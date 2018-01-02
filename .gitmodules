@@ -1,9 +1,3 @@
-[submodule "p3-app"]
-	path = p3-app
-	url = https://github.com/ahui132/awesome-python3-webapp
-[submodule "excel-tutorial"]
-	path = excel-tutorial
-	url = https://github.com/ahui132/python3-excel-tutorial
 [submodule "demo/php-lib"]
 	path = demo/php-lib
 	url = https://github.com/ahui132/php-lib
