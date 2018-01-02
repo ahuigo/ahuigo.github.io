@@ -1,0 +1,513 @@
+---
+layout: page
+title:	Shell Programming
+category: blog
+description:
+---
+
+# Preface
+
+# Variable
+
+	let num++
+	let ++num
+
+	declare -i num
+	num+=1
+
+	((num++))
+
+## readonly
+
+	x=6
+	readonly x
+
+## 输出变量
+
+	echo $v
+	echo ${v}
+
+### bash 中的换行
+建议使用zsh. 因为bash不会将单双引号中的`\n`解析为换行.
+
+	echo "a\nb" #bash 不换行,\n会被原样输出
+	echo $'a\nb' #这样才能换行
+
+> 如果需要\n换行, 建议使用zsh 或者 printf 'a\nb %s' $str
+
+## shell 特殊变量
+
+	$$     脚本运行的当前进程的ID号
+	$!     *后台运行*的最后一个进程的ID号
+	$#     传递到脚本的参数个数
+	$@   	传递给脚本的参数数组
+	$*   	传递给脚本的参数字符串
+	$-     显示shell使用的当前选项
+	$?     显示最后命令的退出状态，0表示无错误
+	$0 		Current Process's ScriptPath
+	$PWD	`pwd`
+	$UID
+	$USER
+	$RANDOM 随机数
+	$COLUMNS $LINES only for zsh
+
+### PS1
+
+	PS1 命令提示符
+	PS1='\[\e[1;31m\][\u@\W]\$\[\e[m\]' #\[\e[1;31m\] 是红色粗体, \[\e[m\] 是正常颜色值.
+
+### Get Script pid
+> http://wiki.jikexueyuan.com/project/13-questions-of-shell/exec-source.html
+
+- fork 子进程
+- exec 替换当前进程的code(原有程序终止)
+- source 在前进程执行code
+
+### Get Script File Path
+In bash(>=3):
+
+	$0				Current Process's Path
+	BASH_SOURCE[0]	Current Script's Path
+
+In zsh:
+
+	$0				Current Script's Path
+
+Working Directory:
+
+	pwd
+
+Example:
+
+	$ cat s.sh
+	#!/bin/bash
+	printf '$0 is: %s\n $BASH_SOURCE is: %s\n' "$0" "$BASH_SOURCE"
+
+	bash-3.2$ ./s.sh
+		$0 is: ./s.sh,$BASH_SOURCE is: ./s.sh
+	bash-3.2$ source s.sh
+		$0 is: bash,$BASH_SOURCE is: s.sh
+
+## 赋值
+
+	v=value #注意=两边不能有空格,这是规定!
+	unset v ;#删除字符串
+
+### read 交互
+
+	read [-pt] [variable]
+	read [-ers] [-u fd] [-t timeout] [-p prompt] [-a array] [-n nchars] [-d delim] [name name2...]
+	选项与参数：
+	-p  ：后面可以接提示字符！
+	-t  ：后面可以接等待的『秒数！』这个比较有趣～不会一直等待使用者啦！
+	variable
+		默认是REPLY
+
+	## read line
+	while read line;
+	do
+		echo $line
+	done < file
+
+read without echoing
+
+	read -s var
+
+multiple and line:
+
+	bash-3.2$ read a
+	1 2
+	bash-3.2$ echo $a
+	1 2
+	bash-3.2$ read a b c
+	1 2
+	bash-3.2$ echo $a
+	1
+	bash-3.2$ echo $b
+	2
+	bash-3.2$ echo $c
+
+### 声明
+
+	 declare [-aixr] variable
+	 typeset [-aixr] variable
+
+	 选项与参数：
+	 -a  ：将后面名为 variable 的变量定义成为数组 (array) 类型
+	 -i  ：将后面名为 variable 的变量定义成为整数数字 (integer) 类型
+	 -x  ：用法与 export 一样，就是将后面的 variable 变成环境变量；
+	 -r  ：将变量配置成为 readonly 类型，该变量不可被更改内容，也不能 unset
+	 declare -p var  #单独列出变量类型
+
+	unset var #销毁变量
+
+##  环境变量
+
+	env #查看环境变量 与说明
+	env var1=1 var2=2 php -r 'var_dump($_SERVER);'  #执行其它信命令时, 指定子进程的环境变量
+	set #查看环境变量与自定义变量.
+	export  #查看环境变量的生成语句(declare -x)
+
+## 环境配置stty,set
+
+### set
+一般地，set 的参数如果以- 为前缀，则表示设置；如果以`+`为前缀，表示取消.
+
+	set # 查看/设置 环境变量与本地变量
+	set -x # set -o xtrace 执行时打印语句
+	set +x # 执行时不打印语句
+	set -e # set -o errexit
+
+	set -o :
+		emacs/vi			在进行命令编辑的时候,使用内建的emacs编辑器, 默认选项
+		errexit		-e		非0退出状态值(失败),就退出. 判断条件(if/&&/||)中子命令的状态码则没有影响
+		xtrace		-x		打开调试回响模式
+		verbose		-v		为调试打开verbose模式
+		nounset		#		引用未定义的变量(缺省值为"")
+		allexport	-a		从设置开始标记所有新的和修改过的用于输出的变量
+		braceexpand	-B		允许符号扩展,默认选项
+		histexpand	-H		在做临时替换的时候允许使用!和!! 默认选项
+		history				允许命令行历史,默认选项
+		ignoreeof			禁止coontrol-D的方式退出shell，必须输入exit。
+		interactive-comments		在交互式模式下， #用来表示注解
+		keyword		-k		为命令把关键字参数放在环境中
+		monitor		-m		允许作业控制
+		noclobber	-C		保护文件在使用重新动向的时候不被覆盖
+		noexec		-n		在脚本状态下读取命令但是不执行，主要为了检查语法结构。
+		noglob		-d		禁止路径名扩展，即关闭通配符
+		notify		-b		在后台作业以后通知客户
+		nounset		-u		在扩展一个没有的设置的变量的时候，    显示错误的信息
+		onecmd		-t		在读取并执行一个新的命令后退出
+		physical	-P		如果被设置，则在使用pwd和cd命令时不使用符号连接的路径 而是物理路径
+		posix		改变shell行为以便符合POSIX要求
+		privileged		一旦被设置，shell不再读取.profile文件和env文件 shell函数也不继承任何环境
+
+		if `+o` with no option-name, a series of set commands to recreate current set options is displayed on standard output.
+		if `-o` with no option-name, the values of current  options are printed.
+
+# Signal, 信号(trap)
+Refer to:
+http://billie66.github.io/TLCL/book/zh/chap37.html
+
+signal handling:
+
+	trap argument signal [signal...]
+
+demo1:
+
+	trap "echo 'I am ignoring interrupted and kill!'" SIGINT SIGTERM
+	for i in {1..5}; do
+		echo "Iteration $i of 5"
+		sleep 5
+	done
+
+trap-demo2 : simple signal handling demo
+
+	exit_on_signal_SIGINT () {
+		echo "Script interrupted." 2>&1
+		exit 0
+	}
+	exit_on_signal_SIGTERM () {
+		echo "Script terminated(kill)." 2>&1
+		exit 0
+	}
+	trap exit_on_signal_SIGINT SIGINT
+	trap exit_on_signal_SIGTERM SIGTERM
+	for i in {1..5}; do
+		echo "Iteration $i of 5"
+		sleep 5
+	done
+
+# Security
+
+## temp race
+给临时文件一个不可预测的文件名是很重要的。这就避免了一种为大众所知的 temp race 攻击。 一种创建一个不可预测的（但是仍有意义的）临时文件名的方法是，做一些像这样的事情：
+
+	tempfile=/tmp/$(basename $0).$$.$RANDOM
+
+`$$` 是pid, `$RANDOM` 的范围比较小`1-32767`.
+
+我们可以使用`mktemp`, 它接受一个用于创建文件名的模板作为参数。这个模板应该包含一系列的 “X” 字符， 随后这些字符会被相应数量的随机字母和数字替换掉。一连串的 “X” 字符越长，则一连串的随机字符也就越长
+
+	tempfile=$(mktemp /tmp/foobar.$$.XXXXXXXXXX) ;# /tmp/foobar.6593.UOZuvM6654
+
+# 异步执行
+Refer to:
+http://billie66.github.io/TLCL/book/zh/chap37.html
+
+## wait
+wait 命令导致一个父脚本暂停运行，直到一个 特定的进程（例如，子脚本）运行结束。
+
+	# async-parent : Asynchronous execution demo (parent)
+	echo "Parent: starting..."
+	echo "Parent: launching child script..."
+	async-child &
+	pid=$!
+	echo "Parent: child (PID= $pid) launched."
+	echo "Parent: continuing..."
+	sleep 2
+	echo "Parent: pausing to wait for child to finish..."
+	wait $pid
+	echo "Parent: child is finished. Continuing..."
+	echo "Parent: parent is done. Exiting."
+
+`$!` shell 参数的值，它总是 包含放到*后台执行*的最后一个任务的进程 ID 号。
+
+# Command Exec
+
+## process
+shell 本身启动的`cmd &`, 会随着shell 的退出而退出。
+sub process 启动的`cmd &`, 会随着shell 的退出, 不会退出，控制权限会被交给shell 的父进程
+
+    `echo "the command"|at now`;
+
+## check if a command exists
+
+	hash git || { echo 'Err: git is not installed.' ; exit 3; }
+	command git || { echo 'Err: git is not installed.' ; exit 3; }
+	type git || { echo 'Err: git is not installed.' ; exit 3; }
+
+Refer to:
+http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+http://unix.stackexchange.com/questions/85249/why-not-use-which-what-to-use-then
+
+## errcode
+`exit 0 ` 返回一个成功的状态码，非0状态码表示不成功。
+
+默认的管道不会传递errcode(`pipefail` is false).
+
+	$ false | true; echo $?
+	0
+
+可以手动开启：
+
+	$ set -o pipefail
+	$ false | true; echo $?
+	1
+
+## grep & ps
+remove grep command while use ps
+
+	ps aux | grep perl | grep -v grep
+	ps aux | grep '[p]erl'
+
+Or use `pgrep` instead:
+
+	pgrep perl
+	pgrep per[l]
+
+## type
+type 用于查看命令的属性
+
+	type command
+	type -t command (not support zsh)
+
+## alias
+
+	unalias rgrep
+
+## execute command `cmd` or $(cmd)
+以子进程执行cmd.(你也可通过source 以当前进程执行cmd)
+
+	`cmd` or $(cmd)
+	ls -l `locate crontab`
+
+	source cmd or . cmd
+
+\`\`内嵌时需要转义
+
+	echo "`ls \`which ls\``"
+	echo "$(ls `which ls`)"
+
+>	ps: a=`cmd` #如果cmd 中含有\r, 则每次\r会把前面的字符给干掉. 可以 a=`cmd | tr "\r\n" "-+"`
+
+shell arguments:
+在zsh 中会执行失败zsh为了安全，会将$var 整个字符串视为一个命令（包括其中的空白符）
+
+	var='svn st'; `$var`;
+	var='svn st'; $var;
+
+你可以用eval, `sh -c`
+
+	`eval "$cmd"`;
+	`sh -c "$cmd"`;
+	# 或者这样，让zsh 原样输出$var
+	setopt shwordsplit; `$var`;
+
+请参考：[Why does $var where var="foo bar" not do what I expect?](http://zsh.sourceforge.net/FAQ/zshfaq03.html)
+
+## Process Substitution - 进程替换
+有些命令需要以文件名为参数(file args)，这样一来就不能使用管道。这个时候 `<()` `>()` 就显出用处了，它可以接受一个命令，并把它转换成临时文件名。
+
+	# 下载并比较两个网页
+	diff <(wget -O - url1) <(wget -O - url2)
+	echo <(echo "foo"); # ///dev/fd/17
+	# 将临时文件通过管道传给命令
+	wget -q -O >(cat) url
+
+	# 替换符号不分开！
+	➜ > py git:(gh-pages) ✗cat <( echo abc )
+	abc
+	➜ > py git:(gh-pages) ✗cat < ( echo abc )
+	zsh: unknown file attribute:
+
+再来一个例子
+
+	while read attr links owner group size date time filename; do
+		cat <<- EOF
+			Filename:     $filename
+			Size:         $size
+			Owner:        $owner
+			Group:        $group
+			Modified:     $date $time
+			Links:        $links
+			Attributes:   $attr
+		EOF
+	done < <(ls -l | tail -n +2)
+
+> 注意# tail -n +2, 用的+ 号哦
+
+### pipe stdout while keeping it on screen
+
+	#with Process Substitution
+	echo abc | tee >(cmd)
+	#with stdout(cmd get double stdout)
+	echo abc | tee /dev/stdout | cmd
+	#with tty(screen)
+	echo abc | tee /dev/tty | cmd
+
+## heredoc and nowdoc
+Act as stdin
+
+	# heredoc 任何字词都可以当作分界符 (cat < file)
+	cat  << MM
+	echo $? #支持变量替换
+	MM
+
+	#nowdoc 加引号防止变量替换
+	cat << 'MM' > out.txt
+	echo $?
+	MM
+
+	# `<<-` ignore tab
+	if true ; then
+		cat <<- MM | sudo tee -a file > /dev/null
+		The leading tab is ignored.
+			MM
+	fi
+	# nowdoc + ignore tab(not include space)
+	cat <<-'MM' | sudo tee -a a.txt > /dev/null
+		echo $PATH
+		MM
+
+## here string
+> Note: here string 结尾会追加'\n'
+
+Act as stdin
+
+    python <<<'import os;os._exit(0)'
+	tr a-z A-Z <<< 'one two'
+	cat <<< 'one two'
+
+	cat <<< $PATH a.txt
+	echo "$PATH" | cat a.txt
+
+Note that here string behavior can also be accomplished (reversing the order) via piping and the echo command, as in:
+
+	echo 'one two' | tr a-z A-Z
+
+## Caculation
+
+### expr
+expr 算式:
+
+	x=`expr $x + 1` ; #$x 与 + 与 1 之间必须有空格, 否则被expr视为字符串
+
+### bc expression
+	x=`echo $x^3 | bc`; #bc 较expr限制少, 支持大量的数学符号(而expr 仅支持+-*/%)
+
+### let
+let 数学式:
+
+	let x=$x+1;echo $x; # let 没有返回值的
+
+### 双括号(())
+1. 支持-+*/%
+2. 支持随机数
+
+	echo $((RANDOM%100))
+
+# debug 调试
+
+## read args through pipe to sh
+
+	echo "echo \$@" | sh -s 1 2 3
+	echo "echo \$@" | zsh -s 1 2 3
+
+## time
+
+	time cmd
+
+	$ time (for m in {1..100000}; do [[ -d . ]];done;)
+	real	0m0.438s
+	user	0m0.375s
+	sys	0m0.063s
+
+## Record commands and results
+log command
+
+	script [record_file]
+		record_file: default typescript
+
+Refer to: [stackoverflow](http://stackoverflow.com/questions/15698590/how-to-capture-all-the-commands-typed-in-unix-linux-by-any-user)
+
+Also you record results via `redirection` and `exec`:
+
+	set -x
+	exec 2>> record.txt 1>>record.txt
+
+## debug 参数
+shell 支持一些调试参数：
+
+	-n 不执行，用于检查语法错误
+	-v Prints shell input lines as they are read.(set -v, set -o verbose)
+	-x Print command traces before executing command.(set -x, set -o xtrace)
+
+## 调试参数使用场景
+1. 在命令行 sh -x a.sh
+1. 在脚本的头部 `#/bin/sh -x`
+1. 在脚本中用set 设置 `set -x` 或者 `set -o xtrace`, 用于在命令执行前打印命令
+
+
+	set -x			# activate debugging from here
+	w
+	set +x			# stop debugging from here
+
+# shell login
+
+## 作为交互登录Shell启动，或者使用--login参数启动
+*登录Shell*就是在输入用户名和密码*登录*后得到的Shell.  但是从*图形界面*的窗口管理器登录之后会显示桌面而不会产生登录Shell（也不会执行启动脚本），在图形界面下打开终端窗口得到的Shell也不是登录Shell。
+
+交互式的登录shell 会依次执行:
+
+1. /etc/profile
+2. ~/.bash_profile、~/.bash_login和~/.profile三个文件中的一个
+3. 退出登录时会执行~/.bash_logout脚本
+
+## 以交互非登录Shell启动
+图形界面下开一个终端窗口，或者在登录Shell提示符下再输入bash命令
+
+1. ~/.bashrc
+
+一般~/.bash_profile 会包含 ~/.bashrc
+
+## 非交互Shell
+为执行脚本而fork出来的子Shell是非交互Shell
+
+# Reference
+- [TLCL] The Linux Command Line book
+- [shell manual] 51yip shell manual
+
+[TLCL]: http://billie66.github.io/TLCL/book/
+[shell manual]: http://manual.51yip.com/shell/
+[bash 进阶]:  http://blog.sae.sina.com.cn/archives/3606

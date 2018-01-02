@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+#########################################
+# Author: hilojack  <a132811@gmail.com>
+#########################################
+from sys import argv
+import re
+files = []
+act = '+'
+def Usage():
+    tip = '''
+    Usage:
+        fileset [OPTIONS] FILE1 {SET_OPERATOR} FILE2
+
+        SET_OPERATOR
+            +   Union set
+            -   Difference set
+            -i  Intersection set
+        OPTION
+            -h  For help
+            -f n
+                Compare the n'th field(The default is whole line)
+            -d <delimiter>
+                Set delimiter( `,` is default delimiter) with `-f`
+
+    Example:
+        fileset a + b
+            Union set of a and b.
+        fileset a -  b
+            Difference set: a minus b
+        fileset a -i b
+            Intersection set of a and b.
+    '''
+    quit(tip);
+
+field = 0;
+delimiter = ',';
+argv.pop(0);
+while len(argv):
+    arg = argv.pop(0);
+    if arg in ['-', '+', '-i']:
+        act = arg;
+    elif arg == '-f':
+        arg = argv.pop(0)
+        field = int(arg)
+    elif arg == '-d':
+        delimiter = argv.pop(0)
+    elif re.match(r'^[\w\.\/]+$', arg):
+        files.append(arg)
+    else:
+        Usage()
+if (len(files)<2):
+    Usage()
+
+lines = {};
+out = {}
+for line in open(files[0]):
+    line = line.strip()
+    key = line.split(delimiter)[field-1]  if field else line;
+    lines[key] =line
+
+if act == '+':
+    out = lines;
+    for line in open(files[1]):
+        line = line.strip()
+        key = line.split(delimiter)[field-1]  if field else line;
+        out[key] = line;
+elif act == '-':
+    out = lines;
+    for line in [ line.strip() for line in open(files[1])]:
+        key = line.split(delimiter)[field-1]  if field else line;
+        if key in lines:
+            out.pop(key)
+elif act == '-i':
+    out = {}
+    for line in [ line.strip() for line in open(files[1])]:
+        key = line.split(delimiter)[field-1]  if field else line;
+        if key in lines:
+            out[key] = line
+
+for k,v in out.items():
+    print(v)

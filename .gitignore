@@ -1,0 +1,8 @@
+tmp
+pri
+Gemfile.lock
+.vscode
+jek.exvim
+.exvim.jek/
+.DS_Store
+__pycache__

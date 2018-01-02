@@ -1,0 +1,3 @@
+# godoc
+
+	godoc  fmt Print

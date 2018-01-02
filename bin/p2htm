@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+cd $HOME;
+cat > a.htm;
+open a.htm;

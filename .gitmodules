@@ -1,0 +1,15 @@
+[submodule "p3-app"]
+	path = p3-app
+	url = https://github.com/ahui132/awesome-python3-webapp
+[submodule "excel-tutorial"]
+	path = excel-tutorial
+	url = https://github.com/ahui132/python3-excel-tutorial
+[submodule "demo/php-lib"]
+	path = demo/php-lib
+	url = https://github.com/ahui132/php-lib
+[submodule "demo/js-lib"]
+	path = demo/js-lib
+	url = https://github.com/ahui132/js-lib
+[submodule "demo/java-lib"]
+	path = demo/java-lib
+	url = https://github.com/ahui132/java-lib

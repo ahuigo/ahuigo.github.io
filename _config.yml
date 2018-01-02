@@ -1,0 +1,15 @@
+# Site settings
+title: ahui132
+name: ahui132
+email: 
+description: ''
+baseurl: ""
+url: "http://ahui132.github.io"
+username: ahui132 
+
+# Build settings
+exclude: ['posts1']
+markdown: kramdown
+paginate: 10 
+paginate_path: "/p:num"
+permalink: /p/:title

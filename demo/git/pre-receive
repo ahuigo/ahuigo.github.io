@@ -1,0 +1,27 @@
+#!/bin/sh
+ERRORS=""
+RETVAL=0
+
+#gitolite style
+refname="$1"
+oldrev="$2"
+newrev="$3"
+
+# <oldrev> <newrev> <refname>
+if [[ -z "$newrev" ]];then
+	read oldrev newrev refname; #client-git style
+fi
+echo "oldrev:$oldrev | newrev:$newrev | refname:$refname\n========"
+
+list=$(git diff-tree --name-only -r $oldrev..$newrev | grep -e '.php' -e '.phtml')
+for file in ${list}; do
+	#git show ${newrev}:${file} || continue  #skip deleted files
+	OUTPUT=$(git show ${newrev}:${file} | php -l 2>&1 )
+	if [ "$?" -ne "0" ]; then
+		ERRORS="${ERRORS}${file}:\n${OUTPUT}\n===========\n"
+		RETVAL=1
+	fi
+done
+
+echo  "$ERRORS"
+exit $RETVAL

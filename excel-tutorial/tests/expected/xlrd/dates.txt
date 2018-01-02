@@ -1,0 +1,9 @@
+2009-03-18 00:00:00 2009-03-18
+2009-03-18 21:06:44
+21:06:44
+Traceback (most recent call last):
+  File "bin/py", line 33, in <module>
+    execfile(__file__)
+  File "dates.py", line 13, in <module>
+    print datetime(*time_value)
+ValueError: year is out of range
