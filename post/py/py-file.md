@@ -117,6 +117,13 @@ If you need an list, just use `glob.glob` instead of `glob.iglob` with iterator
 	>>> os.path.join('/Users/michael', 'testdir')
 	'/Users/michael/testdir'
 
+### current directory
+change current workspace:  support abspath only
+
+	os.chdir(path)
+	os.getcwd()
+	os.chroot(path)
+
 ### split pathinfo
 
 	>>> os.path.split('/Users/michael/testdir/file.txt')
@@ -124,13 +131,6 @@ If you need an list, just use `glob.glob` instead of `glob.iglob` with iterator
 
 	>>> os.path.splitext('/path/to/file.txt')
 	('/path/to/file', '.txt')
-
-### current directory
-change current workspace:  support abspath only
-
-	os.chdir(path)
-	os.getcwd()
-	os.chroot(path)
 
 # File stream
 

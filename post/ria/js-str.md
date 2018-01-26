@@ -17,6 +17,13 @@
 	name='ahui'
 	`Hello, ${name}`
 
+## 字符串是不可变的
+```
+var s = 'Test';
+s[0] = 'X';
+alert(s); // s仍然为'Test'
+```
+
 ## function
 
 	.charAt(pos) str[pos=0]

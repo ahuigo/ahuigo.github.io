@@ -34,6 +34,11 @@ description:
 	{n,m}?	重复n到m次，但尽可能少重复
 	{n,}?	重复n次以上，但尽可能少重复
 
+    >> re.search("(switchport)?", " switchport").groups()
+    Out[13]: (None,)
+    >> re.findall("(switchport)?", " switchport")
+    Out[16]: ['', 'switchport', '']
+
 # Posix Expression
 
 POSIX正则表达式分为：BRE (Basic Regular Expression) 和 ERE (Extended Regular Expressions)。

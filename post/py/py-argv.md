@@ -51,9 +51,10 @@ try：一个从来没有更简单的命令行工具，用来试用python库。�
     @click.command()
     @click.option('-count', default=1, help='Number of greetings')
     @click.option('-name', prompt='Your name', help='The person to greet')
-    def hello(name, count): # 没有位置先后
-        for x in range(count):
-            click.echo('Hello %s!' % name);
+	@click.argument('more_params', nargs=3)
+    def hello(name, count, params): # 没有位置先后
+		click.echo('Hello %s! count=%s' % (name, count));
+		print(more_params)
 
     if __name__ == '__main__':
         hello()

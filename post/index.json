@@ -2,7 +2,7 @@
     "site_name": "ahui132",
     "copyright": "SYSCDE",
     "cates": [
-        {"name": "tech", "text":"工作"},
+        {"name": "tech", "text":"学习"},
         {"name": "life", "text":"生活"}
     ],
     "articles":[

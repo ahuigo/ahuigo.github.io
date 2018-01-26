@@ -5,9 +5,13 @@ http://www.miitbeian.gov.cn/publish/query/indexFirst.action
 
 .cc 90
 .pw 350
+.top 16/续费
 
+# 域名级别
+https://www.iana.org/domains/root/db
 
 # register
+https://wanwang.aliyun.com/domain/?spm=5176.8006371.772227.ymzc.13d0577auxEbKE
 gandi.net
 https://www.domcomp.com/
 https://www.zhihu.com/question/19551906

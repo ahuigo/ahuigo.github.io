@@ -40,7 +40,7 @@ Python的hashlib提供了常见的摘要算法，如MD5，SHA1等等。
 ## sha1
 	hashlib.sha1(b'mypasswd').hexdigest()
 		sha1=hashlib.sha1()
-		sha1.update(b'mypasswd'.encode())
+		sha1.update(b'mypasswd')
 		sha1.hexdigest()
 	hashlib.md5(b'mypasswd').hexdigest()
 		md5 = hashlib.md5()

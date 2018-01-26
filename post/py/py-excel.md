@@ -63,19 +63,24 @@ https://openpyxl.readthedocs.io/en/default/tutorial.html
 	wb = load_workbook(filename='large_file.xlsx', read_only=True)
 	ws = wb['big_data'] # ws is now an IterableWorksheet
 
+	row = next(ws.rows) # row is tuple, rows is generator
+
 	for row in ws.rows:
+		# row[1]
 		for cell in row:
 			print(cell.value)
 
 ### row slicing
-generator:
-
-	rows = ws['A1':'C2']
-	ws.iter_rows('A1:C2'):
-
 tuple
 
-	rows = ws.rows[0:3]
+	cell_range = ws['A1':'C2']
+	cell_range = ws['A1:C2']
+	row10 = ws[10]
+	row_range = ws[1:10]
+
+	colC = ws['C']
+
+	for row in ws.iter_rows(min_row=1, max_col=3, max_row=2):
 
 ### cell
 

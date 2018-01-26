@@ -11,6 +11,12 @@ description:
 移动大王卡、联通大王卡和电信超牛卡、到底谁划算?
 https://zhuanlan.zhihu.com/p/24249217?from=groupmessage
 
+## 联通
+### 联通PUK+PIN
+使用短信营业厅（PUK码未锁），发送PUK或CXPUK至10010（发送此信息是免费的）。
+2.联通网上营业厅——登录——选择“办业务”——点击页面左侧头像图标——页面拉至最下方即可见“号码信息”中显示“PUK码”为8位全数字；[5] 
+3.使用联通手机营业厅，登陆手机号码后选择“我的联通”——“安全中心”——“我的PUK码”进行查询；
+
 # 关于漫游
 标准国内（不含港澳台）漫游主叫：0.6元/分钟；被叫0.4元/分钟
 http://service.bj.10086.cn/poffice/package/showpackage.action?PACKAGECODE=GNBHGATMY
@@ -70,7 +76,7 @@ http://service.bj.10086.cn/poffice/package/showpackage.action?PACKAGECODE=GNBHGA
 
 ## 流量套餐
 取消数据流量可选包/将套餐变更为标准资费（不含随e行等客户）:
- 发送` qxlltc` 到10086
+ 发送`qxlltc` 到10086
 
 # 关于积分(M)
 JF到10086查询您当前的积分
