@@ -44,6 +44,10 @@ msgpack 也是一个二进制的打包协议. 鸟哥的Yar http 框架默认作�
 
     gRPC by google
 
+一个轻量级RPC的实现 
+    文档： https://juejin.im/post/5a69e308518825733b0f151a 
+    源码: https://github.com/TanLian/testrpc
+
 # weixin 使用的协议
 参考: http://blog.csdn.net/justinjing0612/article/details/38322353
 微信协议简单调研笔记

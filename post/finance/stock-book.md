@@ -8,6 +8,7 @@ https://quant.gf.com.cn/
 http://m.toutiao.manqian.cn/wz_bvEKRYul3QF.html
 
 # book
+https://www.botvs.com/bbs-topic/1357
   1、《聪明的投资者》（格雷厄姆著）。格雷厄姆专门为业余投资者所著，巴菲特称之为“有史以来最伟大的投资著作”。
 
         2、《穷光蛋查理年鉴》（富兰克林著）（一个不幸的灵魂去年问查理：“如果感受不到阅读本书的喜悦，该怎么办？”他得到的芒格式的回答——“没问题，请把这本书赠给更有智慧的人。）

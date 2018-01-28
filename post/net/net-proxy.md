@@ -136,12 +136,12 @@ Privoxy 能
 2. 支持类似PAC 的自动代理
 
 	forward-socks5	/	127.0.0.1:1080	.    # socks v5
-	forward-socks5t	/	127.0.0.1:1080	.    # socks v5, reduce the latency for the newly connection.
+	forward-socks5t	/	127.0.0.1:1080	.    # socks v5, reduce the latency for the newly connection.(可能有问题)
 
 安装(Mac osx)
 
 	$ brew install Privoxy
-	echo "forward-socks5t   /               127.0.0.1:1080 .  " >> /usr/local/etc/privoxy/config
+	echo "forward-socks5   /               127.0.0.1:1080 .  " >> /usr/local/etc/privoxy/config
 	gsed  -ir 's/^listen-address  127.0.0.1:8118/listen-address :8080/' /usr/local/etc/privoxy/config
 
 启动

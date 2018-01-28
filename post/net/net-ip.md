@@ -1,3 +1,6 @@
+# get public ip
+http://whatismyip.akamai.com/
+
 #  renew ip
 
     # release

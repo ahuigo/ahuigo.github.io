@@ -16,9 +16,3 @@ lab.alipay.com 点交易记录
 b.alipay.com 明细
 https://consumeprod.alipay.com/record/standard.htm 企业版我的帐单
 shenghuo.alipay.com/send/payment/fill.htm 切换到商户
-
-
-碧桂园海昌天澜 别墅
-保利百合花园 北辰绿郡
-龙泉大面镇
-江安花园

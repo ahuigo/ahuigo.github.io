@@ -14,6 +14,7 @@ https://wequant.io/blog/kdj_strategy/
 
 学习:
 长投网(视频与选股)：http://www.ichangtou.com/
+https://www.botvs.com/bbs-topic/1357
 
 系统学习:
 聚宽: https://www.joinquant.com/study

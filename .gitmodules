@@ -10,3 +10,6 @@
 [submodule "demo/excel-tutorial"]
 	path = demo/excel-tutorial
 	url = https://github.com/ahui132/python3-excel-tutorial
+[submodule "demo/php-websockets"]
+	path = demo/php-websockets
+	url = https://github.com/ahui132/php-websockets
