@@ -58,12 +58,6 @@ or use any part which is hash-able:
 	>>> OrderedDict.fromkeys([5,3,2,3]).keys()
 	odict_keys([5, 3, 2])
 
-## list index
-
-	[1,2,3][True] == 2
-	[1,2,3].index(2) == 1
-	[1,2,3].index('2') == ValueError
-
 ## list copy
 
     l=[1,2,3]
@@ -106,6 +100,25 @@ merge to set, 利用`*args` 展开
 
 	if x in list
 	if index < len(list)
+
+### find in list
+Finding the first occurrence
+
+	next(x for x in lst if ...)
+
+which will return the first match or raise a StopIteration if none is found. Alternatively, you can use
+
+	next((x for x in lst if ...), [default value])
+	first_or_default = next((x for x in lst if ...), None)
+
+### find location(index)
+
+	[1,2,3][True] == 2
+	[1,2,3].index(2) == 1
+	[1,2,3].index('2') == ValueError
+
+	[1,2,3,2].index(2) # => 1
+	[i for i,x in enumerate([1,2,3,2]) if x==2] # => [1, 3]
 
 ## zip list
 
@@ -226,9 +239,9 @@ repeat
 	>>> del list[0]
 	>>> list.pop(0)
 	>>> list.append(3)
-	>>> list.pop(-1) # same as list.pop()
+	>>> list.pop(-1) # same as list.pop() last one
 	3
-	>>> list.pop(0)
+	>>> list.pop(0) # first one
 	1
 
 ### insert and shift

@@ -72,6 +72,7 @@ Another example:
 ```
 
 如果要使用setup.py 的test 命令， 所需要的包放在: setup_requires：
+
 	setup_requires=[
         'pytest-runner',
     ],
@@ -98,18 +99,17 @@ include flaskr/schema.sql
 	$ python setup.py sdist # This will create a dist folder containing all your distributions. 
 ```
 2. After unpacking the distribution file, you can simply install it using :
-```s
-python setup.py install 
-pip install
 
-pip install --editable .
+```s
+	python setup.py install 
+	pip install
+	pip install --editable . ;# 不拷贝
 ```
 
 ## find_packages
 For very large projects, to decrease size of proj:.
 
 	find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
-
 
 # Upload to PyPI
 ## first register PyPI simply done by typing:
@@ -140,3 +140,30 @@ python3 setup.py register sdist upload
 pip freeze > requirements.txt
 pip install -r requirements.txt
 
+
+# cli tool
+可以在setup.py 为script 加入口.
+
+第一种：
+
+    scripts=['bin/fileset.py'], # general for non python, exec:`$ fileset.py`
+
+或用python：
+
+	entry_points = {
+        'console_scripts': ['fileset=bin.fileset:main', 'bin2=bin.fin2:main'],
+    }
+	entry_points='''
+        [console_scripts]
+        flaskr=bin.fileset:main
+        flaskr2=bin.fileset2:main
+    '''
+
+fileset.py
+
+	app = Flask('xxx')
+	@app.cli.command('ahui')
+	def main(as_module=False):
+		print(sys.argv)
+
+注意，安装`pip install -e .` 之后的再`uninstall` 不是删除bin 目录下的fileset

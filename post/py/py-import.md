@@ -22,7 +22,7 @@ wirte a `hilo.py`:
 Then under interact python envirment:
 
 	import hilo
-	#from . import hilo
+	#from . import hilo ;# 仅限__init__.py
 	print hilo.add(1,2)
 	add = hilo.add
 	print add(1,2)
@@ -41,7 +41,7 @@ import `ex47.game`, would find two file:
 	ex47/game.py
 	ex47/__init__.py
 
-1. 请注意，每一个包目录下面都会有一个__init__.py的文件，这个文件是必须存在的，否则，Python就把这个目录当成普通目录，而不是一个包。目录名就是包名或叫模块名
+1. 请注意，每一个包目录下面都会有一个__init__.py的文件，这个文件是必须存在的，否则，Python就把这个目录当成普通目录，而不是一个包。目录名就是包名或叫模块名(python3 后不是必须)
 2. `__init__.py`可以是空文件，也可以有Python代码，因为`__init__.py`本身就是一个模块，而它的模块名就是所在文件夹的名字`ex47`
 
 ## import as
@@ -67,6 +67,14 @@ attr1 = getattr(__import__('A.B', globals(), locals(), ['attr1']), 'attr1')
 The . is a shortcut that tells it search in current package(not process's cwd) before rest of the PYTHONPATH:
 
 	from .submodule import sth
+
+`__init__.py` 中的dot
+
+	from . import a,b,c ;# current directory(not process's cwd)
+	from .a import x1
+	from .b import x1
+
+import dir.pkg; # process's cwd !!!!!!!!!!!
 
 ## __name__
 命令行执行模块时，`__name__` = `__main__` , import 导入时，它等于模块名, if不会执行
@@ -157,7 +165,7 @@ Python 靠一套需要大家自觉遵守的”约定“下工作。 比如下划
         pass  # omit
 
 ### 控制 from xxx import * 的行为
-用 from xxx import * 的写法的，就只会导入 `__all__` 列出的成员
+用 from xxx import * 的写法的，就只会导入 `__all__` 列出的成员(`仅限制*`)
 
 ### 为 lint 工具提供辅助
 编写一个库的时候，经常会在 `__init__.py` 中暴露整个包的 API，而这些 API 的实现可能是在包中其他模块中定义的。如果我们仅仅这样写：

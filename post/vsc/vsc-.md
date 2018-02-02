@@ -163,3 +163,23 @@ instead of above,  delegate them back to VSCode so that VSCodeVim does not proce
         "<C-e>": false
     }
 ```
+
+## show tabs
+```json
+{
+    "vim.disableAnnoyingNeovimMessage": true,
+    "vim.enableNeovim": true,
+    "vim.insertModeKeyBindingsNonRecursive": [
+        { "before": ["<C-f>"], "after": ["<Right>"]},
+        {"before": ["<C-a>"], "after": ["<C-o>","0"]},
+        {"before": ["<C-u>"], "after": ["<Esc>","c","0"]}
+    ],
+    "vim.handleKeys": {
+        "<C-e>": false
+    },
+    "workbench.editor.enablePreview": false,
+    "python.pythonPath": "python3",
+    "python.linting.flake8Enabled": true,
+    "workbench.editor.showTabs": true
+}
+```

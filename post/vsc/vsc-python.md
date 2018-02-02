@@ -8,3 +8,4 @@ https://code.visualstudio.com/docs/python/python-tutorial
 ## Navigation
 F12 Go to definition
 ⌃- / ⌃⇧- Go back/forward
+cmd+j toggle panel (cmd+`)

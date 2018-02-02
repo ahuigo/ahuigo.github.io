@@ -46,7 +46,6 @@ class School(Base):
     __tablename__ = 'school'
     id = ...
     name = ...
-create_engine()用来初始化数据库连接。SQLAlchemy用一个字符串表示连接信息：
 ```
 ## add user
 由于有了ORM，我们向数据库表中添加一行记录，可以视为添加一个User对象：
@@ -88,23 +87,24 @@ name: Bob
 
 例如，如果一个User拥有多个Book，就可以定义一对多关系如下：
 
-```
-class User(Base):
-    __tablename__ = 'user'
+	```python
+	class User(Base):
+		__tablename__ = 'user'
 
-    id = Column(String(20), primary_key=True)
-    name = Column(String(20))
-    # 一对多:
-    books = relationship('Book')
+		id = Column(String(20), primary_key=True)
+		name = Column(String(20))
+		# 一对多:
+		books = relationship('Book')
 
-class Book(Base):
-    __tablename__ = 'book'
+	class Book(Base):
+		__tablename__ = 'book'
 
-    id = Column(String(20), primary_key=True)
-    name = Column(String(20))
-    # “多”的一方的book表是通过外键关联到user表的:
-    user_id = Column(String(20), ForeignKey('user.id'))
-```
+		id = Column(String(20), primary_key=True)
+		name = Column(String(20))
+		# “多”的一方的book表是通过外键关联到user表的:
+		user_id = Column(String(20), ForeignKey('user.id'))
+	```
+
 当我们查询一个User对象时，该对象的books属性将返回一个包含若干个Book对象的list。
 
 ## two simple modles
@@ -157,73 +157,6 @@ async def create_pool(loop, **kw):
         loop=loop
     )
 ```
-
-
-# SQLite
-SQLite是一种嵌入式数据库，它的数据库就是一个文件。由于SQLite本身是C写的，而且体积很小，所以，经常被集成到各种应用程序中，甚至在iOS和Android的App中都可以集成。
-
-在使用SQLite前，我们先要搞清楚几个概念：
-
-1. 表是数据库中存放关系数据的集合，一个数据库里面通常都包含多个表，比如学生的表，班级的表，学校的表，等等。表和表之间通过外键关联。
-2. 要操作关系数据库，首先需要连接到数据库，一个数据库连接称为Connection；
-3. 连接到数据库后，需要打开游标，称之为Cursor，通过Cursor执行SQL语句，然后，获得执行结果。
-
-Python定义了一套操作数据库的API接口，任何数据库要连接到Python，只需要提供符合Python标准的数据库驱动即可:
-	由于SQLite的驱动内置在Python标准库中，所以我们可以直接来操作SQLite数据库。
-
-我们在Python交互式命令行实践一下：
-```
-	# 导入SQLite驱动:
-	>>> import sqlite3
-
-	# 连接到SQLite数据库
-	# 数据库文件是test.db
-	# 如果文件不存在，会自动在当前目录创建:
-	>>> conn = sqlite3.connect('test.db')
-	# 创建一个Cursor:
-	>>> cursor = conn.cursor()
-	# 执行一条SQL语句，创建user表:
-	>>> cursor.execute('create table user (id varchar(20) primary key, name varchar(20))')
-	<sqlite3.Cursor object at 0x10f8aa260>
-	# 继续执行一条SQL语句，插入一条记录:
-	>>> cursor.execute('insert into user (id, name) values (\'1\', \'Michael\')')
-	<sqlite3.Cursor object at 0x10f8aa260>
-	# 通过rowcount获得插入的行数:
-	>>> cursor.rowcount
-	1
-	# 关闭Cursor:
-	>>> cursor.close()
-	# 提交事务:
-	>>> conn.commit()
-	# 关闭Connection:
-	>>> conn.close()
-```
-
-我们再试试查询记录：
-
-```
->>> conn = sqlite3.connect('test.db')
->>> cursor = conn.cursor()
-
->>> cursor.execute('select * from user where id=?', '1')
-<sqlite3.Cursor object at 0x10f8aa340>
-
->>> values = cursor.fetchall()
-[('1', 'Michael')]
-
->>> cursor.close()
->>> conn.close()
-```
-
-使用Python的DB-API时，只要搞清楚Connection和Cursor对象，打开后一定记得关闭，就可以放心地使用。
-1. 使用Cursor对象执行`insert，update，delete`语句时，执行结果由`cursor.rowcount`返回影响的行数，就可以拿到执行结果。
-2. 使用Cursor对象执行`select`语句时，通过`featchall()`可以拿到结果集。结果集是一个`list`，每个元素都是一个`tuple`，对应一行记录。
-
-如果SQL语句带有参数，那么需要把参数按照位置传递给execute()方法，有几个?占位符就必须对应几个参数，例如：
-
-	cursor.execute('select * from user where id=?', '1')
-
-如何才能确保出错的情况下也关闭掉Connection对象和Cursor对象呢？请回忆try:...except:...finally:...的用法。
 
 # Mysql
 SQLite的特点是轻量级、可嵌入，但不能承受高并发访问，适合桌面和移动应用。而MySQL是为服务器端设计的数据库，能承受高并发访问，同时占用的内存也远远大于SQLite。

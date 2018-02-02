@@ -8,6 +8,21 @@ description:
 
 函数式编程
 
+# call func
+getattr(foo, 'bar')()
+locals()['bar']()
+globals()['bar']()
+
+## access var accross file
+settings.py
+
+    myList = []
+
+Next, your subfile.py can import globals:
+
+	import settings
+	settings.myList.append('hey')
+
 # function
 var 默认:
 
@@ -57,12 +72,18 @@ or:
             for k,v in kwargs.items():
                 setattr(func, k, v)
             return func
-        return decorate; 函数定义后执行
+        return decorate; 
 
 	@static_vars(counter=0)
 	def foo():
         print("Counter is %d" % foo.counter)
         foo.counter += 1
+
+## find def args name:
+
+>>> func = lambda x, y: (x, y)
+>>> func.__code__.co_varnames
+('x', 'y')
 
 ## default args
 默认参数必须指向不变对象！因为它是一个static_vars

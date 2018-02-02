@@ -100,7 +100,7 @@ example:
 
 ## p
 
-	$ sed '2p' a.txt
+	$ sed -n '2p' a.txt
 	$ sed '2,3p' a.txt
 	$ sed '/my/p' a.txt
 

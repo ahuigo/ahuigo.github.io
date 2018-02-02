@@ -273,7 +273,7 @@ However, you can achieve simpler code with extra work.
 	-r 降序
 	-o file 防止重定向清空文件sed a.txt > a.txt
 	-k 2 指定排序列
-	-t '一个字符' 指定分隔符
+	-t '一个字符' 指定分隔符, 默认是空格" ", 不是TAB
 	-s --stable
 		stable sort
 

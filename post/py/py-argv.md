@@ -52,7 +52,7 @@ try：一个从来没有更简单的命令行工具，用来试用python库。�
     @click.option('-count', default=1, help='Number of greetings')
     @click.option('-name', prompt='Your name', help='The person to greet')
 	@click.argument('more_params', nargs=3)
-    def hello(name, count, params): # 没有位置先后
+    def hello(name, count, more_params): # 没有位置先后
 		click.echo('Hello %s! count=%s' % (name, count));
 		print(more_params)
 
@@ -60,3 +60,39 @@ try：一个从来没有更简单的命令行工具，用来试用python库。�
         hello()
 
 click.command 装饰使hello 能接收cli args
+
+## multi argument
+
+	@click.command()
+	@click.argument('src', nargs=-1) ;# multiple
+	@click.argument('dst', nargs=1)
+	def copy(src, dst):
+		for fn in src:
+			click.echo('move %s to folder %s' % (fn, dst))
+
+And what it looks like:
+
+	$ copy foo.txt bar.txt my_folder
+	move foo.txt to folder my_folder
+	move bar.txt to folder my_folder
+
+## file argument
+Example:
+
+	@click.command()
+	@click.argument('input', type=click.File('rb'))
+	@click.argument('output', type=click.File('wb'))
+	def inout(input, output):
+		while True:
+			chunk = input.read(1024)
+			if not chunk:
+				break
+			output.write(chunk)
+
+And what it does:
+
+	$ inout - hello.txt
+	hello
+	^D
+	$ inout hello.txt -
+	hello
