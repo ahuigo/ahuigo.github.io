@@ -5,138 +5,201 @@ category: blog
 description:
 ---
 # Preface
-- SQLAlchemy: ORM
+- SQLAlchemy: ORM 重量级 见雪峰老师的教程, filter(User.id==5)
+- peewee: 极简ORM https://www.oschina.net/translate/sqlalchemy-vs-orms
 - AioMysql
 - Mysql and MysqlDB: 功能少
 - SQLite
 
-# SQLAlchemy：
-为了将数据与属性名等信息关联，可以使用ORM,Object-Relational Mapping， 比较有名的就是 sqlalchemy
+## Peewee
+http://docs.peewee-orm.com/en/latest/peewee/quickstart.html
 
-	pip install sqlalchemy
+	from peewee import *
 
-## 定义User, 并初始化DBSession：
-```
-# 导入:
-from sqlalchemy import Column, String, create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+	db = SqliteDatabase('people.db')
 
-# 创建对象的基类:
-Base = declarative_base()
+	class Person(Model):
+		name = CharField()
+		birthday = DateField()
+		is_relative = BooleanField()
+		class Meta:
+			database = db # This model uses the "people.db" database.
 
-# 定义User对象:
-class User(Base):
-    # 表的名字:
-    __tablename__ = 'user'
+	# person.pets 反向引用 backref='pets'
+	class Pet(Model):
+		owner = ForeignKeyField(Person, backref='pets')
+		name = CharField()
+		animal_type = CharField()
+		class Meta:
+			database = db # this model uses the "people.db" database
 
-    # 表的结构:
-    id = Column(String(20), primary_key=True)
-    name = Column(String(20))
+	# connect
+	db.connect()
+	Person.create_table()
+	db.create_tables([Person, Pet])
 
-# 初始化数据库连接: 数据库类型+数据库驱动名称://用户名:口令@机器地址:端口号/数据库名'
-engine = create_engine('mysql+mysqlconnector://root:password@localhost:3306/test')
-# 创建DBSession类型:
-DBSession = sessionmaker(bind=engine)
-```
-以上代码完成SQLAlchemy的初始化和具体每个表的class定义。如果有多个表，就继续定义其他class，例如School：
+### sql
+Peewee returns a cursor. Then you can use the db-api 2 to iterate over it:
 
-```
-class School(Base):
-    __tablename__ = 'school'
-    id = ...
-    name = ...
-```
-## add user
-由于有了ORM，我们向数据库表中添加一行记录，可以视为添加一个User对象：
-```
-# 创建session对象:
-session = DBSession()
-# 创建新User对象:
-new_user = User(id='5', name='Bob')
-# 添加到session:
-session.add(new_user)
-# 提交即保存到数据库:
-session.commit()
-# 关闭session 连接:
-session.close()
-```
+	db = Tweets._meta.database
+	cursor = db.execute_sql('select * from tweets;')
+	for row in cursor.fetchall():
+		print row
 
-## query user
-如何从数据库表中查询数据呢？有了ORM，查询出来的可以不再是tuple，而是User对象。SQLAlchemy提供的查询接口如下：
-```
-# 创建Session:
-session = DBSession()
-# 创建Query查询，filter是where条件，最后调用one()返回唯一行，如果调用all()则返回所有行:
-user = session.query(User).filter(User.id=='5').one()
-# 打印类型和对象的name属性:
-print('type:', type(user))
-print('name:', user.name)
-# 关闭Session:
-session.close()
-运行结果如下：
+	cursor = db.execute_sql('select count(*) from tweets;')
+	res = cursor.fetchone()
+	print 'Total: ', res[0]
 
-type: <class '__main__.User'>
-name: Bob
-```
+### insert.execute()
+返回affected rows num
 
-可见，ORM就是把数据库表的行与相应的对象建立关联，互相转换。
+	User.insert(username='Mickey').execute()
+	User.create(username='Charlie')
 
-## 一对多
-由于关系数据库的多个表还可以用外键实现一对多、多对多等关联，相应地，ORM框架也可以提供两个对象之间的一对多、多对多等功能。
+	User(username='Bob').save() # 这个无效, 不要用
 
-例如，如果一个User拥有多个Book，就可以定义一对多关系如下：
+### delete.execute()
 
-	```python
-	class User(Base):
-		__tablename__ = 'user'
+	Member.delete().where(Member.memid > 37).execute()
+	Stock.get(Stock.id=='1002').delete_instance()
 
-		id = Column(String(20), primary_key=True)
-		name = Column(String(20))
-		# 一对多:
-		books = relationship('Book')
+### update.execute()
 
-	class Book(Base):
-		__tablename__ = 'book'
+	(Facility.update(num=10000)
+			.where(Facility.name == 'Tennis Court 2'))
+			.execute()
 
-		id = Column(String(20), primary_key=True)
-		name = Column(String(20))
-		# “多”的一方的book表是通过外键关联到user表的:
-		user_id = Column(String(20), ForeignKey('user.id'))
-	```
+### select
+select
+	
+	for person in Person.select(Person.name):
+	for person in Person.select():
+		print person.name, person.is_relative
 
-当我们查询一个User对象时，该对象的books属性将返回一个包含若干个Book对象的list。
+where: Facility.select().where
 
-## two simple modles
-two simple models question and choice: http://aiohttp.readthedocs.io/en/stable/tutorial.html#database
-```
-import sqlalchemy as sa
+	.where((Person.birthday < d1940) | (Person.birthday > d1960)))
+		.where(Person.birthday.between(d1940, d1960)))
 
-meta = sa.MetaData()
+	# where facid IN (1, 5);
+	.where(Facility.facid.in_([1, 5]))
+	.where((Facility.facid == 1) | (Facility.facid == 5))
 
-question = sa.Table(
-    'question', meta,
-    sa.Column('id', sa.Integer, nullable=False),
-    sa.Column('question_text', sa.String(200), nullable=False),
-    sa.Column('pub_date', sa.Date, nullable=False),
+	# and or
+	.where( (Facility.membercost > 0) &
+             (Facility.membercost < (Facility.monthlymaintenance / 50))))
 
-    # Indexes #
-    sa.PrimaryKeyConstraint('id', name='question_id_pkey'))
+	# name like '%tennis%'
+	.where(Facility.name ** '%tennis%')
 
-choice = sa.Table(
-    'choice', meta,
-    sa.Column('id', sa.Integer, nullable=False),
-    sa.Column('question_id', sa.Integer, nullable=False),
-    sa.Column('choice_text', sa.String(200), nullable=False),
-    sa.Column('votes', sa.Integer, server_default="0", nullable=False),
+get: fetchone()
 
-    # Indexes #
-    sa.PrimaryKeyConstraint('id', name='choice_id_pkey'),
-    sa.ForeignKeyConstraint(['question_id'], [question.c.id],
-                            name='choice_question_id_fkey',
-                            ondelete='CASCADE'),
-)
-```
+	person = Person.select().where(Person.name == 'Grandma L.').get()
+	person = Person.get(Person.name == 'Grandma L.')
+
+join: selecting both Pet and Person, and adding a join.
+
+	query = (Pet .select(Pet, Person) .join(Person)
+			.where(Pet.animal_type == 'cat'))
+
+	for pet in query:
+		print pet.name, pet.owner.name
+
+sort:
+
+	for pet in Pet.select().where(Pet.owner == uncle_bob).order_by(Pet.name):
+	for person in Person.select().order_by(Person.birthday.desc()):
+
+result to dict:
+
+	query = User.select()
+	[row.__data__ for row in query]
+
+	User.get().__data__
+
+DoesNotExist:
+
+    try:
+        rtn = User.get(User.id==id).__data__
+    except User.DoesNotExist as e:
+
+### delete
+
+	grandma.delete_instance() # return delete row number
+
+### Aggregates and Prefetch
+owner = ForeignKeyField(Person, backref='pets')
+
+	for person in Person.select():
+		print person.name, person.pets.count(), 'pets'
+
+Once again we’ve run into a classic example of *N+1* query behavior. 
+1. In this case, we’re executing an additional query for every Person returned by the original SELECT! 
+2. We can avoid this by performing a JOIN and using a SQL function to aggregate the results.
+
+	query = (Person
+			.select(Person, fn.COUNT(Pet.id).alias('pet_count'))
+			.join(Pet, JOIN.LEFT_OUTER)  # include people without pets.
+			.group_by(Person)
+			.order_by(Person.name))
+
+	for person in query:
+		# "pet_count" becomes an attribute on the returned model instances.
+		print person.name, person.pet_count, 'pets'
+
+	# prints:
+	# Bob 2 pets
+	# Grandma L. 0 pets
+	# Herb 1 pets
+
+if we were to do a `join` from `Person` to `Pet` then every person with multiple pets would be repeated, once for each pet. 
+It would look like this:
+
+	query = (Person
+			.select(Person, Pet)
+			.join(Pet, JOIN.LEFT_OUTER)
+			.order_by(Person.name, Pet.name))
+	for person in query:
+		# We need to check if they have a pet instance attached, since not all
+		# people have pets.
+		if hasattr(person, 'pet'):
+			print person.name, person.pet.name
+		else:
+			print person.name, 'no pets'
+
+	# prints:
+	# Bob Fido
+	# Bob Kitty
+	# Grandma L. no pets
+	# Herb Mittens Jr
+
+To accomodate the more common (and intuitive) workflow of listing a person and attaching a list of that person’s pets, we can use a special method called prefetch():
+
+	query = Person.select().order_by(Person.name).prefetch(Pet)
+	for person in query:
+		print person.name
+		for pet in person.pets:
+			print '  *', pet.name
+
+	# prints:
+	# Bob
+	#   * Kitty
+	#   * Fido
+	# Grandma L.
+	# Herb
+	#   * Mittens Jr
+
+### other
+
+	group_by()
+	having()
+	limit() and offset()
+
+## Working with existing databases
+autogenerate peewee models using pwiz, a model generator.
+ For instance, if I have a postgresql database named charles_blog, I might run:
+
+	python -m pwiz -e postgresql charles_blog > blog_models.py
 
 # aiomysql
 see [/demo/aiomysql](/demo/py-app/orm.py)

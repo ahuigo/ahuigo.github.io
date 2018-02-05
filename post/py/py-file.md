@@ -109,9 +109,6 @@ If you need an list, just use `glob.glob` instead of `glob.iglob` with iterator
 
 ### abspath:
 
-	os.path.abspath('.')
-	os.path.abspath(amodule.__file__)
-
 在某个目录下创建一个新目录，首先把新目录的完整路径表示出来:
 
 	>>> os.path.join('/Users/michael', 'testdir')
@@ -121,8 +118,15 @@ If you need an list, just use `glob.glob` instead of `glob.iglob` with iterator
 change current workspace:  support abspath only
 
 	os.chdir(path)
-	os.getcwd()
 	os.chroot(path)
+
+	os.getcwd()
+	os.path.abspath('.')
+	os.path.abspath(amodule.__file__)
+
+current file's dir:
+
+	os.path.realpath(__file__)
 
 ### split pathinfo
 

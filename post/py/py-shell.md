@@ -22,7 +22,6 @@ via 进程替换(process substitution)
 	python <(cat p.py)
 	python p.py
 
-
 via python module
 
 	echo 'import sys;print(sys.argv)' > module.py ; p3 -m module arg1
@@ -36,6 +35,11 @@ via python module
 	# localserver
 	python3 -m http.server 8080 # 3.x
 
+via exec
+
+	import file.py; #
+	exec('print(1)')
+
 ## exec shell
 
 ### sh
@@ -44,6 +48,7 @@ via python module
 2. subprocess.check_output("ls -l", shell=True).decode('gbk')
 3. subprocess.getoutput("ls -l"); # only support utf8
 	1. subprocess.getstatusoutput("ls -l") # return list: [code, output_str]
+4. print output: errno = os.system('ls -ls')
 
 ### subprocess.check_output
 

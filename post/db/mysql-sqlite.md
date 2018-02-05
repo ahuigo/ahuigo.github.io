@@ -1,7 +1,7 @@
 # shell command
 $ sqlite3
 
-## .show 默认配置
+### .show 默认配置
 
     sqlite>.show
         echo: off
@@ -14,7 +14,7 @@ $ sqlite3
         width:
     sqlite>
 
-## 格式化
+### 格式化
 
     sqlite>.header on
     sqlite>.mode column
@@ -30,7 +30,7 @@ $ sqlite3
     3           Teddy       23          Norway      20000.0
     CPU Time: user 0.000000 sys 0.000000
 
-## sqlite_master 表格
+### sqlite_master 表格
 主表 sqlite_master 中保存数据库表的关键信息
 
     sqlite>.schema sqlite_master
@@ -42,11 +42,41 @@ $ sqlite3
     sql text
     );
 
-# 语法
-## 注释
+## 语法
+### 注释
 sqlite>.help -- This is a single line comment
 sqlite>.help /* This is a single line comment */
-## 结尾
+### 结尾
 所有的语句以分号（;）结束。命令.help，.show 等则不需要
 
 
+## CRUD
+### update 
+默认编译的版本 update 不支持limit. 不过可以这样:
+
+    UPDATE tbl_data SET ... limit 1; # wrong
+    UPDATE tbl_data SET ... WHERE rowid IN (SELECT rowid
+                    FROM tbl_data
+                    WHERE ...
+                    ORDER BY ...
+                    LIMIT 1)
+
+## DDL
+
+### rename column
+rename "colb" to "col_b":
+
+
+    ALTER TABLE orig_table_name RENAME TO tmp_table_name;
+
+    CREATE TABLE orig_table_name (
+        col_a INT
+        , col_b INT
+    );
+
+    INSERT INTO orig_table_name(col_a, col_b)
+        SELECT col_a, colb FROM tmp_table_name;
+
+    DROP TABLE tmp_table_name;
+
+Wrapping all this in a `BEGIN TRANSACTION; and COMMIT;` is also probably a good idea.

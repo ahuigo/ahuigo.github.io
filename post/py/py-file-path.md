@@ -5,6 +5,11 @@
     >>> p = Path('.')
     (p/'dir'/'a.py').read_text()
 
+## current working path
+
+    os.chdir('/')
+    os.getcwd()
+
 ## .iterdir
 
     >>> [x for x in p.iterdir() if x.is_dir()]

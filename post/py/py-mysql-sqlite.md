@@ -50,19 +50,43 @@ SQLite是一种嵌入式数据库，它的数据库就是一个文件。由于SQ
 
 使用Python的DB-API时，只要搞清楚Connection和Cursor对象，打开后一定记得关闭，就可以放心地使用。
 1. `cursor.rowcount`返回影响的行数:`insert，update，delete`
-2. `featchall()`结果集是一个`list`，每个元素都是一个`tuple`，对应一行记录:`select`
 3. 如果SQL语句带有占位位参数:
 
-	cursor.execute('select * from user where id=?', '1')
 
 如何才能确保出错的情况下也关闭掉Connection对象和Cursor对象呢？请回忆try:...except:...finally:...的用法。
 
+## insert many
+
+	cursor.execute('select * from user where id=1')
+	cursor.execute('select * from user where id=?', 1); # '123' 会被当成数组
+	cursor.execute('select * from user where id=?, name=?', ('1', 'name'))
+
+### insert many
+
+    purchases = [('2006-03-28', 'BUY', 'IBM', 1000, 45.00),
+                ('2006-04-05', 'BUY', 'MSFT', 1000, 72.00),
+                ]
+    c.executemany('INSERT INTO stocks VALUES (?,?,?,?,?)', purchases)
+
+
+## fetch
+2. `featchall()`结果集是一个`list`，每个元素都是一个`tuple`，对应一行记录:`select`
+2. cur.fetchone()[0]
+
+### fetch with dict
+
+	def dict_factory(cursor, row):
+		d = {}
+		for idx, col in enumerate(cursor.description):
+			d[col[0]] = row[idx]
+		return d
+
+	con.row_factory = dict_factory
 
 ## executescript
 
     import sqlite3
     db = sqlite3.connect('test.db')
-    db.row_factory = sqlite3.Row
 
     sqls = '''
         drop table if exists entries;

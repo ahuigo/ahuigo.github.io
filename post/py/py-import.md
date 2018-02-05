@@ -52,29 +52,41 @@ from bs4 import BeautifulSoup as bs
 
 ## import function
 依次从locals, globals, PYTHONPATH查找:
-```python
-A = __import__('A.B')
-A = __import__('A.B', globals(), locals())
-```
+
+	```python
+	A = __import__('A')
+	A = __import__('A.B') # __import__('A') == __import__('A.B')
+	A = __import__('A.B', globals(), locals())
+
+	B = __import__('A.B', fromlist=[''])
+	```
+
 如果想直接获取属性:
-```
-B = __import__('A.B', globals(), locals(), ['attr1'])
-attr1 = __import__('A.B', globals(), locals(), ['attr1']).attr1
-attr1 = getattr(__import__('A.B', globals(), locals(), ['attr1']), 'attr1')
-```
+
+	```
+	B = __import__('A.B', globals(), locals(), ['attr1'])
+	attr1 = __import__('A.B', globals(), locals(), ['attr1']).attr1
+	attr1 = getattr(__import__('A.B', globals(), locals(), ['attr1']), 'attr1')
+	```
+
+fromlist:
+
+	['a', 'b'] is a list of names to emulate ``from name import a,b''
+    [''] fromlist to emulate ``from name import *''.
+    [] fromlist to emulate ``import name''.
 
 ## import dot
 The . is a shortcut that tells it search in current package(not process's cwd) before rest of the PYTHONPATH:
 
 	from .submodule import sth
 
-`__init__.py` 中的dot
+current working path
 
-	from . import a,b,c ;# current directory(not process's cwd)
-	from .a import x1
-	from .b import x1
+	import mod.pkg;   # top file's directory (not process's cwd)
+	import .mod.pkg;  # current file's directory (not process's cwd)
+	from . import a,b,c ; current file's directory (not process's cwd)
 
-import dir.pkg; # process's cwd !!!!!!!!!!!
+比如 `__init__.py` 中经常用dot
 
 ## __name__
 命令行执行模块时，`__name__` = `__main__` , import 导入时，它等于模块名, if不会执行
@@ -128,9 +140,12 @@ module find path
 1. 特殊变量`__xxx__`： 可以被直接引用，但是有特殊用途
 	__author__，__name__就是特殊变量
 	__doc__ 文档注释也可以用特殊变量
+	__file__ 
+	`__class__.__name__`
 
 3. `_xxx和__xxx`
 	这样的函数或变量就是非公开的（private），不应该被直接引用，比如_abc，__abc等；
+	`FOO.__xxx` 通过改名为`FOO._FOO__xxx` 隐藏自己
 
 > 之所以我们说，private函数和变量“不应该”被直接引用，而不是“不能”被直接引用，是因为Python并没有一种方法可以完全限制访问private函数或变量
 
