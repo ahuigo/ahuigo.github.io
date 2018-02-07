@@ -124,11 +124,13 @@ which will return the first match or raise a StopIteration if none is found. Alt
 
 	>>> xl = [1,3,5]
 	>>> yl = [9,12,13,14]
-	>>> print(list(zip(xl,yl))
+	>>> print(list(zip(xl,yl)) # 取最短的
 	[(1, 9), (3, 12), (5, 13)]
-    >>> for i in zip([1,2,9], [3,4,5]): print(i)
-    (1, 3) zip object next return a tuple
-    ....
+
+	l = [(1,2), (3,4), (8,9)]
+	>>> zip(*l)
+	[(1, 3, 8), (2, 4, 9)]
+
 
 ## join and split
 

@@ -55,6 +55,18 @@ description:
 
 	from datetime import datetime, timedelta
 
+## range time
+
+	base = datetime.datetime.today()
+	date_generator = (base - datetime.timedelta(days=i) for i in itertools.count())
+	>>> dates = itertools.islice(date_generator, 3)
+	>>> list(dates)
+
+pd.date_range():
+
+	import pandas as pd
+	datelist = pd.date_range(pd.datetime.today(), periods=100).tolist()
+
 ## 获取日期和时间元素
 ```
 	from datetime import datetime

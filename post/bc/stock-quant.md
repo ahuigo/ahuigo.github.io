@@ -21,6 +21,8 @@ https://www.botvs.com/bbs-topic/1357
 
 策略交易:
 聚宽: https://www.joinquant.com/study
+ricequant: https://www.ricequant.com/
+商业: uqer.io
 
 手把手教你读财报:
 https://mp.weixin.qq.com/s/FdXTA3Ffh_9ZI87Afyi1Ug
