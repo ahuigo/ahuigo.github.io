@@ -414,7 +414,7 @@ filter 返回的也是惰性Iterator
 	>>> list(filter(lambda x:x%2==0, range(0,10)))
 	[0, 2, 4, 6, 8]
 
-filter empty element in list:
+filter empty element in list: ['',None, 'abc'] -> ['abc']
 
 	str_list = filter(None, str_list) # fastest
 	str_list = filter(bool, str_list) # fastest

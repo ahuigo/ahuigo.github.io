@@ -147,13 +147,18 @@ If you want to locate a match anywhere in string, use search() .
 	>>> 'a b   c'.split(' ')
 	['a', 'b', '', '', 'c']
 
-嗯，无法识别连续的空格，用正则表达式试试：
+嗯，无法识别连续的空格. 不给参数就可以喽	
+
+	>>> 'a b   c'.split()
+	['a', 'b', 'c']
+
+用正则表达式试试：
 
 	>>> re.split(r'[\s\,]+', 'a,b, c  d')
 	['a', 'b', 'c', 'd']
 
 ## findall
-re.search/match/matchall 都是只找一次
+re.search/match/fullmatch 都是只找一次
 Use re.findall or re.finditer instead.
 
 	re.findall(pattern, string) returns a list of matching strings.

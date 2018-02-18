@@ -160,6 +160,7 @@ dict subclass that calls a factory function to supply missing values: `defaultdi
 ```
 from collections import defaultdict
 >>> defaultdict()['k']
+KeyError: 'k'
 >>> defaultdict(None)['k']
 KeyError: 'k'
 >>> defaultdict(lambda:1)['k']

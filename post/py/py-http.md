@@ -98,24 +98,29 @@ Passing Parameters In URLs
 
 	>>> r = requests.get("http://httpbin.org/get", params="key=val&key2=val2"})
 
-### post data(non-raw)
+### post data(form-data type)
+data 转为input(raw)会自动encode 
 
-	>>> print(s.post('http://hilo.sinaapp.com/header.php', data={'a':1}).text)
+	>>> print(s.post('http://hilo.sinaapp.com/header.php', data={'a':1, 'b':2}).text)
+	>>> print(s.post('http://hilo.sinaapp.com/header.php', data='a=1&b=2').text)
+	 ["input"]=> string(7) "a=1&b=2"
+	 'post'=>{a:1,b:2}
 
-### post data(from encode)
+### post data(unknown type)
+data 转为input(raw)会自动encode 
 
 	>>> print(s.post('http://localhost:7777/header.php',headers={'Content-Type':'x'} data='a=1&b=2').text)
+	>>> print(s.post('http://localhost:7777/header.php',headers={'Content-Type':'x'} data={'a':1,'b':2}).text)
+	只有php://input => string(7) "a=1&b=2"
 
-### post json(raw)
+### post json(json type)
+只是RAW: ["Content-Type"]=> string(16) "application/json
+json 转为input 时, 会自动json.dumps
 
-	>>> payload = {'some': 'data'}
-	>>> r = requests.post(url, json=payload)
-
-	json='a=1&b=2'
-	 ["raw"]=>
-	  string(9) ""a=1&b=2""
-
->>> print(s.post('http://hilo.sinaapp.com/header.php', json='a=1&b=2').text)
+	>>> r.post('http://0:8000/header.php', json={'ahui5':1}).text
+	["input"]=> "{"ahui5": 1}"
+	>>> r.post('http://0:8000/header.php', json='ahui6=6').text
+	["input"]=> ""ahui6=6""
 
 ### post a Multipart-Encoded File
 
