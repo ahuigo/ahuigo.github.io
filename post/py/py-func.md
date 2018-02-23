@@ -397,14 +397,15 @@ If initial is present, it is placed before the items of the sequence in the calc
 
 ### reduce 实现pipeling
 
-    def pipeline_func(data, fns):
+    def pipeline_func(fns, data):
         return reduce(lambda v, f: f(v),
                       fns,
                       data)
-    >用法：
-    pipeline_func(nums, [even_filter,
+用法：
+
+    pipeline_func([even_filter,
                        multiply_by_three,
-                       convert_to_string])
+                       convert_to_string], nums)
 
 ## filter
 filter 返回的也是惰性Iterator
@@ -530,6 +531,12 @@ ython内置的sorted()函数就可以对list进行排序：
 
 	>>> sorted(['bob', 'about', 'Zoo', 'Credit'], key=str.lower, reverse=True)
 	['Zoo', 'Credit', 'bob', 'about']
+
+## 多key 排序
+正的放前面，负的放后面，并且分别按绝对值从小到大
+
+	[1, 2, 9, 10, -2, -4, -5, -12]
+	lst.sort(key=lambda x: (x < 0, abs(x)))
 
 # decorator, 装饰器
 

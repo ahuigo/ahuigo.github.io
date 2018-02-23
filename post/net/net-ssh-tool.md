@@ -69,6 +69,12 @@ Save and close the file. Restart sshd:
 ## sshd_config
 现把/etc/ssh/ssh_config 和 /etc/ssh/sshd_config的配置说下。
 
+### 阿里云sshd 自动断开
+打开/etc/ssh/sshd_config 添加或修改:
+
+	ClientAliveInterval 120
+	ClientAliveCountMax 0
+
 ### /etc/ssh/ssh_config:
 Refer http://blog.lizhigang.net/archives/249
 

@@ -81,6 +81,12 @@ shutil模块提供了copyfile()的函数，你还可以在shutil模块中找到�
 	os.mkfifo(path, mode=438, *, dir_fd=None)
         Create a "fifo" (a POSIX named pipe).
 
+## touch file
+	with open("empty.txt", "w") as f:
+		f.write("")
+
+	Path("empty.txt").write_file("")
+
 ## listdir
 
 ### via os.listdir

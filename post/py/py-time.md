@@ -122,6 +122,7 @@ pd.date_range():
 
 	d=datetime.strptime('2015-6-1 18:19:59', '%Y-%m-%d %H:%M:%S')
 	d.strftime('%a, %b %d %H:%M')
+	d.strftime('%Y-%m-%d %H:%M')
 
 ## timedelta: datetime加减
 ```

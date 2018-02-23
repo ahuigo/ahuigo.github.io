@@ -52,23 +52,6 @@ list 也一样
         key, value = d.popitem()
         print key, '-->', value
 
-# Looping over dictionary keys
-When should you use the second and not the first? When you're *mutating the dictionary*.
-
-    d = {'matthew': 'blue', 'rachel': 'green', 'raymond': 'red'}
-
-    for k in d:
-        print k
-
-Note: in python 3 to iterate through a dictionary you have to *explicidly* write: *list(d.keys())* because d.keys() returns a "dictionary view" (an iterable that provide a dynamic view on the dictionary’s keys).
-
-    for k in list(d.keys()):
-        if k.startswith('r'):
-            del d[k]
-
-
-1. If you mutate something while you're iterating over it, you're living in a state of sin and deserve what ever happens to you.
-
 ## merge dict
 python >=3.5
 ```
@@ -246,14 +229,24 @@ or with collections.Counter:
     >>> k, v = 1,3
     >>> k, v = (1,3)
 
-### dict iterms vs list
+
+# Note
+## Looping over dictionary keys and delete
+Note: in python 3 to iterate through a dictionary you have to *explicidly* write: *list(d.keys())* because d.keys() returns a "dictionary view" (an iterable that provide a dynamic view on the dictionary’s keys).
+
+    for k in list(d.keys()):
+        if k.startswith('r'):
+            del d[k]
+
+
+1. If you mutate something while you're iterating over it, you're living in a state of sin and deserve what ever happens to you.
+
+## dict iterms and delete
+items 不是iter, 可以在里面直接删除元素, iteritems(.keys()/.values() 都是generator)则不行
 
 	//list
 	list.items() //error
 	//gnenerator object itemview
-	dict.items()
+	for k, v in dict.items()
+		dict.pop(k)
 
-用six : Six is a Python 2 and 3 compatibility library.
-
-	from six import iteritems
-	for k,v in iteritems(dict):

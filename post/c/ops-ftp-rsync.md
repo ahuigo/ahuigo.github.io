@@ -221,19 +221,34 @@ install:
 default port:873
 
 ### password
+有两种密码：系统账号密码，与自己维护的帐号与密码
 
-	auth users = root,hilojack # 必须为系统实体帐户，密码除外
-	secrets file = /etc/rsync.secrets
+	auth users = root,hilojack # 如果不指定这个，而会 使用系统实体帐户，密码
+	secrets file = /etc/rsync.secrets # 相应的密码应该配置在这里
 
 	$ cat /etc/rsync.secrets
 	hilojack:mypasswd
 	$ chmod 600 /etc/rsync.secrets # 强制
 
-client:
+client 使用文件密码时，必须得使用`:/module`
 
+	$ chmod 400 .rsync.pwd; # 必须
 	$ cat .rsync.pwd
 	mypasswd
+	$  rsync -avz --password-file=/home/.rsync.pwd rsync://hilojack@host:/module /home/
+	$  rsync -avz --password-file=/home/.rsync.pwd hilojack@host:/module /home/
+
+	# 下面几项无效
+	$  rsync -avz --password-file=/home/.rsync.pwd rsync://hilojack@host::module /home/
+	$  rsync -avz --password-file=/home/.rsync.pwd rsync://hilojack@host:module /home/
 	$  rsync -avz --password-file=/home/.rsync.pwd hilojack@host::module /home/
+	$  rsync -avz --password-file=/home/.rsync.pwd hilojack@host:module /home/
+
+使用交互式方式: 
+
+	$ rsync -avz hilojack@host:/module /home/ ;# 使用服务器的帐号与密码
+	$ rsync -avz hilojack@host::module /home/ ;# 使用服务器的帐号与密码
+	$ sshpass -p $RSYNC_PASSWORD rsync root@1.2.3.4:/abc /def
 
 Also we can specify password via `export RSYNC_PASSWORD="password";`
 

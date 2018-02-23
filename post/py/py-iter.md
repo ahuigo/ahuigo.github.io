@@ -4,7 +4,7 @@ http://nvie.com/posts/iterators-vs-generators/
 
 
 ## Iterable, 迭代器,
-### iterable vs iterable
+### iterable vs iterator
 区别:
 1. Iterable(能用for的都是): type(obj)->__iter__(), iter(obj)是否真的返回 Iterator, isinstance 其实判断不出来(按协议是应该考虑的).
 2. Iterator(能用next的都是): type(obj)->__iter__(), type(obj)->__next__() 同时定义,
@@ -256,6 +256,26 @@ use list comprehension to combine several lists
     [(0, 0), (1, 1), (2, 2)]
     >>> [(i,j) for i in range(3) for j in range(20) if j%10==0]
     [(0, 0), (0, 10), (1, 0), (1, 10), (2, 0), (2, 10)]
+
+### 二维变一维
+
+	list_1 = [[1, 2], [3, 4, 5], [6, 7], [8], [9]]
+	[i for k in list_1 for i in k]
+
+或者：
+
+	list_1 = [[1, 2], [3, 4, 5], [6, 7], [8], [9]]
+	sum(list_1, [])
+
+或者：
+
+	itertools.chain(*list_1)
+	itertools.chain.from_iterable(list_1)
+
+或者
+
+	from numpy import array
+	array(list_1).flatten().tolist()
 
 ## dict comprehension
     >>> dict_comp = {x:chr(65+x) for x in range(1, 11)}

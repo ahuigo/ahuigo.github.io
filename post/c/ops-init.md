@@ -369,6 +369,7 @@ disown的用法如下。
 nohup命令不会自动把进程变为"后台任务"，所以必须加上`&`符号
 
 	$ nohup node server.js 2>&1 &
+	$ nohup node server.js >> nohup2.out 2>&1 &
 
 nohup命令对server.js进程做了三件事。
 1. 阻止SIGHUP信号发到这个进程。

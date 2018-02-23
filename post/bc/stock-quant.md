@@ -1,4 +1,13 @@
 # 量化
+book
+https://www.zhihu.com/question/26594258
+
+## 套利
+OK期货/huobi波动价差。
+三角套利
+搬砖
+波动与趋势
+https://www.botvs.com/
 
 ## 交易软件
 受股网-实盘易 http://www.iguuu.com/e?x=1982q8

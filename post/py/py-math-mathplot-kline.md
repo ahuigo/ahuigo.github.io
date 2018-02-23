@@ -1,15 +1,18 @@
 
 ## kline k线
 
-    from matplotlib.finance import candlestick_ohlc
-    candlestick_ohlc(plt.gca(),[[datetime.now().timestamp(),1,3,0.5,2]])
+     pip3 install -e https://github.com/ahui132/mpl_finance
+
+    from mpl_finance import candlestick_ohlc
+    candlestick_ohlc(plt.gca(),[[d2num(timestamp),1,3,0.5,2]])
 
 完整的example
 
     from pylab import *
     from matplotlib.dates import DateFormatter, WeekdayLocator, DayLocator, MONDAY, date2num as d2
     from datetime import datetime
-    from matplotlib.finance import candlestick_ohlc
+    from mpl_finance import candlestick_ohlc
+    # date2num = d.timestamp()/86400+719163.3333333334
 
     fig, ax = plt.subplots()
     ax.xaxis.set_major_locator(WeekdayLocator(MONDAY)) # 大刻度

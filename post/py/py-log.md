@@ -30,11 +30,24 @@ level value:
 getattr(logging, 'DEBUG') # 10
 ```
 
+## logger
+除了根logging.root, 不同的应用/子应用可以设定自己的logger, 进而分别设定不同filename
+
+    >>> logging.root
+    <RootLogger root (WARNING)>
+    >>> wb = logging.getLogger('weibo')
+    <Logger weibo (WARNING)>
+    >>> wb = logging.getLogger('weibo.sub1')
+    <Logger weibo.sub1 (WARNING)>
+    >>> logging.getLogger('root')
+    <Logger root (WARNING)> # 不是根root
+
 ### set level
 1. via logging.basicConfig(level=logging.DEBUG)
 2. via command-line option:
-`level = 'DEBUG'
-logging.basicConfig(level=getattr(logging, level))`
+    ```python
+    level = 'DEBUG'
+    logging.basicConfig(level=getattr(logging, level))```
 
 > basicConfig 第二次不再生效
 
@@ -49,6 +62,7 @@ logging.warning('And this, too')
 
 $ cat example.log
 DEBUG:root:This message should go to the log file
+.....
 ```
 
 If not remember messages from elarlier runs, use `filemode='w'`:
@@ -64,7 +78,7 @@ logging.getLoggerClass().root.handlers[0].baseFilename
 
 ```
 BASIC_FORMAT = "%(levelname)s:%(name)s:%(message)s"  
-logging.basicConfig(format='%(levelname)s:%(filename)s:%(lineno)s:%(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s', level=logging.DEBUG)
 INFO:a.py:1:So should this
 ```
 [For more logrecord-attributes ](https://docs.python.org/3.4/library/logging.html#logrecord-attributes):
@@ -207,6 +221,15 @@ see: https://docs.python.org/3.6/howto/logging.html#useful-handlers
 5. SocketHandler:
 6. StreamHandler: logging.StreamHandler(stream=sys.stderr) # open(filename)
 7. null: logging.NullHandler()
+
+example add stdout:
+
+    root = logging.getLogger('mblog')
+    root.setLevel(logging.DEBUG)
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.DEBUG)
+    ch.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+    root.addHandler(ch)
 
 ### handlers method
 like logger:
