@@ -259,11 +259,13 @@ http://gitbook.liuhui998.com/6_1.html
 > Note: git revert is used to record some new commits to reverse the effect of some earlier commits (often only a faulty one).
 
 # git add
-- git revert
+checkout 适合working 回滚到某一分支
+- git revert 
 	Revert some existing commits
-- git reset
+- git reset: 改变commit+index: 顺便清理working
  	rollback commit: (clean index)
-- git checkout
+- git checkout(改变working, 保留index/commit)
+	git checkout HEAD^ .
 	working copy from index(priority) or switch to commit(without file)
 
 ## git unadd(git reset)
@@ -271,7 +273,7 @@ http://gitbook.liuhui998.com/6_1.html
 	git reset file
 	working copy `merge` from commit(Should No working copy or index change)
 
-# git commit(stage to commited)
+## git commit(stage to commited)
 
 	git commit -m 'comment' //commited file
 	#auto stage when commit
@@ -327,7 +329,7 @@ Ah, but suppose commit C wasn't a disaster, but just a bit off. You want to undo
 
 In this case the result is:
 
-	   (F(working))
+	   (F(working)) : lost index
 	A-B-C
 	  ↑
 	master

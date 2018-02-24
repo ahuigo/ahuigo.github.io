@@ -19,6 +19,8 @@ godebug 是一个与众不同的 Go 程序调试工具，传统的编译型语�
 
 godebug 使用不同的方法，直接把源码作为目标程序，在每一行插入调试代码，然后编译并运行。结果就是一个全功能的调试器，完全可以移植到不同平台。
 
+## pprof 生成火焰图
+
 ## gopherjs
 GopherJS - A compiler from Go to JavaScript
 

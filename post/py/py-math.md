@@ -95,4 +95,6 @@ https://docs.python.org/3.2/library/math.html
     import math
     math.ceil(x)
     math.floor(x)
-    round(x, 2)
+    round(x, 2) # 小数点后两位, 四舍五入
+		'%.2f'%x
+	'%.3e' % 53.3432 # 有效位数，四舍五入
