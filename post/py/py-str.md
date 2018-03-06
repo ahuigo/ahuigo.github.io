@@ -307,7 +307,12 @@ like list
 	str.replace(needle, word, 1); //replace the first needle with word
 
 ### startwith
+
     aString.startswith("hello")
+    aString.startswith(tuple(["hello", 'hi']))
+
+	if any(map(l.startswith, x)):
+	if any([l.startswith(s) for s in x])
 
 ### endswith
 

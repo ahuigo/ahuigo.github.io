@@ -109,6 +109,14 @@ Example:
 		echo $line
 	done < file
 
+	## read line from string
+	while read line; do echo $i; done <  <(
+		cat<<MM
+		124.104.141.23:80
+		82.165.135.253:3128
+		MM
+	)
+
 read without echoing
 
 	read -s var
@@ -193,7 +201,7 @@ signal handling:
 
 	trap argument signal [signal...]
 
-demo1:
+demo1: press`Ctrl+C` to send interrupt signal
 
 	trap "echo 'I am ignoring interrupted and kill!'" SIGINT SIGTERM
 	for i in {1..5}; do
@@ -231,11 +239,16 @@ trap-demo2 : simple signal handling demo
 
 	tempfile=$(mktemp /tmp/foobar.$$.XXXXXXXXXX) ;# /tmp/foobar.6593.UOZuvM6654
 
-# 异步执行
-Refer to:
-http://billie66.github.io/TLCL/book/zh/chap37.html
+# process
 
-## wait
+## 子进程退出
+shell 本身启动的`cmd &`, 会随着shell 的退出而退出。
+sub process 启动的`cmd &`, 会随着shell 的退出, 不会退出，控制权限会被交给shell 的父进程
+
+    `echo "the command"|at now`;
+
+## async 异步执行: wait
+> http://billie66.github.io/TLCL/book/zh/chap37.html
 wait 命令导致一个父脚本暂停运行，直到一个 特定的进程（例如，子脚本）运行结束。
 
 	# async-parent : Asynchronous execution demo (parent)
@@ -252,14 +265,6 @@ wait 命令导致一个父脚本暂停运行，直到一个 特定的进程（�
 	echo "Parent: parent is done. Exiting."
 
 `$!` shell 参数的值，它总是 包含放到*后台执行*的最后一个任务的进程 ID 号。
-
-# Command Exec
-
-## process
-shell 本身启动的`cmd &`, 会随着shell 的退出而退出。
-sub process 启动的`cmd &`, 会随着shell 的退出, 不会退出，控制权限会被交给shell 的父进程
-
-    `echo "the command"|at now`;
 
 ## check if a command exists
 
