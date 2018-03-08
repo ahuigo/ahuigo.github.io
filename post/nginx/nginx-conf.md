@@ -22,6 +22,11 @@ Options:
 $     nginx -t
 nginx: the configuration file /usr/local/nginx//conf/nginx.conf syntax is ok
 
+### include
+
+	include mime.types;
+	include vhosts/*.conf;
+
 ## conf file 层级
 events{}
 http{
@@ -29,12 +34,6 @@ http{
 	}
 }
 
-# Config
-
-### include
-
-	include mime.types;
-	include vhosts/*.conf;
 
 ### user
 

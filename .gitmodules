@@ -13,3 +13,9 @@
 [submodule "demo/php-websockets"]
 	path = demo/php-websockets
 	url = https://github.com/ahui132/php-websockets
+[submodule "demo/c-lib"]
+	path = demo/c-lib
+	url = git@github.com-hilojack:hilojack/c-lib.git
+[submodule "demo/go-lib"]
+	path = demo/go-lib
+	url = git@github.com-hilojack:hilojack/go-lib.git

@@ -15,6 +15,7 @@ The only format in the spec is a simplified version of ISO-8601:
 	2004-05-03T17:30:08; // chomre safari 默认0时区(更大), firefox 则默认是当前东8时区(更小: 这才是准确的)
 
 	2004-05-03T17:30:08+8:00;//invalid date
+	2018-03-06T09:30:08.000Z; //忽略时区
 
 If you change the space to a T, you'll be in spec:
 
@@ -60,6 +61,9 @@ Then you can clear it like so:
 	$d = new Date(miliseconds);
 
 	//date & time
+	new Date()		2018-03-06T16:30:28.521Z 非local时间 (node js)
+	new Date()		"Mon Apr 28 2014 23:25:02 GMT+0800 (CST)"(chrome)
+
 	Date(); 		"Mon Apr 28 2014 23:25:02 GMT+0800 (CST)"
 	.toString(); 	"Mon Apr 28 2014 23:25:02 GMT+0800 (CST)"
 	.toUTCString();	"Mon, 28 Apr 2014 15:25:02 GMT" //UTC & GMT 是一样的(除了精度上有区别)

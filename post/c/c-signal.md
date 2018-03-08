@@ -65,14 +65,14 @@ signal(7) 有对signal 产生条件和默认动作 的说明：
 ## signal generation, 信号的产生
 一般地，信号产生的主要条件有:
 
-1. 从终端按下特殊键时，终端驱动程序会发送信号给前台进程：ctrl-C 产生 SIGHUP ，Ctrl-\ 产生SIGQUIT, Ctrl-Z 产生SIGTSTP
+1. 从终端按下特殊键时，终端驱动程序会发送信号给前台进程：ctrl-C 产生 SIGINT ，Ctrl-\ 产生SIGQUIT, Ctrl-Z 产生SIGTSTP
 2. 硬件异常产生信号，由硬件检测到并通知内核： 除0 异常产生SIGFPE; 非法访问内存地址，MMU 产生SIGSEGV 信号(段错误)
 3. kill(2) 函数将信号发送给进程
 4. kill(1) 调用kill(2) 发送信号，默认会发送SIGTERM 终止进程信号
 5. 内核检测到软件设定的条件发生时，产生信号: 如闹钟超时产生SIGALRM, 向读端关闭的管道写数据时产生SIGPIPE 信号
 
 ### 通过键盘产生
-从终端按下特殊键时，终端驱动程序会发送信号给前台进程：ctrl-C 产生 SIGHUP ，Ctrl-\ 产生SIGQUIT, Ctrl-Z 产生SIGTSTP
+从终端按下特殊键时，终端驱动程序会发送信号给前台进程：ctrl-C 产生 SIGINT ，Ctrl-\ 产生SIGQUIT, Ctrl-Z 产生SIGTSTP
 
 ### 调用系统函数向进程发送信号
 使用kill(1) 或者 kill(2)/raise(2)向进程发送信号. 比如：

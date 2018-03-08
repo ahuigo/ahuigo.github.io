@@ -77,3 +77,31 @@ event-based library:
             2. LiveStyle：css双向绑定，在chrome改动css，代码自动更新；或者在代码改动css，chrome自动更新
     2. pip3 install gunicorn: gunicorn 本身就遵守wsgi的web server. 可搭配请求转给worker: flask/django，也可单独使用
     gunicorn -b 127.0.0.1:8800 -k aiohttp.worker.GunicornWebWorker -w 1 -t 60 --reload app:app
+
+# nginx+gunicorn
+
+## gunicorn
+rocket.py:
+
+    from flask import Flask
+    app = Flask(__name__)
+
+    @app.route('/')
+    def index():
+        return "Hello World!"
+
+run:
+
+    $ gunicorn rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
+    $ cat rocket.pid
+    63101
+    $ kill -cat rocket.pid
+
+## nginx反向
+
+    location / {
+                proxy_pass http://127.0.0.1:8000;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
