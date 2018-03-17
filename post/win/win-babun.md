@@ -1,10 +1,15 @@
+# babun
 babun: 封装了cygwin, 开箱即用。
 1. 提供git
 2. oh-my-zsh
 3. pact install python3
 
 ## install 
+    install.bat -t d:\babun
 
+如果安装的程序, error 127:
+
+    d:\babun\.babun\update.bat
 
 ## pact 镜像
 默认国外的mirrors太慢了，修改~/.pact/pact.repo

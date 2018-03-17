@@ -13,11 +13,9 @@ id：用户/组身份信息
 
 # useradd
 
-	useradd username -d /home/path
-	echo '123456' | passwd username --stdin
-	-s /sbin/nologin
+	useradd www -s /sbin/nologin -d /home/www
+	echo '123456' | passwd www --stdin
 	-M no Home Directory
-
 
 # usermod
 User Modifier

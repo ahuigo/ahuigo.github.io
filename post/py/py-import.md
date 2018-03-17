@@ -61,6 +61,20 @@ from bs4 import BeautifulSoup as bs
 	B = __import__('A.B', fromlist=[''])
 	```
 
+fromlist:
+A目录下必须放`__init__.py`才被被作为pkg 引入import
+
+	# 前两种实验结果是一样的B
+	['a', 'b'] is a list of names to emulate ``from A.B import a,b'' : a,b
+    [''] fromlist to emulate ``from A.B import *''. : B
+
+	# 得到A.B
+    [] fromlist to emulate ``import A.B''. : A
+    no fromlist to emulate ``import A.B''. : A
+
+	# 只得到A
+    no fromlist to emulate ``import A''. : A
+
 如果想直接获取属性:
 
 	```
@@ -68,12 +82,6 @@ from bs4 import BeautifulSoup as bs
 	attr1 = __import__('A.B', globals(), locals(), ['attr1']).attr1
 	attr1 = getattr(__import__('A.B', globals(), locals(), ['attr1']), 'attr1')
 	```
-
-fromlist:
-
-	['a', 'b'] is a list of names to emulate ``from name import a,b''
-    [''] fromlist to emulate ``from name import *''.
-    [] fromlist to emulate ``import name''.
 
 ## import dot
 The . is a shortcut that tells it search in current package(not process's cwd) before rest of the PYTHONPATH:

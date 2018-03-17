@@ -90,6 +90,9 @@ rocket.py:
     def index():
         return "Hello World!"
 
+    if __name__ == '__main__':
+        app.run('0.0.0.0', 80, debug=True)
+
 run:
 
     $ gunicorn rocket:app -p rocket.pid -b 0.0.0.0:8000 -D

@@ -189,9 +189,9 @@ PATTERN 是一个shell 通配符
 
 	uid = nobody
 	gid = nobody
-	use chroot = yes
+	use chroot = no #首先chroot到path参数所指定的目录下, 必须有权限+home
 	max connections = 4
-	syslog facility	= 指定rsync 向syslog 发送消息的级别
+	#syslog facility	= 指定rsync 向syslog 发送消息的级别
 	syslog facility = local5
 	pid file = /var/rsyncd.pid
 
@@ -227,28 +227,24 @@ default port:873
 	secrets file = /etc/rsync.secrets # 相应的密码应该配置在这里
 
 	$ cat /etc/rsync.secrets
-	hilojack:mypasswd
+	www:mypasswd
 	$ chmod 600 /etc/rsync.secrets # 强制
 
-client 使用文件密码时，必须得使用`:/module`
+client 使用文件密码时，必须得使用`rsync://user@host:/module`, 这种`::module`, `:module` 都不行
 
 	$ chmod 400 .rsync.pwd; # 必须
 	$ cat .rsync.pwd
 	mypasswd
 	$  rsync -avz --password-file=/home/.rsync.pwd rsync://hilojack@host:/module /home/
-	$  rsync -avz --password-file=/home/.rsync.pwd hilojack@host:/module /home/
 
-	# 下面几项无效
-	$  rsync -avz --password-file=/home/.rsync.pwd rsync://hilojack@host::module /home/
-	$  rsync -avz --password-file=/home/.rsync.pwd rsync://hilojack@host:module /home/
-	$  rsync -avz --password-file=/home/.rsync.pwd hilojack@host::module /home/
-	$  rsync -avz --password-file=/home/.rsync.pwd hilojack@host:module /home/
 
-使用交互式方式: 
+使用交互式方式: (chroot=yes), 非module
 
-	$ rsync -avz hilojack@host:/module /home/ ;# 使用服务器的帐号与密码
-	$ rsync -avz hilojack@host::module /home/ ;# 使用服务器的帐号与密码
-	$ sshpass -p $RSYNC_PASSWORD rsync root@1.2.3.4:/abc /def
+	# 绝对路径 /www
+	$ rsync -avz hilojack@host:/www /dir/ ;# 使用服务器的帐号与密码
+	# 相对路径 $HOME/www
+	$ rsync -avz hilojack@host:www /dir/ ;# 使用服务器的帐号与密码
+	$ sshpass -p $RSYNC_PASSWORD rsync -avz root@1.2.3.4:/www /def
 
 Also we can specify password via `export RSYNC_PASSWORD="password";`
 
@@ -416,6 +412,7 @@ Connect to FTPS with specific port, username and password.
 Refer to: http://yuanbin.blog.51cto.com/363003/108262/
 
 ### chroot_local_user
+用户登录后只能切换到自己的目录
 
 	chroot_local_user=YES
 

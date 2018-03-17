@@ -22,3 +22,11 @@ url_for 只能用于启动时的context, 用来确定url:
     def abc(): 
         return 1; #不能返回数字型
     ```
+
+## request
+from flask import request
+
+    request.args
+    request.form post
+    request.data raw 不正常的content-type
+    request.files

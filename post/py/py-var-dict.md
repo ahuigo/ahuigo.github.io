@@ -17,6 +17,19 @@ t=[(1,1)]; dict(t)
 s={(1,1)}; dict(s)
 ```
 
+## copy dict
+dict, list 赋值都是按引用的，如果是一维的值:
+
+	l = li[:]
+	objA = objB.copy()
+
+如果是多维的：
+
+	from copy import deepcopy
+	myCopy = deepcopy(myDict)
+
+或者用json
+
 ## dict key
 在Python中，字符串、整数等都是不可变的。而list是可变的，就不能作为key：
 
@@ -234,12 +247,26 @@ or with collections.Counter:
 ## Looping over dictionary keys and delete
 Note: in python 3 to iterate through a dictionary you have to *explicidly* write: *list(d.keys())* because d.keys() returns a "dictionary view" (an iterable that provide a dynamic view on the dictionary’s keys).
 
+	# list 将iter 转了一下
     for k in list(d.keys()):
         if k.startswith('r'):
             del d[k]
 
-
 1. If you mutate something while you're iterating over it, you're living in a state of sin and deserve what ever happens to you.
+
+	a = [1,2,3,4,5]
+	for i in a:
+		a.remove(i) # or a.pop(0) 也会发生错误
+	# a = [2,4]
+
+正确的方式：
+
+	a = [1,2,3,4,5]
+	# for i in a[:]: 
+	for i in list(a): 
+		a.remove(i) # or a.pop(0) 也会发生错误
+	# a = [2,4]
+
 
 ## dict iterms and delete
 items 不是iter, 可以在里面直接删除元素, iteritems(.keys()/.values() 都是generator)则不行

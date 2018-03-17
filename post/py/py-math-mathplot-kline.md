@@ -5,6 +5,9 @@
 
     from mpl_finance import candlestick_ohlc
     candlestick_ohlc(plt.gca(),[[d2num(timestamp),1,3,0.5,2]])
+    def d2num(timestamp):
+        return 719163.3333333334+timestamp/86400
+
 
 完整的example
 

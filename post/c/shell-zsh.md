@@ -426,6 +426,9 @@ At login, Zsh sources the following files in this [order](https://wiki.archlinux
 输入grep 再按上下键, 会查阅所有以grep 打头的历史命令
 
 ## autojump 目录跳转
+	brew install autojump
+	yum install autojump
+
 有autojump(j) 和 d 两个命令可方便的实现快速跳转：
 
 	d<CR> #罗列所有访问过的目录 再输入数字<CR> 就直接进入到对应的目录
@@ -469,6 +472,7 @@ git插件旋转在`.oh-my-zh/plugins/git/git.plugin.zsh`.
 PROMPT PS1
 
 	export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
+	sudo hostnamectl set-hostname NEW_HOSTNAME
 
 host user ...:
 

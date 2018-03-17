@@ -10,13 +10,9 @@ FPM 是PHP内置的FastCGI Process Manager(FPM), 在命令行下，可以通过`
 传统的CGI 方式，每次 Web请求PHP都必须重新解析php.ini、重新载入全部dll扩展并重初始化全部数据结构, 处理完成后进程结束。
 而FastCGI 方式则是让进程常驻内存(这样还可以使用APCu 等缓存加速功能), 当然Fast 了。
 
-1. FastCGI进程管理器自身初始化(master process)，fork 出多个CGI解释器进程(worker process).
-2. FastCGI 进程收到请求时，FastCGI 通过TCP/socket 方式将请求转发给其中一个 worker process.
-3. worker process 处理完成后，将结果和错误返回给web server, worker等待下一个任务
+1. FastCGI进程管理器:master process + worker process.
 4. 修改php.ini之后，php-cgi进程的确是没办法平滑重启的。php-fpm对此的处理机制是新的worker用新的配置，已经存在的worker处理完手上的活就可以歇着了，通过这种机制来平滑过度。
 
-> Apache 常用mod_php5 作为php 进程管理，但它使用的是prefork MPM方式，非常消耗资源.
-可以选择与nginx 类似的FPM系统：worker MPM(对应mod_fastcgi 模块) 或event MPM（对应 mod_fcgid 模块）.内存消耗更少，速度更快，但配置麻烦。流行的方式还是独立出的php-fpm 方式
 
 # INI
 `php -i` 显示的是`Server API => Command Line Interface`

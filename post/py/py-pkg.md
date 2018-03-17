@@ -8,6 +8,9 @@ wheel：Python 分发的新标准，意在取代 eggs。官网
 
 # pip
 
+    wget https://bootstrap.pypa.io/get-pip.py -O - | python3
+    pip install -U pip # upgrade
+
 ## cache
 
 	rm -r ~/Library/Caches/pip
@@ -15,10 +18,35 @@ wheel：Python 分发的新标准，意在取代 eggs。官网
 ## install pip pkg 
 
 	pip3 install requests
+    pip install cryptography>=0.8.2
+    pip install -U requests #升级
+    pip install wechatpy[cryptography] # extra: cryptography
 
     $ pip3 uninstall python-highcharts
     Uninstalling python-highcharts-0.2.0:
       /usr/local/lib/python3.5/site-packages/highcharts/__init__.py
+
+### mirrors
+http://www.pypi-mirrors.org/ 
+- e.pypi.python.org
+- pypi.douban.com
+- pypi.hustunique.com
+- pypi.mirrors.ustc.edu.cn
+
+使用时路径要包含 simple
+
+    pip  install -i https://pypi.mirrors.ustc.edu.cn/simple/ pandas 
+
+在~/.pip/pip.conf配置文件中写入：
+
+    [global]
+    index-url = http://e.pypi.python.org/simple
+
+### 另一个程序正在使用此文件，进程无法访问
+打开c:\program files\python36\lib\site-packages\pip\compat\__init__.py约75行
+编码问题，虽然py3统一用utf-8了。但win下的终端显示用的还是gbk编码。
+
+    return s.decode('utf_8') 改为return s.decode('cp936')
 
 ## pip with file
 

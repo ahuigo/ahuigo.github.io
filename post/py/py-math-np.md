@@ -11,7 +11,35 @@ Refer to : segmentfault.com/a/1190000011372128
 ## install
 pip3 install numpy
 
-# 数据类型
+# pandas
+http://wiki.jikexueyuan.com/project/start-learning-python/311.html
+
+    df=pd.DataFrame({'col1':{'index1':1,'k2':2}, 'b':{'index1':2, 'k2':4}})
+    df.index
+    df.columns
+    df['col1']['index1']
+    df.iloc[0] # first row
+
+    df[df.col1>1]
+    df[df.col1>1].iloc[0] #first row
+
+    df['col1'].iloc[0] # first column value
+
+## datetime
+
+    dates = pd.date_range('20130101', periods=6)
+
+各种文件
+
+    dataFrame = pandas.read_csv("./marks.csv")
+    dataFrame = pd.read_table("./marks.csv", sep=",")
+
+    xls = pd.ExcelFile("./marks.xlsx")
+    >>> xls.sheet_names
+    ['Sheet1', 'Sheet2', 'Sheet3']
+    >>> sheet1 = xls.parse("Sheet1")
+
+# np 数据类型
 
 ## np数组定义
 ```
@@ -162,7 +190,7 @@ print(lst.sum(axis=2))
 
 np所支持的数据类型都有bool、int8/16/32/64/128/、uint8/16/32/64/128、float16/32/43、complex64/128、string。
 
-# csvtxt
+## csvtxt
 #### savetxt
 保存一个4 * 5的矩阵，元素0~19, 不可以保存三维数组
 ```
@@ -224,9 +252,9 @@ b=np.load("a.npy")
     from pylab import *
     list(np.linspace(start, end, amount, endpoint=True))
 
-# geometry
+## geometry
 
-## sin
+### sin
 np.sin support: number, array, numpy.ndarray
 
     np.sin(np.pi)
