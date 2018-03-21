@@ -26,6 +26,11 @@ url_for 只能用于启动时的context, 用来确定url:
 ## request
 from flask import request
 
+    request.url_root host
+    request.
+
+data:
+
     request.args
     request.form post
     request.data raw 不正常的content-type

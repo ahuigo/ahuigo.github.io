@@ -387,6 +387,9 @@ nohup命令对server.js进程做了三件事。
 
 	>> nohup.out 2>&1
 
+## restart process
+如果进程能响应HUP
+kill -HUP `cat gunicorn.pid`
 
 ## Screen 命令与 Tmux 命令
 另一种思路是使用 terminal multiplexer （终端复用器：在同一个终端里面，管理多个session），典型的就是 Screen 命令和 Tmux 命令。

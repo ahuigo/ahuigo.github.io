@@ -43,7 +43,7 @@ old
 '{:f}'.format(123.0)
 ```
 
-### value conversion
+### value conversion(str & repr)
 ```
 class Data0(object):
     def __repr__(self):
@@ -54,7 +54,7 @@ class Data1(object):
 
 //Old
 '%s %r %a' % (Data0(), Data1())
-//New
+//New: !r 代表 repr, !s 代表 str, !a 代表repr
 '{1!s} {0!r} {0!a}'.format(Data0(), Data1())
 ```
 Output

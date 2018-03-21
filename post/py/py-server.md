@@ -76,7 +76,7 @@ event-based library:
             3. 还有mechanize这种自动控制多个浏览器做事的库，利用浏览器引擎等。
             2. LiveStyle：css双向绑定，在chrome改动css，代码自动更新；或者在代码改动css，chrome自动更新
     2. pip3 install gunicorn: gunicorn 本身就遵守wsgi的web server. 可搭配请求转给worker: flask/django，也可单独使用
-    gunicorn -b 127.0.0.1:8800 -k aiohttp.worker.GunicornWebWorker -w 1 -t 60 --reload app:app
+    gunicorn --reload -b 127.0.0.1:8800 -k aiohttp.worker.GunicornWebWorker -w 1 -t 60 --reload app:app
 
 # nginx+gunicorn
 

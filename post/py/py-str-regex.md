@@ -27,12 +27,13 @@ description:
 	>>> m = re.match(r'(\d{3})\-(\d{3,8})', '010-12345')
 	<_sre.SRE_Match object; span=(0, 9), match='010-12345'>
 
+	>>> m.group(0)
 	>>> m.group()
 	010-12345
-	>>> m.group(1)
-	010
 	>>> m.groups()
 	('010', '12345')
+	>>> m.group(1)
+	010
 
 ## 命名分组
 

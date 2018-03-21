@@ -12,7 +12,7 @@ Refer to : segmentfault.com/a/1190000011372128
 pip3 install numpy
 
 # pandas
-http://wiki.jikexueyuan.com/project/start-learning-python/311.html
+http://pandas.pydata.org/pandas-docs/stable/10min.html
 
     df=pd.DataFrame({'col1':{'index1':1,'k2':2}, 'b':{'index1':2, 'k2':4}})
     df.index
@@ -23,7 +23,19 @@ http://wiki.jikexueyuan.com/project/start-learning-python/311.html
     df[df.col1>1]
     df[df.col1>1].iloc[0] #first row
 
+    df.loc[:,['col1','col2']]
+    df.loc[:,'col1']
+
     df['col1'].iloc[0] # first column value
+    df.iloc[0:2, 1:5]
+
+## series
+    s = pd.Series([1, 2, 3])
+    >>> s.update(pd.Series([4, 5, 6]))
+
+    s.append(pd.Series({'c':3}), ignore_index=True)
+
+    pd.concat([df1, df4], axis=1)
 
 ## datetime
 
@@ -38,6 +50,7 @@ http://wiki.jikexueyuan.com/project/start-learning-python/311.html
     >>> xls.sheet_names
     ['Sheet1', 'Sheet2', 'Sheet3']
     >>> sheet1 = xls.parse("Sheet1")
+    df.to_excel('foo.xlsx', sheet_name='Sheet1')
 
 # np 数据类型
 
