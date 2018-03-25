@@ -1,6 +1,6 @@
 $(function() {
     $('body').ajaxError(function(event, request, settings, err) {
-        console.log(event);
+        console.log('ajax error',event);
     });
     $.ajaxSetup({
         cache: false
@@ -22,7 +22,6 @@ $(function() {
     blog.views = {};
     blog.helper = {};
 
-
     blog.helper.build_main_model = function(data) {
         var result = {};
         document.title = data.site_name;
@@ -39,25 +38,13 @@ $(function() {
 
     blog.helper.build_sidebar_model = function(data, cate) {
         var result = {};
-
-        var articles = data.articles;
-        if(cate) {
-            articles = _.filter(articles, function(article) {
-                return article.cate == cate;
-            });
-        }
-
-        result.months = _.groupBy(articles, function(article) {
-            return article.file.substring(0, 7);
-        });
-
-        result.months = _.map(result.months, function(value, key) {
+        result.months = _.map(data.tree, function(value, key) {
             return {
-                month: key,
-                articles: _.map(value, function(article) {
+                month: value[0],
+                articles: _.map(value[1], function(article) {
                     return {
-                        link: article.file,
-                        text: article.title
+                        link: article,
+                        text: article.split('/')[article.split('/').length-1]
                     }
                 })
             };
@@ -111,6 +98,15 @@ $(function() {
         render: function() {
             var html = Mustache.to_html(this.template, this.model);
             $(this.el).append(html);
+            $(this.el).find('li').click(function(e) {
+                e.stopPropagation();
+                var $el = $('ul',this);
+                $(this).parent().find('li > ul').not($el).slideUp();
+                $el.stop(true, true).slideToggle(200);
+            });
+            $(this.el).find('li > ul > li').click(function(e) {
+                e.stopImmediatePropagation();  
+            });
             return this;
         }
     });
@@ -153,17 +149,17 @@ $(function() {
         },
         sync: function() {
             var that = this;
-            $.getJSON('post/index.json', function(data) {
+            $.getJSON('post/tree.json', function(data) {
                 that.data = data;
                 that.render();
             });
         },
         render: function() {
-            console.log('adfsa')
             if(!this.data) {
                 this.sync();
                 return this;
             }
+
             // 主页面
             var main_model = blog.helper.build_main_model(this.data);
             var main_html = Mustache.to_html(this.template, main_model);
@@ -197,7 +193,7 @@ $(function() {
                 hasShowedNum = 0;
                 loadingIndex = true;
 
-                blog.views.make_main_index(this.cate,this.data.articles,this.pagenum);
+                blog.views.make_main_index(this.cate,this.data.tree,this.pagenum);
 
                 blog.views.Pagebar = Backbone.View.extend({
                     template:$('#tpl-pagebar').html(),
@@ -266,10 +262,6 @@ $(function() {
                 $(".article-content").append("<p><a title=\"\" class=\"btn btn-primary pull-left\" href=\"#show/" + articles[curIndex].file + "\"  onclick=\"\">继续阅读  →</a> </p><br/> <br/>");
                 $(".article-content").append("<div class=\"line_dashed\"></div>");
 
-               /* curIndex++;
-                if(curIndex < articles.length && curIndex < 10) {
-                    addIndex(cate,articles);
-                }*/
                 //总索引
                 curIndex++;
                  //显示文章计数
@@ -289,7 +281,6 @@ $(function() {
             "page/:num":"page"
         },
         make_main_view: function(cate, article,pagenum) {
-            console.log([article])
             if(!this.main) {
                 this.main = new blog.views.Main();
             }
@@ -299,15 +290,17 @@ $(function() {
             this.main.render();
         },
         index: function() {
-            this.make_main_view(null, 'index',1);
-
+            //this.make_main_view(null, 'index',1);
+            this.make_main_view(null, 'c/c-terminal',1);
         },
         cate: function(cate) {
             this.make_main_view(cate, 'index',1);
         },
         show: function(p1,p2) {
             var p = p2 === null? p1: p1+'/'+p2;
+            console.log(p)
             this.make_main_view(null, p,1);
+            window.scrollTo(0,0)
         },
         page: function(num){
             console.log(num)

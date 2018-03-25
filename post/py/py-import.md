@@ -97,7 +97,7 @@ current working path
 比如 `__init__.py` 中经常用dot
 
 ## __name__
-命令行执行模块时，`__name__` = `__main__` , import 导入时，它等于模块名, if不会执行
+命令行直接执行模块时，`__name__` = `__main__` , import 导入时，它等于模块名, if不会执行
 
 	if __name__=='__main__':
 		print(__name__)

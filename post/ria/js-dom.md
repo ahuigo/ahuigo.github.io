@@ -79,12 +79,13 @@ device-width(jquery)
 
 归位:
 		window.scrollTo(0, 0) 
+		window.scrollBy(x, y) 
 
 元素切换到可视区：
 
 	ele.scrollIntoView()
 
-##### 元素的滚动偏移
+##### 元素的滚动偏移(overflow: auto)
 所有元素默认0: 页面滚动不影响它。不是本身的偏移，而是其内部元素偏
 
 	ele.scrollLeft, ele.scrollTop
@@ -97,10 +98,12 @@ jquery:
 元素归位:
 
 	ele.scrollTo(0,0)
+	ele.scrollBy(10,10)
 
 切换到可视区:
 
 	ele.scrollIntoView(0,0); 
+	ele.scrollIntoView(); 
 
 example:[js-postion](/demo/js-demo/dom-position.html)
 
@@ -333,6 +336,7 @@ createElement:
 	function loadHtml(html){
 		var div = document.createElement('div');
 		div.innerHTML = html;
+		div.children[0].onclick = function(){console.log('click on new ele')}
 		document.body.appendChild(div.children[0]);
 	}
 

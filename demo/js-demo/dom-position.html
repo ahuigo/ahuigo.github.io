@@ -6,8 +6,13 @@
     </div>
     <div id="x" style="position:absolute; left:15px;margin:1px;width: 200px; height: 200px; overflow: auto; border: 10px solid orange; padding:3px">
          <div style="background:purple; height:2000px;width:2000px">
-             <div id="x1">document.querySelector("#x1").scrollIntoView</div>
+             <div id="x1">document.querySelector("#x1").scrollIntoView()</div>
              <div id="x2">document.querySelector("#x").scrollTo(0,0)</div>
+             <div id="top">
+                 overflow: auto
+                 $('#x').scrollBy(10,10);<br>
+                 $('#x').scrollTo(10,10);<br>
+            </div>
          </div>
     </div>
 </body>
@@ -25,8 +30,8 @@ window.onresize=function(ev){
         'window.screenX/Y':[window.screenX,window.screenY],
 
         'body.clientWidth/.clientHeight': [document.body.clientWidth, document.body.clientHeight],
-        'body.offsetWidth/..(border)': [document.body.offsetWidth, document.body.offsetHeight],
-        'body.scrollWidth/..(border+margin)': [document.body.scrollWidth, document.body.scrollHeight],
+        'body.scrollWidth/..(no border, nomargin)': [document.body.scrollWidth, document.body.scrollHeight],
+        'body.offsetWidth/..(+border)': [document.body.offsetWidth, document.body.offsetHeight],
         'window.scrollX/scrollY': [window.scrollX, window.scrollY],
 
         'divx.clientWidth, divx.clientHeight': [divx.clientWidth, divx.clientHeight],

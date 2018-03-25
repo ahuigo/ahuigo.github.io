@@ -43,24 +43,20 @@
 
                 </div>
             </div>
-
-
             <div class="container-fluid">
-
                 <div class="row-fluid">
-                    <div class="span3">
-                        <div class="well sidebar-nav">
+                    <div class="span2">
+                        <div class="well sidebar-nav" style="overflow-y:auto; height:1000px">
                         </div>
                     </div>
 
-                    <div class="span9">
-                        <div id="toc"></div>
+                    <div class="span8">
                         <div id="article-content" class="row-fluid article-content">
                         </div>
                         <div class="row-fluid pagebar">
                         </div>
                     </div>
-
+                    <div id="toc" class="span2 sidebar fixednav" style=""></div>
 
                 </div>
                 <hr>
@@ -76,10 +72,13 @@
         <script id="tpl-sidebar" type="text/template">
             <ul class="nav nav-list">
                 {{#months}}
-                <li class="nav-header">{{month}}</li>
-                {{#articles}}
-                <li><a href="#show/{{link}}">{{text}}</a></li>
-                {{/articles}}
+                <li class="nav-header">{{month}}
+                    <ul style="margin:0;display: none;">
+                        {{#articles}}
+                        <li><a href="#show/{{link}}">{{text}}</a></li>
+                        {{/articles}}
+                    </ul>
+                </li>
                 {{/months}}
             </ul>
         </script>

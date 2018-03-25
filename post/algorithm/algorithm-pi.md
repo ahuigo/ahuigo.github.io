@@ -1,14 +1,7 @@
----
-layout: page
-title:	圆周率算法
-category: blog
-description: 
----
 # Preface
-
+圆周率算法
 
 # 梅钦类公式
-
 
 # AGM
 http://en.wikipedia.org/wiki/Arithmetic%E2%80%93geometric_mean

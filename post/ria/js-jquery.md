@@ -19,7 +19,7 @@ chrome 原生的`$(selector)==document.querySelector() 、$$(selector)==jquery==
 	//分别匹配多个元素(or)
 	$(sel1,sel2,sel3)
 
-	//同时匹配多个条件(and)
+	//同时满足多个条件(and)
 	$('p.a.b')
 		$('p .a .b') 子结点class=a, 再子结点class=b
 	$('p.classA.classB')  p结点必须满足class包含: classA, classB

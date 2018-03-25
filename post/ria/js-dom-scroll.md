@@ -20,21 +20,21 @@ description:
 		//scroll (scroll postion vs dom postion)
 		$(window).scroll(function() {
 		  setTimeout(function() {
-			var nowTop = $(window).scrollTop();
-			var length = scrollTop.length;
-			var index;
-			if(nowTop+60 > scrollTop[length-1]) {
-			  index = length;
-			} else {
-			  for(var i=0; i < length; i++) {
-				if(nowTop+60 <= scrollTop[i]) {
-				  index = i;
-				  break;
+				var nowTop = $(window).scrollTop();
+				var length = scrollTop.length;
+				var index;
+				if(nowTop+60 > scrollTop[length-1]) {
+					index = length;
+				} else {
+					for(var i=0; i < length; i++) {
+						if(nowTop+60 <= scrollTop[i]) {
+							index = i;
+							break;
+						}
+					}
 				}
-			  }
-			}
-			$('#menuIndex li').removeClass('on');
-			$('#menuIndex li').eq(index-1).addClass('on');
+				$('#menuIndex li').removeClass('on');
+				$('#menuIndex li').eq(index-1).addClass('on');
 		  },100);
 		});
 		$(window).resize(function(){

@@ -112,17 +112,26 @@ If you need an list, just use `glob.glob` instead of `glob.iglob` with iterator
 ### dirname:
 
 	path = os.path.dirname(amodule.__file__)
+	path = Path('file').parent.absolute()
 
-### abspath:
-
+### abspath/relpath:
 在某个目录下创建一个新目录，首先把新目录的完整路径表示出来:
 
 	>>> os.path.join('/Users/michael', 'testdir')
 	'/Users/michael/testdir'
 
+1. abspath: simply removes things like . and .. 
+2. realpath: removes things like . and .., and symbolic link
+3. relative path:
+	print os.path.commonprefix(['/usr/var/log', '/usr/var/security'])
+		'/usr/var'
+	os.path.relpath('/usr/var/a.xt', common_prefix) 
+	Path('/usr/var/a.xt').relative_to(common_prefix) 
+
 ### current directory
 change current workspace:  support abspath only
 
+	path = Path('/etc')
 	os.chdir(path)
 	os.chroot(path)
 
