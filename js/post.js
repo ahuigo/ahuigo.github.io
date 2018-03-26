@@ -276,7 +276,7 @@ $(function() {
         routes: {
             "": "index",
             "cate/:cate": "cate",
-            "show/:article(/:p2)": "show",
+            "show/*article": "show",
             "page/:num":"page"
         },
         make_main_view: function(cate, article,pagenum) {
@@ -295,9 +295,7 @@ $(function() {
         cate: function(cate) {
             this.make_main_view(cate, 'index',1);
         },
-        show: function(p1,p2) {
-            var p = p2 === null? p1: p1+'/'+p2;
-            console.log(p)
+        show: function(p) {
             this.make_main_view(null, p,1);
             window.scrollTo(0,0)
         },

@@ -4,7 +4,7 @@ title:	linux c 终端、作业与守护进程
 category: blog
 description: 
 ---
-# Preface
+# Unix 下的终端、作业、守护进程
 用户通过终端登录系统后得到一个shell 进程， 这个终端成为shell 进程的控制终端（Controlling Terminal）. [linux-c-process](/p/linux-c/process) *控制终端是保存在PCB 中的信息*. shell 进程fork 出的子进程时会复制这份PCB, 所以子进程指向的终端也会是这个终端。
 
 默认情况下，*每个进程的标准输入/标准输出/标准错误输出 都是指向控制终端*. 进程从标准输入读，也是从键盘输入; 进程向标准输出/标准错误输出，也是输出到显示器。
@@ -364,7 +364,6 @@ Linux 也提供了一个daemon(3) 函数实现daemonize 的功能，它带有两
 	$ ps xj |grep a.out
 
 # 参考
-[linux c terminal]
+- [linux c terminal]
 
 [linux c terminal]: http://akaedu.github.io/book/ch34.html
-
