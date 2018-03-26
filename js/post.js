@@ -134,7 +134,7 @@ $(function() {
 
             $(this.el).html(html);
             blog.helper.highlight();
-            document.querySelector('#toc').innerHTML = createToc(this.el);
+            document.querySelector('#toc').appendChild(createToc(this.el))
         }
     });
 

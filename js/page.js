@@ -26,10 +26,47 @@ function getTocObj(article){
 	}
     return toc;
 }
+
+/**
+ * 
+ * @param {createToc} article 
+ */
 function createToc(article){
-  var tocObj = getTocObj(article);
-  return genToc(tocObj);
+  var tocObj = getTocObj(article),
+    div = document.createElement('div');
+    div.innerHTML = genToc(tocObj);
+    div.onclick = function(e){
+      e = e || event;
+      var from = findParent('a',e.target || e.srcElement);
+      if (from){
+        e.preventDefault()
+        var hash = decodeURI(from.hash)
+        document.getElementById(hash.substr(1)).scrollIntoView()
+      }
+
+    }
+  return div;
 }
+
+/**
+ * findParent
+ * @param {*} tagname 
+ * @param {*} el 
+ */
+function findParent(tagname,el){
+  while (el){
+    if ((el.nodeName || el.tagName).toLowerCase()===tagname.toLowerCase()){
+      return el;
+    }
+    el = el.parentNode;
+  }
+  return null;
+}
+
+/**
+ * 
+ * @param {genToc} toc 
+ */
 function genToc(toc){
     var t = '';
   if(toc.href !== undefined) {
