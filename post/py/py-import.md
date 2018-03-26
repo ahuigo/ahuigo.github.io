@@ -135,7 +135,7 @@ module find path
 #### PYTHONPATH
 > PYTHONPATH Augment the default search path for module files. The format is the same as the shell’s PATH
 
-相当于: sys.path.append()
+相当于: sys.path.append('.')
 
 	export PYTHONPATH=.
 

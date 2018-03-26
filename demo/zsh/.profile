@@ -16,8 +16,11 @@ alias vi='mvim'
 alias cp='cp -i'
 alias svnst='svn st'
 alias l='ls -lah'
+
+# python
 alias py='ipython3'
 alias p='python3'
+export PYTHONPATH=.
 
 
 #android sdk

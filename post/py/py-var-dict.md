@@ -69,14 +69,6 @@ list 也一样
 python >=3.5
 ```
 	z = {**x, **y}
-or
-
-	def merge_dicts(*dict_args):
-	    result = {}
-	    for dictionary in dict_args:
-	        result.update(dictionary)
-	    return result
-	merge_dicts(x,y)
 ```
 
 or with update:

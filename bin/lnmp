@@ -2,6 +2,7 @@
 echo "stop nginx & php-fpm & memcached & redis-server";
 sudo pkill php-fpm memcached redis-server
 pgrep nginx > /dev/null && sudo nginx -s stop
+mysql.server stop
 
 if [[ $1 = 'stop' ]];then
 	exit;
@@ -21,6 +22,7 @@ echo "start memcache"
 pgrep memcached > /dev/null || memcached -s /tmp/mc.sock -d
 
 # redis
-pgrep redis-server> /dev/null || { md -p /usr/local/var/db/redis; redis-server /usr/local/etc/redis.conf &;}
+pgrep redis-server> /dev/null || { mkdir -p /usr/local/var/db/redis; redis-server /usr/local/etc/redis.conf &;}
 
 # start mysql
+mysql.server start

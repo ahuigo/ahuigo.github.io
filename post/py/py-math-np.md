@@ -52,6 +52,10 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
     >>> sheet1 = xls.parse("Sheet1")
     df.to_excel('foo.xlsx', sheet_name='Sheet1')
 
+## copy 
+
+    df.copy() series.copy()
+
 # np 数据类型
 
 ## np数组定义
