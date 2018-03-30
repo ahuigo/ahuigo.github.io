@@ -42,6 +42,7 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 	print('thread %s is running...' % threading.current_thread().name)
 	t = threading.Thread(target=loop, name='LoopThread')
 	t.start()
+    t.is_alive()
 	t.join()
 	print('thread %s ended.' % threading.current_thread().name)
 
@@ -57,28 +58,46 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 	thread LoopThread ended.
 	thread MainThread ended
 
+## close thread: via thread.Event
+via a threadsafe threading.Event():
+
+    running = threading.Event()
+    running.set()
+
+    def loop(running):
+        while running.is_set():
+            print('running')
+            time.sleep(0.5)
+
+    thread = threading.Thread(target=loop, args=(running,))
+    thread.start()
+
+    running.clear()
+    thread.join()
+
 ## communicate via pool.apply_async().get()
 对比下ThreadPool vs Thread
-```
-t = threading.Thread(target=loop, name='LoopThread')
-	t.start() t.join()
 
-async_result = multiprocessing.pool.ThreadPool(processes=1).apply_async(foo, ('world', 'foo')) # tuple of args for foo
-	print(async_result.get()) # 阻塞
-	pool.close() .join() # 阻塞等待所有线程结束
-```
+	```python
+	t = threading.Thread(target=loop, name='LoopThread')
+		t.start() t.join()
+
+	async_result = multiprocessing.pool.ThreadPool(processes=1).apply_async(foo, ('world', 'foo')) # tuple of args for foo
+		print(async_result.get()) # 阻塞+返回结果
+		pool.close() # 阻塞等待所有线程结束, 相当于Thread.join()
+	```
+
 e.g.
-```
-def foo(bar, baz):
-  print('hello {0}'.format(bar))
-  return 'foo' + baz
 
-from multiprocessing.pool import ThreadPool
-pool = ThreadPool(processes=1)
+    def foo(bar, baz):
+        print('hello {0}'.format(bar))
+        return 'foo' + baz
 
-async_result = pool.apply_async(foo, ('world', 'foo')) # tuple of args for foo
-print(async_result.get()) # 阻塞
-```
+    from multiprocessing.pool import ThreadPool
+    pool = ThreadPool(processes=1)
+
+    async_result = pool.apply_async(foo, ('world', 'foo')) # tuple of args for foo
+    print(async_result.get()) # 阻塞+get
 
 # lock thread
 如果线程要修改全局变量，为防collision 冲突，可以加lock

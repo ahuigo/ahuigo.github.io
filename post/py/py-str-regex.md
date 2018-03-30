@@ -43,9 +43,8 @@ description:
 
 	pattern = re.search(r'(?P<fstar>f.*)(?P<bstar>b.*)', 'Hello foobar')
 	print "f* => {0}".format(pattern.group('fstar')) # prints f* => foo
-	print "b* => {0}".format(pattern.group('bstar')) # prints b* => bar
 
-groups 列出所有的分组，但是不包含group(0) 整个匹配
+groups 列出所有的分组，但是不包含: group(0)=group()即整个匹配
 
     >>> re.match('((t)(e))st', 'TeSt', re.IGNORECASE).groups()
     ('Te', 'T', 'e')

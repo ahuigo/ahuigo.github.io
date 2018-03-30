@@ -135,6 +135,12 @@ $(function() {
             $(this.el).html(html);
             blog.helper.highlight();
             document.querySelector('#toc').appendChild(createToc(this.el))
+            $(this.el).find('a').each(function(){
+                var href = this.getAttribute('href')
+                if(href.substr(0,3)=='/p/'){
+                    this.setAttribute('href', '#show/'+href.slice(3))
+                }
+            })
         }
     });
 

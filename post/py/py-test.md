@@ -1,13 +1,12 @@
 # Preface
 test framework list:
-- pytest
+- pytest   比unittest 好的一点是：可以选择测试范围
 - unittest 单元测试, py-unittest
-- doctest, 
+    - doctest, 不太常用
 - nose
 
 function:
 1. be able to continue through a test function after a failure
-2. 
 
 # pytest
 
@@ -64,8 +63,6 @@ class rule:
     py.test --resultlog=filepath
     # xml
     py.test --junitxml=filepath
-
-
 
 ## help
 ```

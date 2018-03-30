@@ -81,6 +81,11 @@ event-based library:
 # nginx+gunicorn
 
 ## gunicorn
+
+    --log-level "debug" 
+    PYTHONUNBUFFERED=TRUE
+    -R, --enable-stdio-inheritance
+
 rocket.py:
 
     from flask import Flask
@@ -96,9 +101,20 @@ rocket.py:
 run:
 
     $ gunicorn rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
+    $ gunicorn --pythonpath . rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
+    $ PYTHONPATH=. gunicorn rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
     $ cat rocket.pid
     63101
     $ kill -cat rocket.pid
+
+### log
+将启动时的python grammar error, exception 都记录到app.gun.log
+
+    gunicorn app:app  --log-file app.gun.log
+
+app log:
+
+    app.logger.setHandler(logging.FileHandler('app.log'))
 
 ## nginx反向
 

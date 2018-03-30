@@ -22,7 +22,7 @@ wirte a `hilo.py`:
 Then under interact python envirment:
 
 	import hilo
-	#from . import hilo ;# 仅限__init__.py
+	#from . import hilo ;# 仅限__init__.py, 且只能从包外部调用这个文件
 	print hilo.add(1,2)
 	add = hilo.add
 	print add(1,2)
@@ -43,6 +43,10 @@ import `ex47.game`, would find two file:
 
 1. 请注意，每一个包目录下面都会有一个__init__.py的文件，这个文件是必须存在的，否则，Python就把这个目录当成普通目录，而不是一个包。目录名就是包名或叫模块名(python3 后不是必须)
 2. `__init__.py`可以是空文件，也可以有Python代码，因为`__init__.py`本身就是一个模块，而它的模块名就是所在文件夹的名字`ex47`
+
+## package and module
+1. pkg/__init__.py is package, 优先级高
+2. mod.py is module, 优先级低
 
 ## import as
 from tkinter import messagebox
@@ -128,16 +132,15 @@ module find path
 	>>> import sys
 	>>> sys.path.append('path')
 	>>> print(sys.path)
-	['', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python35.zip', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5/plat-darwin', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5/lib-dynload', '/usr/local/lib/python3.5/site-packages']
-	 '/usr/local/lib/python3.5/site-packages'
+	['', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5','/usr/local/lib/python3.5/site-packages']
 	 /usr/local/lib/python3.5/site-packages/pip/_vendor/requests/cookies.py
 
 #### PYTHONPATH
 > PYTHONPATH Augment the default search path for module files. The format is the same as the shell’s PATH
 
-相当于: sys.path.append('.')
+相当于: sys.path.insert(1,'.'): 注意不是0个，第0个是执行入口文件所在的目录, 比如flask/gunicorn 所在的目录
 
-	export PYTHONPATH=.
+	export PYTHONPATH=. ;# 当前的working 目录
 
 # scope
 模块内变量作用scope

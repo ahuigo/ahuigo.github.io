@@ -37,6 +37,9 @@ dict, list 赋值都是按引用的，如果是一维的值:
     >>> d[key] = 'a list'
     TypeError: unhashable type: 'list'
 
+### first key
+	next(iter(a))
+
 ## get value
 
     dic.get(key, default)
@@ -54,7 +57,7 @@ dict, list 赋值都是按引用的，如果是一维的值:
 ## del key
 list 也一样
 
-    dict.pop(key) list.pop(index_or_last)
+    dict.pop(key, None) list.pop(index_or_last)
     del dict[key]
 
 ### Is a dictionary popitem() atomic?
@@ -256,16 +259,16 @@ Note: in python 3 to iterate through a dictionary you have to *explicidly* write
 	a = [1,2,3,4,5]
 	# for i in a[:]: 
 	for i in list(a): 
-		a.remove(i) # or a.pop(0) 也会发生错误
-	# a = [2,4]
+		a.remove(i)
+	# a = []
 
 
 ## dict iterms and delete
-items 不是iter, 可以在里面直接删除元素, iteritems(.keys()/.values() 都是generator)则不行
+py3: items/iteritems 是iter(.keys()/.values() 都是generator) 都不可以直接改变原值
+需要list copy出一份才可
 
 	//list
 	list.items() //error
-	//gnenerator object itemview
-	for k, v in dict.items()
+	for k, v in list(dict.items())
 		dict.pop(k)
 

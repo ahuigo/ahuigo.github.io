@@ -47,6 +47,8 @@ description:
 		return m[n]
 
 ## Knapsack problem 背包问题
+背包属于[NPC](/algorithm/algorith-np), 暂时不存在多项式时间算法。
+
 背包问题解法包括：动态规划、搜索法等; 近似解有: 贪心法（其中分数背包问题有最优贪心解）等
 
 ## LCS 最长公共子序列

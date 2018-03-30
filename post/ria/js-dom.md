@@ -410,6 +410,11 @@ Example 浮层:
 	node.getAttribute('name')
 	//jq node.attr('name', 'val')
 
+    > $0.getAttribute('href')
+    /p/xss.md
+    > $0.href
+    http://locahost/p/xss.md
+
 ## Set Attribute
 
 	node.setAttribute('name', value);

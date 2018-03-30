@@ -1,6 +1,9 @@
 # Datatype, 数据类型
+## export
 
-### String, 字符串
+	unset PYTHONPATH
+
+## String, 字符串
 
 #### count_chars
 

@@ -3,34 +3,24 @@
 https://docs.python.org/3.4/howto/logging.html
 
 # autolog: excepthook
-```
-import sys
->>> def foo(exctype, value, tb):
-...     print 'My Error Information'
-...     print 'Type:', exctype
-...     print 'Value:', value
-...     print 'Traceback:', tb
-...
->>> sys.excepthook = foo
-```
+
+    import sys
+    >>> def foo(exctype, value, tb):
+    ...     print 'My Error Information'
+    ...     print 'Type:', exctype
+    ...     print 'Value:', value
+    ...     print 'Traceback:', tb
+    ...
+    >>> sys.excepthook = foo
+
 
 # logging
 logging，和assert比，logging不会抛出错误，而且可以输出到文件：
 
 ## log level
 1. `debug，info，warning，error, fatal/critical`等几个级别重要性依次增加，
-1. The default level is *WARNING*, which means that only events of this level and above will be tracked
-```
-import logging
-logging.warning('Watch out!')  # will print a message to the console
-logging.info('I told you so')  # will not print anything
-```
-level value:
-```
-getattr(logging, 'DEBUG') # 10
-```
+1. default level: *WARNING*
 
-## logger
 除了根logging.root, 不同的应用/子应用可以设定自己的logger, 进而分别设定不同filename
 
     >>> logging.root
@@ -42,55 +32,49 @@ getattr(logging, 'DEBUG') # 10
     >>> logging.getLogger('root')
     <Logger root (WARNING)> # 不是根root
 
+
 ### set level
-1. via logging.basicConfig(level=logging.DEBUG)
-2. via command-line option:
-    ```python
-    level = 'DEBUG'
-    logging.basicConfig(level=getattr(logging, level))```
+logging.basicConfig(level=logging.DEBUG)
+logger.setLevel()
 
-> basicConfig 第二次不再生效
-
+>Note: basicConfig 第二次不再生效
 
 ## log file
-```
-import logging
-logging.basicConfig(filename='example.log',level=logging.DEBUG)
-logging.debug('This message should go to the log file')
-logging.info('So should this')
-logging.warning('And this, too')
+    import logging
+    logging.basicConfig(filename='example.log',level=logging.DEBUG)
+    logging.debug('This message should go to the log file')
+    logging.info('So should this')
+    logging.warning('And this, too')
 
-$ cat example.log
-DEBUG:root:This message should go to the log file
-.....
-```
+    $ cat example.log
+    DEBUG:root:This message should go to the log file
 
 If not remember messages from elarlier runs, use `filemode='w'`:
-```
-logging.basicConfig(filename='example.log', filemode='w', level=logging.DEBUG)
-```
+
+    logging.basicConfig(filename='example.log', filemode='w', level=logging.DEBUG)
 
 logging file path(default by current path):
-```
-logging.getLoggerClass().root.handlers[0].baseFilename
-```
+
+    logging.getLoggerClass().root.handlers[0].baseFilename
+    logger.handlers[0].baseFilename
+
 ## format message
 
-```
-BASIC_FORMAT = "%(levelname)s:%(name)s:%(message)s"  
-logging.basicConfig(format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s', level=logging.DEBUG)
-INFO:a.py:1:So should this
-```
-[For more logrecord-attributes ](https://docs.python.org/3.4/library/logging.html#logrecord-attributes):
-```
-%(asctime)s	Human-readable time:
-%(created)f time.time():
-%(lineno)d
-%(filename)s
-%(funcName)s
-%(thread)d
+    BASIC_FORMAT = "%(levelname)s:%(name)s:%(message)s"  
+    logging.basicConfig(format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s', 
+        filename='a.log',
+        level=logging.DEBUG)
+    INFO:a.py:1:So should this
 
-```
+[For more logrecord-attributes ](https://docs.python.org/3.4/library/logging.html#logrecord-attributes):
+
+    %(asctime)s	Human-readable time:
+    %(created)f time.time():
+    %(lineno)d
+    %(filename)s
+    %(funcName)s
+    %(thread)d
+
 ### format date
 The default format for date/time display (shown above) is ISO8601.
 
@@ -127,12 +111,14 @@ loggers have threefold job
 3. Third, logger objects pass along relevant log messages *to all interested log handlers*.
 
 ### loggers method
-logger configuration:
+logger 不支持setFormatter, 那个是handler 支持的。只支持以下
 - Logger.setLevel()
-- loogger handler
-Logger.addHandler() and Logger.removeHandler()
-- filter
-Logger.addFilter() and Logger.removeFilter()
+- logger.addHandler:
+    Logger.addHandler() and Logger.removeHandler()
+    logger.handlers[0].baseFilename
+- addFilter()
+    Logger.addFilter() and Logger.removeFilter()
+
 
 logger send msg:
 1. logger.error()/critical()
@@ -142,14 +128,19 @@ logger send msg:
         `logger.exception(msg, _args)`，它等价于 `logger.error(msg, exc_info=True, _args)`
 3. Logger.log() takes a log level as an explicit argument.
 
-### loggers name and ineritante
-1. loggers with names of `foo.bar, foo.bar.baz, and foo.bam` are all children of `foo`.
-2. all loggers ineritante `root`!
+### loggers name and inheritante
+1. loggers with names of `foo.bar, foo.bar.baz, and foo.bam` are all children of `foo`. 继承的东西包括
+    1. level
+    2. 不继承formatter
+2. all loggers inheritante `root`! 
+3. rootLogger 会创建handler: stderr (NOTSET)
+    1. 调用logging.error,info,...,etc
+    2. 调用logging.basicConfig时
 
-#### loggers propagate
 Child loggers *propagate* messages up to *ancestor* loggers:
-you can turn off propagation by setting the propagate attribute of a logger to False
+turn off propagate:
 
+    logger.propagate=False
 
 ### loggers level
 effective level is used to decide  whether to process an event, which is *inheritance* parental level.
@@ -165,24 +156,23 @@ effective level is used to decide  whether to process an event, which is *inheri
 
 #### create loggers
 The root of the hierarchy of loggers is called the root logger.
-```
->>> import logging
->>> logging.root.handlers[:]
-[]
->>> logging.error('1')
-ERROR:root:1
->>> logging.root.handlers[:]
-[<StreamHandler <stderr> (NOTSET)>]
-```
+
+    >>> import logging
+    >>> logging.root.handlers[:]
+    []
+    >>> logging.error('1')
+    ERROR:root:1
+    >>> logging.root.handlers[:]
+    [<StreamHandler <stderr> (NOTSET)>]
+
 creat a new logger explicitly:
-```
->>> logging.Logger.manager.loggerDict
-{}
->>> logging.getLogger(__name__) # return root logger if without args
-<Logger __main__ (WARNING)>
->>> logging.Logger.manager.loggerDict
-{'__main__': <Logger __main__ (WARNING)>}
-```
+
+    >>> logging.Logger.manager.loggerDict
+    {}
+    >>> logging.getLogger(__name__) # return root logger if without args
+    <Logger __main__ (WARNING)>
+    >>> logging.Logger.manager.loggerDict
+    {'__main__': <Logger __main__ (WARNING)>}
 
 
 #### remove logger's handler
@@ -194,11 +184,11 @@ creat a new logger explicitly:
 
 #### root logger
 for `logging/__init__.py`, you'll see that basicConfig() *sets the handlers on the root logger* object *by calling addHandler()*.
-```
-import logging
-for handler in logging.root.handlers[:]: # copy loop, dict用dict.items(), 不可用dict.keys()
-    logging.root.removeHandler(handler)
-```
+
+    import logging
+    for handler in logging.root.handlers[:]: # copy loop, dict用dict.items(), 不可用dict.keys()
+        logging.root.removeHandler(handler)
+
 The root logger is used by the functions `loggging.debug()/ info()/...`, which just call the same-named method of the root logger
 
     logging.info(msg):
@@ -214,7 +204,7 @@ One logger's default handler:
 see: https://docs.python.org/3.6/howto/logging.html#useful-handlers
 1. file: logging.FileHandler(filename)
 1. BaseRotatingFileHandler:
-    1. RotatingFileHandler = logging.handlers.RotatingFileHandler( LOG_FILENAME, maxBytes=20, backupCount=5)
+    1. RotatingFileHandler = logging.handlers.RotatingFileHandler( LOG_FILENAME, maxBytes=10**8, backupCount=5)
     2. TimedRotatingFileHandler
 3. SysLogHandler
 4. QueueHandler
@@ -235,7 +225,7 @@ example add stdout:
 like logger:
 1. handler.setLevel() method, just as in logger objects
 2. handler.addFilter() like logger
-2. handler.setFormatter() like logger
+2. handler.setFormatter() (not logger)
 
 #### hander destinations
 1. writing log messages to:  files, HTTP GET/POST locations, email via SMTP, generic sockets, queues, or OS-specific logging mechanisms such as syslog or the Windows NT event log.
@@ -273,70 +263,70 @@ Note:
 > fileConfig()/dictConfig function takes a default parameter, disable_existing_loggers=True
 
 configure code  example:
-```
-import logging
 
-# create logger
-logger = logging.getLogger('simple_example')
-logger.setLevel(logging.DEBUG)
+    import logging
 
-# create console handler and set level to debug
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+    # create logger
+    logger = logging.getLogger('simple_example')
+    logger.setLevel(logging.DEBUG)
 
-# create formatter
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    # create console handler and set level to debug
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
 
-# add formatter to ch
-ch.setFormatter(formatter)
+    # create formatter
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-# add ch to logger
-logger.addHandler(ch)
+    # add formatter to ch
+    ch.setFormatter(formatter)
 
-# 'application' code
-logger.error('error message')
-```
+    # add ch to logger
+    logger.addHandler(ch)
+
+    # 'application' code
+    logger.error('error message')
+
 ### config log with dictConfig()
 in YAML format for the new dictionary-based approach:
-```
-version: 1
-formatters:
-  simple:
-    format: 'simple:%(name)s - %(levelname)s - %(message)s'
-handlers:
-  console:
-    class: logging.StreamHandler
-    level: DEBUG
-    formatter: simple
-    stream: ext://sys.stdout
-  file:
-    class : logging.handlers.RotatingFileHandler
-    formatter: simple
-    filename: logconfig.log
-    maxBytes: 10240
-    backupCount: 3
-loggers:
-  simpleExample:
+
+    version: 1
+    formatters:
+    simple:
+        format: 'simple:%(name)s - %(levelname)s - %(message)s'
+    handlers:
+    console:
+        class: logging.StreamHandler
+        level: DEBUG
+        formatter: simple
+        stream: ext://sys.stdout
+    file:
+        class : logging.handlers.RotatingFileHandler
+        formatter: simple
+        filename: logconfig.log
+        maxBytes: 10240
+        backupCount: 3
+    loggers:
+    simpleExample:
+        level: DEBUG
+        handlers: [console]
+        propagate: yes
+    simpleExample.a:
+        level: DEBUG
+        handlers: [console]
+        propagate: yes
+    root:
     level: DEBUG
     handlers: [console]
-    propagate: yes
-  simpleExample.a:
-    level: DEBUG
-    handlers: [console]
-    propagate: yes
-root:
-  level: DEBUG
-  handlers: [console]
-```
+
 code:
-```
-import logging, yaml
-import logging.config
-import logging.handlers
-logging.config.dictConfig(yaml.load(open('a.yaml')))
-s=logging.getLogger('simpleExample.a')
-s.error('abc')
-```
+
+    import logging, yaml
+    import logging.config
+    import logging.handlers
+    logging.config.dictConfig(yaml.load(open('a.yaml')))
+    s=logging.getLogger('simpleExample.a')
+    s.error('abc')
+
 测试下chrilden loggers inheritance: Output:
 1. 依次是simpleExample.a, simpleExample, root产生的三个
 2. 产生一个: simpleExample.a(propagate=no)

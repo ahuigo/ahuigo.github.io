@@ -1,6 +1,6 @@
 # Preface
 1. traceback
-2. inspect
+2. inspect.getsource(func)
 
 # traceback(exception+stack)
 ```

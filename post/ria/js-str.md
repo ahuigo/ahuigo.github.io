@@ -36,7 +36,8 @@ alert(s); // s仍然为'Test'
 	.localeCompare(str) //return 1 0 -1
 	#截取
 	.substr(start,[length])//start可为负
-	.slice(start, [end]) //start, end可为负
+	.slice(start, [end]) //start, end可为负, py: str[slice]
+    .substring(start, [end]) //不可为负
 
 ###	case
 	.toLowerCase() / .toUpperCase()
