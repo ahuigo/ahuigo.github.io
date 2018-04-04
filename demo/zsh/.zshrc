@@ -66,6 +66,8 @@ export ARCHFLAGS="-arch x86_64"
 export LDFLAGS="-L/usr/local/opt/icu4c/lib"
 export CPPFLAGS="-I/usr/local/opt/icu4c/include"
 # export ARCHFLAGS="-Wno-error=unused-command-line-argument-hard-error-in-future"
+alias pg-start="launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
+alias pg-stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
 
 # private
 [ -f ~/.profile ] && source ~/.profile

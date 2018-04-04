@@ -76,7 +76,7 @@ InnoDB: 表没有存储总行数，`select count(*) from table` 会遍历数据�
 ### CURD 操作
 MyISAM: 适合大量的select, 小量的CUD
 
-MyISAM: 适合大量的Update/Insert, 性能更优秀. 但Delete from table 时，它是一行一行的删除表而不是像MyISAM 那样重新建表. 如果想清空 InnoDB 表, 最好用`truncate table` 命令
+InnoDB: 适合大量的Update/Insert, 性能更优秀. 但Delete from table 时，它是一行一行的删除表而不是像MyISAM 那样重新建表. 如果想清空 InnoDB 表, 最好用`truncate table` 命令
 
 ## BrightHouse Engine
 这是InfoBright 开源的引擎，采用基于知识网格的学习机制
@@ -138,117 +138,16 @@ It's another name is  HEAP Engine.
 ## EXAMPLE Engine
 这是一个创建引擎的模板，供研究引擎的开发者练习
 
-# Operation
-
-## database
-
-	//create
-	> CREATE DATABASE dbName;
-	$ mysqladmin create dbName;
-
-	//drop
-	> DROP DATABASE dbName;
-	$ mysqladmin DROP dbName;
-
-There is no `rename` for database special, but you could rename database via table
-
-	//For innoDB
-	RENAME TABLE old_db.table TO new_db.table;
-	//or
-	mysqladmin create new_db;
-	mysqldump old_db | mysql -D new_db
-
-Here is a `renameInnoDB` shell:
-
-	for tb in mysql -uroot -e "show tables from $old_db"; do
-		mysql -uroot -e "rename table $old_db.$tb $new_db.$tb";
-	done;
-
-## TABLE
-
-	> show tables from db;
-
-### Create
-
-	CREATE TABLE [IF NOT EXISTS] `TTT_DATAALLOWANCE` (
-	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-	  `uid` char(15) NOT NULL,
-	  `status` tinyint(2) DEFAULT NULL,
-	  `number` char(15) NOT NULL,
-	  PRIMARY KEY (`id`),
-	  UNIQUE KEY `uid` (`uid`),
-	  KEY `number` (`number`)
-	) ENGINE=MyISAM DEFAULT CHARSET=utf8
-
-#### Copy Table
-Copy table struct only:
-
-	create table tb_name like tb_other;
-
-Copy table struct and data;
-
-	create table tb_name select * from tb_other;
-	create table tb_name select col1,col2 from tb_other;
-
-#### Create Temporary Table
-
-	"like copy table, except that it's data is stored in temp dir `/usr/tmp/` or `/var/tmp` or `/tmp`
-	CREATE TEMPORARY TABLE tb_name select col1 from tb_other limit 10;
-
-可以通过`mysql -t <tmpdir>` 指定tmpdir. 否则会默认查看： `$TMPDIR, $TEMP, $TMP`
-
-	"linux
-	/usr/tmp /var/tmp /tmp
-	"mac OSX
-	/var/folders/73/7vxr7kzs09ndh3kwzw9zpdj80000gn/T/
-
-### union table 分表联合
-
-	CREATE TABLE `union_tb` (
-		`uid` char(10) NOT NULL,
-		`create_time` int(10) unsigned NOT NULL,
-		INDEX(uid)
-	) TYPE=MERGE UNION=(union_tb1,union_tb2,union_tb3,.......) INSERT_METHOD=LAST
-
-将分表合为一张表，方便分表查询
-
-### rename TABLE
-
-	rename TABLE tb1 to tb2 , tb3 to tb4, ...
-	rename TABLE db.tb1 to new_db.tb2
-
-### drop TABLE if exists
-DROP TABLE table;
-DROP TABLE IF EXISTS `tablename`
-
-### View Table
-
-	> describe <table>
-	> show columns from <table>
-	> show create table <table>
-	shell> mysqlshow <db> <table>
-
-## Column
-
-### Alter(add/drop column)
-modify change add
-
-	alter table tabelname ...
-	ALTER TABLE table_name DROP Column
-	ALTER TABLE table_name ADD KEY `provice` (`province`)
-	ALTER TABLE table_name ADD KEY (`province`)
-	ALTER TABLE table_name drop `provice`
-
-You should remove the autoincrement property before dropping the key:
-
-	ALTER TABLE table_name MODIFY id INT NOT NULL;
-	ALTER TABLE table_name DROP PRIMARY KEY;
-
-### alter change(update column)
-
-	alter table t1 change a b tinyint(1) not null;
-
 # data
+
+## if
+
+	select if(9<=7, '1-7', if(9=8, 8, 9));
+
+## math
+
+	select 1-3*2 as calc into @sum;//在存储例程中变量不需要加@
+	select * from table where id in (3,4) or [name] in ('andy','paul');
 
 ## Variable
 mysql 变量不区分大小写
@@ -663,7 +562,7 @@ EXAMPLE:
 
 ## Show Triggers
 List triggers via command:
-
+gg
 	"list triggers
 	SHOW TRIGGERS [FROM db_name] [LIKE expr | WHERE expr]
 	"show create trigger

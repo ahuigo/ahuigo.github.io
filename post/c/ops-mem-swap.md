@@ -46,3 +46,11 @@ You can verify that the swap file is active by running the free command again.
 nano /etc/fstab, Add the following line at the end of the file:
 
     /swapfile   none    swap    sw    0   0
+
+# summary
+
+    dd if=/dev/zero of=/swapfile count=2048 bs=1M
+    chmod 600 /swapfile
+    mkswap /swapfile
+    swapon /swapfile
+    echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab

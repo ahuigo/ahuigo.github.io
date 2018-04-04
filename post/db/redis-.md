@@ -1,10 +1,4 @@
----
-layout: page
-title:	redis 使用简记
-category: blog
-description:
----
-# Preface
+# Redis
 redis所有的数据都是redisObject存储的。redisObject来表示所有的key/value数据是比较浪费内存的(为了支持各种数据类型嘛)，还好redis 作者也考虑了很多内存优化的方法。
 
 # todo

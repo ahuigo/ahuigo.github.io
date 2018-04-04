@@ -5,7 +5,7 @@ category: blog
 description: 
 ---
 # Unix 下的终端、作业、守护进程
-用户通过终端登录系统后得到一个shell 进程， 这个终端成为shell 进程的控制终端（Controlling Terminal）. [linux-c-process](/p/linux-c/process) *控制终端是保存在PCB 中的信息*. shell 进程fork 出的子进程时会复制这份PCB, 所以子进程指向的终端也会是这个终端。
+用户通过终端登录系统后得到一个shell 进程， 这个终端成为shell 进程的控制终端（Controlling Terminal）. [/c/ops-process](/p/c/ops-process) *控制终端是保存在PCB 中的信息*. shell 进程fork 出的子进程时会复制这份PCB, 所以子进程指向的终端也会是这个终端。
 
 默认情况下，*每个进程的标准输入/标准输出/标准错误输出 都是指向控制终端*. 进程从标准输入读，也是从键盘输入; 进程向标准输出/标准错误输出，也是输出到显示器。
 

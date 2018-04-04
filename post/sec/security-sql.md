@@ -50,7 +50,7 @@ A SQL string can contain the tick character. For example:
 	SELECT ... WHERE var = 'abc\'def';
 	SELECT ... WHERE var = 'abc''def';
 
-The first vulnerability affects the `mysql_real_escape_string()` function family which does not reject invalid multi-byte characters:
+1. The first vulnerability affects the `mysql_real_escape_string()` function family which does not reject invalid multi-byte characters:
 
 For example, in UTF-8, the `"0xC8 ' ' attackersql"` or `"0xC8 \ ' attackersql"` string is converted to:
 `"one_character ' attackersql"` (ignore spaces), `0xC8` will eat `\`. So, the query:
@@ -62,7 +62,7 @@ For example, in UTF-8, the `"0xC8 ' ' attackersql"` or `"0xC8 \ ' attackersql"` 
 
 An attacker can therefore inject the attackersql command.
 
-The second vulnerability only affects Asian encodings,
+2. The second vulnerability only affects Asian encodings,
 when they are used with simple escaping functions such as a regular expression replace of `' by \'`, PHP addslashes(), etc.
 For example, in SJIS, the query:
 

@@ -30,7 +30,7 @@ ps工具标识进程的5种状态码:
 
 -Options:
 
-	-e,-A
+	-e, -A
 		Select all processes.  Identical to -e.
 	-f     Do full-format listing.
 		-L, the NLWP (number of threads) and LWP (thread ID) columns will be added
@@ -59,14 +59,13 @@ headers:`man ls`
 	SPID     see lwp. (alias lwp, tid).out.
 	LWP      lwp (light weight process, or thread) ID of the lwp being reported.
 
-
 ## OUTPUT MODIFIERS
 
-     c      Show the true command name.
-     -L     Show threads, possibly with LWP and NLWP columns.
-     m      Show threads after processes.
-     -m     Show threads after processes.
-     -T     Show threads, possibly with SPID column.
+    c      Show the true command name.
+    -L     Show threads, possibly with LWP and NLWP columns.
+    m      Show threads after processes.
+    -m     Show threads after processes.
+    -T     Show threads, possibly with SPID column.
 
 mac:
 

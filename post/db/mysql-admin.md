@@ -436,6 +436,13 @@ mysqlcheck用于检查所有类型的表, 不需要关闭守护进程:
 # mysql client
 
 	mysql -uroot -hhost -pxx database
+	echo cmds | mysql
+	mysql -e cmd -e cmd
+
+## which database
+
+	//show which database is in use
+	SELECT DATABASE();
 
 ## exec
 mysql client 有自己的interactive cli 模式，这种模式下每条语句以";"结束，也可以标记`\G`, `\H`，或者别名`status` 结束

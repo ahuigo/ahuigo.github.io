@@ -376,7 +376,7 @@ shell arguments:
 
 	#with Process Substitution
 	echo abc | tee >(cmd)
-	#with stdout(cmd get double stdout)
+	#with stdout(cmd get double stdout); stdout pipe to cmd
 	echo abc | tee /dev/stdout | cmd
 	#with tty(screen)
 	echo abc | tee /dev/tty | cmd

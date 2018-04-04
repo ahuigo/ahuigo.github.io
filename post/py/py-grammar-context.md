@@ -4,6 +4,8 @@ https://docs.python.org/3/library/contextlib.html
 1. Context Managers are usually used for allocation and releasing of resources(eg. `with..as`),
 2. Also useful for any pair of operations that need to be performed before or after a procedure.
 
+在with 里面`return`, 还是会执行finnally
+
 ## try-finally
 In simple terms, Context Managers make writing try-finally blocks easier.
 
