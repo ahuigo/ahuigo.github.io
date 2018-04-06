@@ -43,12 +43,19 @@ via exec
 ## exec shell
 
 ### sh
-1. sh.ls("-l", "/tmp", color="never")
+1. sh.ls("-l", "/tmp", color="never") # equal to getoutput
 	1. sh.ls("-l /tmp".split(' '))
 2. subprocess.check_output("ls -l", shell=True).decode('gbk')
 3. subprocess.getoutput("ls -l"); # only support utf8
 	1. subprocess.getstatusoutput("ls -l") # return list: [code, output_str]
 4. print output: errno = os.system('ls -ls')
+
+不要结果的background:
+
+1. errno=call("ls -l", shell=True)
+1. errno=call("sleep 10 &", shell=True) 
+    2. call 后台执行时，永远返回errno=0
+    3. 而getoutput 它需要获取到stdout+stderr, 强制等待任务结束
 
 ### subprocess.check_output
 

@@ -83,15 +83,20 @@ Note:
 - `$(cmd)` , `\`cmd\`` 会过滤最后连续的换符符, 且被视为多个参数
 - `"$(cmd)"` , `"\`cmd\`"` 会过滤最后连续的换符符,且被视为1个参数
 
-#### 拼接
+#### concat 拼接
 
 	$PATH:otherStr #拼接.
 	${var}otherStr
+    s=' a      b'
+    echo 'left_'$s'_right' 
 
 or:
 
 	str='hello '
 	str+='world'
+
+不可以这样子
+
 
 #### length
 

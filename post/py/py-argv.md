@@ -47,6 +47,9 @@ try：一个从来没有更简单的命令行工具，用来试用python库。�
 
 # click 推荐
 
+## option
+option 的先后，也args name的先后无关
+
     import click
     @click.command()
     @click.option('-count', default=1, help='Number of greetings')
@@ -59,9 +62,32 @@ try：一个从来没有更简单的命令行工具，用来试用python库。�
     if __name__ == '__main__':
         hello()
 
-click.command 装饰使hello 能接收cli args
+click.command 装饰使hello 能接收cli args:
 
-## multi argument
+    p a.py 1 2 3 -name 'ahui'
+
+other:
+
+    @click.option('-d', is_flag=True)
+
+### count
+
+    @click.option('-v', '--verbose', count=True)
+    def log(verbose):
+        click.echo('Verbosity: %s' % verbose)
+
+### multi value
+
+    @click.option('--item', type=(unicode, int))
+    def putitem(item):
+        click.echo('name=%s id=%d' % item)
+    $ putitem --item peter 1338
+    name=peter id=1338
+
+    @click.option('--pos', nargs=2, type=float)
+    def findme(pos):
+
+## multi argument(顺序参数)
 
 	@click.command()
 	@click.argument('src', nargs=-1) ;# multiple

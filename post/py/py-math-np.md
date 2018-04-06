@@ -34,8 +34,16 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
     >>> s.update(pd.Series([4, 5, 6]))
 
     s.append(pd.Series({'c':3}), ignore_index=True)
-
     pd.concat([df1, df4], axis=1)
+
+to_dict(), to_json, tolist():
+
+    >>> s = pd.Series([1, 2, 3, 4])
+    >>> s.to_dict()
+    >>> s.to_dict(OrderedDict)
+    >>> s.to_dict(defaultdict(list))
+    s.tolist()
+    json.loads(s.to_json())
 
 ## datetime
 
@@ -59,6 +67,7 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
 # np 数据类型
 
 ## np数组定义
+
 ```
 >>>lst = [[1,3,5],[2,4,6]]
 >>>np_lst = np.array(lst,dtype=np.float)

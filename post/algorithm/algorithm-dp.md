@@ -56,7 +56,6 @@ description:
 ## LCS 最长公共子序列
 http://en.wikipedia.org/wiki/Longest_common_substring_problem
 
-
 # Reference
 
 - [dp]

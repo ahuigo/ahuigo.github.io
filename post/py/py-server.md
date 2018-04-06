@@ -116,6 +116,9 @@ app log:
 
     app.logger.setHandler(logging.FileHandler('app.log'))
 
+### profiler
+/demo/py-demo/wsgi_profiler.py
+
 ## nginx反向
 
     location / {

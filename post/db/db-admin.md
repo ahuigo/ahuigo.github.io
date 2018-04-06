@@ -16,8 +16,8 @@ vim /var/lib/pgsql/data/pg_hba.conf
     if centos:
         systemctl start postgresql-10.service
         systemctl enable postgresql-10.service
-        sudo systemctl start postgresql
-        sudo systemctl enable postgresql
+        #sudo systemctl start postgresql
+        #sudo systemctl enable postgresql
     elif osx:
         ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
 
