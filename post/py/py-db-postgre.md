@@ -1,12 +1,15 @@
 # help
 http://initd.org/psycopg/docs/cursor.html
 
-# conn
+# psycopg2
+## conn
 
     conn = psycopg2.connect(database="testdb", user="postgres", password="pass123", host="127.0.0.1", port="5432")
     conn.set_session(readonly=True, autocommit=True)
+    conn.cursor()
 
-# cursor
+## cursor
+postgre 是用cusor 去执行+缓存数据
 
     curosr.executemany(sql, seq_of_parameters)
     curosr.callproc(procname[, parameters])
@@ -15,10 +18,10 @@ http://initd.org/psycopg/docs/cursor.html
     cursor.connection.commit()
     cur.query # return sql query string
 
-## execute
+### execute
 cursor：execute, conn.commit,close 查询fetch 如果没有修改数据，不需要commit
 
-### bind params
+#### bind params
 1. 关键字用：sql.Identifier
 2. 普通数据先自己用%s 拼好，再bind_param
 execute 支持变量绑定
@@ -41,19 +44,20 @@ table name 这些则不支持，应该使用:
         sql.SQL("insert into {} values (%s, %s)") .format(sql.Identifier('my_table')),
         [10, 20])
 
-## select fetch
+### select fetch
 
-### fetch iter
+#### fetch iter
 
     for row in cur: print(row)
 
-### fetchall
+#### fetchall
 
     cur = conn.cursor()
     cur.execute("SELECT id, name, address, salary from COMPANY")
     for row in cur.fetchall()
 
-other:
+##other:
 
     cursor.fetchone()
     cursor.fetchmany([size=cursor.arraysize])
+

@@ -117,21 +117,23 @@ Refer: [tcp-ip](/p/tcp-ip)
 	sysctl net.ipv4.tcp_tw_recycle=1 # 表示开启TCP连接中TIME-WAIT sockets的快速回收
 
 ## ab ApacheBench 
-`ab -h`
 
+    yum install httpd-tools
 	Usage: ab [options] [http[s]://]hostname[:port]/path
 	Options are:
 		-n requests     Number of requests to perform
 		-c concurrency  Number of multiple requests to make at a time
 		-k              Use HTTP KeepAlive feature
-		-r              Don't exit on socket receive errors.
 		-l              Accept variable *document length* (use this for dynamic pages)
 		-m method       Method name
 
+		-r              Don't exit on socket receive errors.
+
 Example:
 
-	 ab -l -n 200 -c 2 http://baidu.com/
-	 ab -l -n 100 -c 2 -H 'Cookie: a=1; b=1'  -H 'Host:weibo.cn' 'http://192.168.0.1/'
+	 ab -r -l -n 200 -c 2 http://baidu.com/
+	 ab -l -n 100 -c 2 -p post.txt -H 'Cookie: a=1; b=1'  -H 'Host:weibo.cn' 'http://192.168.0.1/'
+     post.txt: <(echo 'a=1&b=1')
 
 具体参数
 

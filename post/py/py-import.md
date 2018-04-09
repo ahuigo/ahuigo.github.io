@@ -7,52 +7,24 @@ python 主要是通过import 实现模块化的, 每个文件就是一个package
 		pkg2.py
 	
 必须要电式引入，只会引入`pkg1`和`__init__`, 如下就不会引入`pkg2`\
-```python
-from module import pkg1; 
-from module.pkg1
-from module.pkg1 import func; 
-```
+
+    ```python
+    from module import pkg1; 
+    from module.pkg1
+    from module.pkg1 import func; 
+    ```
 
 # import
-wirte a `hilo.py`:
-
-	def add(a, b):
-		return a+b
-
-Then under interact python envirment:
-
-	import hilo
-	#from . import hilo ;# 仅限__init__.py, 且只能从包外部调用这个文件
-	print hilo.add(1,2)
-	add = hilo.add
-	print add(1,2)
-
-	help(hilo) # What did you see?
-	help(hilo.add)
-	help(add)
-
-import all class as first level   
-
-    from hilo import *
-    print add(1,2)
-
 import `ex47.game`, would find two file:
 
 	ex47/game.py
 	ex47/__init__.py
 
-1. 请注意，每一个包目录下面都会有一个__init__.py的文件，这个文件是必须存在的，否则，Python就把这个目录当成普通目录，而不是一个包。目录名就是包名或叫模块名(python3 后不是必须)
-2. `__init__.py`可以是空文件，也可以有Python代码，因为`__init__.py`本身就是一个模块，而它的模块名就是所在文件夹的名字`ex47`
+1. 每一个包目录下面都会有一个__init__.py的文件，这个文件是必须存在的，否则，Python就把这个目录当成普通目录，而不是一个包。目录名就是包名
 
 ## package and module
 1. pkg/__init__.py is package, 优先级高
 2. mod.py is module, 优先级低
-
-## import as
-from tkinter import messagebox
-import tkinter.messagebox as messagebox
-import numpy as np
-from bs4 import BeautifulSoup as bs
 
 ## import function
 依次从locals, globals, PYTHONPATH查找:
@@ -72,7 +44,7 @@ A目录下必须放`__init__.py`才被被作为pkg 引入import
 	['a', 'b'] is a list of names to emulate ``from A.B import a,b'' : a,b
     [''] fromlist to emulate ``from A.B import *''. : B
 
-	# 得到A.B
+	# 加载A.B，但得到A
     [] fromlist to emulate ``import A.B''. : A
     no fromlist to emulate ``import A.B''. : A
 
@@ -91,26 +63,23 @@ A目录下必须放`__init__.py`才被被作为pkg 引入import
 The . is a shortcut that tells it search in current package(not process's cwd) before rest of the PYTHONPATH:
 
 	from .submodule import sth
+        # 本质是 from __name__.submodule import sth
+        # 直接执行会出问题 from '__main__'.submodule import sth
 
 current working path
 
-	import mod.pkg;   # top file's directory (not process's cwd)
+	import mod.pkg;   # entrance file's directory (not process's cwd) 见sys.path
 	import .mod.pkg;  # current file's directory (not process's cwd)
 	from . import a,b,c ; current file's directory (not process's cwd)
-
-比如 `__init__.py` 中经常用dot
-
-## __name__
-命令行直接执行模块时，`__name__` = `__main__` , import 导入时，它等于模块名, if不会执行
-
-	if __name__=='__main__':
-		print(__name__)
 
 ## path
 此PATH 与 SHELL PATH 是独立的
 
 1. Shell path: `os.environ['PATH']`, `os.getenv('PATH', default_value)`
 2. PATH: sys.path, 会包括 `export PYTHONPATH`, 用于搜索python的模块
+
+### sys.prefix 
+python安装路径: sys.prefix
 
 ### module path
 
@@ -136,8 +105,6 @@ module find path
 	 /usr/local/lib/python3.5/site-packages/pip/_vendor/requests/cookies.py
 
 #### PYTHONPATH
-> PYTHONPATH Augment the default search path for module files. The format is the same as the shell’s PATH
-
 相当于: sys.path.insert(1,'.'): 注意不是0个，第0个是执行入口文件所在的目录, 比如flask/gunicorn 所在的目录
 
 	export PYTHONPATH=. ;# 当前的working 目录

@@ -111,6 +111,13 @@ For very large projects, to decrease size of proj:.
 
 	find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
 
+## MANIFEST.in
+包含目录用graft, 包含文件用include
+
+    graft flaskr/templates
+    graft flaskr/static
+    include flaskr/schema.sql
+
 # Upload to PyPI
 ## first register PyPI simply done by typing:
 ```
@@ -144,11 +151,11 @@ pip install -r requirements.txt
 # cli tool
 可以在setup.py 为script 加入口.
 
-第一种：
+1. 第一种scripts：
 
     scripts=['bin/fileset.py'], # general for non python, exec:`$ fileset.py`
 
-或用python：
+2. entry_points['console_scripts']：
 
 	entry_points = {
         'console_scripts': ['fileset=bin.fileset:main', 'bin2=bin.fin2:main'],
@@ -159,11 +166,4 @@ pip install -r requirements.txt
         flaskr2=bin.fileset2:main
     '''
 
-fileset.py
-
-	app = Flask('xxx')
-	@app.cli.command('ahui')
-	def main(as_module=False):
-		print(sys.argv)
-
-注意，安装`pip install -e .` 之后的再`uninstall` 不是删除bin 目录下的fileset
+注意，安装`pip install -e .` 之后的再`uninstall` 不会删除/usr/bin 目录下的fileset

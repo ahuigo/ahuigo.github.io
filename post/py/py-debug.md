@@ -110,8 +110,6 @@ logging file path(default by current path):
 # 调试
 调试包括print, assert, logging, pdb,ipdb,...
 
-## 用print
-
 ## assert 断言
 
 	def foo(n):
@@ -127,3 +125,18 @@ logging file path(default by current path):
 Python解释器时可以用-O参数来关闭assert：
 
 	$ python3 -O test.py
+
+## gdb
+    $ gdb python3 <pid>
+    > bt
+    > info threads
+
+好像失效了: If you have Python extensions installed, you can enter:
+https://wiki.python.org/moin/DebuggingWithGdb
+
+    (gdb) py-bt
+    (gdb) py-list
+    (gdb) pystack
+
+## pdb
+py/py-debug-pdb.md

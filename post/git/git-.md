@@ -433,6 +433,13 @@ tag 相当于commit 的别名
 	git tag
 	git tag -l 'v1.*'
 
+## del tag
+
+    # git push origin :tagname
+    git push --delete origin tagname
+    # git tag -d tagname
+    git tag --delete tagname
+
 ## add tag
 
 ### add lighted tag

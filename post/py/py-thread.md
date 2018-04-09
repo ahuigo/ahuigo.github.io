@@ -13,7 +13,8 @@ Python的标准库提供了两个模块：`_thread`和`threading`: `_thread`是�
 
 	import time, threading
 	t = threading.Thread(target=loop, name='LoopThread', args = (arg1, arg2, ..))
-	# t.setDaemon(False); # 独立线程, 否则: True 主线程结束后，会默认等待子线程非daemon 结束后，主线程才退出。
+	# t.setDaemon(True); # 设置独立线程, 主线程不会管子线程序而结束(子线程也会强制结束, join()才会等待) 
+                         # 默认主线程结束后，会默认等待子线程(非daemon) 结束后，主线程才退出。
 	t.start()
 	t.join(); 相当于wait
 	threading.current_thread().name
@@ -43,7 +44,7 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 	t = threading.Thread(target=loop, name='LoopThread')
 	t.start()
     t.is_alive()
-	t.join()
+	t.join([timeout])
 	print('thread %s ended.' % threading.current_thread().name)
 
 执行结果如下：
@@ -58,8 +59,31 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 	thread LoopThread ended.
 	thread MainThread ended
 
+## lock
+RLock:
+
+    from threading import RLock, Thread
+    lock = Rlock()
+    lock.acquire()
+    lock.release()
+
+mutex:
+
+    if mutex.acquire(1):
+        if not queue.empty():
+            queue.get()
+        mutex.release()
+
 ## close thread: via thread.Event
 via a threadsafe threading.Event():
+1. 利用wait(), set():
+
+    e = threading.Event()
+    while not e.wait(0.5): # wait 会阻塞0.5秒
+        time.sleep(1)
+    print('end')
+
+2. 利用is_set(), clear():
 
     running = threading.Event()
     running.set()
@@ -74,6 +98,19 @@ via a threadsafe threading.Event():
 
     running.clear()
     thread.join()
+
+or via thread attr:
+
+    def loop():
+        t = threading.currentThread()
+        while getattr(t, "do_run", True):
+            print ("working on %s" % arg)
+            time.sleep(1)
+        print("Stopping as you wish.")
+
+    thread = threading.Thread(target=loop, args=(running,))
+    thread.do_run = False
+
 
 ## communicate via pool.apply_async().get()
 对比下ThreadPool vs Thread

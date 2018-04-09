@@ -7,8 +7,8 @@
 
 # ipdb: ipython + pdb
 
-## sys.excepthook
-创建一个sys.excepthook, 当异常出现时，就调用ipython.core.urltrdb+pdb 调试: (from @Rui L on zhihu)
+## via sys.excepthook
+创建一个sys.excepthook, 当异常出现时，就调用ipython+pdb 调试: (from @Rui L on zhihu)
 ```
 import sys
 
@@ -27,38 +27,38 @@ sys.excepthook = ExceptionHook()
 
 和普通的IPython不同，这个时候可以调用 p (print), up(up stack), down(down stack) 之类的命令。还能创建临时变量，执行任意函数
 
-```s
-$ p3 a.py
-Traceback (most recent call last):
-  File "a.py", line 13, in <module>
-    f2()
-  File "a.py", line 11, in f2
-    f1()
-  File "a.py", line 6, in f1
-    print(10 / n)
-ZeroDivisionError: division by zero
+    ```s
+    $ p3 a.py
+    Traceback (most recent call last):
+    File "a.py", line 13, in <module>
+        f2()
+    File "a.py", line 11, in f2
+        f1()
+    File "a.py", line 6, in f1
+        print(10 / n)
+    ZeroDivisionError: division by zero
 
-> /Users/hilojack/test/a.py(6)f1()
-      4     s = '0'
-      5     n = int(s)
-----> 6     print(10 / n)
-      7     print('next exception KeyError')
-      8     raise KeyError()
+    > /Users/hilojack/test/a.py(6)f1()
+        4     s = '0'
+        5     n = int(s)
+    ----> 6     print(10 / n)
+        7     print('next exception KeyError')
+        8     raise KeyError()
 
-ipdb> up
-> /Users/hilojack/test/a.py(11)f2()
-      9
-     10 def f2():
----> 11     f1()
-     12
-     13 f2()
-> p f2
-<function f2 at 0x10546abf8>
-> f1()
-...
-```
+    ipdb> up
+    > /Users/hilojack/test/a.py(11)f2()
+        9
+        10 def f2():
+    ---> 11     f1()
+        12
+        13 f2()
+    > p f2
+    <function f2 at 0x10546abf8>
+    > f1()
+    ...
+    ```
 ## ipdb
-其实不用手动引入sys.excepthook with ipython+pdb, 直接使用命令就可以, 当发生错误时会自动动停下的:
+其实不用手动引入sys.excepthook (ipython+pdb), 直接使用命令就可以, 当发生错误时会自动动停下的:
 ```
 $ ipython --pdb test.py
 ```
@@ -79,6 +79,26 @@ break  condition  down      j       p     pp      return   unalias  where
 ```
 
 # pdb
+python -m pdb test_pdb.py
+
+    import pdb
+    ....code...
+    pdb.set_trace()      # This introduces a breakpoint
+    ... code...
+
+## example
+run:
+
+    > bt
+        -> caller()
+        /Users/hilojack/test/a.py(7)caller()
+        -> a()
+        > /Users/hilojack/test/a.py(3)a()
+        -> time.sleep(1)
+    > help
+    # list code 
+    > list
+
 pdb，让程序以单步方式运行，可以随时查看运行状态。
 
 	s = '0'

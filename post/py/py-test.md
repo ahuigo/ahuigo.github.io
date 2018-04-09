@@ -43,14 +43,15 @@ class rule:
             assert hasattr(x, 'check')
 
         def setup_class(cls):
-            print('setup_class')
+            print('setup_class init')
 
         def teardown_class(cls):
-            print('teardown_class')
+            print('teardown_class: end')
 
 
 ## run test
 
+    py -m pytest
     py.test               # run all tests below current dir(test_*.py|*_test.py), or *test** directory
     py.test test_mod.py   # run tests in module
     py.test somepath      # run all tests below somepath

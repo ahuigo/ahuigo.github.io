@@ -18,6 +18,13 @@ http://docs.peewee-orm.com/en/latest/peewee/quickstart.html
 
 	db = SqliteDatabase('people.db')
 
+    from playhouse.pool import PooledPostgresqlExtDatabase
+    db = PooledPostgresqlExtDatabase(
+        'my_database',
+        max_connections=8,
+        stale_timeout=300,
+        user='postgres')
+
 	class Person(Model):
 		name = CharField()
 		birthday = DateField()
@@ -33,16 +40,22 @@ http://docs.peewee-orm.com/en/latest/peewee/quickstart.html
 		class Meta:
 			database = db # this model uses the "people.db" database
 
-	# connect
+	# auto connect
 	db.connect()
-	Person.create_table()
-	db.create_tables([Person, Pet])
 
-### sql
+### create table
+    if not Person.table_exists():
+        # Person.create_table()
+        Person._meta.database.create_tables([Person, Pet])
+    with db.atomic() as tr:
+        data = [{'name':'ahui'}]
+        Person.insert_many(data).upsert().execute()
+
+### pure sql
 Peewee returns a cursor. Then you can use the db-api 2 to iterate over it:
 
 	db = Tweets._meta.database
-	cursor = db.execute_sql('select * from tweets;')
+	cursor = db.execute_sql('select * from tweets where id=%s;', [123])
 	for row in cursor.fetchall():
 		print row
 
@@ -55,8 +68,8 @@ Peewee returns a cursor. Then you can use the db-api 2 to iterate over it:
 
 	User.insert(username='Mickey').execute()
 	User.create(username='Charlie')
-
-	User(username='Bob').save() # 这个无效, 不要用
+    #以下 这个无效, 不要用
+	User(username='Bob').save() 
 
 ### delete.execute()
 

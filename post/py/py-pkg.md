@@ -11,6 +11,8 @@ wheel：Python 分发的新标准，意在取代 eggs。官网
     wget https://bootstrap.pypa.io/get-pip.py -O - | python3
     pip install -U pip # upgrade
 
+python安装路径: sys.prefix
+
 ## cache
 
 	rm -r ~/Library/Caches/pip

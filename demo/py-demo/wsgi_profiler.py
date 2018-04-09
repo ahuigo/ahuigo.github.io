@@ -15,7 +15,7 @@ print("""
 # ** USAGE:
 $ PROFILE_LIMIT=100 gunicorn -c ./wsgi_profiler_conf.py wsgi
 # ** TIME MEASUREMENTS ONLY:
-$ PROFILER=0 gunicorn -c ./wsgi_profiler_conf.py wsgi
+$ PROFILER=0 gunicorn -c ./wsgi_profiler.py wsgi
 """
 )
 
@@ -34,7 +34,6 @@ def profiler_summary(worker, req):
 
     logging.error("\n[%d] [INFO] [%s] URI %s" % (worker.pid, req.method, req.uri))
     logging.error("[%d] [INFO] %s" % (worker.pid, s.getvalue()))
-
 
 def pre_request(worker, req):
     worker.start_time = time.time()

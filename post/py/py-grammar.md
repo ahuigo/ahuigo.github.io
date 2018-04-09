@@ -161,7 +161,8 @@ with 可以捕获异常, 类必须支持`__enter__, __exit__`相当于文件open
 		10/0
 		print('do sth...')
 
-利用with 断言指定类型的Error，比如通过d['empty']访问不存在的key时，断言会抛出KeyError：
+1. exc_tb 是错误发生位置
+2. 利用with 断言指定类型的Error，比如通过d['empty']访问不存在的key时，断言会抛出KeyError：
 
 	with self.assertRaises(KeyError):
 		value = d['empty']

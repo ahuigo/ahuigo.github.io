@@ -60,7 +60,6 @@ logging file path(default by current path):
 
 ## format message
 
-    BASIC_FORMAT = "%(levelname)s:%(name)s:%(message)s"  
     logging.basicConfig(format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s', 
         filename='a.log',
         level=logging.DEBUG)
@@ -70,10 +69,14 @@ logging file path(default by current path):
 
     %(asctime)s	Human-readable time:
     %(created)f time.time():
-    %(lineno)d
-    %(filename)s
+    %(filename)s %(lineno)d
     %(funcName)s
     %(thread)d
+
+    %(pathname)s
+    %(module)s
+
+'''))
 
 ### format date
 The default format for date/time display (shown above) is ISO8601.
@@ -144,13 +147,15 @@ turn off propagate:
 
 ### loggers level
 effective level is used to decide  whether to process an event, which is *inheritance* parental level.
-```
->> b=logging.getLogger('b')
-<Logger b (WARNING)>
->>> b.setLevel(20)
->>> c=logging.getLogger('b.c')
-<Logger b.c (INFO)>
-```
+getLogger 是单态的
+
+    ```python
+    >> b=logging.getLogger('b')
+    <Logger b (WARNING)>
+    >>> b.setLevel(20)
+    >>> c=logging.getLogger('b.c')
+    <Logger b.c (INFO)>
+    ```
 
 ### loggers curd
 
@@ -211,6 +216,7 @@ see: https://docs.python.org/3.6/howto/logging.html#useful-handlers
 5. SocketHandler:
 6. StreamHandler: logging.StreamHandler(stream=sys.stderr) # open(filename)
 7. null: logging.NullHandler()
+8. flask 的smtpHandler
 
 example add stdout:
 

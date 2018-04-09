@@ -72,22 +72,31 @@ If an error is raised in `__init__` or `__enter__` then the code block is never 
 ## Generators contextmanager(enter: next(g), exit: StopIteration)
 Simple context managers can also be written using Generators and the contextmanager decorator:
 Note: 因为只执行一次next, 所以只能用一个yield
-```
-from contextlib import contextmanager
-@contextmanager
-def tag(name):
-    print("<%s>" % name)
-    yield
-    print("</%s>" % name)
 
-with tag("h1"):
-   print("foo")
+    from contextlib import contextmanager
+    @contextmanager
+    def tag(name):
+        print("<%s>" % name)
+        yield
+        print("</%s>" % name)
 
-output:
-<h1>
-foo
-</h1>
-```
+    with tag("h1"):
+    print("foo")
+
+    output:
+    <h1>
+    foo
+    </h1>
+
+## check context
+
+    from flask from has_request_context, has_app_context
+    has_request_context()
+
+原理:
+1. __enter__ 把app_ctx=LocalStack() 放到globals.py 中
+2. app_ctx.top in not None 判断当前ctx
+3. __exit__ 中stack.pop 出ctx
 
 ## context with file
 

@@ -7,10 +7,18 @@ description:
 # Preface
 
 # html
+
+## emtities
+encodeEntities - decodeEntities:
+
+    Markup.escape('<blink>hacker</blink>')
+
+via html
+
 	import html
 	print(html.unescape('&pound;682m'))
 
-in bs4, 自动转：
+via bs4, 自动转：
 
 	BeautifulSoup("<p>&pound;682m</p>")
 	<html><body><p>£682m</p></body></html>

@@ -1,6 +1,11 @@
 # shell command
 $ sqlite3
 
+## import db
+sqlite3 /tmp/flaskr.db < schema.sql
+
+## client
+
 ### .show 默认配置
 
     sqlite>.show

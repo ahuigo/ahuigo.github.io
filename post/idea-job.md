@@ -1,6 +1,7 @@
 # 接活网站： 
 1. http://odesk.com
 2. http://freelancer.com
+https://www.upwork.com/?r
 3. http://elance.com
 
 然后谈谈入行准备：

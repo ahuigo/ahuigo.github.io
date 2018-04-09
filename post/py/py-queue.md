@@ -6,7 +6,21 @@
 	q.put(any_type_value)
 	q.get(True)	 # io阻塞
 	q.get(False) # io非阻塞
+	q.get(timeout=2) # io阻塞
 	time.sleep(random.random())
+
+    q.qsize()
+    q.empty()
+    q.full()
+
+
+## mutex
+threading要记得加锁
+
+    if mutex.acquire(1):
+        if not queue.empty():
+            queue.get()
+        mutex.release()
 
 ## asyncio
 
@@ -20,7 +34,6 @@ method:
 
     get_nowait()
         Remove and return an item from the queue.
-        Return an item if one is immediately available, else raise QueueEmpty.
 
 clear queue if queue if full
 

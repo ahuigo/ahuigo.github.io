@@ -37,17 +37,7 @@ see [/p/py/async-asyncio](/p/py/py-async-asyncio)
 2. 边缘触发：如果文件描述符自上次来的时候有了新的IO活动(新的输入)，触发通知
 
 #### epool
-基于事件驱动的(像epool) 衍生了大量的框架：
-Tornado:
-```
-import tornado.ioloop, tornado.web
-class MainHander(tornado.web.RequestHandler):
-    def get(self):
-        self.write('hello,ahui')
-app = tornado.web.Application([r'/', MainHander])
-app.listen(8888)
-tornado.ioloop.IOLoop.current().start()
-```
+基于事件驱动的(像epool) 衍生了大量的框架, 比如 Tornado。
 event-based library:
 1. libevent, libev, libuv,greenlet等: 这些库用于实现协程等
     1. eventlet(python2 时协程库)
@@ -81,6 +71,7 @@ event-based library:
 # nginx+gunicorn
 
 ## gunicorn
+比起uWSGI来说，Gunicorn对于“协程”也就是Gevent的支持会更好更完美。
 
     --log-level "debug" 
     PYTHONUNBUFFERED=TRUE
@@ -100,12 +91,10 @@ rocket.py:
 
 run:
 
-    $ gunicorn rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
+    $ gunicorn rocket:app -w 2 -p rocket.pid -b 0.0.0.0:8000 -D
     $ gunicorn --pythonpath . rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
     $ PYTHONPATH=. gunicorn rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
-    $ cat rocket.pid
-    63101
-    $ kill -cat rocket.pid
+    $ kill -9 `cat rocket.pid`
 
 ### log
 将启动时的python grammar error, exception 都记录到app.gun.log
@@ -116,14 +105,32 @@ app log:
 
     app.logger.setHandler(logging.FileHandler('app.log'))
 
+### gevent
+gunicorn 默认使用同步阻塞的网络模型(-k sync)，改用高并发的：gevent或meinheld 等worker class
+
+    gunicorn -k gevent app:app
+        -k aiohttp.worker.GunicornWebWorker
+
+### conf
+
+    $ gunicorn -c gun.conf app:app
+    import os
+    bind = '127.0.0.1:5000'
+    workers = 4
+    backlog = 2048
+    worker_class = "sync"
+    debug = True
+    proc_name = 'gunicorn.proc'
+    pidfile = '/tmp/gunicorn.pid'
+    logfile = '/var/log/gunicorn/debug.log'
+    loglevel = 'debug'
+
+### pstree
+    pstree -alp
+    ├─gunicorn,27763 /usr/bin/gunicorn cli.sub:app --reload -t 7200 -D
+    │   └─gunicorn,27768 /usr/bin/gunicorn cli.sub:app --reload -t 7200 -D
+    │       ├─{gunicorn},27786 <thread>
+    │       └─{gunicorn},27787 <thread>
+
 ### profiler
 /demo/py-demo/wsgi_profiler.py
-
-## nginx反向
-
-    location / {
-                proxy_pass http://127.0.0.1:8000;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }

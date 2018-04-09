@@ -11,6 +11,7 @@
     print "=> elasped lpush: %s s" % t.secs
 
 ## profile
+### for code
 用标准库里面的profile或者cProfile(cProfile性能更好)
 
     import cProfile
@@ -24,14 +25,28 @@
     p.sort_stats('time') # 基于对time排序
     p.print_stats(4)    # 打印出前4个
 
+### for file
 cProfile 执行整个脚本:
 
     python -m cProfile -o out.pstats prime.py arg1 arg2
     python -m profile -o out.pstats prime.py arg1 arg2
+    python -m cProfile -o out.pstats $(which py.test)
 
-还可以使用一些图形化工具，比如 gprof2dot 来可视化分析 cProfile 的诊断结果: 火焰图
+可用以下脚本分析：
+```
+    import pstats
+    p = pstats.Stats('out.pstats')
+    p.strip_dirs()
+    #p.sort_stats('cumtime')
+    p.sort_stats('time') # 基于对time排序
+    p.print_stats(50)
+```
 
-    gprof2dot.py -f pstats out.pstats | dot -Tpng -o output.png
+还可以使用一些图形化工具，比如 gprof2dot 来可视化分析 cProfile 的诊断结果: 火焰图,
+用dot 生成调用结构图(循环调用这种最麻烦了)
+
+    pip install gprof2dot
+    gprof2dot -f pstats out.pstats | dot -Tpng -o output.png
 
 ## line_profiler 逐行计时和分析执行的频率
 pip install line_profiler

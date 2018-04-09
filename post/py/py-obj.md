@@ -28,6 +28,14 @@ pythone 一切皆对象: var, class, metaclass
 	print(MyStuff.name); # hilo
 	print(obj.name);     # hilo
 
+## bound method
+
+    class A: pass
+    a=A()
+    def bar(): 
+        print('bar')
+    a.bar=bar.__get__(a)
+
 ## static value for object
 > `obj.__class__ === type(obj). type(self) === self.__class === __class__`
 static value 在不同的对象/类里, 是隔离的

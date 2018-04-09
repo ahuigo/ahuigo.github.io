@@ -10,9 +10,7 @@ description:
 - 调试工具之GDB by 信海龙
 http://www.bo56.com/%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B9%8Bgdb/#0-tsina-1-88680-397232819ff9a47a7b7e80a40613cfe1
 
-以调试php 为例子
-
-文件名为test.php，代码如下：
+以调试php/python 为例子, 文件名为test.php，代码如下：
 
 	<?php
 	echo "hello \n";
@@ -37,7 +35,6 @@ http://www.bo56.com/%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B9%8Bgdb/#0-tsina-1-
 	......
 
 启动的时候指定php程序的路径。
-
 使用set args 命令指定php命令的参数。
 
 使用r命令开始执行脚本。r即为run的简写形式。也可以使用run命令开始执行脚本。
