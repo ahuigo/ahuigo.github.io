@@ -539,6 +539,9 @@ ython内置的sorted()函数就可以对list进行排序：
 	lst.sort(key=lambda x: (x < 0, abs(x)))
 
 # decorator, 装饰器
+作用：
+1. 为函数添加功能，特别是上下文能力
+2. 为方法添加上下文能力
 
     # func(MyClass)
     @func
@@ -660,7 +663,7 @@ from functools import singledispatch
 from functools import wraps
 
 ## class decorator
-除了函数版装饰器，还有类装饰器
+除了函数版装饰器，还有类装饰器(就当函数来使用就行)
 
     class make_bold(object):
         def __init__(self, func):
@@ -686,6 +689,9 @@ run
 
     >>> get_content = make_bold(get_content)
     Initialize
+
+## 内置装饰器
+@staticmethod、@classmethod、@property
 
 # partial function,偏函数
 用于定制函数, 支持`partial(func, *list, **kw)`

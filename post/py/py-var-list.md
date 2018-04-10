@@ -128,7 +128,7 @@ which will return the first match or raise a StopIteration if none is found. Alt
 	[(1, 9), (3, 12), (5, 13)]
 
 	l = [(1,2), (3,4), (8,9)]
-	>>> zip(*l)
+	>>> zip(*l) # matrix转置
 	[(1, 3, 8), (2, 4, 9)]
 
 

@@ -19,3 +19,5 @@ futex 函数：
 2. queue 的 get() 是堵塞: 多个线程同时获取queue.get(), 没有获取到的线程就会被get 阻塞
     1. 可以用queue.get(timeout=2)
     1. queue.get() 前，mutex.acquire(1) 加锁+先判断 queue size
+3. RLock().acquire()
+    RLock().acquire(block=True)

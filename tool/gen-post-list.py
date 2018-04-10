@@ -32,10 +32,9 @@ class gentree():
 
 index = {
     "site_name": "ahui132",
-    "copyright": "SYSCDE",
+    "copyright": "CC",
     "cates": [
-        {"name": "tech", "text":"学习"},
-        {"name": "life", "text":"生活"}
+        {"name": "tech", "text":"0x00"}
     ],
     'tree': gentree().gen_dir(),
 }

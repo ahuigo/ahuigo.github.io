@@ -276,6 +276,7 @@ systemctl list-unit-files命令用于列出所有配置文件: `*.service, *.tar
 	# 列出指定类型的配置文件
 	$ systemctl list-unit-files --type=service
 	$ systemctl list-unit-files --type=target
+	$ systemctl list-unit-files --type timer ; # 定时器单元，可以提供crontab的功能
 
 这个列表显示每个配置文件的状态，一共有四种。
 
@@ -341,6 +342,27 @@ systemctl cat命令可以查看配置文件的内容, 分不同的区块
 	RequiredBy：它的值是一个或多个 Target，当前 Unit 激活时，符号链接会放入/etc/systemd/system目录下面以 Target 名 + .required后缀构成的子目录中
 	Alias：当前 Unit 可用于启动的别名
 	Also：当前 Unit 激活（enable）时，会被同时激活的其他 Unit
+
+###  Timer 区块定时任务
+见ruanyifeng 例子为： /usr/lib/systemd/system目录里面，新建一个mytimer.timer
+
+    [Unit]
+    Description=Runs mytimer every hour
+
+    [Timer]
+    OnUnitActiveSec=1h
+    Unit=mytimer.service
+
+    [Install]
+    WantedBy=multi-user.target
+
+比如crontab 它支持更丰富的定时条件:
+
+    OnUnitActiveSec=*-*-* 02:00:00表示每天凌晨两点执行，
+    OnUnitActiveSec=Mon *-*-* 02:00:00表示每周一凌晨两点执行
+    OnUnitInactiveSec： 定时器上次关闭后多少时间，再次执行
+    OnBootSec：系统启动后，多少时间开始执行任务
+    ....
 
 ### Service 区块：启动行为
 `[Service]`区块用来 Service 的配置，只有 Service 类型的 Unit 才有这个区块。它的主要字段如下。

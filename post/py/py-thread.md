@@ -31,8 +31,9 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 
 	import time, threading
 
-	def loop():
+	def loop(*args, **kw):
 		print('thread %s is running...' % threading.current_thread().name)
+        print(args)
 		n = 0
 		while n < 5:
 			n = n + 1
@@ -41,7 +42,7 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 		print('thread %s ended.' % threading.current_thread().name)
 
 	print('thread %s is running...' % threading.current_thread().name)
-	t = threading.Thread(target=loop, name='LoopThread')
+	t = threading.Thread(target=loop, name='LoopThread', args=[1,2,3], kwargs={'v':2})
 	t.start()
     t.is_alive()
 	t.join([timeout])
@@ -51,6 +52,7 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 
 	thread MainThread is running...
 	thread LoopThread is running...
+    [1,2,3]
 	thread LoopThread >>> 1
 	thread LoopThread >>> 2
 	thread LoopThread >>> 3
@@ -64,7 +66,7 @@ RLock:
 
     from threading import RLock, Thread
     lock = Rlock()
-    lock.acquire()
+    lock.acquire(block=True)
     lock.release()
 
 mutex:
@@ -73,6 +75,8 @@ mutex:
         if not queue.empty():
             queue.get()
         mutex.release()
+
+在c语言里面就是用的futex
 
 ## close thread: via thread.Event
 via a threadsafe threading.Event():

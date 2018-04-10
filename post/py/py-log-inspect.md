@@ -26,10 +26,14 @@ This displays:
 stack example 2: print_stack(), format_stack()
 
 	import traceback
-
 	traceback.print_stack([file=sys.stderr]);
 	#or
     stack_str = ''.join(traceback.format_stack())
+
+## sys.exc_info
+    traceback.format_exc()
+    traceback.print_exc()
+    err = sys.exc_info()[1]
 
 # inspect
 
