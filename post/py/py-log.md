@@ -2,7 +2,7 @@
 - logging
 https://docs.python.org/3.4/howto/logging.html
 
-# autolog: excepthook
+## autolog: excepthook
 
     import sys
     >>> def foo(exctype, value, tb):
@@ -13,6 +13,14 @@ https://docs.python.org/3.4/howto/logging.html
     ...
     >>> sys.excepthook = foo
 
+## Logging to a single file from multiple processes
+1. logging is thread-safe(这个可能要感谢GIL)
+2. logging to a single file from multiple processes is not supported
+    1. 不过如果是posix 兼容的系统，append < buf_size就是atomic, linux下应该是: 4096bytes
+
+方案：
+1. 独立的单进程socketHandler写log
+2. 加锁, 甚至文件锁
 
 # logging
 logging，和assert比，logging不会抛出错误，而且可以输出到文件：

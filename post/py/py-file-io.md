@@ -69,7 +69,7 @@ string 与 bytes 相互转换
 	>>> bytes([0, 1, 97])
 	b'\x00\x01a'
 
-# url
+# http io
 
 	from urllib import urlopen
 
@@ -84,14 +84,6 @@ readlines:
 
 	for line in urlopen(url).readlines():
 		print line.strip()
-
-# argv
-
-	from sys import argv # import module "sys" and objects: argv
-	script, arg1, arg2 = argv
-
-	import sys;
-	sys.argv
 
 # std io
 

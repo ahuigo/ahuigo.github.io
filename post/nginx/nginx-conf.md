@@ -78,6 +78,8 @@ nginx: the configuration file /usr/local/nginx//conf/nginx.conf syntax is ok
 
             location ~* "/proxy" {
                 proxy_pass http://host:8080;
+                proxy_set_header Host            $host;
+                proxy_set_header X-Forwarded-For $remote_addr;
             }
 
             # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000

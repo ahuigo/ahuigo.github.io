@@ -20,6 +20,10 @@ use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_s
 3. 正常模式下eval 内的变量作用域取决于所在的作用域。strict 模式下，eval 本身是一个作用域
 4. function 下的this 是undefined, 而new 生成的obj 内的this 指向自己
 
+## define variable
+1. let name 只在代码块中有效
+1. var name 只在作用域中有效
+
 ## 禁止删除变量
 严格模式下无法删除变量。只有configurable设置为true的对象属性，才能被删除。
 

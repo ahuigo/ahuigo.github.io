@@ -157,6 +157,18 @@ current file's dir:
     print sys.stdin.read()
 	print open('a.php').read(); //cat a.php
 
+## lock
+
+    import fcntl
+    new_entry = "foobar"
+    with open("/somepath/somefile.txt", "a") as g:
+        fcntl.flock(g, fcntl.LOCK_EX)
+        g.write(new_entry)
+        fcntl.flock(g, fcntl.LOCK_UN)
+
+### append is atomic?
+对于POSIX-compliant components:
+1. under the size of 'PIPE_BUF' is supposed to be atomic. (linux 4096)
 
 ## IOError
 

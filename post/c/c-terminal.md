@@ -100,7 +100,7 @@ echo  -tostop -echoprt echoctl echoke -flusho -extproc.....
 
 内核中处理终端设备的模块包括硬件驱动程序和线路规程（Line Discipline）。
 
-![](/img/inux-c-terminal-kernel-mode.png)
+![](/img/linux-c-terminal-kernel-mode.png)
 
 终端设备驱动程序负责实际硬件的读写，比如：
 - 从键盘读取字符, 向显示器输出字符

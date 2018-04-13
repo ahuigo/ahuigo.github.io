@@ -68,6 +68,27 @@ event-based library:
     2. pip3 install gunicorn: gunicorn 本身就遵守wsgi的web server. 可搭配请求转给worker: flask/django，也可单独使用
     gunicorn --reload -b 127.0.0.1:8800 -k aiohttp.worker.GunicornWebWorker -w 1 -t 60 --reload app:app
 
+# greenlet
+gevent 是基于greenlet， greenlet封装了libevent+yield 的事件循环高层同步API, 所以它是基于生成器的
+
+    >>> from greenlet import greenlet
+    >>> def foo1():
+    ...   print "foo1.1"
+    ...   gr2.switch()
+    ...   print "foo1.2"
+    ... 
+    >>> def foo2():
+    ...   print "foo2.1"
+    ...   gr1.switch()
+    ...   print "foo2.2"
+    ... 
+    >>> gr1 = greenlet(foo1)
+    >>> gr2 = greenlet(foo2)
+    >>> gr1.switch()
+    foo1.1
+    foo2.1
+    foo1.2
+
 # nginx+gunicorn
 
 ## gunicorn
@@ -106,10 +127,20 @@ app log:
     app.logger.setHandler(logging.FileHandler('app.log'))
 
 ### gevent
-gunicorn 默认使用同步阻塞的网络模型(-k sync)，改用高并发的：gevent或meinheld 等worker class
+http://xiaorui.cc/2017/02/16/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3uwsgi%E5%92%8Cgunicorn%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E4%B8%8A/
+
+gunicorn 默认使用同步阻塞的网络模型(-k sync)，改用高并发的：gevent(epoll 监听模型)或meinheld 等worker class
 
     gunicorn -k gevent app:app
         -k aiohttp.worker.GunicornWebWorker
+
+gevent 是协程+异步IO的库(epoll)
+1. gevent 的采用的epoll 监听模型，flask 本身是单进程单线程的，gevent通过epoll 实现对多事件的监听
+2. 每个连接由gevent的一个协程处理：从accept、parse http protocol、response 都是在一个gevent协程里面专属app=Flask('')处理
+3. gevent 要求业务是非阻塞型的: `while True: checkFd then yield`, 或者 兼容gevent的patch
+    4. time.sleep() 支持gevent patch
+        from gevent import monkey
+        monkey.patch_all()
 
 ### conf
 

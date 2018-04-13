@@ -39,7 +39,8 @@ function Controller(callback) {
     var models = {};
     var views = Array.prototype.slice.call(document.querySelectorAll('[bind]'), 0);
     views.forEach(function(view) {
-        var modelName = view.getAttribute('bind'); (models[modelName] = models[modelName] || new Model()).bind(view);
+        var modelName = view.getAttribute('bind'); 
+        (models[modelName] = models[modelName] || new Model()).bind(view);
     });
     callback.call(this, models);
 }

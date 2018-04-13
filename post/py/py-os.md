@@ -8,10 +8,9 @@ description:
 
 # platform
 
-	import platform
-	system = platform.system()
-	if system == 'Darwin':  # 如果是Mac OS X
-
+    from sys import platform
+	if platform == 'Darwin':  # 如果是Mac OS X
+        linux linux2 win32 win64
 
 # os
 

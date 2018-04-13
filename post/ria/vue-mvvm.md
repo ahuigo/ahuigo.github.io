@@ -1,7 +1,5 @@
 # Preface
-https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143233918656129f4ad3ac29e4f728dc72b5d2368215a000
-
-和后端结合的MVC模式已经无法满足复杂页面逻辑的需要了:
+和后端结合的MVC模式已经无法满足复杂页面逻辑的需要了, 我们需要双向动态绑定:
 1. 像smarty 这种mvc 模式，JavaScript代码与后端代码绑得非常紧密:  其根本原因在于负责显示的HTML DOM模型与负责数据和交互的JavaScript代码没有分割清楚。
 2. 所以，新的MVVM：Model View ViewModel模式应运而生。 MVVM最早由微软提出来，它借鉴了桌面应用程序的MVC思想，
 
@@ -30,6 +28,3 @@ View是纯HTML：
 
 # ViewModel
 可以采用已有许多成熟的MVVM框架的 ViewModel ，例如AngularJS，KnockoutJS, Vue等
-
-## 双向绑定
-

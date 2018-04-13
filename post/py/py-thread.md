@@ -61,7 +61,28 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 	thread LoopThread ended.
 	thread MainThread ended
 
-## lock
+## lock thread
+如果线程要修改全局变量，为防collision 冲突，可以加lock
+
+Lock:
+
+	balance = 0
+	//创建一把锁
+	lock = threading.Lock()
+
+	def run_thread(n):
+		for i in range(100000):
+			# 先要获取锁:
+			lock.acquire()
+			try:
+				# 放心地改吧:
+				balance +=n
+				balance -=n
+			finally:
+				# 改完了一定要释放锁:
+				lock.release()
+
+
 RLock:
 
     from threading import RLock, Thread
@@ -103,7 +124,7 @@ via a threadsafe threading.Event():
     running.clear()
     thread.join()
 
-or via thread attr:
+3. close via thread attr:
 
     def loop():
         t = threading.currentThread()
@@ -139,26 +160,6 @@ e.g.
 
     async_result = pool.apply_async(foo, ('world', 'foo')) # tuple of args for foo
     print(async_result.get()) # 阻塞+get
-
-# lock thread
-如果线程要修改全局变量，为防collision 冲突，可以加lock
-线程因为获得了锁，因此其他线程不能同时执行change_it()，只能等待，直到锁被释放后，其它线程获得该锁以后才能改。
-
-	balance = 0
-	//创建一把锁
-	lock = threading.Lock()
-
-	def run_thread(n):
-		for i in range(100000):
-			# 先要获取锁:
-			lock.acquire()
-			try:
-				# 放心地改吧:
-				balance +=n
-				balance -=n
-			finally:
-				# 改完了一定要释放锁:
-				lock.release()
 
 # 多核CPU
 打开Mac OS X的Activity Monitor，或者Windows的Task Manager，都可以监控某个进程的CPU使用率。
@@ -205,8 +206,38 @@ GIL是Python解释器设计的历史遗留问题，通常我们用的解释器�
 1. 那只能通过C扩展来实现，不过这样就失去了Python简单易用的特点。
 2. 不过，也不用过于担心，Python虽然不能利用多线程实现多核任务，但可以通过多进程实现多核任务。多个Python进程有各自独立的GIL锁，互不影响
 
-# ThreadLocal
-在线程中传递归局部变量(全局变量要加锁)，传递起来很麻烦：
+# sleep
+sleep 线程级的，只会停止当前线程: 在waiter sleep时，worken继续工作
+
+    class worker(Thread):
+        def run(self):
+            for x in xrange(0,11):
+                print x
+                time.sleep(1)
+
+    class waiter(Thread):
+        def run(self):
+            for x in xrange(100,103):
+                print x
+                time.sleep(5)
+
+    def run():
+        worker().start()
+        waiter().start()
+
+
+# share variable
+1. 通过thread attr:
+    t = Thread(...)
+    t.a = 2;
+    threading.current_thread().a
+2. 通过dict[thread_key]
+3. 通过queue
+
+
+## ThreadLocal
+线程也有属于自己的子全局变量，否则:
+每个函数一层一层调用都这么传参数？太麻烦了!
 
 	def thread_student(name):
 		std = Student(name)
@@ -218,9 +249,8 @@ GIL是Python解释器设计的历史遗留问题，通常我们用的解释器�
 		do_subtask_1(std)
 		do_subtask_2(std)
 
-每个函数一层一层调用都这么传参数？太麻烦了!
 
-如果用一个全局dict存放所有的Student对象，然后以thread自身作为key获得线程对应的Student对象如何？
+由于`dict[key]=value`是线程安全的, 可用一个全局dict存放所有的Student对象，然后以thread自身作为key获得线程对应的Student对象如何？
 
 	global_dict = {}
 
@@ -269,11 +299,12 @@ ThreadLocal应运而生，不用查找dict，ThreadLocal帮你自动做这件事
 
 ThreadLocal最常用的地方:
 
+0. 线程范围内的全局变量
 1. 就是为每个线程绑定一个数据库连接，HTTP请求，用户身份信息等，这样一个线程的所有调用到的处理函数都可以非常方便地访问这些资源。
-2. 父线程与子线程通信
 
 ## communicate via Queue
 Queue  is thread safe
 
-# signal for thread
+## signal for thread
 signal.pthread_kill(thread_id, signum)
+

@@ -135,6 +135,12 @@ Python should adopt the C3 Linearization algorithm described in the paper "A Mon
 3. 如果出现在其它某些列表的*非头部*, 选它则会违反 Monotonic; 需要回到步骤1按顺序检查*其它非头部*的列表
 4. 重复上述步骤，直至列表为空    
 
+    >>> class X(object): pass
+    >>> class Y(object): pass
+    >>> class A(X, Y): pass
+    >>> class B(Y, X): pass
+    >>> class C(A, B): pass
+
 我们看看 C 的线性化结果：
 
 	L[C] = [C] + merge(L[A], L[B], [A], [B])
