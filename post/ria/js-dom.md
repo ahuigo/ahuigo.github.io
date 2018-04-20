@@ -478,8 +478,9 @@ Chrome，Safari – Chrome和Safari中网络选项还展示了两项额外的信
 	onmouseover 和 onmouseout 事件
 	onmousedown、onmouseup
 	onfocus
+    onkeyup, onkeydown
 
-### eventNamespace
+### eventNamespace(jquery)
 This is a namespaced event and the documentation [docs] describes it pretty well:
 
 	$(document).on('click.modal.data-api', '[data-toggle="modal"]', function (e) {
@@ -493,7 +494,6 @@ A click event handler attached via that string could be removed with `.off("clic
 
 > Namespaces are similar to CSS classes;
 > Namespaces beginning with an underscore `_` are reserved for jQuery's use.
-
 
 ### input,change
 
@@ -605,7 +605,7 @@ Jquery
 
 ### add listener
 
-	//监听顺序
+	//监听顺序FIFO
 	btn1Obj.addEventListener("click",method1,false);
 	btn1Obj.addEventListener("click",method2,false);
 	btn1Obj.addEventListener("click",method3,false);
@@ -633,7 +633,10 @@ Jquery
 	e.target://In most Explore e.target?e.target:e.srcElement
 	e.fromElement(e.relatedTarget): e.toElement(e.target) //for mouse event(from mouseout to mouserover)
 
-### remove listener
+### add/remove event listener
+
+	target.addEventListener('click', listener, false);
+	target.removeEventListener('click', listener, false);
 
 ### stop
 
@@ -652,6 +655,17 @@ Jquery
 		event.toElement,
 		event.preventDefault(), //阻止默认的事件处理，比如href
 	}
+
+## key:
+
+    e.keyCode == e.which:
+         16-shift, 17-ctrl, 18-alt
+    e.ctrlKey, e.altKey
+
+    document.addEventListener('keydown', function(e){
+        isShiftKey = window.event ? window.event.shiftKey : e.shiftKey
+        console.log(e.which,e.keyCode,e.ctrlKey, isShiftKey)
+     })
 
 ### trigger event
 
@@ -678,11 +692,6 @@ Jquery
 	　　});
 	　　return this;
 	};
-
-### add/remove event listener
-
-	target.addEventListener('click', listener, false);
-	target.removeEventListener('click', listener, false);
 
 # Dom HTML
 

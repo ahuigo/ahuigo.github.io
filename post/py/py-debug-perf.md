@@ -120,53 +120,52 @@ cPython解释器使用引用计数做为记录内存使用的主要方法.
 
 运行python 运行时，并使用gdb 调试查看 最普遍的对象是哪些？
 
-```
-(pdb) import objgraph
-(pdb) objgraph.show_most_common_types()
+    ```
+    (pdb) import objgraph
+    (pdb) objgraph.show_most_common_types()
 
-MyBigFatObject             20000
-tuple                      16938
-function                   4310
-dict                       2790
-wrapper_descriptor         1181
-builtin_function_or_method 934
-weakref                    764
-list                       634
-method_descriptor          507
-getset_descriptor          451
-type                       439
-```
-哪些对象已经被添加或删除？
+    MyBigFatObject             20000
+    tuple                      16938
+    function                   4310
+    dict                       2790
+    wrapper_descriptor         1181
+    builtin_function_or_method 934
+    weakref                    764
+    list                       634
+    method_descriptor          507
+    getset_descriptor          451
+    type                       439
+    ```
+    哪些对象已经被添加或删除？
 
 我们也可以查看两个时间点之间那些对象已经被添加或删除：
-```
-(pdb) import objgraph
-(pdb) objgraph.show_growth()
-.
-.
-.
-(pdb) objgraph.show_growth()   # this only shows objects that has been added or deleted since last show_growth() call
 
-traceback                4        +2
-KeyboardInterrupt        1        +1
-frame                   24        +1
-list                   667        +1
-tuple                16969        +1
-```
+    ```
+    (pdb) import objgraph
+    (pdb) objgraph.show_growth()
+    .
+    .
+    .
+    (pdb) objgraph.show_growth()   # this only shows objects that has been added or deleted since last show_growth() call
+
+    traceback                4        +2
+    KeyboardInterrupt        1        +1
+    frame                   24        +1
+    list                   667        +1
+    tuple                16969        +1
+    ```
 谁引用着泄漏的对象？
 
 继续，你还可以查看哪里包含给定对象的引用。让我们以下述简单的程序做为一个例子：
 
-```
-x = [1]
-y = [x, [x], {"a":x}]
-import pdb; pdb.set_trace()
-```
+    ```
+    x = [1]
+    y = [x, [x], {"a":x}]
+    import pdb; pdb.set_trace()
+    ```
 想要看看哪里包含变量x的引用，执行objgraph.show_backref()函数：
-```
-(pdb) import objgraph
-(pdb) objgraph.show_backref([x], filename="/tmp/backrefs.png")
-```
+    ```
+    (pdb) import objgraph
+    (pdb) objgraph.show_backref([x], filename="/tmp/backrefs.png")
+    ```
 我们得到一个refs.png 引用图
-
-

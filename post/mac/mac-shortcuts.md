@@ -7,7 +7,7 @@ description:
 
 # mac 快捷键使用整理
 
-# Karabiner + Seil, 定制全键盘
+## Karabiner + Seil, 定制全键盘
 一开始是左手手指有点酸，估计是尾指按键盘左边的Ctrl键次数有点多，为此把左边的Ctrl键盘跟CapsLock对换了一下，这样用了有一年，使用的软件是karabiner和它的一个组件Seil，之所以需要Seil，Karabiner说是CapsLock键的替换（重新映射）需要特殊处理，偶尔还会在 OSX 系统升级后出现映射失效，需要等待作者来做软件升级。
 
 有这个工具，键盘的所有按键都可以重新定义功能，比方说没有用的eject（12前Pro款都拥有的退出光盘按键）键可以改成「往前删除」。

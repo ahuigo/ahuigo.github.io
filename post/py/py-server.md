@@ -58,6 +58,10 @@ event-based library:
 - 利用reload 加载，但不是所有模块都能被重新载入, 且只适合于无副作用的模块
 - 监控代码改动，一旦有改动，就自动重启服务器，适合debug模式开发:
     1. watchdog: `$ ./pymonitor.py app.py`[demo](p3-app/day-13)
+        0. exec:
+            1. pip install watchdog -U
+            2. watchmedo shell-command --patterns="*.py;*.html;*.css;*.js" --recursive --command='echo "${watch_src_path}" && kill -HUP `cat app.pid`' . &
+            3. python manage.py run_gunicorn 127.0.0.1:80 --pid=app.pid
         1. 利用watchdog接收文件变化的通知，如果是.py文件，就自动重启wsgiapp.py进程。
         2. 利用Python自带的subprocess实现进程的启动和终止，并把输入输出重定向到当前进程的输入输出中：
         4.  watchdog只能处理后端的, 介绍以下两个神器

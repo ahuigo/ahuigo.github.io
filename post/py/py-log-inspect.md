@@ -3,24 +3,25 @@
 2. inspect.getsource(func)
 
 # traceback(exception+stack)
-```
-import sys
-import traceback
+    ```
+    import sys
+    import traceback
 
-try:
-    asdf
-except NameError:
-    exc_type, exc_value, exc_traceback = sys.exc_info()
-    lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-    print ''.join('!! ' + line for line in lines)  # Log it or whatever here
-```
+    try:
+        asdf
+    except NameError:
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+        print ''.join('!! ' + line for line in lines)  # Log it or whatever here
+    ```
 
 This displays:
-```
-!! Traceback (most recent call last):
-!!   File "<stdin>", line 2, in <module>
-!! NameError: name 'asdf' is not defined
-```
+
+    ```
+    !! Traceback (most recent call last):
+    !!   File "<stdin>", line 2, in <module>
+    !! NameError: name 'asdf' is not defined
+    ```
 
 ## print_stack
 stack example 2: print_stack(), format_stack()

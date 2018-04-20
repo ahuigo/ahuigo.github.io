@@ -40,12 +40,16 @@ Python 代码调试技巧: \
           +-- StopIteration
 
 ### SystemExit
-exit(n), quit(n), sys.exit(n)都是一个东西:SystemExit(n); 不影响 不影响finnaly 或者 catch BaseException; 而`os._exit(n)` 直接调用C `_exit(n)` 直接中断！
-1. SystemExit is raised by the `sys.exit()` function. 
-2. not accidentally caught by code that *catches Exception*.
-5. 不影响finnaly 或者 except BaseException
-3. When it is not handled, the Python *interpreter exits; no stack traceback* is printed. 
-4. The constructor accepts the same optional argument passed to sys.exit(). 
+exit(n), quit(n), sys.exit(n)都是一个东西: SystemExit(n); 
+不影响 不影响finnaly 或者 catch BaseException; 
+
+    1. SystemExit is raised by the `sys.exit()` function. 
+    2. not accidentally caught by code that *catches Exception*.
+    5. 不影响finnaly 或者 except BaseException
+    3. When it is not handled, the Python *interpreter exits; no stack traceback* is printed. 
+
+而`os._exit(n)` 直接调用C `_exit(n)` 直接中断！
+1. The constructor accepts the same optional argument passed to sys.exit(). 
     1. If an integer,passed to C’s exit() function;
     2. if it is None, the exit status is zero;
     3. if it has another type (such as a string), the object’s value is printed and the exit status is one.

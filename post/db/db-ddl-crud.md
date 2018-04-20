@@ -37,6 +37,8 @@ INSERT INTO table (id, field, field2)
 ## select 
 
 ## del
+SELECT '{"a":[null,{"b":[3.14]}]}' #- '{a,1,b,0}'
+
 
 ## update
 

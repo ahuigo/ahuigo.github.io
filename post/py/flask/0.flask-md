@@ -1,0 +1,27 @@
+# flask 源码
+http://www.ficapy.com/2016/08/03/werkzeug_local_note/
+https://www.jianshu.com/p/aef1520a2cb9
+
+## Request Context对象
+
+    from werkzeug.local import LocalStack, LocalProxy
+    request = LocalProxy(partial(_lookup_req_object, 'request'))
+
+    def _lookup_req_object(name):    
+        top = _request_ctx_stack.top    
+        if top is None:        
+            raise RuntimeError(_request_ctx_err_msg)    
+        return getattr(top, name)
+
+    class LocalProxy(object):
+    def __init__(self, local, name=None):
+        object.__setattr__(self, '_LocalProxy__local', local)
+        object.__setattr__(self, '__name__', name)
+
+    def _get_current_object(self):
+        if not hasattr(self.__local, '__release_local__'):
+            return self.__local()
+        try:
+            return getattr(self.__local, self.__name__)
+        except AttributeError:
+            raise RuntimeError('no object bound to %s' % self.__name__)

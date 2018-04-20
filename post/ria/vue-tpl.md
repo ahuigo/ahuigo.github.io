@@ -1,0 +1,306 @@
+# bind
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'hello',
+            seen: true
+        }
+        })
+
+## 单向插值
+text
+
+    {{message}}
+
+attribute
+
+   <span v-bind:title="message">
+
+如果 isButtonDisabled 的值为 null, undefined 或 false，disabled 属性甚至不会被包含在渲染后的 <button> 元素中。
+
+    <button v-bind:disabled="isButtonDisabled">Button</button>
+
+rawHtml:
+
+    <span v-html="rawHtml"></span>
+
+## v-model(双向)
+
+        <p>{{ message }}</p>
+        <input v-model="message">
+
+type
+
+    <input type="number" v-model.number="product.num">
+
+## javascript
+任何js 表达式:
+
+    {{ message.split('').reverse().join('') }}
+
+每个绑定都只能包含单个表达式，所以以下示例都无法运行：
+
+    <!-- 这是语句，不是表达式 -->
+    {{ var a = 1 }}
+    <!-- 流控制也无法运行，请使用三元表达式 -->
+    {{ if (ok) { return message } }}
+
+## 指令
+### v-if:
+
+    <span v-if="seen">现在你可以看到我</span>
+    # template 被被去掉
+    <template v-if="ok"> <h1>标题</h1> </template>
+
+else
+
+    <div v-if="type === 'A'"> A </div>
+    <div v-else-if="type === 'C'"> C </div>
+    <div v-else> 非 A/B/C </div>
+
+#### 使用key 控制可复用
+使用key 以后，这些 input 将会在每次切换时从头重新渲染
+
+    <template v-if="loginType === 'username'">
+        <label>用户名</label>
+        <input placeholder="请输入用户名" key="username-input">
+    </template>
+
+### v-show
+show 控制display, 相当于if
+具有 v-show 的元素会始终渲染并保留在 DOM 中
+
+    <h1 v-show="ok">Hello!</h1>
+
+v-if 是“真实”的条件渲染，因为它会确保条件块(conditional block)在切换的过程中，完整地销毁(destroy)和重新创建(re-create)条
+
+### for:
+
+    <li v-for="todo in todos"> </li>
+    <span v-for="n in 10">range(10): {{ n }}</span>
+
+for with if:
+
+    <li v-for="todo in todos" v-if="!todo.isComplete">
+
+
+for with index:
+
+    <ul id="example-2">
+        <li v-for="(item, index) in items">
+            {{ parentMessage }} - {{ index }} - {{ item.message }}
+        </li>
+    </ul>
+    var example2 = new Vue({
+        el: '#example-2',
+        data: {
+            parentMessage: 'Parent',
+            items: [
+            { message: 'Foo' },
+            { message: 'Bar' }
+            ]
+        }
+    })
+
+for with object
+
+    <div v-for="value in object">
+    <div v-for="(value, key) in object">
+    <div v-for="(value, key, index) in object">
+
+#### key
+为了便于 Vue 跟踪每个节点的身份，从而重新复用(reuse)和重新排序(reorder)现有元素，你需要为每项提供唯一的 key 属性，
+
+    <div v-for="item in items" :key="item.id">
+
+#### 删除数据
+1. 删除事件
+    2. <button v-on:click="$emit(\'remove\')">X</button>\
+    2. v-on:remove="func"
+2. o.pop(index)
+
+### 简写
+
+    <!-- 完整语法 -->
+    <a v-bind:href="url"> ... </a>
+
+    <!-- 简写 -->
+    <a :href="url"> ... </a>
+
+v-on 简写
+
+    <!-- 完整语法 -->
+    <a v-on:click="doSomething"> ... </a>
+
+    <!-- 简写 -->
+    <a @click="doSomething"> ... </a>
+
+
+# computed
+
+    {{reverseMessage}}
+    {{reverseMessage}}
+    console.log(vm.reversedMessage) // => 'olleH'
+
+    data: {
+        message: 'Hello'
+    },
+    computed: {
+        // 一个 computed 属性的 getter 函数
+        reversedMessage: function () {
+            return this.message.split('').reverse().join('')
+        }
+    }
+
+## computed 缓存 vs method 方法
+vm.computed
+vm.method() 会执行多次
+
+## computed setter
+computed 属性默认只设置 getter 函数，不过在需要时，还可以提供 setter 函数：
+
+    // ...
+    computed: {
+        fullName: {
+            // 默认getter 函数
+            get: function () {
+                return this.firstName + ' ' + this.lastName
+            },
+            // setter 函数
+            set: function (newValue) {
+                var names = newValue.split(' ')
+                this.firstName = names[0]
+                this.lastName = names[names.length - 1]
+            }
+        }
+    }
+
+
+# css
+## class
+active 这个 class 的存在与否，取决于 isActive 这个 data 属性的 truthy 值
+
+    <div v-bind:class="{ active: isActive }"></div>
+
+直接传classObject:
+
+    <div v-bind:class="classObject"></div>
+    data: {
+        classObject: {
+            active: true,
+            'text-danger': false
+        }
+    }
+
+或者methods:
+
+    computed: {
+    classObject: function () {
+        return {
+        active: this.isActive && !this.error,
+        'text-danger': this.error && this.error.type === 'fatal'
+        }
+    }
+    }
+
+### 数组语法
+我们可以向 v-bind:class 传入一个数组，来与 class 列表对应：
+
+    <div v-bind:class="[activeClass, errorClass]"></div>
+    data: {
+        activeClass: 'active',
+        errorClass: 'text-danger'
+    }
+    会被渲染为：
+
+    <div class="active text-danger"></div>
+
+判断：
+
+    <div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+
+### 组件追加
+
+    Vue.component('my-component', {
+    template: '<p class="foo bar">Hi</p>'
+    })
+
+然后，在调用组件时，再添加一些 class：
+
+    <my-component class="baz boo"></my-component>
+
+那么，最终渲染的 HTML 就是：
+
+    <p class="foo bar baz boo">Hi</p>
+
+同样，class 绑定也是如此：
+
+    <my-component v-bind:class="{ active: isActive }"></my-component>
+
+## style
+
+    <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+    data: {
+        activeColor: 'red',
+        fontSize: 30
+    }
+
+通常，一个比较好的做法是，直接与 data 中的 style 对象绑定，这样模板看起来更清晰：
+
+    <div v-bind:style="styleObject"></div>
+    data: {
+        styleObject: {
+            color: 'red',
+            fontSize: '13px'
+        }
+    }
+
+或者数组:
+
+    <div v-bind:style="[baseStyles, overridingStyles]"></div>
+    data:{
+        baseStyles:{...}
+    }
+
+
+# 组件
+
+## 静态的
+组件不能直接引用data全局变量
+
+    // 定义一个被命名为 todo-item 的新组件
+    Vue.component('todo-item', {
+        template: '<li>这是一个 todo 项</li>'
+    })
+
+使用组件：
+
+    <todo-item></todo-item>
+
+## 传入变量props:todo
+todo-item 组件现在接受一个 "prop"，
+
+    //里面接受删除: click="$emit(event_name)"
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{ todo.text }}\
+            <button v-on:click="$emit(\'remove\')">X</button>\
+        </li>'
+    })
+
+传入todo:
+
+    <todo-item
+      v-for="item in groceryList"
+      v-bind:todo="item"
+      v-bind:key="item.id">
+    </todo-item>
+
+通过`is` 使用todo-item:
+
+    <li
+      is="todo-item"
+      v-for="(todo, key) in todos"
+      v-bind:key="todo.id"
+      v-on:remove="todos.splice(index, 1)"
+    >没有组件时的默认值</li>
