@@ -276,6 +276,19 @@ submit form elements:
 		return $(this).text() == text1;
 	}).attr('selected', true);
 
+	$("select").val()
+
+#### radio
+
+    var radios = form.elements[name];
+    for (var i=0, len=radios.length; i<len; i++) {
+        if ( radios[i].checked ) { // radio checked?
+            val = radios[i].value; // if so, hold its value in val
+            break; // and break out of for loop
+        }
+    }
+    return val; 
+
 ### action
 相当于鼠标全选
 

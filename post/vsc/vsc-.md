@@ -2,6 +2,13 @@
 cmd+p
 cmd+shift+p
 
+# extension
+1. markdown all in one: ctrl+B
+2. Paste Image
+    "pasteImage.basePath": "${projectRoot}/img",
+    "pasteImage.path": "${projectRoot}/img",
+    选择文件名 Cmd+Alt+V
+
 # Directory Manager
 ## New File
 Add a new file under the selected working directory

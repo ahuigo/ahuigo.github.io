@@ -29,9 +29,29 @@ rawHtml:
         <p>{{ message }}</p>
         <input v-model="message">
 
+        <select v-model="selected">
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+        </select>
+
 type
 
     <input type="number" v-model.number="product.num">
+
+### .lazy
+    <!-- 在触发 "change" 事件后同步，而不是在触发 "input" 事件后更新 -->
+    <input v-model.lazy="msg" >
+
+### .number
+如果想要将用户的输入，自动转换为 Number 类型
+
+    <input v-model.number="age" type="number">
+
+### .trim
+如果想要将用户的输入，自动过滤掉首尾空格，可以在 v-model 之后添加一个 trim 修饰符，来处理输入值：
+
+    <input v-model.trim="msg">
 
 ## javascript
 任何js 表达式:
@@ -82,7 +102,6 @@ v-if 是“真实”的条件渲染，因为它会确保条件块(conditional bl
 for with if:
 
     <li v-for="todo in todos" v-if="!todo.isComplete">
-
 
 for with index:
 
@@ -262,45 +281,3 @@ active 这个 class 的存在与否，取决于 isActive 这个 data 属性的 t
         baseStyles:{...}
     }
 
-
-# 组件
-
-## 静态的
-组件不能直接引用data全局变量
-
-    // 定义一个被命名为 todo-item 的新组件
-    Vue.component('todo-item', {
-        template: '<li>这是一个 todo 项</li>'
-    })
-
-使用组件：
-
-    <todo-item></todo-item>
-
-## 传入变量props:todo
-todo-item 组件现在接受一个 "prop"，
-
-    //里面接受删除: click="$emit(event_name)"
-    Vue.component('todo-item', {
-        props: ['todo'],
-        template: '<li>{{ todo.text }}\
-            <button v-on:click="$emit(\'remove\')">X</button>\
-        </li>'
-    })
-
-传入todo:
-
-    <todo-item
-      v-for="item in groceryList"
-      v-bind:todo="item"
-      v-bind:key="item.id">
-    </todo-item>
-
-通过`is` 使用todo-item:
-
-    <li
-      is="todo-item"
-      v-for="(todo, key) in todos"
-      v-bind:key="todo.id"
-      v-on:remove="todos.splice(index, 1)"
-    >没有组件时的默认值</li>

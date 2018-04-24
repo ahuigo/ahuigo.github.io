@@ -5,7 +5,7 @@ v-on:event
 1. click,remove,keyup.enter
 
 ### on:event
-event: click, keyup.enter, remove,...
+event: click,input,change, keyup.enter,...
 
     <button v-on:click="reverseMessage">reverse_message</button>
     methods: {
@@ -14,9 +14,14 @@ event: click, keyup.enter, remove,...
         }
     }
 
-甚至直接修改:
+组件emit 还支持自定义: remove...
 
-    <button v-on:click="message = 'baz'">点我修改</button>
+`<input v-model="searchText">` 等同于如下：
+
+    <input
+    v-bind:value="searchText"
+    v-on:input="searchText = $event.target.value"
+    >
 
 ### v-on:keyup.enter
 回车按下后：
