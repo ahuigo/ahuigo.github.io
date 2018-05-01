@@ -1,4 +1,9 @@
-# bind
+# 属性合并
+对于class/style 来说，它们会合并, 这是dom 自己决定的，不是vue 控制的
+
+    <div is="tpl" class="cls1 cls2" :class="cls" :title="'title'"></div>
+
+# 值的绑定
     new Vue({
         el: '#app',
         data: {
@@ -7,20 +12,30 @@
         }
         })
 
-## 单向插值
-text
+## bind, 单向绑定
+bind text
 
     {{message}}
 
-attribute
+bind attribute
 
-   <span v-bind:title="message">
+    <span v-bind:title="message">
+    <!-- 传递真正的数值 -->
+    <comp v-bind:some-prop="1"></comp>
 
-如果 isButtonDisabled 的值为 null, undefined 或 false，disabled 属性甚至不会被包含在渲染后的 <button> 元素中。
+bind bool attribute:
+由于disabled/checked 本身是bool型，如果 isDisabled 的值为 null, undefined 或 false，`disabled 属性`不会被包含在渲染后的 `<button>` 元素中。
 
-    <button v-bind:disabled="isButtonDisabled">Button</button>
+   <button :disabled="isDisabled">Button</button>
 
-rawHtml:
+bind all:
+
+    <div v-bind="all">
+    等价于
+    <div v-bind:x1="all.x1">
+    <div v-bind:x2="all.x2">
+
+### v-html:
 
     <span v-html="rawHtml"></span>
 
@@ -28,8 +43,15 @@ rawHtml:
 
         <p>{{ message }}</p>
         <input v-model="message">
+        <input :value="message" @input="message=$event.target.value">
 
-        <select v-model="selected">
+list 应该用$set 修改:
+
+    <input :value="list[1]" @input="$root.$set(list, 1, $event.target.value)">
+
+in select 
+
+        <select v-model="selectedVal">
             <option disabled value="">请选择</option>
             <option>A</option>
             <option>B</option>
@@ -197,10 +219,14 @@ computed 属性默认只设置 getter 函数，不过在需要时，还可以提
 
 # css
 ## class
+class 只有两个值: true or false
+
+### class 单值
 active 这个 class 的存在与否，取决于 isActive 这个 data 属性的 truthy 值
 
     <div v-bind:class="{ active: isActive }"></div>
 
+### class 对象
 直接传classObject:
 
     <div v-bind:class="classObject"></div>
@@ -211,18 +237,19 @@ active 这个 class 的存在与否，取决于 isActive 这个 data 属性的 t
         }
     }
 
+### class computed 对象
 或者methods:
 
     computed: {
-    classObject: function () {
-        return {
-        active: this.isActive && !this.error,
-        'text-danger': this.error && this.error.type === 'fatal'
+        classObject: function () {
+            return {
+            active: this.isActive && !this.error,
+            'text-danger': this.error && this.error.type === 'fatal'
+            }
         }
     }
-    }
 
-### 数组语法
+### 数组语法(传className)
 我们可以向 v-bind:class 传入一个数组，来与 class 列表对应：
 
     <div v-bind:class="[activeClass, errorClass]"></div>
@@ -241,7 +268,7 @@ active 这个 class 的存在与否，取决于 isActive 这个 data 属性的 t
 ### 组件追加
 
     Vue.component('my-component', {
-    template: '<p class="foo bar">Hi</p>'
+        template: '<p class="foo bar">Hi</p>'
     })
 
 然后，在调用组件时，再添加一些 class：

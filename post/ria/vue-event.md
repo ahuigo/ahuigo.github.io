@@ -1,10 +1,11 @@
 # event(v-on:event)
-v-on:event
+使用 $on(eventName) 监听事件
+使用 $emit(eventName, optionalPayload) 触发事件
 
 ## event type
 1. click,remove,keyup.enter
 
-### on:event
+### v-on
 event: click,input,change, keyup.enter,...
 
     <button v-on:click="reverseMessage">reverse_message</button>
@@ -14,16 +15,14 @@ event: click,input,change, keyup.enter,...
         }
     }
 
-组件emit 还支持自定义: remove...
+组件emit 还支持自定义: remove....
 
-`<input v-model="searchText">` 等同于如下：
+v-model 是基于input
 
-    <input
-    v-bind:value="searchText"
-    v-on:input="searchText = $event.target.value"
-    >
+    <input v-model="message">
+    <input :value="message" @input="message=$event.target.value">
 
-### v-on:keyup.enter
+#### v-on:keyup.enter
 回车按下后：
 
     <input v-on:keyup.enter="addNewTodo">

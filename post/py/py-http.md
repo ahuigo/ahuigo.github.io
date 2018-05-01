@@ -81,6 +81,7 @@ If you are concerned about the use of blocking IO, there are lots of projects ou
 
 ## request
 
+	>>> r = requests.request('GET', 'https://127.0.0.1:8000/a.php')
 	>>> r = requests.get('https://127.0.0.1:8000/a.php')
 	>>> r = requests.post("http://httpbin.org/post", data = {"key":"value"})
 	>>> r = requests.post("http://httpbin.org/post", data = (("key","value",),))

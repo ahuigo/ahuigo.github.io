@@ -4,7 +4,12 @@ title:	js notes
 category: blog
 description:
 ---
-# Bom
+# Navigator
+navigator.appName：浏览器名称；
+navigator.appVersion：浏览器版本；
+navigator.language：浏览器设置的语言；
+navigator.platform：操作系统类型；
+navigator.userAgent：浏览器设定的User-Agent字符串。
 
 # Window
 
@@ -316,6 +321,26 @@ submit form elements:
 	document.body
 	document.head
 
+### relation node
+child:
+
+    var cs = test.children;//children 只含Element
+    test.firstElementChild;
+    test.lastElementChild;
+
+    // 所有
+    test.childrenNodes
+
+同胞:
+
+    # 包括#text、commnent, CDATA_SECTION
+    node.nextElementSibling
+    node.previousElementSibling
+
+    node.nextSibling
+    node.previousSibling
+
+
 ## create node
 text
 
@@ -475,7 +500,10 @@ Example 浮层:
 
 # Event
 
-## DOMContentLoaded and load
+## DOM MutationObserver
+http://javascript.ruanyifeng.com/dom/mutationobserver.html
+
+### DOMContentLoaded and load
 Chrome，Safari – Chrome和Safari中网络选项还展示了两项额外的信息，DOMContentLoaded事件触发的时间用蓝线表示，load事件触发的时间用红线表示。
 如果这两个事件同时发生，这条线会显示为紫色。
 
@@ -761,6 +789,9 @@ Refer: [http://www.esqsoft.com/javascript_examples/iframe_talks_to_parent/](http
 # Cookie
 Cookie 跨域
 hack 的方法：类型jsonp，通过script 标签请求外域的服务器，让服务器返回cookie.
+
+## httponly
+设定了httpOnly的Cookie将不能被JavaScript读取
 
 # Data
 html5 的dataset 对象

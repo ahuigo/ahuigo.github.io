@@ -1,4 +1,16 @@
-# defin arrow func 
+# generator
+    function* foo() {
+        yield 11
+        return 22;
+    }
+    f=foo()
+    f.next(); // {value: 11, done: false}
+    f.next(); // {value: 22, done: true}
+    f.next(); // {value: undefined, done: true}
+
+    for(var x of foo())
+
+# define arrow func 
 
     (参数1, 参数2, …, 参数N) => { 函数声明 }
     (参数1, 参数2, …, 参数N) => 表达式（单一）
@@ -23,6 +35,56 @@
     //同样支持参数列表解构
     let f = ([a, b] = [1, 2], {x: c} = {x: a + b}) => a + b + c;
     f();  // 6
+
+## define + exec
+
+    !function(){return 0}()
+    (function(){return 0})()
+    (()=>0)()
+
+## arguments
+如果arguments[0] 存在, name 指针都指向arguments[0]内存:
+否则name 不变
+
+	function a(name){
+		arguments[0]='v11';//same as: name='v11'
+		console.log(arguments, name);
+	}
+	a('v1','v2'); //output: ['v11', 'v2'], 'v11'
+
+arguments本身不是Array, 如果想让 arguments 支持数组函数:
+
+    function f(a){
+        [].shift.call(arguments)
+        console.log(arguments, a);
+    }
+    f(1); //[],1
+    f(1,2); //[2],2
+    f(1,2,3); //[2,3],2
+    f(1,2,3,4); //[2,3,4],2
+
+注意arguments 还是近引用传值, 修改前要copy 一下
+
+    !function(){
+        var params = Array.prototype.slice.call(arguments); // copy
+        params.shift();
+        console.log([params, arguments, 'ahui'])
+    }(1,2,3)
+
+### ...rest
+rest，b，a 参数不全时，可以为undefined
+
+    function foo(a, b, ...rest) {
+        console.log('a = ' + a);
+        console.log('b = ' + b);
+        console.log(rest);
+    }
+
+    foo(1, 2, 3, 4, 5);
+    // a = 1
+    // b = 2
+    // Array [ 3, 4, 5 ]
+
 
 # bind params
 http://stackoverflow.com/questions/256754/how-to-pass-arguments-to-addeventlistener-listener-function/36786630#36786630
@@ -111,42 +173,49 @@ Example:
 	a.name=1;//函数静态变量
 
 ## 闭包
+privat 变量:
 
-	变量的作用域链.
-
-## arguments
-如果arguments[0] 存在, name 指针都指向arguments[0]:
-否则name 不变
-
-	function a(name){
-		arguments[0]='v11';//same as: name='v11'
-		console.log(arguments, name);
-	}
-	a('v1','v2'); //output: ['v11', 'v2'], 'v11'
-
-如果想让 arguments 支持数组函数:
-
-    function f(a){
-        [].shift.call(arguments)
-        console.log(arguments, a);
+    function create_counter(initial) {
+        var x = initial || 0;
+        return {
+            inc: function () {
+                x += 1;
+                return x;
+            }
+        }
     }
-    f(1); //[],1
-    f(1,2); //[2],2
-    f(1,2,3); //[2,3],2
-    f(1,2,3,4); //[2,3,4],2
 
-push.apply
+    var c1 = create_counter();
+    c1.inc(); // 1
 
-    var args = [];
-    Array.prototype.push.apply( args, arguments );
+或者:
 
-slice:
+    x=1
+    f1=(function(x){return ()=>x})(x)
+    f2=()=>x
 
-    //注意arguments 中的object/array 还是近引用传值, string 不是
-    var params = Array.prototype.slice.call(arguments);
-    params.shift();
+    x=2; 
+    f1(); //1
+    f2(); //2
+
 
 ## function 对象
 
 	new a(); 函数本身就是一个类似php 的 __constructor.
 	a.length; //参数数量
+
+
+## eval
+
+    i=0
+    j=eval('i=1'); // i==j==1
+
+# decorator,装饰
+
+    var count = 0;
+    var oldParseInt = parseInt; // 保存原函数
+
+    window.parseInt = function () {
+        count += 1;
+        return oldParseInt.apply(null, arguments); // 调用原函数
+    };

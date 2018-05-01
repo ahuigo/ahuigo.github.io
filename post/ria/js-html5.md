@@ -25,13 +25,8 @@ description:
 		month, week, time
 		<input type="time" />
 
-### placeholder
-
-	placeholder="Input you password here"
-
 ### Datalist-Option
-
-	Select-Option
+Select-Option
 
 	<select name="browser">
 		<option value="firefox">Firefox</option>
@@ -136,17 +131,17 @@ Tutorial: [](http://www.html5canvastutorials.com/tutorials/html5-canvas-text-fon
 SVG 意为可缩放矢量图形（Scalable Vector Graphics）
 
 	Canvas
-	依赖分辨率
-	不支持事件处理器
-	弱的文本渲染能力
-	能够以 .png 或 .jpg 格式保存结果图像
-	最适合图像密集型的游戏，其中的许多对象会被频繁重绘
+        依赖分辨率
+        不支持事件处理器
+        弱的文本渲染能力
+        能够以 .png 或 .jpg 格式保存结果图像
+        最适合图像密集型的游戏，其中的许多对象会被频繁重绘
 	SVG
-	不依赖分辨率
-	支持事件处理器
-	最适合带有大型渲染区域的应用程序（比如谷歌地图）
-	复杂度高会减慢渲染速度（任何过度使用 DOM 的应用都不快）
-	不适合游戏应用
+        不依赖分辨率
+        支持事件处理器
+        最适合带有大型渲染区域的应用程序（比如谷歌地图）
+        复杂度高会减慢渲染速度（任何过度使用 DOM 的应用都不快）
+        不适合游戏应用
 
 # Location(navigator.geolocation)
 	navigator.geolocation.getCurrentPosition(showPos, showErr);
@@ -365,31 +360,6 @@ Example:
 
 # New
 
-## mvc
-AngularJS, Ember.js,
-backbone + requireJS + bootstrap3
-	amd:
-		https://github.com/yanhaijing/lodjs
-
-Worktile http://segmentfault.com/q/1010000000615220
-不使用框架？
-http://segmentfault.com/blog/bum/1190000002455654
-
-backbong note
-http://segmentfault.com/a/1190000002386651
-
-### 前后端分离
-http://ued.taobao.org/blog/2014/04/full-stack-development-with-nodejs/
-
-### Qmik
-Replace for zepto.js
-
-## nodejs
-用generator 免回调地狱
-http://huangj.in/765
-http://www.jianshu.com/p/a0379bef5913
-
-
 ## TypeScript
 JS短板在于缺乏静态类型，做大型工程的时候无法通过编译期静态类型检查来保证质量，这一点用TypeScript就可以了。
 TypeScript是JavaScript的一个超集(superset)，并且提供了额外的功能。但是在编译的时候，它又会变回普通的JavaScript。它正在和 google 的Angular2 合作
@@ -401,26 +371,3 @@ TypeScript是JavaScript的一个超集(superset)，并且提供了额外的功�
 - https://ruby-china.org/topics/4789
 - [coffeeScript intro] IBM
 
-
-## nativescript
-http://docs.nativescript.org/getting-started
-NativeScript，可以用现有的 JavaScript 和 CSS 技术来编写 iOS、Android 和 Windows Phone 原生移动应用程序。由原生平台的呈现引擎呈现界面而不是 WebView，正因为如此，应用程序的整个使用体验都是原生的。
-
-### cross-mobile
-http://fex.baidu.com/blog/2015/05/cross-mobile/
-
-### react-native
-http://facebook.github.io/react-native/
-http://www.zhihu.com/question/27852694
-
-## SEO
-如果web前端使用了argular 这样的mvc 框架，爬虫是不能直接获取到有效内容的。这就需要针对爬虫在后端做[prerender](https://github.com/prerender/prerender):
-
-1. 针对含锚点(#)的ajax页面，可以将锚点符号"#"改成"#!", google 爬虫(Googlebot)会把"#!" 转换成"[?&]_escaped_fragment_=", 后端根据这个标识做prerender
-2. 其实可以利用history.pushState 实现无锚点的ajax页面, 前端不需要使用"#!", 后端直接根据各搜索引擎的bot(spider)做prerender. 通过history.pushState ,前端可以自己根据url 做路由.
-
-第一种方法缺点太大: 必須修改url, 而且只适用于googlebot. 第二种方法是只适用于IE(>=10), chrome(>=18),Safari(>=6)..
-
-1. 如果是博客这样的应用，如果后端放的是markdown文件，也没有必要用prerender, 直接针对爬虫返回 markdown文件也行
-
-[coffeeScript intro]: http://www.ibm.com/developerworks/cn/web/wa-coffee1/

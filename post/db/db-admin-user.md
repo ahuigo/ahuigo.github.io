@@ -1,7 +1,8 @@
 # Authentication
-vim /var/lib/pgsql/data/pg_hba.conf
+vim /var/lib/pgsql/10/data/pg_hba.conf
 
     host    all             all             127.0.0.1/32            md5
+    host    all             all             0.0.0.0/0               md5
 
 auth method:
 1. Peer : use kernel os system user name, only supported on local connections.
@@ -45,11 +46,19 @@ Non interactive password:
     # give ability to ligin in
     CREATE ROLE demo_role WITH LOGIN;
 
+通过shell: creat super user
+
+    sudo -u postgres createuser --superuser dbuser
+
 ### password
 By default, users are only allowed to login locally with the system username
 如果用host 登录，则pg的帐号需要设定自己的密码：
 
     \password test_user
+
+non interactive:
+
+    ALTER USER postgres WITH PASSWORD 'newpassword';
 
 ### group user
 

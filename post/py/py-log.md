@@ -6,12 +6,18 @@ https://docs.python.org/3.4/howto/logging.html
 
     import sys
     >>> def foo(exctype, value, tb):
-    ...     print 'My Error Information'
-    ...     print 'Type:', exctype
-    ...     print 'Value:', value
-    ...     print 'Traceback:', tb
+    ...     print('My Error Information')
+    ...     print('Type:', exctype)
+    ...     print('Value:', value)
+    ...     print('Traceback:', tb)
     ...
     >>> sys.excepthook = foo
+
+## log with exc_info
+    try:
+        result = json.loads(s, strict=False)
+    except (TypeError, ValueError):
+        logger.debug('Can not decode response as JSON', exc_info=True)
 
 ## Logging to a single file from multiple processes
 1. logging is thread-safe(这个可能要感谢GIL)
@@ -21,6 +27,13 @@ https://docs.python.org/3.4/howto/logging.html
 方案：
 1. 独立的单进程socketHandler写log
 2. 加锁, 甚至文件锁
+
+### log lock
+Python的logging模块是线程安全的，
+1. 因为logging模块在输出日志时，都要获取一把锁，而这把锁是一把可重入锁，
+2. 对于不同的线程，在打日志前都要等待这把锁变为可用状态，才能持有这把锁并执行提交逻辑
+
+https://zhuanlan.zhihu.com/p/36310626?group_id=974774296987615232
 
 # logging
 logging，和assert比，logging不会抛出错误，而且可以输出到文件：
@@ -79,7 +92,10 @@ logging file path(default by current path):
     %(created)f time.time():
     %(filename)s %(lineno)d
     %(funcName)s
+
     %(thread)d
+    %(threadName)s
+    %(process)d
 
     %(pathname)s
     %(module)s

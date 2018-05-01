@@ -13,6 +13,7 @@ see db-user.md
 vim /var/lib/pgsql/data/pg_hba.conf
 
 ## run
+
     if centos:
         systemctl start postgresql-10.service
         systemctl enable postgresql-10.service
@@ -30,14 +31,13 @@ vim /var/lib/pgsql/data/pg_hba.conf
 
 ### change listen host
 1. postgres -h 0.0.0.0
-2. /var/lib/pgsql/10/data/
-2. vim /var/lib/pgsql/data/postgresql.conf
-    `listen_address='*'`
-    `listen_address='localhost'`
+2. vim /var/lib/pgsql/10/data/postgresql.conf
+    `listen_addresses='*'`
+    `listen_addresses='localhost'`
     'localhost,192.168.1.66'
     'port=5432'
 
-### via args
+#### via args
 /lib/systemd/system/postgresql.service
 
     Environment=PGPORT=9898
@@ -61,19 +61,25 @@ psql postgresql://t1:1@47.96.1.162:6379/template1
     $ psql -h 127.0.0.1 -p 5930 -c "select 1"
     $ psql -h 127.0.0.1 -p 5930 -f a.sql
 
-# admin
+#### exec sql file
 psql -f exec.sql
+pg_dump dbname > outfile
+
+psql [dbname] < exec.sql
 
 ## backup
+
     # only schema
-    pg_dump -U [db_username] -s -Fc -f [filename.sql] [db_name]
+    pg_dump -U [db_username] -s  -f [filename.sql] [db_name]
     # data+schema
-    pg_dump                     -Fc -f [filename.sql] [db_name]
+    pg_dump                      -f [filename.sql] [db_name]
 
     -F format
-        c custom, Output a custom-format archive suitable for input
+        -Fc custom, Output a custom-format archive suitable for input
+        -Fp plain 默认
 
 ## restore
+custom-format archive:
 
     # schema
     pg_restore -s -d [db_name] [filename.sql]

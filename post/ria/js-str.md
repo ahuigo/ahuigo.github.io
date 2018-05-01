@@ -1,4 +1,5 @@
 # String
+与python 一样的定义
 
 	'\x31'
 	"\x31"
@@ -34,13 +35,18 @@ alert(s); // s仍然为'Test'
 	.lastIndexOf(sub_str)
 	#compare
 	.localeCompare(str) //return 1 0 -1
-	#截取
-	.substr(start,[length])//start可为负
+	#截取(只用slice)
 	.slice(start, [end]) //start, end可为负, py: str[slice]
+	.substr(start,[length])//start可为负
     .substring(start, [end]) //不可为负
 
 ###	case
+
 	.toLowerCase() / .toUpperCase()
+    //p:first-letter { text-transform:capitalize; }
+    String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
 
 ### .trim()
 trim space only
@@ -63,6 +69,7 @@ trim space only
 
 	stringObject.split(separator,[maxSize]);
 	'1,2,3,4,5'.split(',', 3);//[1,2,3]
+	'12345'.split('', 3);//[1,2,3]
 	'1,2,3,4,5'.split(/,/);//[1,2,3,4,5]
 
 ### font
@@ -122,6 +129,10 @@ eg:
 		return '<a href="'+url+'">'+card+'</a>';
 	})
 
+### map,reduce
+
+    '12345'.split('', 3).map()
+
 ## RegExp
 Create RegExp：
 
@@ -169,4 +180,42 @@ Create RegExp：
 		//第1次输出 ["1ing", "ing", index: 1, input: " 1ing 2ing 3ing"] 5
 		//第2次输出 ["2ing", "ing", index: 6, input: " 1ing 2ing 3ing"] 10
 		//第3次输出 ["3ing", "ing", index: 11, input: " 1ing 2ing 3ing"] 15
+	}
+
+
+## html转码:
+常规字符: 字母 数字 下划线
+
+	encodeURI()	把字符串编码为 URI。
+		encodeURI("http://www.google.com/a file with spaces.html"); //转码所有非常规URI字符转码: '|" Ò' 等等
+	encodeURIComponent()	把字符串编码为 URI 组件(utf8)。(所有URI特殊字符 将被转码)
+		encodeURIComponent('中国 ')
+			%E4%B8%AD%E5%9B%BD%20
+        decodeURIComponent
+	escape()	对字符串进行编码(unicode)。Don't use it, as it has been deprecated since ECMAScript v3.
+        escape('中国 ');
+            "%u4E2D%u56FD%20"
+        unescape('%20');
+	str.replace(/'/g, "\\'");//addslashes
+
+	eval()	计算 JavaScript 字符串，并把它作为脚本代码来执行。
+
+## math
+
+    '11'*'33' //363
+
+### hex2str & str2hex
+
+	function str2hex(str) {
+		var hex = '';
+		for(var i=0;i<str.length;i++) {
+			hex += ('0'+str.charCodeAt(i).toString(16)).substr(-2);
+		}
+		return hex;
+	}
+	function hex2str(hex) {
+		var str = '';
+		for (var i = 0; i < hex.length; i += 2)
+			str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+		return str;
 	}

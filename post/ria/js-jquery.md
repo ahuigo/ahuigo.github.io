@@ -21,9 +21,9 @@ chrome 原生的`$(selector)==document.querySelector() 、$$(selector)==jquery==
 
 	//同时满足多个条件(and)
 	$('p.a.b')
-		$('p .a .b') 子结点class=a, 再子结点class=b
+		不同于：$('p .a .b') 子结点class=a, 再子结点class=b
 	$('p.classA.classB')  p结点必须满足class包含: classA, classB
-	$('p .classA .classB') p 结点的子结点含classA, 子结点2再含classA, 返回子结点2, 结果跟$('p').find('.classA').find('.classB') 一样
+	    不同于$('p .classA .classB') p 结点的子结点含classA, 子结点2再含classA, 返回子结点2, 结果跟$('p').find('.classA').find('.classB') 一样
     $('input:checked[name="id[]"]')
 
 	$('#id')[0];//原生的dom, 非jquery 对象
@@ -497,6 +497,9 @@ Note: Global callback functions should be set with their respective global Ajax 
 
 	.bind( eventType [, data ], handler(eventObject) );//data is passed to event.data
 	//Attach a handler to an event for the elements.
+    function handler(e){
+        event.data
+    }
 
 	.bind({click:function, mouseenter:function, ...})
 

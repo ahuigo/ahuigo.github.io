@@ -5,103 +5,6 @@ category: blog
 description:
 ---
 # Preface
-本文参考: [](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
-
-# todo
-https://leanpub.com/exploring-es6/read
-https://es6.ruanyifeng.com/
-javascript 一站式
-http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000
-
-前端工程：
-https://github.com/fouber/blog/blob/master/201508/01.md?from=timeline&isappinstalled=0
-
-# TOC
-- js-scope
-
-# Expression
-## Condition 
-
-	switch(n) { case 1: code break;}
-	带类型匹配
-
-## break label
-
-	break [label]; 不支持break numer
-
-	function foo () {
-		dance:
-		for(var k = 0; k < 4; k++){
-			for(var m = 0; m < 4; m++){
-				if(m == 2){
-					break dance;
-				}
-			}
-		}
-	}
-
-## 迭代
-	for(i in obj){obj[i]...} // PropertyIsEnumerable
-	for(i=0;i<5;i++){...}
-
-# Variable
-[p/js-var](/p/js-var)
-
-
-# 运算符
-
-## 一元
-
-	delete variable
-	delete obj.name
-
-## Bits Operation 位运算
-
-	num & num
-	num | num
-	~num 取反
-	num ^ num	//xor
-	#左右位移(有符号)
-	1<<2 # 1<<34 == 1<<2
-	a>>32 === a>>0 === a;
-		#有符号右移(符号位不变)
-		-4>>1; -2
-		-4>>2; -1
-		-4>>3; -1
-		-4>>4; -1
-
-		#有符号左移==无符号左移等价(但符号位会变)
-		-1<<2; -4
-		-1<<31 ; -2147483648
-		1<<30 ; 1073741824
-		1<<31 ; -2147483648
-
-		#无符号移右移(高位变成0), 符号位会变,输出无符号数
-		> -1>>>1; 2147483647
-		> -1>>>0; 4294967295
-		> -1>>>32; 4294967295
-
-		#不存在有符号移左移
-		1<<<3
-
-## 逻辑
-
-	!var
-	var && var
-		逻辑 AND 运算并不一定返回 Boolean 值：
-			如果一个运算数是对象，另一个是 Boolean 值，返回该对象。
-				1 && obj //return obj
-				0 && obj // return 0
-				obj1 && obj2 //return obj2(if obj1不为空)
-			如果某个运算数是 null
-				1 && null //return null
-				0 && null //return 0
-			如果某个运算数是 NaN
-				1 && NaN //return NaN
-				0 && NaN //return 0
-	var || var
-		逻辑 OR 运算并不一定返回 Boolean 值(同上)
-
 # Object
 
 ## keys
@@ -113,27 +16,30 @@ list forEach
 		console.log(key, obj[key])
 	})
 
-## has key value
+### has key
+1. hasOwnProperty
+2. `in`: key 它可能是obj 继承的属性, 不一定是obj 本身的属性
 
-	if('key' in myObj){ }
+    'toString' in xiaoming; // true, 不是xiaoming 本身，而是object 都有
 
 	function hasValue(obj, key, value) {
 		return obj.hasOwnProperty(key) && obj[key] === value;
 	}
 
+### delete key
+
+	delete variable
+	delete obj.name
+
 ## extend
 
 	Object.prototype.extend = function(defaults) {
 		for (var i in defaults) {
-			if(i in this){ //if(!this[i]) 
+			if(i in this){
 				this[i] = defaults[i];
 			}
 		}
 	};
-
-## 判断原型
-
-	obj instanceof funcname// 函数原型名
 
 ## Property 属性
 
@@ -149,7 +55,7 @@ list forEach
 .IsPrototypeOf(object)
 	判断该对象是否为另一个对象的原型。
 
-.propertyIsEnumerable
+.propertyIsEnumerable('attr')
 	判断给定的属性是否可以用 for...in 语句进行枚举。
 
 ## value
@@ -176,8 +82,9 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 		get: function (){return (this + this)}
 	  }
 	);
+	3.double;//被当作小数点
 	(3).double;//6
-	3['double'].double;//6
+	3['double'].double;//12
 	3..double;//6 第一个点被解析为小数点，第二个点被解释为操作符
 
 对原始类型做对象操作时，js 会用原始类型的对象wrapper 把变量包装一下，然后在临时对象上操作。
@@ -186,29 +93,128 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 	a.key=1; //js 数据类型的对象wrapper 会将a 包装为临时的数值对象. 相当于`(new Number(a)).key=1`
 	a.key;//undefined 因为临时对象不存在了
 
-## 创建对象
+# 定义与创建
 
+## 对象实例的原型
+1. prototype是原型独有的属性,也就是有constructor可以实例化对象的方法才有;
+2. `__proto__` 是对象才有的属性, 指向原型属性，实现原型继承.
+
+    Object.prototype//{}
+    o=new Object()
+    o.__proto__ === Object.prototype
+
+    Object.__proto__//[function] 这个就别管它了
+
+### new 与 Object.create
+Object.create(func.prototype)相当于: `{__proto__:func.prototype}`
+Object.create(obj)相当于: `{__proto__:obj}` 相当于对象继承了
+
+    Object.create =  function (func.prototype) {
+        var F = function () {};
+        F.prototype = func.prototype;
+        return new F();
+    };
+
+new func() 相当于:
+        `{attrs:vals,__proto__:func.prototype}`
+
+    var o1 = new Object();
+    o1['__proto__'] = func.prototype;
+    func.call(o1);
+
+> arrow函数不是匿名函数，它没有`[[Construct]] internal method` ，不能进行`new`,  
+
+### 对象继承对象
+
+    a={age:10, name:'xiao'}
+    b={age:12}
+    b.__proto__ = a
+
+### 类继承类
+原型继承原型
+
+    function ClassA(sColor){ }
+    function ClassB(){ 
+        self = Object.getPrototypeOf(this)
+        //1. 原型链冒充 原类的静态成员(prototype).
+        if(self.__init === undefined){
+            self.__init === true
+            ClassB.prototype = Object.create(ClassA.prototype) //prototype隔离
+        }
+        // 2. 再冒充ClassB对象.
+        self.call(this, sColor);
+    }
+
+让我们封装一下:
+
+    function inherits(that, Parent, ...args){
+        if(that.__init === undefined){
+            that.__init === true
+            self = Object.getPrototypeOf(that)
+            self.prototype = Object.create(Parent.prototype)
+        }
+        self.apply(that, args);
+    }
+
+### class 定义类
+    class Animal{
+        constructor(name){
+            this.name = name
+        }
+    }
+    class Cat extends Animal{
+        constructor(name){
+            super(name)
+        }
+        say(){
+            return `Hello, ${this.name}!`
+        }
+    }
+    (new Cat('ahui')).say()
+
+
+### 创建对象
 1. obj = new Object();
 2. person={firstname:"John"};
 3. obj = new func(param1, param2);
+    obj.constructor === func.prototype.constructor; // true
 
-## 本地对象
 
-	Object
-	Function
-	Array
-	String
-	Boolean
-	Number
-	Date
-	RegExp
-	Error
-	EvalError
-	RangeError
-	ReferenceError
-	SyntaxError
-	TypeError
-	URIError
+## 对象分类
+### 包装对象与原始primitive 对象
+number、boolean和string都有包装对象. (包装对象一点用处也没有，所以还是用primitive 吧)
+
+    typeof new Number(123); // 'object'
+    typeof Number(123); // 'number'
+    Number(123) === 123; // true
+
+    var x1 = {};            // new object
+    var x2 = "";            // new primitive string
+    var x3 = 0;             // new primitive number
+    var x4 = false;         // new primitive boolean
+    var x5 = [];            // new array object
+    var x6 = /str/igm       // new RegExp('str', 'igm') object
+    var x7 = function(){};  // new function object
+
+临时包装销毁：
+
+    (123).toString(); // '123'; #加括号是为了防止解析为小数点
+    123..toString(); // '123'; #加括号是为了防止解析为小数点
+
+### 对象原型判断
+
+    arr ----> Array.prototype ----> Object.prototype ----> null
+
+注意null/Array/{}的类型是object, 不可以用typeof 判断
+
+	obj instanceof funcname// 函数原型名
+    null === null
+    Array.isArray(arr)
+
+全局/局部变量是否存在用:
+
+    typeof window.myVar === 'undefined'
+    typeof myVar === 'undefined'
 
 ## 定义对象的模式
 
@@ -280,6 +286,7 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 ## Extends 继承
 
 ### 对象冒充
+#### 利用this 变化
 ClassB 继承 ClassA
 
 	function ClassA(color){
@@ -387,13 +394,19 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 	}
 
 	function ClassB(sColor, sName) {
-		var self = ClassB;
+		var self = Object.getPrototypeOf(this)
 		if( self.init === undefined){
 			self.init = true;
-			//self.prototype = new ClassA(); //1. 原型链冒充 原类的静态成员(prototype). 最好别传new ClassA(sColor),因为sColor应该是每个对象私有的.
+            // 最好别传new ClassA(sColor),因为sColor应该是每个对象私有的.
+			//self.prototype = new ClassA(); 
+            
+            //1. 原型链冒充 原类的静态成员(prototype). 
 			self.prototype = Object.create(ClassA.prototype)
+			self.prototype = ClassA.prototype
 		}
 		ClassA.call(this, sColor);// 2. 再冒充ClasA对象.
+
+        //自身
 		this.name = sName;
 	}
 
@@ -417,6 +430,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 	  Shape.call(this); //call super constructor.
 	}
 
+    //不要共享prototype
 	Rectangle.prototype = Object.create(Shape.prototype);
 
 	var rect = new Rectangle();
@@ -425,8 +439,3 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 	rect instanceof Shape //true.
 
 	rect.move(1, 1); //Outputs, "Shape moved."
-
-# profile
-- [js profile]
-
-[js profile]: http://kb.cnblogs.com/page/501177/

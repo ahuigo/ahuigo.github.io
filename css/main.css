@@ -92,7 +92,7 @@ pre .xml .cdata {
 .well {  border: 1px; color: #0078B6; }
 .nav-list > li > a, .nav-list .nav-header { text-shadow: none;top: 10px;}
 .sidebar-nav { padding: 0; }
-.pagebar {  }
+body {font-size:100%;  }
 
 .heading,body>header h1,h1,h2,h3,h4,h5,h6 {
 	font-family:"PT Serif","Georgia","Helvetica Neue",Arial,sans-serif

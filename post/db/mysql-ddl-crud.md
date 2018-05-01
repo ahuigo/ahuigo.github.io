@@ -357,8 +357,22 @@ mysql update 多个unique key 时,如果遇到 `duplicate key`, 比如所有的i
 	where name <=> NULL; # 不可以用name=NULL
 	where name!=''; # not null and not empty string
 
-# join
-Refer to: http://www.codedata.com.tw/database/mysql-tutorial-5-join-union/
+# join 外连接
+Refer to: 
+http://www.codedata.com.tw/database/mysql-tutorial-5-join-union/
+postgresql----JOIN之多表查询 http://www.cnblogs.com/alianbog/p/5618349.html
+
+join分 类：
+1. A^B 交集：from 子句
+    2. A [INNER] JOIN B ON （A.uid = B.id）
+    2. A JOIN B USING （uid = id）
+    2. A JOIN B USING （uid） #相同
+
+2. 左右交: Av(A^B) 或 (A^B)vB:
+    3. A LEFT JOIN B
+    3. A RIGHT JOIN B
+3. 全连接: AvB: (mysql 不支持)
+    4. A FULL [OUTER] JOIN B
 
 先构建两张表: 国家和城市
 

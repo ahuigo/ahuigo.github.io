@@ -40,7 +40,7 @@ foo.say_foo()
 ```python
 class ListMetaclass(type):
     def __new__(cls, name, bases, attrs):
-        print('1.2 define: ListMetaclass.__new__(cls,name,bases,attrs)\t');
+        print('1.2 define: ListMetaclass.__new__(meta_cls,name,bases,attrs)\t');
         attrs['add'] = lambda self, value: self.append(value)
         new_cls = type.__new__(cls, name, bases, attrs)
         print('1.3 define: new_cls=type.new()')

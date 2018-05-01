@@ -5,6 +5,11 @@
     > CREATE DATABASE yuzhi100 OWNER myuser;
     > drop database yunzhi100
 
+    \l
+        list all databases
+    \connect database_name
+
+
 ## table
 
 ### create

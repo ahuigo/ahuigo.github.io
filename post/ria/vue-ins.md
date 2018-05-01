@@ -5,12 +5,17 @@
         data: data
     })
 
+## scope in template
+
+    this.vm === $root
+    window.componentInstance
+
 ## vue attr
 
     vm.$el === document.getElementById('app') // => true
     vm.$data=== vm._data === data
 
-    # render 使用的是this.attr, 而不是data.attr
+    # render 使用的是this.attr, 而不是data.attr(因为tpl 中的scope 是vm内)
     this.message == data.message
 
 ### watch attr
@@ -116,6 +121,7 @@ Vue 将观察数组(observed array)的变化数组方法(mutation method)包裹�
 
 ## 实例生命周期钩子函数
 每个 Vue 实例在被创建之前，都要经过一系列的初始化过程 
+0. created hook
 1. 设置数据观察(set up data observation)、
 2. 编译模板(compile the template)、
 3. 在 DOM 挂载实例(mount the instance to the DOM)，
@@ -123,7 +129,7 @@ Vue 将观察数组(observed array)的变化数组方法(mutation method)包裹�
 5. 在这个过程中，Vue 实例还会调用执行一些生命周期钩子函数，这样用户能够在特定阶段添加自己的代码。
 
 ### created hook
-实例创建后:
+发生在实例创建后:
 
     new Vue({
     data: {

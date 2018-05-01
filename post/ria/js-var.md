@@ -8,10 +8,9 @@ description:
 基本类型：Undefined、Null、Boolean、Number和String
 复杂类型：由基本类型构成
 
-# "use strict";
-> ES6 modules are always in strict mode
-
-use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html
+# var
+## "use strict";
+es6 默认用 use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html
 
 必须写在执行语句或者函数体内的第一行
 
@@ -21,8 +20,46 @@ use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_s
 4. function 下的this 是undefined, 而new 生成的obj 内的this 指向自己
 
 ## define variable
-1. let name 只在代码块中有效
+1. let name 只在代码块中有效+不可以重复定义: for(let i=0;;)；
 1. var name 只在作用域中有效
+2. const PI = 3.14;
+
+### 解构赋值
+
+    var [x, y, z] = ['hello', 'JavaScript', 'ES6'];
+    let [, , z] = ['hello', 'JavaScript', 'ES6']; // 忽略前两个元素，只对z赋值第三个元素
+    var [x, y, ...z] = ['hello', 'JavaScript', 'ES6','ES7']; #a,b,c, *arg
+
+dict:
+
+    let {name, age, pass} = {name:'ahui',pass:'pass',age:10}; //不存在就是undefined
+    let {uid:id} = {id:1};
+    let{uid=0} = {}
+
+var 可以省略
+
+    {uid=0} = {}
+
+#### 解构传值
+
+    function buildDate({year, month, day, hour=0, minute=0, second=0}) {
+        return new Date(year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second);
+    }
+    buildDate({ year: 2017, month: 1, day: 1 });
+
+
+### 变量提升
+它会先扫描整个函数体的语句，把所有申明的变量“提升”到函数顶部：
+
+    'use strict';
+
+    function foo() {
+        var x = 'Hello, ' + y;//y不报错，但是值还是为undefined
+        console.log(x);
+        var y = 'Bob';
+    }
+
+    foo();
 
 ## 禁止删除变量
 严格模式下无法删除变量。只有configurable设置为true的对象属性，才能被删除。
@@ -97,57 +134,6 @@ JavaScript 提供三种不同的比较操作符：
 
 ## 非严格相等 ==EDIT
 没有什么意义，建议用严格相等！
-相等操作符对于不同类型的值，进行的比较如下图所示：
-
-            B
- 	 	    Undef	Null	Number	            String	                    Boolean	                        Object
-    Undef	true	true	false	            false	                    false	                        IsFalsy(B)
-    Null	true	true	false	            false	                    false	                        IsFalsy(B)
-    Number	false	false	A === B	            A === ToNumber(B)	        A=== ToNumber(B)	            A=== ToPrimitive(B)
-    Boolean	false	false	ToNumber(A) === B	ToNumber(A) === ToNumber(B)	A === B	                        false
-    String	false	false	ToNumber(A) === B	A === B	                    ToNumber(A) === ToNumber(B)	    ToPrimitive(B) == A
-    Object	false	false	ToPrimitive(A) == B	ToPrimitive(A) == B	        ToPrimitive(A) == ToNumber(B)	A === B
-
-to number:
-
-	[]==[];//false 因为它们指向不同的对象. 这跟php是不一样的.
-	[]==0; //true Number({})的值为NaN，而Number([])的值为0 Number(null)为0 Number(undefined) = NaN
-	{}==0; //false
-
-to Boolean:
-
-	null==undefined; //true
-	0==''==false;//true
-    {}==false
-    [] == false; //true
-
-	![];!{}//false, 对象取反都为false *******
-    {}!=false
-	!null;!undefined;!'';!0; //true
-
-
-在上面的表格中，
-
-1. ToNumber(A) 尝试在比较前将参数 A 转换为数字，这与 +A（单目运算符+）的效果相同。通过尝试依次调用 A 的A.toString 和 A.valueOf 方法，将参数 A 转换为原始值。
-
-2. 根据 ECMAScript 规范，所有的对象都与 undefined 和 null 不相等。
-但是大部分浏览器允许非常窄的一类对象（即，所有页面中的 `document.all` 对象），在某些情况下，充当效仿 undefined 的角色。
-因此，IsFalsy(Object) 值为 true ，当且仅当 Object 效仿 `undefined`。在其他所有情况下，`Object != undefined/null`。
-
-`==`类型不同时的转换规则：
-
-    如果一个值是null，另一个值是undefined，则相等
-    如果一个值是数字，则把另一个值转换成数字，进行比较
-    如果一个值是true，则把true转换成1再进行比较；如果任意值是false，则把false转换成0再进行比较
-    如果一个是对象，则转成基础类型再比较(valueOf先于toString)
-    剩下的都是字符串了
-
-关于比较运算符<、|、>、|、<、=、|、>、=, >=, <=
-
-    如果一个值是null, 除了null >= null, 都为false
-    如果一个值是undefined, 除了undefined>= undefined 都为false
-    如果一个值是数字/boolean, 都转成数字
-    如果一个是对象，则转成基础类型再比较(valueOf先于toString)
 
 ## is
 Object.is 与== 只有两个不同
@@ -162,7 +148,7 @@ Object.is 与== 只有两个不同
 # type check
 
 ## typeof
-用于判断数据类型及function, object
+用于判断数据类型及function, object, 不可以判断Array... 需要使用instanceof
 
     undefined、boolean、number,  string
     object
@@ -268,7 +254,7 @@ special, 有些object 与`== false` 相比较时, 成立
 
     false == new Object()  //false
 
-## 原始值转换成字符串
+## toString
 原始值：
 
     数字、字符串、布尔值、null、undefined
@@ -308,7 +294,7 @@ special, 有些object 与`== false` 相比较时, 成立
     +" 123" --> 123
     +"123 " --> 123
     +" 12 " --> 12
-    +" 12.5e3 " --> 1250
+    +" 12.5e3 " --> 12500
 
 ## 原始值转换成对象
 原理：原始值通过调用String()、Number()、Boolean()构造函数，转换成他们各自的包装对象

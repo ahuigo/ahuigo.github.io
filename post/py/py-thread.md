@@ -61,8 +61,14 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 	thread LoopThread ended.
 	thread MainThread ended
 
+### attr
+threading.current_thread().ident
+threading.current_thread().name
+
 ## lock thread
 如果线程要修改全局变量，为防collision 冲突，可以加lock
+1. Rlock(),允许多重嵌套锁，
+2. 而Lock()只能锁一次；
 
 Lock:
 

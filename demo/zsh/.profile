@@ -19,7 +19,7 @@ alias l='ls -lah'
 
 # python
 alias py='ipython3'
-alias p='python3'
+alias p='python'
 export PYTHONPATH=.
 
 

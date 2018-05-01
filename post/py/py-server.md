@@ -22,7 +22,7 @@ master-worker 就是producer-consumer:
     msgs = Queue()
     msgs.append(msg)
     condition.notify()    
-                        msgs.pop(0)
+    msgs.pop(0)
     ...                 ...
 
 ### futures的多线程多进程
@@ -125,10 +125,15 @@ run:
 将启动时的python grammar error, exception 都记录到app.gun.log
 
     gunicorn app:app  --log-file app.gun.log
+    nohup gunicorn app --capture-output &
 
 app log:
 
     app.logger.setHandler(logging.FileHandler('app.log'))
+
+debug log:
+
+    --log-level=debug
 
 ### gevent
 http://xiaorui.cc/2017/02/16/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3uwsgi%E5%92%8Cgunicorn%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E4%B8%8A/
