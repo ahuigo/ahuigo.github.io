@@ -437,6 +437,7 @@ tag 相当于commit 的别名
 
     # git push origin :tagname
     git push --delete origin tagname
+    git push origin :refs/tags/<tagname>
     # git tag -d tagname
     git tag --delete tagname
 

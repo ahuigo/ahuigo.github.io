@@ -8,6 +8,14 @@ description:
 
 # file and blob
 
+    # cmd+click 不连续选择
+    # shift+click 连续选择
+    <input type="file" name="img" multiple="multiple" />
+
+## file
+fileInput.onchange 上传吧
+
+    fileInput.value; //可以判断是束有文件( 假路径)
 	file = document.getElementById('fileToUpload').files[0];
 	file.size
 		bytes
@@ -16,18 +24,23 @@ description:
 	ifle.type
 		image/png ....
 
+## blob
 blob
 
 	if(navigator.appVersion.match('Chrome/'))
-		file.slice(start, length);
+		blob = file.slice(start, length);
 	if(navigator.appVersion.match('Firefox/'))
-		file.slice(start, start + length)
+		blob = file.slice(start, start + length)
 
-Resources:
+## FileReader
 
-- http://updates.html5rocks.com/2012/06/Don-t-Build-Blobs-Construct-Them
-- https://developer.mozilla.org/en-US/docs/Web/API/Blob
-- [chunks and uploading](http://blog.kongaraju.in/2012/07/large-file-upload-more-than-1gb-using.html)
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var data = e.target.result; // 'data:image/jpeg;base64,/9j/4AAQSk...'            
+        $('img')[0].style.backgroundImage = 'url(' + data + ')';
+    };
+    // 以DataURL的形式读取文件:
+    reader.readAsDataURL(file);
 
 # chunk upload
 分块(block)与分片(chunk)上传

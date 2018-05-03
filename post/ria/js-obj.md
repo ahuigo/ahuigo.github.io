@@ -31,7 +31,7 @@ list forEach
 	delete variable
 	delete obj.name
 
-## extend
+## update, extend
 
 	Object.prototype.extend = function(defaults) {
 		for (var i in defaults) {
@@ -43,20 +43,11 @@ list forEach
 
 ## Property 属性
 
-.constructor(指向函数)
-	对创建对象的函数的引用（指针）。对于 Object 对象，该指针指向原始的 Object() 函数。
-
-.Prototype(指向对象原型)
-	对该对象的对象原型的引用。对于所有的对象，它默认返回 Object 对象的一个实例。
-
-.hasOwnProperty('property')
-	判断对象是否有某个特定的属性
-
-.IsPrototypeOf(object)
-	判断该对象是否为另一个对象的原型。
-
-.propertyIsEnumerable('attr')
-	判断给定的属性是否可以用 for...in 语句进行枚举。
+    obj.constructor
+    obj.hasOwnProperty('attr') # 不是继承proto的
+    obj.propertyIsEnumerable('attr')
+        判断给定的属性是否可以用 for...in 语句进行枚举。
+    obj.__proto__
 
 ## value
 

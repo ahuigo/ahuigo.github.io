@@ -172,12 +172,9 @@ class HAL9000(object):
 ```
 
 ### f-str
-```
-x=1; user={'name':'ahui'};
-f'x={x}, user["name"]={user["name"]}, id(user)={id(user)}'
-
-'x=1, user["name"]=ahui, id(user)=4500547264'
-```
+    x=1; user={'name':'ahui'};
+    f'x={x}, user["name"]={user["name"]}, id(user)={id(user)}'
+        'x=1, user["name"]=ahui, id(user)=4500547264'
 
 ### string Template
 

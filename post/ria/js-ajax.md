@@ -6,20 +6,16 @@ description:
 ---
 # Preface
 
-# ajax 串行
-TODO:
-http://www.2fz1.com/post/javascript-yi-bu-bian-cheng/
-
 # ajax
 
 	var xhr=new XMLHttpRequest();
 	xhr.onreadystatechange=function() {
 		if (xhr.readyState==4 && xhr.status==200) {
 			var a=xhr.responseText;
-			console.log(a);
-		}
+            var contentType = xhr.getResponseHeader("Content-Type");
+		}//redayState=!4 请求还在继续
 	}
-	xhr.open("POST","http://hilo.sinaapp.com/header.php?demo",true);
+	xhr.open("POST","http://hilo.sinaapp.com/header.php?demo",true);//默认true 异步
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.setRequestHeader('Accept', 'application/json');
 	xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -63,6 +59,7 @@ For html5, emulate jquery ajax
 
 	var get = request.bind(this, 'GET');
 	var post = request.bind(this, 'POST');
+    post(url, {k:1,b:2})
 
 # debug
 每次请求xhr 最好新建一下xhr. 或者销毁覆盖`xhr` 过去的变量

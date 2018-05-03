@@ -12,6 +12,18 @@ array 不像string 是primitive value, 所以length 可以缩短放大array。
 	arr.length = 3;
 	arr.push(4);// [ 1, <2 empty undefined>, 4 ]
 
+## create array
+序列:
+
+    [...Array(5).keys()];
+    Array.from({length: 5}, (x,i) => i);
+
+undefined 数组:
+
+    Array(5)
+    Array.from({length:5})
+    Array.from(Array(5))
+
 ## indexOf 位置方法:
 
     ['aa','bb','cc'].indexOf('aa');//0 找不到就返回-1
@@ -69,11 +81,12 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
 还用map reduce
 
 ## map/reduce
+迭代方法: all:every, any:some, filter, map/forEach
 
-	迭代方法: all:every, any:some, filter, map/forEach
-
-		.every(func);//每一项运行给定函数都返回true,结果才返回true. //func= function(item,index,array){}; array是对数组本身的引用
+		.every(func);//每一项运行给定函数都返回true,结果才返回true. 
 		.some(func);//只要其中一项运行指定函数时返回true,结果就返回true.
+
+
 		.filter(func);//返回运行为true item组成的数组
 		.map(func);//返回函数运行结果组成的数组
 		.forEach(func);//只运行不返回

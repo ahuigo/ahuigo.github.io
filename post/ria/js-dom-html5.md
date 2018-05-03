@@ -13,8 +13,10 @@ description:
 		autocomplete="off" //默认自动完成是on
 	multiple(多选)
 		<input type="file" name="img" multiple="multiple" />
+    onsubmit="callback" //return: true/false
 
 ## Input
+没有name，form 不会提交
 
 	<input type="input" readonly name="creator" value="hilo">
 	email:	<input type="email" name="xxx" />
@@ -22,8 +24,12 @@ description:
 	number:	<input type="number" name="points" min="1" max="10" />
 	range: <input type="range" name="points" min="1" max="10" />
 	date:
-		month, week, time
-		<input type="time" />
+		date, time, datetime-local, 
+        month, week
+        <input type="datetime-local" value="2010-12-11T10:00:00">
+        <input type="date" value="2015-07-01">
+    color:
+    image:
 
 ### Datalist-Option
 Select-Option
@@ -62,7 +68,9 @@ Datalist-Option:
 ## radio
 
 ## drag
+
 	<img draggable="true" />
+
 ### 拖动什么 - ondragstart 和 setData()
 	ondragstart = function drag (ev){
 		ev.dataTransfer.setData("Text",ev.target.id);
@@ -82,7 +90,7 @@ Datalist-Option:
 	}
 
 ## Canvas
-Tutorial: [](http://www.html5canvastutorials.com/tutorials/html5-canvas-text-font-size/)
+https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/00143449990549914b596ac1da54a228a6fa9643e88bc0c000#0
 
 	<canvas id="my" width="200" height="100"></canvas>
 

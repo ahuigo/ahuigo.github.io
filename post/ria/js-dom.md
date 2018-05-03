@@ -299,6 +299,57 @@ submit form elements:
 
 	textareaNode.select()
 
+## iframe
+访问iframe:
+
+	document
+		document.getElementById('frameId').contentDocument; //有跨域限制.
+	window:
+		document.getElementById('frameId').contentWindow; //有跨域限制.
+
+	属性	描述
+	align	根据周围的文字排列 iframe。
+	contentDocument	容纳框架的内容的文档。
+	frameBorder	设置或返回是否显示 iframe 周围的边框。
+	height	设置或返回 iframe 的高度。
+	id	设置或返回 iframe 的 id。
+	longDesc	设置或返回描述 iframe 内容的文档的 URL。
+	marginHeight	设置或返回 iframe 的顶部和底部的页空白。
+	marginWidth	设置或返回 iframe 的左侧和右侧的页空白。
+	name	设置或返回 iframe 的名称。
+	scrolling	设置或返回 iframe 是否可拥有滚动条。
+	src	设置或返回应载入 iframe 中的文档的 URL。
+	width	设置或返回 iframe 的宽度。
+
+### iframe 间的referer
+A -> B -> C ,C的refer 是B
+
+### contentDocument
+同域下:
+
+	//获取子iframe 的document
+	window.frames[index].contentDocument
+	window.frames[frame_id].contentDocument
+	document.getElementById(frame_id).contentDocument
+	window.frames[frame_name].contentDocument//这个不被支持
+
+	//获取子iframe 的src
+	window.frames[index].src
+	window.frames[frame_id].src
+	document.getElementById(frame_id).src
+
+	//获取父iframe的div
+	window.parent.document.getElementById('code').innerText
+
+跨域或者跨子域:
+父子不可以相互操作iframe 的内容, H5 也没有提供CORS 协议。可以通过hack 的方式:
+
+1. 通过iframe.src hash, 实现数据交互哦。
+2. 通过postMessage/ActiveXObject 作中间件实现数据交互，比如：https://github.com/oyvindkinsey/easyXDM#readme http://consumer.easyxdm.net/current/example/methods.html
+
+Refer: [http://www.esqsoft.com/javascript_examples/iframe_talks_to_parent/](http://www.esqsoft.com/javascript_examples/iframe_talks_to_parent/)
+
+
 # Dom Node
 
 ## Search Node
@@ -321,27 +372,37 @@ submit form elements:
 	document.body
 	document.head
 
-### relation node
+### child node
 child:
 
-    var cs = test.children;//children 只含Element
+    # 不包括#text、commnent, CDATA_SECTION
+	children 
+    # all
+	childNodes 
+
+
     test.firstElementChild;
     test.lastElementChild;
 
     // 所有
-    test.childrenNodes
+    test.childNodes
 
-同胞:
+同胞`next/previous [Element]Sibling`:
 
-    # 包括#text、commnent, CDATA_SECTION
     node.nextElementSibling
     node.previousElementSibling
 
     node.nextSibling
     node.previousSibling
 
+parent:
 
-## create node
+    c.parentNode
+    c.parentElement
+
+## Add Node
+
+### create node
 text
 
 	document.createElement("p");
@@ -355,91 +416,41 @@ createElement:
 		return p.childNodes[0];
 	}
 
-## Add Node
-
 ### .appendChild
+Example 浮层: js-demo/alert-float.js
 
-	function loadJs(url, callback) {
-		//var head = document.getElementsByTagName('head')[0];
-		var script = document.createElement('script');
-		script.type = 'text/javascript';
-		script.src = url;
-
-		if(callback)
-			script.addEventListener('load', callback, false);
-
-		// Fire the loading
-		document.head.appendChild(script);
-	}
-	function loadHtml(html){
-		var div = document.createElement('div');
-		div.innerHTML = html;
-		div.children[0].onclick = function(){console.log('click on new ele')}
-		document.body.appendChild(div.children[0]);
-	}
-
-Example 浮层:
-
-	Object.prototype.extend = function( defaults) {
-		for (var i in defaults) {
-			if (!this[i]) {
-				this[i] = defaults[i];
-			}
-		}
-	};
-	AddFloatLayer('test', 5);
-	function AddFloatLayer(txt, time) {
-		var node = document.createElement("div");
-		node.innerText = txt;
-		node.style.extend( {
-			position:'fixed',
-			top: '50%',
-			left: '50%',
-			height:'3em',
-			width:'4em',
-			'text-align': 'center',
-			'font-size':'3em',
-			'margin': '-1.5em -2em', /*set to a negative number 1/2 of your height*/
-			border: '1px solid #ccc',
-			'background-color': '#f3f3f3'
-		});
-		document.body.appendChild(node);
-		if(typeof time === 'number'){
-			setTimeout(function(){
-				node.parentNode.removeChild(node);
-			}, time*1000);
-		}
-	}
+    # resort node
+    var list = $('#test-list')[0]
+    var arr =[];
+    for(let i=0;i<list.children.length;i++){
+        arr.push(list.children[i])
+    }
+    arr.sort((a,b)=>a.innerText>b.innerText)
+    arr.map(node=>list.appendChild(node))
 
 ### .insertBefore
 
-	child.parentNode.insertBefore(child, parent.childNodes[0]);
+	node.parentNode.insertBefore(child, parent.childNodes[0]);
+    $("#holder > div:nth-child(2)").before("<div>foobar</div>");
+    $("#holder > div:eq(2)").before("<div>foobar</div>");
+    # dom 没有after
+    $("#holder > div:nth-child(2)").after("<div>foobar</div>");
 
-## .removeChild
-
+### .removeChild
+    #self
 	child.parentNode.removeChild(child);
-	jqueryNode.remove()
+	jqueryNode.remove() 
+
+    # subnode
 	jqueryNode.remove(subnode)
 
-## child
-
-	children (not include textNode)
-	childNodes (include textNode)
 
 ## node 属性
 
 	node.nodeName; //
 		TEXTAREA
-	node.nodeValue; //
+	node.nodeValue; //null or 文本
 	node.nodeType; //元素1 属性2 文本3 注释8 文档9
-
-### node value
-
-	document.getElementById("Ultra").value
-	$("#Ultra").val()
-
-	e = document.getElementById("Ultra");
-	e.options(e.selectedIndex).value;
 
 # Dom Attribute
 
@@ -476,12 +487,16 @@ Example 浮层:
 
 	node.style.key;//只能查看显示的
 	node.style.backgroundColor
+        node.style['background-color']
+	node.style.cssText
 
 ### Set
 
-　　element.style.cssText += 'color:red';
-	//or
-　　element.style.color = 'red';
+　　 element.style.cssText += 'color:red';
+    //or
+    element.style.color = 'red';
+    p.style.fontSize = '20px';
+    p.style.paddingTop = '2em';
 
 ### Get
 
@@ -644,6 +659,9 @@ Jquery
 
 ## listener
 
+	target.addEventListener('click', listener, false);
+	target.removeEventListener('click', listener, false);
+
 ### add listener
 
 	//监听顺序FIFO
@@ -673,11 +691,6 @@ Jquery
 	e.srcElement,//forIE
 	e.target://In most Explore e.target?e.target:e.srcElement
 	e.fromElement(e.relatedTarget): e.toElement(e.target) //for mouse event(from mouseout to mouserover)
-
-### add/remove event listener
-
-	target.addEventListener('click', listener, false);
-	target.removeEventListener('click', listener, false);
 
 ### stop
 
@@ -734,66 +747,17 @@ Jquery
 	　　return this;
 	};
 
-# Dom HTML
+#### dispatchEvent
 
-## iframe
-访问iframe:
+    var event = new Event('submit', {
+        bubbles: true,
+        cancelable: true
+        });
+    document.forms[0].dispatchEvent(event);
 
-	document
-		document.getElementById('frameId').contentDocument; //有跨域限制.
-	window:
-		document.getElementById('frameId').contentWindow; //有跨域限制.
-
-	属性	描述
-	align	根据周围的文字排列 iframe。
-	contentDocument	容纳框架的内容的文档。
-	frameBorder	设置或返回是否显示 iframe 周围的边框。
-	height	设置或返回 iframe 的高度。
-	id	设置或返回 iframe 的 id。
-	longDesc	设置或返回描述 iframe 内容的文档的 URL。
-	marginHeight	设置或返回 iframe 的顶部和底部的页空白。
-	marginWidth	设置或返回 iframe 的左侧和右侧的页空白。
-	name	设置或返回 iframe 的名称。
-	scrolling	设置或返回 iframe 是否可拥有滚动条。
-	src	设置或返回应载入 iframe 中的文档的 URL。
-	width	设置或返回 iframe 的宽度。
-
-### iframe 间的referer
-A -> B -> C ,C的refer 是B
-
-### contentDocument
-同域下:
-
-	//获取子iframe 的document
-	window.frames[index].contentDocument
-	window.frames[frame_id].contentDocument
-	document.getElementById(frame_id).contentDocument
-	window.frames[frame_name].contentDocument//这个不被支持
-
-	//获取子iframe 的src
-	window.frames[index].src
-	window.frames[frame_id].src
-	document.getElementById(frame_id).src
-
-	//获取父iframe的div
-	window.parent.document.getElementById('code').innerText
-
-跨域或者跨子域:
-父子不可以相互操作iframe 的内容, H5 也没有提供CORS 协议。可以通过hack 的方式:
-
-1. 通过iframe.src hash, 实现数据交互哦。
-2. 通过postMessage/ActiveXObject 作中间件实现数据交互，比如：https://github.com/oyvindkinsey/easyXDM#readme http://consumer.easyxdm.net/current/example/methods.html
-
-Refer: [http://www.esqsoft.com/javascript_examples/iframe_talks_to_parent/](http://www.esqsoft.com/javascript_examples/iframe_talks_to_parent/)
-
-# Cookie
-Cookie 跨域
-hack 的方法：类型jsonp，通过script 标签请求外域的服务器，让服务器返回cookie.
-
-## httponly
-设定了httpOnly的Cookie将不能被JavaScript读取
 
 # Data
+## dataset
 html5 的dataset 对象
 
 　　element.dataset.key = string_only;
@@ -804,3 +768,11 @@ jquery:
     element.dataset.key // undefined
 
     $(element).attr('data-key', 'value');
+
+## Cookie
+Cookie 跨域
+1. CORS
+2. hack 的方法：类型jsonp，通过script 标签请求外域的服务器，让服务器返回cookie.
+
+### httponly
+设定了httpOnly的Cookie将不能被JavaScript读取

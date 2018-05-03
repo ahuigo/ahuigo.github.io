@@ -56,10 +56,13 @@ checked, checkbox
 后代:
 	子、
 		$('div').children(); //所有div之下的所有子节点
-		$('parent > child');
-		$('parent child'); //孙子
-		 $("div").children("p.1"); //筛选出所有类名为.1的p标签节点
+		$("div").children("p.1"); //筛选出所有类名为.1的p标签节点
+		$('parent > child'); //儿子
+            # 第二个儿子
+            $("#holder > div:nth-child(2)").before("<div>foobar</div>");
+            $("#holder > div:eq(2)").before("<div>foobar</div>");
 	孙、曾孙...
+		$('parent grandchild'); //孙子
 		$("div").find("span"); //所有孙子中的span节点
 		$("div").find("*"); //所有孙子节点
 
@@ -88,6 +91,12 @@ checked, checkbox
 	$('div:not(".intro")')
 
 	$('.tr-sms').find('input[name=channel]').filter('[value=1]')
+
+### filter func
+
+    .filter(function () {
+        return this.innerHTML.indexOf('S') === 0; // 返回S开头的节点
+    }); 
 
 ### via position
 
@@ -158,6 +167,16 @@ for class:
 
 # each
 
+## slice
+
+    $('li').slice(2, 4); 
+
+## map
+
+    var arr = langs.map(function () {
+        return this.innerHTML;
+    }).get(); // 用get()拿到包含string的Array：['JavaScript', 'Python'
+
 ## each selector
 
 	$("#navigation >a").each(function() {
@@ -173,97 +192,8 @@ for class:
 			console.log(this);//item reference;
 	}
 
-# innerHTML
-
-	jqNode.html() === jqNode[0].innerHTML
-
-# 效果
-
-其中： callback 是当动画100% 完成后，才执行
-
-## hide
-
-	node.hide()
-	node.show()
-	node.toggle()
-
-## 淡入/淡出
-
-### fadeIn
-
-	node.fadeIn(speed, callback)
-		speed:
-			null
-			'slow'/'fast'
-			3000 //3000ms
-		callback:
-			function(){....} //没有参数
-
-### fadeOut
-
-	node.fadeOut(speed, callback)
-
-### fadeToggle
-
-	node.fadeToggle(speed, callback)
-
-### fadeTo
-$(selector).fadeTo(speed,opacity,callback);
-	opacity: 透明度
-		0~1
-
-## slide滑动
-	$(selector).slideDown(speed,callback);
-	$(selector).slideUp(speed,callback);
-	$(selector).slideToggle(speed,callback);
-
-## animation动画
-必选的css属性. css3也有相应的动画效果: -webkit-animation: myAnimation speed;
-
-	$(selector).animate({params},speed,callback);
-		params:
-			{left:'250px',
-				height:'+=150px',//相对值
-				marginLeft:'10px' //必须使用 Camel 标记法书写所有的属性名，比如，必须使用 paddingLeft 而不是 padding-left，使用 marginRight 而不是 margin-right，等等。
-			}
-
-## stop
-停止动画/淡入淡出
-
-	$(selector).stop(stopAll,goToEnd);
-		stopAll:
-			default:false
-			false/true;//是否清除所有动画队列
-		goToEnd:
-			default:false
-			false/true;//是否立即完成当前动画
-
-# html
-
-## 查询
-返回第一个子结点的内容
-
-	$(select).text();//innerText
-	$(select).html();//取html. 相当了innerHTML 
-	$(select).val();//取value
-	$(select).attr('name');//取得属性
-
-## 设置
-当有多个结点时，同时改变多个结点
-
-	$(select).text(value);
-	$(select).html(value);
-	$(select).val(value);
-	$(select).attr(name, value);
-	$(select).attr({name:value});
-
-	//以上都支持回调
-	$("#test1").text(function(i,origText){
-	    return "Old text: " + origText + " New text: Hello world!
-		(index: " + i + ")";
-	});
-
-## insertBefore insertAfter
+## node
+### insertBefore insertAfter
 newNode.insertBefore(oldNode)
 
 	$( "<p>Test</p>" ).insertBefore( "#main" );
@@ -279,26 +209,22 @@ oldNode.before(node1,node2,...)
 	$("img").after(node1, node2, ...);
 	$("img").before("Some text before");
 
-## prepend & append
-newNode.prependTo(oldNode)
-newNode.prependTo(html_str)
+### prepend & append
+基于  `appendChild, insertBefore` by DOM method
 
-	newNode.appendTo(oldNode)
+    newNode.prependTo(oldNode)
+    newNode.prependTo(html_str)
 
-oldNode.prepend(node1, node2, ...)
+    newNode.appendTo(oldNode)
+    newNode.appendTo(html_str)
+
+    oldNode.prepend(node1, node2, ...)
+
+试下
 
 	 $(select).append('hello world!');
 	 $("p").prepend("<img src='xxx'>");
 
-The main difference is that `appendChild` is a DOM method and `append` is a jQuery method. The second one uses the first as you can see on jQuery source code
-
-	append: function() {
-		return this.domManip(arguments, true, function( elem ) {
-			if ( this.nodeType === 1 || this.nodeType === 11 || this.nodeType === 9 ) {
-				this.appendChild( elem );
-			}
-		});
-	},
 
 ## remove & empty
 
@@ -312,6 +238,7 @@ The main difference is that `appendChild` is a DOM method and `append` is a jQue
 ## .attr,.prop
 
 	$(node).attr('action')
+        $(select).attr({name:value});
 	$(node).prop('action')
 	$(node).html()
 	$(node)[0].outerHTML
@@ -358,31 +285,6 @@ get checked val
 		console.log($tr.wrap('<p>').html());
 	});
 
-# Css
-
-## ClassName
-
-	.addClass(ClassName);
-	.removeClass(ClassName);
-	.removeClass();//all
-	.toggleClass(ClassName);
-
-## Css Attribute
-
-	.css(propertyname); //return Attribute value
-	.css(propertyname, value); //set Attribute value
-	.css(propertyname, value); //set Attribute value
-	.css({'k1':'v1', 'k2':'v2'}); //set Attribute value
-
-## size
-
-	width() ;//不包括内边距、边框或外边距）。
-	height()
-	innerWidth() //包括padding
-	innerHeight()
-	outerWidth() //包括border. outerWidth(true)则包括border & margin
-	outerHeight()
-
 # ajax
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 
@@ -405,23 +307,35 @@ get checked val
 不支持FormData
 
 	$.get("demo_test.asp",function(responseTxt,statusTxt){});
-	$.post("demo_test.asp",data, function(responseTxt,statusTxt){});
+	$.post("demo_test.asp",{a:1}, function(responseTxt,statusTxt){});
+
+### getJSON
+
+    var jqxhr = $.getJSON('/path/to/resource', {
+        name: 'Bob Lee',
+        check: 1
+    }).done(function (data) {
+        // data已经被解析为JSON对象了
+    });
 
 ## ajax
+ajax(url, setting)
 
 	$.ajax(url, {'data':{'post':1}, 'type':"POST", header:{'Origin':'http://wiki.cn'}}
-	).done(function(res){
-			console.log(res);
-		}
-	)
-	res = $.ajax({
-		url:url,
-		data:data,
-		async:false
-	});
+	).done(function(data){
+        ajaxLog('成功, 收到的数据: ' + JSON.stringify(data));
+    }).fail(function (xhr, status) {
+        ajaxLog('失败: ' + xhr.status + ', 原因: ' + status);
+    }).always(function () {
+        ajaxLog('请求完成: 无论成功或失败都会调用');
+    });
+
+ajax(setting):
+
 	res = $.ajax({
 		url:url,
 		data:new FormData(document.forms[0]),
+        dataType: 'json', //接收的数据格式 Content-Type
 		type:'POST',
 		success:function(data, string textStatus, jqXHR jqXHR){}
 	});
