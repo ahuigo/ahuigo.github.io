@@ -56,7 +56,7 @@ table name 这些则不支持，应该使用:
     cur.execute("SELECT id, name, address, salary from COMPANY")
     for row in cur.fetchall()
 
-##other:
+## other:
 
     cursor.fetchone()
     cursor.fetchmany([size=cursor.arraysize])

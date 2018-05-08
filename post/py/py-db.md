@@ -14,12 +14,14 @@ description:
 ## Peewee
 http://docs.peewee-orm.com/en/latest/peewee/quickstart.html
 
+### Model
+
 	from peewee import *
+    from playhouse.pool import PooledPostgresqlExtDatabase
 
 	db = SqliteDatabase('people.db')
-
-    from playhouse.pool import PooledPostgresqlExtDatabase
-    db = PooledPostgresqlExtDatabase(
+    pg_db = PostgresqlDatabase('my_app', user='postgres', password='secret', host='10.1.0.9', port=5432)
+    pg_pool_db = PooledPostgresqlExtDatabase(
         'my_database',
         max_connections=8,
         stale_timeout=300,
@@ -28,9 +30,15 @@ http://docs.peewee-orm.com/en/latest/peewee/quickstart.html
 	class Person(Model):
 		name = CharField()
 		birthday = DateField()
+        uid = CharField(unique=True)
+
 		is_relative = BooleanField()
 		class Meta:
 			database = db # This model uses the "people.db" database.
+            indexes = (
+                (('name', 'birthday'), True),
+            )
+            primary_key = CompositeKey('one', 'two')
 
 	# person.pets 反向引用 backref='pets'
 	class Pet(Model):
@@ -70,6 +78,24 @@ Peewee returns a cursor. Then you can use the db-api 2 to iterate over it:
 	User.create(username='Charlie')
     #以下 这个无效, 不要用
 	User(username='Bob').save() 
+
+#### insert dup
+
+    test_data = (
+            ('huey', 'cat', '123'),
+            ('zaizee', 'cat', '124'),
+            ('mickey', 'dog', '125'),
+        )
+
+    for first, last, empno in self.test_data:
+        Emp.create(first=first, last=last, empno=empno)
+        res = (Emp
+                .insert(first='foo', last='bar', empno='125')
+                .on_conflict(
+                    conflict_target=(Emp.empno,),
+                    preserve=(Emp.first, Emp.last),
+                    update={Emp.empno: '125.1'})
+                .execute())
 
 ### delete.execute()
 
@@ -150,57 +176,58 @@ Once again we’ve run into a classic example of *N+1* query behavior.
 1. In this case, we’re executing an additional query for every Person returned by the original SELECT! 
 2. We can avoid this by performing a JOIN and using a SQL function to aggregate the results.
 
-	query = (Person
-			.select(Person, fn.COUNT(Pet.id).alias('pet_count'))
-			.join(Pet, JOIN.LEFT_OUTER)  # include people without pets.
-			.group_by(Person)
-			.order_by(Person.name))
+e.g.
 
-	for person in query:
-		# "pet_count" becomes an attribute on the returned model instances.
-		print person.name, person.pet_count, 'pets'
+    query = (Person
+        .select(Person, fn.COUNT(Pet.id).alias('pet_count'))
+        .join(Pet, JOIN.LEFT_OUTER)  # include people without pets.
+        .group_by(Person)
+        .order_by(Person.name))
 
-	# prints:
-	# Bob 2 pets
-	# Grandma L. 0 pets
-	# Herb 1 pets
+    for person in query:
+        # "pet_count" becomes an attribute on the returned model instances.
+        print person.name, person.pet_count, 'pets'
+    # prints:
+    # Bob 2 pets
+    # Grandma L. 0 pets
+    # Herb 1 pets
 
 if we were to do a `join` from `Person` to `Pet` then every person with multiple pets would be repeated, once for each pet. 
 It would look like this:
 
-	query = (Person
-			.select(Person, Pet)
-			.join(Pet, JOIN.LEFT_OUTER)
-			.order_by(Person.name, Pet.name))
-	for person in query:
-		# We need to check if they have a pet instance attached, since not all
-		# people have pets.
-		if hasattr(person, 'pet'):
-			print person.name, person.pet.name
-		else:
-			print person.name, 'no pets'
+    query = (Person
+            .select(Person, Pet)
+            .join(Pet, JOIN.LEFT_OUTER)
+            .order_by(Person.name, Pet.name))
+    for person in query:
+        # We need to check if they have a pet instance attached, since not all
+        # people have pets.
+        if hasattr(person, 'pet'):
+            print person.name, person.pet.name
+        else:
+            print person.name, 'no pets'
 
-	# prints:
-	# Bob Fido
-	# Bob Kitty
-	# Grandma L. no pets
-	# Herb Mittens Jr
+    # prints:
+    # Bob Fido
+    # Bob Kitty
+    # Grandma L. no pets
+    # Herb Mittens Jr
 
 To accomodate the more common (and intuitive) workflow of listing a person and attaching a list of that person’s pets, we can use a special method called prefetch():
 
-	query = Person.select().order_by(Person.name).prefetch(Pet)
-	for person in query:
-		print person.name
-		for pet in person.pets:
-			print '  *', pet.name
+    query = Person.select().order_by(Person.name).prefetch(Pet)
+    for person in query:
+        print person.name
+        for pet in person.pets:
+            print '  *', pet.name
 
-	# prints:
-	# Bob
-	#   * Kitty
-	#   * Fido
-	# Grandma L.
-	# Herb
-	#   * Mittens Jr
+    # prints:
+    # Bob
+    #   * Kitty
+    #   * Fido
+    # Grandma L.
+    # Herb
+    #   * Mittens Jr
 
 ### other
 

@@ -5,17 +5,13 @@ category: blog
 description: 
 ---
 # Install android sdk Manager
-	$ brew install android-sdk
+	$ brew cask install android-sdk
+    'export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"'
+    android-sdk requires Java 8. You can install it with
+        brew cask install caskroom/versions/java8
+    -------------
 	==> Caveats
 	Now run the `android' tool to install the actual SDK stuff.
-
-	" The Android-SDK location for IDEs such as Eclipse, IntelliJ etc is:
-	  /usr/local/Cellar/android-sdk/22.0.5
-
-	" You may need to add the following to your .bashrc:
-
-	  export ANDROID_HOME=/usr/local/opt/android-sdk
-
 	" Bash completion has been installed to:
 
 	  /usr/local/etc/bash_completion.d
@@ -28,7 +24,23 @@ description:
 如果你只是想操作android手机或者刷机用，只需要勾选Platform-tools和Tools (这是ADT必须的)。
 完成后就可以使用 adb（Android Debug Bridge）命令来调试手机了，输入： adb version 出现版本结果就大功告成。
 
-# adb
+# adb + fastboot
+android debug bridge
+ADB是android sdk里的一个工具, 用这个工具可以直接操作管理android模拟器或者真实的andriod设备. 它的主要功能有:
+
+    运行设备的shell(命令行)
+    管理模拟器或设备的端口映射
+    计算机和设备之间上传/下载文件
+    将本地apk软件安装至模拟器或android设备
+
+## download adb and fastboot(platform-tools)
+https://developer.android.com/studio/releases/platform-tools#download
+
+
+## set phone debug mode
+1. Tap the About Phone option 
+2. Then tap the Build Number option 7 times to enable Developer Mode. 
+3. enable the USB Debugging mode option.
 
 ## 查看adb 设备
 	$ adb devices #在手机上点authorized this device
@@ -38,9 +50,96 @@ description:
 	034e5ae9828df5d1	unauthorized
 
 ## adb 常用命令
+https://lifehacker.com/the-most-useful-things-you-can-do-with-adb-and-fastboot-1590337225
+
 	$ adb shell # 交互
+	$ adb shell [command]
+
+    Copy files to phone
+    $ adb push [source] [destination]
 	$ adb push ~/file /sdcard/file
+
+    Copy files from your phone to your computer.
 	$ adb pull /sdcard/file
+
+    adb install [source.apk]
+
+reboot:
+
+    adb reboot bootloader
+    adb reboot recovery
+
+### backup
+adb backup 
+Function: Create a full backup of your phone and save to the computer.
+
+adb restore restorefile.zip
+Function: Restore a backup to your phone.
+
+### ROM
+adb sideload
+Function: Push and flash custom ROMs and zips from your computer.
+
+## fastboot
+adb 不能访问bootloader 区，fastboot可以：
+
+    fastboot oem unlock
+    Function: Unlock your bootloader, making root access possible.
+    fastboot oem lock
+
+    fastboot devices
+    Function: Check connection and get basic information about devices connected to the computer.
+    This is essentially the same command as adb devices from earlier. However, it works in the bootloader, which ADB does not
+
+    fastboot flash recovery
+    Function: Flash a custom recovery image to your phone.
+
+
+
+# 刷机
+hammerhead D820(H) 16G
+HW Version rev_11
+Bootloader version: HHZ12h
+BASEBAND VERSION: M8974A-2.0.50.2.26
+SECURE BOOT: enabled
+Lock state: unlocked (原来是locked)
+
+1. platfrom sdk: adb+fastboot 
+    0. PATH=$PATH:~/Download/n5/platform-tools
+    1. adb devices
+2. n5 connect to mac osx: set debug mode
+3. install:
+    5. adb reboot bootloader
+    2. Fastboot OEM unlock
+    3. install rom:
+        1. via twrap recovery
+            0. http://www.androiddevs.net/downloads/
+            1. Inside TWRP -> Press wipe -> advance wipe -> enable cache, Dalvik cache, data, and system. 
+            2. Tap on install and choose the downloaded ROM package 
+            2. Now install Gapps (based on Android Nougat)
+        2. via fastboot: 
+            1. 到官网（http://developer.android.com/preview/setup-sdk.html）下载Android ROM file L/M/N/O整包，并解压。
+            3. cd unzip_rom_dir && sh flash-all.sh 
+        3. 其他方法： https://www.jianshu.com/p/e5e9ef0eec4b
+
+## install twrp recovery
+https://dl.twrp.me/hammerhead/
+
+    fastboot flash recovery twrp-2.8.x.x-xxx.img
+
+
+# software
+## fastboot
+Fastboot 类似BIOS 固件。
+1. fastboot可以将电脑上的recovery镜像（非手机上），加载到手机。
+2. 不需要依赖于recovery，甚至linux底层刷坏了recovery模式
+3. astboot模式其实是调用spl进行刷机的，所以如果刷spl坏了就变砖了
+4. fastboot方法需要电脑上有fastboot程序，同时手机要进入fastboot模式才可以操作
+
+另外
+1. Recovery - wipe data/partition tool
+1. Bootloader 更为原始的BIOS，然后选择进入fastboot还是recovery/rom
+
 
 # java sdk
 /Library/Java/Home/lib/
@@ -55,45 +154,3 @@ description:
 
 # root
 http://www.androidrootz.com/2013/11/nexus-5-one-click-toolkit-for-mac.html
-
-***************************************************************
-								     
-              One-Click Root for LG Nexus 5!		     
- 							     
-            Brought to you by AndroidRootz.com	     
-								     
-***************************************************************
-             This script will: Root your Nexus 5!			     
-           For more details go to AndroidRootz.com	     
- 
-Warning! This will do a factory reset on your phone! BACKUP your phone!
-First make sure your in FASTBOOT MODE and phone is plugged in!
-and then press enter to unlock your Bootloader and root your Nexus 5
-< waiting for device >
-...
-FAILED (remote: Already Unlocked)
-finished. total time: 0.001s
-Use the volume up and power button to select Yes on your Nexus 5 screen
-You now have an unlocked bootloader!
- 
-Now press the power button to start the device
-Let your device boot up, complete the setup screen
-Transfer UPDATE-SuperSU-v1.65.zip into your phone using Android File Transfer 
-Download Android File Transfer for Mac: http://bit.ly/e2doAr
-Press enter to continue
-Enter back into FASTBOOT MODE and keep your phone plugged in!
-Press enter to continue
-
-Ready to install TWRP Recovery
-1. TWRP Recovery
-Enter 1 then press enter
-/Users/hilojack/Downloads/nexus5/Root Nexus 5/Root.Nexus.5.tool: line 41: [: =: unary operator expected
-Press the volume up key 2x to highlight Recovery Mode,
-Use the power button to select it.
- 
-Once in recovery, select Install
-Choose UPDATE-SuperSU-v1.65.zip, then slide to install
-Once it finishes reboot your phone.
- 
- 
-Press enter to continue

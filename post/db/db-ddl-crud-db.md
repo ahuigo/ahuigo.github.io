@@ -7,8 +7,8 @@
 
     \l
         list all databases
-    \connect database_name
-
+    \c database_name
+        \connect database_name
 
 ## table
 
@@ -26,6 +26,10 @@ describe table and sequence:
 
     \d
     \dt [<table>]
+
+### drop
+
+    drop TABLE [IF EXISTS ] xxx
 
 ## Alter
 ALTER TABLE table_name `<action>`:

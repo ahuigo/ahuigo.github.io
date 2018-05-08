@@ -24,9 +24,7 @@ export PYTHONPATH=.
 
 
 #android sdk
-#export PATH="/Users/hilojack/Downloads/android-sdk/platforms/":$PATH
-export PATH=$PATH:~/.composer/vendor/bin
-export ANDROID_HOME=/usr/local/opt/android-sdk
+export PATH=$PATH:~/.composer/vendor/bin:/Users/hilojack/Downloads/n5/platform-tools
 
 # go
 export GOPATH=~/go

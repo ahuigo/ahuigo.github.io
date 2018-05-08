@@ -222,6 +222,7 @@ current file's dir:
 
 	fp.read()	Return file content.
 	fp.readline()	Return just one line of text file.
+	fp.readlines() === list(fp)	Return just one line of text file.
 		for line in fp
 		while line:
 			line = fp.readline()
@@ -263,8 +264,12 @@ Example:
 		Optional argument whence defaults to:
 			0 (offset from start of file, offset should be >= 0);
 			1 (move relative to current position, positive or negative),
-			2 (move relative to end of file, usually negative, although many platforms allow seeking beyond the end of a file).
-			If the file is opened in text mode, only offsets returned by tell() are legal.  Use of other offsets causes undefined behavior.
+			2 (move relative to end of file, usually negative, 
+            If the file is opened in text mode, only offsets returned by tell() are legal.  
+
+        tail 100 char of file:
+            fp.seek(fp.seek(0, 2)-100)
+            
 
 ### line position
 

@@ -17,7 +17,8 @@ list forEach
 	})
 
 ### has key
-1. hasOwnProperty
+1. hasOwnProperty: 不包括原型链
+2. keys: 也不含proto
 2. `in`: key 它可能是obj 继承的属性, 不一定是obj 本身的属性
 
     'toString' in xiaoming; // true, 不是xiaoming 本身，而是object 都有
@@ -147,28 +148,177 @@ new func() 相当于:
         self.apply(that, args);
     }
 
-### class 定义类
+## class 定义类
+所有的方法都定义在prototype 上
+
     class Animal{
         constructor(name){
             this.name = name
         }
+        method1(){}
     }
     class Cat extends Animal{
         constructor(name){
-            super(name)
+            super(name) //super 是编译时确定 必须在前
+            this.xxx()
         }
         say(){
             return `Hello, ${this.name}!`
+            return super.method1()
         }
     }
     (new Cat('ahui')).say()
 
+class 定义的方法是不可枚举的
+
+    class Point {
+        constructor(x, y) {
+            // ...
+        }
+
+        toString() {
+            // ...
+        }
+        a(){}
+    }
+
+    Object.keys(Point.prototype)
+    // []
+    Object.getOwnPropertyNames(Point.prototype)
+    // ["constructor","toString"]
+
+你也可以这样es5 写法绑定就可以枚举
+
+    class Point {
+        constructor(){ }
+    }
+
+    Object.assign(Point.prototype, {
+        toString(){},
+        toValue(){}
+    });
+
+属性名可以用变量:
+
+     [methodName]() { }
+
+### constructor
+constructor方法默认返回实例对象（即this），完全可以指定返回另外一个对象。
+
+    class Foo {
+        constructor() {
+            return Object.create(null);
+        }
+    }
+### set/get
+    class MyClass {
+        constructor() {
+            // ...
+        }
+        get prop() {
+            return 'getter';
+        }
+        set prop(value) {
+            console.log('setter: '+value);
+        }
+    }
+    var descriptor = Object.getOwnPropertyDescriptor( MyClass.prototype, "prop");
+
+    "get" in descriptor  // true
+
+### new.target === class
+new.target会返回子类
+
+    class Rectangle {
+        constructor(length, width) {
+            console.log(new.target === Rectangle);
+            this.length = length;
+            this.width = width;
+        }
+    }
+
+    var obj = new Rectangle(3, 4); // 输出 true
+
+### static
+static 不可以被实例继承(不是prototype), static属于类自己(相当于proto)
+
+#### static prop
+    class Foo {
+    }
+
+    Foo.prop = 1;
+
+提案
+
+    class MyClass {
+    static myStaticProp = 42;
+
+#### static method
+0. 只可以被子类继承
+1. 如果静态方法包含this关键字，这个this指的是类，而不是实例。
+2. super.staticMethod() ，super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类
+
+    class Foo {
+        static bar () {
+            this.baz();
+        }
+        static baz () {
+            console.log('hello');
+        }
+        baz () {
+            console.log('world');
+        }
+    }
+
+    Foo.bar() // hello
+
+### Generator 
+如果某个方法之前加上星号（*），就表示该方法是一个 Generator 函数。
+
+    class Foo {
+        constructor(...args) {
+            this.args = args;
+        }
+        * [Symbol.iterator]() {
+            for (let arg of this.args) {
+            yield arg;
+            }
+        }
+    }
+
+    for (let x of new Foo('hello', 'world')) {
+        console.log(x);
+    }
+
+上面代码中，Foo类的Symbol.iterator方法前有一个星号，表示该方法是一个 Generator 函数。Symbol.iterator方法返回一个Foo类的默认遍历器，for...of循环会自动调用这个遍历器。
+
+### 直接定义对象：
+
+    let parent = {
+        method1() { .. },
+    }
+
+    let child = {
+        __proto__: parent,
+        method1() { return super.method1() },
+    }
 
 ### 创建对象
 1. obj = new Object();
 2. person={firstname:"John"};
 3. obj = new func(param1, param2);
     obj.constructor === func.prototype.constructor; // true
+
+    let person = new class {
+        constructor(name) {
+            this.name = name;
+        }
+
+        sayName() {
+            console.log(this.name);
+        }
+    }('张三');
+
 
 
 ## 对象分类

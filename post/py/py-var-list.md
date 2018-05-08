@@ -171,12 +171,55 @@ exclude end
 	>>> x in range(1, 10)
 	>>> 'hilo' in 'hilojack'
 
-## print
+## range:
 
-	print list
-	print '%r' % list
+	>>> print range(4)
+	[0, 1, 2, 3]
+	>>> print range(2,4)
+	[2, 3]
 
-## Common list Function
+## repeat
+repeat
+
+	'.'.join(['pad']*2)
+
+## pop,append(push)
+
+	>>> list = [1,2]
+	>>> del list[0]
+	>>> list.pop(0)
+	>>> list.append(3)
+	>>> list.pop(-1) # same as list.pop() last one
+	3
+	>>> list.pop(0) # first one
+	1
+
+### insert and shift
+
+    list.insert(pos, item)
+    list = list[1:]
+
+    from collections import deque
+    items = deque([1, 2])
+    items.append(3) # deque == [1, 2, 3]
+    items.rotate(1) # The deque is now: [3, 1, 2]
+    items.rotate(-1) # Returns deque to original state: [1, 2, 3]
+
+    items.appendleft(item)
+    item = items.popleft() # deque == [2, 3]
+
+## list with enumerate
+
+	>>> for k,v in [['k1','v1'],['k2','v2']]: print k,v
+	>>> for k,v in [('k1','v1'),('k2','v2')]: print k,v
+	k1 v1
+	k2 v2
+
+	>>> for k,v in enumerate([['k1','v1'],['k2','v2']], start=2): print k,v
+	...
+	1 ['k2', 'v2']
+
+# sort
 
 
 	.index(value, [start, [stop]])
@@ -222,59 +265,3 @@ list.reverse() is *IN PLACE*
 直接插入:
 
     l.insert(index,item)
-
-## range:
-
-	>>> print range(4)
-	[0, 1, 2, 3]
-	>>> print range(2,4)
-	[2, 3]
-
-## repeat
-repeat
-
-	'.'.join(['pad']*2)
-
-## pop,append(push)
-
-	>>> list = [1,2]
-	>>> del list[0]
-	>>> list.pop(0)
-	>>> list.append(3)
-	>>> list.pop(-1) # same as list.pop() last one
-	3
-	>>> list.pop(0) # first one
-	1
-
-### insert and shift
-
-    list.insert(pos, item)
-    list = list[1:]
-
-    from collections import deque
-    items = deque([1, 2])
-    items.append(3) # deque == [1, 2, 3]
-    items.rotate(1) # The deque is now: [3, 1, 2]
-    items.rotate(-1) # Returns deque to original state: [1, 2, 3]
-
-    items.appendleft(item)
-    item = items.popleft() # deque == [2, 3]
-
-## unpack list
-
-	>>> print argv
-	[1, 2]
-	>>> a,b = [1, 2]
-	>>> a,b = 1, 2 # tuple
-	>>> a,b = (1,2)
-
-## list with enumerate
-
-	>>> for k,v in [['k1','v1'],['k2','v2']]: print k,v
-	>>> for k,v in [('k1','v1'),('k2','v2')]: print k,v
-	k1 v1
-	k2 v2
-
-	>>> for k,v in enumerate([['k1','v1'],['k2','v2']], start=2): print k,v
-	...
-	1 ['k2', 'v2']

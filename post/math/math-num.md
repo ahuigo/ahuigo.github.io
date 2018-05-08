@@ -15,9 +15,10 @@ Power function  幂函数 x^a=y x=y^(1/a)
 
 Exponential_function 指数函数e^x
 Logarithm:
+
 翻倍：
-(1+x)^10 = 2 ; x=70/10 = 7%
-(1+0.05)^n = 2 ; n=70/5 = 14
+    (1+x)^10 = 2 ; x=70/10 = 7%
+    (1+0.05)^n = 2 ; n=70/5 = 14
 
 ## 整除
 y被x整除: x|y, 即y=ax, 且a不为0
@@ -35,6 +36,7 @@ a,b 的最大公约数(包含公共元素): (a,b)
 ### 互质, relatively prime
 互质（英文：coprime，符号：⊥，又称互素、relatively prime、mutually prime、co-prime）
 
+    //最大公因数为1
     gcd(a,b) = 1
     (a,b) = 1
 
@@ -48,3 +50,46 @@ a,b 的最大公约数(包含公共元素): (a,b)
     7m = 4n+1, 因为7,4互质
         4*(0,1,2,3,4,5,6)
         余(0,4,1,5,2,6,3)
+
+
+### 扩展扩展欧几里得算法, Extended Euclidean algorithm
+欧几里得算法(又叫辗转相除法): a>b, gcd(a,b) 为最大公因数，满足:
+
+    gcd(a,b) = gcd(b, a mod b)
+    (a,b) = (b, a mod b)
+
+比如:
+
+    (5,3) (3, 2) (2, 1) (1, 0) 得最大公因为1
+    (8,4) (4, 0) 最大公因4
+
+扩展算法： 给予二个整数a、b，必存在整数x、y使得
+
+    ax + by = gcd(a,b)
+
+归纳法证明：
+1. 对于b=0, 存在(x,y)=(1, 0) 使得: ax+by=gcd(a,b) 成立
+2. 当a>b>0时，假设
+    3. ax1+by1=gcd(a, b)
+    3. bx2+(a mod b)y2=gcd(a, a mod b)
+3. 根据Euclidean 算法，2中的两式其实是相等的：
+    4. ax1+by1 = bx2+(a-[a/b]*b)y2 = ay2+b(x2-[a/b]*y2)
+4. 所以如果(x2,y2)存在，而一定存在(x1,y1)=(y2, x2-[a/b]*y2)
+
+### 模逆元(数论倒数)
+一整数a对同余n之模逆元是指满足以下公式的整数 b
+
+    a^-1 = b (mod n).
+    //也可以写成以下的式子
+    ab = 1 (mod n).
+
+整数 a 对模数 n 之模逆元存在的充分必要条件是 a 和 n 互素
+
+证明：
+1. exgcd(a,n)为扩展欧几里得算法的函数，则可得到ax+ny=g，g是a,n的最大公因数。
+2. 若互质g=1, 则两边mod n, 得ax (mod n)= 1 (mod n), x 即为模逆元b
+3. 若g!=1, 
+    4. 不存在x使 ax (mod n) = 1 (mod n)，
+    5. 否则就出现 ax+ny (mod n) = 1 (mod n) 与g!=1矛盾
+
+### 中国剩余定理

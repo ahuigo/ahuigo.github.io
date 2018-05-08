@@ -4,15 +4,69 @@ title:	ria module
 category: blog
 description:
 ---
-# Preface
-本文参考阮一峰的: [js 模块化](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
+# node Module
+## Create module
+hello module: hello.js
+
+    var s = 'Hello';
+    function greet(name) {
+        console.log(s + ', ' + name + '!');
+    }
+
+    //暴露变量
+    module.exports = greet;
+
+## 加载模块
+
+    // 引入hello模块:
+    var greet = require('./hello');
+    greet('Michael'); // Hello, Michael!
+
+Node会依次在内置模块、全局模块和当前模块下查找hello.js, 但是不会在当前目录查找
+
+    var greet = require('hello');
+
+### module.exports怎么实现？
+这个也很容易实现，Node可以先准备一个对象module：
+
+    // 准备module对象:
+    var module = {
+        id: 'hello',
+        exports: {}
+    };
+
+    var load = function (exports, module) {
+        // 读取的hello.js代码:
+        function greet(name) {
+            console.log('Hello, ' + name + '!');
+        }
+
+        module.exports = greet;
+        // hello.js代码结束
+        return module.exports;
+    };
+    // 保存module:
+    exported = load(module.exports, module);
+    // 保存module:
+    save(module, exported);
 
 
-## 定义一个类
+多个变量暴露可以用`exports.var=xxx`:
+1. 但是不可以直接覆盖exports, 导致module.exports不会指向exports
+2. 直接对module.exports对象赋值, 适合返回所有类型: func/obj/arr
 
-### 用动态的构造加原型定义类
+    module.exports = {
+        hello: hello,
+        greet: greet
+    };
+    exports.hello = hello;
+    exports.greet = greet;
+
+
+
 
 # 模块的定义(对象定义)
+本文参考阮一峰的: [js 模块化](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
 
 ## 直接定义对象
 
@@ -32,8 +86,8 @@ description:
 		return {incr:incr};
 	})();
 	module.count=100;//和内部count 不同
-	module.incr();
-	module.incr();
+	module.incr();//2
+	module.incr();//3
 
 简化下对象封装`mod.*` 写法：
 
@@ -64,12 +118,10 @@ description:
 
 也可以用局部静态变量
 
-# 模块规范
+## 模块规范
 js 的模块规范有两种： CommonJs 和 AMD js
 
-## CommonJS 规范
-美国Ryan Dahl 程序员所创造的NodeJs 项目标志着 “JS 模块编程”的诞生
-
+### CommonJS 规范
 node.js的模块系统，就是参照CommonJS规范实现的。在CommonJS中，有一个全局性方法require()，用于加载模块。假定有一个数学模块math.js，就可以像下面这样加载。
 
 	var math = require('math');
@@ -80,7 +132,7 @@ node.js的模块系统，就是参照CommonJS规范实现的。在CommonJS中，
 
 所以在浏览器端，不能使用同步加载(Synchronous), 只能使用“异步加载”(Asynchronous), 这就是AMD 规范.
 
-## AMD(Asynchronous Module Definition)
+### AMD(Asynchronous Module Definition)
 AMD 规范采用异步加载模块，加载不影响后面的语句运行。AMD 也使用require 加载模块，但是它不同于CommonJS, 它需要两个参数：
 
 	require([module], callback);
@@ -93,8 +145,7 @@ Example:
 
 主要有两个Javascript库实现了AMD规范：require.js和curl.js。
 
-# RequireJs
-
+# RequireJs: AMD
 以下js 加载是按顺序加载的，它有两个问题:
 
 1. 依赖最大的js 必须放到最后
@@ -136,21 +187,10 @@ Require 会异步加载指定的模块，当所有的模块都加载完毕后就
 	require(['jquery', 'underscore', 'backbone'], function ($, _, Backbone){
 		// some code here
 	});
-	require(['jquery']);//回调不是必须的, 此时是同步加载？
 	$ = require('jquery');// 此时是同步加载
 
 ## AMD 模块的加载
 主模块的依赖模块是`['jquery', 'underscore', 'backbone']`, require 会默认加载的模块和main.js 都在同一目录`js/` 下。可以通过require.config() 设定加载模块的路径（paths）:
-
-	require.config({
-		paths: {
-		　　"jquery": "jquery.min",
-		　　"underscore": "underscore.min",
-		　　"backbone": "backbone.min"
-		}
-	});
-
-如果jquery 在`/js/lib/` 下，underscore 在`/other/js/` 下, backbone 在`http://hilo.com/js/backbone.min.js`, 我们可以这样写
 
 	require.config({
 		paths: {
@@ -160,13 +200,13 @@ Require 会异步加载指定的模块，当所有的模块都加载完毕后就
 		}
 	});
 
-如果所有的js 模块都在`js/lib` 下，则可以将基目录`baseUrl` 从main.js 的根目录改成其它的`baseUrl`:
+如果大部分的js 模块都在`js/lib` 下，则可以将基目录`baseUrl` 从main.js 的根目录改成其它的`baseUrl`:
 
 	require.config({
 		baseUrl: "js/lib",
 		paths: {
-		　　"jquery": "lib/jquery.min",
-		　　"underscore": "/other/js/underscore.min",
+		　　"jquery": "jquery.min",
+		　　"underscore": "underscore.min",
 		　　"backbone": "http://hilo.com/js/backbone.min"
 		}
 	});
@@ -194,16 +234,6 @@ AMD 加载的模块，采用AMD 规范：即模块必须使用define() 函数来
 	　　return {
 	　　　　foo : foo
 	　　};
-	});
-
-或者
-
-	define(['myLib'], function(myLib){
-	　　return {
-	　　　　foo : function(){
-				myLib.doSomething();
-			}
-		};
 	});
 
 ## 加载非规范的模块

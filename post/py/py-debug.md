@@ -80,6 +80,11 @@ print('END')
 ```
 More: raise语句如果不带参数，就会把当前错误原样抛出
 
+### e
+
+    raise Exception(*args)
+    e.args
+
 ### 记录异常错误
 
 	import logging

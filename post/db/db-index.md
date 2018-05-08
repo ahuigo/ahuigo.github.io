@@ -31,12 +31,31 @@ GIN(Generalized Inverted Index, 通用倒排索引) 是一个存储对(key, post
 
 
 ## 索引语法
+create table:
+
+    CREATE TABLE table_name(
+        id bigserial PRIMARY KEY,
+        column_name data_type UNIQUE,
+        UNIQUE ( column_name [, ... ] ) 
+        PRIMARY KEY ( column_name [, ... ] ) 
+    );
+    column_constraint:
+        NOT NULL |
+        NULL |
+        CHECK ( expression ) |
+        DEFAULT default_expr |
+        UNIQUE index_parameters |
+        PRIMARY KEY index_parameters |...
+
+独立
+
     CREATE [ UNIQUE | FULLTEXT | SPATIAL ] INDEX index_name
         ON table_name (col_name [length],…) [ASC | DESC]
     DROP INDEX idx_name;
     ALTER INDEX idx_name RENAME TO idx_name1;
 
 ### index(btree)
+create table 语句不支持
 
     CREATE INDEX test1_id_index ON test1 (id);
 

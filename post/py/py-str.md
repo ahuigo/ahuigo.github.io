@@ -136,7 +136,7 @@ combining truncating and padding
 
 ### named placeholder
 ```
-'hello, {name}'.format(name='Wang')
+'hello, {name} {obj["a"]} {{literal}}'.format(name='Wang')
 'hello, {0}-{1}'.format('Wang', 'Kang')
 '{p[first]} {p[last]}'.format(p={'first':1, 'last':2})
 ```

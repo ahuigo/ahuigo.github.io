@@ -303,6 +303,10 @@ $(function() {
         },
         show: function(p) {
             this.make_main_view(null, p,1);
+            window.disqus_config = function () {
+                this.page.url = location.href;  
+                this.page.identifier = p; 
+                };
             window.scrollTo(0,0)
         },
         page: function(num){
