@@ -1,3 +1,9 @@
+function disqus(){
+    var d = document, s = d.createElement('script');
+    s.src = 'https://ahui132.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+}
 $(function() {
     $('body').ajaxError(function(event, request, settings, err) {
         console.log('ajax error',event);
@@ -303,11 +309,12 @@ $(function() {
         },
         show: function(p) {
             this.make_main_view(null, p,1);
+            window.scrollTo(0,0)
+
             window.disqus_config = function () {
                 this.page.url = location.href;  
                 this.page.identifier = p; 
                 };
-            window.scrollTo(0,0)
         },
         page: function(num){
             console.log(num)
