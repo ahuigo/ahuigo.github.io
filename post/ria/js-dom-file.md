@@ -39,8 +39,21 @@ blob
         var data = e.target.result; // 'data:image/jpeg;base64,/9j/4AAQSk...'            
         $('img')[0].style.backgroundImage = 'url(' + data + ')';
     };
+    reader.onloadend = function(e) {
+        console.log(reader.result); // onload 只适合小blob
+    }
     // 以DataURL的形式读取文件:
     reader.readAsDataURL(file);
+    reader.readAsText(file);
+
+file is blob, split file to small blob
+
+    function blobSlice(file, start, end) {
+        var blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice;
+        return blobSlice.call(file, start, end);
+    }
+    blob = blobSlice(file, start, end)
+    fileReader.readAsBinaryString(blob_or_file);
 
 # chunk upload
 分块(block)与分片(chunk)上传

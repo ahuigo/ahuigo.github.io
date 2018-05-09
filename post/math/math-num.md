@@ -34,9 +34,9 @@ a,b 的最大公约数(包含公共元素): (a,b)
 性质2:  若 $a|bc$ 且 $(a,b)=1$, 则 $a|c$
 
 ### 互质, relatively prime
-互质（英文：coprime，符号：⊥，又称互素、relatively prime、mutually prime、co-prime）
+互质（英文：coprime，符号：⊥，又称互素、relatively prime、mutually prime、co-prime）
 
-    //最大公因数为1
+    //最大公因数为1的 正整数
     gcd(a,b) = 1
     (a,b) = 1
 
@@ -51,8 +51,7 @@ a,b 的最大公约数(包含公共元素): (a,b)
         4*(0,1,2,3,4,5,6)
         余(0,4,1,5,2,6,3)
 
-
-### 扩展扩展欧几里得算法, Extended Euclidean algorithm
+### 欧几里得算法, Euclidean algorithm
 欧几里得算法(又叫辗转相除法): a>b, gcd(a,b) 为最大公因数，满足:
 
     gcd(a,b) = gcd(b, a mod b)
@@ -63,9 +62,14 @@ a,b 的最大公约数(包含公共元素): (a,b)
     (5,3) (3, 2) (2, 1) (1, 0) 得最大公因为1
     (8,4) (4, 0) 最大公因4
 
+### 扩展扩展欧几里得算法, Extended Euclidean algorithm
 扩展算法： 给予二个整数a、b，必存在整数x、y使得
 
     ax + by = gcd(a,b)
+
+通解：
+
+    x=x0+lcm(a,b)/a*t; //t是任意整数，lcm 是最小公倍数
 
 归纳法证明：
 1. 对于b=0, 存在(x,y)=(1, 0) 使得: ax+by=gcd(a,b) 成立

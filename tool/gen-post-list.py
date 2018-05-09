@@ -34,7 +34,7 @@ index = {
     "site_name": "ahui132",
     "copyright": "CC",
     "cates": [
-        {"name": "tech", "text":"0x00"}
+        {"name": "tech", "text":""}
     ],
     'tree': gentree().gen_dir(),
 }
