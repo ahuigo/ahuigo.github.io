@@ -5,22 +5,29 @@ from functools import reduce
 @click.command()
 @click.option('-d', '--delimiter', default=',', help='Set dilimiter')
 @click.option('-t', '--tab', default=10, help='Set tab length')
+@click.option('-c', '--columns', help='Set all columns')
 @click.argument('file',type=click.File('r'))
 @click.argument('fields')
-def grepcolumn(file, delimiter, fields, tab):
+def grepcolumn(file, delimiter, fields,columns, tab):
     '''
-    echo 'name=Jack,sex=male,job=coder' | grepcolumn - 'name,job,sex'
+    echo 'name=Jack,gender=male,job=coder' | grepcolumn - 'job,name'
+    echo 'Jack,male,coder' | grepcolumn - 'job,name' -c 'name,gender,job'
     '''
     fields = fields.split(',')
     print(reduce(lambda x,y: x+'\t'+y, fields).expandtabs(tab))
     print('-'*tab*len(fields))
+    if columns:
+        columns = columns.split(',')
     for line in file:
-        data = {}
-        for item in line.strip().split(delimiter):
-            k,v = item.split('=')
-            k = k.strip()
-            if k in fields:
-                data[k]=v
+        if columns:
+            data = dict(zip(columns, line.strip().split(delimiter)))
+        else:
+            data = {}
+            for item in line.strip().split(delimiter):
+                k,v = item.split('=')
+                k = k.strip()
+                if k in fields:
+                    data[k]=v
         buffer = ''
         for k in fields:
             buffer += data.get(k, '')+'\t'
