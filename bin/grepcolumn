@@ -3,7 +3,7 @@ import click
 from functools import reduce
 
 @click.command()
-@click.option('-d', '--delimiter', default=',', help='Set dilimiter')
+@click.option('-d', '--delimiter', default=',', help='Set delimiter')
 @click.option('-t', '--tab', default=10, help='Set tab length')
 @click.option('-c', '--columns', help='Set all columns')
 @click.argument('file',type=click.File('r'))
@@ -12,6 +12,7 @@ def grepcolumn(file, delimiter, fields,columns, tab):
     '''
     echo 'name=Jack,gender=male,job=coder' | grepcolumn - 'job,name'
     echo 'Jack,male,coder' | grepcolumn - 'job,name' -c 'name,gender,job'
+    echo 'Jack||male||coder' | grepcolumn - 'job,name' -c 'name,gender,job' -d '||'
     '''
     fields = fields.split(',')
     print(reduce(lambda x,y: x+'\t'+y, fields).expandtabs(tab))

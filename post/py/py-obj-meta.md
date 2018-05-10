@@ -86,7 +86,7 @@ output:
 1.2 define: ListMetaclass.__new__(cls,name,bases,attrs)
 1.3 define: new_cls=type.new()
 1.4 define:Metaclass.__init__(new_cls, name,bases, attrs) (<class 'list'>,)
-2. start instance MyList  :
+2. start instance MyList()  :
 2.1 MyList():ins=Metaclass.__call__(new_cls)
 (<class '__main__.ListMetaclass'>, <class 'type'>, <class 'object'>)
 2.2 MyList(): ins = MyList.__new__(MyList):

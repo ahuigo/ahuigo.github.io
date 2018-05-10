@@ -6,6 +6,54 @@ description:
 ---
 # Preface
 
+# mmap
+1. 文件操作需要从磁盘到页缓存再到用户主存的两次数据拷贝。
+2. 而 mmap 操控文件，只需要从磁盘到用户主存的一次数据拷贝过程. 但是大文件： major page fault 多
+
+    In [6]: with open("2.txt","r+b") as f:
+    ...:     mm = mmap.mmap(f.fileno(),0,prot=mmap.PROT_READ)
+    ...:     for line in iter(lambda: mm.readline(), b''):
+    ...:         print(line)
+    ...:
+
+# HTTP io
+
+	from urllib import urlopen
+
+readline:
+
+	urlp = urlopen(url);
+	while(line = urlp.readline()){
+
+	}
+
+readlines:
+
+	for line in urlopen(url).readlines():
+		print line.strip()
+
+# std io
+
+    for l in sys.stdin.readlines():
+        sys.stdout.write(l[::-1])
+
+## input
+输入一行，不含换行
+
+	str = input()
+	str = input("Input some string:")
+    # 不回显:
+    getpass.getpass("Please input your Password: ")
+
+## stdin file
+接收多行: 包含换行
+```
+import fileinput
+for line in fileinput.input():
+	sys.stdout.write(line)
+	print(line) # on more new line
+```
+
 # StringIO和BytesIO
 
 ## File-like Object
@@ -68,51 +116,3 @@ string 与 bytes 相互转换
 
 	>>> bytes([0, 1, 97])
 	b'\x00\x01a'
-
-# http io
-
-	from urllib import urlopen
-
-readline:
-
-	urlp = urlopen(url);
-	while(line = urlp.readline()){
-
-	}
-
-readlines:
-
-	for line in urlopen(url).readlines():
-		print line.strip()
-
-# std io
-
-    for l in sys.stdin.readlines():
-        sys.stdout.write(l[::-1])
-
-## input
-输入一行，不含换行
-
-	str = input()
-	str = input("Input some string:")
-    # 不回显:
-    getpass.getpass("Please input your Password: ")
-
-## stdin file
-接收多行: 包含换行
-```
-import fileinput
-for line in fileinput.input():
-	sys.stdout.write(line)
-	print(line) # on more new line
-```
-
-# print
-https://docs.python.org/3/library/string.html#format-string-syntax
-
-    print('a={:d}, b={:d}'.format(a,b))
-    print("a=%d,b=%d" % (a,b))
-    print('a={first:4.2f}, b={second:03d}'.format(first=a,second=b))
-    print("a={0},b={1}".format(a, b))
-    print("a={1},b={0}".format(b, a))
-    print("a={},b={}".format(a, b))

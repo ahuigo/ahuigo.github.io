@@ -1,3 +1,40 @@
+# Preface
+    >>> class A(object):
+    ...     def a(self):
+    ...         print('a')
+    ...
+    ...     @staticmethod
+    ...     def b():
+    ...         print('b')
+    ...
+    ...     @classmethod
+    ...     def c(cls):
+    ...         print('c')
+    ...
+    >>> import inspect
+    >>> inspect.getmembers(A, inspect.isfunction)
+    >>> inspect.getmembers(A, inspect.ismethod)
+    Out[1]: [('a', <function __main__.A.a>), ('b', <function __main__.A.b>)]
+    Out[2]: [('c', <bound method A.c of <class '__main__.A'>>)]
+
+    >>> inspect.getmembers(A(), inspect.ismethod)
+    [('a', <bound method A.a of <__main__.A object at 0x10bd65f60>>),
+    ('c', <bound method A.c of <class '__main__.A'>>)]
+
+python3 这样更加清晰了. 
+
+    @staticmethod 本来就是纯函数，不绑定 self/cls 
+    @classmethod 是 method, 绑定 cls 
+    A.a 也是函数. 
+    A().a 是 method, 但是会绑定 cls, 这里的 cls=A() 
+        cls 本质就是 metaclass 的实例（实例自己叫自己 self ）
+
+# @staticmethod
+@staticmethod和@classmethod都可以直接类名.方法名()来调用，
+
+1. @staticmethod: 不需要self和 cls参数, 纯函数
+2. @classmethod : 不需要self, 包装了staticmethod
+
 # @classmethod
 @classmethod make a class static method act like *object method*, except that the first arg is *class*
 

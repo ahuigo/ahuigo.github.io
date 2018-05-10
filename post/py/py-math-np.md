@@ -51,8 +51,8 @@ to_dict(), to_json, tolist():
 
 各种文件
 
-    dataFrame = pandas.read_csv("./marks.csv")
-    dataFrame = pd.read_table("./marks.csv", sep=",")
+    dataFrame = pandas.read_csv("./marks.csv", sep=",")
+    dataFrame = pandas.read_table("./marks.csv", sep=",")
 
     xls = pd.ExcelFile("./marks.xlsx")
     >>> xls.sheet_names

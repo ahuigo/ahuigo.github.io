@@ -184,6 +184,12 @@ with 可以捕获异常, 类必须支持`__enter__, __exit__`相当于文件open
     for block in iter(lambda:f.read(32), ''):
         blocks.append(block)
 
+    In [6]: with open("2.txt","r+b") as f:
+    ...:     mm = mmap.mmap(f.fileno(),0,prot=mmap.PROT_READ)
+    ...:     for line in iter(lambda: mm.readline(), b''):
+    ...:         print(line)
+    ...:
+
 # Distinguishing multiple exit points in loops
 
     def find(seq, target):
