@@ -35,6 +35,9 @@ old
 
 > %r displays the "raw" data
 
+### tab length
+'\t'.expandtabs(4)
+
 
 ### value type
 ```

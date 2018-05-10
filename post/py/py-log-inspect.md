@@ -127,7 +127,7 @@ eg:
     frame.f_code.co_filename    # filename
     frame.f_lineno          # lineno
         frame.f_back.f_lineno   # caller lineno
-    frame.f_code.co_name          # frame name
+    frame.f_code.co_name          # frame name(func name)
     frame.f_locals          # locals for frame
 
     gen.gi_frame.f_lasti # 生成器当前的执行位置(字节码)

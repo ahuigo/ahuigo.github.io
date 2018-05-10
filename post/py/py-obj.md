@@ -28,6 +28,21 @@ pythone 一切皆对象: var, class, metaclass
 	print(MyStuff.name); # hilo
 	print(obj.name);     # hilo
 
+## attr scope for extend
+
+    class A:
+         l=[]
+         v=1
+    a=A()
+    a.l.append(1)
+    a.l==A.l # True
+    a.l=[2]
+    a.l==A.l # False
+
+    a.v==A.v # True
+    a.v=2
+    a.v==A.v # False
+
 ## bound method
 
     class A: pass

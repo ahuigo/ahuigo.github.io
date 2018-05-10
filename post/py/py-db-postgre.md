@@ -9,6 +9,8 @@ http://initd.org/psycopg/docs/cursor.html
     conn.cursor()
 
 ## cursor
+    conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
 postgre 是用cusor 去执行+缓存数据
 
     curosr.executemany(sql, seq_of_parameters)
@@ -46,6 +48,7 @@ table name 这些则不支持，应该使用:
 
 ### select fetch
 
+#### cur.query
 #### fetch iter
 
     for row in cur: print(row)

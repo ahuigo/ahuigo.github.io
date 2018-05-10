@@ -56,6 +56,7 @@ option 的先后，也args name的先后无关
     @click.option('-name', prompt='Your name', help='The person to greet')
 	@click.argument('more_params', nargs=3)
     def hello(name, count, more_params): # 没有位置先后
+        """This script prints hello NAME COUNT times."""
 		click.echo('Hello %s! count=%s' % (name, count));
 		print(more_params)
 
@@ -69,6 +70,11 @@ click.command 装饰使hello 能接收cli args:
 other:
 
     @click.option('-d', is_flag=True)
+
+### required
+toto:
+
+    @click.option('-count', required=True, prompt='Number of greetings')
 
 ### count
 
