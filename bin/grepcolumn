@@ -20,8 +20,10 @@ def grepcolumn(file, delimiter, fields,columns, tab):
         columns = columns.split(',')
     for line in file:
         if columns:
+            # log format: val1,val2,val3....
             data = dict(zip(columns, line.strip().split(delimiter)))
         else:
+            # log format: key1=val1,key2=val2,key3=val3....
             data = {}
             for item in line.strip().split(delimiter):
                 k,v = item.split('=')
