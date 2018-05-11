@@ -283,3 +283,36 @@ text和image插件，则是允许require.js加载文本和图片文件。
 	　　　　document.body.appendChild(cat);
 	　　}
 	);
+
+# Package, 打包
+http://www.ruanyifeng.com/blog/2014/09/package-management.html
+
+- Bower - 不打包，只是install/update..: 
+    　　# 模块的名称
+    　　$ bower install jquery
+    　　# github用户名/项目名
+    　　$ bower install jquery/jquery
+
+- Browserify - 将多个require('js') 合并
+    - browserify robot.js > bundle.js
+- dao: package both js/css
+- webpack: 静态模块打包器(module bundler): js/css/png/font/...
+
+- Gulp: 一个新的基于流的`管道式构建工具`，用于代替过时的Grunt。 类似于java 的Maven
+    - http://javascript.ruanyifeng.com/tool/gulp.html
+    - https://segmentfault.com/a/1190000002491282
+
+
+## dao
+将js/css 合并
+
+    $ cat index.css
+    @import 'necolas/normalize.css';
+    @import './layout/layout.css';
+　　
+　　 body {
+　　  color: teal;
+　　  background: url('./background-image.jpg');
+　　 }
+    
+    $ duo index.css > build.css
