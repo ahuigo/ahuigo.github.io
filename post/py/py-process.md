@@ -33,7 +33,8 @@ p = Process(target=run_proc, args=('test',))
 	p.start() .join() .terminate()
 	p.exitcode = 0
 multiprocessing.Pool(4).apply_async(func_task, args).get() # 直接调用get()会阻塞，不需要pool.join()
-	pool.close() .join()
+    pool = Pool(4)
+	pool.close() pool.join()
 
 ```
 thread 类似
@@ -85,7 +86,7 @@ multiprocessing.Pool(4) 比fork 简单
 
 1. p = multiprocessing.Poll(4)
 2. for i in range(5): res = p.apply_async(func, args=(i,))
-2. child.join() 等待子进程结束后再继续往下运行，通常用于进程间的同步
+2. p.join() 等待子进程结束后再继续往下运行，通常用于进程间的同步
 3. 或者用res.get() 阻塞获取返回值
 ```
 from multiprocessing import Pool

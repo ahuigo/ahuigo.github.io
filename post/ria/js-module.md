@@ -292,12 +292,10 @@ http://www.ruanyifeng.com/blog/2014/09/package-management.html
     　　$ bower install jquery
     　　# github用户名/项目名
     　　$ bower install jquery/jquery
-
 - Browserify - 将多个require('js') 合并
     - browserify robot.js > bundle.js
 - dao: package both js/css
 - webpack: 静态模块打包器(module bundler): js/css/png/font/...
-
 - Gulp: 一个新的基于流的`管道式构建工具`，用于代替过时的Grunt。 类似于java 的Maven
     - http://javascript.ruanyifeng.com/tool/gulp.html
     - https://segmentfault.com/a/1190000002491282

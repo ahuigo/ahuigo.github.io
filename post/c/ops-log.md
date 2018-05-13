@@ -10,6 +10,12 @@ linux 下有很多日志，有的是系统级的，有的是应用程序级的. 
 - 连接时间相关日志（binary）: /var/log/wtmp, /var/run/utmp
 	0. w/who/finger/id/last/lastlog/ac 都是通过分析以上日志得到信息的。
 
+# install.log
+/var/log/install.log
+
+    1. xcode-select --install
+
+
 # 连接时间
 与连接时间相关的日志文件有（binary）:
 1. /var/log/wtmp

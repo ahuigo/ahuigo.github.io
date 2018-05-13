@@ -9,14 +9,6 @@ description: Abstract of git commmands.
 Abstract of git commmands.
 - git-checkout.md: sparse
 
-# todo
-对于git 输出的文件交互，可以使用fpp:
-https://github.com/facebook/PathPicker
-
-https://git-scm.com/book/zh/
-Git Community Book 中文版
-http://gitbook.liuhui998.com/
-
 # git server
 参考廖老师的文章在本地建一个git server
 http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000
@@ -408,6 +400,7 @@ Example:
 
 	git remote add origin ssh://git@ahui132.github.io:hilojack/wiki.git
 	git remote add upstream https://github.com/octocat/Spoon-Knife.git
+    git -C "/usr/local/Homebrew" remote set-url origin https://github.com/Homebrew/brew.git
 
 ## show remote
 

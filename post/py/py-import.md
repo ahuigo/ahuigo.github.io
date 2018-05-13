@@ -23,7 +23,7 @@ import `ex47.game`, would find two file:
 1. 每一个包目录下面都会有一个__init__.py的文件，这个文件是必须存在的，否则，Python就把这个目录当成普通目录，而不是一个包。目录名就是包名
 
 ## package and module
-1. pkg/__init__.py is package, 优先级高
+1. pkg/__init__.py is package, 优先级高 包含多个module
 2. mod.py is module, 优先级低
 
 ## import function
@@ -31,7 +31,7 @@ import `ex47.game`, would find two file:
 
 	```python
 	A = __import__('A')
-	A = __import__('A.B') # __import__('A') == __import__('A.B')
+	A = __import__('A.B') # __import__('A') == __import__('A.B') 但是会加载B
 	A = __import__('A.B', globals(), locals())
 
 	B = __import__('A.B', fromlist=[''])
