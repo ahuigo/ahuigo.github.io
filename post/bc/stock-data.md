@@ -44,7 +44,7 @@ http://stock.zdcj.net/jiazhi/600000.html
 1. 开通Wind交易通道, 如在国信FIX直通业务
 2. 量化交易框架python3:
     https://uqer.io/community/share/56893b69228e5b67159beb37
-    https://github.com/ahui132/easytrader
+    https://github.com/ahuigo/easytrader
     https://github.com/shidenggui/easyquant
 3. 量化分析师的Python日记:
     https://uqer.io/community/share/54c89443f9f06c276f651a52

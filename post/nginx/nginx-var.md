@@ -27,7 +27,7 @@ $http_user_agent, $http_cookie, and so on.
 		REQUEST_URI(query) 则不会变
 
     SCRIPT_URI = HTTP_HOST+path 可能为空
-        http://ahui132.github.io/a/b/c/
+        http://ahuigo.github.io/a/b/c/
     REQUEST_URI = path + QUERY_STRING
 		nginx: $request_uri
         /a/b/c/?test=1

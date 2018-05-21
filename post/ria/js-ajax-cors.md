@@ -125,7 +125,7 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
     Content-Type: text/html; charset=utf-8
 
 ### Apache & nginx
-不支持子域名`*.ahui132.github.io`
+不支持子域名`*.ahuigo.github.io`
 
 	# apache
 	Header set Access-Control-Allow-Origin *

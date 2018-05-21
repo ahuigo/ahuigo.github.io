@@ -1,4 +1,4 @@
-# ahui132
+# ahuigo
 
 本博客是基于[小天天博客](https://github.com/onlytiancai/xiaotiantian)
 [多多de棉花糖](http://hugcoday.github.com)

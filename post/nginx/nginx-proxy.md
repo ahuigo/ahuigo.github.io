@@ -27,7 +27,7 @@ A request URI is passed to the server as follows:
 the request URI is passed to the server in the *same form* as sent by a client when the original request is processed
 
     proxy_pass http://127.0.0.1;
-    proxy_pass http://api.ahui132.github.io;
+    proxy_pass http://api.ahuigo.github.io;
 
 > When location is specified using a regular expression,  the directive should be specified `without a URI`
 
@@ -65,13 +65,13 @@ example
 		listen 8888;
 		location / {
 			resolver 223.5.5.5;
-			if ( $host ~ "ahui132.github.io" ) {
+			if ( $host ~ "ahuigo.github.io" ) {
 				proxy_pass http://127.0.0.1:80;
 			}
-			if ( $host !~ "ahui132.github.io" ) {
+			if ( $host !~ "ahuigo.github.io" ) {
 				proxy_pass $scheme://$http_host;
 			}
 		}
 	}
 
-curl -x '127.0.0.1:8888' 'http://ahui132.github.io/test.php'
+curl -x '127.0.0.1:8888' 'http://ahuigo.github.io/test.php'

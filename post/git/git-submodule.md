@@ -8,7 +8,7 @@ description:
 
 # git submodule add
 
-	$ git submodule add https://github.com/ahui132/c-lib
+	$ git submodule add https://github.com/ahuigo/c-lib
 	Cloning into 'c-lib'...
 	$ gst
 	On branch master
@@ -35,7 +35,7 @@ description:
 	@@ -0,0 +1,4 @@
 	+[submodule "c-lib"]
 	+       path = c-lib
-	+       url = https://github.com/ahui132/c-lib
+	+       url = https://github.com/ahuigo/c-lib
 	+
 	Submodule c-lib 0000000...c061cce (new submodule)
 

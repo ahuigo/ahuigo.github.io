@@ -41,16 +41,16 @@ http://zh.wikipedia.org/wiki/%E9%95%BF%E5%BA%A6%E6%89%A9%E5%B1%95%E6%94%BB%E5%87
 
 mac 的具体应用场景：给如下的url 加一个md5 签名
 
-	Url: http://ahui132.github.io?redirect=wiki.ahui132.github.io
+	Url: http://ahuigo.github.io?redirect=wiki.ahuigo.github.io
 	Origin Signature: 6d5f807e23db210bc254a28be2d6759a0f5f5d99
 
 攻击者不知道md5 签名密钥key。但可以通过猜测得到消息的长度，进而填充`\x00`以得到一个完整的区块(512bits)；再增加伪造的信息(forge message)，并基于大原始签名(origin sign)计算出新的合法签名:
 
-	Forge Message: &redirect=forge.ahui132.github.io
-	Url: http://ahui132.github.io?redirect=wiki.ahui132.github.io\x00\x00\x00&redirect=forge.ahui132.github.io
+	Forge Message: &redirect=forge.ahuigo.github.io
+	Url: http://ahuigo.github.io?redirect=wiki.ahuigo.github.io\x00\x00\x00&redirect=forge.ahuigo.github.io
 	New Signature: 0e41270260895979317fff3898ab85668953aab2
 
-> md5 Implemention in php: http://github.com/ahui132/php-lib/hash/md5.php
+> md5 Implemention in php: http://github.com/ahuigo/php-lib/hash/md5.php
 
 因为这种攻击只能用于添加扩展字符的场景，比如上例的增加新的query, 还比如下例的攻击w3c 的子资源完整性(Subresource Integrity, supported by chrome and firefox in 2015)
 

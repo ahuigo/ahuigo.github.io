@@ -735,9 +735,9 @@ unixstamp
 
 ## dns
 
-	% nslookup ahui132.github.io
+	% nslookup ahuigo.github.io
 	...
-	% exec nslookup ahui132.github.io
+	% exec nslookup ahuigo.github.io
 	...
 
 # TK 命令

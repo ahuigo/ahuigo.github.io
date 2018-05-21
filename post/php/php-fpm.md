@@ -156,7 +156,7 @@ listen 的作用域是 pool
 
 	pm.status_path=/pm_status
 
-Then visit: `ahui132.github.io/pm_status`
+Then visit: `ahuigo.github.io/pm_status`
 
 ## ini(php setting)
 

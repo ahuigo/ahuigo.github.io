@@ -7,7 +7,7 @@ description:
 # Preface
 学习了一下php 的基于yield 的多任务[Cooperative Multitasking]. 本文最终实现了这样一个*非阻塞(Non-Blocking)*且支持*协程调用栈(Stacked Coroutines)* 的*server demo*:
 
-	curl https://raw.githubusercontent.com/ahui132/php-lib/master/yield/stacked-coroutine.php | php &;
+	curl https://raw.githubusercontent.com/ahuigo/php-lib/master/yield/stacked-coroutine.php | php &;
 	sleep 5; curl -d 'test' http://localhost:8000/
 
 # Coroutines, 协程
@@ -428,7 +428,7 @@ This will print the following:
 
 > One Syscall could not include other Syscall
 
-The complete code for [Cooperative-Multitask](https://raw.githubusercontent.com/ahui132/php-lib/master/yield/cooperative-multitask.php)
+The complete code for [Cooperative-Multitask](https://raw.githubusercontent.com/ahuigo/php-lib/master/yield/cooperative-multitask.php)
 
 There are many more process management calls one could implement, for example wait (which waits until a task has finished running), exec (which replaces the current task) and fork (which creates a clone of the current task). Forking is pretty cool and you can actually implement it with PHP’s coroutines, because they support cloning.
 
@@ -579,7 +579,7 @@ Writing the server is relatively easy now:
 	$scheduler->newTask(server(8000));
 	$scheduler->run();
 
-> The complete code for [server-non-block](https://raw.githubusercontent.com/ahui132/php-lib/master/yield/server-non-block.php)
+> The complete code for [server-non-block](https://raw.githubusercontent.com/ahuigo/php-lib/master/yield/server-non-block.php)
 
 This will accept connections to `localhost:8000` and just send back a HTTP response with whatever it was sent.
 
@@ -740,7 +740,7 @@ Now the server can be rewritten a bit cleaner:
 		yield $socket->close();
 	}
 
-The complete code for [stacked coroutine](https://raw.githubusercontent.com/ahui132/php-lib/master/yield/stacked-coroutine.php)
+The complete code for [stacked coroutine](https://raw.githubusercontent.com/ahuigo/php-lib/master/yield/stacked-coroutine.php)
 
 # Error handling
 Coroutines provide the ability to throw exceptions inside them using the `throw()` method.

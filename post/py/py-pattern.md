@@ -1,5 +1,5 @@
 # python-pattern
-https://github.com/ahui132/python-patterns
+https://github.com/ahuigo/python-patterns
 
 # singleton
 http://stackoverflow.com/questions/6760685/creating-a-singleton-in-python

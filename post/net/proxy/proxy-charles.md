@@ -20,7 +20,7 @@ description:
 ![proxy-charles-2.png](/img/proxy-charles-2.png)
 
     host: 不支持wildcard, 只支持regex/plain
-        .*\.ahui132.com -> ahui132.com
+        .*\.ahuigo.com -> ahuigo.com
     modify query:
         name: prefix*, value: value_prefix*
         ->

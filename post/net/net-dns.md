@@ -50,7 +50,7 @@ A记录是用来创建到IP地址的记录。
 2、`*.hiloack.com` 则表示所有的二级域名
 3、同一个二级域名 可设置了多个A记录
 
-在命令行下可以通过`nslookup -q=a ahui132.github.io`来查看A记录。
+在命令行下可以通过`nslookup -q=a ahuigo.github.io`来查看A记录。
 
   dig +trace math.stackexchange.com
   $ dig a github.com
@@ -85,11 +85,11 @@ PTR：逆向查询记录（Pointer Record），只用于从IP地址查询域名
   153.252.30.192.in-addr.arpa. 3600 IN    PTR pages.github.com.
 
 ## CNAME
-在命令行下可以使用`nslookup -q=cname ahui132.github.io`来查看CNAME记录。
+在命令行下可以使用`nslookup -q=cname ahuigo.github.io`来查看CNAME记录。
 
-  $ nslookup  -q=cname ahui132.github.io
+  $ nslookup  -q=cname ahuigo.github.io
   Non-authoritative answer:
-  ahui132.github.io	canonical name = hilojack.github.io.
+  ahuigo.github.io	canonical name = hilojack.github.io.
 
 ## TXT记录
 两个作用:
@@ -122,10 +122,10 @@ how many ip google has?
 ## NS记录
 NS记录是域名服务器记录，用来指定域名由哪台服务器来进行解析。
 
-  $ nslookup -q=ns ahui132.github.io
+  $ nslookup -q=ns ahuigo.github.io
   Non-authoritative answer:
-  ahui132.github.io	nameserver = f1g1ns1.dnspod.net.
-  ahui132.github.io	nameserver = f1g1ns2.dnspod.net.
+  ahuigo.github.io	nameserver = f1g1ns1.dnspod.net.
+  ahuigo.github.io	nameserver = f1g1ns2.dnspod.net.
 
   $ dig ns stackexchange.com
 
@@ -152,7 +152,7 @@ NS记录是域名服务器记录，用来指定域名由哪台服务器来进行
 # DNS Utility:
 1. host <domain> - DNS lookup Utility
 1. dig [@dns_server] <domain> - DNS lookup Utility
-1. nslookup ahui132.github.io
+1. nslookup ahuigo.github.io
 
 	host baidu.com [dns_server]
 	dig baidu.com

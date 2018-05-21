@@ -1,21 +1,21 @@
 [submodule "demo/php-lib"]
 	path = demo/php-lib
-	url = https://github.com/ahui132/php-lib
+	url = https://github.com/ahuigo/php-lib
 [submodule "demo/js-lib"]
 	path = demo/js-lib
-	url = https://github.com/ahui132/js-lib
+	url = https://github.com/ahuigo/js-lib
 [submodule "demo/java-lib"]
 	path = demo/java-lib
-	url = https://github.com/ahui132/java-lib
+	url = https://github.com/ahuigo/java-lib
 [submodule "demo/excel-tutorial"]
 	path = demo/excel-tutorial
-	url = https://github.com/ahui132/python3-excel-tutorial
+	url = https://github.com/ahuigo/python3-excel-tutorial
 [submodule "demo/php-websockets"]
 	path = demo/php-websockets
-	url = https://github.com/ahui132/php-websockets
+	url = https://github.com/ahuigo/php-websockets
 [submodule "demo/c-lib"]
 	path = demo/c-lib
-	url = https://github.com/ahui132/c-lib
+	url = https://github.com/ahuigo/c-lib
 [submodule "demo/go-lib"]
 	path = demo/go-lib
-	url = https://github.com/ahui132/go-lib
+	url = https://github.com/ahuigo/go-lib

@@ -118,7 +118,7 @@ description:
 debuging 函数安装(如果需要开启xhprof，可以加`-xhprof`，只支持php5.4 及以上):
 
 	# php-fpm + xhprof server 必须读取同一套php.ini
-	sh <(wget https://raw.githubusercontent.com/ahui132/php-lib/master/app/debuging.sh -O -) -xhprof
+	sh <(wget https://raw.githubusercontent.com/ahuigo/php-lib/master/app/debuging.sh -O -) -xhprof
 
 安装xhprof 后，当用GET 传参数`DEBUG` 时就会打出如下的信息, 支持*性能瓶颈图*：
 
@@ -297,7 +297,7 @@ charles 可作为linux/mac下fiddler 的替代
 
 #### Install
 
-	curl -s https://raw.githubusercontent.com/ahui132/php-lib/master/app/xhprof.sh | sh
+	curl -s https://raw.githubusercontent.com/ahuigo/php-lib/master/app/xhprof.sh | sh
 
 #### 生成xhprof 数据
 
@@ -354,7 +354,7 @@ charles 可作为linux/mac下fiddler 的替代
 
 #### install xdebug
 
-	wget https://raw.githubusercontent.com/ahui132/php-lib/master/app/xdebug.sh -O- | sh
+	wget https://raw.githubusercontent.com/ahuigo/php-lib/master/app/xdebug.sh -O- | sh
 
 #### collect params & return
 
@@ -608,7 +608,7 @@ phpstrace 包括：
 
 Install:
 
-	# sh <(wget https://raw.githubusercontent.com/ahui132/php-lib/master/app/phpext.sh -O -) phptrace
+	# sh <(wget https://raw.githubusercontent.com/ahuigo/php-lib/master/app/phpext.sh -O -) phptrace
 
 Reference:
 

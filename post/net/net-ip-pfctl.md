@@ -13,7 +13,7 @@ Mac使用pf命令可代替iptables, 而icefloor这个图形化的Mac防火墙，
 
 以下是模拟连接失败
 
-    (sudo pfctl -sr 2>/dev/null; echo "block drop quick on en0 proto tcp from any to ahui132.github.io port = 3306" ) | sudo pfctl -f - 2>/dev/null
+    (sudo pfctl -sr 2>/dev/null; echo "block drop quick on en0 proto tcp from any to ahuigo.github.io port = 3306" ) | sudo pfctl -f - 2>/dev/null
     sudo pfctl -e
     sudo pfctl -d; # disable
 

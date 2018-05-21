@@ -35,8 +35,8 @@ context: http, server, location
 The server_name will be matched in following order of precedence:
 
 1. exact name
-2. *longest wildcard name* starting/ending with an asterisk, e.g. `"*.org", "mail.*"`. These name are invalid `"www.*.ahui132.github.io"`, `"hilo*.com"`
-2. *a special wildcard name* ".ahui132.github.io" imply both `"ahui132.github.io"` and `"*.ahui132.github.io"` .
+2. *longest wildcard name* starting/ending with an asterisk, e.g. `"*.org", "mail.*"`. These name are invalid `"www.*.ahuigo.github.io"`, `"hilo*.com"`
+2. *a special wildcard name* ".ahuigo.github.io" imply both `"ahuigo.github.io"` and `"*.ahuigo.github.io"` .
 3. *Regular expression names* must start with the tilde character, e.g. `"~^(?<name>\d{1,3}+)\.hilo\.net$"`.
 
 Note: A expressioin name contains character "{}" should be quoted.

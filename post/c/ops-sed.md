@@ -15,7 +15,7 @@ mac 使用的是BSD sed, `-i` 参数后必须跟一个扩展名, 如果想直接
 	sed -i '' "/^PATH=/ c\\
 	sth." a.txt #> a.txt
 
-而linux下(gnu sed)则简单多了
+而linux下(gnu sed)则简单多了: `\\\n `等空白不影响
 
 	gsed $'/^PATH=/c\\\n sth.' a.txt > a.txt.ori
 	gsed -i $'/^PATH=/c\\\n sth.' a.txt #> a.txt

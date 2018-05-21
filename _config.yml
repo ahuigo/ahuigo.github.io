@@ -1,11 +1,11 @@
 # Site settings
-title: ahui132
-name: ahui132
+title: ahuigo
+name: ahuigo
 email: 
 description: ''
 baseurl: ""
-url: "http://ahui132.github.io"
-username: ahui132 
+url: "http://ahuigo.github.io"
+username: ahuigo 
 
 # Build settings
 exclude: ['posts1']

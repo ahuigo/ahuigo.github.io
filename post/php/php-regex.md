@@ -163,7 +163,7 @@ php5.4之后,会支持递归子组.
 >ps:如果你安装了vim,让光标处于这个汉字上,按ga显示其unicode编码,按g8显示其utf-8编码.另,fcitx中,可以按`ctrl+shift+alt+u`,然后输入'0x65b0'这个unicode找到对应汉字.
 
 ### 匹配gbk
-如果需要用php 匹配gbk, 需要先了解[gbk的编码规则](http://ahui132.github.io/p/character-code/#8.2.GBK)，基于其规则，正则可以这么写：
+如果需要用php 匹配gbk, 需要先了解[gbk的编码规则](http://ahuigo.github.io/p/character-code/#8.2.GBK)，基于其规则，正则可以这么写：
 
 	function isGBK($str){
 		//利用gbk定义

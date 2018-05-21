@@ -215,7 +215,7 @@ start:
 
 install:
 
-	curl -s https://github.com/ahui132/php-lib/blob/master/app/rsync.sh | sh
+	curl -s https://github.com/ahuigo/php-lib/blob/master/app/rsync.sh | sh
 
 ### port
 default port:873

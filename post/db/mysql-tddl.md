@@ -21,4 +21,4 @@ Twitter在把存储系统从MySQL迁移到Cassandra的过程中由于Cassandra�
 	12位的计数顺序号（12位的计数顺序号支持每个节点每毫秒产生4096个ID序号）如果序号不够，就等待nextMiliseconds
 	最高位是符号位，始终为0。
 
-php 实现: https://github.com/ahui132/php-lib/blob/master/id/snowflake.php
+php 实现: https://github.com/ahuigo/php-lib/blob/master/id/snowflake.php

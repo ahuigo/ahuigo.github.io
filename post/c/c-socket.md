@@ -831,7 +831,7 @@ i.e., readfds 包含`2,3`，nfds 为4，如果检测到 `0~3` 中只有文件描
 
 Example:
 
-其中的socklib.h 从这里下载 [socklib.h](https://raw.githubusercontent.com/ahui132/c-lib/master/socklib.h)
+其中的socklib.h 从这里下载 [socklib.h](https://raw.githubusercontent.com/ahuigo/c-lib/master/socklib.h)
 
 	/* server.c */
 	#include <stdio.h>
@@ -952,8 +952,8 @@ UDP 不需要连接，协议可靠性需要在应用层实现。关闭server, �
 
 Example:
 
-[](https://raw.githubusercontent.com/ahui132/c-lib/master/udp/server.c)
-[](https://raw.githubusercontent.com/ahui132/c-lib/master/udp/client.c)
+[](https://raw.githubusercontent.com/ahuigo/c-lib/master/udp/server.c)
+[](https://raw.githubusercontent.com/ahuigo/c-lib/master/udp/client.c)
 
 # UNIX Domain Socket IPC
 在网络通讯socket API 的基础上，发展出一种IPC 机制: UNIX Domain Socket。

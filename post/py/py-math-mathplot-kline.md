@@ -1,7 +1,7 @@
 
 ## kline k线
 
-     pip3 install -e https://github.com/ahui132/mpl_finance
+     pip3 install -e https://github.com/ahuigo/mpl_finance
 
     from mpl_finance import candlestick_ohlc
     candlestick_ohlc(plt.gca(),[[d2num(timestamp),1,3,0.5,2]])

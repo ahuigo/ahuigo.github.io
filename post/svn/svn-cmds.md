@@ -24,7 +24,7 @@ svn cat 目标[@版本]…如果指定了版本，将从指定的版本开始查
 
 如果是删除文件，如果指定repository URL，而非working copy
 
-	svn cat https://svn.ahui132.github.io/autofans.js@238
+	svn cat https://svn.ahuigo.github.io/autofans.js@238
 	svn cat ^/autofans.js@238
 
 # import 导入数据到你的版本库

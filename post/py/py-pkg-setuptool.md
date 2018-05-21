@@ -43,12 +43,12 @@ setuptools 与 disutils
 
 
 		# metadata for upload to PyPI
-		author = "ahui132",
+		author = "ahuigo",
 		author_email = "a132811@gmail.com",
 		description = "This is a filset Package",
 		license = "GPL",
 		keywords = "fileset",
-		url = "http://github.com/ahui132/",   # project home page, if any
+		url = "http://github.com/ahuigo/",   # project home page, if any
 		# could also include long_description, download_url, classifiers, etc.
 	)
 ```

@@ -90,7 +90,7 @@ description:
 	#sudo yum replace php-common --replace-with=php54w-common -y
 
 	#install xdeubg
-	# wget https://gist.githubusercontent.com/ahui132/0e808c805f496efa925e/raw/f48f610d0abbf67a976d517310b3d977a07d4fff/oh-my-xdebug -O - | sh
+	# wget https://gist.githubusercontent.com/ahuigo/0e808c805f496efa925e/raw/f48f610d0abbf67a976d517310b3d977a07d4fff/oh-my-xdebug -O - | sh
 	cd ~
 	set -o errexit
 	git clone https://github.com/derickr/xdebug 

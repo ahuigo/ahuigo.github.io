@@ -331,7 +331,7 @@ http://www.phpbuilder.com/articles/application-architecture/optimization/creatin
 ## WebSocket Demo
 websocket demo for php:
 
-https://github.com/ahui132/php-websockets
+https://github.com/ahuigo/php-websockets
 
 ## WebSocket Server Library
 服务端Php/Python/Ruby 等有丰富的WebSocket 库：

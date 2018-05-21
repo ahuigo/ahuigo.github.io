@@ -6,7 +6,7 @@ description:
 ---
 # Preface
 http://www.yangzhiping.com/tech/pandoc.html
-http://github.com/ahui132/php-lib/app/pandoc
+http://github.com/ahuigo/php-lib/app/pandoc
 
 # Install
 

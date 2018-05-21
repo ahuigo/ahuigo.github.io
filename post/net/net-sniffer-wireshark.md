@@ -75,8 +75,8 @@ Shortcuts:
 4. Http模式过滤
 
 	http.request.method=="GET",   只显示HTTP GET方法的。
-	http.host=="ahui132.github.io"
-	http.host==ahui132.github.io
+	http.host=="ahuigo.github.io"
+	http.host==ahuigo.github.io
 
 5. 逻辑运算符为 and or
 
@@ -87,7 +87,7 @@ Example:
 
 	ip.src ==192.168.1.102 or ip.dst==192.168.1.102	 源地址或者目标地址是192.168.1.102
 	http and (ip.src ==192.168.1.102 or ip.dst==192.168.1.102)
-	tcp && http.host==ahui132.github.io
+	tcp && http.host==ahuigo.github.io
 
 #### Save
 Select the filter you no longer want and click Remove.

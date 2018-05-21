@@ -2,3 +2,5 @@
 .git/config
 .git/hooks/pre-commit
 
+# backup
+~/bin

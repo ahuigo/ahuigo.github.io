@@ -31,7 +31,7 @@ class gentree():
         return li
 
 index = {
-    "site_name": "ahui132",
+    "site_name": "ahuigo",
     "copyright": "CC",
     "cates": [
         {"name": "tech", "text":""}

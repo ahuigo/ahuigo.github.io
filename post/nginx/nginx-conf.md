@@ -162,8 +162,8 @@ hilo.com/a/b?c=1
 		server {
 			#侦听80端口
 			listen    80;
-			#定义使用 www.nginx.cn ahui132.github.io访问
-			server_name  ahui132.github.io www.nginx.cn;
+			#定义使用 www.nginx.cn ahuigo.github.io访问
+			server_name  ahuigo.github.io www.nginx.cn;
 
 			#定义服务器的默认网站根目录位置
 			root html;

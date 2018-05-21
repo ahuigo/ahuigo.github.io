@@ -68,7 +68,7 @@ On Mac OS X:
 
 ## Usage:
 
-	 mutt -s "Test mail" -a /tmp/file.tar.gz 'a132811@gmail.com,ahui132@qq.com' < /tmp/mailmessage.txt
+	 mutt -s "Test mail" -a /tmp/file.tar.gz 'a132811@gmail.com,ahuigo@qq.com' < /tmp/mailmessage.txt
 	 echo 'msg' |  mutt -s "Test mail" -a /tmp/file.tar.gz 'a132811@gmail.com'
 
 # mail
@@ -86,11 +86,11 @@ Usage:
 	account hilojack
 	tls off
 	auth off
-	host mail.ahui132.github.io
+	host mail.ahuigo.github.io
 	port 587
-	from admin@ahui132.github.io
+	from admin@ahuigo.github.io
 	tls_certcheck off
-	user hilo@ahui132.github.io
+	user hilo@ahuigo.github.io
 	password your_password
 	account default : hilo
 
@@ -194,7 +194,7 @@ Mac mail 有个地址薄, 查看方法为：`Select Window | Previous Recipients
 
 	$file = './a.txt';
 	$from_name = 'hilojack';
-	$from_mail = 'hilojack@ahui132.github.io';
+	$from_mail = 'hilojack@ahuigo.github.io';
 	$subject = 'subject--';
 	$replyto = 'replyto@qq.com';
 	$mail_to = 'xx@xx.com';

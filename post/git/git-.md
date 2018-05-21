@@ -398,7 +398,7 @@ Git will normally follow the "first" parent upwards from a merge commit, but spe
 
 Example:
 
-	git remote add origin ssh://git@ahui132.github.io:hilojack/wiki.git
+	git remote add origin ssh://git@ahuigo.github.io:hilojack/wiki.git
 	git remote add upstream https://github.com/octocat/Spoon-Knife.git
     git -C "/usr/local/Homebrew" remote set-url origin https://github.com/Homebrew/brew.git
 

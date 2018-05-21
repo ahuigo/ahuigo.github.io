@@ -60,7 +60,7 @@ User:
 Host:
 
 	localhost
-	%.ahui132.github.io
+	%.ahuigo.github.io
 	192.168.1.10
 	192.168.1.10/255.255.255.0
 
@@ -225,11 +225,11 @@ ssl 开启前需要创建或者购买server/client 证书, 再启用证书
 
 强制用户提供合法的由CA发行的证书, 必须包含合法的信息:必须来自于US, 来源洲Ohio, ..., 拥有者名字，域和邮箱。
 
-	REQUIRE SSL REQUIRE ISSUER 'C=US, ST=Ohio,.... , OU=ADMIN, CN=ahui132.github.io/Email=hilojack@sina.com';
+	REQUIRE SSL REQUIRE ISSUER 'C=US, ST=Ohio,.... , OU=ADMIN, CN=ahuigo.github.io/Email=hilojack@sina.com';
 
 强制用户提供合法的由CA发行的证书, 必须包括合法主题
 
-	REQUIRE SSL REQUIRE SUBJECT 'C=US, ST=Ohio,.... , OU=ADMIN, CN=ahui132.github.io/Email=hilojack@sina.com';
+	REQUIRE SSL REQUIRE SUBJECT 'C=US, ST=Ohio,.... , OU=ADMIN, CN=ahuigo.github.io/Email=hilojack@sina.com';
 
 强制使用特定的算法(EDH,RSA，DES,CBC3,SHA)：
 

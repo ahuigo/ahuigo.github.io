@@ -323,7 +323,7 @@ simpleXML
 # network
 
 ## curl
-Refer to [php-curl](https://github.com/ahui132/php-lib)
+Refer to [php-curl](https://github.com/ahuigo/php-lib)
 
 ## headers
 
@@ -354,7 +354,7 @@ Refer to [php-curl](https://github.com/ahui132/php-lib)
 
 ## mail
 
-	mail($to, $subject, $message[, $header = "From: test@ahui132.github.io\r\n"]);
+	mail($to, $subject, $message[, $header = "From: test@ahuigo.github.io\r\n"]);
 	cat php.ini
 		sendmail_from = string
 		sendmail_path = String 默认为系统sendmail的路径

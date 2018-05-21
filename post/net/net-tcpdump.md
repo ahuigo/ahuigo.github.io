@@ -160,7 +160,7 @@ flowdata 是一个binary! 查看的话需要借助`-r`
 # tcp
 分析tcp 包时，不要限制`dst or src`：
 
-	sudo tcpdump -i en5 -nn -A host ahui132.github.io
+	sudo tcpdump -i en5 -nn -A host ahuigo.github.io
 
 ## 三次握手
 ```
