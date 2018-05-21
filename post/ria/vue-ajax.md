@@ -1,4 +1,7 @@
 # ajax
+- fetch: 可能有兼容性问题
+- axios：需要外部资源
+- $http
 
 ## fetch
 
@@ -15,7 +18,7 @@
 
     fetch(url, {
         credentials: "same-origin"
-        credentials: "include", # crosee-origin
+        credentials: "include", // crosee-origin
     }).then(...).then(..).catch(...);
 
 ### fetch post
@@ -28,8 +31,14 @@
         },
         body: new FormData()
 
+## this.$http
+
+    this.$http.get('/message').then((response) {}
+
 ## axios
-    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+    axios.defaults.withCredentials=true;//让ajax携带cookie
+
     axios.get('https://yesno.wtf/api')
           .then(function (response) {
             vm.answer = _.capitalize(response.data.answer)

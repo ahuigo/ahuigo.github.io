@@ -1,0 +1,34 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id="app">
+   message:{{message}}
+   <div is="sub-component" :message="message"></div>
+   <button @click="refreshMessage" value="你好">x1</button>
+
+
+</div>
+<script>
+Vue.component('sub-component', {
+    template: '<div><div @click="refreshMessage">{{ message }}</div></div>',
+  props: [ 'message' ],
+  methods: {
+    refreshMessage: function(e) {
+        console.log([e])
+      this.$emit('refreshMessage');
+    }
+  }
+});
+
+new Vue({
+    el:'#app',
+  data: {
+    message: '1'
+  },
+  methods: {
+    refreshMessage(resource) {
+        console.log(['main',resource])
+    }
+  }
+})
+
+
+</script>

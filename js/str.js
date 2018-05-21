@@ -10,7 +10,7 @@ String.prototype.str_pad = function(len){
 /**
  * get_pos
  */
-String.prototype.get_pos = function(m, i) {
+String.prototype.getColumnPos = function(m, i) {
        return this.split(m, i).join(m).length + m.length;
 }
 String.prototype.nthIndex = function(pat, n){
@@ -22,18 +22,17 @@ String.prototype.nthIndex = function(pat, n){
     return i;
 }
 /*
-String.prototype.str_pad = function(ch, n) {
-        var pad = '';
-		n = n - this.length;
+String.prototype.str_repeat = function(n) {
+        var ch=this, pad='';
 		if(n<1) return this;
         while (true) {
-        	if (n & 1) {
+         if (n & 1) {
           	pad += ch;
           }
           n >>= 1;
-          if (n) ch += ch;
-          else break;
+          ch += ch
+          if(n<=0){break}
         }
-        return pad+this;
+        return pad;
     }
 */

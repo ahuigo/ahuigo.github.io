@@ -60,11 +60,24 @@ ajax函数将返回Promise对象:
         log('Got value: ' + result);
     });
 
+Promise.then(f1).then(f2):
+1. 执行Promise(f0) 中绑定的f0()==resolve(v0)
+1. resolve(v0).then(f1) 执行f1(v0)
+    1. f1 返回Promise, 再异步调用resove(v1)
+1. resolve(v1).then(f2) 执行f2(v1)
+    1. f2 返回Promise, 再异步调用resove(v2)
+
+也可以自动包装
+
+        fetch('http://localhost:5001').then(response=>response.json()).then(json=>{
+            this.products=json.products
+        })
+
 ## 并行
 Promise.all()实现如下：
 
     var p1 = new Promise(function (resolve, reject) {
-        setTimeout(resolve, 500, 'P1');
+        saetTimeout(resolve, 500, 'P1');
     });
     var p2 = new Promise(function (resolve, reject) {
         setTimeout(resolve, 600, 'P2');

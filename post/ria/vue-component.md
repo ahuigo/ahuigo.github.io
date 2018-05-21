@@ -23,7 +23,7 @@ refs 相当于id,
     // 访问子组件实例
     var child = parent.$refs.profile
 
-也可以是组件元素
+ref也可以是组件元素
 
     template: ' <input ref="input" v-on:input="updateValue($event.target.value)"',
     props: ['value'],

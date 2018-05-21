@@ -21,8 +21,10 @@ function getTocObj(article){
 		var id = tNode.sn + h.innerText;
 		tNode.href = "#"+id.encodeURIComponentUnicode();
 		tNode.title = h.innerText;
-		h.id = id;
-		h.innerText = id;
+        h.id = id;
+        h.innerText = tNode.sn +' '+ 
+            h.innerText.charAt(0).toUpperCase()+
+            h.innerText.slice(1)
 	}
     return toc;
 }

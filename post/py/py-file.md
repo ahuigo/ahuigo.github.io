@@ -115,10 +115,24 @@ If you need an list, just use `glob.glob` instead of `glob.iglob` with iterator
 	path = Path('file').parent.absolute()
 
 ### abspath/relpath:
-在某个目录下创建一个新目录，首先把新目录的完整路径表示出来:
+绝对/相对、link/real
 
 	>>> os.path.join('/Users/michael', 'testdir')
 	'/Users/michael/testdir'
+
+Get absolute/relative path
+
+    os.path.abspath(filepath)
+    os.path.relpath(filepath, Commprefix)
+
+Get symbolic link and real path
+
+    os.readlink(filepath)
+    os.path.realpath(filepath)
+
+islink:
+
+    os.path.islink(filepath)
 
 1. abspath: simply removes things like . and .. 
 2. realpath: removes things like . and .., and symbolic link

@@ -1,3 +1,12 @@
+# repo
+
+    # temp
+    npm --registry https://registry.npm.taobao.org install <package>
+    # persistance
+    npm config set registry https://registry.npm.taobao.org
+    # verify
+    npm config get registry
+
 # npm install 说起
 npm install 命令用来安装模块到node_modules目录。
 

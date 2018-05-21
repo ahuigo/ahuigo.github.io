@@ -9,6 +9,8 @@
         list all databases
     \c database_name
         \connect database_name
+    SELECT current_database();
+
 
 ## table
 

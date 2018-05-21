@@ -5,15 +5,14 @@ category: blog
 description:
 ---
 # Preface
-[latex 数学公式](http://zh.wikipedia.org/wiki/Help:%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F)
+数学公式：
+- [latex 数学公式](http://zh.wikipedia.org/wiki/Help:%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F)
+- [常用数学公式](http://www.ituring.com.cn/article/32403)
 
-[常用数学公式](http://www.ituring.com.cn/article/32403)
-http://blog.163.com/goldman2000@126/blog/static/167296895201221242646561/
-
-# learn latex
+# Learn latex
 http://www.jianshu.com/p/e59aaac15088
 
-## maclatex
+## Mac OSX latex
 http://www.zhihu.com/question/20928639
 
 在 OS X 上，主流的 TeX 发行版是 MacTeX。这是一个基于 TeX Live 之上的封装，和 TeX Live 的主要区别是：
@@ -52,7 +51,7 @@ http://docs.mathjax.org/en/latest/misc/mathjax-in-use.html
 # 函数、符号、及字符
 http://www.cnblogs.com/houkai/p/3399646.html
 
-## label
+## Label
 
     ${\overline a}_{n}$
     ${\bar a}$
@@ -116,7 +115,7 @@ https://bcc16.ncu.edu.tw/7/latex/math_tex/2-html/
 Ψ	ψ	Psi	ps
 Ω	ω	Omega	o
 
-### Mathematical Symbols
+### Mathematical Symbols, 数学符号
 https://www.howtotype.net/category/all_symbols/
 
     √ (square root): OPTION + v
@@ -161,7 +160,7 @@ https://www.howtotype.net/category/all_symbols/
  	Superscript three - cubed	³
  	Superscript two - squared	²
 
-### Input Symbols
+### Input Symbols, 常用输入符号
 
 	⌥ +K 
 	⌥ +R ‰
@@ -223,28 +222,7 @@ https://www.howtotype.net/category/all_symbols/
 
 For more details,refer to [Type Symbols](http://www.wikihow.com/Type-Symbols-Using-the-ALT-Key)
 
-## 函数
-	\sin a
-    \sin^{2}x + \cos^{2}x = 1
-    \cos b
-    \tan c
-	O(\log n)
-
-## 对数, logarithmic
-
-    \log_{a}{b}
-
-## 根
-
-	\sqrt{x} \sqrt[n]{x}
-
-## 上标(幂)
-	a^2
-
-## 下标
-	a_2
-
-## 符号
+### Latex符号
 
 	\pi 表示希腊字母 π，\infty 表示 ∞。更多的符号请参见：Special Symbols 。
 	\sqrt{被开方数} 表示平方根。另外，\sqrt[n]{x} 表示 n 次方根。
@@ -265,6 +243,24 @@ For more details,refer to [Type Symbols](http://www.wikihow.com/Type-Symbols-Usi
 	此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。
 	还有：\pm：±、\times：×、\div：÷ 。
 
+## 函数
+	\sin a
+    \sin^{2}x + \cos^{2}x = 1
+    \cos b
+    \tan c
+	O(\log n)
+
+## 对数, logarithmic
+
+    \log_{a}{b}
+
+## 根
+
+	\sqrt{x} \sqrt[n]{x}
+
+## 上下标
+	a^2
+	a_2
 
 # 分数fraction、矩阵和多行列式
 

@@ -188,9 +188,9 @@ Set crud:
     s.has(4)
 
 # for-in vs for-of
-1. 用for-in 遍历属性, 除了length 等不可读的属性
+1. 用for-in 遍历属性(length 等不可读的属性除外)
 2. for of：只循环集合本身的元素
-3. .forEach: 只循环元素、key、mamp/arr/集合本身
+3. .forEach: value、key、self(mamp/arr/集合本身)
 
     s = new Set([1,2,3])
     for(var it of s){

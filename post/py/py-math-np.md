@@ -14,6 +14,8 @@ pip3 install numpy
 # pandas
 http://pandas.pydata.org/pandas-docs/stable/10min.html
 
+## DataFrame
+
     df=pd.DataFrame({'col1':{'index1':1,'k2':2}, 'b':{'index1':2, 'k2':4}})
     df.index
     df.columns
@@ -26,14 +28,87 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
     df.loc[:,['col1','col2']]
     df.loc[:,'col1']
 
-    df['col1'].iloc[0] # first column value
+### concat
+
+    df1.append(df2)
+    s1.append(s2)
+
+### add row series
+    df = pd.concat([df, s.to_frame().T])
+    df[index]=s
+
+### add col series
+    DataFrame.add(s, axis=1)
+
+### filter
+row: index
+
+    df[df.apply(lambda x: x['col1'] > x['col2'], axis=1)]
+    df.loc['index']
+    df.iloc[0] # first row
+    df[0:2]
     df.iloc[0:2, 1:5]
 
+col series
+
+    df['col1'].iloc[0] # first column value
+    df.col1
+
+series item:
+
+    df.loc['index'].col1
+    df.col1.index //series.name,series.dtype 会覆盖
+    df.col1['index'] //不会
+    df['col1']['index'] //不会
+
+to_dict:
+
+    df.to_dict()
+    df.to_json()
+    series.to_dict()
+    series.to_json()
+
+    # series alone
+    series.tolist()
+
+### len
+
+    len(df) == df.shape[0] # row number
+    df.shape[1]     # col number
+
+### T 转置
+    df.T
+
+### apply
+    In [48]: df
+    Out[48]:
+    a  b  c
+    d  1  2  3
+    e  4  5  6
+
+    In [49]: df.apply(lambda x:0, axis=0)
+    Out[49]:
+    a    0
+    b    0
+    c    0
+    dtype: int64
+
+    In [50]: df.apply(lambda x:1, axis=1)
+    Out[50]:
+    d    1
+    e    1
+
+### for
+    for index, row in df.iterrows():
+        print row['c1'], row['c2']
+
 ## series
+
     s = pd.Series([1, 2, 3])
     >>> s.update(pd.Series([4, 5, 6]))
 
-    s.append(pd.Series({'c':3}), ignore_index=True)
+    s.append(pd.Series({'c':3}), ignore_index=True) 
+    pd.concat([s1, s4], axis=1)
     pd.concat([df1, df4], axis=1)
 
 to_dict(), to_json, tolist():
