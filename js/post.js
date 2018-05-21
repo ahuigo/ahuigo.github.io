@@ -11,6 +11,22 @@ $(function() {
     $.ajaxSetup({
         cache: false
     });
+    var mathjax = function() {
+        console.log('debug mathjax')
+        return [
+            {
+                type: 'lang',
+                filter: function(text) {
+                    MathJax.Hub.Config({tex2jax: {inlineMath: [ ["$","$"] ], displayMath: [ ["$$", "$$"] ]}});
+                    MathJax.Hub.Configured();
+                    MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
+                    return text;
+                }
+            }
+        ];
+    };
+    // Client-side export
+    window.showdown.extensions.mathjax = mathjax;
 
     $.scrollUp({
         scrollName: 'scrollUp', // Element ID
@@ -76,7 +92,7 @@ $(function() {
     }
 
     // 转化引擎
-    blog.helper.markdown = new Showdown.converter();
+    blog.helper.markdown = new showdown.Converter({extensions: ['mathjax']});
 
 
     blog.helper.addpages = function(index,articles,_div){

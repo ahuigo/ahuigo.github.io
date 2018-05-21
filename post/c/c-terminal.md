@@ -148,7 +148,7 @@ Note, argv[0] 前有一个"-", 这样bash 就知道知道是以login shell 启�
 - 与/dev/tty1 这样的终端设备模块类似, 不过它的底层驱动程序不是*访问硬件*，而是访问*主设备(内核模块)*
 
 
-![](/img/inux-c-terminal-pts.png)
+![](/img/linux-c-terminal-pts.png)
 
 上图用telnet 为例说明了网络登录过程，以及伪终端设备的使用:
 1. *用户通过telnet 连接到服务器*。服务有两种监听连接请求的配置：

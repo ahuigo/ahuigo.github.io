@@ -282,6 +282,26 @@ _{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个�
 此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。
 还有：\pm：±、\times：×、\div：÷ 。
 
+# table
+
+    $$ 
+    \begin{array}{|c|c|c|c|}
+    \hline
+    1& 1 > -1 & 1 & -1 \\ \hline
+    & 3 & 55 & 44\\ \hline
+    & 4 & 93 & 33\\ \hline
+    & 5 & 6 &  22\\ \hline
+    \end{array}$$
+
+$$ 
+\begin{array}{|c|c|c|c|}
+\hline
+1& 1 > -1 & 1 & -1 \\ \hline
+& 3 & 55 & 44\\ \hline
+& 4 & 93 & 33\\ \hline
+& 5 & 6 &  22\\ \hline
+\end{array}$$
+
 # combination
 $\binom m{n+1}=\binom mn+ \binom {m-1}n$
 $(A\cup B)^{C}=A^{C}\cap B^{C}$
