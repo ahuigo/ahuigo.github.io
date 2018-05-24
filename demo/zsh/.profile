@@ -1,7 +1,6 @@
 #export
 export LC_ALL='en_US.UTF-8'
 export LANG='en_US.UTF-8'
-export EDITOR="vim"
 export CLICOLOR="xterm-color"
 export PATH=$PATH:$HOME/www/a/bin:$HOME/bin
 export GNUTERM=qt
@@ -12,7 +11,8 @@ export PIP_FORMAT=columns
 ulimit -n 1000
 
 # alias
-alias vi='mvim'
+export EDITOR="nvim"
+alias vi='nvim'
 alias cp='cp -i'
 alias svnst='svn st'
 alias l='ls -lah'
@@ -27,7 +27,7 @@ export PYTHONPATH=.
 export PATH=$PATH:~/.composer/vendor/bin:/Users/hilojack/Downloads/n5/platform-tools
 
 # go
-export GOPATH=~/go
+export GOPATH=~/gohome
 export PATH=$PATH:$GOPATH/bin
 
 # brew

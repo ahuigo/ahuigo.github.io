@@ -30,6 +30,12 @@ vim中的很多命令都可以结合使用，比如强大的`:g`。
 
 	:g/^\s*$/d
 
+## help set
+
+    :h set
+    :h 'smartcase'
+    :h 'ignorecase'
+
 ## help completion
 
 	:h {pat}

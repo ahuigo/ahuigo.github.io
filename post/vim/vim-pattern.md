@@ -216,6 +216,8 @@ Here two example are equal
 # search 搜索
 高亮/搜索时定位/循环搜索时的配置
 
+    :set ignorecase smartcase
+
 	#高亮搜索关键字
 	:set hls or :set hlsearch
 	:nohlsearch "限本次搜索不高亮

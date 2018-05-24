@@ -13,6 +13,8 @@
 	`multiple
 	line`
 
+    String.raw`\a` === `\\a`
+
 ### 模板字符
 
 	name='ahui'
@@ -39,6 +41,9 @@ alert(s); // s仍然为'Test'
 	.slice(start, [end]) //start, end可为负, py: str[slice]
 	.substr(start,[length])//start可为负
     .substring(start, [end]) //不可为负
+
+### startsWith
+endsWith
 
 ###	case
 
@@ -134,7 +139,7 @@ eg:
     '12345'.split('', 3).map()
 
 ## RegExp
-Create RegExp：
+Create RegExp：test, exec
 
 	/pattern/attributes
 	/str/igm
@@ -184,21 +189,33 @@ Create RegExp：
 
 
 ## html转码:
-常规字符: 字母 数字 下划线
+URI:
 
 	encodeURI()	把字符串编码为 URI。
-		encodeURI("http://www.google.com/a file with spaces.html"); //转码所有非常规URI字符转码: '|" Ò' 等等
+		encodeURI("http://a.cn/b?='1'#\"|看"); //转码所有非URI字符转码: '|" Ò' 等等
+			'http://a.cn/b?=\'1\'#%22%7C%E7%9C%8B'
 	encodeURIComponent()	把字符串编码为 URI 组件(utf8)。(所有URI特殊字符 将被转码)
-		encodeURIComponent('中国 ')
-			%E4%B8%AD%E5%9B%BD%20
+		encodeURIComponent("看");
+			'%E7%9C%8B'
         decodeURIComponent
+
+unicode:
+
 	escape()	对字符串进行编码(unicode)。Don't use it, as it has been deprecated since ECMAScript v3.
-        escape('中国 ');
-            "%u4E2D%u56FD%20"
+		escape("看 ");
+			'%u770B%20'
         unescape('%20');
 	str.replace(/'/g, "\\'");//addslashes
-
 	eval()	计算 JavaScript 字符串，并把它作为脚本代码来执行。
+
+htmlentities:
+
+	function htmlEntities(str) {
+		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+	// via html dom
+		div.innerText=div.innerHTML
+		entities=div.innerHTML
 
 ## math
 

@@ -11,6 +11,53 @@ description:
 http://learnvimscriptthehardway.stevelosh.com/ (中文)
 http://learnvimscriptthehardway.onefloweroneworld.com/ (英文)
 
+# Var type
+
+## inner var
+	:echo $VIMRUNTIME
+	:vsplit $MYVIMRC
+	:echo &shell
+	:echo &t_Co
+	:let &t_Co=256
+    # 普通变量
+	:let w='abc'
+	:echo w
+
+## options var
+:h set
+
+	:set tw=80
+	:let &tw = &tw + 10
+	:set tw?
+	:echo &tw
+	:echo &wrap
+
+    "reset
+    :set tw& 
+
+set 非option var
+
+    :set         Show all options that differ from their default value.
+    :set all     Show all but terminal options.
+    :set termcap Show all terminal options.
+    :set t_Co=256
+    :set t_Co? error!
+
+### local options
+
+	:let &l:number = 1
+
+## Registers as Variables
+
+	:let @a = "hello!"
+	:echo @"
+	:echo @+
+	:echo @/	" store search word "/word"
+
+	@/ search word
+	@@ @"	default unnamed register
+
+
 # Variable Scoping
 >See :help internal-variables
 
@@ -35,8 +82,6 @@ It lists the following types:
 
 	v:lnum
 		Line number for the 'foldexpr' |fold-expr
-
-## define var
 
 # var data type
 
@@ -403,38 +448,6 @@ We can use deepcopy
 
 	let l2 = deepcopy(l1)
 	let l2 = deepcopy(l1, 1)	"recursively copy reference
-
-# Var function type
-
-## inner var
-
-	:echo $VIMRUNTIME
-	:vsplit $MYVIMRC
-	:echo &shell
-	:let w='abc'
-	:echo w
-
-## options var
-
-	:set tw=80
-	:let &tw = &tw + 10
-	:set tw?
-	:echo &tw
-	:echo &wrap
-
-### local options
-
-	:let &l:number = 1
-
-## Registers as Variables
-
-	:let @a = "hello!"
-	:echo @"
-	:echo @+
-	:echo @/	" store search word "/word"
-
-	@/ search word
-	@@ @"	default unnamed register
 
 # Reference
 - [learnvim hardway][book]

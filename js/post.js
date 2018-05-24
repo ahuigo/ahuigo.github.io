@@ -11,22 +11,6 @@ $(function() {
     $.ajaxSetup({
         cache: false
     });
-    var mathjax = function() {
-        console.log('debug mathjax')
-        return [
-            {
-                type: 'lang',
-                filter: function(text) {
-                    MathJax.Hub.Config({tex2jax: {inlineMath: [ ["$","$"] ], displayMath: [ ["$$", "$$"] ]}});
-                    MathJax.Hub.Configured();
-                    MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
-                    return text;
-                }
-            }
-        ];
-    };
-    // Client-side export
-    window.showdown.extensions.mathjax = mathjax;
 
     $.scrollUp({
         scrollName: 'scrollUp', // Element ID
@@ -91,10 +75,6 @@ $(function() {
             return host;
     }
 
-    // 转化引擎
-    blog.helper.markdown = new showdown.Converter({extensions: ['mathjax']});
-
-
     blog.helper.addpages = function(index,articles,_div){
         var el = document.createElement('ul');
         el.setAttribute('data-num-items', "10");
@@ -152,7 +132,7 @@ $(function() {
         },
         render: function() {
             if(!this.model) return this;
-            var html = blog.helper.markdown.makeHtml(this.model);
+            var html = marked(this.model);
 
             $(this.el).html(html);
             blog.helper.highlight();
@@ -276,10 +256,10 @@ $(function() {
 
                 var html;
                 if(artData.length >= 200) {
-                    html = blog.helper.markdown.makeHtml(artData.substring(0, 200));
+                    html = marked(artData.substring(0, 200));
 
                 } else {
-                    html = blog.helper.markdown.makeHtml(artData);
+                    html = marked(artData);
                 }
 
                 $(".article-content").append(html);

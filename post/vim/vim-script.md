@@ -8,6 +8,11 @@ description:
 
 # debug
 
+## startuptime
+
+    vim --startuptime time.log
+    vim -u NONE
+
 ## verbose
 
 	:set verbose=1
@@ -59,6 +64,7 @@ execute commands:
 	:endif
 
 	if 1| echo "true" | endif
+	if 1|echo "true"|endif
 
 if string
 

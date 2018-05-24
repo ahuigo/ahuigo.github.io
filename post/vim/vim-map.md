@@ -76,7 +76,8 @@ map attr list: `<script> <buffer> <buffer>, <silent>, <expr> , <unique> and <spe
 ## unique map
 <unique> 关键字可以被用来当一个映射已经存在时不允许重新定义。否则的话新的映射 会简单的覆盖旧的。参见 `|:map-<unique>|`。
 
-	:nnoremap <buffer> <leader>x dd
+	:nnoremap <leader>x dd
+    :map <buffer> <unique> <leader>x  /[#&!]<CR> | " failed as map exists
 
 如果要使一个键无效,将之映射至 <Nop> (五个字符)。下面的映射会使 <F7> 什么也干 不了:
 
@@ -84,7 +85,7 @@ map attr list: `<script> <buffer> <buffer>, <silent>, <expr> , <unique> and <spe
 
 注意 <Nop> 之后一定不能有空格。
 
-## silent
+## silent map
 To define a mapping which will not be echoed on the command line:
 
 	:map <silent> ,h /Header<cr>
@@ -289,7 +290,9 @@ Vim 会显示 "Hello World"。然而如果你加上一个双引号,就不行了�
 
 # map operator
 > :h omap-info
+> :h g@ - call the function set by operatorfunc(following motion), e.g.: g@iw
 
+    " 一次性set
 	nnoremap <leader>g :set operatorfunc=GrepOperator<cr>g@
 	vnoremap <leader>g :<c-u>call GrepOperator(visualmode())<cr>
 

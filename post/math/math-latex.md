@@ -42,11 +42,37 @@ or
 
 ## MathJax
 这是一个js 库. 用法如`$a^2=b$` as in-line or `$$a^2=b$$` as block
+1. 还有：kaTex
+2. web app: markx(pageDown), stackedit
 
-支持markdown 的库:
-1. markx: Markx, an open source markdown+MathJax editor heroku app using StackExchange’s PageDown library and optional pandoc integration. https://github.com/jgallen23/markx
-2. StackEdit, a versatile open source markdown+MathJax editor webapp and blogging client using StackExchange’s PageDown library.
-http://docs.mathjax.org/en/latest/misc/mathjax-in-use.html
+http://docs.mathjax.org/en/latest/misc/mathjax-in-use.html 全局渲染
+
+    MathJax.js?config=TeX-AMS-MML_HTMLorMML
+
+### katex
+
+    katex.render(String.raw`c = \pm\sqrt{a^2 + b^2}`, element);
+    var html = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}");
+
+
+### MathJax+markdown
+1. MathJax 与 Markdown 的究极融合 https://yihui.name/cn/2017/04/mathjax-markdown/
+1. 支持markdown 的库: showdown/pageDown/marked
+
+marked:
+
+	marked.setOptions({
+		//renderer: new marked.Renderer(),
+		gfm: true,
+		tables: true,
+		breaks: true,
+		pedantic: false,
+		sanitize: false, 
+		smartLists: true,
+		smartypants: false,
+		latexRender: katex.renderToString.bind(katex),
+	});
+    marked*(text)
 
 # 函数、符号、及字符
 http://www.cnblogs.com/houkai/p/3399646.html
@@ -280,7 +306,7 @@ For more details,refer to [Type Symbols](http://www.wikihow.com/Type-Symbols-Usi
 
 _{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个字符，可以省略 { 和 } 。
 此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。
-还有：\pm：±、\times：×、\div：÷ 。
+还有：\pm：±、\times：×、\div：÷ ****。
 
 # table
 

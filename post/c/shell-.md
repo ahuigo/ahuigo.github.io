@@ -276,6 +276,12 @@ Refer to:
 http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
 http://unix.stackexchange.com/questions/85249/why-not-use-which-what-to-use-then
 
+    ➜ > ~ command -v ls
+    alias ls='ls -G'
+    ➜ > ~ command -v go
+    /usr/local/bin/go
+    gopath=$(command)
+
 ## errcode
 `exit 0 ` 返回一个成功的状态码，非0状态码表示不成功。
 

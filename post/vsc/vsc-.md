@@ -31,19 +31,6 @@ refer: https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf
 ⇧⌘M Show Problems panel
 F8 / ⇧F8 Go to next/previous error or warning
 
-# develop
-
-## Debug
-cmd+shift+d
-```yaml
-F9 Toggle breakpoint
-F5 Start/Continue
-F11 / ⇧F11 Step into/ out
-F10 Step over
-⇧F5 Stop
-⌘K ⌘I Show hover
-```
-
 # File 
 ## Edit
 ```yaml
