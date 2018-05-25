@@ -94,7 +94,7 @@ trim space only
 	stringObject.match(searchvalue)
 
 	stringObject.match(regexp)
-	matches = ("1 2 3 ".match(/\d+/g); //[1,2,3]
+	matches = "1 2 3 ".match(/\d+/g); //[1,2,3]
 	"1 2 3".match(/(\d) s/g); //return null
 
 	//如果regexp没有g, 则会匹配子模式
@@ -102,6 +102,7 @@ trim space only
 	matches.index //0 相当于indexOf返回的位置
 
 > 如果需要同时支持regExp global 及 子表达式, 请使用RegExp.prototype.exec
+> match 成功后，`RegExp.$1~$9` 代表子组，`RegExp.$0` 不存在
 
 ### search
 返回字符位置, 不支持regexp global; 这个像indexOf()

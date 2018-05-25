@@ -47,7 +47,8 @@ or
 
 http://docs.mathjax.org/en/latest/misc/mathjax-in-use.html 全局渲染
 
-    MathJax.js?config=TeX-AMS-MML_HTMLorMML
+    src="MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    //via getElementsByTagName("script").filter MathJax 找到config
 
 ### katex
 

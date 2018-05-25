@@ -1,3 +1,14 @@
+# ci
+
+    npm run test:unit
+    npm run test:lint
+
+    # security
+    npm run test:redos
+
+    # specs
+    npm run test:specs
+
 # repo
 
     # temp

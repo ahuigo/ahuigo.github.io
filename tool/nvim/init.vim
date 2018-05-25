@@ -17,6 +17,9 @@ set laststatus=2
 	 \ |   exe "normal! g`\""
 	 \ | endif
 
+"search
+noremap <F3> :let @/ = ""<CR>
+
 "close & write
 nnoremap <C-q> :qa<CR>
 

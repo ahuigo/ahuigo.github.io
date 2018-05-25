@@ -222,7 +222,7 @@ Here two example are equal
 	:set hls or :set hlsearch
 	:nohlsearch "限本次搜索不高亮
     #真正的撤消搜索 clearmatch clear search: 有这几种
-    :noremap <F3> :let @/ = ""
+    :noremap <F3> :let @/ = ""<CR>
     :set nohlsearch
     :set hlsearch!
     :noh

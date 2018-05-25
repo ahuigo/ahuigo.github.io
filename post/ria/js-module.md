@@ -295,11 +295,13 @@ http://www.ruanyifeng.com/blog/2014/09/package-management.html
 - Browserify - 将多个require('js') 合并
     - browserify robot.js > bundle.js
 - dao: package both js/css
-- webpack: 静态模块打包器(module bundler): js/css/png/font/...
 - Gulp: 一个新的基于流的`管道式构建工具`，用于代替过时的Grunt。 类似于java 的Maven
     - http://javascript.ruanyifeng.com/tool/gulp.html
     - https://segmentfault.com/a/1190000002491282
 
+- webpack: 静态模块打包器(module bundler): js/css/png/font/..., 整合了gulp的优
+- parcel: 比webpack 更快先进
+- rollup: es2015 Rollup 是下一代的 javascript 打包器，它使用 tree-shaking 的技术使打包的结果只包括实际用到的 exports。 使用它打包的代码，基本没有冗余的代码，减少了很多的代码体积
 
 ## dao
 将js/css 合并

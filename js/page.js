@@ -14,7 +14,7 @@ String.URIChar = {
 String.prototype.encodeURIComponentUnicode = function(){
     return this.replace(/./g, function(k){return String.URIChar[k] || k;}) ;
 }
-document.addEventListener("DOMContentLoaded", function(event) { 
+document.addEventListener("DOMContentLoaded", function() { 
 	//document.querySelector('#toc').innerHTML = createToc();
 });
 
@@ -93,20 +93,21 @@ function genToc(toc){
 }
 
 function getTNode(l, toc, sn_pre){
+  var node;
   if(sn_pre === undefined ) sn_pre = '';
   l = parseInt(l); 
-  if(l<1 || toc.l >=l ) return;
+if(l<1 || toc.l >=l ) return;
   if(toc.list === undefined){ toc['list'] =[];}
 
   if(toc.l===l-1){
-     var node = toc.list[toc.list.length]= {l:l}
+     node = toc.list[toc.list.length]= {l:l}
      node.sn = sn_pre + toc.list.length + '.';
      return node;
   }else{
      if(toc.list.length === 0){
        toc.list[0]= {l:toc.l+1};
     }
-    var node = toc.list[toc.list.length-1];
+    node = toc.list[toc.list.length-1];
     return getTNode(l, node, sn_pre + toc.list.length + '.');
   }
 }
