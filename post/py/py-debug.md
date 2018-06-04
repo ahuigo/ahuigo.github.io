@@ -59,28 +59,28 @@ exit(n), quit(n), sys.exit(n)都是一个东西: SystemExit(n);
     PYTHONASYNCIODEBUG=1 python3 a.py
 
 ## raise异常
-可以在except语句块后面加一个else，当没有错误发生时，会自动执行else语句：
-```
-class FooError(ValueError):
-    pass
-try:
-	print('try...')
-	r = 10 / int('2')
-	print('result:', r)
-except ValueError as e:
-	print('ValueError:', e)
-except ZeroDivisionError as e:
-	print('ZeroDivisionError:', e)
-except:
-	print('no error!')
-    raise FooError('invalid value:')
-finally:
-	print('finally...')
-print('END')
-```
 More: raise语句如果不带参数，就会把当前错误原样抛出
 
-### e
+    class FooError(ValueError):
+        pass
+
+    try:
+        print('try...')
+        r = 10 / int('2')
+        print('result:', r)
+    except ValueError as e:
+        print('ValueError:', e)
+    except ZeroDivisionError as e:
+        print('ZeroDivisionError:', e)
+    except:
+        print('no error!')
+        raise FooError('invalid value:')
+    finally:
+        print('finally...')
+    print('END')
+
+
+Exception:
 
     raise Exception(*args)
     e.args

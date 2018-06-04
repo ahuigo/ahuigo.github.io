@@ -61,8 +61,11 @@ or use any part which is hash-able:
 ## list copy
 
     l=[1,2,3]
-    l.copy()
-    dic.copy()
+    lc=l.copy()
+    lc[:]=l
+
+    dc=dic.copy()
+
 
 ## list merge, tuple merge
 

@@ -60,9 +60,11 @@ via exec
 ### subprocess.check_output
 
     import subprocess
+    res = subprocess.check_output(["ls", "-l"])
     res = subprocess.check_output("ls -l", shell=True) # 以shell 角析, 否则"ls -l" 就是一个命令
     print(res.decode()) # 默认返回值为 bytes 类型
         -rw-r--r-- ...
+
 
 ### subprocess.Popen
 Popen 是最基础的类, 它是非阻塞的(除非执行`.stdout.read()`)

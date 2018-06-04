@@ -4,67 +4,6 @@ title:	ria module
 category: blog
 description:
 ---
-# node Module
-## Create module
-hello module: hello.js
-
-    var s = 'Hello';
-    function greet(name) {
-        console.log(s + ', ' + name + '!');
-    }
-
-    //暴露变量
-    module.exports = greet;
-
-## 加载模块
-
-    // 引入hello模块:
-    var greet = require('./hello');
-    greet('Michael'); // Hello, Michael!
-
-Node会依次在内置模块、全局模块和当前模块下查找hello.js, 但是不会在当前目录查找
-
-    var greet = require('hello');
-
-### module.exports怎么实现？
-这个也很容易实现，Node可以先准备一个对象module：
-
-    // 准备module对象:
-    var module = {
-        id: 'hello',
-        exports: {}
-    };
-
-    var load = function (exports, module) {
-        // 读取的hello.js代码:
-        function greet(name) {
-            console.log('Hello, ' + name + '!');
-        }
-
-        module.exports = greet;
-        // hello.js代码结束
-        return module.exports;
-    };
-    // 保存module:
-    exported = load(module.exports, module);
-    // 保存module:
-    save(module, exported);
-
-
-多个变量暴露可以用`exports.var=xxx`:
-1. 但是不可以直接覆盖exports, 导致module.exports不会指向exports
-2. 直接对module.exports对象赋值, 适合返回所有类型: func/obj/arr
-
-    module.exports = {
-        hello: hello,
-        greet: greet
-    };
-    exports.hello = hello;
-    exports.greet = greet;
-
-
-
-
 # 模块的定义(对象定义)
 本文参考阮一峰的: [js 模块化](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
 
@@ -161,6 +100,29 @@ requireJS 解决了：
 1. 异步加载
 2. 解决模块依赖问题
 
+## 原理
+require(ids, factory(ids){})
+
+1. loadScript+load
+2. 每次load 都检查下是不是所有ids都加载成功(args.length)
+3. 所有ids加载完毕, 就执行: factory(args)
+
+    load: function()}
+        // means load all dependencies
+        if (args.length === mod.dependencies.length) {
+            args.push(mod.exports);
+            mod.makeExports(args);
+            mod.status = STATUS.EXECUTED;
+            mod.notifyDependents();
+        }
+    makeExports: function(args) {
+        var mod = this;
+        var result = isFunction(mod.factory) ? mod.factory.apply(root, args) : mod.factory;
+        // as we know, the default `mod.exports` is `{}`
+        mod.exports = isPlainObject(mod.exports) ? result : mod.exports;
+    },
+
+
 ## 引入requireJs
 加载RequireJs 本身也会导致浏览器停止渲染。解决的办法是将其放在浏览器底部。或者写成这样：
 
@@ -227,6 +189,8 @@ AMD 加载的模块，采用AMD 规范：即模块必须使用define() 函数来
 
 如果模块还依赖其它的模块
 
+js.onlad=callback
+
 	define(['myLib'], function(myLib){
 	　　function foo(){
 	　　　　myLib.doSomething();
@@ -283,6 +247,67 @@ text和image插件，则是允许require.js加载文本和图片文件。
 	　　　　document.body.appendChild(cat);
 	　　}
 	);
+
+# Node: CMD
+## Create module
+hello module: hello.js
+
+    var s = 'Hello';
+    function greet(name) {
+        console.log(s + ', ' + name + '!');
+    }
+
+    //暴露变量
+    module.exports = greet;
+
+## 加载模块
+
+    // 引入hello模块:
+    var greet = require('./hello');
+    greet('Michael'); // Hello, Michael!
+
+Node会依次在内置模块、全局模块和当前模块下查找hello.js, 但是不会在当前目录查找
+
+    var greet = require('hello');
+
+### module.exports怎么实现？
+这个也很容易实现，Node可以先准备一个对象module：
+
+    // 准备module对象:
+    var module = {
+        id: 'hello',
+        exports: {}
+    };
+
+    var load = function (exports, module) {
+        // 读取的hello.js代码:
+        function greet(name) {
+            console.log('Hello, ' + name + '!');
+        }
+
+        module.exports = greet;
+        // hello.js代码结束
+        return module.exports;
+    };
+    // 保存module:
+    exported = load(module.exports, module);
+    // 保存module:
+    save(module, exported);
+
+
+多个变量暴露可以用`exports.var=xxx`:
+1. 但是不可以直接覆盖exports, 导致module.exports不会指向exports
+2. 直接对module.exports对象赋值, 适合返回所有类型: func/obj/arr
+
+    module.exports = {
+        hello: hello,
+        greet: greet
+    };
+    exports.hello = hello;
+    exports.greet = greet;
+
+
+
 
 # Package, 打包
 http://www.ruanyifeng.com/blog/2014/09/package-management.html

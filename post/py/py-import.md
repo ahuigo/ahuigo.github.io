@@ -1,30 +1,23 @@
 # Preface
-python 主要是通过import 实现模块化的, 每个文件就是一个package:
 
-	module/
-		__init__.py
-		pkg1.py
-		pkg2.py
-	
-必须要电式引入，只会引入`pkg1`和`__init__`, 如下就不会引入`pkg2`\
-
-    ```python
-    from module import pkg1; 
-    from module.pkg1
-    from module.pkg1 import func; 
-    ```
-
-# import
-import `ex47.game`, would find two file:
-
-	ex47/game.py
-	ex47/__init__.py
-
-1. 每一个包目录下面都会有一个__init__.py的文件，这个文件是必须存在的，否则，Python就把这个目录当成普通目录，而不是一个包。目录名就是包名
-
-## package and module
+## package vs module
 1. pkg/__init__.py is package, 优先级高 包含多个module
 2. mod.py is module, 优先级低
+
+python 主要是通过import 实现模块化的, 每个文件就是一个module:
+
+	pkg/
+		__init__.py
+		mod1.py
+		mod2.py
+	
+mod必须要显式引入，只会引入`mod1`和`__init__`, 如下就不会引入`mod2`:
+
+    from pkg import mod1; 
+    from module.mod1
+    from module.mod1 import func; 
+
+# import
 
 ## import function
 依次从locals, globals, PYTHONPATH查找:
@@ -122,6 +115,7 @@ module find path
 	`__class__.__name__`
 
 3. `_xxx和__xxx`
+    import M import * 不会引入下划线属性
 	这样的函数或变量就是非公开的（private），不应该被直接引用，比如_abc，__abc等；
 	`FOO.__xxx` 通过改名为`FOO._FOO__xxx` 隐藏自己
 

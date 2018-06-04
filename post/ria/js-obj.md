@@ -101,9 +101,9 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 Object.create(func.prototype)相当于: `{__proto__:func.prototype}`
 Object.create(obj)相当于: `{__proto__:obj}` 相当于对象继承了
 
-    Object.create =  function (func.prototype) {
+    Object.create =  function (obj) {
         var F = function () {};
-        F.prototype = func.prototype;
+        F.prototype = obj;
         return new F();
     };
 
@@ -127,7 +127,8 @@ new func() 相当于:
 
     function ClassA(sColor){ }
     function ClassB(){ 
-        self = Object.getPrototypeOf(this)
+        //self.prototype = Object.getPrototypeOf(this)
+        self = this.constructor
         //1. 原型链冒充 原类的静态成员(prototype).
         if(self.__init === undefined){
             self.__init === true
@@ -135,17 +136,6 @@ new func() 相当于:
         }
         // 2. 再冒充ClassB对象.
         self.call(this, sColor);
-    }
-
-让我们封装一下:
-
-    function inherits(that, Parent, ...args){
-        if(that.__init === undefined){
-            that.__init === true
-            self = Object.getPrototypeOf(that)
-            self.prototype = Object.create(Parent.prototype)
-        }
-        self.apply(that, args);
     }
 
 ## class 定义类
@@ -169,38 +159,41 @@ new func() 相当于:
     }
     (new Cat('ahui')).say()
 
-class 定义的方法是不可枚举的
-
-    class Point {
-        constructor(x, y) {
-            // ...
-        }
-
-        toString() {
-            // ...
-        }
-        a(){}
-    }
-
-    Object.keys(Point.prototype)
-    // []
-    Object.getOwnPropertyNames(Point.prototype)
-    // ["constructor","toString"]
-
-你也可以这样es5 写法绑定就可以枚举
+class 定义的方法是不可keys 枚举定义值（除了assign值）, 不过可以用getOwnPropertyNames
 
     class Point {
         constructor(){ }
+        func1(){}
     }
 
     Object.assign(Point.prototype, {
         toString(){},
-        toValue(){}
+        toValue(){},
+        func2(){}
     });
+
+    > Object.keys(Point.prototype)
+    [ 'toString', 'toValue', 'func2' ]
+    > Object.getOwnPropertyNames(Point.prototype)
+    [ 'constructor', 'func1', 'toString', 'toValue', 'func2' ]
 
 属性名可以用变量:
 
      [methodName]() { }
+
+### property
+
+    //instance
+    class Foo { 
+        constructor(){
+            this.bar = 1; 
+        }
+    } 
+    // consructor
+    Foo.bar=1
+    // prototype
+    Foo.prototype.bar=1
+
 
 ### constructor
 constructor方法默认返回实例对象（即this），完全可以指定返回另外一个对象。
@@ -535,7 +528,8 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 	}
 
 	function ClassB(sColor, sName) {
-		var self = Object.getPrototypeOf(this)
+		//var self.prototype = Object.getPrototypeOf(this)
+		var self = this.constructor
 		if( self.init === undefined){
 			self.init = true;
             // 最好别传new ClassA(sColor),因为sColor应该是每个对象私有的.

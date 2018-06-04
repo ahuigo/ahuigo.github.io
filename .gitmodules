@@ -19,3 +19,6 @@
 [submodule "demo/go-lib"]
 	path = demo/go-lib
 	url = https://github.com/ahuigo/go-lib
+[submodule "demo/pyhttp"]
+	path = demo/pyhttp
+	url = https://github.com/ahuigo/pyhttp-server

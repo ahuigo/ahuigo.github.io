@@ -6,7 +6,7 @@ set t_Co=8
 "encoding
 set fileencoding=utf-8
 set fileencodings=utf-8,gbk
-set ts=4 sw=4
+set ts=4 sw=4 nu
 set ignorecase smartcase
 set expandtab
 "info

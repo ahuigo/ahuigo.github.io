@@ -38,6 +38,7 @@ description:
 ## 命名分组
 
     # 分组必须带括号
+    (?<name>pattern) # wrong
     (?P<name>pattern)
     (?:pattern) # 非命名
 
@@ -105,7 +106,7 @@ compile with modifier:
 
 ## replace, sub
 
-    re.sub('test', 'xxxx', 'Testing', flags=re.IGNORECASE)
+    re.sub(r'test', 'xxx', 'Testing', flags=re.IGNORECASE)
         str.replace(needle, word, 1);
 
 like `str.replace`

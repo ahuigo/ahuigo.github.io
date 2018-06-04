@@ -68,6 +68,10 @@ https://zhuanlan.zhihu.com/p/27258289
 
     import inspect
     inspect.iscoroutine(async_function)
+
+    import asyncio
+    asyncio.iscoroutine(someFunc)
+    asyncio.iscoroutinefunction(someFunc)
     ```
 
 ## generator 生成器

@@ -7,6 +7,10 @@ cmd+p
     cmd+j 切换集成终端(ctrl+`)
         ctrl+shift+`
 
+## Setting sync
+1. Upload Key : Shift + Alt + U
+2. Download Key : Shift + Alt + D
+
 ## config
 1. org scope 分为：user - workspace - directory
 2. language scope: 

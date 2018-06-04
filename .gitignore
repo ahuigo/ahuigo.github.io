@@ -7,3 +7,4 @@ jek.exvim
 .exvim.jek/
 .DS_Store
 __pycache__
+.netrwhist

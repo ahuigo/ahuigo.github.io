@@ -24,6 +24,8 @@ Next, your subfile.py can import globals:
 	settings.myList.append('hey')
 
 # function
+
+## locals()
 var 默认:
 
 - outside-exist (global)
@@ -44,6 +46,23 @@ var 默认:
 output:
 
 	-Hello- -Hilojack-
+
+### exec
+exec's modfications to locals should not be attempted:
+
+    def foo():
+        exec("a=3")
+        print(locals()['a']) # right
+        print(a) # wrong
+
+    def foo():
+        ldict = locals()
+        exec("a=3",globals(),ldict)
+        print(ldict['a'])
+
+## define func
+    def add(x:int, y:int) -> int:
+    return x + y
 
 ## bind
 

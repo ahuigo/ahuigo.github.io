@@ -8,8 +8,9 @@
 FastCGI则是预先启动多个cgi进程守候，不会重复fork, cgi处理完 等待下一个任务
 - 与FastCGI不同，apache 搞了一套mod_python, 使得cpython 可以内嵌进去
 - 后来PEP 333中定义了[WSGI](/p/py/py-server-framework.md)(Web Server Gateway Interface)，成为沿用至今的Python web开发的标准协议(server与app之间的约定)
-    1. 绝大部分框架都遵守WSGI: 自带的wsgi, 以及flask/django/gunicorn
+    1. 绝大部分app框架都遵守WSGI: 自带的wsgi, 以及flask/django
     2. 以gunicorn 为例: 一个著名的wsgi http服务器，它采用pre-fork模型来处理和转发请求给worker, 支持基本的SyncWorker(多个request要排队), 以及同时处理多个request的: ThreadWorker/AsyncWorker/GeventWorker/TornadoWorker...
+    3. uwsgi/gunicorn 是两个比较著名的wsgi server. 还有玩具：wsgiref/Werkezug
 
 ## master-worker 模型
 master-worker 就是producer-consumer:
@@ -36,41 +37,70 @@ see [/p/py/async-asyncio](/p/py/py-async-asyncio)
 1. 水平触发：如果文件描述符可以非阻塞地进行IO调用，此时认为他已经就绪
 2. 边缘触发：如果文件描述符自上次来的时候有了新的IO活动(新的输入)，触发通知
 
-#### epool
-基于事件驱动的(像epool) 衍生了大量的框架, 比如 Tornado。
-event-based library:
-1. libevent, libev, libuv,greenlet等: 这些库用于实现协程等
-    1. eventlet(python2 时协程库)
-    2. gevent(eventlet 增强版)
-        0. 基于greenlet和libevent: 它用到Greenlet提供的，封装了libevent事件循环的高层同步API
-        1. inspired by eventlet, more consistent API, simpler implementation and better performance
-        2. 其实用go 比gevent 牛逼多了
-    3. asyncio 是python3 提供的官方协程库
-2. Stackless Python: cpython 另一个实现，抛弃了cpython中的堆栈，用微线程"tasklet"取代，tasklet之间通过channel交换数据
-2. Greenlet: 保留cpython 作为c extension，基于stackless实现, 通过switch将一个greenlet的控制权交给另一个greenlet ![greenlet-demo-sample](https://pic3.zhimg.com/v2-9c51c194e68ceeb897ab850c0cdc9d4e_b.jpg)
-4. coroutine: 人性化，优雅，内存小
+#### epool vs coroutine
+直接操作epoll去构造维护事件的循环，从底层到高层的业务逻辑需要层层回调，造成callback hell，并且可读性较差。所以:
+1. 这个繁琐的注册回调与回调的过程得以封装，并抽象成EventLoop。
+2. EventLoop屏蔽了进行epoll系统调用的具体操作。
+3. 对于用户来说，将不同的I/O状态考量为事件的触发，只需关注更高层次下不同事件的回调行为。诸如libev, libevent之类的使用C编写的高性能异步事件库已经取代这部分琐碎的工作。
 
-#### coroutine
+基于事件驱动的(像epool) 衍生了大量的框架, 比如
+
+    2.tornado: tornado框架自己实现的IOLOOP;
+    3.picoev: meinheld(greenlet+picoev)使用的网络库，小巧轻量，相较于libevent在数据结构和事件检测模型上做了改进，所以速度更快
+    4.uvloop: uvloop是个高性能的异步非阻塞框架，比Asyncio更加快速. uvloop继承自libuv使用Cython编写，性能比nodejs还要高
+    1. libevent, libev, libuv,greenlet等: 这些库基于协程等
+        1.libevent/libev: Gevent(greenlet+前期libevent，后期libev)使用的网络库，广泛应用;
+        1. eventlet(python2 时协程库)
+        2. gevent(eventlet 增强版)
+            1. 基于greenlet和libevent: 它用到Greenlet提供的，封装了libevent事件循环的高层同步API
+            2. inspired by eventlet, more consistent API, simpler implementation and better performance
+            3. 其实用go 比gevent 牛逼多了
+        3. asyncio 是python3 提供的官方协程库
+    2. Stackless Python: cpython 另一个实现，抛弃了cpython中的堆栈，用微线程"tasklet"取代，tasklet之间通过channel交换数据
+    3. Greenlet: 保留cpython 作为c extension，基于stackless实现, 通过switch将一个greenlet的控制权交给另一个greenlet ![greenlet-demo-sample](https://pic3.zhimg.com/v2-9c51c194e68ceeb897ab850c0cdc9d4e_b.jpg)
+
+
+EventLoop处理事件触发时的回调比较麻烦: 有了协程(gevent/asyncio/curio 人性化，优雅，内存小)
+
+1. golang 的 goroutine，luajit 的 coroutine，Python 的 gevent,erlang 的 process，scala 的 actor 等。
 1. 基于gevent的协程库 以及monkey patching[coroutine-gevent](/demo/py/coroutine-gevent.py)
 
 # 代码自动加载
 - Django的开发环境在Debug模式下就可以做到自动重新加载
 - 利用reload 加载，但不是所有模块都能被重新载入, 且只适合于无副作用的模块
 - 监控代码改动，一旦有改动，就自动重启服务器，适合debug模式开发:
-    1. watchdog: `$ ./pymonitor.py app.py`[demo](p3-app/day-13)
-        0. exec:
-            1. pip install watchdog -U
-            2. watchmedo shell-command --patterns="*.py;*.html;*.css;*.js" --recursive --command='echo "${watch_src_path}" && kill -HUP `cat app.pid`' . &
-            3. python manage.py run_gunicorn 127.0.0.1:80 --pid=app.pid
-        1. 利用watchdog接收文件变化的通知，如果是.py文件，就自动重启wsgiapp.py进程。
-        2. 利用Python自带的subprocess实现进程的启动和终止，并把输入输出重定向到当前进程的输入输出中：
-        4.  watchdog只能处理后端的, 介绍以下两个神器
-            1. LiveReload：改动php, html，css，js都能重刷chrome
-            2. selenium: 一般用于 Web UI自动化测试
-            3. 还有mechanize这种自动控制多个浏览器做事的库，利用浏览器引擎等。
-            2. LiveStyle：css双向绑定，在chrome改动css，代码自动更新；或者在代码改动css，chrome自动更新
-    2. pip3 install gunicorn: gunicorn 本身就遵守wsgi的web server. 可搭配请求转给worker: flask/django，也可单独使用
+    1. watchdog: 
+    2. 其他: watchdog只能处理后端的, 介绍以下两个神器
+        1. LiveReload：改动php, html，css，js都能重刷chrome
+        2. selenium: 一般用于 Web UI自动化测试
+        3. 还有mechanize这种自动控制多个浏览器做事的库，利用浏览器引擎等。
+        4. LiveStyle：css双向绑定，在chrome改动css，代码自动更新；或者在代码改动css，chrome自动更新
+    3. pip3 install gunicorn: gunicorn 本身就遵守wsgi的web server. 可搭配请求转给worker: flask/django，也可单独使用
     gunicorn --reload -b 127.0.0.1:8800 -k aiohttp.worker.GunicornWebWorker -w 1 -t 60 --reload app:app
+
+## watchdog
+用watchdog 提供的watchmedo
+
+    $ pip install watchdog -U
+    $ watchmedo shell-command --patterns="*.py;*.html;*.css;*.js" --recursive --command='kill -HUP `cat app.pid`' . &
+
+还有
+
+    from watchdog.observers import Observer
+    from watchdog.events import FileSystemEventHandler
+
+    observer = Observer()
+    observer.schedule(MyFileSystemEventHander(restart_process), path, recursive=True)
+    observer.start()
+    log('Watching directory %s...' % path)
+    start_process()
+    try:
+        while True:
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
+
 
 # greenlet
 gevent 是基于greenlet， greenlet封装了libevent+yield 的事件循环高层同步API, 所以它是基于生成器的
