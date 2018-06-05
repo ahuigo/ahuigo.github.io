@@ -4,8 +4,11 @@ title:	js notes
 category: blog
 description:
 ---
-# Preface
 # Object
+
+## define
+
+    {toStr(){}, a:1}
 
 ## keys
 list forEach
@@ -32,9 +35,14 @@ list forEach
 	delete variable
 	delete obj.name
 
-## update, extend
+## merge, update
 
-	Object.prototype.extend = function(defaults) {
+    > Object.assign({a:1}, {a:2}, {a:3},)
+    { a: 3 }
+
+update
+
+	Object.prototype.update = function(defaults) {
 		for (var i in defaults) {
 			if(i in this){
 				this[i] = defaults[i];
@@ -274,7 +282,7 @@ static 不可以被实例继承(不是prototype), static属于类自己(相当�
         }
         * [Symbol.iterator]() {
             for (let arg of this.args) {
-            yield arg;
+                yield arg;
             }
         }
     }

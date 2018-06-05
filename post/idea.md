@@ -55,6 +55,11 @@ https://stackoverflow.com/jobs/live-work-anywhere?utm_source=so-owned&utm_medium
 1. 只读每一段第一个句子+黑体字
 2. 读书时要出声音
 3. 一次读完一段或几段: 不要再重读(除非错了)
+#
+## 字典
+## 班级管理
+## markdown 写作
+## 反馈投票
 
 # Push
 To: weibo/zhihu-live/weixin

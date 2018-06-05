@@ -136,12 +136,15 @@ Python解释器时可以用-O参数来关闭assert：
 	$ python3 -O test.py
 
 ## gdb
+
     $ gdb python3 <pid>
     > bt
     > info threads
 
+
 好像失效了: If you have Python extensions installed, you can enter:
 https://wiki.python.org/moin/DebuggingWithGdb
+On linux, you can attach gdb to the process and get a python stack trace with some gdb macros. Put http://svn.python.org/projects/python/trunk/Misc/gdbinit in ~/.gdbinit, then
 
     (gdb) py-bt
     (gdb) py-list
@@ -149,3 +152,32 @@ https://wiki.python.org/moin/DebuggingWithGdb
 
 ## pdb
 py/py-debug-pdb.md
+
+## signal(when exec)
+https://stackoverflow.com/questions/132058/showing-the-stack-trace-from-a-running-python-application
+
+    import code, traceback, signal
+
+    def debug(sig, frame):
+        """Interrupt running process, and provide a python prompt for
+        interactive debugging."""
+        d={'_frame':frame}         # Allow access to frame object.
+        d.update(frame.f_globals)  # Unless shadowed by global
+        d.update(frame.f_locals)
+
+        i = code.InteractiveConsole(d)
+        message  = "Signal received : entering python shell.\nTraceback:\n"
+        message += ''.join(traceback.format_stack(frame))
+        i.interact(message)
+
+    def listen():
+        signal.signal(signal.SIGUSR1, debug)  # Register handler
+
+To use, just call the listen() function at some point when your program starts up, and let it run. At any point, send the process a SIGUSR1 signal, using kill, or in python:
+
+    os.kill(pid, signal.SIGUSR1)
+
+This will cause the program to break to a python console at the point it is currently at, 
+1. showing you the stack trace, and letting you manipulate the variables. 
+2. Use control-d (EOF) to continue running (though note that you will probably interrupt any I/O etc at the point you signal, so it isn't fully non-intrusive.
+

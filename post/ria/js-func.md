@@ -1,7 +1,7 @@
 # generator
     function* foo() {
         yield 11
-        return 22;
+        return 22;//没用
     }
     f=foo()
     f.next(); // {value: 11, done: false}
@@ -71,8 +71,8 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
         console.log([params, arguments, 'ahui'])
     }(1,2,3)
 
-### ...rest
-rest，b，a 参数不全时，可以为undefined
+### ...rest array
+rest 当参数不足时为`[]`
 
     function foo(a, b, ...rest) {
         console.log('a = ' + a);

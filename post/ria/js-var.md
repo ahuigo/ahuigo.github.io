@@ -151,8 +151,8 @@ Object.is 与== 只有两个不同
 
 # type check
 
-## typeof
-用于判断数据类型及function, object, 不可以判断Array... 需要使用instanceof
+## typeof: function, object, (except: Array/null)
+用于判断数据类型: function, object, 不可以判断Array/null/... 需要使用instanceof
 
     undefined、boolean、number,  string
     object
@@ -177,7 +177,7 @@ string
 
     if (typeof myVar === 'string' || myVar instanceof String)
 
-## via Object.prototype.toString
+## via Object.prototype.toString(all)
 用于判断对像类别更统一
 
 	Object.prototype.toString.call(1)
@@ -235,7 +235,7 @@ JavaScript引擎内部的抽象操作ToPrimitive()有着这样的签名:
 - What are "truthy" and "falsy" values?
 if(value)/Boolean(value) 中被转换成true/false 的value
 
-it's easier to identify all of the falsy values. These are:
+False:
 
     false // obviously
     0     // The only falsy number
@@ -306,117 +306,3 @@ special, 有些object 与`== false` 相比较时, 成立
 但是null和undefined信仰比较坚定，就是不想转成对象，从而，当将它们用在期望是一个对象的地方都会抛出一个错误throws TypeError
 
 注意：只是在转换的过程中会抛出Error，在显性创建对象的时候，不会报错
-
-# Array
-sort + unique
-
-  myData = myData.sort().filter(function(el,i,a){return i==a.indexOf(el);})
-
-sort()方法会直接对Array进行修改，它返回的结果仍是当前Array
-
-  myData.sort(function(i,j){return i-j;}); //从小到大
-  myData.sort(function(i,j){return i<j? -1:1;}); //从小到大>
-
-# 加法
-
-有下面这样的一个加法操作.
-
-    value1 + value2
-
-在计算这个表达式时,内部的操作步骤是这样的 (§11.6.1):
-
-1.将两个操作数转换为原始值 (下面是数学表示法,不是JavaScript代码):
-
-    prim1 := ToPrimitive(value1)
-    prim2 := ToPrimitive(value2)
-
-2.PreferredType被省略,因此Date类型的值采用String,其他类型的值采用Number.
-3.如果prim1或者prim2中的任意一个为字符串,则将另外一个也转换成字符串,然后返回两个字符串连接操作后的结果.
-4.否则,将prim1和prim2都转换为数字类型,返回他们的和.
-
-## 2.1 预料到的结果
-
-两个空数组相加时,结果是我们所预料的:
-
-    > [] + []
-    ''
-
-[]会被转换成一个原始值,首先尝试valueOf()方法,返回数组本身(this):
-
-    > var arr = [];
-    > arr.valueOf() === arr
-    true
-
-这样的结果不是原始值,所以再调用toString()方法,返回一个空字符串(是一个原始值).因此,[] + []的结果实际上是两个空字符串的连接.
-
-将一个空数组和一个空对象相加,结果也符合我们的预期:
-
-    > [] + {}
-    > '' + {}
-    '[object Object]'
-
-类似的,空对象转换成字符串是这样的.
-
-    > String({})
-    '[object Object]'
-
-所以最终的结果是 "" 和 "[object Object]" 两个字符串的连接.
-
-下面是更多的对象转换为原始值的例子,你能搞懂吗:
-
-    > 5 + new Number(7)
-    12
-    > 6 + { valueOf: function () { return 2 } }
-    8
-    > "abc" + { toString: function () { return "def" } }
-    'abcdef'
-
-##2.1 意想不到的结果
-如果加号前面的第一个操作数是个空对象字面量,则结果会出乎我们的意料(下面的代码在Firefox控制台中运行):
-
-    > {} + {}
-    NaN
-
-这是怎么一回事?原因就是JavaScript引擎将第一个{}解释成了一个空的代码块并忽略了它.
-NaN其实是后面的表达式+{}计算的结果 (加号以及后面的{}).这里的加号并不是代表加法的二元运算符,而是一个一元运算符,作用是将它后面的操作数转换成数字,和Number()函数完全一样.例如:
-
-    > +"3.65"
-    3.65
-
-转换的步骤是这样的:
-
-    +{}
-    Number({})
-    Number({}.toString())  // 因为{}.valueOf()不是原始值
-    Number("[object Object]")
-    NaN
-
-为什么第一个{}会被解析成代码块呢?原因是,整个输入被解析成了一个语句,如果一个语句是以左大括号开始的,则这对大括号会被解析成一个代码块.所以,你也可以通过强制把输入解析成一个表达式来修复这样的计算结果:
-
-    > ({} + {})
-    '[object Object][object Object]'
-
-另外,一个函数或方法的参数也会被解析成一个表达式:
-
-    > console.log({} + {})
-    [object Object][object Object]
-
-经过前面的这一番讲解,对于下面这样的计算结果,你也应该不会感到吃惊了:
-
-    > {} + []
-    0
-
-在解释一次,上面的输入被解析成了一个代码块后跟一个表达式+[].转换的步骤是这样的:
-
-    +[]
-    Number([])
-    Number([].toString())  // 因为[].valueOf()不是原始值
-    Number("")
-    0
-
-有趣的是,Node.js的REPL在解析类似的输入时,与Firefox和Chrome(和Node.js一样使用V8引擎)的解析结果不同.下面的输入会被解析成一个表达式,结果更符合我们的预料:
-
-    > {} + {}
-    '[object Object][object Object]'
-    > {} + []
-    '[object Object]'

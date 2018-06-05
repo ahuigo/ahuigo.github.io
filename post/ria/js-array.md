@@ -144,12 +144,22 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
 		arr.push('new');
 		arr.shift();//LIFO 后进先出
 
+# Array
 ## sort
 重排方法(改变arr本身, 并返回arr):
 
     arr.reverse();//倒序
     arr.sort();//从小到大
     arr.sort(function(a,b){return a-b;});//自定义排序
+
+### sort + unique
+
+  myData = myData.sort().filter(function(el,i,a){return i==a.indexOf(el);})
+
+sort()方法会直接对Array进行修改，它返回的结果仍是当前Array
+
+  myData.sort(function(i,j){return i-j;}); //从小到大
+  myData.sort(function(i,j){return i<j? -1:1;}); //从小到大>
 
 ## splice 
 操作方法:
@@ -188,9 +198,9 @@ Set crud:
     s.has(4)
 
 # for-in vs for-of
-1. 用for-in 遍历属性(length 等不可读的属性除外)
-2. for of：只循环集合本身的元素
-3. .forEach: value、key、self(mamp/arr/集合本身)
+1. 用for-in 遍历`array index/obj 属性`(length 等不可读的属性除外)
+2. for of：只循环`array/Set集合/generator`本身的元素
+3. .forEach: value、key、self(`mamp/arr/集合`本身)
 
     s = new Set([1,2,3])
     for(var it of s){

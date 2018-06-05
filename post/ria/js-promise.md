@@ -1,6 +1,8 @@
 # Promise
-Promise: resove-then, reject-catch
 实现异步串行写法
+2. generator
+1. Promise: resove-then, reject-catch
+2. async-await: 基于Promise的封装简化
 
 ## ajax
 ajax函数将返回Promise对象:
