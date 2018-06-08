@@ -774,5 +774,8 @@ Cookie 跨域
 1. CORS
 2. hack 的方法：类型jsonp，通过script 标签请求外域的服务器，让服务器返回cookie.
 
+    document.cookie = "test1=Hello";
+    document.cookie = "test2=World"
+
 ### httponly
 设定了httpOnly的Cookie将不能被JavaScript读取

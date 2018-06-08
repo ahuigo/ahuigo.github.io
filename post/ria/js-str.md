@@ -20,6 +20,13 @@
 	name='ahui'
 	`Hello, ${name}`
 
+### buffer
+
+    // Buffer -> String
+    var text = buf.toString('utf-8');
+    // String -> Buffer
+    var buf = Buffer.from(text, 'utf-8');
+
 ## 字符串是不可变的
 ```
 var s = 'Test';

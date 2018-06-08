@@ -132,7 +132,7 @@ mocha提供了before、after、beforeEach和afterEach来实现这些功能。
             });
             ...
 
-## http test 用例
+## http test(supertest) 用例
 除了mocha外，我们还需要一个简单而强大的测试模块supertest(request)：
 
     {

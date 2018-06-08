@@ -8,3 +8,7 @@ jek.exvim
 .DS_Store
 __pycache__
 .netrwhist
+
+# node
+package-lock.json
+node_modules

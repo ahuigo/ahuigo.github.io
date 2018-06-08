@@ -252,7 +252,6 @@ text和image插件，则是允许require.js加载文本和图片文件。
 ## Create module
 hello module: hello.js
 
-    var s = 'Hello';
     function greet(name) {
         console.log(s + ', ' + name + '!');
     }
@@ -262,13 +261,19 @@ hello module: hello.js
 
 ## 加载模块
 
-    // 引入hello模块:
+    // 引入./hello.js模块:
+    var s = 'Hello';
     var greet = require('./hello');
     greet('Michael'); // Hello, Michael!
 
 Node会依次在内置模块、全局模块和当前模块下查找hello.js, 但是不会在当前目录查找
 
     var greet = require('hello');
+
+### 模块全局变量污染
+全局变量在模块间是共享的！
+
+    var s= 'hello'
 
 ### module.exports怎么实现？
 这个也很容易实现，Node可以先准备一个对象module：
