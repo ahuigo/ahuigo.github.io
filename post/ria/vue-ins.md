@@ -62,6 +62,7 @@
     vm.new_b == vm._data.new_b; //false
 
 ### add/modify attr
+JavaScript语言本身提供了Proxy或者Object.observe()机制来监听对象状态的变化。但是，对于数组元素的赋值，却没有办法直接监听
 
 #### 变化数组方法(Mutation Methods)
 Vue 将观察数组(observed array)的变化数组方法(mutation method)包裹起来，以便在调用这些方法时，也能够触发视图更新:
@@ -74,6 +75,9 @@ Vue 将观察数组(observed array)的变化数组方法(mutation method)包裹�
     splice()
     sort()
     reverse()
+
+    vm.todos.splice(index, 1, newElement); 代替 vm.todos[index]=newElement;
+
 
 #### 替换一个数组(Replacing an Array)
 还有非变化数组方法(non-mutating method)，例如 filter(), concat() 和 slice()，

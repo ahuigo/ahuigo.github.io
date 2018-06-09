@@ -20,7 +20,7 @@ bind text
 bind attribute
 
     <span v-bind:title="message">
-    <!-- 传递真正的数值 -->
+    <!-- 传递真正的数值( 1 不是变量) -->
     <comp v-bind:some-prop="1"></comp>
 
 bind bool attribute:

@@ -2,6 +2,7 @@
 - fetch: 可能有兼容性问题
 - axios：需要外部资源
 - $http
+- vue-resource
 
 ## fetch
 
@@ -46,3 +47,29 @@
           .catch(function (error) {
             vm.answer = '错误！API 无法处理。' + error
           })
+
+## vue-resource
+get:
+
+    <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+    var vm = new Vue({
+        created: function () {
+            this.init();
+        },
+        methods: {
+            init: function () {
+                var that = this;
+                that.$resource('/api/todos').get().then(function (resp) {
+                    resp.json().then(function (result) {
+                        that.todos = result.todos;
+                    });
+                }, function (resp) {
+                    alert('error');
+                });
+            }
+        }
+
+
+post:
+
+    that.$resource('/api/todos').save(todo).then(function (resp) {

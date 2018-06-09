@@ -93,6 +93,48 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 	a.key=1; //js 数据类型的对象wrapper 会将a 包装为临时的数值对象. 相当于`(new Number(a)).key=1`
 	a.key;//undefined 因为临时对象不存在了
 
+# observe
+
+## proxy 
+
+    let validator = {
+        set: function(obj, prop, value) {
+            if (prop === 'age') {
+                if (value > 200) {
+                    throw new RangeError('The age seems invalid');
+                }
+            }
+            obj[prop] = value;
+            return true; // Indicate success
+        }
+        get: function(obj, prop) {
+            return prop in obj ? obj[prop] : 37;
+        }
+    };
+
+    let person = new Proxy({}, validator);
+    person.age = 100;
+
+## Object.observe
+
+    var obj = {
+    foo: 0,
+    bar: 1
+    };
+
+    Object.observe(obj, function(changes) {
+        console.log(changes);
+    });
+
+    obj.baz = 2;
+    // [{name: 'baz', object: <obj>, type: 'add'}]
+
+    obj.foo = 'hello';
+    // [{name: 'foo', object: <obj>, type: 'update', oldValue: 0}]
+
+    delete obj.baz;
+    // [{name: 'baz', object: <obj>, type: 'delete', oldValue: 2}]
+
 # 定义与创建
 
 ## 对象实例的原型

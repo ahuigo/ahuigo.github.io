@@ -55,6 +55,7 @@ https://stackoverflow.com/jobs/live-work-anywhere?utm_source=so-owned&utm_medium
 1. 只读每一段第一个句子+黑体字
 2. 读书时要出声音
 3. 一次读完一段或几段: 不要再重读(除非错了)
+
 #
 ## 字典
 ## 班级管理
@@ -83,6 +84,7 @@ p2p, 基金, 股票
 
 ## 协作
 重点：
+
     文档共享
     支持图片、音频、视频、文件附件
     支持评论系统

@@ -8,6 +8,7 @@ description:
 
 # ajax
 
+## prototype
 	var xhr=new XMLHttpRequest();
     xhr.onload=function(ProgressEvent){}
 	xhr.open("POST","http://hilo.sinaapp.com/header.php?demo",true);//默认true 异步
@@ -33,6 +34,14 @@ Detect Ajax：
 
 	var xhr = new XMLHttpRequest();
 	xhr.addEventListener('load',func);//多次addEventListener 产生多个listener
+
+## jquery
+
+    $.getJSON('/api/products').done(function (data) {
+        vm.products = data.products;
+    }).fail(function (jqXHR, textStatus) {
+        alert('Error: ' + jqXHR.status);
+    });
 
 # listener
 所有的e.target 指向xhr

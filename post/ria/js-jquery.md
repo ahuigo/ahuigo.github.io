@@ -152,11 +152,10 @@ get checked val
 
 ### getJSON
 
-    var jqxhr = $.getJSON('/path/to/resource', {
-        name: 'Bob Lee',
-        check: 1
-    }).done(function (data) {
-        // data已经被解析为JSON对象了
+    $.getJSON('/api/products').done(function (data) {
+        vm.products = data.products;
+    }).fail(function (jqXHR, textStatus) {
+        alert('Error: ' + jqXHR.status);
     });
 
 ## ajax

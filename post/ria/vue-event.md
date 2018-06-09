@@ -6,14 +6,17 @@
 1. click,remove,keyup.enter
 
 ### v-on
-event: click,input,change, keyup.enter,...
+event: click,input,change, keyup.enter,blur...
 
     <button v-on:click="reverseMessage">reverse_message</button>
     methods: {
         reverseMessage: function (e) {
-        this.message = this.message.split('').reverse().join('')
+            this.message = this.message.split('').reverse().join('')
         }
     }
+
+    <dt contenteditable="true" v-on:blur="update(t, 'name', $event)">{{ t.name }}</dt>
+
 
 组件emit 还支持自定义: remove....
 

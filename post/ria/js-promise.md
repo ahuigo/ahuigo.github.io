@@ -13,6 +13,7 @@ ajax函数将返回Promise对象:
             request.onreadystatechange = function () {
                 if (request.readyState === 4) {
                     if (request.status === 200) {
+                        console.log(request.responseText)
                         resolve(request.responseText);
                     } else {
                         reject(request.status);
@@ -24,7 +25,7 @@ ajax函数将返回Promise对象:
         });
     }
     var log = document.getElementById('test-promise-ajax-result');
-    var p = ajax('GET', '/api/categories');
+    var p = ajax('GET', '/api/categories'); //stop at resolve/reject
     p.then(function (text) { // 如果AJAX成功，获得响应内容
         log.innerText = text;
     }).catch(function (status) { // 如果AJAX失败，获得响应代码

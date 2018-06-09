@@ -45,7 +45,7 @@ cmd+k cmd+s: keybindings.json
 
 ## Navigation
 
-    ⌃- / ⌃⇧- Go back/forward
+    ctrl+- / ctrl+shift+- Go back/forward
     ⌘T Show all Symbols
     ⌃G Go to Line...
     ⌘P Go to File...
