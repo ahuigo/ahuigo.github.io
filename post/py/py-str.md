@@ -16,12 +16,14 @@ like js, double quotes and single quotes is same
 		"str2" )
 
 ## string number
-	str.isdigit()
-	.isnumeric()
-	.isdecimal()
+    int:
+        str.isdigit() 123
+        .isdecimal()
+        .isnumeric()
 
+    float:
+        .isalnum() 123.43
 	.isalpha
-	.isalnum()
 
 ## format
 https://pyformat.info/

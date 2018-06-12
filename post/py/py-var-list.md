@@ -234,6 +234,12 @@ repeat
     >>> d=['a','C', 'A','z']; d.sort(key=str.lower))
     ['a', 'A', 'C', 'z']
 
+    >>> a={1:2,2:4,4:1,3:3}
+    >>> sorted(a.items())
+    [(1, 2), (2, 4), (3, 3), (4, 1)]
+    >>> sorted(a.items(), key=lambda x:x[1])
+    [(4, 1), (1, 2), (3, 3), (2, 4)]
+
 remove and insert(in place)
 
 	.insert(index, object)

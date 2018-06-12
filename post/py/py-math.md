@@ -34,10 +34,6 @@ But for float we need some tricks ;-). Every float number has one point...
 
 	>>> "12.34".isdigit()
 	False
-	>>> "12.34".replace('.','',1).isdigit()
-	True
-	>>> "12.3.4".replace('.','',1).isdigit()
-	False
 
 Also for negative numbers just add lstrip():
 
