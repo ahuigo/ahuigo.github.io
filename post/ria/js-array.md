@@ -4,7 +4,7 @@ title:
 category: blog
 description:
 ---
-# Preface
+# Array
 array 不像string 是primitive value, 所以length 可以缩短放大array。
 
 	arr = [1,2,3]
@@ -144,7 +144,25 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
 		arr.push('new');
 		arr.shift();//LIFO 后进先出
 
-# Array
+## find
+returns the value of the first element:
+
+    // expected output: 12
+    [5, 12, 8, 130, 44].find((element) => element > 10)
+    // expected output: 1
+    [5, 12, 8, 130, 44].findIndex((element) => element > 10)
+
+
+## include
+
+    ['a', 'b', 'c'].includes('a')     // true
+    ['a', 'b', 'c'].indexOf('a') > -1      //true
+    2 in ['a', 'b', 'c']
+
+    ['a', 'b', 'c', 'd'].includes('c', 2)      // true
+    ['a', 'b', 'c', 'd'].includes('c', 3)      // false
+
+
 ## sort
 重排方法(改变arr本身, 并返回arr):
 

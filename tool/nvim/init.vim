@@ -100,3 +100,8 @@ function! Pipe2Shell(args)
 endfunction
 command! -nargs=+ -complete=command Pipe2Shell call Pipe2Shell(<q-args>)
 
+call plug#begin('~/.vim/plugged')
+    Plug 'vim-scripts/AutoComplPop'
+call plug#end()
+
+colorscheme desert

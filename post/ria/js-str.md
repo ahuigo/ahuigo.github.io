@@ -27,6 +27,13 @@
     // String -> Buffer
     var buf = Buffer.from(text, 'utf-8');
 
+## pad
+
+    'Vue'.padStart(10)           //'       Vue'
+    'Vue'.padStart(10, '_*')           //'_*_*_*_Vue'
+    'Vue'.padEnd(10, '_*')           //'Vue_*_*_*_'
+
+
 ## 字符串是不可变的
 ```
 var s = 'Test';

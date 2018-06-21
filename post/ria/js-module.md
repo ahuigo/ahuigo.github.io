@@ -14,36 +14,9 @@ description:
 
 但是以上两种定义方法的成员变量会受到污染，比如`mod.count` 是暴露的.
 
-## 使用匿名函数生成对象的局部变量：
-通过定义一个匿名函数，创建一个"私有"的命名空间
-
-	module = (function(){
-		var count=1;//局部变量与函数
-		var incr = function(){
-			return ++count;
-		}
-		return {incr:incr};
-	})();
-	module.count=100;//和内部count 不同
-	module.incr();//2
-	module.incr();//3
-
-简化下对象封装`mod.*` 写法：
-
-	var count = 200;
-	module = (mod = function(){
-		var count=1;
-		mod.incr = function(){
-			return ++count;
-		}
-		return mod;
-	})();
-	module.count=100;
-	module.incr();
-	module.incr();
-
 ## 放大模式
 如果一个模块很大，必须分成几个部分，或者一个模块需要继承另一个模块，这时就有必要采用"放大模式"（augmentation）。
+用匿名函数放大一个module
 
 	var module = (function (mod){
 		var count = 1;
@@ -84,16 +57,106 @@ Example:
 
 主要有两个Javascript库实现了AMD规范：require.js和curl.js。
 
+# Es6 module
+- export 定义值
+- import 引入
+
+## export
+profile.js
+
+    // 写法一
+    export var m = 1;
+
+    // 写法二
+    var m = 1;
+    export {m};
+
+    // 写法三
+    var n = 1;
+    export {n as m};
+
+变量foo，值为bar，500 毫秒之后变成baz。
+
+    export var foo = 'bar';
+    setTimeout(() => foo = 'baz', 500);
+
+这一点与 CommonJS 规范完全不同。CommonJS 模块输出的是值的缓存，不存在动态更新
+
+## import 
+1. import vs node require: https://cnodejs.org/topic/5a0f2da5f9de6bb0542f090b
+2. 默认只能是`*.mjs`，通过Loader Hooks可以自定义配置规则支持`*.js,*.json`等Node原有支持文件
+    1. node --experimental-modules ./index.mjs
+
+    // ES6模块
+    import 'fs';
+    import {stat} from 'fs';
+    import { stat as st, exists, readFile } from 'fs';
+
+    import A from './a?v=2017'
+        ./a.js
+        a.js
+        a
+
+profile.js
+
+    export var foo = 'bar';
+    export var area = 'China';
+
+main.js(babel)
+
+    import {foo} from './profile.js';
+    import {foo} from './profile';
+    import * from './profile';
+    import * from 'profile';
+    import * as profile from './profile';
+
+注意，`export *` 命令会忽略模块的default方法
+
+## export default 命令
+export default命令用于指定模块的默认输出。
+1. 因此export default命令只能使用一次。
+2. import命令后面才不用加大括号，因为只可能唯一对应export default命令。
+
+    // profile.js
+    export default function () {
+        console.log('foo');
+    }
+
+    //main.js
+    import say from './profile';
+    say()
+
+因为export default命令的本质是将后面的值，赋给default变量，所以它后面不能跟变量声明语句
+
+    // 正确
+    var a = 1;
+    export default a;
+    export default 42;
+
+    // 错误
+    export default var a = 1;
+
+default 与其他变量混用
+
+    import _, { each, each as forEach } from 'lodash';
+
+## export 与 import 的复合写法 
+
+    export { foo, bar } from 'my_module';
+
+    // 可以简单理解为
+    import { foo, bar } from 'my_module';
+    export { foo, bar };
+
+    export * from 'my_module';
+    export { es6 as default } from './someModule';
+
+
 # RequireJs: AMD
 以下js 加载是按顺序加载的，它有两个问题:
 
 1. 依赖最大的js 必须放到最后
 2. 加载是同步的，这会导致后面的代码因加载则阻塞；浏览器也会停止渲染
-
-	<script src="1.js"></script>
-	<script src="2.js"></script>
-	<script src="3.js"></script>
-	<script src="4.js"></script>
 
 requireJS 解决了：
 
@@ -106,22 +169,6 @@ require(ids, factory(ids){})
 1. loadScript+load
 2. 每次load 都检查下是不是所有ids都加载成功(args.length)
 3. 所有ids加载完毕, 就执行: factory(args)
-
-    load: function()}
-        // means load all dependencies
-        if (args.length === mod.dependencies.length) {
-            args.push(mod.exports);
-            mod.makeExports(args);
-            mod.status = STATUS.EXECUTED;
-            mod.notifyDependents();
-        }
-    makeExports: function(args) {
-        var mod = this;
-        var result = isFunction(mod.factory) ? mod.factory.apply(root, args) : mod.factory;
-        // as we know, the default `mod.exports` is `{}`
-        mod.exports = isPlainObject(mod.exports) ? result : mod.exports;
-    },
-
 
 ## 引入requireJs
 加载RequireJs 本身也会导致浏览器停止渲染。解决的办法是将其放在浏览器底部。或者写成这样：

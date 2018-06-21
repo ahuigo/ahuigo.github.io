@@ -25,24 +25,22 @@ es6 默认用 use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/0
 2. const PI = 3.14;
 
 ### 解构赋值
+析构array
 
     var [x, y, z] = ['hello', 'JavaScript', 'ES6'];
     let [, , z] = ['hello', 'JavaScript', 'ES6']; // 忽略前两个元素，只对z赋值第三个元素
-
     var [x, y, ...z] = ['hello', 'JavaScript', 'ES6','ES7']; #a,b,c, *arg
-    [...Array(5).keys()];
+
+    [...Array(5).keys()]; //0,1,2,3,4,5
     Array.from({length: 5}, (x,i) => i);
 
 
-dict:
+析构 dict:
 
     let {name, age, pass} = {name:'ahui',pass:'pass',age:10}; //不存在就是undefined
-    let {uid:id} = {id:1};
-    let{uid=0} = {}
+    let {id:uid} = {id:1}; // uid=id
+    let {uid=0} = {}
 
-var 可以省略
-
-    {uid=0} = {}
 
 #### 解构传值
 

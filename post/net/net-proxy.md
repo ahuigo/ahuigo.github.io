@@ -71,7 +71,7 @@ Or just proxify bash:
 
 ### Proximac
 Proximac is an command-line alternative to Proxifier.
-1. It can fowward any App's traffic to a certain Socks5 proxy
+1. It can fowward `any App's` traffic to a certain Socks5 proxy
 2. Moreover, Proximac now can forward all network traffic in your system to a proxy which means you may not need a VPN to do this job.
 
 #### Usage

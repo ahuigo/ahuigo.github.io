@@ -55,26 +55,27 @@ cmd+k cmd+s: keybindings.json
 
 # File 
 ## Edit
-```yaml
-⌘X Cut line (empty selection)
-⌘C Copy line (empty selection)
-⌥↓ / ⌥↑ Move line down/up
-⇧⌥↓ / ⇧⌥↑ Copy line down/up
-```
+
+    ⌘X Cut line (empty selection)
+    ⌘C Copy line (empty selection)
+    ⌥↓ / ⌥↑ Move line down/up
+    ⇧⌥↓ / ⇧⌥↑ Copy line down/up
+
 comment
-```yaml
-⌘K ⌘C Add line comment
-⌘K ⌘U Remove line comment
-⌘/ Toggle line comment
-⇧⌥A Toggle block comment
-⌥Z Toggle word wrap
-```
+
+    ```yaml
+    ⌘/ Toggle line comment
+    ⇧⌥A Toggle block comment
+    ⌥Z Toggle word wrap
+
+    ⌘K ⌘C Add line comment
+    ⌘K ⌘U Remove line comment
+    ```
 
 ### Insert tab character manually
-```json
-{ "key": "ctrl+v tab", "command": "type", "args": { "text": "\t" }, "when": "editorTextFocus" }
-```
-
+    ```json
+    { "key": "ctrl+v tab", "command": "type", "args": { "text": "\t" }, "when": "editorTextFocus" }
+    ```
 
 ## search
 cmd+f   search in file

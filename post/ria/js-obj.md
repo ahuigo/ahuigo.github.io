@@ -9,6 +9,9 @@ description:
 ## define
 
     {toStr(){}, a:1}
+    > a=1
+    > b={a}
+    { a: 1 }
 
 ## keys
 list forEach
@@ -34,6 +37,17 @@ list forEach
 
 	delete variable
 	delete obj.name
+
+## values
+values:
+
+    Object.values({ one: 1, two: 2 })            //[1, 2]
+    Object.values({ 3: 'a', 4: 'b', 1: 'c' })    //['c', 'a', 'b']
+
+items:
+
+    Object.entries({ one: 1, two: 2 })    //[['one', 1], ['two', 2]]
+    Object.entries([1, 2])                //[['0', 1], ['1', 2]]
 
 ## merge, update
 

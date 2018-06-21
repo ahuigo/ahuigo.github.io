@@ -296,8 +296,12 @@ overflow 控制元素内容不超出元素本身width/height.
 
 	content:none | normal |<string>	| url | open-quote | close-quote | no-open-quote | no-close-quote | attr(attribute) | counter(name[, style])
 
-	a:after{
-		content:"<" attr(href) ">";
+	div::beforte
+	div::after{
+		content:"xxx";
+	}
+	div{
+		content:"xxx";
 	}
 
 	h1 {
@@ -458,7 +462,7 @@ http://zh.learnlayout.com/inline-block-layout.html
 
 可以使用 inline-block 来布局。有一些事情需要你牢记：
 
-1. vertical-align 属性会影响到 inline-block 元素，你可能会把它的值设置为 top 。
+1. vertical-align 属性会影响到 inline-block 元素，你可能会把它的值设置为 top/bottom 。
 1. 你需要设置每一列的宽度
 1. 如果HTML源代码中元素之间有空格，那么列与列之间会产生空隙
 
