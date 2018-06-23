@@ -68,7 +68,7 @@ http://javascript.ruanyifeng.com/nodejs/koa.html#toc8
     ctx.request.querystring
     ctx.request.query
 
-form:
+### form:
 
     var body = require('koa-better-body')
     var app = koa()
@@ -83,7 +83,16 @@ form:
         console.log('koa server start listening on port 8080')
     })
 
-header
+### files
+
+    size: 86167,
+    path: '/var/folders/73/7vxr7kzs09ndh3kwzw9zpdj80000gn/T/upload_98df7e5b63da1839f6b5aa6c72b18a63',
+    name: '1529510462596-Hkwr5x_WX.jpg',
+    type: 'image/jpeg',
+    hash: null,
+    lastModifiedDate: 2018-06-23T12:24:48.387Z,
+
+### header
 
     ctx.request.header.accept
 

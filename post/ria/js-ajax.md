@@ -111,6 +111,13 @@ refer: http://stackoverflow.com/questions/7853467/uploading-a-file-in-chunks-usi
 > 上传文件时，不能用 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 > 而必须使用默认的: Content-Type:multipart/form-data; boundary=----WebKitFormBoundaryfyRdj8roosVVWIsH
 
+    fd.append("myfile", myBlob, "filename.txt");
+    fd.delete('myfile')
+
+使用append()方法时
+1. 可以通过第三个可选参数设置发送请求的头 `Content-Disposition` 指定文件名。
+2. 如果不指定文件名将使用名字“`blob`”
+
 ## fromnode
 Via FormData and formnode:
 

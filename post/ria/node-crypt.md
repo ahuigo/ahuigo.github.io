@@ -1,3 +1,7 @@
+# client
+str: blueimp-md5
+file+str: spark-md5
+
 # crypto: md5,sha1,...
 1. update()方法默认字符串编码为UTF-8，也可以传入Buffer。
 2. 支持hash: md5,sha1,sha256,sha512,..

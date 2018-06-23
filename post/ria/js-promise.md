@@ -2,7 +2,9 @@
 实现异步串行写法
 2. generator
 1. Promise: resove-then, reject-catch
-2. async-await: 基于Promise的封装简化
+2. async-await: 
+    1. sync: `result = await promise` 
+    2. async: `promise.then(r=>{result=r})`
 
 ## ajax
 ajax函数将返回Promise对象:
@@ -63,18 +65,25 @@ ajax函数将返回Promise对象:
         log('Got value: ' + result);
     });
 
-Promise.then(f1).then(f2):
-1. 执行Promise(f0) 中绑定的f0()==resolve(v0)
-1. resolve(v0).then(f1) 执行f1(v0)
-    1. f1 返回Promise, 再异步调用resove(v1)
-1. resolve(v1).then(f2) 执行f2(v1)
-    1. f2 返回Promise, 再异步调用resove(v2)
+promise.then(f1).then(f2), 对于then/catch 而言： 
+1. f1(),f2() 可以是return promise(等resolve 传参数)，
+2. 可以是return value. (value 直接作为参数传递)
+3. 但是resolve 不能用于then, 它只能被Promise 包装！Promise 会抛弃return 值
 
-也可以自动包装
+也可以func 返回
 
-        fetch('http://localhost:5001').then(response=>response.json()).then(json=>{
-            this.products=json.products
-        })
+    var p = new Promise(function (resolve, reject) {
+        console.log('start new Promise2...');
+        resolve(124);
+    }).then(e=>{return e+1}).
+        then(e=>console.log(e)); // second
+    console.log({p}); // first 
+
+Another example
+
+    fetch('http://localhost:5001').then(response=>response.json()).then(json=>{
+        this.products=json.products
+    })
 
 ## 并行
 Promise.all()实现如下：
@@ -101,3 +110,35 @@ Promise.all()实现如下：
     Promise.race([p1, p2]).then(function (result) {
         console.log(result); // 'P1'
     });
+
+# async-await
+1. then: async
+2. await: sync
+
+async is used to await promise:
+
+    var p = new Promise(resolve => {
+        setTimeout(() => {
+        resolve('resolved');
+        }, 2000);
+    });
+
+    async function asyncCall() {
+        console.log('start');
+        var result = await p;
+        console.log(result); // expected output: "resolved"
+        return 'real end!';
+    }
+    asyncCall()
+    console.log('not end!');
+
+Notice: 
+1. 即使没有await, 程序也要等promise 执行完毕才能退出！
+2. `await p` 阻塞，但是`async` 不会阻塞, 两者成对不分离
+
+## asyncFunc() is promise
+1. As promoise support both: then/catch/await
+2. AsyncFunc's `return` is promise's `resolve`
+
+    asyncFunc().then(v=>console.log(v));// realy end!`
+    await asyncFunc().then(v=>(v));// 同步阻塞

@@ -9,11 +9,11 @@ description:
 ## Forms
 属性
 
+    enctype="multipart/form-data"
+        default content-type: application/x-www-form-urlencoded
 	autocomplete(自动完成)
 		autocomplete="off" //默认自动完成是on
-	multiple(多选)
-		<input type="file" name="img" multiple="multiple" />
-    onsubmit="callback" //return: true/false
+    onsubmit="return callback()" //return: true/false
 
 ## button
 button will auto submit by default  `type="submit"`, change it to:
@@ -35,6 +35,10 @@ button will auto submit by default  `type="submit"`, change it to:
         <input type="date" value="2015-07-01">
     color:
     image:
+
+multiple(多选)
+
+    <input type="file" name="img" multiple="multiple" />
 
 ### Datalist-Option
 Select-Option
