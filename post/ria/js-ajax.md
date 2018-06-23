@@ -107,54 +107,6 @@ refer: http://stackoverflow.com/questions/7853467/uploading-a-file-in-chunks-usi
 		xhr.send(fd);
 	}
 
-# FormData
-> 上传文件时，不能用 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-> 而必须使用默认的: Content-Type:multipart/form-data; boundary=----WebKitFormBoundaryfyRdj8roosVVWIsH
-
-    fd.append("myfile", myBlob, "filename.txt");
-    fd.delete('myfile')
-
-使用append()方法时
-1. 可以通过第三个可选参数设置发送请求的头 `Content-Disposition` 指定文件名。
-2. 如果不指定文件名将使用名字“`blob`”
-
-## fromnode
-Via FormData and formnode:
-
-    formobj = document.getElementById('form1')
-	fd = new FormData(formobj);
-    fd = formobj.getFormData()
-
-    for (var pair of formData.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-    }
-
-## file
-Via FormData and file:
-
-	var files = document.getElementById('photos').files;
-	var formData = new FormData();
-	for (var i = 0; i < files.length; i++) {
-	  var file = files[i];
-	  formData.append('photos[]', file, file.name);
-	}
-
-	// HTML 文件类型input，由用户选择
-	formData.append("userfile", fileInputElement.files[0]);
-	formData.append("userfile", fileInputElement.files[0], name);
-
-	// In jquery
-	$.each(files, function(key, value) {
-        formData.append(key, value);
-    });
-
-## blob
-
-	// JavaScript file-like 对象
-	var content = '<a id="a"><b id="b">hey!</b></a>'; // 新文件的正文...
-	var blob = new Blob([content], { type: "text/xml"});
-	formData.append("webmasterfile", blob);
-
 ## Add form listener:
 
 	$('form').submit(function(event) {

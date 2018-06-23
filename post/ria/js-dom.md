@@ -216,12 +216,22 @@ redirect:
 #### FormData
 
 	new FormData (optional HTMLFormElement form)
-	fd = new FormData;
+	fd = new FormData(form);
 
 	void append(DOMString name, File value, optional DOMString filename);
 	void append(DOMString name, Blob value, optional DOMString filename);
 	void append(DOMString name, DOMString value);
 	fd.append('key', 'value' [,filename]);
+
+submit form elements:
+
+	fd = new FormData(oForm);
+	for(k in obj){
+		fd.append(k, obj[k]);
+	}
+	//with Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryQHefs2ABc2lw02em
+	// and u should not set x-www-form-urlencoded
+
 
 #### elements
 
@@ -254,15 +264,6 @@ foreach elements
 	//jquery 3
 	$("form#formID input[type=text]").each
 
-
-submit form elements:
-
-	fd = new FormData(oForm);
-	for(k in obj){
-		fd.append(k, obj[k]);
-	}
-	//with Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryQHefs2ABc2lw02em
-	// and u should not set x-www-form-urlencoded
 
 #### submit
 
