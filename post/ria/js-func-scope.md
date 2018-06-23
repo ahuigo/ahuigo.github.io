@@ -1,5 +1,5 @@
 # this scope
-一般this 是使用的时候才确实，arrow 的this是定义时就确定
+一般this 是使用的时候才确实
 
     function A(){
         this.name='ahui'
@@ -20,6 +20,9 @@
     };
     //or xiaoming.age=getAge
 
+
+## module this
+module `this` is `{}`, not `global===window`
 
 ## 单独调用函数的情况(坑)
 strict 指向undefined, 否则指window
@@ -57,17 +60,18 @@ strict 指向undefined, 否则指window
             return y - that.birth; // 用that而不是this
         }
 
-修改方法2: 用剪头函数固定this:
+修改方法2: 用剪头函数固定this (闭包):
 
     var xiaoming = {
         name: '小明',
         birth: 1990,
         age: function () {
+            console.log(this); //xiaoming
             var fn = () => this;
             return fn();
         }
     };
-    xiaoming.age(); //window
+    xiaoming.age()===xiaoming; //true
 
 ## modify this scope
 

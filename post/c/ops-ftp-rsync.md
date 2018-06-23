@@ -204,7 +204,7 @@ PATTERN 是一个shell 通配符
     read only   = false
     list        = true
     pid file = /var/rsyncd.pid
-    log file = /var/logs/rsyncd.pid
+    log file = /var/log/rsyncd.log
 	lock file = /tmp/rsyncd/rsyncd.lock
 	exclude = 与client 使用-exclude 相同
 	include = 与client 使用-include 相同

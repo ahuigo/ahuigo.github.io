@@ -13,33 +13,40 @@
         })
 
 ## bind, 单向绑定
-bind text
+### bind text
 
-    {{message}}
+    <h1>{{user.name}}</h1>
+    //页面加载时不显示{{}} 
+    <h1 v-text="user.name"></h1>
 
-bind attribute
+### v-html:
+
+    <span v-html="rawHtml"></span>
+
+### bind attribute
 
     <span v-bind:title="message">
     <!-- 传递真正的数值( 1 不是变量) -->
     <comp v-bind:some-prop="1"></comp>
+
+    <!-- 简写 -->
+    <a :href="url"> ... </a>
 
 bind bool attribute:
 由于disabled/checked 本身是bool型，如果 isDisabled 的值为 null, undefined 或 false，`disabled 属性`不会被包含在渲染后的 `<button>` 元素中。
 
    <button :disabled="isDisabled">Button</button>
 
-bind all:
+### bind all:
 
     <div v-bind="all">
     等价于
     <div v-bind:x1="all.x1">
     <div v-bind:x2="all.x2">
 
-### v-html:
-
-    <span v-html="rawHtml"></span>
 
 ## v-model(双向)
+Notice: v-model 不会设置name, `new FormData(formobj)` 不能取值
 
         <p>{{ message }}</p>
         <input v-model="message">
@@ -60,6 +67,15 @@ in select
 type
 
     <input type="number" v-model.number="product.num">
+
+### select
+
+    <select v-model="selected">
+    <option v-for="option in options" v-bind:value="option.value">
+        {{ option.text }}
+    </option>
+    </select>
+    <span>Selected: {{ selected }}</span>
 
 ### .lazy
     <!-- 在触发 "change" 事件后同步，而不是在触发 "input" 事件后更新 -->
@@ -87,12 +103,16 @@ type
     <!-- 流控制也无法运行，请使用三元表达式 -->
     {{ if (ok) { return message } }}
 
+## template 会被去掉
+
+    # template 会被去掉
+    <template v-if="ok"> <h1>标题</h1> </template>
+
 ## 指令
 ### v-if:
+if 内部不能有
 
     <span v-if="seen">现在你可以看到我</span>
-    # template 被被去掉
-    <template v-if="ok"> <h1>标题</h1> </template>
 
 else
 

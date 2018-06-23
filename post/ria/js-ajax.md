@@ -114,7 +114,13 @@ refer: http://stackoverflow.com/questions/7853467/uploading-a-file-in-chunks-usi
 ## fromnode
 Via FormData and formnode:
 
-	new FormData(document.getElementById('form1'));
+    formobj = document.getElementById('form1')
+	fd = new FormData(formobj);
+    fd = formobj.getFormData()
+
+    for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
 
 ## file
 Via FormData and file:

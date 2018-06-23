@@ -611,53 +611,10 @@ onpopstate(when or popstate):
 
 Refer to : http://segmentfault.com/blog/jslite/1190000002465197
 
-## callback pass arguments
-callback 会遇到variable scope 污染问题
-
-    var someVar=1;
-    document.addEventListener('click',function(event){
-       console.log(somaVar);
-    });
-    someVar=2
-
-如果想让someVar 作为形参传进去, 就封装一个函数将局部变量传进去：
-You could pass `somevar` by value(not by reference) through *excute a special wrap function*:
-
-    var someVar=1;
-    func = function(v){
-        console.log(v);
-    }
-    document.addEventListener('click',function(someVar){
-       return function(){func(someVar)}
-    }(someVar));
-    someVar=2
-
-简单的封装一下：
-Or you could write a `common wrap` function such as `wrapEventCallback`
-
-    function WrapEventCallback(callback){
-        var args = Array.prototype.slice.call(arguments, 1);
-        return function(e){
-            callback.apply(this, args)
-        }
-    }
-    var someVar=1;
-    func = function(v){
-        console.log(v);
-    }
-    document.addEventListener('click',wrapEventCallback(func,someVar))
-    someVar=2
-
-Jquery
-
-    $("some selector").click({param1: "Hello", param2: "World"}, func);
-    function func(e){
-       e.data.param1
-    }
-    
-> 更多传参数见：js-fund.md
-
 ## listener
+
+    onclick="func(this)" //notice: this 传的是window
+    onsubmit="return func(this)" //有兼容问题
 
 	target.addEventListener('click', listener, false);
 	target.removeEventListener('click', listener, false);
@@ -680,7 +637,7 @@ Jquery
 
 	//不捕获
 	div1.addEventListener("click",method,true);//捕获时触发  event.stopPropagation()
-	div1.addEventListener("click",method,false);//冒泡时触发
+	div1.addEventListener("click",method,false);//冒泡时触发 event.preventDefault()
 
     Note: window.setCapture/window.captureEvents 这种全局控制不能用了, 有风险.
 
@@ -697,7 +654,18 @@ Jquery
 	event.preventDefault()  prevents the default action the browser makes on that event.
 	event.stopPropagation() stops the event from bubbling up/capturing the event chain.
 
-### method
+### method target
+both jquery and dom support e.target...
+
+    document.querySelector('a#submit').onclick=function (e) {
+        e = e || window.event;
+        var targ = e.target || e.srcElement;
+        console.log(targ)
+        console.log(this)
+        // "this" points to the <a> element
+        // "e" points to the event object
+    }
+
 回调函数
 
 	function(event){
@@ -710,7 +678,33 @@ Jquery
 		event.preventDefault(), //阻止默认的事件处理，比如href
 	}
 
-## key:
+## submit event
+e.preventDefault() 冒泡阻止：
+1. `<button>`默认type=submit, 不是type="button"
+2. form onsubmit="return submit(this)" 无效，submit是关键字，取别名吧
+3. form onsubmit="handler()" 有效，必须带括号才能执行函数
+4. form onsubmit="return false" 有效
+
+    <form id="form1" action="javascript:b(this)" onclick="return handler(this)" method="POST">
+        <button>提交</button>
+    </form>
+    <script>
+    function handler(e){
+        console.log(this===window); //true
+        return undefined; //not work
+        return false; //work
+    }
+    </script>
+
+1. addEvent submit handler: 只能用e.preventDefault() 
+
+    function handler(e){
+        e.preventDefault();//work
+        return false; //not work
+    }
+    document.querySelector('form').addEventListener('submit', handler)
+
+## keyborad event:
 
     e.keyCode == e.which:
          16-shift, 17-ctrl, 18-alt

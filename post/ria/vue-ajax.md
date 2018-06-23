@@ -1,8 +1,8 @@
 # ajax
-- fetch: 可能有兼容性问题
-- axios：需要外部资源
-- $http
+- fetch: 可能有兼容性问题, 底层，xhr 升级
+- axios：需要外部资源, 支持并发
 - vue-resource
+- $http 
 
 ## fetch
 
@@ -45,7 +45,8 @@
             vm.answer = _.capitalize(response.data.answer)
           })
           .catch(function (error) {
-            vm.answer = '错误！API 无法处理。' + error
+            error.response.status
+            vm.answer = '错误！API 无法处理。' + error.response.data 
           })
 
 ## vue-resource

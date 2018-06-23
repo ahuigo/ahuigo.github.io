@@ -29,6 +29,7 @@
 
 ## pad
 
+    ('0'+6).slice(-2)
     'Vue'.padStart(10)           //'       Vue'
     'Vue'.padStart(10, '_*')           //'_*_*_*_Vue'
     'Vue'.padEnd(10, '_*')           //'Vue_*_*_*_'

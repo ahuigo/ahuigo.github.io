@@ -40,6 +40,9 @@ JavaScript程序是由事件驱动执行的单线程模型，Node.js也不例外
     });
 
 # fs, 文件系统
+
+## dir
+
     __dirname # current js file's dir
 
 ## readFile

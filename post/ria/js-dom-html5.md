@@ -15,6 +15,11 @@ description:
 		<input type="file" name="img" multiple="multiple" />
     onsubmit="callback" //return: true/false
 
+## button
+button will auto submit by default  `type="submit"`, change it to:
+
+    <button type="button">My Button</button>
+
 ## Input
 没有name，form 不会提交
 

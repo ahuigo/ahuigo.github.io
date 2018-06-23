@@ -102,8 +102,11 @@ short:
 	}
 	Date.prototype.format = function(d){
 		var d = this;
-		return d.getFullYear()+'-' + (d.getMonth()+1)+'-' + d.getDate()+' ' + d.getHours()+':' + d.getMinutes()+':' + d.getSeconds()+''
+        let month = (d.getMonth()+1+'').padStart(2, '0')
+        let date = ('0'+d.getDate()).slice(-2)
+		return d.getFullYear()+'-' + month+'-' + d.getDate()+' ' + d.getHours()+':' + d.getMinutes()+':' + d.getSeconds()+''
 	}
+    (new Date()).format()
 
 ### compare
 

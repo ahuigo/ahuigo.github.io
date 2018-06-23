@@ -2,20 +2,21 @@
 sudo yum update -y
 sudo yum install yum-utils -y
 sudo yum groupinstall development -y
-sudo yum install wget curl git mariadb zsh -y
+sudo yum install wget curl git zsh -y
+## sudo yum mariadb  -y
 
 # python3
 sudo yum install https://centos7.iuscommunity.org/ius-release.rpm -y
 sudo yum install python36u python36u-pip python36u-devel -y
 
 # wget https://bootstrap.pypa.io/get-pip.py -O pip.py | python3
-alias pip3=pip3.6
 echo 'alias pip3=pip3.6' >>~/.bashrc
-pip3 install --upgrade pip
-pip3 install gunicorn 
+sudo pip3.6 install --upgrade pip
+sudo pip3.6 install gunicorn 
 #gunicorn rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
 
 # zsh
+echo 'install zsh'
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 sudo yum install autojump autojump-zsh -y
 sed -i  's/^# export PATH=/export PATH=/' ~/.zshrc
@@ -31,13 +32,16 @@ MM
 
 # lnmp
 ## rsync
+sudo useradd www -s /sbin/nologin -d /home/www
+##echo '123456' | sudo passwd www --stdin
 sudo yum install rsync nginx -y
-cat <<'MM' > /etc/rsyncd.conf
+cat <<'MM' | sudo tee /etc/rsyncd.conf
 uid = www
 gid = www
 use chroot = no
 max connections = 4
 pid file = /var/run/rsyncd.pid
+log file = /var/log/rsyncd.log
 exclude = lost+found/
 transfer logging = yes
 timeout = 900
@@ -48,12 +52,12 @@ auth users = www
 secrets file = /etc/rsync.secrets
 list   = true
 read only = false
-[www]
+[module]
 path = /home/www
 comment = ftp export area : comment
 MM
-echo 'www:123456' > /etc/rsync.secrets
-chmod 600 /etc/rsync.secrets
+echo 'www:123456' | sudo tee /etc/rsync.secrets
+sudo chmod 600 /etc/rsync.secrets
 
 ## lnmp.sh
 md ~/bin
@@ -61,5 +65,5 @@ cat <<'MM' > ~/bin/lnmp.sh
 sudo pkill '[r]sync'
 sudo rsync --daemon --config=/etc/rsyncd.conf --port=873
 MM
-useradd www -s /sbin/nologin -d /home/www
+## sync -avz --password-file=~/.rsync_ali --exclude=.git a.txt rsync://www@47.95.196.14:/module
 sudo chmod u+x ~/bin/lnmp.sh

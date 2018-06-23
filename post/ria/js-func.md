@@ -37,13 +37,15 @@
     f();  // 6
     f([2,3],{x:100}) // 105
 
+see js-var.md
+
 ## define + exec
 
     !function(){return 0}()
     (function(){return 0})()
     (()=>0)()
 
-## arguments
+# arguments
 如果arguments[0] 存在, name 指针都指向arguments[0]内存:
 否则name 不变
 
@@ -97,11 +99,9 @@ bind params by value(not by Reference)
     function echo(a, b, c, d){
         console.log(a,b,c, d);
     }
-    function caller(callback){
-        callback(2,3);
-    }
-    caller(echo.bind(null,a, a));//bind： before, before, 2,3
+    caller = echo.bind(null,a, a);
     a = 'after'
+    caller(2,3); //bind： before, before, 2,3
 
 ## bind params via anonymous func's closure
 You could pass somevar by value(not by reference) via a javascript feature known as [closure][1]:
@@ -124,10 +124,7 @@ In generic, you could write a common wrap function such as wrapEventCallback
         }
     }
     var someVar=1;
-    func = function(v){
-        console.log(v);
-    }
-    document.addEventListener('click',wrapEventCallback(func,someVar))
+    document.addEventListener('click',wrapEventCallback(v=>console.log(v),someVar))
     someVar=2
 
 ## bind via event.target
@@ -138,6 +135,12 @@ In generic, you could write a common wrap function such as wrapEventCallback
     function myFunc(evt) {
       window.alert( evt.target.myParam );
     }
+
+## bind with jquery
+    $("some selector").click({param1: "Hello", param2: "World"}, func);
+        function func(e){
+            e.data.param1
+        }
 
 # empty object
 js

@@ -13,7 +13,7 @@
 ## vue attr
 
     vm.$el === document.getElementById('app') // => true
-    vm.$data=== vm._data === data
+    vm.$data=== vm._data 包装了 data
 
     # render 使用的是this.attr, 而不是data.attr(因为tpl 中的scope 是vm内)
     this.message == data.message

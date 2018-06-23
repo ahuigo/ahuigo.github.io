@@ -4,6 +4,37 @@ title:	ria module
 category: blog
 description:
 ---
+# Perface
+## 防止变量污染
+1. 'use strict';//es6 默认
+2. var v=1; //适用于 commandJS 
+
+    //commandjs
+    (function(exports, require, module, __filename, __dirname) {
+        var v=1;
+    })();
+
+## path + global
+
+    //app.js
+    ROOT_DIR=__dirname;
+    global.ROOT_DIR=__dirname; //不要用 const ROOT_DIR=xxx
+
+    // module.js
+    let users = require(ROOT_DIR+'/conf/users')
+    let users = require(global.ROOT_DIR+'/conf/users')
+    let users = require('../conf/users')
+
+## module storage
+
+    //a.js
+    require('./config')['name']='ahui'
+    //b.js
+    require('./config')['name']==='ahui'
+
+## module this
+module `this` is `{}`, not `global===window`
+
 # 模块的定义(对象定义)
 本文参考阮一峰的: [js 模块化](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
 
@@ -308,12 +339,12 @@ hello module: hello.js
 
 ## 加载模块
 
-    // 引入./hello.js模块:
+    // 引入./hello.js模块,
     var s = 'Hello';
     var greet = require('./hello');
     greet('Michael'); // Hello, Michael!
 
-Node会依次在内置模块、全局模块和当前模块下查找hello.js, 但是不会在当前目录查找
+如果没有`.`或者`绝对路劲`, Node会依次在内置模块、全局模块和当前模块下查找hello.js, 但是不会在当前目录查找
 
     var greet = require('hello');
 
