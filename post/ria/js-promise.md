@@ -6,6 +6,12 @@
     1. sync: `result = await promise` 
     2. async: `promise.then(r=>{result=r})`
 
+## promise status
+执行态和完成态
+
+    Promise { <pending> }
+    Promise { undefined }
+
 ## ajax
 ajax函数将返回Promise对象:
 
@@ -66,9 +72,10 @@ ajax函数将返回Promise对象:
     });
 
 promise.then(f1).then(f2), 对于then/catch 而言： 
-1. f1(),f2() 可以是return promise(等resolve 传参数)，
-2. 可以是return value. (value 直接作为参数传递)
-3. 但是resolve 不能用于then, 它只能被Promise 包装！Promise 会抛弃return 值
+1. 如果promise 中没有resolve, promise 正常执行，但是`.then(func)` 永远没有机会执行，
+2. f1(),f2() 可以是return promise(等resolve 传参数)，
+3. 可以是return value. (value 直接作为参数传递)
+4. 但是resolve 不能用于then, 它只能被Promise 包装！Promise 会抛弃return 值
 
 也可以func 返回
 
@@ -134,7 +141,7 @@ async is used to await promise:
 
 Notice: 
 1. 即使没有await, 程序也要等promise 执行完毕才能退出！
-2. `await p` 阻塞，但是`async` 不会阻塞, 两者成对不分离
+2. `await p` 阻塞局部，但是`async` 不会因为阻塞整体, 所以两者要`成对存在`
 
 ## asyncFunc() is promise
 1. As promoise support both: then/catch/await
@@ -142,3 +149,54 @@ Notice:
 
     asyncFunc().then(v=>console.log(v));// realy end!`
     await asyncFunc().then(v=>(v));// 同步阻塞
+
+1. await/then 只接受`resolve`, catch 只接受`reject`:
+    1.  没有resolve, await/then 就不会执行. await 也会阻塞后面的语句. promise 正常执行
+    2.  没有reject, catch 则不执行
+
+    var p = new Promise((resolve,reject) => {
+        setTimeout(() => {
+            //resolve('abc')
+            console.log('work')
+        }, 1000);
+    });
+
+    async function A(){
+        console.log([await p])
+        console.log('not work')
+    }
+    a=A()
+    console.log(a);//pending
+
+    new Promise((resolve,reject) => {
+        setTimeout(e => console.log(a), 2000); //a 由于await 永远阻塞pending 状态. 
+                                                //但是没有timer runing, 不会阻塞程序的退出
+    });
+
+
+## combine await/then/catch
+1. catch 不会向后面的then、catch 传导
+2. reject(r)、resolve(r) 不会终止函数，但是第一个r 会被promise 传给 catch/then
+
+example:
+
+    (async function a(){
+        var p = new Promise((resolve,reject) => {
+            reject(0)
+            console.log('----work1--------')
+            resolve(10)
+            console.log('----work2--------')
+        });
+        console.log('reject:', await p.then(e=>e+1).then(e=>e+10).catch(e=>e+3).catch(e=>e+30)); //reject 3
+        console.log('reject:', await p.then(e=>e+1).then(e=>e+10).catch(e=>e+3).catch(e=>e+30)); //reject 3(from cached)
+    })()
+
+result:
+
+    ----work1--------
+    ----work2--------
+    reject: 3
+    reject: 3
+
+
+

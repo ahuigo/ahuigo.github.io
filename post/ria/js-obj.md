@@ -132,8 +132,8 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 ## Object.observe
 
     var obj = {
-    foo: 0,
-    bar: 1
+        foo: 0,
+        bar: 1
     };
 
     Object.observe(obj, function(changes) {
