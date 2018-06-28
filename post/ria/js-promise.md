@@ -4,10 +4,10 @@
 1. Promise: resove-then, reject-catch
 2. async-await: 
     1. sync: `result = await promise` 
-    2. async: `promise.then(r=>{result=r})`
+    2. async: `promise.then(r=>{result=r})`+block
 
 ## promise status
-执行态和完成态
+执行态和完成态(undefied/rejected/resolved)
 
     Promise { <pending> }
     Promise { undefined }
@@ -81,7 +81,7 @@ promise.then(f1).then(f2), 对于then/catch 而言：
 
     var p = new Promise(function (resolve, reject) {
         console.log('start new Promise2...');
-        resolve(124);
+        resolve(124); //Promise.resolve(124)
     }).then(e=>{return e+1}).
         then(e=>console.log(e)); // second
     console.log({p}); // first 

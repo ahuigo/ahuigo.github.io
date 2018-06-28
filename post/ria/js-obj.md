@@ -13,6 +13,8 @@ description:
     > b={a}
     { a: 1 }
 
+    new cls().property
+
 ## keys
 list forEach
 
@@ -253,10 +255,6 @@ class 定义的方法是不可keys 枚举定义值（除了assign值）, 不过�
             this.bar = 1; 
         }
     } 
-    // consructor
-    Foo.bar=1
-    // prototype
-    Foo.prototype.bar=1
 
 
 ### constructor
@@ -267,7 +265,9 @@ constructor方法默认返回实例对象（即this），完全可以指定返�
             return Object.create(null);
         }
     }
+
 ### set/get
+
     class MyClass {
         constructor() {
             // ...
@@ -283,6 +283,7 @@ constructor方法默认返回实例对象（即this），完全可以指定返�
 
     "get" in descriptor  // true
 
+
 ### new.target === class
 new.target会返回子类
 
@@ -296,24 +297,18 @@ new.target会返回子类
 
     var obj = new Rectangle(3, 4); // 输出 true
 
+### static method 
+
+
 ### static
-static 不可以被实例继承(不是prototype), static属于类自己(相当于proto)
+static 不可以被实例继承(因为不是prototype), static属于类自己(相当于proto)
 
-#### static prop
-    class Foo {
-    }
-
-    Foo.prop = 1;
-
-提案
-
-    class MyClass {
-    static myStaticProp = 42;
+    Foo.prototype.bar=2 // 被继承
 
 #### static method
-0. 只可以被子类继承
-1. 如果静态方法包含this关键字，这个this指的是类，而不是实例。
-2. super.staticMethod() ，super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类
+1. 不可以用于实例
+2. 如果静态方法包含this关键字，这个this指的是类，而不是实例。
+3. super.staticMethod() ，super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类
 
     class Foo {
         static bar () {
@@ -329,14 +324,45 @@ static 不可以被实例继承(不是prototype), static属于类自己(相当�
 
     Foo.bar() // hello
 
+#### static prop
+static const/variable:
+
+    class Foo {
+        static get PI() {
+            return 3.1415;
+        }
+        static get bar() {
+            return this._bar;
+        }
+        static set bar(v) {
+            this._bar = v
+            console.log(this)
+        }
+    }
+
+    // consructor
+    Foo.bar=1
+
+提案
+
+    class MyClass {
+    static myStaticProp = 42;
+
+
 ### Generator 
 如果某个方法之前加上星号（*），就表示该方法是一个 Generator 函数。
 
     class Foo {
         constructor(...args) {
             this.args = args;
+            console.log(typeof(Symbol.iterator)); //symbol
         }
         * [Symbol.iterator]() {
+            for (let arg of this.args) {
+                yield arg;
+            }
+        }
+        * it() {
             for (let arg of this.args) {
                 yield arg;
             }
@@ -344,6 +370,9 @@ static 不可以被实例继承(不是prototype), static属于类自己(相当�
     }
 
     for (let x of new Foo('hello', 'world')) {
+        console.log(x);
+    }
+    for (let x of new Foo('hello', 'world').it()) {
         console.log(x);
     }
 
@@ -414,7 +443,7 @@ number、boolean和string都有包装对象. (包装对象一点用处也没有�
     typeof window.myVar === 'undefined'
     typeof myVar === 'undefined'
 
-## 定义对象的模式
+## 定义对象es5(deprecated)
 
 ### 工厂方式(deprecated)
 工厂方式的点是:
@@ -481,7 +510,7 @@ number、boolean和string都有包装对象. (包装对象一点用处也没有�
 	  }
 	}
 
-## Extends 继承
+## Extends 继承(deprecated)
 
 ### 对象冒充
 #### 利用this 变化

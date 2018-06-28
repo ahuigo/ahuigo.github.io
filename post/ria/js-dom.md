@@ -440,6 +440,7 @@ Example 浮层: js-demo/alert-float.js
 ### .removeChild
     #self
 	child.parentNode.removeChild(child);
+	child.remove();
 	jqueryNode.remove() 
 
     # subnode

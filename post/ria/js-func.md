@@ -97,11 +97,11 @@ bind params by value(not by Reference)
 
     var a = 'before'
     function echo(a, b, c, d){
-        console.log(a,b,c, d);
+        console.log(this, [a,b,c, d]);
     }
-    caller = echo.bind(null,a, a);
+    caller = echo.bind(null,a, a); //bind this = obj ? obj:window;
     a = 'after'
-    caller(2,3); //bind： before, before, 2,3
+    caller(2,3); //window: [before, before, 2,3]
 
 ## bind params via anonymous func's closure
 You could pass somevar by value(not by reference) via a javascript feature known as [closure][1]:
