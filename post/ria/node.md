@@ -44,6 +44,9 @@ JavaScript程序是由事件驱动执行的单线程模型，Node.js也不例外
 ## dir
 
     __dirname # current js file's dir
+    __filename # file path
+    require('path').basename(__filename);
+
 
 ## readFile
 同步与异步

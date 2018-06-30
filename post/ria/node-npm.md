@@ -50,25 +50,16 @@ http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
     npm config get registry
 
 # npm install 说起
-npm install 命令用来安装模块到node_modules目录: /usr/local/lib/node_modules
-
-    $ npm install <packageName>
-
 安装之前，会先检查，`node_modules`目录之中是否已经存在指定模块。 如果存在，就不再重新安装了，即使远程仓库已经有了一个新版本，也是如此。
 
-如果你希望，一个模块不管是否安装过，npm 都要强制重新安装，可以使用-f或--force参数。
+如果你希望强制重新安装，可以使用-f或--force参数。
 
     $ npm install <packageName> --force
-
-# 二、npm update
-如果想更新已安装模块，就要用到npm update命令。
-
     $ npm update <packageName>
 
 # 三、registry
 npm update命令怎么知道每个模块的最新版本呢？
 
-1. 答案是 npm 模块仓库提供了一个查询服务，叫做 registry 。
 2. 以 npmjs.org 为例，它的查询服务网址是 https://registry.npmjs.org/ 。
 3. 这个网址后面跟上模块名，就会得到一个 JSON 对象，里面是该模块所有版本的信息。比如，访问 https://registry.npmjs.org/react，就会看到 react 模块所有版本的信息。
 
@@ -81,16 +72,12 @@ npm update命令怎么知道每个模块的最新版本呢？
     $ npm show react
     $ npm v react
 
-registry 网址的模块名后面，还可以跟上版本号或者标签，用来查询某个具体版本的信息。比如， 访问 https://registry.npmjs.org/react/v0.14.6 ，就可以看到 React 的 0.14.6 版。
-
 返回的 JSON 对象里面，有一个dist.tarball属性，是该版本压缩包的网址。
 
     dist: {
       shasum: '2a57c2cf8747b483759ad8de0fa47fb0c5cf5c6a',
       tarball: 'http://registry.npmjs.org/react/-/react-0.14.6.tgz'
     },
-
-到这个网址下载压缩包，在本地解压，就得到了模块的源码。npm install和npm update命令，都是通过这种方式安装模块的。
 
 # 四、缓存目录
 npm install或npm update命令，从 registry 下载压缩包之后，都存放在本地的缓存目录。
@@ -118,6 +105,6 @@ npm install或npm update命令，从 registry 下载压缩包之后，都存放�
 
 1. 发出npm install命令
 2. npm 向 registry 查询模块压缩包的网址
-3. 下载压缩包，存放在~/.npm目录
-4. 解压压缩包到当前项目的node_modules目录: 一份是~/.npm目录下的压缩包，另一份是node_modules目录下解压后的代码。
+3. 下载压缩包，存放在`~/.npm`目录
+4. 解压到`node_modules目录`. e.g. `/usr/local/lib/node_modules`
 5. 但是，运行npm install的时候，只会检查node_modules目录，而不会检查~/.npm目录。也就是说，如果一个模块在～/.npm下有压缩包，但是没有安装在node_modules目录中，npm 依然会从远程仓库下载一次新的压缩包。
