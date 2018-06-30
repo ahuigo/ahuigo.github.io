@@ -13,6 +13,8 @@ array 不像string 是primitive value, 所以length 可以缩短放大array。
 	arr.push(4);// [ 1, <2 empty undefined>, 4 ]
     arr[10] = 10;// [ 1, <2 empty undefined>, 4 , <empty undef>, 10]
 
+empty item 不会被for in 遍历, 但是会被 for of 遍历
+
 ## create array
 序列:
 
@@ -45,10 +47,11 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
 
 ## join 转换:
 
-		arr.toString();arr.valueOf();
-		arr.join(',');//
+    arr.toString();arr.valueOf();
+    arr.join(',');//
+	.join([separator]); //implode
 
-## 方法列表
+## splice
 
 	new Array(1,2,3);
 	arr = [1,2,'d'];
@@ -56,7 +59,6 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
 	arr;//[11,2,'d']; //因为数组赋值使用的是对象引用
 
 	.concat(arr2)
-	.join([separator]); //implode
 	.reverse()
 	.shift();//左移(移出) .unshift(item1,item2);//右移(移入)
 
@@ -67,7 +69,6 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
             [3, 4]
         a;
             [1, 2, "abc", 5]
-	.sort([funcSort]);
 
 ## push,pop, shift
 
@@ -190,7 +191,34 @@ string  没有此属性
     });
 
 
-## map/reduce
+# Map/Set
+
+## Map
+这里的map/set 不是数组的method, 而是一个原型类:
+
+    var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);
+    m.get('Michael'); // 95
+
+map crud:
+
+    m.set('Adam', 67); // 添加新的key-value
+    m.has('Adam'); // 是否存在key 'Adam': true
+    m.delete('Adam'); // 删除key 'Adam'
+    m.get('Adam'); // undefined
+
+## Set
+Set中自动被过滤：
+
+    var s = new Set([1, 2, 3, 3, '3']);
+    s; // Set {1, 2, 3, "3"}
+
+Set crud:
+
+    s.add(4);
+    s.delete(3);
+    s.has(4)
+
+## map/reduce/any:some/all:every
 迭代方法: all:every, any:some, filter, map/forEach
 
 		.every(func);//每一项运行给定函数都返回true,结果才返回true. 
@@ -218,30 +246,3 @@ string  没有此属性
 			array_self 作为数组是按引用传值的(数组元素length>=2)
 			prev = prev+ curr = 1+2 = 3;
 			prev = prev+ curr = 3+3 = 6;
-
-# Map/Set
-
-## Map
-这里的map/set 不是数组的method, 而是一个原型类:
-
-    var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);
-    m.get('Michael'); // 95
-
-map crud:
-
-    m.set('Adam', 67); // 添加新的key-value
-    m.has('Adam'); // 是否存在key 'Adam': true
-    m.delete('Adam'); // 删除key 'Adam'
-    m.get('Adam'); // undefined
-
-## Set
-Set中自动被过滤：
-
-    var s = new Set([1, 2, 3, 3, '3']);
-    s; // Set {1, 2, 3, "3"}
-
-Set crud:
-
-    s.add(4);
-    s.delete(3);
-    s.has(4)

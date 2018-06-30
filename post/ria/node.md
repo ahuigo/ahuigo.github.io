@@ -47,6 +47,28 @@ JavaScript程序是由事件驱动执行的单线程模型，Node.js也不例外
     __filename # file path
     require('path').basename(__filename);
 
+__line:
+
+        Object.defineProperty(global, '__stack', {
+            get: function(){
+                var orig = Error.prepareStackTrace;
+                Error.prepareStackTrace = function(_, stack){ return stack; };
+                var err = new Error;
+                Error.captureStackTrace(err, arguments.callee);
+                var stack = err.stack;
+                Error.prepareStackTrace = orig;
+                return stack;
+            }
+        });
+
+        Object.defineProperty(global, '__line', {
+            get: function(){
+                return __stack[1].getLineNumber();
+            }
+        });
+
+console.log(__line);
+
 
 ## readFile
 同步与异步
@@ -150,6 +172,7 @@ write 不区分buffer/string: new Buffer('使用Stream写入二进制数据...\n
 
 
 # http server
+
     var
         fs = require('fs'),
         url = require('url'),

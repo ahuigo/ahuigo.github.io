@@ -11,6 +11,12 @@
 
     Promise { <pending> }
     Promise { undefined }
+    Promise { resolved/resolved }
+
+create instantiated promise
+
+    var promise = Promise.resolve(100);
+    var promise = new Promise(r=>r(100));
 
 ## ajax
 ajax函数将返回Promise对象:
@@ -145,10 +151,10 @@ Notice:
 
 ## asyncFunc() is promise
 1. As promoise support both: then/catch/await
-2. AsyncFunc's `return` is promise's `resolve`
+2. AsyncFunc's `return` is passed to sub promise's `resolve`
 
-    asyncFunc().then(v=>console.log(v));// realy end!`
-    await asyncFunc().then(v=>(v));// 同步阻塞
+    asyncFunc().then(v=>console.log(v));
+    v = await asyncFunc().then(v=>(v));// 同步阻塞
 
 1. await/then 只接受`resolve`, catch 只接受`reject`:
     1.  没有resolve, await/then 就不会执行. await 也会阻塞后面的语句. promise 正常执行
@@ -175,7 +181,7 @@ Notice:
 
 
 ## combine await/then/catch
-1. catch 不会向后面的then、catch 传导
+1. catch 不会向后面的 catch 传导, 但是会向后面的then 传值
 2. reject(r)、resolve(r) 不会终止函数，但是第一个r 会被promise 传给 catch/then
 
 example:
@@ -188,7 +194,8 @@ example:
             console.log('----work2--------')
         });
         console.log('reject:', await p.then(e=>e+1).then(e=>e+10).catch(e=>e+3).catch(e=>e+30)); //reject 3
-        console.log('reject:', await p.then(e=>e+1).then(e=>e+10).catch(e=>e+3).catch(e=>e+30)); //reject 3(from cached)
+        console.log('reject:', await p.then(e=>e+1).then(e=>e+10).catch(e=>e+3).then(e=>e+30)); 
+        //reject 33(from memory)
     })()
 
 result:
@@ -196,7 +203,7 @@ result:
     ----work1--------
     ----work2--------
     reject: 3
-    reject: 3
+    reject: 33
 
 
 

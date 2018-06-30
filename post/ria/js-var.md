@@ -14,10 +14,12 @@ es6 默认用 use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/0
 
 必须写在执行语句或者函数体内的第一行
 
-1. 变量必须有var 声明
+1. 新定义的变量必须有var 声明
 2. 不允许用with
 3. 正常模式下eval 内的变量作用域取决于所在的作用域。strict 模式下，eval 本身是一个作用域
 4. function 下的this 是undefined, 而new 生成的obj 内的this 指向自己
+
+## global
 
 ## define variable
 1. let name 只在代码块中有效+不可以重复定义: for(let i=0;;)；
