@@ -24,10 +24,41 @@ Promise 的出现正是为了避免callback hell, 而用链式调用取而代�
     }).then(callback)
 
 ## Promise 的实现
-我来分析下Promise 需要支持的语法
+先来分析下Promise 需要支持的语法
 1. then/catch 链式调用: 用来代替callback hell
 2. resolve/reject 暂存异步调用结果：当我们执行异步调用并得到返回结果后, 这个结果值必须暂存起来，这个值未来还要被传给链式调用
 3. fire 执行: 当异步调用结果暂存起来后, 我们需要fire 执行已经绑定的then/catch 回调函数
+
+### Promise 的构造函数
+首先，Promise 属性中肯定需要一个 status 代表状态, fire 会在不同状态下执行不同的回调函数:
+1. pending : 当异步调用没有返回时的状态
+2. resolved: 当异步调用返回成功时的状态
+3. rejected: 当异步调用返回失败时的状态
+
+其次, 还需要一个`this.children_*` 数组, 存放次级Promise。什么时候用到这个数组呢？看到下面这代码你就明白了
+
+    p = new Promise(r=>setTimeout(r(10), 5000));
+    child1 = p.then(v=>console.log(v+1))
+    child2 = p.then(v=>console.log(v+2))
+
+最后，再加上其他必要的属性，我们就可以完成Promise 的构造器了：
+
+    class MyPromise {
+        constructor(task) {
+            this.firing = false
+            this.status = 'pending'
+            this.v = undefined
+            this.children_resolved = []
+
+            if (task) {
+                this.children_rejected = []
+                task(this.resolve.bind(this), this.reject.bind(this))
+            }
+        }
+
+    }
+
+
 
 ### then/catch 链式回调
 then/catch 的链式回调要做几件事：
@@ -127,39 +158,6 @@ fire 负责:
         this.firing = false
     }
 
-
-### Promise 的构造函数
-首先，Promise 属性中肯定需要一个 status 代表状态, fire 会在不同状态下执行不同的回调函数:
-1. pending : 当异步调用没有返回时的状态
-2. resolved: 当异步调用返回成功时的状态
-3. rejected: 当异步调用返回失败时的状态
-
-其次, 还需要一个`this.children` 数组, 存放次级Promise。什么时候用到这个数组呢？看到下面这代码你就明白了
-
-    p = new Promise(r=>setTimeout(r(10), 5000));
-    child1 = p.then(v=>console.log(v+1))
-    child2 = p.then(v=>console.log(v+2))
-
-最后，再加上其他必要的属性，我们就可以完成Promise 的构造器了：
-
-    class MyPromise {
-        constructor(task) {
-            this.firing = false
-            this.status = 'pending'
-            this.v = undefined
-            this.children_resolved = []
-
-            if (task) {
-                this.children_rejected = []
-                task(this.resolve.bind(this), this.reject.bind(this))
-            }
-        }
-
-    }
-
-
-最终的源代码[mypromise](https://github.com/ahuigo/js-lib/blob/master/es6/mypromise.js)
-
 ### eventLoop
 虽然js 的异步模型是基于eventLoop+callback 机制的，
 
@@ -171,3 +169,6 @@ fire 负责:
     log = v=>console.log(v+1)
     p.then(log);
     for(i of Array(2000)){console.log(i)}; //这里耗时较长，会阻塞其他的event task
+
+### 最终的源代码
+[mypromise](https://github.com/ahuigo/js-lib/blob/master/es6/mypromise.js)
