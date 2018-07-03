@@ -11,44 +11,6 @@ http://www.jianshu.com/p/b5e347b3a17c
 2. Python Async/Await入门指南 
 https://zhuanlan.zhihu.com/p/27258289
 
-
-# 非阻塞IO
-在IO操作的过程中，当前线程被挂起，而其他需要CPU执行的代码就无法被当前线程执行了。
-
-1. 多线程和多进程的模型虽然解决了并发问题，但切换线程的开销也很大，一旦线程数量过多，CPU的时间就花在线程切换上了
-2. 另一种解决IO问题的方法是异步IO。它只发出IO指令，并不等待IO结果，然后就去执行其他代码了。一段时间后，当IO返回结果时，再通知CPU进行处理。
-
-异步IO模型需要一个消息循环，在消息循环中，主线程不断地重复“读取消息-处理消息”这一过程：
-
-	loop = get_event_loop()
-	while True:
-		event = loop.get_event()
-		process_event(event)
-
-## asyncio example
-
-    import asyncio
-    import contextlib
-
-    async def ping(ip):
-        p = await asyncio.create_subprocess_exec('ping', '-c', '4', ip, stdout=asyncio.subprocess.PIPE)
-        async for line in p.stdout:
-            print(line)
-        await p.wait()
-
-
-    async def main():
-        await asyncio.wait([
-            ping('8.8.8.8'),
-            ping('8.8.4.4'),
-        ])
-
-
-    if __name__ == '__main__':
-        with contextlib.closing(asyncio.get_event_loop()) as main_loop:
-            main_loop.run_until_complete(main())
-
-
 # 语法
 带`async for p` 或者`await` 只能放到 async 函数，可以是`coroutine or async_gnerator`:
 1. async_generator 不支持:`return`
@@ -56,7 +18,8 @@ https://zhuanlan.zhihu.com/p/27258289
     ```
     def function(): return 1
     def generator(): yield 1
-    在3.5过后，我们可以使用async修饰将普通函数和生成器函数包装成异步函数和异步生成器。
+
+    # 在3.5过后，我们可以使用async修饰将普通函数和生成器函数包装成异步函数和异步生成器。
     async def async_function(): return 1
     async def async_generator(): yield 1
 
@@ -114,6 +77,80 @@ https://zhuanlan.zhihu.com/p/27258289
 注意到consumer函数是一个generator.
 
 整个流程无锁，由一个线程执行，produce和consumer协作完成任务，所以称为“协程”，而非线程的抢占式多任务。
+
+### yield from(>=3.3)
+yield from(不是await )可以将generator 串联：
+
+    def gen_234():
+        yield 2
+        yield 3
+        yield 4
+
+    def main():
+        yield 1
+        yield from gen_234()
+        yield 5
+
+    for element in main():
+        print(element)  # 1,2,3,4,5
+
+## async await 
+asyncio 提供了默认的eventloop
+1. async 是用来将`函数`转换为`协程`的语法api
+1. yield from 等待的是一个生成器对象，
+2. await 接收的是定义了`__await__`方法的 awaitable 对象。
+
+
+    import asyncio
+    import aiohttp
+
+    async def fetch_page(session, url):
+        response = yield from session.get(url)
+        if response.status == 200:
+            text = await response.text()
+            print(text)
+    loop = asyncio.get_event_loop()
+
+    session = aiohttp.ClientSession(loop=loop)
+
+    tasks = [
+        asyncio.ensure_future(
+            fetch_page(session, "http://bigsec.com/products/redq/")
+        ),
+        asyncio.ensure_future(
+            fetch_page(session, "http://bigsec.com/products/warden/")
+        )
+    ]
+
+    loop.run_until_complete(asyncio.wait(tasks))
+    session.close()
+    loop.close()
+
+执行细节:
+
+1. 首先实例化一个 eventloop，并将其传递给 aiohttp.ClientSession 使用，这样 session 就不用创建自己的事件循环。
+2. eventloop 调度的是future 包装的task:
+    1. 当代码运行到 yield from session.get(url)处，fetch_page 协程被挂起
+    2. 隐式的将一个 Future 对象传递给事件循环
+        1. session.get() 内部也是协程
+        2. 只有当 session.get() 完成后，该任务才算完成。恢复其工作状态。
+3. 所有任务才能结束，然后关闭 session 与 loop，释放连接资源。
+
+summary: 
+1. async/await 是协程api, 使用者目前并不能脱离 asyncio/curio 使用 async/await 编写协程代码
+2. 协程基于eventloop 的调度
+
+## future task loop
+https://segmentfault.com/a/1190000012291369#articleHeader11
+
+![](https://sfault-image.b0.upaiyun.com/385/432/3854323182-5a26464766e62_articlex)
+当你写协程代码时，必须先去理解协程、生成器的区别，future 对象与 task 对象的职能，loop 的作用( 还不如学习golang)
+
+### 4.3. 另一个Future
+
+Python 里另一个 Future 对象是 concurrent.futures.Future，与 asyncio.Future 互不兼容，但容易产生混淆。concurrent.futures 是线程级的 Future 对象，当使用 concurrent.futures.Executor 进行多线程编程时用于在不同的 thread 之间传递结果。
+
+
 
 ## coroutine
 - yield(generator): 中断返回; 不关心yield func() 内部有无yield
@@ -510,3 +547,26 @@ future可以被await证明了future对象是一个Awaitable，进入Future类的
 1. await后面必须要跟着一个协程对象或Awaitable. 通过`__wait__`确认是否继续暂停等待
 2. await的目的是等待协程控制流的返回，
 3. 而实现暂停并挂起函数的操作是yield, yield 不可出现在coroutine中，而要放到Future中
+
+### asyncio example
+
+    import asyncio
+    import contextlib
+
+    async def ping(ip):
+        p = await asyncio.create_subprocess_exec('ping', '-c', '4', ip, stdout=asyncio.subprocess.PIPE)
+        async for line in p.stdout:
+            print(line)
+        await p.wait()
+
+
+    async def main():
+        await asyncio.wait([
+            ping('8.8.8.8'),
+            ping('8.8.4.4'),
+        ])
+
+
+    if __name__ == '__main__':
+        with contextlib.closing(asyncio.get_event_loop()) as main_loop:
+            main_loop.run_until_complete(main())

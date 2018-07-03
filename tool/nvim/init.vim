@@ -77,6 +77,7 @@ vnoremap <M-A>c "+y
 nnoremap <M-A>s :up<CR>
 inoremap <M-A>s <C-o>:up<CR>
 nnoremap <M-A>a ggVG
+nnoremap \p "+p
 
 function! Strip(input_string)
 	return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')

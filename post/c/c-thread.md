@@ -10,7 +10,8 @@ description:
 
 # 同步 异步 阻塞 协程
 https://www.zhihu.com/question/19732473
-<Unix 网络编程>
+
+Unix 网络编程
 
 - 同步异步: (synchronous/synchronous communication) 关注的是*调用内核* 本身的*返回消息*机制; 直接返回信息, 就同步; 以*回调的方式*返回信息就是异步
 - 阻塞(blocking): 关注的是*调用者* 本身, 它在等待消息的过程中是*blocking*, 还是*unblocking* 做其它事

@@ -6,6 +6,19 @@
     1. sync: `result = await promise` 
     2. async: `promise.then(r=>{result=r})`+block
 
+## eventloop
+js 是单线程的，通过eventloop 调度，所以回调函数是安全的。
+
+如果想在eventloop 前后插入task，可以通过nextTick/setImmedite:
+
+    log=console.log
+    setImmediate(r=>log('4.0 setImmediate'));
+    setImmediate(r=>log('4.1 setImmediate'));
+    setTimeout(r=>log('3. TIMEOUT FIRED'), 0)
+    process.nextTick(r=>log('1.1 nextTick'));
+    process.nextTick(r=>log('1.2 nextTick'));
+
+
 ## promise status
 执行态和完成态(undefied/rejected/resolved)
 
@@ -147,7 +160,7 @@ async is used to await promise:
 
 Notice: 
 1. 即使没有await, 程序也要等promise 执行完毕才能退出！
-2. `await p` 阻塞局部，但是`async` 不会因为阻塞整体, 所以两者要`成对存在`
+2. `await p` 阻塞局部，但是`async` 不会阻塞整体, 所以两者要`成对存在`
 
 ## asyncFunc() is promise
 1. As promoise support both: then/catch/await

@@ -46,6 +46,7 @@ libc中定义的全局变量environ指向环境变量表数组，数组最后的
 ## 环境变量相关函数
 
 ### getenv
+
 	#include <stdlib.h>
 	char *getenv(const char *name);
 
@@ -66,6 +67,7 @@ getenv 返回的是对值的指针, 可以直接通过指针修改*子程序*的
 		rewrite != 0 覆盖原来的定义
 
 ### unsetenv
+
 	void unsetenv(const char *name);
 		即使name没有定义也不返回错误。
 
@@ -365,39 +367,43 @@ Linux进程间通信由以下几部分发展而来：
 ## 异步同步阻塞非阻塞
 > 链接：https://www.zhihu.com/question/19732473/answer/18752453
 
-1. 阻塞，非阻塞：是否需要阻塞*等待*数据就绪；
-2. 同步，异步：是否可以干别的事
-	1. 同步阻塞：自己不能干别的事
-	1. 同步非阻塞：自己不能干别的事，但也不用阻塞等待数据就绪。这又分好几种情况
-		1. 同时等待多个io, 但是不阻塞于单个io, 这个就是IO复用(io multiplexing), 典型的如: select/poll/epoll
-			2. 严格来说，io复用虽然不阻塞于单个io, 但是将数据从内核复制到用户态缓冲区阶段，还是阻塞的
-	1. 异步阻塞：去干的别事，阻塞等待数据(挂起自己)，如：协程, SIGIO 驱动
-		1. SIGIO信号驱动，跟io复用一样在内核数据复制时阻塞。
-	2. 异步非阻塞：去干别的事, 非阻塞等待数据(也不挂起自己)
-
-
 1. 同步：数据由内核空间复制回进程缓冲时阻塞(如recvfrom)
-	1. 阻塞block：
-	2. 非阻塞Non-Block: 就是轮询
-	3. IO 复用:主要阻塞在select, poll, epoll（等待可用描述符), 读取数据的I/O系统调用如recvfrom 也是阻塞的
-		1. 轮询多个io描述符
-			1. select(rlist,wlist,timeout=0)+ 轮询判断FD_ISSET(fd, &rset)，且有FD_SETSIZE 最大1024限制
-			2. poll 没有FD_SETSIZE 限制, 但每次收到数据依然需要遍历所有的描述符
-		2. 直接返回准备就绪的描述符: epoll、kqueue 事先注册需要检查哪些描述符的哪些事件，当状态发生变化时，内核会调用对应的回调函数，将这些描述符保存下来；下次获取可用的描述符时，*直接返回这些发生变化的描述符*即可。
-			3. epoll 也可以叫做Reactor，事件驱动，事件轮循（EventLoop）
-				1. 采用的是异步非阻塞回调, 嵌套回调极难维护: 
-				1. 没有FD_SETSIZE限制，O(1)时间，N倍并发
-				2. libevent是基于epoll系统调用的事件驱动库
-			2. kqueue 类似epoll 是mac osx 提供的
-	4. IO信号驱动(SIGIO)：信号发生在IO之前，IO由进程完成
-		1. 即描述符就绪时，内核发送 SIGIO 信号，
-		2. 当从内核态返回用户态时：由用户态的*信号处理程序*去完成io操作
-		3. signal handler call the actual I/O operation (man 2 recvfrom) blocks the process.
-		4. 适用场景：
-			1. 不适合TCP套接字：信号驱动式IO不适合处理TCP套接字，因为信号产生的过与频繁，在TCP中，连接请求完成、断开连接发起、断开连接完成、数据到达、数据送走。。。都会产生SIGIO。但我们真正只需要它在数据到达或者数据送走的时候才产生信号
-			2. 适合UDP套接字：SIGIO信号在数据报到达套接字以及套接字上发生异步错误才会发生
+	1. 同步阻塞BIO： BlockIO
+	2. 非阻塞NIO(Non-Block): 就是轮询
+        1. IO 复用:主要阻塞在select, poll, epoll（等待可用描述符), 读取数据的I/O系统调用如recvfrom 也是阻塞的
+            1. 用户层轮询多个io描述符
+                1. select(rlist,wlist,timeout=0)+ 轮询判断FD_ISSET(fd, &rset)，且有FD_SETSIZE 最大1024限制
+                2. poll 没有FD_SETSIZE 限制, 但每次收到数据依然需要遍历所有的描述符
+            2. 直接返回准备就绪的描述符: 
+                1. 机制：
+                    1. epoll、kqueue 事先注册需要检查哪些fd 的哪些事件
+                    2. 当状态发生变化时，内核会调用对应的回调函数，将这些描述符保存下来；
+                    3. 下次获取可用的描述符时，*直接返回这些发生变化的描述符*即可。
+                2. epoll callback: 
+                    1. 直接操作epoll去构造维护事件的循环, 造成callback hell, 注册回调与回调的可以封装，并抽象成EventLoop
+                    2. 诸如libev, libevent之类, uvloop 继承自libuv
+                3. epoll 特点： 也可以叫做Reactor，事件驱动，事件轮循（EventLoop）
+                    1. 采用的是异步非阻塞回调, 嵌套回调极难维护: 
+                    2. 没有FD_SETSIZE限制，O(1)时间，N倍并发
+                    3. libevent是基于epoll系统调用的事件驱动库
+                4. kqueue 类似epoll 是mac osx 提供的
+        2. 协程: 没有 EventLoop 的回调(同步写法, 但是底层的回调依然是callback hell)
+            1.  golang 的 goroutine，
+            2.  luajit 的 coroutine，
+            3.  Python 的 gevent: 基于 Greenlet 与 Libev，
+                1. greenlet 是一种微线程或者协程，在调度粒度上比 PY3 的协程更大。
+                2. greenlet 存在于线程容器中，其行为类似线程，有自己独立的栈空间，不同的 greenlet 的切换类似操作系统层的线程切换。
+            4.  erlang 的 process，
+            5.  scala 的 actor 等
+        3. IO信号驱动(SIGIO)：信号发生在IO之前，IO由进程完成
+            1. 即描述符就绪时，内核发送 SIGIO 信号，
+            2. 当从内核态返回用户态时：由用户态的*信号处理程序*去完成io操作
+            3. signal handler call the actual I/O operation (man 2 recvfrom) blocks the process.
+            4. 适用场景：
+                1. 不适合TCP套接字：信号驱动式IO不适合处理TCP套接字，因为信号产生的过与频繁，在TCP中，连接请求完成、断开连接发起、断开连接完成、数据到达、数据送走。。。都会产生SIGIO。但我们真正只需要它在数据到达或者数据送走的时候才产生信号
+                2. 适合UDP套接字：SIGIO信号在数据报到达套接字以及套接字上发生异步错误才会发生
 
-2. 异步: copy from kernel to buffer, then sig notification, 信号发生在IO之后，IO由内核完成
+2. 异步(AIO): copy from kernel to buffer, then sig notification, 信号发生在IO之后，IO由内核完成
 	1. 注册信号事件(比如SIGALRM)，*内核完成读写*后（读取的数据会复制到用户态），再调用aio指定的*事件处理函数*。
 	2. 中间任何步骤都没有阻塞(甚至是内核复制数据到用户态缓冲区), 这在文本编辑器读写大文件时很有用, 网络编程则极少用
 		1. linux: AIO 不少缺点

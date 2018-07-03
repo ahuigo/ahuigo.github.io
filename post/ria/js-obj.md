@@ -297,13 +297,28 @@ new.target会返回子类
 
     var obj = new Rectangle(3, 4); // 输出 true
 
-### static method 
+### private
+侵入式的不优雅 1. 只能用this[property], 不能用this.property
 
+    var property = Symbol();
+    var method = Symbol();
+    class Something {
+        constructor(){
+            this[property] = "test";
+        }
+        [method](){
+            console.log(1)
+        }
+    }
+
+    var instance = new Something();
+
+    console.log(instance.property); //=> undefined,
 
 ### static
 static 不可以被实例继承(因为不是prototype), static属于类自己(相当于proto)
 
-    Foo.prototype.bar=2 // 被继承
+    Foo.prototype.bar=2 // prototype 才被继承
 
 #### static method
 1. 不可以用于实例
@@ -325,7 +340,7 @@ static 不可以被实例继承(因为不是prototype), static属于类自己(�
     Foo.bar() // hello
 
 #### static prop
-static const/variable:
+static const/variable, via get/set
 
     class Foo {
         static get PI() {
@@ -339,6 +354,8 @@ static const/variable:
             console.log(this)
         }
     }
+
+方式2：
 
     // consructor
     Foo.bar=1
@@ -390,9 +407,11 @@ static const/variable:
     }
 
 ### 创建对象
-1. obj = new Object();
-2. person={firstname:"John"};
-3. obj = new func(param1, param2);
+2. {}: person={firstname:"John"};
+1. new func constructor:
+4. new class constructor
+
+    obj = new func(param1, param2);
     obj.constructor === func.prototype.constructor; // true
 
     let person = new class {
@@ -404,7 +423,6 @@ static const/variable:
             console.log(this.name);
         }
     }('张三');
-
 
 
 ## 对象分类
@@ -427,6 +445,7 @@ number、boolean和string都有包装对象. (包装对象一点用处也没有�
 
     (123).toString(); // '123'; #加括号是为了防止解析为小数点
     123..toString(); // '123'; #加括号是为了防止解析为小数点
+    ''+123
 
 ### 对象原型判断
 

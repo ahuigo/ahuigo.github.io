@@ -298,7 +298,7 @@ $(function() {
         },
         index: function() {
             //this.make_main_view(null, 'index',1);
-            this.make_main_view(null, 'c/c-terminal',1);
+            this.make_main_view(null, 'ria/js-promise-source',1);
         },
         cate: function(cate) {
             this.make_main_view(cate, 'index',1);
