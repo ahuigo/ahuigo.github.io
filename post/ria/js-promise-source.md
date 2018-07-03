@@ -39,20 +39,30 @@ then/catch 的链式回调要做几件事：
 
     then(fnDone, fnFail) {
         var child_p;
-        if (fnFail) {
-            this.root['fnFail'] = fnFail
-        }
-        if (fnDone && typeof (fnDone) === 'function') {
-            this['fnDone'] = fnDone
-            child_p = new MyPromise()
-            child_p.root = this.root
-            child_p.status = this.status
-            child_p.v = this.v
-            this.children.push(child_p)
-        }
-        if (!this.firing && this.status != 'pending') {
-            if (this.isDone || this.isFail) {
-                this.fire()
+        if (typeof (fnDone) === 'function' || typeof (fnFail) === 'function') {
+
+            if (typeof (fnDone) === 'function' ){
+                child_p = this.createChild()
+
+                child_p.fnDone = fnDone
+                this.children_resolved.push(child_p)
+
+                if ( (this.isDone && child_p.fnDone)) {
+                    child_p.fire(this.v, this.status)
+                }
+            }else{
+                var root = this.findCatchRoot()
+                if(root){
+                    child_p = this.createChild()
+                    child_p.fnFail = fnFail
+                    root.children_rejected.push(child_p)
+
+                    if ( (this.isFail && child_p.fnFail)) {
+                        child_p.fire(this.v, this.status)
+                    }
+                }
+
+                //this.root['fnFail'] = fnFail
             }
         }
         return child_p ? child_p : this
@@ -63,24 +73,32 @@ then/catch 的链式回调要做几件事：
 1. 通过resolve/reject 将返回值和状态存起来; 
 2. 然后判断是否存在fnDone/fnFail, 如果有就立即执行fire
 
+实现:
+
     resolve(v) {
         if (this.status !== 'pending') return
         this.status = 'resolved'
         this.v = v
 
-        if (!this.firing && this.fnDone) {
-            this.fire()
+        if (!this.firing && this.isDone) {
+            for(let child_p of this.children_resolved){
+                child_p.fire(this.v, this.status)
+            }
         }
     }
+
     reject(v) {
         if (this.status !== 'pending') return
         this.status = 'rejected'
         this.v = v
 
-        if (!this.firing && this.root.fnFail) {
-            this.fire()
+        if (!this.firing && this.isFail) {
+            for(let child_p of this.children_rejected){
+                child_p.fire(this.v, this.status)
+            }
         }
     }
+
 
 ### fire 执行回调函数
 fire 负责:
@@ -88,26 +106,27 @@ fire 负责:
 2. 将回调函数的返回值`child_v`, 传给次级的promise(`child_p`)
 3. 如果次级的promise 已经准备好了，就执行次级的fire: `child_p.fire()`
 
-    fire() {
-        this.firing = true
+实现：
 
-        if (this.status !== 'pending' && (this.isDone || this.isFail)) {
-            if (this.isDone) {
-                var child_v = this.fnDone(this.v)
-            } else if (this.isFail) {
-                var child_v = this.root.fnFail(this.v)
-            }
-            for (let child_p of this.children) {
-                child_p.status = 'resolved'
-                child_p.v = child_v
-                if (!child_p.firing && child_p.isDone) {
-                    child_p.fire()
-                }
-            }
+    /**
+     */
+    fire(v, status) {
+        this.firing = true
+        if(this.parent.isDone){
+            this.v= this.fnDone(v)
+        }else{
+            this.v = this.fnFail(v)
+        }
+        this.status = 'resolved'
+        
+        //var children = this.isDone? this.children_resolved : this.root.children_rejected
+        for (let child_p of this.children_resolved) {
+            child_p.fire(this.v, this.status)
         }
 
         this.firing = false
     }
+
 
 ### Promise 的构造函数
 首先，Promise 属性中肯定需要一个 status 代表状态, fire 会在不同状态下执行不同的回调函数:
@@ -125,16 +144,17 @@ fire 负责:
 
     class MyPromise {
         constructor(task) {
-            this.root = task ? null : this
             this.firing = false
             this.status = 'pending'
             this.v = undefined
-            this.children = []
+            this.children_resolved = []
 
             if (task) {
+                this.children_rejected = []
                 task(this.resolve.bind(this), this.reject.bind(this))
             }
         }
+
     }
 
 
