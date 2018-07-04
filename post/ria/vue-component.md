@@ -1,5 +1,27 @@
 # 组件
 
+    <div id="app-7">
+    <ol>
+        <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+    </ol>
+    </div>
+    <script>
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{ todo.text }}</li>'
+        })
+        var app7 = new Vue({
+            el: '#app-7',
+            data: {
+                groceryList: [
+                { text: 'Vegetables' },
+                { text: 'Cheese' },
+                { text: 'Whatever else humans are supposed to eat' }
+                ]
+            }
+        })
+    </script>
+
 ## 简单组件
 组件不能直接引用data全局变量
 
@@ -146,7 +168,7 @@ props 传给子组件的值，作为局部变量是不允许直接修改的(为�
 2. 定义一个computed 属性，处理 prop 的值并返回：
 
 #### data 局部变量
-1. 组件的 data 选项必须是一个函数，
+1. 组件的 data 选项`必须是一个函数`，
 2. 以便每个实例都可以维护「函数返回的数据对象」的彼此独立的数据副本.
 
     // 定义一个新的组件，名称为 button-counter
@@ -343,9 +365,9 @@ slot 也像是普通元素那样使用v-for:
 这意味着 PascalCase 是最通用的声明约定而 kebab-case 是最通用的使用约定。
 
     components: {
-    'kebab-cased-component': { /* ... */ },
-    camelCasedComponent: { /* ... */ },
-    PascalCasedComponent: { /* ... */ }
+        'kebab-cased-component': { /* ... */ },
+        camelCasedComponent: { /* ... */ },
+        PascalCasedComponent: { /* ... */ }
     }
     <kebab-cased-component></kebab-cased-component>
 

@@ -1,6 +1,7 @@
 # ajax
-- fetch: 可能有兼容性问题, 底层，xhr 升级
-- axios：需要外部资源, 支持并发
+- fetch: 可能有兼容性问题, 底层，xhr 升级, 原生
+    1. https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
+- axios：promise, 需要外部资源, 支持并发
 - vue-resource
 - $http 
 
