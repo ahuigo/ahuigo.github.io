@@ -241,8 +241,8 @@ See java-lib
 	$c = $aes->encrypt('数据');
 	var_dump($aes->decrypt($c));
 
-# Asymmetric Cryptography
-公开密钥加密(public-key cryptography), 又称对称密钥加密（asymetric cryptography）.
+# Asymmetric Cryptography, 非对称加密
+公开密钥加密(public-key cryptography), 又称非对称密钥加密（asymmetric cryptography）.
 [公开密钥加密](http://zh.wikipedia.org/zh/%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86)
 
 常见的公钥加密算法有:
