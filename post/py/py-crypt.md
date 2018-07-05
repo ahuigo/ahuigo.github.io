@@ -1,5 +1,5 @@
 # python 加密实例
-[加密算法简介](/algorithm/algorithm-crypt)
+[加密算法简介](/p/algorithm/algorithm-crypt)
 
 # AES
 
