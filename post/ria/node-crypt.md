@@ -77,9 +77,9 @@ AES是一种常用的对称加密算法，加解密都用同一个密钥。
     var ming = crypto.createDiffieHellman(512);
     var ming_keys = ming.generateKeys();
 
+    // prime generator
     var prime = ming.getPrime();
     var generator = ming.getGenerator();
-
     console.log('Prime: ' + prime.toString('hex'));
     console.log('Generator: ' + generator.toString('hex'));
 

@@ -112,7 +112,7 @@ string 与 bytes 相互转换
 	'€20'
 	>>> '123'.encode('utf-8')
 
-或者：
+int to bytes：
 
 	>>> bytes([0, 1, 97])
 	b'\x00\x01a'
