@@ -5,7 +5,7 @@
 ## event type
 1. click,remove,keyup.enter
 
-### v-on
+### v-on(@)
 event: click,input,change, keyup.enter,blur...
 
     <button v-on:click="reverseMessage">reverse_message</button>

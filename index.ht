@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ahuigo's blog">
+    <meta name="author" content="ahuigo">
+    <link href="https://cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
+</head>
+
+<body class="layout-documentation page-layout">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <router-link to="/">Index</router-link>
+            <router-link to="/clipboard">Clipboard</router-link>
+        </div>
+    </nav>
+
+    <section id="app" class="section">
+        <div class="hero-body">
+            <div class="container">
+                <p class="title">
+                    ahuigo 的自留地
+                </p>
+                <p class="subtitle">
+                    Hero
+                </p>
+            </div>
+        </div>
+        <div>
+            <router-view :nodes="dir_tree"></router-view>
+        </div>
+    </section>
+
+</body>
+<template id="tree-menu">
+    <div>foo
+        <ul>
+            <li id="menu" v-for="(file,index) in nodes">
+                <a :type="file.type" > {{file.type}}:{{file.path}},{{file.name}} </a>
+                <ul v-if="file.nodes">
+                    <tree-menu v-for="(file,index) in file.nodes"></tree-menu>
+                <ul>
+            </li>
+        </ul>
+    </div>
+</template>
+<script>
+    const DirTree = {
+        template: `#tree-menu` ,
+        props: ['dir_tree'],
+    };
+    Vue.component('tree-menu', { 
+        template: '#tree-menu',
+        props: [ 'nodes', 'label', 'depth' ],
+        data() {
+           return {
+             showChildren: false
+           }
+        },
+    });
+
+    const routes = [
+        { path: '/', component: DirTree, props: {}, },
+        { path: '/bar', component:{ template: '<div>bar</div>' } },
+    ]
+
+
+    const app = new Vue({
+        router: new VueRouter({ routes, }),
+        data: {
+            dir_tree: { a: { name: 'ahui' }, },
+            name: 'ahuigo',
+        },
+        methods: {
+            getMenu(dir='post') {
+                fetch('https://api.github.com/repos/ahuigo/a/contents/'+dir, {
+                }).then(r => r.json()).then(data => {
+                    app.dir_tree = data;
+                }).catch(v => console.info(v))
+            }
+        },
+        created:function(){
+            this.getMenu()
+        }
+    }).$mount('#app')
+
+</script>
+
+</html>

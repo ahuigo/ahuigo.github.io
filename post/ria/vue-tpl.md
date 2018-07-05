@@ -110,7 +110,7 @@ type
 
 ## 指令
 ### v-if:
-if 内部不能有
+if 
 
     <span v-if="seen">现在你可以看到我</span>
 
