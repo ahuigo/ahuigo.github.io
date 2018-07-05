@@ -143,6 +143,12 @@ $(function() {
                     this.setAttribute('href', '#show/'+href.slice(3))
                 }
             })
+            $(this.el).find('img').each(function(){
+                var href = this.getAttribute('src')
+                if(href.startsWith('/img/')){
+                    this.setAttribute('src', '/a'+href)
+                }
+            })
         }
     });
 
