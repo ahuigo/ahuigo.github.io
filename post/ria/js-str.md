@@ -1,8 +1,8 @@
 # String
-与python 一样的定义
+与python 一样的定义, 而且不区分双引号：
 
-	'\x31'
-	"\x31"
+    '\x00' == '\u0000'
+	'\x31' == "\x31"
 
 	'好' === '\u597D' // true
 	'好' === '\u{597D}' // true
@@ -21,11 +21,30 @@
 	`Hello, ${name}`
 
 ### buffer
+see py-str-struct
+
+string:
 
     // Buffer -> String
     var text = buf.toString('utf-8');
     // String -> Buffer
     var buf = Buffer.from(text, 'utf-8');
+
+base64
+
+    Buffer.from('a')
+    Buffer.from('YQ==', 'base64')
+    Buffer.from('a').toString('base64')
+
+hex:
+
+    > Buffer.from('ab').toString('hex')
+    '6162'
+
+chunk
+
+    > Buffer.alloc(5,'\x01\x02');
+    <Buffer 01 02 01 02 01>
 
 ## pad
 
@@ -33,7 +52,6 @@
     'Vue'.padStart(10)           //'       Vue'
     'Vue'.padStart(10, '_*')           //'_*_*_*_Vue'
     'Vue'.padEnd(10, '_*')           //'Vue_*_*_*_'
-
 
 ## 字符串是不可变的
 ```

@@ -36,23 +36,26 @@ AES是一种常用的对称加密算法，加解密都用同一个密钥。
 3. 加密结果通常有两种表示方法：hex和base64
 4. final是为了获取剩余串
 
+engine: aes256, aes-256-cbc, .. \
+encoding: hex, base64, ....
+
     const crypto = require('crypto');
     function aesEncrypt(data, key) {
-        const cipher = crypto.createCipher('aes192', key);
+        const cipher = crypto.createCipher('aes-256-cbc', key);
         var crypted = cipher.update(data, 'utf8', 'hex');
         crypted += cipher.final('hex')
         return crypted;
     }
 
     function aesDecrypt(encrypted, key) {
-        const decipher = crypto.createDecipher('aes192', key);
+        const decipher = crypto.createDecipher('aes-256-cbc', key);
         var decrypted = decipher.update(encrypted, 'hex', 'utf8');
         decrypted += decipher.final('utf8');
         return decrypted;
     }
 
-    var data = 'Hello, this is a secret message!';
-    var key = 'Password!';
+    var data = '数据';
+    var key = 'password';
     var encrypted = aesEncrypt(data, key);
     var decrypted = aesDecrypt(encrypted, key);
 
@@ -60,6 +63,11 @@ AES是一种常用的对称加密算法，加解密都用同一个密钥。
     console.log('Encrypted text: ' + encrypted);
     console.log('Decrypted text: ' + decrypted);
 
+如果要定制iv:
+
+
+    iv = Buffer.alloc(16,'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f');
+    let decipher = crypto.createDecipheriv(engine, key, iv);
 
 ## DH算法，Diffie-Hellman
 原理:

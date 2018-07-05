@@ -23,6 +23,33 @@ description:
 
 好在Python提供了一个struct模块来解决bytes和其他二进制数据类型的转换。
 
+## str2hex & hex2str
+
+    import binascii
+    hx = binascii.hexlify('str'.encode)
+        b'3c2063....
+    binascii.unhexlify(hx).decode()
+        'str'
+
+## strhex
+
+    bytes.fromhex('4a4b4c')
+    bytes.fromhex('4a4b4c').hex()
+
+int to strhex
+
+    >>> hex(16)
+    '0x10'
+
+see: py/py-strack for unpack
+
+## base64
+
+    import base64
+    >>> base64.b64encode(b'a')
+    b'YQ=='
+    >>> base64.b64decode(b'a')
+
 # struct
 
 ## pack

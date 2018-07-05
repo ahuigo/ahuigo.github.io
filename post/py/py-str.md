@@ -411,14 +411,9 @@ with no space and new line:
 	print "abc"[-1]
 	for in "abc"
 
-## hex
-
-    >>> hex(16)
-    '0x10'
-
 ## chunk
 利用range+step:
-```
+
     def ChunkStr1(string, length):
         return (string[0+i:length+i] for i in range(0, len(string), length))
 
@@ -428,4 +423,4 @@ with no space and new line:
     	return re.findall('.{1,'+str(length)+'}',string)
 
     list(ChunkStr1(s,10))
-```
+
