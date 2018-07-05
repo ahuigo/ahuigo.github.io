@@ -126,8 +126,6 @@ python3:
     encrypted = encrypt(my_password, my_data)    
     decrypted = decrypt(my_password, encrypted)    
 
-    '1546d89ec91632cdd2b6fd7d35f5c72b2d56903b1db5bacf763260c4d077'
-
     print("key:  {}".format(my_password))    
     print("data: {}".format(my_data))    
     print("enc:  {}".format(encrypted))    
