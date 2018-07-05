@@ -16,10 +16,11 @@ array 不像string 是primitive value, 所以length 可以缩短放大array。
 empty item 不会被for in 遍历, 但是会被 for of 遍历
 
 ## create array
-序列:
+### range 序列:
 
     [...Array(5).keys()];
     Array.from({length: 5}, (x,i) => i);
+    _.range(5)
 
 undefined 数组:
 
@@ -80,6 +81,8 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
 	队列:
 
 		arr.push('new');
+        arr = [...buffer]
+        arr.push(...buffer)
 		arr.shift();//LIFO 后进先出
 
 

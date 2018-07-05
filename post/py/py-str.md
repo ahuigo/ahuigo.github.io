@@ -68,55 +68,60 @@ str räpr r\xe4pr
 ```
 
 ### Padding and aligning strings
-```
-# align left
-'%-10s' % ('test')
-'{:10}'.format('test')
-'{:<10}'.format('test')
 
-# align center
-'{:^10}'.format('test')
+    # align left
+    '%-10s' % ('test')
+    '{:10}'.format('test')
+    '{:<10}'.format('test')
 
-# align right
-'%10s' % ('test',)
-'{:>10}'.format('test')
-      test
+    # align center
+    '{:^10}'.format('test')
 
-```
+    # align right
+    '%5s' % ('test',)
+    '{:>5}'.format('test')
+    ' test'
+
 string default left, number/float default right:
-```
->>> '{:5s}'.format('a')
-'a    '
->>> '{:5d}'.format(3)
-'    3'
-```
+
+    >>> '{:5s}'.format('a')
+    'a    '
+    >>> '{:5d}'.format(3)
+    '    3'
+
 padding with _
-```
-'{:_<10}'.format('test')
-'{:_^10}'.format('test')
-'{:_>10}'.format('test')
-```
+
+    '{:_<10}'.format('test')
+    '{:_^10}'.format('test')
+    '{:_>10}'.format('test')
+
+padding with space(default)
+
+    >>> '%6.2f' % (3.141592653589793,)
+    >>> '{:6.2f}'.format (3.141592653589793,)
+    '  3.14'
+
 padding with zero
-```
->>> '%06.2f' % (3.141592653589793,)
-'003.14'
->>> '{:06.2f}'.format (3.141592653589793,)
-'003.14'
-```
-padding with signed number
-```
->>> '{:+06.2f}'.format (+3.141592653589793,)
-'+03.14'
->>> '{:=+06.2f}'.format (+3.141592653589793,)
-'+03.14'
-```
+
+    >>> '%06.2f' % (3.141592653589793,)
+    '003.14'
+    >>> '{:06.2f}'.format (3.141592653589793,)
+    '003.14'
+
+padding with signed number(`=`没啥用)
+
+    >>> '{:+07.2f}'.format (+3.141592653589793,)
+    '+003.14'
+    >>> '{:=+07.2f}'.format (+3.141592653589793,)
+    '+003.14'
+
 padding with signed number position:
-```
->>> '{:+6d}'.format (3)
-'    +3'
->>> '{:=+6d}'.format (3)
-'+    3'
-```
+
+    >>> '{:+6d}'.format (3)
+    '    +3'
+    >>> '{:=+6d}'.format (3)
+    '+    3'
+
 
 ### Truncating long strings
 ```

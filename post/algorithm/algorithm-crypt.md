@@ -4,12 +4,12 @@ title:	algorithm crypt
 category: blog
 description:
 ---
-# Preface
+# 加密算法简介
 
 # Symmetric-key Cryptography 对称密钥加密
 1. 对称密钥加密，又称对称加密、私钥加密、共享密钥加密，与非对称密钥相比它快得多
 1. 分组加密（Block cipher，又称分块加密、块密码），是一种对称密钥算法。
-它将明文分成多个等长的模块（block），使用确定的算法和对称密钥对每组分别加密解密。
+    1. 它将明文分成多个等长的模块（block），使用确定的算法和对称密钥对每组分别加密解密。
 
 其中典型的块加密有：
 
@@ -25,48 +25,50 @@ description:
 参考[Block_cipher_mode_of_operation]
 
 - ECB (Electronic Code Book): 确定的块Block， 得到的密文是确定的
-优点：
-	1.简单；
-	2.有利于并行计算；
-	3.误差不会被传送；
-缺点:
-	1.不能隐藏明文的模式；
-	2.可能对明文进行主动攻击；
+    1. 优点：
+        1.  简单；
+        2.  有利于并行计算；
+        3.  误差不会被传送；
+    2. 缺点:
+        1. 不能隐藏明文的模式；
+        2. 可能对明文进行主动攻击；
 
 - CBC (Chipher Block Chaining): 密码分组链接，它使用前一块block的密文作为下一块的初始向量IV. 加密只能串行，而解密可以并行(解密时，密文中一位的改变只会导致其对应的平文块完全改变和下一个平文块中对应位发生改变，不会影响到其它平文的内容。)
-优点：
-	1.不容易主动攻击,安全性好于ECB,适合传输长度长的报文,是SSL、IPSec的标准。
+    1. 优点：
+        1. 不容易主动攻击,安全性好于ECB,适合传输长度长的报文,是SSL、IPSec的标准。
 
-缺点：
-	1.不利于加密并行计算；
-	2.误差传递；
-	3.需要初始化向量IV
+    2. 缺点：
+        1. 不利于加密并行计算；
+        2. 误差传递；
+        3. 需要初始化向量IV
 
 - CFB (Chipher Feed Back): 密码反馈，类似CBC, 也需要IV, 解密可并行化，支持更小的密码块,
-优点：
-	1.隐藏了明文模式;
-	2.分组密码转化为流模式;
-	3.可以及时加密传送小于分组的数据;
-缺点:
-	1.不利于并行计算;
-	2.误差传送：一个明文单元损坏影响多个单元;
-	3.唯一的IV;
+    1. 优点：
+        1. 隐藏了明文模式;
+        2. 分组密码转化为流模式;
+        3. 可以及时加密传送小于分组的数据;
+    2. 缺点:
+        1. 不利于并行计算;
+        2. 误差传送：一个明文单元损坏影响多个单元;
+        3. 唯一的IV;
 
 - OFB (Output Feed Back): 输出反馈，同样需要IV; 每个使用OFB的输出块与其前面所有的输出块相关，因此无论是加密还是解密都不能并行化
-优点:
-	1.隐藏了明文模式;
-	2.分组密码转化为流模式;
-	3.可以及时加密传送小于分组的数据;
-缺点:
-	1.不利于并行计算;
-	2.对明文的主动攻击是可能的;
-	3.误差传送：一个明文单元损坏影响多个单元;
+    1. 优点:
+        1. 隐藏了明文模式;
+        2. 分组密码转化为流模式;
+        3. 可以及时加密传送小于分组的数据;
+    2. 缺点:
+        1. 不利于并行计算;
+        2. 对明文的主动攻击是可能的;
+        3. 误差传送：一个明文单元损坏影响多个单元;
 
 ## 3des
 3次DES
 
+    MCRYPT_TRIPLEDES => MCRYPT_DES
+
 ### 3des example
-见[php-lib/mcrypt.php](php-lib/mcrypt.php)
+参考[php-lib/mcrypt.php](php-lib/mcrypt.php)
 
 	/**
 	 * if blocksize = 8, it is pkcs5
@@ -109,8 +111,6 @@ description:
 		return $decrypted_data;
 	}
 
-### DES
-MCRYPT_TRIPLEDES => MCRYPT_DES
 
 ## PKCS
 [pks5,pks7]: http://zhiwei.li/text/2009/05/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%9A%84pkcs5%E5%92%8Cpkcs7%E5%A1%AB%E5%85%85/
@@ -238,13 +238,12 @@ See java-lib
 	}
 
 	$aes = new AESMcrypt($bit = 128, $key = 'abcdef1234567890', $iv = '0987654321fedcba', $mode = 'cbc');
-	$c = $aes->encrypt('haowei.me');
+	$c = $aes->encrypt('数据');
 	var_dump($aes->decrypt($c));
 
 # Asymmetric Cryptography
-Public-key Cryptography [公开密钥加密](http://zh.wikipedia.org/zh/%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86)，又称非对称加密(Asymmetric Cryptography)
-
-公钥的一种表现形式就是数字证书
+公开密钥加密(public-key cryptography), 又称对称密钥加密（asymetric cryptography）.
+[公开密钥加密](http://zh.wikipedia.org/zh/%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86)
 
 常见的公钥加密算法有:
 

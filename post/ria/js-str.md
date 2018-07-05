@@ -21,7 +21,7 @@
 	`Hello, ${name}`
 
 ### buffer
-see py-str-struct
+see py-str-struct: like bytes
 
 string:
 
@@ -36,17 +36,38 @@ base64
     Buffer.from('YQ==', 'base64')
     Buffer.from('a').toString('base64')
 
+    ### base64(chrome)
+	btoa(str)
+	atob(str)
+
 hex:
 
     > Buffer.from('ab').toString('hex')
     '6162'
+    > Buffer.from('6162', 'hex')
 
-chunk
+array:
+
+    var buffer = Buffer.from([1,2,3])
+    arr = [...buffer]
+
+    > Buffer.from(Array(5))
+    <Buffer 00 00 00 00 00>
+    > Buffer.from([...Array(5).keys()])
+
+repeat(alloc)
 
     > Buffer.alloc(5,'\x01\x02');
     <Buffer 01 02 01 02 01>
+    > Buffer.alloc(5, 'str');
 
-## pad
+    > Buffer.alloc(5, Buffer.from([1,2]))
+    <Buffer 01 02 01 02 01>
+
+    > Buffer.alloc(5, 15)
+    <Buffer 0f 0f 0f 0f 0f>
+
+## pad+repeat
 
     ('0'+6).slice(-2)
     'Vue'.padStart(10)           //'       Vue'
@@ -54,11 +75,9 @@ chunk
     'Vue'.padEnd(10, '_*')           //'Vue_*_*_*_'
 
 ## 字符串是不可变的
-```
-var s = 'Test';
-s[0] = 'X';
-alert(s); // s仍然为'Test'
-```
+    var s = 'Test';
+    s[0] = 'X';
+    alert(s); // s仍然为'Test'
 
 ## function
 
@@ -96,11 +115,6 @@ trim space only
 	for(var i=0; i < str.length; i++ ){
 		str[i];
 	}
-
-### base64
-
-	btoa(str)
-	atob(str)
 
 ### split
 支持regexp

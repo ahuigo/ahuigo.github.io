@@ -39,6 +39,8 @@ AES是一种常用的对称加密算法，加解密都用同一个密钥。
 engine: aes256, aes-256-cbc, .. \
 encoding: hex, base64, ....
 
+更多实现:[py-crypt](/p/py-crypt)
+
     const crypto = require('crypto');
     function aesEncrypt(data, key) {
         const cipher = crypto.createCipher('aes-256-cbc', key);

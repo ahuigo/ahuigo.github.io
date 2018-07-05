@@ -23,18 +23,18 @@ description:
 
 好在Python提供了一个struct模块来解决bytes和其他二进制数据类型的转换。
 
-## str2hex & hex2str
+## buffer
+int to bytes： like js Buffer.from([1,2,3])
 
-    import binascii
-    hx = binascii.hexlify('str'.encode)
-        b'3c2063....
-    binascii.unhexlify(hx).decode()
-        'str'
+	>>> bytes([0, 1, 97])
+	b'\x00\x01a'
 
-## strhex
+### str2hex
 
-    bytes.fromhex('4a4b4c')
-    bytes.fromhex('4a4b4c').hex()
+    'abc'.encode().hex()
+        '616263'
+    bytes.fromhex('6162')
+        b'abc'
 
 int to strhex
 
