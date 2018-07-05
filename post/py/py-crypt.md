@@ -1,10 +1,10 @@
 # python 加密实例
 [加密算法简介](/algorithm/algorithm-crypt)
 
-## AES
+# AES
 
-### aes-256-cbc 算法实例（指定iv）
-#### node example
+## aes-256-cbc 算法实例（指定iv）
+### node example
 
     engine = 'aes-256-cbc'
     crypto = require('crypto')
@@ -46,7 +46,7 @@
     dec = Aes.decryptAes256Cbc(enc, pass)
     console.log(enc, dec)
 
-#### python3 example
+### python3 example
 
     import base64
     from Crypto.Cipher import AES
@@ -88,7 +88,7 @@
     print("dec:  {}".format(decrypted))    
     print("data match: {}".format(my_data == decrypted))
 
-#### 随机IV
+### 随机IV
 有时我们想随机产生一个IV,  此时IV 应该像pading 一样`保存`到加密结果的头或者尾部
 
     import base64    
@@ -134,12 +134,12 @@ Warn:
 1. 随机IV 会导致 aes-cbc 加密结果(加IV前)是随机的
 2. ECB 会忽略IV 
 
-#### 固定iv的风险
+### 固定iv的风险
 很多示例是用的内部默认的iv，固定的iv 会有风险:
 1. https://stackoverflow.com/questions/3008139/why-is-using-a-non-random-iv-with-cbc-mode-a-vulnerability
 2. https://crypto.stackexchange.com/questions/5094/is-aes-in-cbc-mode-secure-if-a-known-and-or-fixed-iv-is-used
 
-### aes-ecb
+## aes-ecb
 ecb 不需要iv
 
     from Crypto.Cipher import AES
