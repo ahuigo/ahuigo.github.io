@@ -3,12 +3,19 @@
 见/py/py-serial.md
 
 # String
-like js, double quotes and single quotes is same
+same as js:
 
 	print "a\nb" ;# The character here "\n" is new line
 	print 'a\nb'
 	print '\x30\x31'; 01
+
 	'\x87' == '\u0087' == b'\xc2\x87'.decode() ; #表示的是双位unicode
+    '\x87' == bytes([0xc2,0x87]).decode() == chr(0x87)
+
+## ord/chr(unicode)
+
+	ord('A'); 65
+	chr(65); 'A'
 
 ## multi line
 
@@ -212,11 +219,6 @@ python 内存中string 全部是以unicode编码的，而bytes则可以任何特
     'B'
     >>> chr(25991)
     '文'
-
-## ord/chr
-
-	ord('A'); 65
-	chr(65); 'A'
 
 ### Bytes
 bytes对象b'\xa420'只是一堆比特位而已。define bytes

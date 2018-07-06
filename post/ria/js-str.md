@@ -7,10 +7,10 @@
 	'好' === '\u597D' // true
 	'好' === '\u{597D}' // true (js only)
 
-Note: '\x87' 并不是单字节字符！它其实表示的是双位uicode
+Note: '\x87' 并不是单字节字符！它其实表示的是双位uicode(所以是合法的)
 
     '\u0087' == b'\xc2\x87'.decode()
-        '\x87' === bytes([0xc2,0x87]).decode() === ord(0x87)
+        '\x87' == bytes([0xc2,0x87]).decode() == chr(0x87)
         '\x87' === Buffer.from([0xc2,0x87]).toString() === String.fromCharCode(0x87)
 
 ## es6 string
@@ -21,7 +21,7 @@ Note: '\x87' 并不是单字节字符！它其实表示的是双位uicode
 
     String.raw`\a` === `\\a`
 
-### charcode
+### charcode(unicode)
 
 	.charAt(pos) str[pos=0]
 	.charCodeAt(pos) //返回unicode 十进制表示

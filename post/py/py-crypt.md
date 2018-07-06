@@ -3,10 +3,10 @@
 
 # AES
 
-## aes-256-cbc 算法实例（指定iv）
+## aes-256-cbc 算法实例
 ### node example
 
-    engine = 'aes-256-cbc'
+    engine = 'aes-256-cbc'; //aes-256-ecb, aes192, ...
     crypto = require('crypto')
     log= console.log
     ivx = true
@@ -18,7 +18,7 @@
             let key = m.digest();
             let iv = Buffer.from([...Array(16).keys()])
             cipher = crypto.createCipheriv(engine, key, iv);
-            //cipher = crypto.createCipher(engine, key); # deprecated: iv 复用风险
+            //cipher = crypto.createCipher(engine, key); // deprecated: iv 复用风险
             cipher.setAutoPadding(true)
             let ciph = cipher.update(text, 'utf8', 'base64'); //base64, hex ...
             ciph += cipher.final('base64');
@@ -57,7 +57,7 @@
     def encrypt(key, source):
         source = source.encode()
         key = SHA256.new(key.encode()).digest()  
-        IV = bytes(range(10))
+        IV = bytes(range(16))
         encryptor = AES.new(key, AES.MODE_CBC, IV)
         padding = AES.block_size - len(source) % AES.block_size  
         source += bytes([padding]) * padding 
@@ -67,7 +67,7 @@
     def decrypt(key, source):
         source = base64.b64decode(source.encode("utf8"))
         key = SHA256.new(key.encode()).digest()  
-        IV = bytes(range(10))
+        IV = bytes(range(16))
         decryptor = AES.new(key, AES.MODE_CBC, IV)
         data = decryptor.decrypt(source)  
         padding = data[-1]  # pick the padding value from the end;
@@ -144,13 +144,14 @@ ecb 不需要iv
 
     from Crypto.Cipher import AES
     def pad(text):
+        text = text.encode()
         return text + b' ' * (16 - len(text) % 16)
 
-    key = b'password'
+    key = 'password'
     aes = AES.new(pad(key), AES.MODE_ECB)
-    text = '数据'.encode()
+    text = '数据'
     enc = aes.encrypt(pad(text))
     print(enc)
 
     de = aes.decrypt(enc).decode()
-    print(de[:len(text)])
+    print(de[:len(text)]) # remove padding

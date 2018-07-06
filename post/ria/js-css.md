@@ -472,7 +472,7 @@ http://zh.learnlayout.com/inline-block-layout.html
 	box-sizing:
 		border-box;
 			width = width + pad + border
-		content-box:
+		content-box: default
 
 box-sizing 属性允许您以确切的方式定义width 是否包含padding + border
 

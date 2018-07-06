@@ -6,13 +6,11 @@ description:
 ---
 # Preface
 https://www.shiyanlou.com/courses/53
-https://www.codecademy.com/zh/courses/web-beginner-en-6merh/1/1?curriculum_id=50579fb998b470000202dc8b
 https://github.com/xetorthio/jedis/issues/932
 
-http://www.cnblogs.com/coffeedeveloper/p/3145790.html
 
 http://walle-web.io/docs/
-margin-right
+http://zh.learnlayout.com/position.html
 
 # display
 
@@ -34,7 +32,7 @@ box 的 horizonal 水平居中
     .box{
         margin: 0 auto;
         max-width: 500px;
-        box-sizing: border-box; //将border, padding 也作为盒模型max-width的一部分
+        box-sizing: border-box; //将border, padding 也作为盒模型width的一部分
     }
 
 ## inline-block
@@ -251,10 +249,10 @@ float的元素的margin 由于浮动起来了，不再影响父容器，但是ch
 
 	Inherited: no
 	position:
-		static; 默认(left/top 不生效, )
-		relative; 以本元素static为基准, 面且占用父元素的位置
-		absolute; 相对于最近的“positioned”祖先元素(非static)左上角为基准
-		fixed; 以窗口左上角为基准,不受鼠标滚动影响
+		static; 默认(left/top 不生效, 不会被“positioned”)
+		relative; 相对本元素static 的偏移, 会占用父元素的位置
+		absolute; 相对于父级“positioned”祖先元素的偏移, 如果没有则以当前视窗为基准
+		fixed; 以整个视窗为基准,不受鼠标滚动影响
 
 		如果父结点为relative/absolute则以父结点为基准
 

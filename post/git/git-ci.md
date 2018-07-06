@@ -12,7 +12,8 @@ description:
 2. gitlab
 2. bitbucket
 
-# project management: waffle.io
+# deploy 系统
+http://walle-web.io/
 Waffle is an automated project management tool powered by your GitHub issues & pull requests.
 
 # gitlab
