@@ -8,7 +8,7 @@ like js, double quotes and single quotes is same
 	print "a\nb" ;# The character here "\n" is new line
 	print 'a\nb'
 	print '\x30\x31'; 01
-	print '\xb8'; b'\xc2\xb8' 其实是按utf8 解释
+	'\x87' == '\u0087' == b'\xc2\x87'.decode() ; #表示的是双位unicode
 
 ## multi line
 
@@ -213,6 +213,11 @@ python 内存中string 全部是以unicode编码的，而bytes则可以任何特
     >>> chr(25991)
     '文'
 
+## ord/chr
+
+	ord('A'); 65
+	chr(65); 'A'
+
 ### Bytes
 bytes对象b'\xa420'只是一堆比特位而已。define bytes
 
@@ -275,11 +280,6 @@ python3:
 	len('ab'); 2
 	len('ab'.encode('utf8')); 2
 
-
-## ord/chr
-
-	ord('A'); 65
-	chr(65); 'A'
 
 ## Access String
 like list

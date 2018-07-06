@@ -5,7 +5,13 @@
 	'\x31' == "\x31"
 
 	'好' === '\u597D' // true
-	'好' === '\u{597D}' // true
+	'好' === '\u{597D}' // true (js only)
+
+Note: '\x87' 并不是单字节字符！它其实表示的是双位uicode
+
+    '\u0087' == b'\xc2\x87'.decode()
+        '\x87' === bytes([0xc2,0x87]).decode() === ord(0x87)
+        '\x87' === Buffer.from([0xc2,0x87]).toString() === String.fromCharCode(0x87)
 
 ## es6 string
 支持backquote 多行(es6):
@@ -14,6 +20,12 @@
 	line`
 
     String.raw`\a` === `\\a`
+
+### charcode
+
+	.charAt(pos) str[pos=0]
+	.charCodeAt(pos) //返回unicode 十进制表示
+	String.fromCharCode(97,98)
 
 ### 模板字符
 
@@ -81,9 +93,6 @@ repeat(alloc)
 
 ## function
 
-	.charAt(pos) str[pos=0]
-	.charCodeAt(pos) //返回unicode 十进制表示
-	.fromCharCode(97)
 	#搜索
 	.indexOf(sub_string)
 	.lastIndexOf(sub_str)
