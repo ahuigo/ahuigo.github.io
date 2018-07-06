@@ -17,16 +17,18 @@ description:
 # Data Index Type
 > http://stackoverflow.com/questions/12813363/what-is-the-difference-between-a-candidate-key-and-a-primary-key
 
+在数据库中，超键(SuperKey) 包含候选键(Candidate Key), 候选键包含主键(Primary Key)
 1. Primary Key:
 	对数据对象唯一标识和完整标识的列. Primary Key 属于Candidate Key.  Each Candidate Key can qualify as Primary Key. Only one CK can be PK
-2. Candidate Key:
-	某关系变量的一组属性的集合，且同时满足：1.属性集合能确保在关系中能唯一标识元组，2. 在这个属性集合中找不出合适的子集满足条件
+2. Candidate Key: Unique can be null, it can not be ck
+	某关系变量的一组属性的集合，且同时满足：
+    1. 属性集合能确保在关系中能唯一标识元组(SuperKey)
+    2. 在这个属性集合中找不出合适的子集满足条件(最小子集)
 3. SuperKey:
 	某关系变量的一组属性的集合，且同时满足：属性集合能确保在关系中能唯一标识元组. 所以候选键Candidate Key是最小超键SuperKey。
 
-在数据库中，超键(SuperKey) 包含候选键(Candidate Key), 候选键包含主键(Primary Key)
-
 外键Foreign Key: 连接两表之间的关系属性或者属性集合，通常是主键属性。
+
 	在关系数据库中，关系用来表示表间关系：父数据表(Parent Entity)的Primary Key 会放在另一张表中, 两表通过PK 建立关系，这个PK 属性就是外键。
 
 代理键和自然键: 如果数据表中的所有候选键都不适合做主键(数据太长，意义层面太多), 就会请一个无意义的键做主键（比如自增的id）, 这就是代理键。有意义的主键就是自然键。
