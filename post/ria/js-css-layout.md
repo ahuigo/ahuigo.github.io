@@ -5,11 +5,6 @@ category: blog
 description:
 ---
 # Preface
-https://www.shiyanlou.com/courses/53
-https://github.com/xetorthio/jedis/issues/932
-
-
-http://walle-web.io/docs/
 http://zh.learnlayout.com/position.html
 
 # display
@@ -35,14 +30,8 @@ box 的 horizonal 水平居中
         box-sizing: border-box; //将border, padding 也作为盒模型width的一部分
     }
 
-## inline-block
-float+clear 多麻烦，我们用inline-block:
-1. inline-height内位置的偏移使用: vertical-align:top/bottom
-
-    这是一幅<img stype="vertical-align:top" src="/i/eg_cute.gif" />位于段落中的图像
-
 ## column
-column 3列
+吧文本分成 column 3列
 
     p{
         column-count: 3;
@@ -50,13 +39,23 @@ column 3列
     }
 
 # flex
-display:flex, 子块即使不设置flex, 也会导致： inline-block=float+clear 效果
+display:flex, 比 inline-block 简单
 
 	.parent{ display:flex;}
         .children1{ flex:1;}
         .children2{ flex:2;} //宽度自适应 比例2
 
 它分为容器container, 和 items
+
+    .container {
+        display: flex;
+    }
+    nav {
+        width: 200px; //先占有左边，右边的剩余空间给items 
+    }
+    .items{
+        flex: 1;
+    }
 
 ## flex 容器
 flex 容器有主轴，侧轴之分
@@ -76,7 +75,7 @@ flex 容器有主轴，侧轴之分
         flex-flow:flex-direction;默认值为row  nowrap；
     
 ### box对齐:
-justify-content 用于定义`伸缩项目`在`主轴`上面的的对齐方式
+justify-content 用于定义`伸缩项目`在`主轴(横轴)`上面的的对齐方式
 
         flex-start;伸缩项目向主轴的起始位置开始对齐，后面的每元素紧挨着前一个元素对齐。
         flex-end;伸缩项目向主轴的结束位置对齐，前面的每一个元素紧挨着后一个元素对齐。
@@ -119,14 +118,29 @@ http://zh.learnlayout.com/flexbox.html
 
 # align
 
-## content align
+## inline align
 
-	text-align:	(horizonal center)
-	align-items: center; (content vertical center)
-	justify-content: center; (horizonal center)
-	align-content:
+    vertical-align: top/bottom
 
-## 水平
+## text align
+
+	text-align:	left/center/right
+
+## container align
+
+	justify-content: horizonal center
+	align-items: vertical center)
+
+	align-content: justify-content属性类似。只不过这里元素是以一行为单位。
+
+居中:
+
+    display:  flex;
+    justify-content: center;
+    align-items: center;
+
+## 传统居中
+### 水平
 1. margin: 0 auto;
 2. margin-right/left+float: 计算量大
     3. width:200px; margin-right: -200px;float:right; 
@@ -138,7 +152,7 @@ http://zh.learnlayout.com/flexbox.html
 4. absolue+relative: 两层
     1. div_parent: left:50%; div_sub: relative,left: -50% 
 
-## page center
+### page center
 利用absolute + margin 修正(一层, 但得算margin=-width/2)
 
 	<div style="position: absolute; left: 50%;top: 50%;z-index: 99;background: red;
@@ -190,25 +204,60 @@ http://zh.learnlayout.com/flexbox.html
 # 位置的css 核心属性
 
 ## float
-float 块导致的滑动:
-1. 按宽度往上挤的效果(属性为float:left/right 且有空间)
+float 因为自己漂浮起来，导致`下面的块`的滑动，`上面的块`不会滑动:
+1. 下面的块按宽度往上挤的效果(属性为float:left/right 且有空间)
 2. 非float 块, 会向上移动(注意: 文字本身会排斥float 块, 所以文字不会向上移动)
 3. 文字不会去挤压float 块，产生文字环绕的效果
 
-关于float+clear: 
+### 关于float+clear: 
+1. parent 有height时，`下面的块`不会滑动上去(本质上的原因是，float 本身不占用parent.height)
 1. clear 是告诉自己不要往左上、右上挤，
 2. 也不要去填补 float 浮动起来后的空位
 
     <div style="float:left"></div>
     <div style="clear:left">我遇到了clear:left，不会往左上挤</div>
 
-    # clear 内部无效
+    # clear 内部无效(冲突的)
     <div style="float:left; background:red;">你好<div style="clear:left"></div></div>
 
-浮动元素不占用父容器的宽高，可能会溢出容器，为了解决这个问题可以:
+example:
+
+    nav {
+        float: left;
+        width: 200px; #  width: 25%;
+    }
+    section {
+        margin-left: 200px;
+    }
+
+
+
+### overflow
+浮动元素不占用父容器的宽高，可能会溢出容器，可以给parent 加overflow:
 
     overflow: hidden; #浮动元素不会被hidden，而会撑大容器
     overflow: auto; #浮动元素不会被hidden，而会撑大容器
+
+## inline-block 代替float
+float+clear 多麻烦，我们用inline-block:
+1. vertical-align 属性会影响到 inline-block 元素，你可能会把它的值设置为 top 。(默认bottom)
+2. 你需要设置每一列的宽度
+2. 如果HTML源代码中元素之间有空格，那么列与列之间会产生空隙
+
+    nav {
+        display: inline-block;
+        vertical-align: top;
+        width: 25%;
+    }
+    .column {
+        display: inline-block;
+        vertical-align: top;
+        width: 75%;
+    }
+
+example
+
+    这是一幅<img stype="vertical-align:top" src="/i/eg_cute.gif" />位于段落中的图像
 
 ## margin
 margin 控制的是相邻元素之间的border 外边界间距。float的元素的margin则指与容器内的`padding内边界`的间距

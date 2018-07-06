@@ -59,6 +59,10 @@ width 也会受单词的影响，所以你还需要加上
 
 ![Have](/img/ria.color.hue.png)
 
+## coloer list
+
+    a:hover{background: cadetblue}
+    a:link{background: lightgray}
 
 # 响应式设计(Responsive Design)
 http://zh.learnlayout.com/media-queries.html
