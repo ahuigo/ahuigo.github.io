@@ -154,3 +154,36 @@ ecb 不需要iv
 
     de = aes.decrypt(enc).decode()
     print(de[:len(text)]) # remove padding
+
+# DES
+以DES ECB 为例(不需要enc = iv+enc)
+
+    from Crypto.Cipher import DES
+    import base64 as b64
+    from Crypto import Random
+
+    def pad5(text):
+        s = text.encode()
+        pads = 8 - len(s)%8
+        s = s+bytes([pads])*pads
+        return s
+
+    def encrypt(key, text):
+        #iv = Random.new().read(DES.block_size)
+        #cipher = DES.new(key, DES.MODE_OFB, iv)
+        cipher = DES.new(key, DES.MODE_ECB)
+        msg = cipher.encrypt(pad5(text))
+        return  b64.b64encode(msg).decode()
+
+    def decrypt(key, enc):
+        #iv = Random.new().read(DES.block_size)
+        #cipher = DES.new(key, DES.MODE_OFB, iv)
+        cipher = DES.new(key, DES.MODE_ECB)
+        enc = b64.b64decode(enc)
+        return cipher.decrypt(enc).decode()
+
+    key = "password"
+    text = '数据'
+    enc = encrypt(key, text)
+    print('enc:', enc)
+    print('data:', decrypt(key, enc))

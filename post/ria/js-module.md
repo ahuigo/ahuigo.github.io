@@ -326,7 +326,7 @@ text和image插件，则是允许require.js加载文本和图片文件。
 	　　}
 	);
 
-# Node: CMD
+# Node: commonJS
 ## Create module
 hello module: hello.js
 
@@ -354,28 +354,19 @@ hello module: hello.js
     var s= 'hello'
 
 ### module.exports怎么实现？
-这个也很容易实现，Node可以先准备一个对象module：
+http://www.cnblogs.com/chenguangliang/p/5856701.html
 
     // 准备module对象:
     var module = {
-        id: 'hello',
         exports: {}
     };
 
-    var load = function (exports, module) {
-        // 读取的hello.js代码:
-        function greet(name) {
-            console.log('Hello, ' + name + '!');
-        }
+    (function(module, exports) {
+        exports.multiply = function (n) { return n * 1000 };
+    }(module, module.exports))
 
-        module.exports = greet;
-        // hello.js代码结束
-        return module.exports;
-    };
-    // 保存module:
-    exported = load(module.exports, module);
-    // 保存module:
-    save(module, exported);
+    var f = module.exports.multiply;
+    f(5) // 5000 
 
 
 多个变量暴露可以用`exports.var=xxx`:

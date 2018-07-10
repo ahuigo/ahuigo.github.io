@@ -1,5 +1,13 @@
 # Expression
 
+## and or
+and 优先级更高
+
+    2 || 1 && 0 //2
+    (2 || 1) && 0 //0
+    0 && 1 || 3     //3
+    0 && (1 || 3)     //0
+
 ## Condition 
 
 	switch(n) { case 1: 'code block' ;break;}
