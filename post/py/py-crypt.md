@@ -180,10 +180,18 @@ ecb 不需要iv
         #cipher = DES.new(key, DES.MODE_OFB, iv)
         cipher = DES.new(key, DES.MODE_ECB)
         enc = b64.b64decode(enc)
-        return cipher.decrypt(enc).decode()
+        decmsg = cipher.decrypt(enc)
+        msg = decmsg[:-decmsg[-1]].decode()
+        return msg
+
 
     key = "password"
     text = '数据'
     enc = encrypt(key, text)
     print('enc:', enc)
     print('data:', decrypt(key, enc))
+
+notice:
+
+    DES.block_size = 8
+    AES.block_size = 16

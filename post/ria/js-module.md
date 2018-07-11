@@ -62,7 +62,7 @@ module `this` is `{}`, not `global===window`
 也可以用局部静态变量
 
 ## 模块规范
-js 的模块规范有两种： CommonJs 和 AMD js
+js 的模块规范有两种： CommonJs 和 AMD js, CMD.js(sea)
 
 ### CommonJS 规范
 node.js的模块系统，就是参照CommonJS规范实现的。在CommonJS中，有一个全局性方法require()，用于加载模块。假定有一个数学模块math.js，就可以像下面这样加载。
@@ -386,6 +386,7 @@ http://www.cnblogs.com/chenguangliang/p/5856701.html
 # Package, 打包
 http://www.ruanyifeng.com/blog/2014/09/package-management.html
 
+old:
 - Bower - 不打包，只是install/update..: 
     　　# 模块的名称
     　　$ bower install jquery
@@ -398,9 +399,11 @@ http://www.ruanyifeng.com/blog/2014/09/package-management.html
     - http://javascript.ruanyifeng.com/tool/gulp.html
     - https://segmentfault.com/a/1190000002491282
 
+new:
 - webpack: 静态模块打包器(module bundler): js/css/png/font/..., 整合了gulp的优
-- parcel: 比webpack 更快先进
-- rollup: es2015 Rollup 是下一代的 javascript 打包器，它使用 tree-shaking 的技术使打包的结果只包括实际用到的 exports。 使用它打包的代码，基本没有冗余的代码，减少了很多的代码体积
+- parcel: 比较webpack 属于0配置，专注也web，不能用于打包npm
+- rollup: Facebook出品的es2015 Rollup 是下一代的 javascript 打包器，它使用 tree-shaking 的技术使打包的结果只包括实际用到的 exports。 使用它打包的代码，基本没有冗余的代码，减少了很多的代码体积
+    1. https://w3ctech.com/topic/1996
 
 ## dao
 将js/css 合并

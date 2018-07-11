@@ -17,8 +17,13 @@ description:
 mysql 集群: mysql cluster, mysql proxy, mysql replication, drdb 等；
 集群其实不是分表，但是起到了分表的作用—— 通过分布式为数据库减负
 
+- mysql cluster: NDB cluster 存储引擎实现的分布式数据库系统 ![](https://images0.cnblogs.com/i/609710/201404/142046463694994.png)
+    1. 自动切分数据，冗余数据等高级功能。
+    2. Share Nothing的架构，各个MySQL Server之间并不共享任何数据，高度可扩展以及高度可用。
 - mysql proxy: 将路由mysql的逻辑, 从业务代码中解耦出来
 - MySQL replication: 提供了数据库复制的功能,可以实现多个数据库实时同步
+    1. 用于读写分离、冷热分离
+    2. 数据冗余
 
 集群特点：
 
@@ -27,10 +32,10 @@ mysql 集群: mysql cluster, mysql proxy, mysql replication, drdb 等；
 
 
 # 水平分表与垂直分表
-分表有两种：
+分表有两种：题图![](https://pic4.zhimg.com/v2-b7b31d442e75c4f68f481160e891580f_r.jpg)
 
-- 水平分表: 根据某一个字段(比如uid) 分表
-- 垂直分表: 把一些字段拆分到另一个表，并且该表与原表是一对一的关系。
+- 水平分表: 根据某一个字段(比如uid) 分表。 影响聚合
+- 垂直分表: 把一些字段拆分到另一个表，并且该表与原表是一对一的关系。影响字段join
 
 # merge 合并分表
 当水平分表后，可以通过merge 合并分表。这样老代码就不需要改动了！不过，只支持MyISAM, 比较适合读数据，而不适合写数据

@@ -156,6 +156,7 @@ run:
 
     gunicorn app:app  --log-file app.gun.log
     nohup gunicorn app --capture-output &
+    nohup gunicorn app --capture-output --log-file app.gun.log --log-level=debug
 
 app log:
 
