@@ -112,10 +112,6 @@ file is blob, split file to small blob
     fileReader.readAsBinaryString(blob_or_file);
 
 # chunk upload
-分块(block)与分片(chunk)上传
-> http://developer.qiniu.com/docs/v6/api/overview/up/chunked-upload.html
-
-demo: 见ajax
 [js-lib/ajax/](js-lib/ajax/)
 
 ## uploadFile
@@ -149,5 +145,31 @@ demo: 见ajax
 	$chunk = fopen($_FILES['file']['tmp_name'], 'r');
 	stream_copy_to_stream($chunk, $f);
 
-# md5
-> Refer to: http://www.zhuwenlong.com/blog/52d6769f93dcae3050000003
+# Blob
+
+    blob = new Blob(['str'], {type : 'application/json'});
+    blob.slice(start, end)
+
+# File
+File 基于blob
+
+    file = new File(['str'],'a.txt', {type : 'application/json'});
+    file = new File(['str'], 'a.txt' );
+
+## FileReader
+
+    reader = new FileReader()
+    reader.onload = function(evt) {
+        xhr.send(evt.target.result);
+    };
+
+    reader.readAsBinaryString(file);
+    reader.readAsDataURL(file); //data:;base64,YQ==
+    reader.readAsText(file)
+    reader.readAsArrayBuffer(file)
+
+## FileReaderSync
+该接口只在workers里可用,因为在主线程里进行同步I/O操作可能会阻塞用户界面
+http://jsfiddle.net/bgrins/7DjCP/
+
+    r = new FileReaderSync().readAsDataURL(data)

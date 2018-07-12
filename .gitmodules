@@ -22,3 +22,6 @@
 [submodule "demo/pyhttp"]
 	path = demo/pyhttp
 	url = https://github.com/ahuigo/pyhttp-server
+[submodule "demo/upload"]
+	path = demo/upload
+	url = https://github.com/ahuigo/upload-chunk

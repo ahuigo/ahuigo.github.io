@@ -38,13 +38,6 @@ module `this` is `{}`, not `global===window`
 # 模块的定义(对象定义)
 本文参考阮一峰的: [js 模块化](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
 
-## 直接定义对象
-
-	obj = {count:1, incr:function(){return ++this.count;}};
-	obj.incr();
-
-但是以上两种定义方法的成员变量会受到污染，比如`mod.count` 是暴露的.
-
 ## 放大模式
 如果一个模块很大，必须分成几个部分，或者一个模块需要继承另一个模块，这时就有必要采用"放大模式"（augmentation）。
 用匿名函数放大一个module
@@ -404,6 +397,7 @@ new:
 - parcel: 比较webpack 属于0配置，专注也web，不能用于打包npm
 - rollup: Facebook出品的es2015 Rollup 是下一代的 javascript 打包器，它使用 tree-shaking 的技术使打包的结果只包括实际用到的 exports。 使用它打包的代码，基本没有冗余的代码，减少了很多的代码体积
     1. https://w3ctech.com/topic/1996
+    2. http://www.rollupjs.com
 
 ## dao
 将js/css 合并

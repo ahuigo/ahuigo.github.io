@@ -2,6 +2,7 @@
 ## serial json
 
     JSON.stringify(xiaoming, null, '  ');
+    JSON.stringify(xiaoming, null, 2);
 
 
 第二个参数，控制如何筛选对象的键值，第三个参数控制缩进

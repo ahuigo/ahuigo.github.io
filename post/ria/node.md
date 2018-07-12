@@ -156,7 +156,7 @@ write 不区分buffer/string: new Buffer('使用Stream写入二进制数据...\n
 要以流的形式写入文件，只需要不断调用write()方法，最后以end()结束：
 
     var fs = require('fs');
-    var ws1 = fs.createWriteStream('output1.txt', 'utf-8');
+    var ws1 = fs.createWriteStream('out.txt', 'utf-8');
     ws1.write('使用Stream写入文本数据...\n');
     ws1.write('END.');
     ws1.end('more end');
@@ -170,6 +170,12 @@ write 不区分buffer/string: new Buffer('使用Stream写入二进制数据...\n
     rs.pipe(ws);
     //readable.pipe(writable, { end: false }); 防止readable end事件自动关闭writable
 
+koa append: https://github.com/koajs/examples/tree/master/upload
+
+    const file = ctx.request.files[0];
+    const reader = fs.createReadStream(file.path);
+    const stream = fs.createWriteStream('out.txt', {flags: 'a'});
+    reader.pipe(stream);
 
 # http server
 

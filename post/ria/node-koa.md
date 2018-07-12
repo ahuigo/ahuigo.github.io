@@ -156,7 +156,7 @@ e.g.
         if (ctx.request.path.startsWith('/api/') || ctx.request.accepts('json')) {
             ctx.rest = (data) => {
                 ctx.response.type = 'application/json';
-                ctx.response.body = data;
+                ctx.response.body = JSON.stringify(data);
             }
             ctx.error = function (msg, extra) {
                 throw { message, extra, }

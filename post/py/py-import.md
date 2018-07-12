@@ -59,10 +59,15 @@ The . is a shortcut that tells it search in current package(not process's cwd) b
         # 本质是 from __name__.submodule import sth
         # 直接执行会出问题 from '__main__'.submodule import sth
 
+wrong:
+
+    import .pkg
+    import .mod
+
 current working path
 
-	import mod.pkg;   # entrance file's directory (not process's cwd) 见sys.path
-	import .mod.pkg;  # current file's directory (not process's cwd)
+	from mod.pkg;   # entrance file's directory (not process's cwd) 见sys.path
+	from .mod.pkg;  # current file's directory (not process's cwd)
 	from . import a,b,c ; current file's directory (not process's cwd)
 
 ## path

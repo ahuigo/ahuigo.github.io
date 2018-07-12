@@ -99,8 +99,16 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
 
 sort()方法会直接对Array进行修改，它返回的结果仍是当前Array
 
-  myData.sort(function(i,j){return i-j;}); //从小到大
-  myData.sort(function(i,j){return i<j? -1:1;}); //从小到大>
+  myData.sort((i,j)=>i-j); //从小到大
+  myData.sort((i,j)=>i>j?1:-1); //从小到大
+  myData.sort((i,j)=>i>j); //wrong!!!!!
+
+for list:
+
+    var list = document.querySelector('#test-list')
+    Array.prototype.slice.call(list)
+        .sort((a,b)=>a.innerText>b.innerText?1:-1)
+        .map(node=>list.appendChild(node))
 
 ## splice 
 操作方法:

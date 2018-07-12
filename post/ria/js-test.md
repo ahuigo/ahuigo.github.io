@@ -17,11 +17,11 @@ description:
 # 界面回归测试
 界面回归测试常见的做法有像素对比和dom结构对比两个方向。
 
+## PhantomCSS
 **像素对比**
-	PhantomCSS
 		像素对比比较出名的工具是PhantomCSS。 PhantomCSS结合了 Casperjs截图和ResembleJs 图像对比分析。单纯从易用性和对比效果来说还是不错的
 
-**dom结构对比**
+## dom结构对比
 	page-monitor
 		你可以很快的搭建一个监控系统，监控页面的文字、样式等变动情况。
 
@@ -30,10 +30,10 @@ description:
 # 功能测试 
 通过模拟正常的操作流程来判断页面展现是否符合预期。
 
-**Phantomjs**
+## Phantomjs
 大名鼎鼎的PhantomJS当然要隆重介绍啦！前面界面对比测试基本都是基于PhantomJS开发的， Phantom JS是一个服务器端的 JavaScript API 的 WebKit。其支持各种Web标准： DOM 处理, CSS 选择器, JSON, Canvas, 和 SVG。对于web测试、界面、网络捕获、页面自动化访问等等方面可以说是信手拈来。
 
-**CasperJS**
+## CasperJS
 casperjs是对PhantomJS的封装，提供了更加易用的API, 增强了测试等方面的支持。例如通过CasperJS可以轻松实现贴吧的自动发帖功能：
 
 	casper.test.begin('测试发帖功能', function suite(test) {   
@@ -89,7 +89,7 @@ casperjs能监听测试和页面的各个状态进行截图等操作，如果针
 # 性能测试
 [性能监控系统](http://fex.baidu.com/blog/2014/05/build-performance-monitor-in-7-days/)
 
-*Phantomas*
+## Phantomas
 这里推荐一个同样是基于PhantomJS的工具Phantomas,它能运行测试页面获取很多性能指标，加载时间、页面请求数、资源大小、是否开启缓存和Gzip、选择器性能、dom结构等等诸多指标都能一次性得到，并且有相应的grunt插件。
 
 你也可以对检测指标进行二次开发，例如移动端定义一个最大图片大小的规则，在开发的时候如果使用了超过限制的大图则进行告警。不过如果把加载过程中的时间点作为常规的测试监控，则最好模拟移动端网络环境。

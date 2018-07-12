@@ -10,6 +10,20 @@ description:
 Chrome开发者工具不完全指南
 	http://web.jobbole.com/82562/
 
+# reloadCSS
+
+    function reloadCSS() {
+        const links = document.getElementsByTagName('link');
+
+        Array.from(links)
+        .filter(link => link.rel.toLowerCase() === 'stylesheet' && link.href)
+        .forEach(link => {
+            const url = new URL(link.href, location.href);
+            url.searchParams.set('forceReload', Date.now());
+            link.href = url.href;
+        });
+    }
+
 # chrome
 [ria-debug-chrome](/p/ria-debug-chrome)
 
