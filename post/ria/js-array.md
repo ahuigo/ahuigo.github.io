@@ -201,6 +201,10 @@ string  没有此属性
         console.log(value, map===m);
     });
 
+## entries
+    for(let [key, value] of Object.entries(myObject)) {
+        console.log(key, value); // "first", "one"
+    }
 
 # Map/Set
 

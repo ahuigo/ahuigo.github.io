@@ -14,6 +14,7 @@ description:
 	autocomplete(自动完成)
 		autocomplete="off" //默认自动完成是on
     onsubmit="return callback()" //return: true/false
+    onsubmit="callback()" //不行！return 才能break
 
 ## button
 button will auto submit by default  `type="submit"`, change it to:

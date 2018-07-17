@@ -20,11 +20,27 @@ es6 默认用 use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/0
 4. function 下的this 是undefined, 而new 生成的obj 内的this 指向自己
 
 ## global
+node:
+
+    // mod1.js
+    global.name = "Tony";
+    // mod2.js
+    console.log(name)
+
+chrome: 天生global
+
+    name = "Tony";
 
 ## define variable
 1. let name 只在代码块中有效+不可以重复定义: for(let i=0;;)；
 1. var name 只在作用域中有效
-2. const PI = 3.14;
+    1. const name 只在作用域中有效
+    2. const PI = 3.14;
+
+没有前缀的var，被绑定到this/window, 所以可以被删除. 少用，他会覆盖this/window属性
+
+    a=1
+    delete window.a
 
 ### 解构赋值
 析构array

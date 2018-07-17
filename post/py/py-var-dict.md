@@ -40,6 +40,14 @@ dict, list 赋值都是按引用的，如果是一维的值:
 ### first key
 	next(iter(a))
 
+### init with same value
+
+    >>> keys=[1,2,3]
+
+    >>> dict(zip(keys,[0]*len(keys)))
+    >>> dict.fromkeys(keys, 0)
+    >>> {k:0 for k in keys}
+
 ## get value
 
     dic.get(key, default)
@@ -238,7 +246,12 @@ or with collections.Counter:
     >>> k, v = (1,3)
 
 
+
 # Note
+## update inplace version
+
+    d.update((k, v * 0.5) for k,v in d.items())
+
 ## Looping over dictionary keys and delete
 Note: in python 3 to iterate through a dictionary you have to *explicidly* write: *list(d.keys())* because d.keys() returns a "dictionary view" (an iterable that provide a dynamic view on the dictionary’s keys).
 
@@ -247,12 +260,12 @@ Note: in python 3 to iterate through a dictionary you have to *explicidly* write
         if k.startswith('r'):
             del d[k]
 
-1. If you mutate something while you're iterating over it, you're living in a state of sin and deserve what ever happens to you.
+If you mutate something while you're iterating over it, you're living in a state of sin and deserve what ever happens to you.
 
-	a = [1,2,3,4,5]
-	for i in a:
-		a.remove(i) # or a.pop(0) 也会发生错误
-	# a = [2,4]
+    a = [1,2,3,4,5]
+    for i in a:
+    	a.remove(i) # or a.pop(0) 也会发生错误
+    # a = [2,4]
 
 正确的方式：
 

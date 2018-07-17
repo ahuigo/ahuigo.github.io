@@ -53,18 +53,9 @@ items:
 
 ## merge, update
 
-    > Object.assign({a:1}, {a:2}, {a:3},)
+    > let merged = {...obj1, ...obj2};
+    > let merged = Object.assign({}, {a:2}, {a:3},)
     { a: 3 }
-
-update
-
-	Object.prototype.update = function(defaults) {
-		for (var i in defaults) {
-			if(i in this){
-				this[i] = defaults[i];
-			}
-		}
-	};
 
 ## Property 属性
 

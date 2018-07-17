@@ -35,6 +35,7 @@ curl 默认发送post数据是: application/x-www.form-urlencoded(不同于在fo
 		set User-Agent
 	-e
 		robots=off if you don’t want wget to obey by the robots.txt file
+    -A 'Chrome/xxxx, ....'
 
 ## -I
 

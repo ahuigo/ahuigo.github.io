@@ -47,6 +47,8 @@ JavaScript程序是由事件驱动执行的单线程模型，Node.js也不例外
     __filename # file path
     require('path').basename(__filename);
 
+    fs.existsSync('a.csv')
+
 __line:
 
         Object.defineProperty(global, '__stack', {
@@ -67,8 +69,7 @@ __line:
             }
         });
 
-console.log(__line);
-
+    console.log(__line);
 
 ## readFile
 同步与异步
