@@ -17,6 +17,20 @@ xlsx 是zip 文件：
 
 	zip -t t.xlsx
 
+## unzip
+
+    import zipfile,tempfile,os
+    with open('a.xlsx', 'rb') as f:
+        dest = tempfile.TemporaryDirectory()
+        zf = zipfile.ZipFile(f)
+        zf.extract('xl/media/image1.png', dest.name)
+            '/var/xxxxxx/xl/media/image1.png'
+        os.rename(dest.name+'/xl/media/image1.png', 'newdir')
+
+        # print([f.filename for f in zf.filelist if type(f)==zipfile.ZipInfo])
+        # print([f.filename for f in zf.infolist()])
+        # zf.extractall(dest)
+
 ## 数据类型
 数据类型用s(style_id) 表示：
 

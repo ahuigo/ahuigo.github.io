@@ -8,37 +8,52 @@ description:
 
 Socket是网络编程的一个抽象概念。通常我们用一个Socket表示“打开了一个网络链接”，而打开一个Socket需要知道目标计算机的IP地址和端口号，再指定协议类型即可。
 
+# connect multiple times
+ 同一个socket 只能 connect 一次:
+
+    # code by 依云
+    >>> import socket
+    >>> s = socket.socket()
+    # since Linux 3.9, 见 man 7 socket
+    >>> s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    >>> s2 = socket.socket()
+    >>> s2.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    >>> s.bind(('127.0.0.1', 12345))
+    >>> s2.bind(('127.0.0.1', 12345))
+
+    >>> s.connect(('127.0.0.1', 8081))
+    >>> s2.connect(('127.0.0.1', 8082)
+
 # 客户端
 大多数连接都是可靠的TCP连接。创建TCP连接时，主动发起连接的叫客户端，被动响应连接的叫服务器。
 
 我们要创建一个基于TCP连接的Socket，可以这样做：
-```
-import socket
 
-# 创建一个socket:
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# 建立连接:
-s.connect(('baidu.com', 80))
+    import socket
 
-# 发送数据:
-s.send(b'GET /header.php HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n')
+    # 创建一个socket:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # 建立连接:
+    s.connect(('baidu.com', 80))
 
-# 接收数据:
-buffer = []
-#for d in takewhile(lambda x:x, iter(lambda:s.recv(1024),b'')): # 每次最多接收1k字节:
-for d in iter(lambda:s.recv(1024), b''): # 每次最多接收1k字节:
-	buffer.append(d)
-data = b''.join(buffer)
+    # 发送数据:
+    s.send(b'GET /header.php HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n')
 
-# 关闭连接:
-s.close()
+    # 接收数据:
+    buffer = []
+    #for d in takewhile(lambda x:x, iter(lambda:s.recv(1024),b'')): # 每次最多接收1k字节:
+    for d in iter(lambda:s.recv(1024), b''): # 每次最多接收1k字节:
+        buffer.append(d)
+    data = b''.join(buffer)
 
-header, html = data.split(b'\r\n\r\n', 1)
-print(header.decode('utf-8'))
-# 把接收的数据写入文件:
-with open('sina.html', 'wb') as f:
-    f.write(html)
-```
+    # 关闭连接:
+    s.close()
+
+    header, html = data.split(b'\r\n\r\n', 1)
+    print(header.decode('utf-8'))
+    # 把接收的数据写入文件:
+    with open('sina.html', 'wb') as f:
+        f.write(html)
 
 创建Socket时
 1. AF_INET指定使用IPv4协议，如果要用更先进的IPv6，就指定为AF_INET6。

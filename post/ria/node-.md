@@ -42,10 +42,15 @@ JavaScript程序是由事件驱动执行的单线程模型，Node.js也不例外
 # fs, 文件系统
 
 ## dir
+### path
 
+    const path = require('path')
+    path.resolve(__dirname, '../') 
+    path.basename(__filename) 
+
+### dir/file/line
     __dirname # current js file's dir
     __filename # file path
-    require('path').basename(__filename);
 
     fs.existsSync('a.csv')
 

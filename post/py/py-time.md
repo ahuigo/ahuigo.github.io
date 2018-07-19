@@ -136,6 +136,12 @@ formater: https://docs.python.org/3/library/datetime.html
 	2015-04-19 04:20:00
 	>>> datetime.now().timestamp()
 
+### by formate
+
+    from dateutil.parser import parse as strptime
+    strptime('2011-12-31')
+	d=datetime.strptime('2015-6-1 18:19:59', '%Y-%m-%d %H:%M:%S')
+
 ## timedelta: datetime加减
 
     >>> timedelta(days=2, hours=12)

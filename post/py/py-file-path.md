@@ -1,3 +1,25 @@
+# tempfile
+
+    import tempfile
+    tempfile.TemporaryDirectory(suffix=None, prefix=None, dir=None)
+    tempfile.TemporaryFile(mode='w+b', buffering=None, encoding=None, newline=None, suffix=None, prefix=None, dir=None)
+
+    fp = tempfile.TemporaryFile()
+    fp.write(b'ssss')
+
+## temporaryDirectory
+
+    import zipfile,tempfile,os
+    with open('a.xlsx', 'rb') as f:
+        dest = tempfile.TemporaryDirectory()
+        zf = zipfile.ZipFile(f)
+        zf.extract('xl/media/image1.png', dest.name)
+            '/var/xxxxxx/xl/media/image1.png'
+        os.rename(dest.name+'/xl/media/image1.png', 'newdir')
+
+        # print([f.filename for f in zf.filelist if type(f)==zipfile.ZipInfo])
+        # print([f.filename for f in zf.infolist()])
+        # zf.extractall(dest)
 
 # Path
 
@@ -18,12 +40,18 @@
 
 ### .glob file
 Listing Python source files in this directory tree:
-```
+
     >>> list(p.glob('**/*.py'))
     [PosixPath('test_pathlib.py'), PosixPath('setup.py'),
      PosixPath('pathlib.py'), PosixPath('docs/conf.py'),
      PosixPath('build/lib/pathlib.py')]
-```
+
+## walk
+
+    for root, dirs, files in os.walk(dest):
+        for file_ in files:
+            fn = os.path.join(root, file_)
+
 
 ## concat path
     >>> p = Path('/etc')

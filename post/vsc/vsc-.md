@@ -23,7 +23,8 @@ cmd+p
 div.test>h3.title+ul>li*3>span.text
 
 ## Snippet
- select User Snippets under File > Preferences (Code > Preferences 
+Select User snippets under:  (Code > Preferences )
+        http://codepen.io/mrmlnc/pen/GqrqPg
 
 # extension
 1. markdown all in one: ctrl+B

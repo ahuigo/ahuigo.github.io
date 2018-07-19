@@ -44,6 +44,17 @@ old
 
 > %r displays the "raw" data
 
+### f-str
+    x=1; user={'name':'ahui'};
+    f'x={x}, user["name"]={user["name"]}, id(user)={id(user)}'
+        'x=1, user["name"]=ahui, id(user)=4500547264'
+
+### string Template
+
+    from string import Template
+    Template('$who likes $what').substitute(who='Tom', what='cat')
+    Template('$who').substitute({'who':1})
+
 ### tab length
 '\t'.expandtabs(4)
 
@@ -187,17 +198,6 @@ class HAL9000(object):
         return 'HAL 9000'
 '{:open-the-pod-bay-doors}'.format(HAL9000())
 ```
-
-### f-str
-    x=1; user={'name':'ahui'};
-    f'x={x}, user["name"]={user["name"]}, id(user)={id(user)}'
-        'x=1, user["name"]=ahui, id(user)=4500547264'
-
-### string Template
-
-    from string import Template
-    Template('$who likes $what').substitute(who='Tom', what='cat')
-    Template('$who').substitute({'who':1})
 
 ## encoding
 python 内存中string 全部是以unicode编码的，而bytes则可以任何特定的编码

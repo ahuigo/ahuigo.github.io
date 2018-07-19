@@ -10,8 +10,12 @@ http://mirror.eggjs.org/zh-cn/advanced/loader.html
 ### headers 
 ctx.headers，ctx.header，ctx.request.headers，ctx.request.header：这几个方法是等价
 
-  ctx.get('user-agent') || '';
+  ctx.get('user-agent') || ''; //自动处理大小写
   ctx.get('content-type') ==='application/json'
+
+  ctx.host
+  ctx.protocol
+  ctx.ip
 
 ### query
     //router.get('/user/:id'
@@ -20,10 +24,47 @@ ctx.headers，ctx.header，ctx.request.headers，ctx.request.header：这几个�
         ctx.queries.page array
     ctx.request.body // form
 
+### cookie & session
+http://mirror.eggjs.org/zh-cn/basics/controller.html
+
+    ctx.cookies.get('count');
+    ctx.cookies.set('count', null);
+
+    ctx.session.userId
+    ctx.session.visited = ctx.session.visited ? ++ctx.session.visited : 1;
+    this.ctx.session = null;
+    ctx.session.maxAge = require('ms')('30d');// 记住我
+
+    // config/config.default.js
+    module.exports = {
+        session: {
+            renew: true, //仅剩下最大有效期一半的时候，重置 
+            key: 'EGG_SESS',
+            maxAge: 24 * 3600 * 1000, // 1 天
+            httpOnly: true,
+            encrypt: true,
+        },
+    };
+
 ### form
-stream.fields
+
+    stream = await ctx.getFileStream()
+    stream.fields
+
+    const parts = this.ctx.multipart({ autoFields: true });
+    parts.field[key]
+
 
 #### file
+新增支持的文件扩展名
+
+    // config/config.default.js
+    module.exports = {
+        multipart: {
+            fileExtensions: [ '.apk' ], // 增加对 .apk 扩展名的支持
+        },
+    };
+
 single file:
 
     const stream = await ctx.getFileStream();
@@ -43,37 +84,10 @@ single file:
 
 multi file:
 
-    const parts = ctx.multipart();
-    let part;
-    // parts() return a promise
-    while ((part = await parts()) != null) {
-      if (part.length) {
-        // 如果是数组的话是 filed
-        console.log('field: ' + part[0]);
-        console.log('value: ' + part[1]);
-        console.log('valueTruncated: ' + part[2]);
-        console.log('fieldnameTruncated: ' + part[3]);
-      } else {
-        if (!part.filename) {
-          // 这时是用户没有选择文件就点击了上传(part 是 file stream，但是 part.filename 为空)
-          return;
-        }
-        // part 是上传的文件流
-        console.log('field: ' + part.fieldname);
-        console.log('filename: ' + part.filename);
-        console.log('encoding: ' + part.encoding);
-        console.log('mime: ' + part.mime);
-        // 文件处理，上传到云存储等等
-        let result;
-        try {
-          result = await ctx.oss.put('egg-multipart-test/' + part.filename, part);
-        } catch (err) {
-          await sendToWormhole(part);
-          throw err;
-        }
-        console.log(result);
-      }
-    }
+    const [files, fields] = await this.multipart()
+
+http://mirror.eggjs.org/zh-cn/basics/controller.html#%E8%8E%B7%E5%8F%96%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6
+
 
 ### router
 router.js
@@ -85,28 +99,133 @@ controller:
 
     ctx.recirect('http://baidu.com')
 
+## response
+### set header
 
+    ctx.set('show-response-time', used.toString());
+    ctx.set(headers)
+
+### response stream
+node 流式特性, 框架也支持直接将 body 设置成一个 Stream，并会同时处理好这个 Stream 上的错误事件。
+
+    class ProxyController extends Controller {
+        async proxy() {
+            const ctx = this.ctx;
+            const result = await ctx.curl(url, { streaming: true, });
+            ctx.set(result.header);
+            // result.res 是一个 stream
+            ctx.body = result.res;
+        }
+    };
+
+## render
+
+    await ctx.render('home.tpl', { name: 'egg' });
+    // ctx.body = await ctx.renderString('hi, {{ name }}', { name: 'egg' });
 
 ## controller
+
     this.ctx
     this.app === this.ctx.app
     this.service
     this.config
     this.logger.warn
 
+### define controller
+module.exports 不能少
+
+    //module.exports = 
+    module.exports = (app) =>
+        class ClipboardController extends app.BaseController {
+
 ### ctx.validate
+    // config/plugin.js
+    exports.validate = {
+        enable: true,
+        package: 'egg-validate',
+    };
+
+    //异常的状态码为 422 
     const createRule = {
         title: { type: 'string' },
         content: { type: 'string' },
     };
-    // 校验参数
-    ctx.validate(createRule);
+    // 如果不传第二个参数会自动校验 `ctx.request.body`
+    ctx.validate(createRule); 
+
+定制rule:
+
+    // app.js
+    app.validator.addRule('json', (rule, value) => {
+        try {
+            JSON.parse(value);
+        } catch (err) {
+            return 'must be json string';
+        }
+    });
+
+    //使用
+    const rule = { test: 'json' };
+    ctx.validate(rule, ctx.query);
+
+## schedule 定时任务
+egg 多个 worker 不会竞争schedule
+
+    //app/schedule/update_cache.js
+    module.exports = {
+        schedule: {
+            interval: '1m', // 1 分钟间隔
+            type: 'all', // 指定所有的 worker 都需要执行
+        },
+        async task(ctx) {
+            const res = await ctx.curl('http://www.api.com/cache', { dataType: 'json', });
+            ctx.app.cache = res.data;
+        },
+    };
+
+### 定时 参数:
+
+    type:
+        'worker', //随机一个 worker 执行
+    interval: '10s',
+         '5000',//5s
+         app.config.cacheTick
+    // 每三小时准点执行一次
+    cron: '0 0 */3 * * *',
+        *    *    *    *    *    *
+        ┬    ┬    ┬    ┬    ┬    ┬
+        │    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)
+        │    │    │    │    └───── month (1 - 12)
+        │    │    │    └────────── day of month (1 - 31)
+        │    │    └─────────────── hour (0 - 23)
+        │    └──────────────────── minute (0 - 59)
+        └───────────────────────── second (0 - 59, optional)
+
+### 执行日志:
+会输出到 `${appInfo.root}/logs/{app_name}/egg-schedule.log`，默认不会输出到控制台，可以通过 config.customLogger.scheduleLogger 来自定义。
+
+    // config/config.default.js
+    config.customLogger = {
+        scheduleLogger: {
+            // consoleLevel: 'NONE',
+            // file: path.join(appInfo.root, 'logs', appInfo.name, 'egg-schedule.log'),
+        },
+    };
+
+### 手动执行 定时任务
+
+    // app.js
+    module.exports = app => {
+        app.beforeStart(async () => {
+            await app.runSchedule('update_cache');
+        });
+    };
 
 ## inner object
 http://mirror.eggjs.org/zh-cn/basics/objects.html
 
 1. app 继承自 Koa.Application 的实例。 注意: app!==require('egg'), 尽管他们指向同一个Controller
-    1. this.app === ctx.app
+    1. controller.app === ctx.app
 2. ctx 是一个请求级别的对象，继承自 Koa.Contex. 支持热加载
     1. 在有些非用户请求的场景下我们需要访问 service / model 等 
         1. const ctx = app.createAnonymousContext();
@@ -120,22 +239,14 @@ http://mirror.eggjs.org/zh-cn/basics/objects.html
 
     // app/extend/helper.js
     module.exports = {
-        formatUser(user) {
-            return only(user, [ 'name', 'phone' ]);
+      formatMoney(val) {
+        const lang = this.ctx.get('Accept-Language');
+        if (lang.includes('zh-CN')) {
+          return `￥ ${val}`;
         }
+        return `$ ${val}`;
+      },
     };
-
-## logger
-
-    // app logger 记录启动阶段的一些数据信
-    app.logger.warn(msg)
-
-    // 当前请求相关的信息（如 [$userId/$ip/$traceId/${cost}ms $method $url]
-    ctx.logger 
-
-    //controller/service logger 本质上就是一个 Context Logger，不过在打印日志的时候还会额外的加上文件路径
-    this.logger
-
 
 
 # dev
@@ -150,15 +261,17 @@ http://mirror.eggjs.org/zh-cn/basics/objects.html
     加载 router，加载应用的 app/router.js
 
 
-## plugin
-plugin 可以支持扩展：
-1. Application this.ctx.app
-2. context.js 为this.ctx 加属性
-3. Request
-4. Response
-5. Helper
+## plugin & extend
+一个插件其实就是一个『迷你的应用』，和应用（app）几乎一样：
 
-### context plugin
+plugin 可以支持扩展：
+1. Application this.ctx.app合并 app/extend/application.js 中定义的对象 
+2. Helper
+3. context.js 为this.ctx 加属性, **请求级别**的
+4. Request  **请求级别**的
+5. Response **请求级别**的
+
+### context extend
 以context 为例子
 
     // app/extend/context.js
@@ -169,33 +282,48 @@ plugin 可以支持扩展：
         },
     };
 
-    // config/plugin.js
-    exports.any_name = {
-        enable: true,
-        path: path.join(__dirname, '../lib/plugin/egg-ua'),
-    }
+### config/plugin.js 安装配置
+当我们把extend/context.js 移动到 `/lib/plugin/egg-ua/app/extend/context.js` 就需要安装配置
+
     exports.nunjucks = {
         enable: true,
         package: 'egg-view-nunjucks'
     };
 
-一般来说属性的计算只需要进行一次，那么是可以实现缓存
+plugin.js 安装:
 
-    // app/extend/application.js
-    const BAR = Symbol('Application#bar');
-    module.exports = {
-        get bar() {
-            // this 就是 app 对象，在其中可以调用 app 上的其他方法，或访问属性
-            if (!this[BAR]) {
-                this[BAR] = this.config.xx + this.config.yy;
-            }
-            return this[BAR];
+    {Boolean} enable - 是否开启此插件，默认为 true
+        对于内置插件的关闭，只需要: exports.inner_plugin_name = false
+    {String} package - npm 模块名称，通过 npm 模块形式引入插件
+    {String} path - 插件绝对路径，跟 package 配置互斥
+        path: path.join(__dirname, '../lib/plugin/egg-ua'),
+    {Array} env - 只有在指定运行环境才能开启，会覆盖插件自身 package.json 中的配置
+
+plugin.{env}.js根据环境配置: 比如只希望在本地环境加载，可以egg-dev 安装到 devDependencies，然后
+
+    // config/plugin.local.js ; local/unittest
+    exports.dev = {
+        enable: true,
+        package: 'egg-dev',
+    };
+
+这样在生产环境可以 `npm i --production` 不需要下载 egg-dev 的包了
+
+### plugin & middleware 共用配置
+
+    // config/config.default.js
+    exports.mysql = {
+        client: {
+            host: 'mysql.com',
+            port: '3306',
+            user: 'test_user',
+            password: 'test_password',
+            database: 'test',
         },
     };
 
 ## middleware
 与koa midllerware 兼容，所以可以直接用koa-compress, koa-bodyParser
-
 
 ### define middleware:
 
@@ -208,7 +336,6 @@ plugin 可以支持扩展：
             reportTime(Date.now() - startTime);
         }
     };
-
 
 ### coreMiddleware
 都会被加载器加载，并挂载到 app.middleware 上. app不能覆盖core

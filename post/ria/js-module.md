@@ -341,13 +341,7 @@ hello module: hello.js
 
     var greet = require('hello');
 
-### 模块全局变量污染
-全局变量在模块间是共享的！
-
-    var s= 'hello'
-
-### module.exports怎么实现？
-http://www.cnblogs.com/chenguangliang/p/5856701.html
+### exports 暴露
 
     // 准备module对象:
     var module = {
@@ -372,9 +366,6 @@ http://www.cnblogs.com/chenguangliang/p/5856701.html
     };
     exports.hello = hello;
     exports.greet = greet;
-
-
-
 
 # Package, 打包
 http://www.ruanyifeng.com/blog/2014/09/package-management.html

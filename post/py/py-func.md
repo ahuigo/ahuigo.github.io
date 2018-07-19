@@ -501,6 +501,7 @@ filter empty element in list: ['',None, 'abc'] -> ['abc']
      >>> any(())
      >>> any({})
      >>> any('')
+     >>> any([None,None])
      False
 
 ## any

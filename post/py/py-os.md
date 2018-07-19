@@ -76,7 +76,7 @@ If you need to know MEMORY USAGE of a given type, you can use the function sys.g
     gid = os.getgid()
     egid = os.getegid()
 
-# 环境变量
+# environ, 环境变量
 在操作系统中定义的环境变量，全部保存在os.environ这个变量中，可以直接查看：
 
 	>>> os.environ

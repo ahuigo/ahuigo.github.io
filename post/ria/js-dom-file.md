@@ -112,7 +112,7 @@ file is blob, split file to small blob
     fileReader.readAsBinaryString(blob_or_file);
 
 # chunk upload
-[js-lib/ajax/](js-lib/ajax/)
+[js-lib/ajax/](js-lib/upload/)
 
 ## uploadFile
 
@@ -150,10 +150,17 @@ file is blob, split file to small blob
     blob = new Blob(['str'], {type : 'application/json'});
     blob.slice(start, end)
 
+## blob2file
+    function blob2file(blobData) {
+        const fd = new FormData();
+        fd.set('a', blobData);
+        return fd.get('a');//name:blob, type:''
+    }
+
 # File
 File 基于blob
 
-    file = new File(['str'],'a.txt', {type : 'application/json'});
+    file = new File(['str'],'a.png', {type : 'image/png'});
     file = new File(['str'], 'a.txt' );
 
 ## FileReader

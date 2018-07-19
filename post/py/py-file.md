@@ -54,7 +54,7 @@ example:
 
 ### rename file:
 
-	os.rename(fileA, existedDir/fileB)
+	os.rename(fileA_or_dirA, existedDir/fileB)
 	os.move(fileA, existedDir/fileB)
 		os.renames('dirA', 'newDir/DirB')//auto create dir
 		os.renames('a', 'c/')// rename a to c (rmdir c if c is existed)
