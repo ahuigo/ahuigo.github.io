@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+import click,os
+
+from subprocess import getoutput
+def sh(cmd):
+    print('----------------')
+    print(f"shell: {cmd}")
+    print(getoutput(cmd))
+
+@click.command()
+@click.option('-count', default=1, help='Number of greetings')
+@click.option('-d', '-debug', is_flag=True)
+@click.argument('params', nargs=-1)
+def hello(count,debug, params): # 没有位置先后
+    if not os.path.exists('setup.py'):
+        quit('no setup.py')
+
+    if len(params) == 0:
+        params = ['clean', 'sdist','upload']
+    if 'clean' in params:
+        (sh('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info'))
+    if 'sdist' in params:
+        (sh('python3 setup.py sdist bdist_wheel'))
+
+    if 'upload' in params:
+        if debug:
+            sh(f'twine upload --repository-url https://test.pypi.org/legacy/ dist/*')
+        else:
+            sh(f'twine upload dist/*')
+
+
+
+if __name__ == '__main__':
+    hello()

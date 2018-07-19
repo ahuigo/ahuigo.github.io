@@ -75,8 +75,6 @@ action="store_true" is bool
 
 ## help and desc
 
-
-
 # click 
 
 ## option
@@ -86,7 +84,7 @@ option 的先后，也args name的先后无关
     @click.command()
     @click.option('-count', default=1, help='Number of greetings')
     @click.option('-name', prompt='Your name', help='The person to greet')
-	@click.argument('more_params', nargs=3)
+	@click.argument('more_params', nargs=-1)
     def hello(name, count, more_params): # 没有位置先后
         """This script prints hello NAME COUNT times."""
 		click.echo('Hello %s! count=%s' % (name, count));
@@ -99,7 +97,7 @@ click.command 装饰使hello 能接收cli args:
 
     p a.py 1 2 3 -name 'ahui'
 
-other:
+### bool:
 
     @click.option('-d', is_flag=True)
 

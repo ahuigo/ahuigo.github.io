@@ -156,8 +156,9 @@ Python 靠一套需要大家自觉遵守的”约定“下工作。 比如下划
     def process_xxx():
         pass  # omit
 
-### 控制 from xxx import * 的行为
-用 from xxx import * 的写法的，就只会导入 `__all__` 列出的成员(`仅限制*`)
+###  作用
+1. 只能控制 `from xxx import *` 的写法的，就只会导入 `__all__` 列出的成员(`仅限制*`)
+2. `from xxx import any` 则不限制
 
 ### 为 lint 工具提供辅助
 编写一个库的时候，经常会在 `__init__.py` 中暴露整个包的 API，而这些 API 的实现可能是在包中其他模块中定义的。如果我们仅仅这样写：
@@ -168,7 +169,7 @@ Python 靠一套需要大家自觉遵守的”约定“下工作。 比如下划
 
     from foo.bar import Spam, Egg  # noqa
 
-但是更好的方法是显式定义 __all__，这样代码检查工具会理解这层意思，就不再报 unused variables 的警告：
+但是更好的方法是显式定义 __all__，这样代码检查工具会理解 为暴露给外部，就不再报 unused variables 的警告：
 
     from foo.bar import Spam, Egg
     __all__ = ["Spam", "Egg"]

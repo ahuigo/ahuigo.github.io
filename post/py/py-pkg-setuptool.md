@@ -5,8 +5,7 @@ category: blog
 description:
 ---
 # Preface
-https://marthall.github.io/blog/how-to-package-a-python-app/
-http://flask.pocoo.org/docs/0.12/tutorial/packaging/
+https://packaging.python.org/tutorials/packaging-projects/
 
 setuptools 与 disutils
 1. distutils 用于包的创建与分发到Python Package Index（PyPI）,
@@ -16,7 +15,7 @@ setuptools 与 disutils
 我想到打包我写的一个python脚本: fileset
 
 	$ ls your_proj/
-	fileset
+	fileset.py
 	$ cd your_proj/
 
 ## setup
@@ -27,7 +26,7 @@ setuptools 与 disutils
 		name='pytest',
 		version = "0.0.1",
 
-        package_dir={"": "src"},
+        #package_dir={"": "src"},
 		packages=["_pytest", "_pytest.assertion"], # dir only(dir is __init__ package)
         py_modules=["pytest"]
 
@@ -55,11 +54,6 @@ Another example:
 			   'B>=2',
 			   'django-pipeline==1.1.22'
 			]
-
-		# 如果Pyhton2.7 则需要mock
-		extras_require={
-		    ':python_version=="2.7"': ["mock"],
-		},
 
 		author = "ahuigo",
 		author_email = "nobody@qq.com",
@@ -152,13 +146,19 @@ use:
 Once this is done, `~/.pypirc` file will store the login name and the password. 
 
 ## The next step is to upload your package. 
-sdist: create egg-info
+create egg-info+sdist
 
-    python3 setup.py sdist upload
+    python3 setup.py sdist bdist_wheel
 
-You can save a few keystrokes by doing it all in one command: 
+run Twine to upload all of the archives under dist:
 
-    python3 setup.py register sdist upload
+    # twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+    # pip install --upgrade twine
+    twine upload  dist/*
+
+use:
+
+    pip install --index-url https://test.pypi.org/simple/ example_pkg
 
 # Requirements
 pip freeze > requirements.txt

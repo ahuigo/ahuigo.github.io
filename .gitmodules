@@ -25,3 +25,6 @@
 [submodule "demo/upload"]
 	path = demo/upload
 	url = https://github.com/ahuigo/upload-chunk
+[submodule "demo/xlscsv"]
+	path = demo/xlscsv
+	url = git@github.com:ahuigo/xlscsv.git

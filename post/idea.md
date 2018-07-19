@@ -13,6 +13,10 @@ description:
 
 # 滑雪网站
 
+# git team doc
+https://github.com/ahuigo/docute
+gogs+Drone.io/gitlab
+
 # 全职工作的团队
 http://deepdevelop.com/
 一早一晚: 自由工作社区
