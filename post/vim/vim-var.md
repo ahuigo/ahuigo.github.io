@@ -265,6 +265,12 @@ lower or upper case
 	let str='a'
 	let str .= 'b'
 
+
+### exec based on string
+
+    exec "source ".expand('%:h').'/denite.vim'
+
+
 ### expr-quote
 > *expr-quote*
 > :help literal-string.

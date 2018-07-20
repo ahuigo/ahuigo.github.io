@@ -50,5 +50,5 @@ let ack use ag:
 
 # Denite
 
-    nnoremap <C-p> :Denite file<CR>
-    :h Denite
+    nnoremap <C-p> :Denite file/rec buffer<CR>
+    :h denite-usage

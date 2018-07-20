@@ -6,6 +6,19 @@ description:
 ---
 # Preface
 
+# ex
+
+    gQ
+
+# visual
+
+	gv	reselect previouse area
+
+# history mode
+:h cmdline-window
+
+    q: Ex command-line history
+    q/ q? seraching history
 
 # Cpture Ex Cmd output
 Redirect ex command output into current buffer ...

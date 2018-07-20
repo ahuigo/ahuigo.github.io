@@ -148,7 +148,8 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 " When writing a buffer (no delay), and on normal mode changes (after 750ms)
-call neomake#configure#automake('nw', 500)
+" call neomake#configure#automake('nw', 500)
+call neomake#configure#automake('w')
 
 """"""""""""""
 " ag
@@ -256,6 +257,7 @@ endfor
 for m in normal_mode_mappings
 	call denite#custom#map('normal', m[0], m[1], m[2])
 endfor
-nnoremap <C-p> :Denite file<CR>
+nnoremap <C-p> :Denite buffer file/rec<CR>
+exec "source ".expand('%:h').'/denite.vim'
 
 " vim: set ts=2 sw=2 tw=80 noet :

@@ -26,5 +26,5 @@
 	path = demo/upload
 	url = https://github.com/ahuigo/upload-chunk
 [submodule "demo/xlscsv"]
-	path = demo/xlscsv
+	path = demo/xlsparser
 	url = git@github.com:ahuigo/xlscsv.git
