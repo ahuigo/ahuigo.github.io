@@ -113,7 +113,7 @@ Convert data type:
 	True
 
 ## isinstance
-也可用来判断数据类型
+可用来判断数据类型
 
 	isinstance('abc', str); # True
 	isinstance(b'abc', bytes); # True

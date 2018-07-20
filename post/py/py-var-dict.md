@@ -247,7 +247,7 @@ or with collections.Counter:
 
 
 
-# Note
+# modifify inplace version
 ## update inplace version
 
     d.update((k, v * 0.5) for k,v in d.items())
@@ -260,9 +260,11 @@ Note: in python 3 to iterate through a dictionary you have to *explicidly* write
         if k.startswith('r'):
             del d[k]
 
+## list and delete
 If you mutate something while you're iterating over it, you're living in a state of sin and deserve what ever happens to you.
 
     a = [1,2,3,4,5]
+    # for k,i in enumerate(a): # too wrong
     for i in a:
     	a.remove(i) # or a.pop(0) 也会发生错误
     # a = [2,4]

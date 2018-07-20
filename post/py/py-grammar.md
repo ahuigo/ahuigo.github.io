@@ -21,11 +21,13 @@ True
 
 	try:
 		do sth.
-	except EOFError:
-		print '\nBye!'
+    except ZeroDivisionError as e:
+        print(e)
 	except ValueError:
 		raise
 		raise ValueError('sth error!')
+    except (RuntimeError, TypeError, NameError):
+        pass
 	else:
 		return None
 	finally:

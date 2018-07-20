@@ -23,30 +23,20 @@ setuptools 与 disutils
 	$ vim setup.py
 	from setuptools import setup, find_packages
 	setup(
-		name='pytest',
+		name='fileset',
 		version = "0.0.1",
 
         #package_dir={"": "src"},
 		packages=["_pytest", "_pytest.assertion"], # dir only(dir is __init__ package)
-        py_modules=["pytest"]
+		packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
+        py_modules=["fileset"]
 
+		scripts = ['fileset.sh'],
 		include_package_data=True,
 		install_requires=[
 			'aiohttp',
 		],
-	)
-```
-1. 如果写的是命令，那么将命令文件直接放到: scripts = ['fileset']
-2. 如果存在依赖：install_requires = [],  tests_require=[ 'pytest', ],
 
-Another example:
-
-```python
-	from setuptools import setup, find_packages
-	setup(
-		name = "fileset",
-		packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-		scripts = ['fileset.sh'],
 		if sys.version_info >= (3,2):
 			''' 如果需要其它包 '''
 			install_requires=[
@@ -54,14 +44,10 @@ Another example:
 			   'B>=2',
 			   'django-pipeline==1.1.22'
 			]
-
-		author = "ahuigo",
-		author_email = "nobody@qq.com",
-		description = "This is a filset Package",
-		license = "GPL",
-		url = "http://github.com/ahuigo/fileset",   
 	)
 ```
+1. 如果写的是命令，那么将命令文件直接放到: scripts = ['fileset']
+2. 如果存在依赖：install_requires = [],  tests_require=[ 'pytest', ],
 
 如果要使用setup.py 的test 命令， 所需要的包放在: setup_requires：
 
@@ -159,6 +145,8 @@ run Twine to upload all of the archives under dist:
 use:
 
     pip install --index-url https://test.pypi.org/simple/ example_pkg
+
+
 
 # Requirements
 pip freeze > requirements.txt

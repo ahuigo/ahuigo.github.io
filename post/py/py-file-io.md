@@ -47,12 +47,11 @@ readlines:
 
 ## stdin file
 接收多行: 包含换行
-```
-import fileinput
-for line in fileinput.input():
-	sys.stdout.write(line)
-	print(line) # on more new line
-```
+
+    import fileinput
+    for line in fileinput.input():
+        sys.stdout.write(line)
+        print(line) # on more new line
 
 # StringIO和BytesIO
 
