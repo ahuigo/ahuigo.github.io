@@ -76,11 +76,53 @@ items:
 		return false;
 	};
 
+### uniqueId
+
+    (function() {
+        var id_counter = 1;
+        Object.defineProperty(Object.prototype, "uniqueId", {
+            get: function() {
+                if (this.__uniqueId == undefined)
+                    this.__uniqueId = id_counter++;
+                return this.__uniqueId;
+            }
+        });
+    }());
+
+#### 不可变的变量的对像是临时生成的
+
+    a = 1
+    console.log(a.uniqueId); // 1
+    console.log(a.uniqueId); // 2
+    console.log(a.uniqueId); // 3
+
+#### hasOwnProperty 不会触发 get:
+
+    a={}
+    console.log(a.hasOwnProperty('__uniqueId')) // false
+    console.log(a.uniqueId)                     // 1
+    console.log(a.hasOwnProperty('__uniqueId')) // true
+
 ### Object.defineProperty()
 
 	obj[name] = value;
 	//or
-    Object.defineProperty(obj, name, { value: value, writable: false });
+    Object.defineProperty(obj, name, { 
+        # value: value, 
+        get(){
+            return value
+        },
+        writable: false ,
+        enumerable: false,
+    });
+
+如果想被实例继承，应该定义在`obj.prototype`:
+
+    Object.defineProperty(Object.prototype, "__uniqueId", {
+        writable: false,
+    });
+    obj = {}
+    obj.__uniqueID = 1; //invalid
 
 Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现类似 PHP 类的`__get`, `__set`
 

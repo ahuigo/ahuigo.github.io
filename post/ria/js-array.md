@@ -73,27 +73,29 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
 
 ## push,pop, shift
 
-	栈方法:
 
-		arr.push('new item', 'item2'); //return length
-		arr.pop();
+    arr.push('new item', 'item2'); //return length
+    arr.pop();
 
-	队列:
+    arr.unshift(...buffer) //return length
+    arr.shift()
 
-		arr.push('new');
-        arr = [...buffer]
-        arr.push(...buffer)
-		arr.shift();//LIFO 后进先出
+## copy list
 
+    arr.slice(0)
+    Array.prototype.slice.call(arr)
+    [...arr]
 
-## sort
+## .sort .reverse inplace(python)+return
 重排方法(改变arr本身, 并返回arr):
 
     arr.reverse();//倒序
     arr.sort();//从小到大
     arr.sort(function(a,b){return a-b;});//自定义排序
 
-### sort + unique
+    arr.slice(0).sort()
+
+### .sort + filter/unique
 
   myData = myData.sort().filter(function(el,i,a){return i==a.indexOf(el);})
 
@@ -109,6 +111,7 @@ for list:
     Array.prototype.slice.call(list)
         .sort((a,b)=>a.innerText>b.innerText?1:-1)
         .map(node=>list.appendChild(node))
+
 
 ## splice 
 操作方法:

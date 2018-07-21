@@ -109,10 +109,13 @@ or:
 
     def add_end(L=[]):
         L.append('END')
+        print(id(L))
         return L
     >>> add_end()
+    123
     ['END']
     >>> add_end()
+    123
     ['END', 'END']
 
 或者每次使用时，将static vars 初始化：

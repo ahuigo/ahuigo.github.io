@@ -144,6 +144,26 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
 	True
 	False
 
+# bit expr
+
+    x << y
+    x >> y
+    x & y
+    x | y
+    ~ x
+    x ^ y
+
+    >>> -1<<2
+    -4
+    >>> -1>>2
+    -1
+    >>> ~1
+    -2
+    >>> ~-1
+    0
+    >>> 1^1
+    0
+
 # with
 with 可以捕获异常, 类必须支持`__enter__, __exit__`相当于文件open/close:
 
@@ -191,6 +211,13 @@ with 可以捕获异常, 类必须支持`__enter__, __exit__`相当于文件open
     ...:     for line in iter(lambda: mm.readline(), b''):
     ...:         print(line)
     ...:
+
+## limit iter
+
+    for _, item in zip(range(limit), items):
+        print(item)
+    for item in itertools.islice(items, 0, stop): # stop=None like -1
+        print(item)
 
 # Distinguishing multiple exit points in loops
 

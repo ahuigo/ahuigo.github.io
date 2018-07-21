@@ -63,6 +63,8 @@ width 也会受单词的影响，所以你还需要加上
 
     a:hover{background: cadetblue}
     a:link{background: lightgray}
+    rebeccapurple, 
+    #2f363d
 
 # 响应式设计(Responsive Design)
 http://zh.learnlayout.com/media-queries.html

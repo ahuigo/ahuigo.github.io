@@ -79,7 +79,7 @@ nerdtree 是一个非常强大的文件管理插件
 
 	:echom expand('%')					"relative file path
 	:echom expand('%:p')				"absolute file path
-	:echom expand('%:h')				"relative file directory
+	:echom expand('%:h')				"relative file directory .
 	:echom expand('~/.vimrc')			"absolute path
 	:echom fnamemodify('foo.txt', ':p') "Absolute path
 
@@ -106,6 +106,11 @@ string `~` replace HOME
 	:echo expand('%:p:h:t')	def			First get the full path with :p (/abc/def/my.txt),
 										then get the head of that with :h (/abc/def),
 										then get the tail of that with :t (def)
+### curren excuted vim's path
+like python `__file__`:
+
+    expand('<sfile>')
+    expand('<sfile>:p:h')
 
 ### wildcard
 > :h wildcard

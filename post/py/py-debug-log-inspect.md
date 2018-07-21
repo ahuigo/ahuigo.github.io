@@ -32,6 +32,7 @@ stack example 2: print_stack(), format_stack()
     stack_str = ''.join(traceback.format_stack())
 
 ## sys.exc_info
+
     traceback.format_exc()
     traceback.print_exc()
     err = sys.exc_info()[1]
@@ -43,6 +44,12 @@ stack example 2: print_stack(), format_stack()
     print(sys.argv[0])
     print(func.__class__) # "<class 'function'>"
     print(cls.__class__) # "<class 'type'>"
+
+## path
+
+    __file__
+    sys._getframe().f_lineno
+
 
 ## class defined path
 

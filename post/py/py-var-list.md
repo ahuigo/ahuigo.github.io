@@ -36,7 +36,6 @@ too many values to unpack:
     a,*args = 1,2,3,4
     a,_ = 1,2,3,4 # for go language
 
-
 ## list unique
 use set if the item is hash-able
 
@@ -49,7 +48,7 @@ or use any part which is hash-able:
 	>>> [item for item in lis if item[1] not in seen and not seen.add(item[1])]
 	[('one', 'a'), ('two', 'b')]
 
-保持顺序 use OrderedDict:
+让set 也保持顺序 use OrderedDict.keys():
 
 	>>> set((5,3,2,3))
 	{2, 3, 5}
@@ -65,7 +64,6 @@ or use any part which is hash-able:
     lc[:]=l
 
     dc=dic.copy()
-
 
 ## list merge, tuple merge
 
@@ -222,7 +220,7 @@ repeat
 	...
 	1 ['k2', 'v2']
 
-# sort
+# .sort .reverse ... inplace like js
 
 
 	.index(value, [start, [stop]])
@@ -246,6 +244,7 @@ remove and insert(in place)
 	.remove(value) -- remove first occurrence of value.
 
 ### sort list
+
     colors = ['red', 'green', 'blue', 'yellow']
     sorted(colors):
     sorted(colors, reverse=True):
@@ -261,7 +260,7 @@ remove and insert(in place)
     for color in reversed([1,2,3]):
     for color in list[::-1]:
 
-list.reverse() is *IN PLACE*
+`list.reverse()` is *IN PLACE*
 
 ### bisect
 用于插入有序数组

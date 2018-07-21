@@ -6,7 +6,7 @@ call denite#custom#option('_', {
 	\ 'source_names': 'short',
 	\ 'vertical_preview': 1,
 	\ 'auto-accel': 1,
-	\ 'mode' : 'insert',
+	\ 'mode' : 'normal',
 	\ 'auto-resume': 1,
 	\ })
 

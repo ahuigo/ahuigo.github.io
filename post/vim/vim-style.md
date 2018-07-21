@@ -49,6 +49,7 @@ Refresh Screen Render
 	set si " smartindent " set smartcase
 	
 	" Format motion with internal function or external given with `equalprg`
+    " "autocmd FileType python set equalprg=autopep8.sh\ -
 	={motion}
 	" 作用visual 选择format 的范围
 	{Visual}=

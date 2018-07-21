@@ -8,6 +8,7 @@ set t_Co=8
 set fileencoding=utf-8
 set fileencodings=utf-8,gbk
 set ts=4 sw=4 softtabstop=4 nu autoindent
+set cuc cul
 set ignorecase smartcase
 set expandtab
 "info
@@ -19,7 +20,8 @@ set laststatus=2
 	 \ | endif
 
 "search
-noremap <F3> :let @/ = ""<CR>
+nnoremap <F1> :let @/ = ""<CR>
+nnoremap  \w :%s/\s\+$//e<CR>
 
 "close & write
 nnoremap <C-q> :qa<CR>
@@ -145,11 +147,20 @@ call plug#begin('~/.vim/plugged')
     Plug 'Shougo/denite.nvim'
 		" ack
     Plug 'mileszs/ack.vim'
+    Plug 'Chiel92/vim-autoformat'
 call plug#end()
 
 " When writing a buffer (no delay), and on normal mode changes (after 750ms)
 " call neomake#configure#automake('nw', 500)
 call neomake#configure#automake('w')
+
+""""""""""""""""""
+" autoformat
+"""""""""""""""
+" autocmd FileType python set equalprg=Autopep8.sh
+vnoremap <F1> :Autoformat<CR>
+"vnoremap = :AutoFormat<CR>
+
 
 """"""""""""""
 " ag
@@ -159,8 +170,8 @@ let g:ackprg = 'ag --vimgrep'
 """"""""""""
 " denite.nvim
 " -----------
-
+"exec "source ".fnameescape(expand('<sfile>:p:h').'/denite.vim')
+exec "source ".expand('<sfile>:p:h').'/denite.vim'
 nnoremap <C-p> :Denite buffer file/rec<CR>
-exec "source ".expand('%:h').'/denite.vim'
 
 " vim: set ts=2 sw=2 tw=80 noet :

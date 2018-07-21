@@ -268,7 +268,7 @@ lower or upper case
 
 ### exec based on string
 
-    exec "source ".expand('%:h').'/denite.vim'
+    exec "source ".expand('<sfile>:p:h').'/denite.vim'
 
 
 ### expr-quote

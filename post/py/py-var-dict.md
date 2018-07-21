@@ -125,12 +125,13 @@ or with update:
 	>>> od=OrderedDict({5:6, 1:5})
 	>>> OrderedDict(sorted(od.items(), key=lambda item: item[1]))
 
-### pop, popitem
+### pop, popitem, last
 
 	self.popitem(last=True) 默认删除尾部: LIFO
 	self.popitem(last=False) 删除头部: FIFO
-	self.pop(key=1) 默认: del self[1]
 	self.pop(key='key') del self['key']
+
+    next(reversed(self))
 
 OrderedDict可以实现一个FIFO（先进先出）的dict，当容量超出限制时，先删除最早添加的Key：
 
@@ -245,14 +246,12 @@ or with collections.Counter:
     >>> k, v = 1,3
     >>> k, v = (1,3)
 
-
-
-# modifify inplace version
-## update inplace version
+# loop modifify inplace 
+## update inplace
 
     d.update((k, v * 0.5) for k,v in d.items())
 
-## Looping over dictionary keys and delete
+## delete dict
 Note: in python 3 to iterate through a dictionary you have to *explicidly* write: *list(d.keys())* because d.keys() returns a "dictionary view" (an iterable that provide a dynamic view on the dictionary’s keys).
 
 	# list 将iter 转了一下
@@ -260,7 +259,7 @@ Note: in python 3 to iterate through a dictionary you have to *explicidly* write
         if k.startswith('r'):
             del d[k]
 
-## list and delete
+## delete list value
 If you mutate something while you're iterating over it, you're living in a state of sin and deserve what ever happens to you.
 
     a = [1,2,3,4,5]
@@ -277,6 +276,21 @@ If you mutate something while you're iterating over it, you're living in a state
 		a.remove(i)
 	# a = []
 
+## delete list index(inplace)
+
+    a = [1,2,3,4,5]
+    del_index = []
+    for i,v in a:
+        del_index.insert(0, i)
+    for i in del_index: 
+        a.pop(i)
+
+or inplace
+
+    a = [1,2,3,4,5]
+    for i,v in list(enumerate(a))[::-1]:
+        #a.remove(v)
+        a.pop(i)
 
 ## dict iterms and delete
 py3: items/iteritems 是iter(.keys()/.values() 都是generator) 都不可以直接改变原值
