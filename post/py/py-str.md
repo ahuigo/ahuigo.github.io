@@ -55,7 +55,7 @@ old
     Template('$who likes $what').substitute(who='Tom', what='cat')
     Template('$who').substitute({'who':1})
 
-### tab length
+### tab length(to space)
 '\t'.expandtabs(4)
 
 

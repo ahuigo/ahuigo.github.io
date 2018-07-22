@@ -404,12 +404,12 @@ Act as stdin
 	if true ; then
 		cat <<- MM | sudo tee -a file > /dev/null
 		The leading tab is ignored.
-			MM
+    MM
 	fi
-	# nowdoc + ignore tab(not include space)
+	# nowdoc + ignore tab(not include space) MM 仍然要顶行写
 	cat <<-'MM' | sudo tee -a a.txt > /dev/null
 		echo $PATH
-		MM
+    MM
 
 ## here string
 > Note: here string 结尾会追加'\n'

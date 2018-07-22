@@ -1,36 +1,65 @@
 #!/usr/bin/env python3
 import click
 from functools import reduce
+import sys,csv
 
 @click.command()
 @click.option('-d', '--delimiter', default=',', help='Set delimiter')
-@click.option('-t', '--tab', default=10, help='Set tab length')
-@click.option('-c', '--columns', help='Set all columns')
-@click.argument('file',type=click.File('r'))
-@click.argument('fields')
-def grepcolumn(file, delimiter, fields,columns, tab):
+@click.option('--tab', default=10, help='Set tab length')
+@click.option('-t', '--titles', default=None, help='Set all titles')
+@click.option('--no-title', is_flag=True,)
+@click.option('-od', '--out-delimiter', is_flag=True,)
+@click.option('--pretty', is_flag=True,)
+@click.option('-f', '--fields', help='Select fields')
+@click.argument('file', default=sys.stdin, type=click.File('r'))
+def grepcolumn(file, no_title, pretty, delimiter,out_delimiter, fields,titles, tab):
+    print(out_delimiter)
     '''
-    echo 'name=Jack,gender=male,job=coder' | grepcolumn - 'job,name'
-    echo 'Jack,male,coder' | grepcolumn - 'job,name' -c 'name,gender,job'
-    echo 'Jack||male||coder' | grepcolumn - 'job,name' -c 'name,gender,job' -d '||'
+Usage: $ grepcolumn -f <fields> [<file>]
+
+    $ cat test.csv
+    name,gender,job
+    Jack,male,coder
+    Lucy,female,artist
+    MM
+
+    $ grepcolumn -f 'job,name' test.csv
+	job       name
+    --------------------
+    coder     Jack
+    artist    Lucy
+
+    $ echo 'Jack,male,coder' | grepcolumn -f 'job,name' -c 'name,gender,job'
+    $ echo 'Jack||male||coder' | grepcolumn -f 'job,name' -c 'name,gender,job' -d '||'
+    $ echo 'name=Jack,gender=male,job=coder' | grepcolumn -f 'job,name'
     '''
     fields = fields.split(',')
-    print(reduce(lambda x,y: x+'\t'+y, fields).expandtabs(tab))
-    print('-'*tab*len(fields))
-    if columns:
-        columns = columns.split(',')
-    for line in file:
-        if columns:
+
+    rows = csv.reader(file, delimiter=delimiter)
+    # print titles and ----
+    if not no_title:
+        print(reduce(lambda x,y: x+'\t'+y, fields).expandtabs(tab))
+        if pretty:
+            print('-'*tab*len(fields))
+    if titles:
+        titles = titles.split(',')
+    elif titles is None:
+        titles = next(rows)
+
+    # csv.writer(f, delimiter =' ',quotechar =',',quoting=csv.QUOTE_MINIMAL)
+
+    for row in rows:
+        if titles:
             # log format: val1,val2,val3....
-            data = dict(zip(columns, line.strip().split(delimiter)))
+            data = dict(zip(titles, row))
         else:
             # log format: key1=val1,key2=val2,key3=val3....
             data = {}
-            for item in line.strip().split(delimiter):
-                k,v = item.split('=')
+            for item in row:
+                k, v = item.split('=', 1)
                 k = k.strip()
                 if k in fields:
-                    data[k]=v
+                    data[k] = v
         buffer = ''
         for k in fields:
             buffer += data.get(k, '')+'\t'

@@ -47,7 +47,6 @@ output:
 
 	-Hello- -Hilojack-
 
-### exec
 exec's modfications to locals should not be attempted:
 
     def foo():
@@ -57,8 +56,88 @@ exec's modfications to locals should not be attempted:
 
     def foo():
         ldict = locals()
-        exec("a=3",globals(),ldict)
+        exec("a=3",globals(),ldict) # 绑定环境locals/globals 
         print(ldict['a'])
+
+### locals 与闭包
+内部函数outer访问 *外部函数局部作用域中变量* 的行为：就是闭包；内部函数
+如果读取local 变量，那么会按照照LEGB 规则(先局部冒泡locals，再`globals()`, 再查内置) 去读取上下文中最近的同名变量;
+
+    def outer():
+        msg = 'hello world'
+        def inner():
+            # msg = msg + 1 这里带赋值，就是非法的: 读取赋值则UnboundLocalError: local variable 'a' referenced before assignment
+            print(msg)
+        return inner
+    outer()()
+
+闭包遵守
+1. inner能访问outer及其祖先函数的命名空间内的变量(局部变量冒泡查找，函数参数), globals, 内置变量。
+2. 调用outer已经返回了，但是它的命名空间被返回的inner对象引用，所以还不会被回收
+
+以下global msg 会因为globals()中不存在msg 而报错
+
+    def outer():
+        msg = 'hello world'
+        def inner():
+            global msg # 类似于php: msg = &globals()['msg']
+            print(msg)
+        return inner
+    outer()()
+
+其实: `inner.__globals__ == outer.__globals__ == globals()`所有的对象都共用一个globals
+
+#### code 对象保存闭包变量
+code对象是指代码对象，表示编译成字节的的可执行Python代码，或者字节码。主要属性：
+
+	co_name：函数的名称
+	co_nlocals: 函数使用的局部变量的个数
+	co_varnames: 一个包含局部变量名字的元组
+	co_cellvars: 是一个元组，包含嵌套的函数所引用的局部变量的名字
+	co_freevars: 是一个元组，保存使用了的外层作用域中的变量名
+	co_consts： 是一个包含字节码使用的字面量的元组
+	__closure__: 多个cell 对象元组，包含freevars 外层作用域变量的引用
+
+e.g.:
+
+    def foo():
+        a = 1
+        b = 2
+        def bar():
+            return a + 1
+        def bar2():
+            return b + 2
+        return bar
+    bar = foo()
+    # 外层函数
+    print(foo.__code__.co_cellvars) # ('a', 'b') 因为内部嵌套的bar/bar2 占用了a/b
+    print(foo.__code__.co_freevars) # 没有占用外层作用域中的变量名
+    # 内层嵌套函数
+    print(bar.__code__.co_cellvars) # 没有内层嵌套
+    print(bar.__code__.co_freevars) # ('a') 占用外层作用域中的a
+
+    # closure cell list，包含freevars变量引用
+    print(foo.__closure__)   # None
+    print(bar.__closure__)  # cell list
+    print(bar.__closure__[0].cell_contents == a)  # True
+
+
+## globals
+globals 包含全局的变量
+
+    >>> def func():
+    ...     pass
+    ...
+    >>> globals()
+    {'func': <function func at 0x10f5baf28>}
+
+类似用类创建函数:
+
+    class NoName(object):
+        def __call__(self):
+            pass
+
+    func = NoName()
 
 ## define func
     def add(x:int, y:int) -> int:
@@ -98,6 +177,7 @@ or:
         print("Counter is %d" % foo.counter)
         foo.counter += 1
 
+# args
 ## find def args name:
 
 >>> func = lambda x, y: (x, y)
@@ -204,102 +284,6 @@ eg:
     > f2(0, *(1,2,3),a=1,**{'1':1,'k':3})
     (0, 1, 2, 3) {'a': 1, '1': 1, 'k': 3}
 
-# locals and globals
-
-## globals
-globals 包含全局的变量
-
-    >>> def func():
-    ...     pass
-    ...
-    >>> globals()
-    {'func': <function func at 0x10f5baf28>}
-
-类似用类创建函数:
-
-    class NoName(object):
-        def __call__(self):
-            pass
-
-    func = NoName()
-
-## locals 与闭包
-内部函数outer访问 *外部函数局部作用域中变量* 的行为：就是闭包；内部函数
-locals 包含局部inner:
-```
-def outer():
-    print('Before def:', locals())
-    def inner():
-        pass
-    print('After def:', locals())
-    return inner
-
->>> outer()
-Before def: {}
-After def: {'inner': <function outer.<locals>.inner at 0x7f0b18fa0048>}
-<function outer.<locals>.inner at 0x7f0b18fa0048>
-```
-如果读取local 变量，那么会按照照LEGB 规则(先局部冒泡locals，再`globals()`, 再查内置) 去读取上下文中最近的同名变量;
-
-    def outer():
-        msg = 'hello world'
-        def inner():
-            # msg = msg + 1 这里带赋值，就是非法的: 读取赋值则UnboundLocalError: local variable 'a' referenced before assignment
-            print(msg)
-        return inner
-    outer()()
-
-闭包遵守
-1. inner能访问outer及其祖先函数的命名空间内的变量(局部变量冒泡查找，函数参数), globals, 内置变量。
-2. 调用outer已经返回了，但是它的命名空间被返回的inner对象引用，所以还不会被回收
-
-以下global msg 会因为globals()中不存在msg 而报错
-
-    def outer():
-        msg = 'hello world'
-        def inner():
-            global msg # 类似于php: msg = &globals()['msg']
-            print(msg)
-        return inner
-    outer()()
-
-其实: `inner.__globals__ == outer.__globals__ == globals()`所有的对象都共用一个globals
-
-### code 对象保存闭包变量
-code对象是指代码对象，表示编译成字节的的可执行Python代码，或者字节码。主要属性：
-
-	co_name：函数的名称
-	co_nlocals: 函数使用的局部变量的个数
-	co_varnames: 一个包含局部变量名字的元组
-	co_cellvars: 是一个元组，包含嵌套的函数所引用的局部变量的名字
-	co_freevars: 是一个元组，保存使用了的外层作用域中的变量名
-	co_consts： 是一个包含字节码使用的字面量的元组
-	__closure__: 多个cell 对象元组，包含freevars 外层作用域变量的引用
-
-e.g.:
-```
-def foo():
-    a = 1
-    b = 2
-    def bar():
-        return a + 1
-    def bar2():
-        return b + 2
-    return bar
-bar = foo()
-# 外层函数
-print(foo.__code__.co_cellvars) # ('a', 'b') 因为内部嵌套的bar/bar2 占用了a/b
-print(foo.__code__.co_freevars) # 没有占用外层作用域中的变量名
-# 内层嵌套函数
-print(bar.__code__.co_cellvars) # 没有内层嵌套
-print(bar.__code__.co_freevars) # ('a') 占用外层作用域中的a
-
-# closure cell list，包含freevars变量引用
-print(foo.__closure__)   # None
-print(bar.__closure__)  # cell list
-print(bar.__closure__[0].cell_contents == a)  # True
-
-```
 
 # lambda function
 
@@ -566,6 +550,8 @@ ython内置的sorted()函数就可以对list进行排序：
 1. 为函数添加功能，特别是上下文能力
 2. 为方法添加上下文能力
 
+e.g.
+
     # func(MyClass)
     @func
     class MyClass(object): pass
@@ -621,6 +607,8 @@ ython内置的sorted()函数就可以对list进行排序：
 这个3层嵌套的 decorator 用法如下：
 1. decorator: 执行装饰器
 2. wrapper: 替换func
+
+e.g.
 
 	#now = log('excute')(now) # return wrapper
 	@log('execute')
@@ -679,11 +667,6 @@ ython内置的sorted()函数就可以对list进行排序：
     def func:
         pass
     func=log2(log1(func))
-
-## decorator in std lib
-from functools import lru_cache
-from functools import singledispatch
-from functools import wraps
 
 ## class decorator
 除了函数版装饰器，还有类装饰器(就当函数来使用就行)
@@ -745,8 +728,9 @@ functools.partial就是帮助我们创建一个偏函数的，不需要我们自
 	max(*args)
 
 # lru_cache
+函数名+args为缓存的键值,只缓存最近使用的maxsize 条
 
-    @lru_cache(maxsize=None) # default maxsize=128
+    @functools.lru_cache(maxsize=None) # default maxsize=128
     def fib(n):
         if n < 2:
             return n

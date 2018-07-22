@@ -26,48 +26,84 @@ ERE
 	echo '12' | xxd -p
 	echo '3132' | xxd -r -p
 
-#### 引号
+#### print
+打印原始字符串，请用
+
+   `printf "%s" "$var"`
+
+Note:
+
+- `$(cmd)` , `\`cmd\`` 会过滤最后连续的换符符, 且被视为多个参数
+- `"$(cmd)"` , `"\`cmd\`"` 会过滤最后连续的换符符,且被视为1个参数
+
+#### shell 字符解析
+
+##### 单引号
 要注意的是shell中的单引号内所有字符都会原样输出.
-而双引号内, `$` 字符会被解析。
 
 	str='a  '\'\"'  b';
-	echo $str; $变量不是字面替换，其中的特殊字符如引号会被转义, 空白符不会
-		echo a \'\" b
-	echo "$str"; 所有的特殊字符会被转义
-		echo 'a  '\'\"'  b'
+	echoraw 'It'\''s Jack'; //output: It's Jack
 
-`$` 不转义
+##### 双引号
+而双引号内: `$`, `!`字符会被解析, 
 
-	echo "\$var"
-		$var
+	echoraw "${HOME}"
+	echoraw "$HOME"
+	echoraw "abc!ls" #会将`!ls` expand 为最近的history 命令
 
-##### shell history 对双引号的特殊处理
-History 会将`!`(exclamation mark)作为 Expandsion Mark,（限交互模式）
+只有`\"` 转义为`字面字符`, `\t\n\r`, `\'` 不处理，
 
-	echo "abc!ls" #会将`!ls` expand
+    echoraw "0\t0\n0\rabc\'\""
+        0\t0\n0\rabc\'"
 
-建议使用单引号：
-
-	echo 'abc!'
-
-Or turn off history expandsion
+shell 会将`!`(exclamation mark)作为 Expandsion Mark,（限交互模式）
+Or turn off history expandsion:
 
 	set +H
 	//or
 	set +o histexpand
 
-#### echo 命令对字符的特殊处理
-对于`echo` 来说，不同的shell 表现不同:
+##### 无引号
+`\t\n\r\'\"` 全部转义为`字面字符`
 
-`zsh` 中 这些字符会被转义`\"` `\r` `\n` `\t` , 而这两个字符`\'`, 原样输出. `bash` 则完全不支持这种转义, 除非增加`-e`
+    echoraw 0\t0\n0\rabc\'\"
+        0t0n0rabc'"
 
-	echo 'It'\''s Jack'; //output: It's Jack
-	echo "\""; //output: "
-	echo "\'"; //output: \'
+##### 无引号`$''`
+`\t\n\r` 转义为特殊字符，`\'\"` 转义为字面字符
+
+    # Press Ctrl-v + Tab
+    cut -f2 -d'   ' infile
+    cut -f2 -d$'\t' infile
+    printf $"ab\tc\ne\rE"
+
+    echoraw $'0\t0\n0\rabc\'\"'
+        0	0
+        abc'"
+
+##### 无引号`$`
+
+    cmd='arg1 arg2'
+    echoraw $cmd
+        zsh: 一个参数
+        bash: 多个参数
+
+##### 无引号`$""` 不要用
+shell 不兼容
+
+    # zsh
+	$ echoraw $"var"
+		$var
+    #bash
+	$ echoraw $"var"
+        var
+
+#### echo 命令
+对于`echo` 来说，它处理的字符已经是经过shell 解析过的。
 
 zsh 中的echo 会解析 \007 \x31 (建议不要这样使用)
 
-	echo '-n' //换行
+	echo '\n' //换行
 	echo '\x31' //1
 	echo "\x31" //1
 	echo  '\0116' //N的ASCII 的8进制是116
@@ -75,13 +111,6 @@ zsh 中的echo 会解析 \007 \x31 (建议不要这样使用)
 在bash 下，必须加`-e`
 
 	echo -e "\x31" //1
-
-打印原始字符串，请用`printf "%s" "$var"`,
-
-Note:
-
-- `$(cmd)` , `\`cmd\`` 会过滤最后连续的换符符, 且被视为多个参数
-- `"$(cmd)"` , `"\`cmd\`"` 会过滤最后连续的换符符,且被视为1个参数
 
 #### concat 拼接
 
@@ -95,17 +124,14 @@ or:
 	str='hello '
 	str+='world'
 
-不可以这样子
-
 
 #### length
 
 	echo ${#str}
-	echo "1" | wc -c #会多一个换行符
+	echo -n "1" | wc -c #去掉换行符
 	echo "1" | awk '{print length($0)}' ;# awk 不会匹配换行，所以其结果是正确的
-    #len=`expr length $str`
 
-	$((${#str}+2))
+	echo $((${#str}+2))
 
 #### index
 
@@ -200,12 +226,12 @@ substr is beginning:
 	var=${str?expr}	expr输出至stderr var=$str		var=$str
 	var=${str:?expr}expr输出至stderr expr输出stderr	var=$str
 
-### Number 数字
+## Number 数字
 
 	$RANDOM 随机数
 	declare -i a=1
 
-#### Calculate 运算
+### Calculate 运算
 下面介绍的inner运算和expr都不支持小数, 虽然不会报错, 但计算结果让人无语. 如果需要小数, 请使用bc(无论如何, shell 计算很鸡肋, 如果需要大量的运算请请使用python/octave等脚本)
 
 	# 不要用inner calc 和 expr 做 float 运算!!
@@ -214,7 +240,7 @@ substr is beginning:
 	➜  ~  a=2+1.1; declare -p a;
 	typeset -i a=3
 
-##### Inner Calc
+#### Inner Calc
 
 	let ++a; let a++;//a也可以为字符串
 	let a=$a+2;
@@ -229,19 +255,19 @@ substr is beginning:
 	declare -i a=1;
 	a+=2; #shell 不允许有空格
 
-##### expr 运算
+#### expr 运算
 
     expr 14 % 9 #需要有空格
     expr 14 \* 3 #*在shell中有特别的含义(它是通配符wildcard)
 		expr '14 * 3' #expr 识别为一个参数
 	expr \( 1 + 2 \)  \* 3
 
-##### bc 运算
+#### bc 运算
 
 	echo '14*3' | bc #bc更精确
 	echo '2.1*3' |bc #6.3
 
-#### 生成数字序列
+### 生成数字序列
 这不是数组!而是以空格为间隔的字符串序列!
 
 	for i in {1..5}; do echo $i; done #Brace expansion是在其它所有类型的展开之前处理的包括参数和变量展开
@@ -255,13 +281,13 @@ seq 用法: man seq
 
 	seq [first [incr]] last
 
-#### Format Num
+### Format Num
 padding num
 
 	`printf "%02i\n" $num`
 	n=`printf %03d $n`
 
-### Array数组
+## Array数组
 > terminal: zsh 的数组, 其下标是从1 开始的，而bash 是从0 开始的。
 > 在函数参数上看: 二者都是从0开始的，不过zsh 会指向函名，bash 则会指向脚本名. 不过`$@`与`$*` 都不会包含0
 
@@ -305,7 +331,7 @@ local 与 assignment 需要分开：
 
 	unset var[0] #清除下标, 其它下标的顺序不会变
 
-#### pass array
+### pass array
 
 	arr=('1 2' 3)
 	"${arr[@]}"
@@ -313,11 +339,11 @@ local 与 assignment 需要分开：
 	${arr[@]}
 		1 2 3	//bash
 
-#### print array
+### print array
 
 	printf "%s," "${array[@]}"
 
-#### copy array
+### copy array
 With Bash4.3, it only creates a reference to the original array, it doesn't copy it:
 
 	declare -n arr2=arr
@@ -326,7 +352,7 @@ With Bash4.3, it only creates a reference to the original array, it doesn't copy
 
 	b=("${a[@]}")
 
-#### loop array
+### loop array
 
 	for i in "${array[@]}";
 	do
@@ -335,7 +361,7 @@ With Bash4.3, it only creates a reference to the original array, it doesn't copy
 
 参数可以省略为 `for i in "$@"`, 这在使用脚本参数时特别有用
 
-#### in_array
+### in_array
 shell 参数不支持array传递. 只能变通实现[in_array](http://stackoverflow.com/questions/5788249/shell-script-function-and-for-loop)了
 
 - 用shift 实现

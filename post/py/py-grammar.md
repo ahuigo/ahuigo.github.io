@@ -101,13 +101,6 @@ Python内置的enumerate函数可以把一个list变成索引-元素对，这样
 	while x < 6:
 		Statement
 
-# 三元运算符
-在python中的格式为
-
-	为真时的结果 if 判定条件 else 为假时的结果
-
-	1 if 5>3 else 0
-
 # List Comprehensions, 列表生成式
 列表生成式即List Comprehensions
 
@@ -231,7 +224,7 @@ with 可以捕获异常, 类必须支持`__enter__, __exit__`相当于文件open
             return -1
         return i
 
-Better: Inside of every for loop is an else.
+Better: break else
 
     def find(seq, target):
         for i, value in enumerate(seq):

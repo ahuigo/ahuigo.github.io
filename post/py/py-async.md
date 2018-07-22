@@ -31,6 +31,7 @@ https://zhuanlan.zhihu.com/p/27258289
 
     import inspect
     inspect.iscoroutine(async_function)
+    inspect.isgenerator
 
     import asyncio
     asyncio.iscoroutine(someFunc)
@@ -149,8 +150,6 @@ https://segmentfault.com/a/1190000012291369#articleHeader11
 ### 4.3. 另一个Future
 
 Python 里另一个 Future 对象是 concurrent.futures.Future，与 asyncio.Future 互不兼容，但容易产生混淆。concurrent.futures 是线程级的 Future 对象，当使用 concurrent.futures.Executor 进行多线程编程时用于在不同的 thread 之间传递结果。
-
-
 
 ## coroutine
 - yield(generator): 中断返回; 不关心yield func() 内部有无yield

@@ -300,6 +300,8 @@ Note that double quotes are used.
 		in mappings, the 0x80 byte is escaped.  Don't use <Char-xxxx> to get a
 		utf-8 character, use \uxxxx as mentioned above.
 
+    :%s/\%u202d//gc
+
 ## echo
 
 	"string

@@ -1,16 +1,3 @@
-"" DEV
-colorscheme desert
-set mouse=a
-set wrap
-" xterm
-set t_Co=8
-"encoding
-set fileencoding=utf-8
-set fileencodings=utf-8,gbk
-set ts=4 sw=4 softtabstop=4 nu autoindent
-set cuc cul
-set ignorecase smartcase
-set expandtab
 "info
 set laststatus=2
 "open
@@ -173,5 +160,20 @@ let g:ackprg = 'ag --vimgrep'
 "exec "source ".fnameescape(expand('<sfile>:p:h').'/denite.vim')
 exec "source ".expand('<sfile>:p:h').'/denite.vim'
 nnoremap <C-p> :Denite buffer file/rec<CR>
+
+""""""""""""""
+" DEV
+"""""""""""""
+colorscheme desert
+set mouse=a
+set wrap
+" xterm
+set t_Co=8
+set fileencoding=utf-8
+set fileencodings=utf-8,gbk
+set ts=4 sw=4 softtabstop=4 nu autoindent
+set cuc cul
+set ignorecase smartcase
+set expandtab
 
 " vim: set ts=2 sw=2 tw=80 noet :
