@@ -145,7 +145,11 @@ which will return the first match or raise a StopIteration if none is found. Alt
 	list=[1,2,3]
 	random.shuffle(list)
 
-## Access List
+## Access List index 
+
+	.index(value, [start, [stop]])
+
+## Access List valueby
 
 	list[0]
 	[1,2][0]
@@ -156,7 +160,7 @@ which will return the first match or raise a StopIteration if none is found. Alt
     v,=[1][1:2] or ['default']
      (a[4:]+['default'])[0]
 
-## slice list and tuple
+### slice list and tuple
 exclude end
 
 	list[start:end:step]
@@ -227,8 +231,6 @@ repeat
 
 # .sort .reverse ... inplace like js
 
-
-	.index(value, [start, [stop]])
 	.count(value) -> integer -- return number of occurrences of value
 	.reverse() -> reverse *IN PLACE*
 	.sort(cmp=None, key=None, reverse=False) -- stable sort *IN PLACE*;

@@ -41,6 +41,16 @@ True
 >>> a1 is a2
 False
 
+### is
+is 比较的是id
+
+    >>> 'a'[:]+'b' == 'ab'
+    True
+    >>> 'a'[:]+'b' is 'ab'
+    False
+    >>> id('a'[:]+'b') == id('ab')
+    False
+
 ## reference
 不同于string/number 之外，list, tuple, dict 都是引用型的，无论是赋值，还是func 传值, 还是线程`threading.Thread(target=run_thread, args=(list,))`
 

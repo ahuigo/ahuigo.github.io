@@ -111,14 +111,12 @@ or with update:
 	['z', 'y', 'x']
 
 ### OrderedDict's keys
-```
 	>>> set((5,3,2,3))
 	{2, 3, 5}
 	>>> OrderedDict.fromkeys([5,3,2,3])
 	OrderedDict([(5, None), (3, None), (2, None)])
 	>>> OrderedDict.fromkeys([5,3,2,3]).keys()
 	odict_keys([5, 3, 2])
-```
 
 ### sort OrderedDict.items
 

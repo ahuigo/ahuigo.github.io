@@ -76,6 +76,9 @@ action="store_true" is bool
 ## help and desc
 
 # click 
+## help
+
+    @click.command(no_args_is_help=True)
 
 ## option
 option 的先后，也args name的先后无关

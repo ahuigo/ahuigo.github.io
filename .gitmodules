@@ -28,3 +28,6 @@
 [submodule "demo/xlscsv"]
 	path = demo/xlparser
 	url = git@github.com:ahuigo/xlscsv.git
+[submodule "demo/xcut"]
+	path = demo/xcut
+	url = git@github.com:ahuigo/xcut.git

@@ -145,9 +145,8 @@ call neomake#configure#automake('w')
 " autoformat
 """""""""""""""
 " autocmd FileType python set equalprg=Autopep8.sh
-vnoremap <F1> :Autoformat<CR>
+nnoremap = :Autoformat<CR>
 vnoremap = :Autoformat<CR>
-"vnoremap = :AutoFormat<CR>
 
 
 """"""""""""""

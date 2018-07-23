@@ -240,7 +240,7 @@ list comprehension finishes evaluation, not Iterator
 
     >>> [x ** 2 for x in range(7) if x % 2 == 0]
     [0, 4, 16, 36]
-    >>> comp_list = [x for x in "some text" if x !=" "]
+    >>> comp_list = [x if x !=" " else 0 for x in "some text" ]
 
 use list comprehension to combine several lists
 
