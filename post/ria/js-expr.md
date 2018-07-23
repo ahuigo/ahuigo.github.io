@@ -1,3 +1,51 @@
+# js fuck
+https://www.qqwenda.com/wenda/22114.html
+
+
+
+    f=rate=>'★★★★★☆☆☆☆☆'.slice(5-rate,10-rate)
+
+outline+`$$`
+
+    [].forEach.call($$("*"),function(a){
+        a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)
+    })
+
+取整数
+
+    ~~3.14 
+    2.33 | 0
+    2.33 >> 0
+
+parseInt
+
+    +'123'
+
+随机字符
+
+    Math.random().toString(36).substring(2) // 11位
+
+用正则魔法实现：
+
+    var test1 = '1234567890'
+    var format = test1.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    console.log(format) // 1,234,567,890
+
+非正则的优雅实现：
+
+    function formatCash(str) {
+        return str.split('').reverse().reduce((prev, next, index) => {
+                return ((index % 3) ? next : (next + ',')) + prev
+        })
+    }
+    console.log(formatCash('1234567890')) // 1,234,567,890
+
+取反
+
+    a ^= b;
+    b ^= a;
+    a ^= b;
+
 # Expression
 
 ## and or

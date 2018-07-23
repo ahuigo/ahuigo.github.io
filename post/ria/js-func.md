@@ -45,6 +45,11 @@ see js-var.md
     (function(){return 0})()
     (()=>0)()
 
+## define from source
+
+    var f = new Function('a', 'alert(a)');
+    f('jawil');
+
 # arguments
 如果arguments[0] 存在, name 指针都指向arguments[0]内存:
 否则name 不变

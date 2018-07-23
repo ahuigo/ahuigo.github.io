@@ -20,7 +20,6 @@ description:
 	>>> print(r'abc\n001')
 	abc\n001
 
-
 ## 分组:
 
 	>>> import re
@@ -30,9 +29,13 @@ description:
 	>>> m.group(0)
 	>>> m.group()
 	010-12345
+	>>> m.group(1)
+        010
+	>>> m.group(2)
+        12345
 	>>> m.groups()
 	('010', '12345')
-	>>> m.group(1)
+	>>> m.groups()[0]
 	010
 
 ## 命名分组
@@ -103,6 +106,7 @@ compile with modifier:
 
 	re.compile(r'.*', re.S) # re.S == re.DOTALL
     re.IGNORECASE
+    re.UNICODE
 
 ## replace, sub
 

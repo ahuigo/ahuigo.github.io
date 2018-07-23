@@ -28,6 +28,12 @@ undefined 数组:
     Array.from({length:5})
     Array.from(Array(5))
 
+### fill
+
+    Array(6).fill(8)
+    > [1,2,3].fill(8)
+    [ 8, 8, 8 ]
+
 ## .slice([start[, end]])
 python vs js
 

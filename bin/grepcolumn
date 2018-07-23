@@ -6,14 +6,14 @@ import sys,csv
 @click.command()
 @click.option('-d', '--delimiter', default=',', help='Set delimiter')
 @click.option('--tab', default=10, help='Set tab length')
-@click.option('-t', '--titles', default=None, help='Set all titles')
+@click.option('--titles', default=None, help='Set all titles')
+@click.option('-t', '-tt', default=None, help='Set title type')
 @click.option('--no-title', is_flag=True,)
-@click.option('-od', '--out-delimiter', is_flag=True,)
+@click.option('-od', '--out-delimiter', default=',',)
 @click.option('--pretty', is_flag=True,)
 @click.option('-f', '--fields', help='Select fields')
 @click.argument('file', default=sys.stdin, type=click.File('r'))
-def grepcolumn(file, no_title, pretty, delimiter,out_delimiter, fields,titles, tab):
-    print(out_delimiter)
+def grepcolumn(file,tt, no_title, pretty, delimiter,out_delimiter, fields,titles, tab):
     '''
 Usage: $ grepcolumn -f <fields> [<file>]
 
@@ -38,16 +38,19 @@ Usage: $ grepcolumn -f <fields> [<file>]
     rows = csv.reader(file, delimiter=delimiter)
     # print titles and ----
     if not no_title:
-        print(reduce(lambda x,y: x+'\t'+y, fields).expandtabs(tab))
+        print(out_delimiter.join(fields).expandtabs(tab))
         if pretty:
             print('-'*tab*len(fields))
     if titles:
         titles = titles.split(',')
-    elif titles is None:
+    elif tt is 'kv':
+        pass
+    elif tt is 'index':
+        pass
+    else:
         titles = next(rows)
 
-    # csv.writer(f, delimiter =' ',quotechar =',',quoting=csv.QUOTE_MINIMAL)
-
+    # csv.writer(f, delimiter =',',quotechar ='"',quoting=csv.QUOTE_MINIMAL)
     for row in rows:
         if titles:
             # log format: val1,val2,val3....
@@ -62,7 +65,8 @@ Usage: $ grepcolumn -f <fields> [<file>]
                     data[k] = v
         buffer = ''
         for k in fields:
-            buffer += data.get(k, '')+'\t'
-        print(buffer.expandtabs(tab))
+            buffer += data.get(k, '')+out_delimiter
+        buffer = buffer[:-1].expandtabs(tab)
+        print(buffer)
 
 grepcolumn()

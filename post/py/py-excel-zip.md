@@ -23,6 +23,7 @@ xlsx 是zip 文件：
     with open('a.xlsx', 'rb') as f:
         dest = tempfile.TemporaryDirectory()
         zf = zipfile.ZipFile(f)
+        zf.filelist[0].filename
         zf.extract('xl/media/image1.png', dest.name)
             '/var/xxxxxx/xl/media/image1.png'
         os.rename(dest.name+'/xl/media/image1.png', 'newdir')

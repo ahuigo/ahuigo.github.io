@@ -151,6 +151,11 @@ which will return the first match or raise a StopIteration if none is found. Alt
 	[1,2][0]
 	[1,2][-1]
 
+### get by default
+
+    v,=[1][1:2] or ['default']
+     (a[4:]+['default'])[0]
+
 ## slice list and tuple
 exclude end
 

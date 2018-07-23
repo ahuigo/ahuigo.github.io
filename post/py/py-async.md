@@ -228,7 +228,7 @@ Coroutine类也继承了Awaitable，而且实现了send，throw和close方法。
             return NotImplemented
 
 ### asyncio.await: merge multiple Coroutine
-    ```
+
     import asyncio
     async def async_func(sleep=.2):
         for i in range(4):
@@ -237,9 +237,10 @@ Coroutine类也继承了Awaitable，而且实现了send，throw和close方法。
             print(r)
 
     loop = asyncio.get_event_loop()
-    res = loop.run_until_complete(asyncio.wait([async_func(0.1), async_func(.3)]))
+    res = loop.run_until_complete(async_func(0.1))
+    # res = loop.run_until_complete(asyncio.wait([async_func(0.1), async_func(.3)]))
+
     loop.close()
-    ```
 
 ### define coroutine
 #### method coroutine
