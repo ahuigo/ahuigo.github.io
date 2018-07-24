@@ -139,12 +139,46 @@ use:
 
 # subcommand
 https://stackoverflow.com/questions/1710839/custom-distutils-commands
+有两种`distutils.commmands`,`cmdclass`
 
     entry_points={
         "distutils.commands": [
             "clean = mypackage.some_module:foo",
         ],
     },
+
+## cmdclass
+我们添加一个测试命令为例子吧：
+
+    from setuptools.command.test import test as TestCommand
+
+    class PyTest(TestCommand):
+        def finalize_options(self):
+            TestCommand.finalize_options(self)
+            self.test_args = []
+            self.test_suite = True
+        def run_tests(self):
+            #import here, cause outside the eggs aren't loaded
+            import pytest
+            errno = pytest.main(self.test_args)
+            sys.exit(errno)
+    setup(
+        tests_require=['pytest'],
+        cmdclass = {'test': PyTest},
+    )
+
+    # /test_main.py
+    from subprocess import getoutput as sh
+
+    class TestClass:
+        def test_main(self):
+            assert "Lucy" in sh('echo "Lucy,Artist,16" | xcut -f 1 -t index --no-title')
+
+# import obj
+
+    # Install the Q() object in sys.modules so that "import q" gives a callable q.
+    sys.modules['q'] = Q()
+
 
 # egg-info
     egg-info/

@@ -49,6 +49,7 @@ Note:
 
 	echoraw "${HOME}"
 	echoraw "$HOME"
+     "$(basename "$PWD")"
 	echoraw "abc!ls" #会将`!ls` expand 为最近的history 命令
 
 只有`\"` 转义为`字面字符`, `\t\n\r`, `\'` 不处理，

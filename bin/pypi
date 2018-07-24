@@ -20,12 +20,12 @@ def hello(count,debug, params): # 没有位置先后
     if 'clean' in params:
         (sh('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info'))
     if 'sdist' in params:
-        sh('python3 setup.py sdist bdist_wheel')
         code = open('setup.py').read()
         code = re.sub(r'(?<=\n)(?P<l>\s*version=["|\']\d+\.\d+\.)(\d+)(?P<r>["|\'],)(?=\n)',
             lambda m: '{}{}{}'.format(m.group('l'), int(m.group(2))+1, m.group('r')),
         code,1)
         open('setup.py', 'w').write(code)
+        sh('python3 setup.py sdist bdist_wheel')
 
     if 'upload' in params:
         if debug:
