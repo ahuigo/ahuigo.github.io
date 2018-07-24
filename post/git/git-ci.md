@@ -41,23 +41,22 @@ http://www.jianshu.com/p/c69deb29720d
 # Continuous integration(CI)
 CI 测试包括
 - 单元测试: 比如 PHPUnit, pyUnit(unittest module)
-- 代码测试CI服务: travis-CI(基于单元测试导出), gitlab-CI, bamboo; What are the best hosted continuous integration services?
+- CI服务: travis, gitlab-CI, bamboo; 
 - 覆盖率测试: codecov vs Coveralls(有点老了) 
 
-以php project 为例  :
-https://segmentfault.com/a/1190000005090444#articleHeader8
-
 ## travis ci
-A hosted continuous integration service for the open source community
 Travis-CI所做的工作就是自动在虚拟机中运行.travis.yml中设定的内容进行单元测试，生成并导出报告。
 
-https://travis-ci.org/profile/hilojack
-http://docs.travis-ci.com/
+travis encrypt -h
 
-## Icon Status
+    $ travis encrypt 'yourpassword'
+        -a, --add, add to .travis.yml
 
-    [![Build Status](https://travis-ci.org/<Github_ID>/<Repo_Name>.svg?branch=master)](https://travis-ci.org/<Github_ID>/<Repo_Name>)
-    [![Coverage Status](https://coveralls.io/repos/github/<Github_ID>/<Repo_Name>/badge.svg?branch=master)](https://coveralls.io/github/<Github_ID>/<Repo_Name>?branch=master)
+    # 自动生成pypi的配置
+    $ travis encrypt --add deploy.password
+
+    # -r, --repo  detect from current git clone
+    $ travis encrypt -r ahuigo/xcut
 
 
 ## webhooks & services
