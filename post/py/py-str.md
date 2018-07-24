@@ -315,6 +315,8 @@ like list
 	'hilo' in 'hilojack'
 	str.replace(needle, word, 1); //replace the first needle with word
 
+    'ab'.replace(['a','b'], ['A','B']) # wrong
+
 ### startwith
 
     aString.startswith("hello")

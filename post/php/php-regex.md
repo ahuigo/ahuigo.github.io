@@ -94,6 +94,7 @@ php叫子组(子模式)
 
 	(\d+foo) #在匹配123bar时,第一次失败,回溯匹配23bar,又失败,再回溯匹配3bar,再回溯.
 	(?>\d+foo) ?>分组匹配失败后,不会再回溯.
+	(?>foo|bar) 匹配了foo 成功，后续失败后，不会再回来匹配bar
 
 ## Conditional subpatterns 条件子组
 php 不支持平衡树, 但支持条件子组:

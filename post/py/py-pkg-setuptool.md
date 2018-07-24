@@ -30,7 +30,6 @@ setuptools 与 disutils
 		packages=["_pytest", "_pytest.assertion"], # dir only(dir is __init__ package)
 		packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
         py_modules=["fileset"]
-
 		scripts = ['fileset.sh'],
 		include_package_data=True,
 		install_requires=[
@@ -49,11 +48,8 @@ setuptools 与 disutils
 1. 如果写的是命令，那么将命令文件直接放到: scripts = ['fileset']
 2. 如果存在依赖：install_requires = [],  tests_require=[ 'pytest', ],
 
-如果要使用setup.py 的test 命令， 所需要的包放在: setup_requires：
-
-	setup_requires=[
-        'pytest-runner',
-    ],
+### test
+如果要使用setup.py 的test 命令, 使用配置依赖： setup_requires=[ 'pytest-runner', ],
 
 test 命令使用: setup.cfg （放在setup.py 同级根目录）指定测试命令：
 
@@ -76,11 +72,6 @@ test 命令使用: setup.cfg （放在setup.py 同级根目录）指定测试命
 
 ## clean
     rm /usr/local/Cellar/python3/3.6.1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/pyhttp-server.egg-link
-
-## find_packages
-For very large projects, to decrease size of proj:.
-
-	find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
 
 ## MANIFEST.in
 除了python 文件外，如果要打包静态文件, 就建立MNIFEST.in, 写入：
@@ -146,12 +137,23 @@ use:
 
     pip install --index-url https://test.pypi.org/simple/ example_pkg
 
+# subcommand
+https://stackoverflow.com/questions/1710839/custom-distutils-commands
+
+    entry_points={
+        "distutils.commands": [
+            "clean = mypackage.some_module:foo",
+        ],
+    },
+
+# egg-info
+    egg-info/
+        PKG-INFO setup config
 
 
 # Requirements
 pip freeze > requirements.txt
 pip install -r requirements.txt
-
 
 # cli tool
 可以在setup.py 为script 加入口.

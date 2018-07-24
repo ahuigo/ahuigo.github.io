@@ -38,6 +38,21 @@ description:
 	>>> m.groups()[0]
 	010
 
+## refer group
+
+    pattern itself	    
+        (?P=quote) (as shown)
+        \1
+    processing match object m	
+        m.group('quote')
+        m.end('quote') (etc.)
+    in a string passed to the repl argument of re.sub()	
+        \g<quote>
+        \g<1>
+        \1
+
+    re.sub(r'(?P<quote>")abc\1',r'\g<quote>ABC\g<quote>' ,'"abc"')
+
 ## 命名分组
 
     # 分组必须带括号

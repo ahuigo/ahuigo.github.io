@@ -407,16 +407,19 @@ Example:
 	git remote -v
 	git remote show <remote-name> //origin
 
-# git show
-# git cat
+# git show(svn cat, git cat)
 git show specify commit
 
-	git show $REV
+	git show $REV [FILE]
 	git show --name-only SHA1
 		show log $REV only
 	git show $REV:$FILE
 	git show somebranch:from/the/root/myfile.txt
 	git show HEAD^^^:test/test.py
+
+## show diff
+    git show $REV $FILE
+
 
 # git tag
 tag 相当于commit 的别名

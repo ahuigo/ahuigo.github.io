@@ -58,6 +58,7 @@ The . is a shortcut that tells it search in current package(not process's cwd) b
 	from .submodule import sth
         # 本质是 from __name__.submodule import sth
         # 直接执行会出问题 from '__main__'.submodule import sth
+	from ..parentmodule import sth
 
 wrong:
 
