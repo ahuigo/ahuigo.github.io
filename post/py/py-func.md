@@ -98,11 +98,14 @@ code对象是指代码对象，表示编译成字节的的可执行Python代码�
 	co_consts： 是一个包含字节码使用的字面量的元组
 	__closure__: 多个cell 对象元组，包含freevars 外层作用域变量的引用
 
+    inspect.getmembers(f.__code__)
+
 e.g.:
 
     def foo():
         a = 1
         b = 2
+        c = 3
         def bar():
             return a + 1
         def bar2():
@@ -118,8 +121,8 @@ e.g.:
 
     # closure cell list，包含freevars变量引用
     print(foo.__closure__)   # None
-    print(bar.__closure__)  # cell list
-    print(bar.__closure__[0].cell_contents == a)  # True
+    print(bar.__closure__)  # cell list: foo.a
+    print(bar.__closure__[0].cell_contents == 1)  # True
 
 
 ## globals

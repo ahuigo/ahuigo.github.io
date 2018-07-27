@@ -79,7 +79,44 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
         console.log([params, arguments, 'ahui'])
     }(1,2,3)
 
-### ...rest array
+## 解构参数
+### 解构赋值
+析构array
+
+    var [x, y, z] = ['hello', 'JavaScript', 'ES6'];
+    let [, , z] = ['hello', 'JavaScript', 'ES6']; // 忽略前两个元素，只对z赋值第三个元素
+    var [x, y, ...z] = ['hello', 'JavaScript', 'ES6','ES7']; #a,b,c, *arg
+
+    [...Array(5).keys()]; //0,1,2,3,4,5
+    Array.from({length: 5}, (x,i) => i);
+
+
+析构 dict:
+
+    let {name, age, pass} = {name:'ahui',pass:'pass',age:10}; //不存在就是undefined
+    let {id:uid} = {id:1}; // uid=id
+    let {uid=0} = {}
+
+
+### 解构命名参数
+same as python:
+
+    > function f(a, b=1){console.log(a,b)}
+    > f(b=23, a=3)
+    23 3
+
+### 解构传值dict
+
+    function buildDate({year, month, day, hour=0, minute=0, second=0}) {
+        return new Date(year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second);
+    }
+    buildDate({ year: 2017, month: 1, day: 1 });
+
+没有python 多传值的麻烦
+
+    buildDate({ more: 'hahah', year: 2017, month: 1, day: 1 });
+
+### 解构传值 ...rest array
 rest 当参数不足时为`[]`
 
     function foo(a, b, ...rest) {
@@ -89,10 +126,10 @@ rest 当参数不足时为`[]`
     }
 
     foo(1, 2, 3, 4, 5);
+    foo(...[1, 2, 3, 4, 5]);
     // a = 1
     // b = 2
     // Array [ 3, 4, 5 ]
-
 
 # bind params
 http://stackoverflow.com/questions/256754/how-to-pass-arguments-to-addeventlistener-listener-function/36786630#36786630

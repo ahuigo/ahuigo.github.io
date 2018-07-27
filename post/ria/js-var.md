@@ -42,32 +42,6 @@ chrome: 天生global
     a=1
     delete window.a
 
-### 解构赋值
-析构array
-
-    var [x, y, z] = ['hello', 'JavaScript', 'ES6'];
-    let [, , z] = ['hello', 'JavaScript', 'ES6']; // 忽略前两个元素，只对z赋值第三个元素
-    var [x, y, ...z] = ['hello', 'JavaScript', 'ES6','ES7']; #a,b,c, *arg
-
-    [...Array(5).keys()]; //0,1,2,3,4,5
-    Array.from({length: 5}, (x,i) => i);
-
-
-析构 dict:
-
-    let {name, age, pass} = {name:'ahui',pass:'pass',age:10}; //不存在就是undefined
-    let {id:uid} = {id:1}; // uid=id
-    let {uid=0} = {}
-
-
-#### 解构传值
-
-    function buildDate({year, month, day, hour=0, minute=0, second=0}) {
-        return new Date(year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second);
-    }
-    buildDate({ year: 2017, month: 1, day: 1 });
-
-
 ### 变量提升
 它会先扫描整个函数体的语句，把所有申明的变量“提升”到函数顶部：
 
