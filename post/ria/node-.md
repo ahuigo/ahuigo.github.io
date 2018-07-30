@@ -4,51 +4,19 @@ node 没有window, 但是有global
     global.console
     global.process === process 
 
-## process
-
-    > process.argv
-    > process.version;
-    'v5.2.0'
-    > process.platform;
-    'darwin'
-    > process.arch;
-    'x64'
-    > process.cwd(); //返回当前工作目录
-    '/Users/michael'
-    > process.chdir('/private/tmp'); // 切换当前工作目录
-    undefined
-    > process.cwd();
-    '/private/tmp'
-
-### process event
-JavaScript程序是由事件驱动执行的单线程模型，Node.js也不例外。
-1. 没有任何响应事件的函数可以执行时，Node.js就退出了。
-
-#### nextTick
-如果我们想要在下一次事件响应中执行代码，可以调用process.nextTick()：
-
-    // process.nextTick()将在下一轮事件循环中调用:
-    process.nextTick(function () {
-        console.log('nextTick callback!');
-    });
-    console.log('nextTick was set!');
-
-#### exit事件
-    //程序即将退出时的回调函数:
-    process.on('exit', function (code) {
-        console.log('about to exit with code: ' + code);
-    });
-
-# fs, 文件系统
-
-## dir
-### path
+# dir 文件系统
+## path
 
     const path = require('path')
     path.resolve(__dirname, '../') 
     path.basename(__filename) 
 
-### dir/file/line
+## rm
+
+    fs.rmdirSync(dir)
+    fs.unlinkSync(file)
+
+## dir/file/line info
     __dirname # current js file's dir
     __filename # file path
 
@@ -76,6 +44,35 @@ __line:
 
     console.log(__line);
 
+## mkdir
+
+    fs.mkdirSync()
+
+### tmp
+file: 
+
+    var tmp = require('tmp');
+
+    var tmpobj = tmp.fileSync();
+        console.log('File: ', tmpobj.name);
+        console.log('Filedescriptor: ', tmpobj.fd);
+
+dir:
+
+    var tmpobj = tmp.dirSync();
+    console.log('Dir: ', tmpobj.name);
+
+    // Manual cleanup
+    tmpobj.removeCallback();//fd 
+
+mkdtemp specify:
+
+    fs.mkdtempSync('tmp/aa.txt')
+        tmp/aa.txt7FxN
+
+
+# fs
+
 ## readFile
 同步与异步
 
@@ -84,7 +81,8 @@ __line:
     fs.readFileSync('sample.txt', 'utf-8', callback);
     var data = fs.readFileSync('sample.txt', 'utf-8');
 
-### txt
+### ReadFile utf-8
+
     var fs = require('fs');
     fs.readFile('sample.txt', 'utf-8', function (err, data) {
         if (err) {
@@ -94,7 +92,7 @@ __line:
         }
     });
 
-### image
+### read image
 
     fs.readFile('sample.png', function (err, data) {
         if (err) {
@@ -120,6 +118,21 @@ write 不区分buffer/string: new Buffer('使用Stream写入二进制数据...\n
     fs.writeFileSync('output.txt', data);
     fs.writeFile('output.txt', data, function (err) {})
 
+## appendFile appendFileSync
+
+    fs.appendFile('message.txt', 'data to append', function (err) {
+        if (err) throw err;
+        console.log('Saved!');
+    });
+    fs.appendFileSync('message.txt', 'data to append');
+
+to stdout stream:
+
+    var fs = require('fs');
+    var fd = fs.openSync('/tmp/tmp.js', 'r');
+    var s = fs.createReadStream(null, {fd: fd});
+    s.pipe(process.stdout);//stdout is stream, not fd
+
 ## stat 文件信息
 
     fs.stat('sample.txt', function (err, stat) {
@@ -140,11 +153,27 @@ write 不区分buffer/string: new Buffer('使用Stream写入二进制数据...\n
     });
 
 ## stream
+
+    fs.createWriteStream("append.txt", {flags:'a'});
+    process.stdin/stdout
+    fs.createReadStream(null, {fd: fd});
+        var fd = fs.openSync('/tmp/tmp.js', 'r');
+
+    stream.write(index + "\n");
+    stream.end();
+
+### read stream
 读，data事件可能会有多次，每次传递的chunk是流的一部分数据。
 
     var fs = require('fs');
     // 打开一个流:
-    var rs = fs.createReadStream('sample.txt', 'utf-8');
+    var rs = fs.createReadStream('a.txt', 'utf-8');
+
+sync:
+
+    rs.read().toString()
+
+async
 
     rs.on('data', function (chunk) {
         console.log('DATA:')
@@ -158,6 +187,8 @@ write 不区分buffer/string: new Buffer('使用Stream写入二进制数据...\n
     rs.on('error', function (err) {
         console.log('ERROR: ' + err);
     });
+
+### write stream
 
 要以流的形式写入文件，只需要不断调用write()方法，最后以end()结束：
 
@@ -174,6 +205,7 @@ write 不区分buffer/string: new Buffer('使用Stream写入二进制数据...\n
     var rs = fs.createReadStream('sample.txt');
     var ws = fs.createWriteStream('copied.txt');
     rs.pipe(ws);
+    rs.bytesRead
     //readable.pipe(writable, { end: false }); 防止readable end事件自动关闭writable
 
 koa append: https://github.com/koajs/examples/tree/master/upload
@@ -182,6 +214,33 @@ koa append: https://github.com/koajs/examples/tree/master/upload
     const reader = fs.createReadStream(file.path);
     const stream = fs.createWriteStream('out.txt', {flags: 'a'});
     reader.pipe(stream);
+
+#### await pipe
+
+    ws.bytesWritten
+    ps.bytesWritten
+    var bytesRead = await new Promise(function(resolve, reject) {
+        const ps = rs.pipe(ws)
+        ps.once('finish', ()=>resolve(rs.bytesRead));
+        ps.on('finish', ()=>resolve(ws.bytesWritten));
+        ps.on('error', reject); // or something like that
+    });
+
+#### get bytesWrite
+
+    var through = require('through2')
+    var countStream = through(function(chunk, enc, next) {
+      this.bytesWritten += Buffer.byteLength(chunk)
+      this.push(chunk, enc)
+      next()
+    })
+
+    var byteCountStream = countStream()
+    const ps = localReadStream.pipe(byteCountStream).pipe(remoteWriteStream)
+
+    remoteWriteStream.once('finish', function() {
+      console.log('GC Bytes', byteCountStream.bytesWritten)
+    })
 
 # http server
 

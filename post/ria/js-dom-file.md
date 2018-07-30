@@ -162,6 +162,8 @@ File 基于blob
 
     file = new File(['str'],'a.png', {type : 'image/png'});
     file = new File(['str'], 'a.txt' );
+    var file = new File([myBlob], "name");
+
 
 ## FileReader
 

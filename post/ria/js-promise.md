@@ -141,12 +141,21 @@ Promise.all()实现如下：
 1. then: async
 2. await: sync
 
+await reject:
+
+    //UnhandledPromiseRejectionWarning
+    await Promise.reject(1)
+
+    //2
+    await Promise.reject(1).catch(r=>r+1)
+
+    //pending
+    await new Promise(r=>{})
+
 async is used to await promise:
 
     var p = new Promise(resolve => {
-        setTimeout(() => {
-        resolve('resolved');
-        }, 2000);
+        setTimeout(() => resolve('resolved'), 2000);
     });
 
     async function asyncCall() {

@@ -52,6 +52,7 @@ http://mirror.eggjs.org/zh-cn/basics/controller.html
     stream.fields
 
     const parts = this.ctx.multipart({ autoFields: true });
+    while ((part = await parts()) != null) {}
     parts.field[key]
 
 
@@ -67,9 +68,11 @@ http://mirror.eggjs.org/zh-cn/basics/controller.html
 
 single file:
 
+    // FileStream != ReadStream
     const stream = await ctx.getFileStream();
+    
     try {
-      let result = await ctx.oss.put('output.bin', stream);
+      stream.read().toString()
     } catch (err) {
       // 必须将上传的文件流消费掉，要不然浏览器响应会卡死
       const sendToWormhole = require('stream-wormhole');
@@ -88,7 +91,6 @@ multi file:
 
 http://mirror.eggjs.org/zh-cn/basics/controller.html#%E8%8E%B7%E5%8F%96%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6
 
-
 ### router
 router.js
 
@@ -98,6 +100,10 @@ router.js
 controller:
 
     ctx.recirect('http://baidu.com')
+        exports.security = {
+            domainWhiteList:['.domain.com'],  // 安全白名单，以 . 开头
+        };
+    ctx.unsafeRedirect(url) 一般不建议使用，明确了解可能带来的风险后使用
 
 ## response
 ### set header
@@ -250,15 +256,45 @@ http://mirror.eggjs.org/zh-cn/basics/objects.html
 
 
 # dev
+http://mirror.eggjs.org/zh-cn/advanced/loader.html
+
 ## loader
-    加载 plugin，找到应用和框架，加载 config/plugin.js
-    加载 config，遍历 loadUnit 加载 config/config.{env}.js
+    加载 plugin: 以及config/plugin.js
+    加载 config， 加载 config/config.{env}.js
     加载 extend，遍历 loadUnit 加载 app/extend/xx.js
     自定义初始化，遍历 loadUnit 加载 app.js 和 agent.js
     加载 service，遍历 loadUnit 加载 app/service 目录
     加载 middleware，遍历 loadUnit 加载 app/middleware 目录
     加载 controller，加载应用的 app/controller 目录
     加载 router，加载应用的 app/router.js
+
+    // app.js
+    // 获取所有的 loadUnit
+    const servicePaths = app.loader.getLoadUnits().map(unit => path.join(unit.path, 'app/service'));
+
+## 生命周期
+Egg提供了应用启动(beforeStart), 启动完成(ready), 关闭(beforeClose)这三个生命周期方法。
+
+    Master: init master process
+                    ⬇
+    Agent:  init *agent* worker process
+                    ⬇
+            loader.load | beforeStart
+                    ⬇
+            await agent worker ready
+                    ⬇
+            call ready callback
+                    ⬇
+    APP:    init app worker processes
+                    ⬇
+            loader.load | beforeStart
+                    ⬇
+            await app workers ready
+                    ⬇
+            call ready callback
+                    ⬇
+    Ready:  send egg-ready to master,
+                agent,app workers
 
 
 ## plugin & extend
@@ -301,7 +337,7 @@ plugin.js 安装:
 
 plugin.{env}.js根据环境配置: 比如只希望在本地环境加载，可以egg-dev 安装到 devDependencies，然后
 
-    // config/plugin.local.js ; local/unittest
+    // config/plugin.local.js ; // local is for unittest/dev
     exports.dev = {
         enable: true,
         package: 'egg-dev',

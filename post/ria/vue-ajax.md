@@ -25,11 +25,12 @@
 
 ### fetch post
 
-        credentials: "same-origin"
+        credentials: "include"
         method: 'POST',
         headers : new Headers(),
         headers: {
-            "Content-Type": "multipart/form-data"
+            'X-requested-with': 'XMLHttpRequest',
+            "Accept": "application/json",
         },
         body: new FormData()
 

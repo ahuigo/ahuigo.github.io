@@ -24,6 +24,22 @@ list forEach
 		console.log(key, obj[key])
 	})
 
+keys / for-in base / getOwnPropertyNames all
+
+    var o = Object.create({base:0})
+    Object.defineProperty(o, 'yes', {enumerable: true})
+    Object.defineProperty(o, 'not', {enumerable: false})
+
+    console.log(Object.keys(o))
+    // [ 'yes' ]
+
+    console.log(Object.getOwnPropertyNames(o))
+    // [ 'yes', 'not' ]
+
+    for (var x in o)
+        console.log(x)
+    // yes, base
+
 ### has key
 1. hasOwnProperty: 不包括原型链
 2. keys: 也不含proto

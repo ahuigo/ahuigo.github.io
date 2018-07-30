@@ -147,6 +147,7 @@ Object.is 与== 只有两个不同
     undefined、boolean、number,  string
     object
     function
+    Number.isInteger(1)
 
 array/null 被视为对象, 所以:
 

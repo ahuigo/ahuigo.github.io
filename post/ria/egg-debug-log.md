@@ -9,6 +9,10 @@
     //controller/service logger 本质上就是一个 Context Logger，不过在打印日志的时候还会额外的加上文件路径
     this.logger
 
+## 日志路径
+online 所有的日志都会打印到 $HOME/logs 文件夹下（例如 /home/admin/logs）
+dev: ${baseDir}/logs
+
 ## 日志级别
 
     // config/config.${env}.js

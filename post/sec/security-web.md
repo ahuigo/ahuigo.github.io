@@ -13,7 +13,21 @@ description:
 
 	<a href="http://example.com/attack.html" style="display: block; z-index: 100000; opacity: 0.1; position: fixed; top: 0px; left: 0; width: 1000000px; height: 100000px; background-color: red;"> </a>
 
-# XSS
+# CSP 白名单(XSS)
+W3C 的 Content Security Policy，简称 CSP，主要是用来定义页面可以加载哪些资源，减少 XSS 的发生
+
+    只允许本站资源
+    Content-Security-Policy: default-src 'self'
+    只允许本站资源以及trusted.com
+    Content-Security-Policy: default-src 'self' *.trusted.com
+    Content-Security-Policy： default-src ‘self’； img-src *；
+    script-src http://trustedscripts.example.com
+
+# SSRF 的防范
+通过 Server-Side Request Forgery(SSRF), 攻击者可以操作内部网络的资源. 比如sina url
+
+# iframe
+X-Frame-Options 这个安全头来防止 iframe 钓鱼。默认值为 SAMEORIGIN，只允许同域把本页面当作 iframe 嵌入。
 
 # CSRF
 Cross-site request forgery跨站请求伪造，也被称为“one click attack”或者session riding，
@@ -22,6 +36,51 @@ Solutions:
 
 - check referer
 - one time token(一次性令牌)
+
+## token
+1. 通过cookie
+2. 通过url query/body
+3. Header: xhr.setRequestHeader('x-csrf-token', Cookies.get('csrfToken'));
+
+egg-view-nunjucks 等 View 插件会自动对 Form 进行注入
+
+    <form method="POST" action="/upload?_csrf={{ ctx.csrf | safe }}" enctype="multipart/form-data">
+    // config/config.default.js
+    module.exports = {
+        security: {
+            csrf: {
+                queryName: '_csrf', // 通过 query 传递 CSRF token 的默认字段为 _csrf
+                bodyName: '_csrf', // 通过 body 传递 CSRF token 的默认字段为 _csrf
+            },
+        },
+    };
+
+## Referer
+
+### 为空
+利用ftp://,http://,https://,file://,javascript:,data:这个时候浏览器地址栏是file://开头的，如果这个HTML页面向任何http站点提交请求的话，这些请求的Referer都是空的。
+
+    <iframe src="data:text/html;base64,PGZvcm0gbWV0aG9kPXBvc3QgYWN0aW9uPWh0dHA6Ly9hLmIuY29tL2Q+PGlucHV0IHR5cGU9dGV4dCBuYW1lPSdpZCcgdmFsdWU9JzEyMycvPjwvZm9ybT48c2NyaXB0PmRvY3VtZW50LmZvcm1zWzBdLnN1Ym1pdCgpOzwvc2NyaXB0Pg==">
+
+利用https协议（https向http跳转的时候Referer为空）
+
+    <iframe src="https://xxxxx.xxxxx/attack.php">
+
+利用:
+    x.126.com.xxx.com
+
+## SameSite
+
+    Set-Cookie: sess=abc123; path=/; SameSite
+
+SameSite 分两种:
+1. SameSite=Strict  A站，直接点击facebook.com 没有cookie
+2. SameSite=Lax,  GET、HEAD、OPTIONS 和 TRACE 跨域带cookie, POST 跨域不带cookie
+
+
+# url 钓鱼
+由于是从可信的站点跳转出去的，用户会比较信任
+
 
 # app
 

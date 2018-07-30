@@ -10,7 +10,6 @@ chrome://chrome-urls/
 # variable
 
 ## print reference variable
-https://stackoverflow.com/questions/44362783/value-below-was-evaluated-just-now-in-javascript-object
 https://stackoverflow.com/questions/11284663/console-log-shows-the-changed-value-of-a-variable-before-the-value-actually-ch
 http://jsfiddle.net/ju3ZV/2/
 
@@ -100,6 +99,7 @@ time 计时
 	console.time([flag])
 	//do sth.
 	console.timeEnd([flag])
+	console.time('egg')
 
 profile
 

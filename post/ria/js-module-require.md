@@ -6,6 +6,7 @@ require ('../../../controller.js') 特点：
 绝对路径，就不能补全喽
 
 ## NODE_PATH 绝对路径
+
     npm root -g 
     export NODE_PATH='dir1:dir2'; # 默认为空
 
