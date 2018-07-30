@@ -82,9 +82,10 @@ repeat(alloc)
 ## pad+repeat
 
     ('0'+6).slice(-2)
-    'Vue'.padStart(10)           //'       Vue'
-    'Vue'.padStart(10, '_*')           //'_*_*_*_Vue'
-    'Vue'.padEnd(10, '_*')           //'Vue_*_*_*_'
+    '6'.padStart(3)             //'006'
+    'Vue'.padStart(10)          //'       Vue'
+    'Vue'.padStart(10, '_*')    //'_*_*_*_Vue'
+    'Vue'.padEnd(10, '_*')      //'Vue_*_*_*_'
 
 ## 字符串是不可变的
     var s = 'Test';

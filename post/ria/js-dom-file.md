@@ -30,8 +30,8 @@ description:
 Via FormData and formnode:
 
     formobj = document.getElementById('form1')
-	fd = new FormData(formobj);
     fd = formobj.getFormData()
+	fd = new FormData(formobj);
 
     for (var pair of formData.entries()) {
         console.log(pair[0]+ ', ' + pair[1]); 

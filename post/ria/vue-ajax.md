@@ -30,9 +30,15 @@
         headers : new Headers(),
         headers: {
             'X-requested-with': 'XMLHttpRequest',
-            "Accept": "application/json",
+            "Accept": "application/json", 
+            //'content-type':'application/x-www-form-urlencode', 
         },
-        body: new FormData()
+        body: new FormData() //不是data!!!!!
+
+body type: not object
+
+    formData
+    JSON.stringify(data); //application/json
 
 ## this.$http
 

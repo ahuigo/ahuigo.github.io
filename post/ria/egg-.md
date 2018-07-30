@@ -22,7 +22,20 @@ ctx.headers，ctx.header，ctx.request.headers，ctx.request.header：这几个�
     ctx.params.id
     ctx.query.page
         ctx.queries.page array
-    ctx.request.body // form
+    ctx.request.body // json, form-urlencode
+        ctx.request.rawBody //after bodyParser
+
+config:
+
+    exports.bodyParser = {
+        jsonLimit: '5mb',
+        formLimit: '6mb',
+    };
+
+### raw body(based on koa)
+
+    const rawBody = require('raw-body')
+    const rawRequestBody = await rawBody(ctx.req) //Buffer
 
 ### cookie & session
 http://mirror.eggjs.org/zh-cn/basics/controller.html

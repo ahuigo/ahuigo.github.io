@@ -72,14 +72,17 @@ mkdtemp specify:
 
 
 # fs
+默认buffer 
 
 ## readFile
 同步与异步
 
     var fs = require('fs');
 
-    fs.readFileSync('sample.txt', 'utf-8', callback);
-    var data = fs.readFileSync('sample.txt', 'utf-8');
+    fs.readFile('sample.txt', 'utf8', (err, data)=>{});
+    var data = fs.readFileSync('sample.txt', 'utf8');
+
+    var data = fs.readFileSync('sample.txt').toString();
 
 ### ReadFile utf-8
 
@@ -110,13 +113,19 @@ mkdtemp specify:
     // String -> Buffer
     var buf = Buffer.from(text, 'utf-8');
 
-## writeFile
+## writeFile, writeFileSync
 write 不区分buffer/string: new Buffer('使用Stream写入二进制数据...\n', 'utf-8')
 
     var fs = require('fs');
     var data = 'Hello, Node.js';
     fs.writeFileSync('output.txt', data);
     fs.writeFile('output.txt', data, function (err) {})
+
+## write, writeSync
+
+    fs.writeSync(fd, buffer, offset)
+    fs.writeSync(1, 'aa'); //process.stdout.fd
+    fs.writeSync(1, Buffer.from('aa')); //process.stdout.fd
 
 ## appendFile appendFileSync
 
