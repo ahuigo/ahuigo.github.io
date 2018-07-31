@@ -110,31 +110,31 @@ type
 
 ## 指令
 ### v-if:
-if 
-
-    <span v-if="seen">现在你可以看到我</span>
-
-else
 
     <div v-if="type === 'A'"> A </div>
     <div v-else-if="type === 'C'"> C </div>
     <div v-else> 非 A/B/C </div>
 
 #### 使用key 控制可复用
-使用key 以后，这些 input 将会在每次切换时从头重新渲染
+使用key 以后，这些 input 将会在每次切换时从头重新渲染。（默认将保留输入值）
 
     <template v-if="loginType === 'username'">
         <label>用户名</label>
-        <input placeholder="请输入用户名" key="username-input">
+      <input placeholder="Enter your username" key="username-input">
+    </template>
+    <template v-else>
+      <input placeholder="Enter your email address" key="email-input">
     </template>
 
 ### v-show
-show 控制display, 相当于if
+show 控制display, 类似if
 具有 v-show 的元素会始终渲染并保留在 DOM 中
 
     <h1 v-show="ok">Hello!</h1>
 
 v-if 是“真实”的条件渲染，因为它会确保条件块(conditional block)在切换的过程中，完整地销毁(destroy)和重新创建(re-create)条
+
+v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
 
 ### for:
 
@@ -170,14 +170,16 @@ for with object
     <div v-for="(value, key, index) in object">
 
 #### key
+v-for 它默认用“就地复用”策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序
+
 为了便于 Vue 跟踪每个节点的身份，从而重新复用(reuse)和重新排序(reorder)现有元素，你需要为每项提供唯一的 key 属性，
 
     <div v-for="item in items" :key="item.id">
 
 #### 删除数据
 1. 删除事件
-    2. <button v-on:click="$emit(\'remove\')">X</button>\
-    2. v-on:remove="func"
+    2. <button v-on:click="$emit('remove')">X</button>\
+    2. v-on:remove="func" 由func 执行数据删除
 2. o.pop(index)
 
 ### 简写
@@ -241,7 +243,7 @@ computed 属性默认只设置 getter 函数，不过在需要时，还可以提
 ## class
 class 只有两个值: true or false
 
-### class 单值
+### class 单值对象
 active 这个 class 的存在与否，取决于 isActive 这个 data 属性的 truthy 值
 
     <div v-bind:class="{ active: isActive }"></div>
@@ -257,8 +259,7 @@ active 这个 class 的存在与否，取决于 isActive 这个 data 属性的 t
         }
     }
 
-### class computed 对象
-或者methods:
+也可以用computed、methods 返回对象
 
     computed: {
         classObject: function () {

@@ -47,7 +47,7 @@
 
     vm.a=222
     vm.a == vm._data.a // => true
-    vm.$data===vm._data == data
+    vm.$data===vm._data // wrap data
 
 为防止修改属性用Object.freeze:
 
@@ -98,6 +98,8 @@ Vue 将观察数组(observed array)的变化数组方法(mutation method)包裹�
 #### del
     Vue.delete(this.selectedRows, key)
     vm.$delete(this.selectedRows, key)
+
+    this.arr.splice(key, 1)
 
 #### set 新属性, 注意事项(Caveats)
 由于 JavaScript 的限制，Vue 有时无法触发重新render(reactiveSetter)

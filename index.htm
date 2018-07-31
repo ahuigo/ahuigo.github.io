@@ -72,7 +72,7 @@
     const app = new Vue({
         router: new VueRouter({ routes, }),
         data: {
-            dir_tree: { a: { name: 'ahui' }, },
+            dir_tree: { file1: { name: 'ahui' }, },
             name: 'ahuigo',
         },
         methods: {
@@ -84,7 +84,7 @@
             }
         },
         created:function(){
-            this.getMenu()
+            //this.getMenu()
         }
     }).$mount('#app')
 

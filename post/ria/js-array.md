@@ -60,24 +60,10 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
     arr.join(',');//
 	.join([separator]); //implode
 
-## splice
+## concat
 
-	new Array(1,2,3);
-	arr = [1,2,'d'];
-	brr[0]=11;
-	arr;//[11,2,'d']; //因为数组赋值使用的是对象引用
-
-	.concat(arr2)
-	.reverse()
-	.shift();//左移(移出) .unshift(item1,item2);//右移(移入)
-
-	.splice(start, howmany[, newValue]);//删除
-        a=[1,2,3,4,5]
-            [1, 2, 3, 4, 5]
-        a.splice(2,2,'abc')
-            [3, 4]
-        a;
-            [1, 2, "abc", 5]
+	.concat(arr2) not in-place
+	.concat(1,2) not in-place
 
 ## push,pop, shift
 
@@ -87,6 +73,25 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
 
     arr.unshift(...buffer) //return length
     arr.shift()
+        .shift();//左移(移出) .unshift(item1,item2);//右移(移入)
+
+remove:
+
+    first:
+        arr.indexOf('3') !== -1 && arr.splice(arr.indexOf('3'), 1)
+    all:
+        arr = arr.filter(e => e !== '3')
+
+    Array.prototype.remove = function() {
+        var what, a = arguments, L = a.length, ax;
+        while (L && this.length) {
+            what = a[--L];
+            while ((ax = this.indexOf(what)) !== -1) {
+                this.splice(ax, 1);
+            }
+        }
+        return this;
+    };
 
 ## copy list
 

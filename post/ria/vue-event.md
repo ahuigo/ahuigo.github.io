@@ -137,6 +137,6 @@ methods(不带参数):
 
 methods(带参数):
 
-    <button v-on:click="greet('hello', $event)">
+    <button v-on:click="greet('hello', $event.target.value)">
 
 

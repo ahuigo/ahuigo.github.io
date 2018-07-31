@@ -371,7 +371,7 @@ hello module: hello.js
 http://www.ruanyifeng.com/blog/2014/09/package-management.html
 
 old:
-- Bower - 不打包，只是install/update..: 
+- Bower - 不打包，只是install/update..: YeoMan和Grunt 建立在Bower基础之上
     　　# 模块的名称
     　　$ bower install jquery
     　　# github用户名/项目名

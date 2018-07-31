@@ -35,8 +35,8 @@
     <todo-item :title="'中国人'"></todo-item>
 
 ## refs
-refs 相当于id, 
-2. 当 ref 和 v-for 一起使用时，获取到的引用会是一个数组
+*refs 相当于id*\
+当 ref 和 v-for 一起使用时，获取到的引用会是一个数组
 
     <div id="parent">
         <user-profile ref="profile"></user-profile>
@@ -57,9 +57,9 @@ ref也可以是组件元素
 
 ## 传值
 1. prop 是单向绑定的：
-    1. prop 属性会从html DOM 属性移除
-    2. 当父组件的属性变化时，将传导给子组件，
-2. $emit(event value) 是反向的
+    1. prop 属性不会出现在html DOM(inherits). `非prop`
+    2. 当父组件的属性变化时，将传导给子组件
+2. $emit(event value) 是反向传达到父组件的
 
 ### props
 todo-item 组件现在接受一个 "prop"，
@@ -103,16 +103,18 @@ HTML 特性是不区分大小写的。所以，当使用的不是字符串模板
     <child my-message="hello!"></child>
 
 #### 非prop
-非prop 属性会被inherit 在模板的根元素上, 而prop 会被移除, 除非:
+非prop 属性会被inherit 在模板的根元素上, 而prop 会被移除;\
+`inheritAttrs: false`时，所有都不被继承
 
     <child-com1 foo="foo" boo="boo">
+
     props: ['foo'],
-    inheritAttrs: false
+    inheritAttrs: true, //default
     created () {
-        console.log(this.$attrs) // { boo: 'boo'} 仅当inheritAttrs 为false 时
+        console.log(this.$attrs) // { boo: 'boo'} 当inheritAttrs 为true 时,只有boo被继承
     }
 
-子组件可以再把$attrs 传给下一层: 限inheritAttrs: false,
+子组件可以再把 所有的 $attrs 传给下一层
 
     <child-com2 v-bind="$attrs">
 
@@ -163,8 +165,8 @@ DOM 决定的
     })
 
 ### 创建副本
-props 传给子组件的值，作为局部变量是不允许直接修改的(为了不影响父组件)。你可以:
-1. 利用data 定义局部变量
+props 传给子组件的值，作为局部变量是不允许直接修改的(为了不影响父组件)。你可以用data/computed 隔离、反传值:
+1. 利用data 定义局部变量, 不会影响父组件
 2. 定义一个computed 属性，处理 prop 的值并返回：
 
 #### data 局部变量
@@ -239,7 +241,7 @@ event:input 发送$event.target.value +接收:
     $event.target.checked
 
 #### .sync
-sync 简化了父组件修改props 的过程
+sync 简化了父组件修改props 的过程（$emit 还是要手动）
 
     <comp :foo.sync="bar"></comp>
     #会被扩展为：
@@ -251,7 +253,9 @@ sync 简化了父组件修改props 的过程
 
 当使用一个对象一次性设置多个属性的时候，这个 .sync 修饰符也可以和 v-bind 一起使用：
 
-    <comp v-bind.sync="{ foo: 1, bar: 2 }"></comp>
+    <comp v-bind.sync="doc"></comp>
+
+在一个字面量的对象上，例如 `v-bind.sync=”{ title: doc.title }”`，是无法正常工作的，因为在解析一个像这样的复杂表达式的时候，有很多边缘情况需要考虑
 
 #### root
 子组件可以通过$root 修改父组件的变量:
