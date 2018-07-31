@@ -23,10 +23,10 @@ same as js:
 		"str2" )
 
 ## string number
-    int:
-        str.isdigit() 123
-        .isdecimal()
-        .isnumeric()
+    int: 123
+        str.isdecimal()
+        str.isdigit() 
+        str.isnumeric()
 
     float:
         .isalnum() 123.43

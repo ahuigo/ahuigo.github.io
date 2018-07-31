@@ -172,18 +172,9 @@ set 只能存不可变hashable: 字符串、数字、bytes
     TypeError: unhashable type: 'list
     >>> a = 'abc'
 
-不可变对象本身a 是不变的，如果变了，其实是生成了新的变量'Abc':
+set 是无序的
 
-    >>> a = 'abc'
-    >>> a.replace('a', 'A')
-    'Abc'
-    >>> a
-    'abc'
-
-注意，传入的参数[1, 2, 3]是一个list，而显示的{1, 2, 3}只是告诉你这个set内部有1，2，3这3个元素，显示的顺序也不表示set是有序的。。
-> set 是无序的
-
-## add set
+## set 元素
 会改变s本身，返回None
 
 	s.add(item);
@@ -191,17 +182,8 @@ set 只能存不可变hashable: 字符串、数字、bytes
 
 通过remove(key)方法可以删除元素：
 
-	>>> s.remove(4)
+	>>> if 4 in s: s.remove(4)
 	{1, 2, 3}
-
-set可以看成数学意义上的无序和无重复元素的集合，因此，两个set可以做数学意义上的交集、并集等操作：
-
-	>>> s1 = set([1, 2, 3])
-	>>> s2 = set([2, 3, 4])
-	>>> s1 & s2
-	{2, 3}
-	>>> s1 | s2
-	{1, 2, 3, 4}
 
 set和dict的唯一区别仅在于没有存储对应的value，但是，set的原理和dict一样
 

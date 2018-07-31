@@ -22,6 +22,8 @@ empty item 不会被for in 遍历, 但是会被 for of 遍历
     Array.from({length: 5}, (x,i) => i);
     _.range(5)
 
+    for(let id in Array(5))
+
 undefined 数组:
 
     Array(5)

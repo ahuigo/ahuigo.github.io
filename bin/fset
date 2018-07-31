@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+#########################################
+# Author: ahuigo <a132811@gmail.com>
+#########################################
+from sys import argv
+import sys
+import os
+import re
+files = []
+act = '+'
+
+
+def Usage():
+    tip = '''
+    Usage:
+        fset [OPTIONS] FILE1 {SET_OPERATOR} FILE2
+
+        FILE:
+            file_path:column:delimiter
+            :column:delimiter   
+               If file is empty, use stdin instead
+
+        SET_OPERATOR
+            +   Union set
+            -   Difference set
+            -i  Intersection set
+        OPTIONS
+            -h  For help
+
+    Example:
+        ➜ $  cat a.csv
+        Lily,18
+        Lilei,19
+        Xiaohua,20
+
+        ➜ $  cat b.csv
+        James|18
+        Lily|18
+        Lilei|19
+
+        ➜ $  fset a.csv:1 - b.csv:1:\|
+        Xiaohua
+
+        ➜ $  fset a.csv:1 + b.csv:1:\|
+        Lilei
+        James
+        Lily
+        Xiaohua
+
+        ➜ $  fset a.csv:1 -i b.csv:1:\|
+        ➜ $  cat a.csv | fset :1 -i b.csv:1:\|
+        Lily
+        Lilei
+
+    '''
+    quit(tip)
+
+
+if len(argv) == 1 or '-h' in argv:
+    Usage()
+
+act = None
+argv.pop(0)
+s = set()
+while len(argv):
+    arg = argv.pop(0)
+    if arg in ['-', '+', '-i']:
+        act = arg
+        continue
+    arr = arg.split(':', 2)
+    if len(arr) == 1:
+        arr.append('0')
+    if len(arr) == 2:
+        arr.append(',')
+    arr[1] = int(arr[1])-1 if arr[1].isdigit() else 0
+    arr[2] = arr[2] or ','
+    file, index, delimiter = arr
+    fp = open(file) if file else sys.stdin
+
+    tmp_s = set()
+    for line in fp:
+        row = line.strip().split(delimiter)
+        if len(row) > index:
+            if act in [None, '+']:
+                s.add(row[index])
+            elif act == '-' and row[index] in s:
+                s.remove(row[index])
+            elif act == '-i':
+                tmp_s.add(row[index])
+    if act == '-i':
+        s &= tmp_s
+
+for l in s:
+    print(l)

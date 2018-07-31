@@ -17,12 +17,18 @@
 	Math.ceil(1.5);	//2
 	Math.floor(Math.random());
 
+    > Number.isNaN(undefined)
+    false
+    # The global isNaN() function, converts the tested value to a Number, then tests it.
+    > isNaN(undefined)
+    true
 
 ## to Number
 数值范围:Number.MIN_VALUE~Number.MAX_VALUE (一般是5e-324~1.79769e+308)
 
     '123.3'*1
     +'-123.3'
+    ''+21234
 
 
     Number('1.2e5')

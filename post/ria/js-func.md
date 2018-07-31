@@ -80,7 +80,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
     }(1,2,3)
 
 ## 解构参数
-### 解构赋值
+### 解构赋值(不要求数量一致`_`)
 析构array
 
     var [x, y, z] = ['hello', 'JavaScript', 'ES6'];
@@ -97,9 +97,8 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
     let {id:uid} = {id:1}; // uid=id
     let {uid=0} = {}
 
-
 ### 解构命名参数
-same as python:
+无效，除非python:
 
     > function f(a, b=1){console.log(a,b)}
     > f(b=23, a=3)

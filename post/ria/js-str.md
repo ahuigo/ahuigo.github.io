@@ -115,10 +115,19 @@ endsWith
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
 
+### isNumber
+
+    isNaN(s) // check +s
+    s.match(/^-?\d+$/)
+
 ### .trim()
 trim space only
 
 	' a '.trim()
+
+replace strip
+
+    '#adf#'.replace(/^#+|#+$/g,'')
 
 ### for
 
@@ -244,7 +253,6 @@ Create RegExp：test, exec
 		//第2次输出 ["2ing", "ing", index: 6, input: " 1ing 2ing 3ing"] 10
 		//第3次输出 ["3ing", "ing", index: 11, input: " 1ing 2ing 3ing"] 15
 	}
-
 
 ## html转码:
 URI:

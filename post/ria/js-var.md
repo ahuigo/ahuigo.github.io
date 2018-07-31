@@ -193,6 +193,10 @@ to string:
 1. 原始值有:undefined, null, 布尔值(booleans), 数字(numbers),还有字符串(strings).
 2. 其他的所有值都是对象类型的值,包括数组(arrays)和函数(functions).
 
+    +'234' 
+    134+''
+    ''+134
+
 强制类型转换:
 
 	Boolean(value) - 把给定的值转换成 Boolean 型；
