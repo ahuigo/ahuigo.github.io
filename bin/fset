@@ -28,27 +28,40 @@ def Usage():
             -h  For help
 
     Example:
-        ➜ $  cat a.csv
+        $  cat a.csv
         Lily,18
         Lilei,19
         Xiaohua,20
 
-        ➜ $  cat b.csv
+        $  cat b.csv
         James|18
         Lily|18
         Lilei|19
 
-        ➜ $  fset a.csv:1 - b.csv:1:\|
+        $  cat c.csv
+        James:18
+        Lily:18
+        Lilei:19
+
+        $  fset a.csv:1 - b.csv:1:\|
         Xiaohua
 
-        ➜ $  fset a.csv:1 + b.csv:1:\|
+        $  fset a.csv:1 + b.csv:1:\|
         Lilei
         James
         Lily
         Xiaohua
 
-        ➜ $  fset a.csv:1 -i b.csv:1:\|
-        ➜ $  cat a.csv | fset :1 -i b.csv:1:\|
+        $  fset a.csv:1 -i b.csv:1:\|
+        Lily
+        Lilei
+
+        $  cat a.csv | fset :1 -i b.csv:1:\|
+        Lily
+        Lilei
+
+        $  cat a.csv | fset :1 -i c.csv:1:\:
+        $  cat a.csv | fset :1 -i c.csv:1::
         Lily
         Lilei
 
