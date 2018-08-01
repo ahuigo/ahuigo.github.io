@@ -140,3 +140,16 @@ methods(带参数):
     <button v-on:click="greet('hello', $event.target.value)">
 
 
+## 程序化的事件侦听器
+ $emit 的用法，除了被 v-on 侦听, 还有：
+1. 通过 $on(eventName, eventHandler) 侦听一个事件
+1. 通过 $once(eventName, eventHandler) 一次性侦听一个事件
+1. 通过 $off(eventName, eventHandler) 停止侦听一个事件
+
+once:
+
+    mounted(){
+        this.$once('hook:beforeDestroy', function () {
+            picker.destroy()
+        })
+    }

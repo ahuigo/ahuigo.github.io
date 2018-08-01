@@ -34,7 +34,9 @@
 
     <todo-item :title="'中国人'"></todo-item>
 
-## refs
+## 访问元素、组件
+
+### refs
 *refs 相当于id*\
 当 ref 和 v-for 一起使用时，获取到的引用会是一个数组
 ref 指向comp
@@ -46,7 +48,7 @@ ref 指向comp
     // 访问子组件实例
     var child = parent.$refs.profile
 
-ref也可以是元素
+ref也可以组件内部的元素
 
     template: ' <input ref="input" v-on:input="updateValue($event.target.value)"',
     props: ['value'],
@@ -55,6 +57,66 @@ ref也可以是元素
             this.$refs.input.value = value.toUpperCase()
         }
     }
+
+`$refs` 只会在组件渲染完成之后生效。
+1. 你应该避免在`模板`或`计算属性`中访问 `$refs`
+
+### $root
+子组件可以通过$root 修改父组件的变量:
+
+    props=['root']
+    <div :root="$root" :is="tpl">
+    <tpl>
+        <input :value="list[1]" @input="$root.$set(list, 1, $event.target.value)"/>
+    </tpl>
+
+在子组件内访问$root:
+
+    new Vue({
+        data: {foo:1}
+    })
+    this.$root.foo
+
+### $parent
+$parent 属性可以用来从一个子组件访问父组件的实例. eg. `this.$parent.getMap`: https://jsfiddle.net/chrisvfritz/ttzutdxh/
+
+
+### 依赖注入(大范围有效的 prop)
+深层次的google-map-markers 访问google-map的话
+
+    <google-map>
+    <google-map-region v-bind:shape="cityBoundaries">
+        <google-map-markers v-bind:places="iceCreamShops"></google-map-markers>
+    </google-map-region>
+    </google-map>
+
+我们需要hack, 它就会失控。
+
+    var map = this.$parent.map || this.$parent.$parent.map
+
+任意更深层级的组件提供上下文信息时推荐依赖注入, 它用到了两个新的实例选项：provide 和 inject
+
+#### provice
+provide 选项允许我们指定我们想要`提供`给`后代`组件的`数据/方法`。在这个例子中，就是 `<google-map>` 内部的 getMap 方法：
+
+    provide: function () {
+      return {
+        getMap: this.getMap
+      }
+    }
+#### inject
+在任何`后代组件`里，我们都可以使用 inject 选项来`接收`指定的我们`想要添加`在这个实例上的`属性`：
+
+    inject: ['getMap']
+
+示例：https://jsfiddle.net/chrisvfritz/tdv8dt3s/ (中间的组件不需要层层传递)
+
+#### 结语
+这样的属性共享，是的组件偶合起来，重构困难。
+
+如果你想要共享的这个属性是你的应用特有的，或者如果你想在祖先组件中更新所提供的数据:
+1. 你可能需要换用一个像 Vuex 这样真正的状态管理方案了。
+
 
 ## 传值
 1. prop 是单向绑定的：
@@ -257,31 +319,6 @@ sync 简化了父组件修改props 的过程（$emit 还是要手动）
     <comp v-bind.sync="doc"></comp>
 
 在一个字面量的对象上，例如 `v-bind.sync=”{ title: doc.title }”`，是无法正常工作的，因为在解析一个像这样的复杂表达式的时候，有很多边缘情况需要考虑
-
-### $root
-子组件可以通过$root 修改父组件的变量:
-
-    props=['root']
-    <div :root="$root" :is="tpl">
-    <tpl>
-        <input :value="list[1]" @input="$root.$set(list, 1, $event.target.value)"/>
-    </tpl>
-
-在子组件内访问$root:
-
-    new Vue({
-        data: {foo:1}
-    })
-    this.$root.foo
-
-### $parent
-$parent 属性可以用来从一个子组件访问父组件的实例. eg. `this.$parent.getMap`: https://jsfiddle.net/chrisvfritz/ttzutdxh/
-
-我们需要hack:
-
-    var map = this.$parent.map || this.$parent.$parent.map
-
-它就会失控。任意更深层级的组件提供上下文信息时推荐依赖注入的原因。
 
 ### 非父子组件的通信
 有时候，非父子关系的两个组件之间也需要通信。在简单的场景下，可以使用一个空的 Vue 实例作为事件总线：
@@ -489,6 +526,43 @@ setTimeout 是为了演示用的，如何获取组件取决于你自己。一个
         },
     }
 
+## 递归组件
+构建一个文件目录树，tree-folder 组件，模板是这样的：
+
+    <p>
+        <span>{{ folder.name }}</span>
+        <tree-folder-contents :children="folder.children"/>
+    </p>
+
+还有一个 tree-folder-contents 组件，模板是这样的：
+
+    <ul>
+      <li v-for="child in children">
+        <tree-folder v-if="child.children" :folder="child"/>
+        <span v-else>{{ child.name }}</span>
+      </li>
+    </ul>
+
+### 相互依赖
+1. Vue 可以处理: A 依赖 B，B 又依赖 A, 
+2. 然而，如果你使用一个`模块系统`依赖导入组件(例如 webpack 或 Browserify)，你会遇到一个错误: mounted: template not defined.
+
+需要告诉模糊系统一个点：解析A时， 不需要先解析 B. 
+1. tree-folder 组件设为了那个点
+2. tree-folder-contents 要等到生命周期钩子 beforeCreate 时去注册它
+
+code:
+
+    beforeCreate: function () {
+        this.$options.components.TreeFolderContents = require('./tree-folder-contents.vue').default
+    }
+
+或者，在本地注册组件的时候，你可以使用 webpack 的异步 import：
+
+    components: {
+      TreeFolderContents: () => import('./tree-folder-contents.vue')
+    }
+
 ## 动态组件
 通过is 改变:
 
@@ -524,15 +598,44 @@ setTimeout 是为了演示用的，如何获取组件取决于你自己。一个
     </div>
 
 # tpl
+
+## 强制更新
+你可能还没有留意到`数组或对象`的变更检测注意事项，或者你可能依赖了一个未被 Vue 的响应式系统追踪的状态。
+
+极少数的情况下需要手动强制更新，那么你可以通过 `$forceUpdate` 来做这件事。
+
 ## v-once
-尽管在 Vue 中渲染 HTML 很快，不过当组件中包含大量静态内容时，可以考虑使用 v-once 将渲染结果缓存起来，就像这样：
+当组件中包含大量静态内容时，\
+你可以在根元素上添加 v-once 特性
+1. 以确保这些内容只计算一次然后缓存起来(数据再次变更就不会响应更新了)
+
+code
 
     Vue.component('terms-of-service', {
-    template: '\
-        <div v-once>\
-            <h1>Terms of Service</h1> ...很多静态内容...\
-        </div>\
-    '
+        template: '\
+            <div v-once>\
+                <h1>Terms of Service</h1> ...很多静态内容...\
+            </div>\
+        '
     })
+
+## 内联模板
+当 inline-template 这个组件将会使用其里面的内容作为模板.（代替了slot）占位符内容就是模板
+
+    <my-component inline-template>
+      <div>
+        <p>These are compiled as the component's own template.</p>
+        <p>Not parent's transclusion content.</p>
+      </div>
+    </my-component>
+
+## X-Templates(不推荐)
+另一个定义模板的方式是在一个 script 元素中x-template
+
+    <script type="text/x-template" id="hello-world-template">
+        <p>Hello hello hello</p>
+    </script>
+    template: '#hello-world-template'
+
 
 # 边界

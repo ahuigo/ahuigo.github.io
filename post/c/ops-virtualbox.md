@@ -34,6 +34,11 @@ Bridged: 局域网交换机 -> VMnet0虚拟交换机 -> 虚拟机
 
 ### NAT
 让虚拟系统借助NAT(网络地址转换)功能，通过*宿主机器所在的网络*来访问*公网*。相当于外网的机器
+> Network Address Translation (NAT) is used to give your device a public IP address. 
+> A router will have a public IP address and every device connected to the router will have a private IP address.
+> Requests will be translated from the device’s private IP to the router’s public IP with a unique port.
+> That way you don’t need a unique public IP for each device but can still be discovered on the Internet.
+
 NAT模式下的虚拟系统的TCP/IP配置信息是由*VMnet8*(NAT)虚拟网络的DHCP服务器提供的，无法进行手工修改，因此虚拟系统也 就无法和本局域网中的其他真实主机进行通讯。
 
     Bridaged Adapter
