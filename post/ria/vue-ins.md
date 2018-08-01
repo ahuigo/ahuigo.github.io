@@ -139,6 +139,19 @@ Vue 将观察数组(observed array)的变化数组方法(mutation method)包裹�
 4. 以及在数据变化时更新 DOM(update the DOM when data change)。
 5. 在这个过程中，Vue 实例还会调用执行一些生命周期钩子函数，这样用户能够在特定阶段添加自己的代码。
 
+
+### mounted vs created
+1. created: 模板编译或router 前
+2. mounted: 模板完成时
+
+see ![](https://img-blog.csdn.net/20170919221428421?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGRubG92ZW1l/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+
+    data: {foo:0}
+    mounted: function () {
+        this.foo = 1
+    },
+
+
 ### created hook
 发生在实例创建后:
 

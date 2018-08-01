@@ -37,6 +37,7 @@
 ## refs
 *refs 相当于id*\
 当 ref 和 v-for 一起使用时，获取到的引用会是一个数组
+ref 指向comp
 
     <div id="parent">
         <user-profile ref="profile"></user-profile>
@@ -45,7 +46,7 @@
     // 访问子组件实例
     var child = parent.$refs.profile
 
-ref也可以是组件元素
+ref也可以是元素
 
     template: ' <input ref="input" v-on:input="updateValue($event.target.value)"',
     props: ['value'],
@@ -257,7 +258,7 @@ sync 简化了父组件修改props 的过程（$emit 还是要手动）
 
 在一个字面量的对象上，例如 `v-bind.sync=”{ title: doc.title }”`，是无法正常工作的，因为在解析一个像这样的复杂表达式的时候，有很多边缘情况需要考虑
 
-#### root
+### $root
 子组件可以通过$root 修改父组件的变量:
 
     props=['root']
@@ -266,7 +267,23 @@ sync 简化了父组件修改props 的过程（$emit 还是要手动）
         <input :value="list[1]" @input="$root.$set(list, 1, $event.target.value)"/>
     </tpl>
 
-#### 非父子组件的通信
+在子组件内访问$root:
+
+    new Vue({
+        data: {foo:1}
+    })
+    this.$root.foo
+
+### $parent
+$parent 属性可以用来从一个子组件访问父组件的实例. eg. `this.$parent.getMap`: https://jsfiddle.net/chrisvfritz/ttzutdxh/
+
+我们需要hack:
+
+    var map = this.$parent.map || this.$parent.$parent.map
+
+它就会失控。任意更深层级的组件提供上下文信息时推荐依赖注入的原因。
+
+### 非父子组件的通信
 有时候，非父子关系的两个组件之间也需要通信。在简单的场景下，可以使用一个空的 Vue 实例作为事件总线：
 
     var bus = new Vue()
@@ -276,7 +293,7 @@ sync 简化了父组件修改props 的过程（$emit 还是要手动）
 
     // 在组件 B 创建的钩子中监听事件
     bus.$on('id-selected', function (id) {
-    // ...
+        // ...
     })
 
 
@@ -335,35 +352,87 @@ sync 简化了父组件修改props 的过程（$emit 还是要手动）
             }
         }
 ## slot, 插槽
+有了slot 后，comp 的template 可以直接写slot 引入了:
+
+    template: '<div class="comp1"><slot></slot></div>'
+
 slot 允许对组件占位中的内容重载: js-demo/vue-slot.html:
     https://codepen.io/anon/pen/JvRbqo
 
-### slot-scope 传值
-
-    <child :list="[1,2,3]">
-        <div slot-scope="props">
-            <div>{{ props.text }}</div>
-        </div>
-    </child>
-
-    template: child
-        <div>
-            <slot text="hello from child"></slot>
-        </div>
+1. child 子模板`<slot name="xx">` 会被父模板`slot="xxx"`覆盖
+1. child 子模板`<slot>` 会被父模板`<child>`覆盖
 
 slot 也像是普通元素那样使用v-for:
 
     <slot v-for="text in list" :text="text"></slot>
 
+### slot-scope 传值
+见: https://juejin.im/post/5a69ece0f265da3e5a5777ed
+
+`<slot>`是插槽，里面可以有默认值，也可以向他传
+
+    <slot :todo="todo"></slot>
+
+模板通过slot-scope 获取值
+
+    <child>
+      <template slot-scope="{ todo }">
+        {{ todo.text }}
+      </template>
+    </child>
+
+slot-scope 也可以用命名作用域
+
+    <child>
+      <template slot-scope="slotProps">
+        {{ slotProps.todo.text }}
+      </template>
+    </child>
+
 ## 组合
 ### 异步组件
-你可以在工厂函数中返回一个 Promise，所以当使用 webpack 2 + ES2015 的语法时可以这样：
+你可以在工厂函数中返回一个 Promise
 
-    Vue.component(
-        'async-webpack-example',
-            // 该 `import` 函数返回一个 `Promise` 对象。
-            () => import('./my-async-component')
-    )
+    Vue.component('async-example', function (resolve, reject) {
+      setTimeout(function () {
+        resolve({
+          template: '<div>I am async!</div>'
+        })
+      }, 1000)
+    })
+
+setTimeout 是为了演示用的，如何获取组件取决于你自己。一个推荐的做法是将异步组件和 webpack 的 code-splitting 功能一起配合使用：
+
+    Vue.component('async-webpack-example', function (resolve) {
+      // 这个特殊的 `require` 语法将会告诉 webpack
+      // 自动将你的构建代码切割成多个包，这些包
+      // 会通过 Ajax 请求加载
+      require(['./my-async-component'], resolve)
+    })
+
+局部异步:
+
+    components: {
+        'my-component': () => import('./my-async-component')
+    }
+
+#### 处理加载状态
+如果想在加载时，显示loading 状态组件, 
+
+    const AsyncComponent = () => ({
+      // 需要加载的组件 (应该是一个 `Promise` 对象)
+      component: import('./MyComponent.vue'),
+      // 异步组件加载时使用的组件
+      loading: LoadingComponent,
+      // 加载失败时使用的组件
+      error: ErrorComponent,
+      // 展示加载时组件的延时时间。默认值是 200 (毫秒)
+      delay: 200,
+      // 如果提供了超时时间且组件加载也超时了，
+      // 则使用加载失败时使用的组件。默认值是：`Infinity`
+      timeout: 3000
+    })
+
 
 ### 组件命名
 这意味着 PascalCase 是最通用的声明约定而 kebab-case 是最通用的使用约定。
@@ -421,6 +490,7 @@ slot 也像是普通元素那样使用v-for:
     }
 
 ## 动态组件
+通过is 改变:
 
     <script src="https://unpkg.com/vue"></script>
     <div id="app">
@@ -437,7 +507,7 @@ slot 也像是普通元素那样使用v-for:
         ></component>
     </div>
 
-### keep-alive
+### keep-alive(dom 常驻)
 如果把切换出去的组件保留在内存中，可以保留它的状态或避免重新渲染。比如表单数据
 
     <keep-alive>
@@ -453,7 +523,6 @@ slot 也像是普通元素那样使用v-for:
         <div v-html="post.content"></div>
     </div>
 
-
 # tpl
 ## v-once
 尽管在 Vue 中渲染 HTML 很快，不过当组件中包含大量静态内容时，可以考虑使用 v-once 将渲染结果缓存起来，就像这样：
@@ -461,9 +530,9 @@ slot 也像是普通元素那样使用v-for:
     Vue.component('terms-of-service', {
     template: '\
         <div v-once>\
-        <h1>Terms of Service</h1>\
-        ...很多静态内容...\
+            <h1>Terms of Service</h1> ...很多静态内容...\
         </div>\
     '
     })
 
+# 边界
