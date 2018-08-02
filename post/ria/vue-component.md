@@ -117,7 +117,6 @@ provide 选项允许我们指定我们想要`提供`给`后代`组件的`数据/
 如果你想要共享的这个属性是你的应用特有的，或者如果你想在祖先组件中更新所提供的数据:
 1. 你可能需要换用一个像 Vuex 这样真正的状态管理方案了。
 
-
 ## 传值
 1. prop 是单向绑定的：
     1. prop 属性不会出现在html DOM(inherits). `非prop`
@@ -391,7 +390,7 @@ sync 简化了父组件修改props 的过程（$emit 还是要手动）
 ## slot, 插槽
 有了slot 后，comp 的template 可以直接写slot 引入了:
 
-    template: '<div class="comp1"><slot></slot></div>'
+    template: '<div class="comp1"><slot></slot></div>' //child 的slot 直接包含站位comp1 的dom
 
 slot 允许对组件占位中的内容重载: js-demo/vue-slot.html:
     https://codepen.io/anon/pen/JvRbqo
@@ -620,7 +619,7 @@ code
     })
 
 ## 内联模板
-当 inline-template 这个组件将会使用其里面的内容作为模板.（代替了slot）占位符内容就是模板
+当 inline-template 这个组件将会使用其里面的内容作为模板.（代替了`<slot></slot>`）占位符内容就是模板
 
     <my-component inline-template>
       <div>

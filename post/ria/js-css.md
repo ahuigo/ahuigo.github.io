@@ -329,12 +329,13 @@ Refer to http://www.qianduan.net/css-content-counter-increment-counter-reset.htm
 # transform(2D)
 旋转、移位....
 
-	-webkit-transform:
+	transform: translateX(15px)  水平右移15px
 		rotate(30deg); 顺时针30度旋转
 		rotateX();
 		rotateY();
 		translate(xpx, ypx); 移动
 		scale(2, 4); 水平扩大两倍, 垂直扩大4倍
+        scale(2); == scale(2,2);
 		skew(30deg,20deg) 围绕 X 轴把元素倾斜 30 度，围绕 Y 轴倾斜 20 度。//-webkit-transform-origin:0px 0px ;倾斜的基点
 		#
 		matrix() 方法把所有 2D 转换方法组合在一起[matrix].
@@ -416,9 +417,6 @@ visibility:hidden 会延时执行 因为它不是连续的.(hidden 会暂用空�
 		animation:myfirst 5s ;//动画结束后返回每一桢
 		animation:myfirst 5s 3;//播放3次
 		animation:myfirst 5s infinite;//播放无限次
-		-moz-animation:myfirst 5s; /* Firefox */
-		-webkit-animation:myfirst 5s; /* Safari and Chrome */
-		-o-animation:myfirst 5s; /* Opera */
 	}
 
 ## animation-fill-mode属性。

@@ -11,11 +11,3 @@ https://segmentfault.com/a/1190000005932457?utm_source=weekly&utm_medium=email&u
 2. 通信还是走的bridge，
 3. js引擎从jscore换成了v8
 4. 用了vue，界面开发不是jsx了。
-
-# demo
-## vue demo
-/demo/js-demo/vue-bind.html
-
-## v-repeat
-Day 12 - 编写日志列表页
-https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339210950e063b4795d574036bc5dcf0c2449bc52000
