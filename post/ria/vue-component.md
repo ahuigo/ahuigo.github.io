@@ -119,7 +119,7 @@ provide 选项允许我们指定我们想要`提供`给`后代`组件的`数据/
 
 ## 传值
 1. prop 是单向绑定的：
-    1. prop 属性不会出现在html DOM(inherits). `非prop`
+    1. prop 属性不会出现在html DOM(inherits). `非prop`才可以继承
     2. 当父组件的属性变化时，将传导给子组件
 2. $emit(event value) 是反向传达到父组件的
 
@@ -133,7 +133,7 @@ todo-item 组件现在接受一个 "prop"，
         </li>'
     })
 
-传入todo: `:todo="value_expression"`
+必须显式传入todo: `:todo="value_expression"`, `tode="string"`
 
     <todo-item todo="{text:'haha1'}"></todo-item> # 传字符串
     <todo-item v-bind:todo="{text:'haha2'}"></todo-item> # 传对象dict
@@ -293,6 +293,7 @@ event:custom 发送/接收一个值,
 
 event:input 发送$event.target.value +接收:
 
+    <custom-input v-model="searchText">
     <custom-input v-bind:value="searchText" v-on:input="searchText = $event" >
         template: `<span v-on:input="$emit('input', $event.target.value)"  >ahui</span>`
 
@@ -393,7 +394,7 @@ sync 简化了父组件修改props 的过程（$emit 还是要手动）
     template: '<div class="comp1"><slot></slot></div>' //child 的slot 直接包含站位comp1 的dom
 
 slot 允许对组件占位中的内容重载: js-demo/vue-slot.html:
-    https://codepen.io/anon/pen/JvRbqo
+    https://codepen.io/ahuigo/pen/rrKqJB
 
 1. child 子模板`<slot name="xx">` 会被父模板`slot="xxx"`覆盖
 1. child 子模板`<slot>` 会被父模板`<child>`覆盖
@@ -409,7 +410,7 @@ slot 也像是普通元素那样使用v-for:
 
     <slot :todo="todo"></slot>
 
-模板通过slot-scope 获取值
+然后, 模板通过slot-scope 获取值
 
     <child>
       <template slot-scope="{ todo }">
@@ -636,5 +637,3 @@ code
     </script>
     template: '#hello-world-template'
 
-
-# 边界

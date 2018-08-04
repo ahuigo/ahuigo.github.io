@@ -52,6 +52,8 @@ Notice: v-model 不会设置name, `new FormData(formobj)` 不能取值
         <input v-model="message">
         <input :value="message" @input="message=$event.target.value">
 
+        v-model.message="message" 等价
+
 list 应该用$set 修改:
 
     <input :value="list[1]" @input="$root.$set(list, 1, $event.target.value)">

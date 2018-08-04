@@ -24,6 +24,7 @@
     this.message == data.message
 
 ### watch attr
+当attr 值变化时的hooks
 
     // $watch 是一个实例方法
     vm.$watch('a', function (newValue, oldValue) {
@@ -36,9 +37,9 @@
         a: 'Foo',
     },
     watch: {
-        a : function (val) {
+        a : function (new_val, old_val) {
             //当a改变时
-            console.log(val)
+            console.log(new_val)
         },
 
 
@@ -166,3 +167,14 @@ see ![](https://img-blog.csdn.net/20170919221428421?watermark/2/text/aHR0cDovL2J
     })
 
 其它的钩子，会在实例生命周期的不同阶段调用，如 mounted、updated 和 destroyed, 所有hook this指向app
+
+# 异步更新队列
+Vue 异步执行 DOM 更新。只要观察到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据改变。
+
+    vm.message = 'new message' // 更改数据
+    vm.$el.textContent === 'new message' // false
+    Vue.nextTick(function () {
+        vm.$el.textContent === 'new message' // true
+    })
+
+在组件内使用 vm.$nextTick() 实例方法特别方便，因为它不需要全局 Vue

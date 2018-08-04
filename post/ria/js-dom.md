@@ -466,6 +466,8 @@ Example 浮层: js-demo/alert-float.js
     > $0.href
     http://locahost/p/xss.md
 
+node.value 与node.getAttribute('value') 不同: 前者是真正的值，后者只是markup 中的value
+
 ## Set Attribute
 
 	node.setAttribute('name', value);
@@ -753,6 +755,9 @@ e.preventDefault() 冒泡阻止：
 
 
 # Data
+
+    <tag data-key="abc">
+
 ## dataset
 html5 的dataset 对象
 
