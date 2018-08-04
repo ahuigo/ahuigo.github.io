@@ -178,3 +178,17 @@ Vue 异步执行 DOM 更新。只要观察到数据变化，Vue 将开启一个�
     })
 
 在组件内使用 vm.$nextTick() 实例方法特别方便，因为它不需要全局 Vue
+
+## 断言异步更新
+
+    // 在状态更新后检查生成的 HTML
+    it('updates the rendered message when vm.message updates', done => {
+      const vm = new Vue(MyComponent).$mount()
+      vm.message = 'foo'
+
+      // 在状态改变后和断言 DOM 更新前等待一刻
+      Vue.nextTick(() => {
+        expect(vm.$el.textContent).toBe('foo')
+        done()
+      })
+    })
