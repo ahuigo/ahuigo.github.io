@@ -64,7 +64,6 @@ ref也可以组件内部的元素
 ### $root
 子组件可以通过$root 修改父组件的变量:
 
-    props=['root']
     <div :root="$root" :is="tpl">
     <tpl>
         <input :value="list[1]" @input="$root.$set(list, 1, $event.target.value)"/>
@@ -75,7 +74,9 @@ ref也可以组件内部的元素
     new Vue({
         data: {foo:1}
     })
+    //component
     this.$root.foo
+    this.$root.func1
 
 ### $parent
 $parent 属性可以用来从一个子组件访问父组件的实例. eg. `this.$parent.getMap`: https://jsfiddle.net/chrisvfritz/ttzutdxh/
@@ -153,6 +154,22 @@ todo-item 组件现在接受一个 "prop"，
       v-on:remove="todos.splice(index, 1)"
     >没有组件时的默认值</li>
 
+#### access props and data
+data 只是before render 生成。lmsg 不是响应式的(即使是数组，也是deep-copy)
+
+    props: ['msg'],
+    data: function() {
+        return {
+            lmsg: this.msg,
+            // other object attributes
+        }
+    },
+    methods:{
+        fun1(){
+            console.log{this.lmsg, this.msg, this.$parent.msg}
+        }
+    }
+
 #### camelCase
 HTML 特性是不区分大小写的。所以，当使用的不是字符串模板时，camelCase (驼峰式命名) 的 prop 需要转换为相对应的 kebab-case (短横线分隔式命名)：
 
@@ -164,7 +181,7 @@ HTML 特性是不区分大小写的。所以，当使用的不是字符串模板
     <!-- 在 HTML 中使用 kebab-case 传值-->
     <child my-message="hello!"></child>
 
-#### 非prop
+#### 非prop(this.$attrs)
 非prop 属性会被inherit 在模板的根元素上, 而prop 会被移除;\
 `inheritAttrs: false`时，所有都不被继承
 
@@ -232,8 +249,10 @@ props 传给子组件的值，作为局部变量是不允许直接修改的(为�
 2. 定义一个computed 属性，处理 prop 的值并返回：
 
 #### data 局部变量
+不需要`<child :value="local_data_count">`传递
 1. 组件的 data 选项`必须是一个函数`，
 2. 以便每个实例都可以维护「函数返回的数据对象」的彼此独立的数据副本.
+3. `this.$data.value`,`this.value` 可以访问：https://codepen.io/ahuigo/pen/yqERxd
 
     // 定义一个新的组件，名称为 button-counter
     Vue.component('button-counter', {

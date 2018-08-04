@@ -152,6 +152,16 @@ await reject:
     //pending
     await new Promise(r=>{})
 
+## try catch 
+
+    export function catchEm(promise) {
+      return promise.then(data => [null, data])
+        .catch(err => [err]);
+    }
+
+    const [err, data] = await catchEm(asyncFunction(arg1, arg2));
+
+
 async is used to await promise:
 
     var p = new Promise(resolve => {
@@ -215,9 +225,9 @@ example:
             resolve(10)
             console.log('----work2--------')
         });
-        console.log('reject:', await p.then(e=>e+1).then(e=>e+10).catch(e=>e+3).catch(e=>e+30)); //reject 3
-        console.log('reject:', await p.then(e=>e+1).then(e=>e+10).catch(e=>e+3).then(e=>e+30)); 
-        //reject 33(from memory)
+        console.log('reject:', await p.then(e=>e+1).catch(e=>e+3).catch(e=>e+30)); //reject 3
+        console.log('reject:', await p.then(e=>e+1).catch(e=>e+3).then(e=>e+30)); //reject 33(from memory)
+        console.log('resolve:', await Promise.resolve(0).then(e=>e+1).catch(e=>e+3).then(e=>e+30)); //reject 33(from memory)
     })()
 
 result:
@@ -226,6 +236,4 @@ result:
     ----work2--------
     reject: 3
     reject: 33
-
-
-
+    resolve: 31

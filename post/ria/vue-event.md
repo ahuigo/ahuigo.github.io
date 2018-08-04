@@ -2,7 +2,16 @@
 使用 $on(eventName) 监听事件
 使用 $emit(eventName, optionalPayload) 触发事件
 
+## condition event
+
+    <div v-on="{ mouseover: condition ? handler : null }">
+
+    v-on="condition ? { mouseover: handler } : {}"
+    v-on="condition ? { mouseover:e=> handler(e,arg) } : {}"
+    v-on="condition ? { mouseover } : {}"
+
 ## event type
+
 1. click,remove,keyup.enter
 
 ### v-on(@)
@@ -17,6 +26,7 @@ event: click,input,change, keyup.enter,blur...
 
     <dt contenteditable="true" v-on:blur="update(t, 'name', $event)">{{ t.name }}</dt>
 
+> click="func" click="func($event)" 一样($event==mouseevent)
 
 组件emit 还支持自定义: remove....
 
