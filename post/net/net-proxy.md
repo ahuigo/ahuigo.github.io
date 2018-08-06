@@ -31,6 +31,9 @@ If the proxy server requires a username and password then add these to the URL. 
 Comparison_of_proxifiers:
 https://en.wikipedia.org/wiki/Comparison_of_proxifiers
 
+### graftcp
+一个可以把指定程序的 TCP 连接重定向到 SOCKS5 proxy 的工具。
+
 ### proxychains with shadowsocks
 > https://github.com/shadowsocks/shadowsocks/wiki/Using-Shadowsocks-with-Command-Line-Tools
 
