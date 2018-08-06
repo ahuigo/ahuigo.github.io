@@ -1,6 +1,6 @@
 # Promise
 实现异步串行写法
-2. generator
+1. generator
 1. Promise: resove-then, reject-catch
 2. async-await: 
     1. sync: `result = await promise` 

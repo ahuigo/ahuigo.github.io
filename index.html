@@ -21,42 +21,54 @@
     <script src="/js/page.js"></script>
     <style>
         .folder::before {
-            content: '\01F5C0  ';
+            content: '📗';
+        }
+
+        .folder::first-letter {
+            text-transform: capitalize;
+        }
+
+        .file::before {
+            content: '📄';
+
         }
     </style>
 </head>
 
 <body class="layout-documentation page-layout">
-
-    <div style="width:200px">
-        <div class="container">
-            <p class="title">
+    <div style="padding:1.5rem" class="level">
+            <div class="level-left">
+                <div class="level-item title">
                 ahuigo 的自留地
-            </p>
-            <p class="subtitle">
-            </p>
-        </div>
+                </div>
+            </div>
+
+            <div class="level-right">
+                <p class="level-item">
+                    <strong>Menu</strong>
+                </p>
+            </div>
     </div>
     <div id="app" style="display:flex">
-        <div class="section nav-left">
-            <tree-folder :nodes="nodes"></tree-folder>
+        <div style="flex:1; width:20%">
+            <tree-folder :show="show" :nodes="nodes"></tree-folder>
         </div>
-        <div style="flex:5">
+        <div style="flex:3; width:65%">
             <router-view></router-view>
         </div>
-        <div id="toc" class="section nav-right" style="flex:5">
+        <div style="flex:1; width:15%">
+            <div id="toc"></div>
+            <iframe height="450" marginheight="0" border="0" src="http://music.163.com/outchain/player?type=0&amp;id=7314556&amp;auto=0&amp;height=430" frameborder="no"></iframe>
         </div>
     </div>
 </body>
 <template id="tree-folder">
-    <ul class="menu-list">
-        <li id="folder" v-for="(file,index) in nodes" :key="file.path">
-            <div v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name}}
+    <ul v-if="show" class="menu-list">
+        <li v-for="(file,index) in nodes" :key="file.path">
+            <div v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name.toUpperCase()}}
             </div>
-            <div v-else :type="file.type">
-                <router-link :to="'/'+file.path">{{file.name}} </router-link>
-            </div>
-            <tree-folder v-if="file.nodes" :nodes="file.nodes"></tree-folder>
+            <router-link v-else :type="file.type" class="file" :to="'/'+file.path">{{file.name.slice(0,-3)}} </router-link>
+            <tree-folder v-if="file.nodes" :show="file.show" :nodes="file.nodes"></tree-folder>
         </li>
     </ul>
 </template>
@@ -77,10 +89,10 @@
             s.setAttribute('data-timestamp', +new Date());
             (d.head || d.body).appendChild(s);
             s.onload = function () {
-                console.log('onload disqus', DISQUS)
+                console.log('onload disqus')
                 disqus_reset()
             }
-        }else{
+        } else {
             disqus_reset()
         }
     }
@@ -91,7 +103,7 @@
                 config: function () {
                     this.page.url = window.location.href.replace('#', '#!');
                     this.page.identifier = window.location.hash.slice(1);
-                    this.page.title = document.querySelector('h1').innerText.split(' ').slice(1).join(' ')
+                    this.page.title = document.querySelector('#content h1').innerText.split(' ').slice(1).join(' ')
                 }
             });
 
@@ -100,10 +112,16 @@
 
     Vue.component('tree-folder', {
         template: '#tree-folder',
-        props: ['nodes'],
+        props: ['nodes', 'show'],
         methods: {
             openFolder(file) {
-                this.$root.fetchFolder(file).then(n => console.log(n))
+                if (!file.nodes) {
+                    file.show = true
+                    Vue.set(file, 'nodes', [{ type: 'file', name: "loading...", path: '' }]);
+                    this.$root.fetchFolder(file).then(n => console.log(n))
+                } else {
+                    Vue.set(file, 'show', !file.show);
+                }
             },
         },
     });
@@ -137,10 +155,6 @@
                     this.$nextTick(function () {
                     })
                 },
-                created() {
-                    console.log('created')
-                    this.fetchMd()
-                },
                 updated() {
                     disqus_reset()
                     console.log('updated')
@@ -159,8 +173,8 @@
                         path = this.$route.path
                         fetch(path).then(response => {
                             response.text().then(data => {
-                                if(data.substr(0,4) === '---\n'){
-                                    var pos = data.substr(0,300).nthIndex('---\n', 2)
+                                if (data.substr(0, 4) === '---\n') {
+                                    var pos = data.substr(0, 300).nthIndex('---\n', 2)
                                     data = data.substr(pos);
                                 }
                                 data = data.replace(/\n/g, '\t\n')
@@ -172,7 +186,11 @@
                         console.log('[text]')
                         return marked(text)
                     },
-                }
+                },
+                created() {
+                    console.log('before created')
+                    this.fetchMd()
+                },
             }
         },
     ];
@@ -186,13 +204,9 @@
         }),
         data() {
             return {
-                nodes: [
-                    {
-                        "path": "post/ai",
-                        "type": "dir",
-                    },
-                ],
+                nodes: [],
                 path: 'post',
+                show: true,
                 name: 'ahuigo',
             };
         },
@@ -200,7 +214,7 @@
             fetchFolder(file) {
                 return fetch('https://api.github.com/repos/ahuigo/a/contents/' + file.path, {
                 }).then(r => r.json()).then(data => {
-                    let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type }))
+                    let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type, show: true }))
                         .filter((v) =>
                             !(
                                 v.type == 'dir'

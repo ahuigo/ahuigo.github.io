@@ -154,6 +154,13 @@ todo-item 组件现在接受一个 "prop"，
       v-on:remove="todos.splice(index, 1)"
     >没有组件时的默认值</li>
 
+#### new add prop
+
+    node={name:'xxx'}
+    <comp :show="node.show">
+
+新添加的参数不能触发钩子：Vue.set(node, 'show', 1)
+
 #### access props and data
 data 只是before render 生成。lmsg 不是响应式的(即使是数组，也是deep-copy)
 

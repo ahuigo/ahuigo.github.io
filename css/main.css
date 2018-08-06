@@ -22,8 +22,12 @@ h5,section h4,section section h3 {
 h6,section h5,section section h4,section section section h3 {
 	font-size:1.3em
 }
-ol{
+ol,ul{
     -webkit-padding-start:10px;
+}
+*{
+    word-wrap:break-word;
+    word-break:break-all;
 }
 .fixednav{
 		height:700px;

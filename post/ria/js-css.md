@@ -246,10 +246,10 @@ https://www.zhihu.com/question/19895400
 ## wrap
 
 	word-wrap:
-		break-word; 对长单词强制换行, 短单词不受影响
+		break-word; //对长单词不截断，强制换行, 短单词不受影响(配合 word-break 生效)
 	word-break: 	;控制`字符与单词`的换行
 		break-all; 按字符换行(对中文无效)
-		break-word;按单词换行, 不过长单词被强制割断.(等同于word-wrap: break-word)
+		break-word;按单词换行, 不过长单词被强制割断.(不想截断就加word-wrap: break-word)
 		normal	按单词换行.长单词不换行 (initial)
 	white-space: 控制空白(空格, 回车, 长句换行), 注意,它会控制长句换行, 但是不会影响单词换行
 		//忽略回车

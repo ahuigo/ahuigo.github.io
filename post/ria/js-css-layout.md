@@ -55,7 +55,13 @@ display:flex, 比 inline-block 简单
     }
     .items{
         flex: 1;
+
+        // 避免长度溢出
+        word-break:break-all; or overflow:auto;
+        width:300px; // flex 当做max-width
     }
+
+
 
 ## flex 容器
 flex 容器有主轴，侧轴之分
