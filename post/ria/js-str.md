@@ -87,6 +87,10 @@ repeat(alloc)
     'Vue'.padStart(10, '_*')    //'_*_*_*_Vue'
     'Vue'.padEnd(10, '_*')      //'Vue_*_*_*_'
 
+    'abc'.repeat(2);    // 'abcabc'
+
+    [...Array(2)].map(()=>'value'); //['value', 'value']
+
 ## 字符串是不可变的
     var s = 'Test';
     s[0] = 'X';
@@ -178,6 +182,9 @@ replace strip
 
 ### replace
 支持regexp global.
+
+	str = stringObject.replace(substr,replacement); //once
+	str = stringObject.replace(/substr/g,replacement); //all
 
 	str = stringObject.replace(regexp/substr,replacement)
 	replacement:

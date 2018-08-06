@@ -19,7 +19,8 @@ empty item 不会被for in 遍历, 但是会被 for of 遍历
 ### range 序列:
 
     [...Array(5).keys()];
-    Array.from({length: 5}, (x,i) => i);
+    Array.from({length: 5}, (v,i) => i);
+        [...Array(5)].map((v,i) => i);
     _.range(5)
 
     for(let id in Array(5))
@@ -164,7 +165,7 @@ for string
     'hello world'.includes('hello') //true
     'hello world'.includes('')      //true
 
-不要用：`index in arr`
+不要用：`index in arr`, 他不是`value in arr`
 
 	Array.prototype.inArray = function(needle) {
         var length = this.length;

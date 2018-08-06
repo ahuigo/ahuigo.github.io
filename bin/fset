@@ -85,6 +85,7 @@ while len(argv):
         arr.append('0')
     if len(arr) == 2:
         arr.append(',')
+
     arr[1] = int(arr[1])-1 if arr[1].isdigit() else 0
     arr[2] = arr[2] or ','
     file, index, delimiter = arr

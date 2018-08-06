@@ -1,125 +1,5 @@
-/* Tomorrow Night Eighties Theme */
-/* Original theme - https://github.com/chriskempson/tomorrow-theme */
-/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
-.tomorrow-comment, pre .comment, pre .title {
-  color: #999999;
-}
-
-.tomorrow-red, pre .variable, pre .attribute, pre .tag, pre .regexp, pre .ruby .constant, pre .xml .tag .title, pre .xml .pi, pre .xml .doctype, pre .html .doctype, pre .css .id, pre .css .class, pre .css .pseudo {
-  color: #f2777a;
-}
-
-.tomorrow-orange, pre .number, pre .preprocessor, pre .built_in, pre .literal, pre .params, pre .constant {
-  color: #f99157;
-}
-
-.tomorrow-yellow, pre .class, pre .ruby .class .title, pre .css .rules .attribute {
-  color: #ffcc66;
-}
-
-.tomorrow-green, pre .string, pre .value, pre .inheritance, pre .header, pre .ruby .symbol, pre .xml .cdata {
-  color: #99cc99;
-}
-
-.tomorrow-aqua, pre .css .hexcolor {
-  color: #66cccc;
-}
-
-.tomorrow-blue, pre .function, pre .python .decorator, pre .python .title, pre .ruby .function .title, pre .ruby .title .keyword, pre .perl .sub, pre .javascript .title, pre .coffeescript .title {
-  color: #6699cc;
-}
-
-.tomorrow-purple, pre .keyword, pre .javascript .function {
-  color: #cc99cc;
-}
-
-pre code {
-  display: block;
-  background: #2d2d2d;
-  color: #cccccc;
-  padding: 0.5em;
-}
-
-pre .coffeescript .javascript,
-pre .javascript .xml,
-pre .tex .formula,
-pre .xml .javascript,
-pre .xml .vbscript,
-pre .xml .css,
-pre .xml .cdata {
-  opacity: 0.5;
-}
-
-#scrollUp {
-	bottom: -10px;
-	right: 30px;
-	width: 60px;
-	height: 40px;
-	padding: 10px 5px;
-	font-family: sans-serif;
-	font-size: 14px;
-	line-height: 20px;
-	text-align: center;
-	text-decoration: none;
-	text-shadow: 0 1px 0 #fff;
-	color: #828282;
-	-webkit-box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.2);
-	box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.2);
-	background-color: #E6E6E6;
-	background-image: -moz-linear-gradient(top, #EBEBEB, #DEDEDE);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#EBEBEB), to(#DEDEDE));
-	background-image: -webkit-linear-gradient(top, #EBEBEB, #DEDEDE);
-	background-image: -o-linear-gradient(top, #EBEBEB, #DEDEDE);
-	background-image: linear-gradient(to bottom, #EBEBEB, #DEDEDE);
-	background-repeat: repeat-x;
-	-webkit-transition: bottom 150ms linear;
-	-moz-transition: bottom 150ms linear;
-	transition: bottom 150ms linear;
-}
-
-#scrollUp:hover {
-	bottom: 0px;
-}
-
-
-.navbar .navbar-inner {  background-image: none; filter: none; }
-.navbar .nav > li > a { color: #eee; text-shadow: none; }
-.navbar .nav .active > a,
-.navbar .nav .active > a:hover,
-.navbar .nav > li > a:hover { background-color: #4480A1; }
-.line_dashed{border-top:1px dashed #C6C6C6;margin-top:15px;margin-bottom:15px}
-.well {  border: 1px; color: #0078B6; }
-.nav-list > li > a, .nav-list .nav-header { text-shadow: none;top: 10px;}
-.sidebar-nav { padding: 0; }
-body {font-size:100%;  }
-
-.heading,body>header h1,h1,h2,h3,h4,h5,h6 {
-	font-family:"PT Serif","Georgia","Helvetica Neue",Arial,sans-serif
-}
-.sans,body>header h2,article header p.meta,article>footer,#content .blog-index footer,html .gist .gist-file .gist-meta,#blog-archives a.category,#blog-archives time,aside.sidebar section,body>footer {
-	font-family:"PT Sans","Helvetica Neue",Arial,sans-serif
-}
-.serif,body,#content .blog-index a[rel=full-article] {
-	font-family:"PT Serif",Georgia,Times,"Times New Roman",serif
-}
-.mono,pre,code,tt,p code,li code {
-	font-family:Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace
-}
-body>header h1 {
-	font-size:2.2em;
-	font-family:"PT Serif","Georgia","Helvetica Neue",Arial,sans-serif;
-	font-weight:normal;
-	line-height:1.2em;
-	margin-bottom:0.6667em
-}
-body>header h2 {
-	font-family:"PT Serif","Georgia","Helvetica Neue",Arial,sans-serif
-}
-
 h1 {
 	font-size:2.88em;
-	line-height:1.2em;
 	padding-bottom:0.5em;
 }
 h1,h2,h3,h4,h5,h6 {
@@ -142,8 +22,9 @@ h5,section h4,section section h3 {
 h6,section h5,section section h4,section section section h3 {
 	font-size:1.3em
 }
-body { padding-bottom: 40px; padding-top: 60px; }
-p,li,.nav-header{font-size:18px; line-height:22px}
+ol{
+    -webkit-padding-start:10px;
+}
 .fixednav{
 		height:700px;
 		width:50px;

@@ -417,6 +417,12 @@ createElement:
 		return p.childNodes[0];
 	}
 
+### .repalceWith
+    toc.children[0].replaceWith(createToc(this.$el))
+
+### .repalceChild
+    toc.replaceChild(createToc(this.$el), toc.children[0])
+
 ### .appendChild
 Example 浮层: js-demo/alert-float.js
 

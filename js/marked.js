@@ -1535,4 +1535,3 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
   root.marked = marked;
 }
 })(this || (typeof window !== 'undefined' ? window : global));
-console.log('markded')

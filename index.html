@@ -1,110 +1,224 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="ahuigo's blog">
-        <meta name="author" content="ahuigo">
-        <link href="favicon.png" rel="shortcut icon">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/main.css" rel="stylesheet" type="text/css" />
-    </head>
-    <body>
-        <script id="tpl-main" type="text/template">
-            <div class="navbar navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container-fluid">
 
-                        <a class="brand" href="#">{{site_name}}</a>
-                        <div class="nav-collapse">
-                            <ul class="nav">
-                                {{#navlist}}
-                                <li><a href="{{link}}">{{text}}</a></li>
-                                {{/navlist}}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluid">
-                <div class="row-fluid">
-                    <div class="span2">
-                        <div class="well sidebar-nav" style="overflow-y:auto; height:1000px">
-                        </div>
-                    </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ahuigo's blog">
+    <meta name="author" content="ahuigo">
+    <link href="https://cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
 
-                    <div class="span8">
-                        <div id="article-content" class="row-fluid article-content">
-                        </div>
-                        <div class="row-fluid pagebar">
-                        </div>
-                        <div>
-                            <div id="disqus_thread">
-                                <button id="show-comments" onclick="disqus();return false;">Load Comments</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="toc" class="span2 sidebar fixednav" style=""></div>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 
-                </div>
-                <hr>
-                <footer role="contentinfo">
-                <p>&copy; {{copyright}} Powered by <a href="/" target="_blank">WTF</a>
-                 </p>
-                </footer>
-            </div><!--/.fluid-container-->
-        </script>
+    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/agate.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
+    <link href="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.js"></script>
+    <script src="/js/marked.js"></script>
+    <script src="/js/page.js"></script>
+    <style>
+        .folder::before {
+            content: '\01F5C0  ';
+        }
+    </style>
+</head>
 
-        <script id="tpl-sidebar" type="text/template">
-            <ul class="nav nav-list">
-                {{#months}}
-                <li class="nav-header">{{month}}
-                    <ul style="margin:0;display: none;">
-                        {{#articles}}
-                        <li><a href="#show/{{link}}">{{text}}</a></li>
-                        {{/articles}}
-                    </ul>
-                </li>
-                {{/months}}
-            </ul>
-        </script>
+<body class="layout-documentation page-layout">
 
-        <script id="tpl-pagebar" type="text/template">
-            <div class="row-fluid">
-                <div class="span12">
-                    <div class="pagination">
-                        <ul>
-                            <li class="prev previous_page "><a href="#page/{{num_up}}">← 上一页</a></li>
-                            {{#pages}}
-                                <li ><a href="#page/{{num}}">{{num}}</a></li>
-                            {{/pages}}
-                            <li class="next next_page "><a rel="next" href="#page/{{num_next}}">下一页 →</a></li>
-                        </ul>
-                    </div>
-                </div>
-          </div>
-        </script>
-
-        <div class="main-body">
+    <div style="width:200px">
+        <div class="container">
+            <p class="title">
+                ahuigo 的自留地
+            </p>
+            <p class="subtitle">
+            </p>
         </div>
+    </div>
+    <div id="app" style="display:flex">
+        <div class="section nav-left">
+            <tree-folder :nodes="nodes"></tree-folder>
+        </div>
+        <div style="flex:5">
+            <router-view></router-view>
+        </div>
+        <div id="toc" class="section nav-right" style="flex:5">
+        </div>
+    </div>
+</body>
+<template id="tree-folder">
+    <ul class="menu-list">
+        <li id="folder" v-for="(file,index) in nodes" :key="file.path">
+            <div v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name}}
+            </div>
+            <div v-else :type="file.type">
+                <router-link :to="'/'+file.path">{{file.name}} </router-link>
+            </div>
+            <tree-folder v-if="file.nodes" :nodes="file.nodes"></tree-folder>
+        </li>
+    </ul>
+</template>
+<template id="md">
+    <div>
+        <div id="content" v-html="marked(md)"></div>
+        <div id="disqus_thread">
+            <button id="show-comments" onclick="disqus();return false;">Load Comments</button>
+        </div>
+    </div>
+</template>
 
-        <a class="go_top hidden-phone hidden" href="#top" style="display: inline; ">
-            <i class="icon icons_go_top"></i>
-        </a>
+<script>
+    function disqus() {
+        if (!window.DISQUS) {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://ahuigo.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            s.onload = function () {
+                console.log('onload disqus', DISQUS)
+                disqus_reset()
+            }
+        }else{
+            disqus_reset()
+        }
+    }
+    function disqus_reset() {
+        if (window.DISQUS) {
+            DISQUS.reset({
+                reload: true,
+                config: function () {
+                    this.page.url = window.location.href.replace('#', '#!');
+                    this.page.identifier = window.location.hash.slice(1);
+                    this.page.title = document.querySelector('h1').innerText.split(' ').slice(1).join(' ')
+                }
+            });
 
-        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdn.bootcss.com/underscore.js/1.9.0/underscore-min.js"></script>
-        <script src="https://cdn.bootcss.com/backbone.js/1.3.3/backbone-min.js"></script>
-        <script src="https://cdn.bootcss.com/mustache.js/2.3.0/mustache.min.js"></script>
-        <link href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.bootcss.com/scrollup/2.4.1/jquery.scrollUp.min.js"></script>
+        }
+    }
 
-        <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/agate.min.css" rel="stylesheet">
-        <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-        <script src="js/marked.js"></script>
-        <script src="js/post.js"></script>
-        <script src="js/page.js"></script>
-    </body>
+    Vue.component('tree-folder', {
+        template: '#tree-folder',
+        props: ['nodes'],
+        methods: {
+            openFolder(file) {
+                this.$root.fetchFolder(file).then(n => console.log(n))
+            },
+        },
+    });
+
+    marked.setOptions({
+        gfm: true,
+        breaks: true,
+        latexRender: katex.renderToString.bind(katex),
+    });
+
+    const routes = [
+        { path: '/bar', component: { template: '<div>bar</div>' } },
+        { path: '/', redirect: '/post/ria/js-promise.md' },
+        {
+            path: '/post/*',
+            component: {
+                template: '#md',
+                data() {
+                    return {
+                        md: '',
+                    }
+                },
+                props: [],
+                watch: {
+                    '$route'(to, from) {
+                        this.fetchMd()
+                    }
+                },
+                mounted: function () {
+                    console.log('mounted')
+                    this.$nextTick(function () {
+                    })
+                },
+                created() {
+                    console.log('created')
+                    this.fetchMd()
+                },
+                updated() {
+                    disqus_reset()
+                    console.log('updated')
+                    document.querySelectorAll('pre code').forEach(function (e) {
+                        return hljs.highlightBlock(e, '    ');
+                    });
+                    const toc = document.querySelector('#toc');
+                    if (toc.children.length) {
+                        toc.children[0].replaceWith(createToc(this.$el))
+                    } else {
+                        toc.appendChild(createToc(this.$el))
+                    }
+                },
+                methods: {
+                    fetchMd(path) {
+                        path = this.$route.path
+                        fetch(path).then(response => {
+                            response.text().then(data => {
+                                if(data.substr(0,4) === '---\n'){
+                                    var pos = data.substr(0,300).nthIndex('---\n', 2)
+                                    data = data.substr(pos);
+                                }
+                                data = data.replace(/\n/g, '\t\n')
+                                this.md = data
+                            })
+                        })
+                    },
+                    marked: function (text) {
+                        console.log('[text]')
+                        return marked(text)
+                    },
+                }
+            }
+        },
+    ];
+
+    const app = new Vue({
+        router: new VueRouter({
+            routes,
+            scrollBehavior(to, from, savedPosition) {
+                return { x: 0, y: 0 }
+            },
+        }),
+        data() {
+            return {
+                nodes: [
+                    {
+                        "path": "post/ai",
+                        "type": "dir",
+                    },
+                ],
+                path: 'post',
+                name: 'ahuigo',
+            };
+        },
+        methods: {
+            fetchFolder(file) {
+                return fetch('https://api.github.com/repos/ahuigo/a/contents/' + file.path, {
+                }).then(r => r.json()).then(data => {
+                    let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type }))
+                        .filter((v) =>
+                            !(
+                                v.type == 'dir'
+                                && ['ai', 'atom'].includes(v.name)
+                            )
+                        );
+                    Vue.set(file, 'nodes', nodes);
+                    return [null, nodes]
+                }).catch(err => {
+                    console.log([err])
+                    return [err]
+                })
+            },
+        },
+        created: function () {
+            this.fetchFolder(this.$data)
+        }
+    }).$mount('#app')
+</script>
+
 </html>

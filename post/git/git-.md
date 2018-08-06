@@ -471,6 +471,7 @@ tag 是绑定在commit上的，但是默认push不会将tag 推到远端.
 
 ### push all tag
 
+    git push --follow-tags
 	git push --tags
 	git push origin --tags
 

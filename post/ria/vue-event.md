@@ -2,6 +2,11 @@
 使用 $on(eventName) 监听事件
 使用 $emit(eventName, optionalPayload) 触发事件
 
+    @click="func"   都可以
+    @click="func()" 都可以
+
+    onclick="func" 不可以
+
 ## condition event
 
     <div v-on="{ mouseover: condition ? handler : null }">

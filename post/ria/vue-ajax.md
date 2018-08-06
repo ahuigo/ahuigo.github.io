@@ -35,10 +35,17 @@
         },
         body: new FormData() //不是data!!!!!
 
-body type: not object
+body type: 不能是 object, 只能是
 
     formData
     JSON.stringify(data); //application/json
+
+### response
+
+    response.json()
+    response.text().then(function (text) {
+        // do something with the text response 
+    });
 
 ## this.$http
 
