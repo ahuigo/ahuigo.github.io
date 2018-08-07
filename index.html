@@ -116,7 +116,7 @@
                 if (!file.nodes) {
                     file.show = true
                     Vue.set(file, 'nodes', [{ type: 'file', name: "loading...", path: '' }]);
-                    this.$root.fetchFolder(file).then(n => console.log(n))
+                    this.$root.fetchFolder(file)
                 } else {
                     Vue.set(file, 'show', !file.show);
                 }
