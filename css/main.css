@@ -57,6 +57,10 @@ div>ol {
     overflow: auto;
     padding: 8px 8px;
 }
+#toc, .left{
+    border-radius: 1em;
+    border: 0.3em solid  lightslategray;
+}
 
 .left {
     flex: 2;
@@ -84,6 +88,20 @@ div>ol {
     margin-bottom: 3px;
     width: 22px;
     height: 3px;
+}
+#content img, {
+    border: 0.3em solid #e0dfcc ;
+    border-radius: 1em;
+}
+#content blockquote{
+    background-color:lightgray;
+    padding: 1em;
+    margin: 2em;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    border-radius: 1em;
+    border: 0.3em solid  lightslategray;
+    text-shadow: 0 1px white;
+    overflow: auto;
 }
 .left.active{
     display: block;
