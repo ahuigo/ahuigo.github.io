@@ -25,9 +25,16 @@ h6,section h5,section section h4,section section section h3 {
 ol,ul{
     -webkit-padding-start:10px;
 }
+.menu li ul{
+    border-left: 1px solid #dbdbdb;
+    margin:0;
+    padding:0 0 0 5px;
+}
 *{
     word-wrap:break-word;
-    word-break:break-all;
+    margin:0;
+    padding:0;
+    /* word-break:break-all; */
 }
 .fixednav{
 		height:700px;

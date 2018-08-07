@@ -57,8 +57,9 @@ display:flex, 比 inline-block 简单
         flex: 1;
 
         // 避免长度溢出
-        word-break:break-all; or overflow:auto;
-        width:300px; // flex 当做max-width
+        overflow:auto;
+        // flex 当做max-width
+        width:300px; 
     }
 
 
@@ -211,14 +212,16 @@ http://zh.learnlayout.com/flexbox.html
 
 ## float
 float 因为自己漂浮起来，导致`下面的块`的滑动，`上面的块`不会滑动:
-1. 下面的块按宽度往上挤的效果(属性为float:left/right 且有空间)
-2. 非float 块, 会向上移动(注意: 文字本身会排斥float 块, 所以文字不会向上移动)
+1. 下面的float 块按宽度往上挤的效果(属性为float:left/right 且有空间)
+2. 非float 块, 会向上移动(注意: 文字不是block, 本身会排斥float 块, 所以文字不会向上移动)
 3. 文字不会去挤压float 块，产生文字环绕的效果
 
 ### 关于float+clear: 
 1. parent 有height时，`下面的块`不会滑动上去(本质上的原因是，float 本身不占用parent.height)
 1. clear 是告诉自己不要往左上、右上挤，
 2. 也不要去填补 float 浮动起来后的空位
+
+e.g.
 
     <div style="float:left"></div>
     <div style="clear:left">我遇到了clear:left，不会往左上挤</div>
@@ -239,10 +242,18 @@ example:
 
 
 ### overflow
-浮动元素不占用父容器的宽高，可能会溢出容器，可以给parent 加overflow:
+浮动元素不占用父容器的宽高，可能会溢出容器，可以加overflow, item 会继承的(flex box也如此):
 
     overflow: hidden; #浮动元素不会被hidden，而会撑大容器
     overflow: auto; #浮动元素不会被hidden，而会撑大容器
+    overflow: scroll; #浮动元素不会被hidden，而会撑大容器
+
+#### overflow + list-style conflict
+包一层div 避免conflict
+
+    <div style="overflow:hidden">
+        <ol style="list-style-type: decimal;">
+    </div>
 
 ## inline-block 代替float
 float+clear 多麻烦，我们用inline-block:

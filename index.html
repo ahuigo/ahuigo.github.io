@@ -20,17 +20,31 @@
     <script src="/js/marked.js"></script>
     <script src="/js/page.js"></script>
     <style>
-        .folder::before {
-            content: '📗';
+        .folder::before { content: '📘'; }
+        .folder::first-letter { text-transform: capitalize; }
+        .file::before { content: '🔵'; }
+
+        div > ul, div > ol{
+            padding-left:20px;
         }
-
-        .folder::first-letter {
-            text-transform: capitalize;
+        .left, .middle, .right, .left-middle{
+            background-color: #fff;
+            overflow: auto;
+            padding:0 8px
         }
-
-        .file::before {
-            content: '📄';
-
+        .left{
+            flex:2;
+        }
+        .middle{
+            flex:8;
+        }
+        .right{
+            flex:3; 
+        }
+        .left-middle{
+            flex:10;
+            display:flex;
+            overflow:auto;
         }
     </style>
 </head>
@@ -55,13 +69,11 @@
         </div>
     </div>
     <div id="app" style="display:flex">
-        <div style="flex:1; width:20%">
-            <tree-folder :show="show" :nodes="nodes"></tree-folder>
+        <div class="left-middle">
+            <tree-folder class="left" :show="show" :nodes="nodes"></tree-folder>
+            <router-view class="middle"></router-view>
         </div>
-        <div style="flex:3; width:65%">
-            <router-view></router-view>
-        </div>
-        <div style="flex:1; width:15%">
+        <div class="right">
             <div id="toc"></div>
             <iframe height="450" marginheight="0" border="0" src="https://music.163.com/outchain/player?type=0&amp;id=7314556&amp;auto=0&amp;height=430"
                 frameborder="no"></iframe>
@@ -69,7 +81,7 @@
     </div>
 </body>
 <template id="tree-folder">
-    <ul v-if="show" class="menu-list">
+    <ul v-if="show" class="menu">
         <li v-for="(file,index) in nodes" :key="file.path">
             <div v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name.toUpperCase()}}
             </div>
