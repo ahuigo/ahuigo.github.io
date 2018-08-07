@@ -59,6 +59,7 @@
             </div>
         </div>
     </div>
+    <a id="scrollUp" href="#app" title="Top" style="position: fixed;z-index: 2;display: block;bottom: 0;right: 0;">Top</a>
 </body>
 <template id="tree-folder">
     <ul v-if="show">
@@ -132,7 +133,7 @@
 
     const routes = [
         { path: '/bar', component: { template: '<div>bar</div>' } },
-        { path: '/', redirect: '/post/ria/js-promise.md' },
+        { path: '/', redirect: '/post/ria/js-promise-source.md' },
         {
             path: '/post/*',
             component: {
