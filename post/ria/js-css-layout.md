@@ -38,6 +38,23 @@ box 的 horizonal 水平居中
         column-gap: 1em;
     }
 
+# 自适应
+## 下拉菜单列表
+http://imweb.io/topic/559f902a3d7bb8096b69cfdd
+
+    <parent>
+        position: relative;
+    <li child> 列表
+        position: absolute;
+        top: 100%;
+
+### 策略
+    <ul>        .self{block}       -> none   (.self.active: block)
+        <li>    .child inline -> block+absolute  display
+        抽屉    .self postion  -> absolute       position
+        wrap   .parent flex    -> block          flex 
+
+
 # flex
 display:flex, 比 inline-block 简单
 
@@ -277,7 +294,7 @@ example
     这是一幅<img stype="vertical-align:top" src="/i/eg_cute.gif" />位于段落中的图像
 
 ## margin
-margin 控制的是相邻元素之间的border 外边界间距。float的元素的margin则指与容器内的`padding内边界`的间距
+margin 控制的是相邻元素之间的border 外边界间距。float和普通元素的margin则指与容器内的`padding内边界`的间距
 
 	Inherited: no
 
@@ -317,10 +334,14 @@ float的元素的margin 由于浮动起来了，不再影响父容器，但是ch
 	position:
 		static; 默认(left/top 不生效, 不会被“positioned”)
 		relative; 相对本元素static 的偏移, 会占用父元素的位置
+            不会影响别的兄弟节点
 		absolute; 相对于父级“positioned”祖先元素的偏移, 如果没有则以当前视窗为基准
+            不占用位置，兄弟节点会填补位置，用z-index:-1 不会遮蔽 
+
 		fixed; 以整个视窗为基准,不受鼠标滚动影响
 
 		如果父结点为relative/absolute则以父结点为基准
+
 
 ## media
 “响应式设计（Responsive Design”) 要借助媒体查询

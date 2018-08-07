@@ -663,3 +663,20 @@ code
     </script>
     template: '#hello-world-template'
 
+# program
+
+## Add component to DOM (popsData)
+https://jsfiddle.net/4fn2h4vL/545/
+
+    <div id="mount"></div>
+    const Hello = {
+      props: ['text'],
+      template: '<div class="hello">{{ text }}</div>',
+    };
+
+    const HelloCtor = Vue.extend(Hello);
+    const vm = new HelloCtor({
+      propsData: {
+        text: 'HI :)'
+      }
+    }).$mount('#mount');

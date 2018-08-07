@@ -1,2 +1,9 @@
-# ahuigo
-计划近期用github api 重新实现存。
+# ahuigo blog
+纯静态blog:
+
+- [x] Vue
+- [x] Markdown + Math + TOC(Table of Content)
+- [x] 动态目录
+- [x] Disqus
+- [x] 网易云音乐
+- [x] 自适应

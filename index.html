@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ahuigo's blog">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1" />
+    <meta name="title" content="ahuigo's blog">
     <meta name="author" content="ahuigo">
     <link href="https://cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
@@ -19,69 +19,49 @@
     <script src="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.js"></script>
     <script src="/js/marked.js"></script>
     <script src="/js/page.js"></script>
-    <style>
-        .folder::before { content: '📘'; }
-        .folder::first-letter { text-transform: capitalize; }
-        .file::before { content: '🔵'; }
-
-        div > ul, div > ol{
-            padding-left:20px;
-        }
-        .left, .middle, .right, .left-middle{
-            background-color: #fff;
-            overflow: auto;
-            padding:0 8px
-        }
-        .left{
-            flex:2;
-        }
-        .middle{
-            flex:8;
-        }
-        .right{
-            flex:3; 
-        }
-        .left-middle{
-            flex:10;
-            display:flex;
-            overflow:auto;
-        }
-    </style>
 </head>
 
 <body class="layout-documentation page-layout">
-    <div style="padding:1.5rem;border-bottom:1px solid" class="level  hero is-dark">
-        <div class="level-left">
-            <div class="level-item title"> ahuigo 的自留地 </div>
-            <pre>
+    <div id="app">
+        <div class="head level  hero is-dark">
+            <div class="level-left">
+                <div class="level-item">
+                    <button class="menu-toggle" @click="showMenu=!showMenu">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </button>
+                </div>
+
+                <div class="level-item"><strong> ahuigo 的自留地 </strong></div>
+                <pre>
     ☁　✈　　 ☁　　🚁
 　🏬🏨🏫🏢🏤🏥🏦🏪
 👬🌲 /　🚶🚍  \🌳
 　🌳/　🚘   🏃　\🌴🐈
-🌴 /　 🐢  🚔   \🌲
+🌴 /　 🐢  🚔    \🌲
 🌲/    🚖　  　　  \🌳👭 </pre>
-        </div>
+            </div>
 
-        <div class="level-right">
-            <p class="level-item">
-                <strong></strong>
-            </p>
+            <div class="level-right">
+                <p class="level-item">
+                    <strong></strong>
+                </p>
+            </div>
         </div>
-    </div>
-    <div id="app" style="display:flex">
-        <div class="left-middle">
-            <tree-folder class="left" :show="show" :nodes="nodes"></tree-folder>
-            <router-view class="middle"></router-view>
-        </div>
-        <div class="right">
-            <div id="toc"></div>
-            <iframe height="450" marginheight="0" border="0" src="https://music.163.com/outchain/player?type=0&amp;id=7314556&amp;auto=0&amp;height=430"
-                frameborder="no"></iframe>
+        <div class="main">
+                <tree-folder :class="{left:true, 'active':showMenu}"  :show="show" :nodes="nodes"></tree-folder>
+                <router-view class="middle"></router-view>
+            <div class="right">
+                <div id="toc"></div>
+                <iframe height="450" marginheight="0" border="0" src="https://music.163.com/outchain/player?type=0&amp;id=7314556&amp;auto=0&amp;height=430"
+                    frameborder="no"></iframe>
+            </div>
         </div>
     </div>
 </body>
 <template id="tree-folder">
-    <ul v-if="show" class="menu">
+    <ul v-if="show">
         <li v-for="(file,index) in nodes" :key="file.path">
             <div v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name.toUpperCase()}}
             </div>
@@ -94,7 +74,7 @@
     <div>
         <div id="content" v-html="marked(md)"></div>
         <div id="disqus_thread">
-            <button id="show-comments" onclick="disqus();return false;">Load Comments</button>
+            <button id="show-comments" class="button is-primary" onclick="disqus();return false;">Load Comments</button>
         </div>
     </div>
 </template>
@@ -220,13 +200,12 @@
                 return { x: 0, y: 0 }
             },
         }),
-        data() {
-            return {
-                nodes: [],
-                path: 'post',
-                show: true,
-                name: 'ahuigo',
-            };
+        data: {
+            nodes: [],
+            path: 'post',
+            show: true,
+            name: 'ahuigo',
+            showMenu: false,
         },
         methods: {
             fetchFolder(file) {

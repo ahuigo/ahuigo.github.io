@@ -1,20 +1,19 @@
-h1 {
-	font-size:2.88em;
-	padding-bottom:0.5em;
-}
 h1,h2,h3,h4,h5,h6 {
 	text-rendering:optimizelegibility;
-	margin:0.5em 0;
+	margin:0.2em 0;
 	font-weight:bold
 }
-h2,section h1 {
-	font-size:2.5em
+h1 {
+	font-size:2.4em;
 }
-h3,section h2,section section h1 {
+h2,section h1 {
 	font-size:2.2em
 }
+h3,section h2,section section h1 {
+	font-size:2.0em
+}
 h4,section h3,section section h2,section section section h1 {
-	font-size:1.9em
+	font-size:1.8em
 }
 h5,section h4,section section h3 {
 	font-size:1.6em
@@ -36,11 +35,84 @@ ol,ul{
     padding:0;
     /* word-break:break-all; */
 }
-.fixednav{
-		height:700px;
-		width:50px;
+
+.folder::before {
+    content: '📘';
+}
+
+.folder::first-letter {
+    text-transform: capitalize;
+}
+
+.file::before {
+    content: '🔵';
+}
+
+div>ul,
+div>ol {
+    padding-left: 20px;
+}
+
+.left, .middle, .right, #toc, #disqus_thread{
     overflow: auto;
-    position: fixed;
-    left: 80%;
-    top: 50px;
+    padding: 8px 8px;
+}
+
+.left {
+    flex: 2;
+    background:white;
+    z-index:2;
+}
+
+.middle {
+    flex: 8;
+}
+
+.right {
+    flex: 3;
+}
+
+.menu-toggle {
+    padding: 3px;
+    z-index: -1;
+}
+.menu-toggle .menu-line:last-child {
+    margin-bottom: 0;
+}
+.menu-line {
+    background: #000;
+    margin-bottom: 3px;
+    width: 22px;
+    height: 3px;
+}
+.left.active{
+    display: block;
+}
+
+@media screen and (max-width:1000px) {
+    .menu-toggle{
+        z-index:0;
+        bottom:0px;
+        position: absolute;
+        left:0;
+    }
+    .main{
+        display:block;
+        position:relative;
+    }
+    .left{
+        position: absolute;
+        display:none;
+    }
+}
+@media screen and (min-width:1001px) {
+    .main{
+        display:flex;
+    }
+}
+
+.head {
+    position: relative;
+    padding: 1.5rem;
+    border-bottom: 1px solid
 }
