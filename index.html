@@ -210,6 +210,13 @@
         },
         methods: {
             fetchFolder(file) {
+                var v = localStorage.getItem(file.path) || '{}'
+                var data = JSON.parse(v)
+                if(data && data.time && new Date-data.time < 86400*1000){
+                    console.log('from cache')
+                    Vue.set(file, 'nodes', data.nodes);
+                    return;
+                }
                 return fetch('https://api.github.com/repos/ahuigo/a/contents/' + file.path, {
                 }).then(r => r.json()).then(data => {
                     let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type, show: true }))
@@ -220,6 +227,7 @@
                             )
                         );
                     Vue.set(file, 'nodes', nodes);
+                    localStorage.setItem(file.path, JSON.stringify({time: +new Date, nodes}))
                     return [null, nodes]
                 }).catch(err => {
                     console.log([err])
