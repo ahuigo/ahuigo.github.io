@@ -57,9 +57,10 @@ div>ol {
     overflow: auto;
     padding: 8px 8px;
 }
-#toc, .left{
+#toc, .left, iframe{
     border-radius: 1em;
     border: 0.3em solid  lightslategray;
+    margin-bottom: 1em;
 }
 
 .left {
