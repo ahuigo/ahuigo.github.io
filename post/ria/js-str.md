@@ -144,6 +144,7 @@ replace strip
 
 	stringObject.split(separator,[maxSize]);
 	'1,2,3,4,5'.split(',', 3);//[1,2,3]
+        python: '1,2,3,4,5'.split(',', 2); //[1,2,3]
 	'12345'.split('', 3);//[1,2,3]
 	'1,2,3,4,5'.split(/,/);//[1,2,3,4,5]
 
@@ -166,6 +167,8 @@ replace strip
 	stringObject.match(regexp)
 	matches = "1 2 3 ".match(/\d+/g); //[1,2,3]
 	"1 2 3".match(/(\d) s/g); //return null
+
+#### match group
 
 	//如果regexp没有g, 则会匹配子模式
 	matches = "first 1".match(/(\w+) 1/);//如果没有g, 则返回包括子表达式  ["first 1", "first"]

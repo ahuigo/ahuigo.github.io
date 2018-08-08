@@ -357,6 +357,23 @@ Or:
 
 	window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
 
+
+# Data
+
+    <tag data-key="abc">
+
+## dataset
+html5 的dataset 对象
+
+　　element.dataset.key = string_only;
+
+jquery:
+
+    $(element).data('key', 'value');
+    element.dataset.key // undefined
+
+    $(element).attr('data-key', 'value');
+
 # history
 
 ## pushstate
@@ -375,17 +392,3 @@ Example:
 	window.onpopstate = function(event) {
 		alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
 	};
-
-# New
-
-## TypeScript
-JS短板在于缺乏静态类型，做大型工程的时候无法通过编译期静态类型检查来保证质量，这一点用TypeScript就可以了。
-TypeScript是JavaScript的一个超集(superset)，并且提供了额外的功能。但是在编译的时候，它又会变回普通的JavaScript。它正在和 google 的Angular2 合作
-
-## coffeeScript
-[coffeeScript intro] 是js 的转译语言，受到了Ruby，python 的启发，增加了js 的简洁性
-
-可参考:
-- https://ruby-china.org/topics/4789
-- [coffeeScript intro] IBM
-

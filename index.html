@@ -33,7 +33,9 @@
                     </button>
                 </div>
 
-                <div class="level-item"><strong>本博采用纯es6, 请使用chrome/firefox </strong></div>
+                <div class="level-item">
+                    <strong>本博采用纯es6, 请使用chrome/firefox </strong>
+                </div>
                 <pre>
     ☁　✈　　 ☁　　🚁
 　🏬🏨🏫🏢🏤🏥🏦🏪
@@ -44,8 +46,29 @@
             </div>
         </div>
         <div class="main">
-                <tree-folder :class="{left:true, 'active':showMenu}"  :show="show" :nodes="nodes"></tree-folder>
-                <router-view class="middle"></router-view>
+            <tree-folder :class="{left:true, 'active':showMenu}" :show="show" :nodes="nodes"></tree-folder>
+            <div class="middle">
+                <router-view></router-view>
+                <div class="hr"></div>
+                <div class="share" style="display:flex">
+                    <div>
+                        <h4>关注我</h4>
+                        <iframe width="120" height="22" src="https://platform.twitter.com/widgets/follow_button.4a8202e5fcbfb5ba8d36683841f4d020.en.html#screen_name=ahuigoo&width=67&height=22&show_count=false&show_screen_name=true"></iframe>
+                        <iframe width="120" height="22" src="http://widget.weibo.com/relationship/followbutton.php?btn=light&style=1&uid=1607772514&width=67&height=22&language=zh_cn"></iframe>
+                    </div>
+                    <div>
+                        <h4>分享</h4>
+                        <div>
+                        <span class="twitter-icon" @click="openShare('twitter', this)">twitter</span>
+                        <span class="weibo-icon" @click="openShare('weibo')">微博</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hr"></div>
+                <div id="disqus_thread">
+                    <button id="show-comments" class="button is-primary" onclick="disqus();return false;">Load Discus</button>
+                </div>
+            </div>
             <div class="right">
                 <div id="toc"></div>
                 <iframe height="450" width="100%" marginheight="0" border="0" src="https://music.163.com/outchain/player?type=0&amp;id=7314556&amp;auto=0&amp;height=430"
@@ -66,15 +89,11 @@
     </ul>
 </template>
 <template id="md">
-    <div>
-        <div id="content" v-html="marked(md)"></div>
-        <div id="disqus_thread">
-            <button id="show-comments" class="button is-primary" onclick="disqus();return false;">Load Discus</button>
-        </div>
-    </div>
+    <div id="content" v-html="marked(md)"></div>
 </template>
 
 <script>
+    const $ = document.querySelector.bind(document);
     function disqus() {
         if (!window.DISQUS) {
             var d = document, s = d.createElement('script');
@@ -96,7 +115,7 @@
                 config: function () {
                     this.page.url = window.location.href.replace('#', '#!');
                     this.page.identifier = window.location.hash.slice(1);
-                    this.page.title = document.querySelector('#content h1').innerText.split(' ').slice(1).join(' ')
+                    this.page.title = window.title;
                 }
             });
 
@@ -144,7 +163,6 @@
             })
         },
         updated() {
-            disqus_reset()
             console.log('updated')
             document.querySelectorAll('pre code').forEach(function (e) {
                 return hljs.highlightBlock(e, '    ');
@@ -155,11 +173,15 @@
             } else {
                 toc.appendChild(createToc(this.$el))
             }
+            //disqus reset
+            const h1node = $('#content h1')
+            window.title = (h1node && h1node.innerText.split(' ', 2).slice(1).join(' ')) || '博文'
+            disqus()
         },
         methods: {
             fetchMd() {
                 var path = this.$route.path
-                path = path === '/' ? '/post/ria/js-promise-source.md':path;
+                path = path === '/' ? '/post/ria/js-promise-source.md' : path;
                 fetch(path).then(response => {
                     response.text().then(data => {
                         if (data.substr(0, 4) === '---\n') {
@@ -184,8 +206,8 @@
 
     const routes = [
         { path: '/bar', component: { template: '<div>bar</div>' } },
-        { path: '/', component:mdConponent,},
-        { path: '/post/*', component: mdConponent},
+        { path: '/', component: mdConponent, },
+        { path: '/*', component: mdConponent },
     ];
 
     const app = new Vue({
@@ -206,7 +228,7 @@
             fetchFolder(file) {
                 var v = localStorage.getItem(file.path) || '{}'
                 var data = JSON.parse(v)
-                if(data && data.time && new Date-data.time < 86400*1000){
+                if (data && data.time && new Date - data.time < 86400 * 1000) {
                     console.log('from cache')
                     Vue.set(file, 'nodes', data.nodes);
                     return;
@@ -221,12 +243,24 @@
                             )
                         );
                     Vue.set(file, 'nodes', nodes);
-                    localStorage.setItem(file.path, JSON.stringify({time: +new Date, nodes}))
+                    localStorage.setItem(file.path, JSON.stringify({ time: +new Date, nodes }))
                     return [null, nodes]
                 }).catch(err => {
                     console.log([err])
                     return [err]
                 })
+            },
+            openShare(site, o){
+                var link;
+                const title = window.encodeURIComponent(window.title)
+                const url  = window.encodeURIComponent(location.href)
+                if(site==='twitter'){
+                    link = `http://twitter.com/share?text=${title}&url=${url}`;
+                }else{
+                    link = `http://service.weibo.com/share/share.php?url=${url}&title=${title}`;
+                }
+                window.open(link, site+' share', 'width=550,height=235');
+                return false;
             },
         },
         created: function () {
@@ -234,4 +268,5 @@
         }
     }).$mount('#app')
 </script>
+
 </html>

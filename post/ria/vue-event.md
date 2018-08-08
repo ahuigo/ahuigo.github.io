@@ -7,6 +7,11 @@
 
     onclick="func" 不可以
 
+## event this
+
+    @click="func(this)"  this===window
+    onclick="func(this.href)"  this===click node
+
 ## condition event
 
     <div v-on="{ mouseover: condition ? handler : null }">

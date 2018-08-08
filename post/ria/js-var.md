@@ -30,6 +30,9 @@ node:
 chrome: 天生global
 
     name = "Tony";
+    var name = "Tony";
+    const name = "Tony";
+    let name = "Tony";
 
 ## define variable
 1. let name 只在代码块中有效+不可以重复定义: for(let i=0;;)；

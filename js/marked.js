@@ -19,6 +19,7 @@ var block = {
   heading: /^ *(#{1,6}) *([^\n]+?) *(?:#+ *)?(?:\n+|$)/,
   nptable: noop,
   blockquote: /^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/,
+  latexblock: /^(\${2})\s*((?:[^$]|\\\$|\$[^$])+)\s*\1(?!\$)/,
   list: /^( *)(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,
   html: '^ {0,3}(?:' // optional indentation
     + '<(script|pre|style)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)' // (1)
@@ -522,8 +523,8 @@ var inline = {
   strong: /^__([^\s][\s\S]*?[^\s])__(?!_)|^\*\*([^\s][\s\S]*?[^\s])\*\*(?!\*)|^__([^\s])__(?!_)|^\*\*([^\s])\*\*(?!\*)/,
   em: /^_([^\s][\s\S]*?[^\s_])_(?!_)|^_([^\s_][\s\S]*?[^\s])_(?!_)|^\*([^\s][\s\S]*?[^\s*])\*(?!\*)|^\*([^\s*][\s\S]*?[^\s])\*(?!\*)|^_([^\s_])_(?!_)|^\*([^\s*])\*(?!\*)/,
   code: /^(`+)\s*([\s\S]*?[^`]?)\s*\1(?!`)/,
-  math: /^(\$)((?:[^\$\n]|\\\$)+)\1(?!\$)/,
-  mathblock: /^(\${2})\s*((?:[^$]|\\\$|\$[^$])+)\s*\1(?!\$)/,
+  latex: /^(\$)((?:[^\$\n]|\\\$)+)\1(?!\$)/,
+  latexblock: /^(\${2})\s*((?:[^$]|\\\$|\$[^$])+)\s*\1(?!\$)/,
   br: /^ {2,}\n(?!\s*$)/,
   del: noop,
   text: /^[\s\S]+?(?=[\\<!\[`*$]|\b_| {2,}\n|$)/
@@ -780,11 +781,12 @@ InlineLexer.prototype.output = function(src) {
       continue;
     }
 
-    // math
-    if (cap = (this.rules.math.exec(src) || this.rules.mathblock.exec(src))) {
+    // latex
+    if (cap = (this.rules.latex.exec(src) || this.rules.latexblock.exec(src))) {
       src = src.substring(cap[0].length);
       try {
         if (this.options.latexRender) {
+          console.log('render ',cap[2])
           var html = this.options.latexRender(cap[2]);
           if (cap[1] === '$$') {
             out += '<div style="text-align:center">' + html + '</div>';

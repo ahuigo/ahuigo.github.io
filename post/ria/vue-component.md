@@ -22,6 +22,9 @@
         })
     </script>
 
+## ignore component
+    <com v-pre>
+
 ## 简单组件
 组件不能直接引用data全局变量
 
