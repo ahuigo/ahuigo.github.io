@@ -43,3 +43,21 @@ katex 支持标准的latex，如果想转义数学符号:
 当`$$`出现在空行后，公式将以段落居中显示
 
 <iframe width="100%" height="600px" src="md.html">
+
+## 用vscode 写作
+我几乎所有的写作都是通过markdown + vscode 完成的。
+配置好plugin, 就能拥有vim+vscode 的完美体验了。我所指的vscode plugin 包括：
+1. Markdown PDF
+2. Markdown All in One: 支持预览(`Cmd+K Cmd+V`)、TOC(outline)
+3. Paste Image
+
+### 截图
+截图用到了Paste Image 插件. 按住`Command+,`, 简单配置下
+
+    "pasteImage.basePath": "${projectRoot}",
+    "pasteImage.path": "${projectRoot}",
+    "pasteImage.prefix": "/",
+
+然后就可以用`Ctrl+Shift+Cmd+4` 截图, 用`Option+Cmd+V` 贴图了
+
+> 更多截图参考：https://zhuanlan.zhihu.com/p/25154768
