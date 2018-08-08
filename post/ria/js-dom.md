@@ -381,7 +381,6 @@ child:
     # all
 	childNodes 
 
-
     test.firstElementChild;
     test.lastElementChild;
 
@@ -393,6 +392,7 @@ child:
     node.nextElementSibling
     node.previousElementSibling
 
+    # 含有#text,coment,CDATA
     node.nextSibling
     node.previousSibling
 

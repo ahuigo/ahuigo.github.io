@@ -364,6 +364,16 @@ new.target会返回子类
 
     console.log(instance.property); //=> undefined,
 
+es6 private:
+
+    class Person {
+        constructor(name) {
+            var _name = name
+            this.setName = function(name) { _name = name; }
+            this.getName = function() { return _name; }
+        }
+    }
+
 ### static
 static 不可以被实例继承(因为不是prototype), static属于类自己(相当于proto)
 

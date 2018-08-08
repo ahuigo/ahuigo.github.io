@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1" />
-    <title>ahuigo的自留地</title>
+    <title>AHUIGO的自留地</title>
     <meta name="author" content="ahuigo">
     <link href="https://cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
@@ -18,7 +18,7 @@
     <link href="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.js"></script>
     <script src="/js/marked.js"></script>
-    <script src="/js/page.js"></script>
+    <script src="/js/toc.js"></script>
 </head>
 
 <body class="layout-documentation page-layout">
@@ -59,8 +59,8 @@
                     <div>
                         <h4>分享</h4>
                         <div>
-                        <span class="twitter-icon" @click="openShare('twitter', this)">twitter</span>
-                        <span class="weibo-icon" @click="openShare('weibo')">微博</span>
+                            <span class="twitter-icon" @click="openShare('twitter', this)">twitter</span>
+                            <span class="weibo-icon" @click="openShare('weibo')">微博</span>
                         </div>
                     </div>
                 </div>
@@ -141,6 +141,7 @@
     marked.setOptions({
         gfm: true,
         breaks: true,
+        sanitize: false,
         latexRender: katex.renderToString.bind(katex),
     });
 
@@ -181,7 +182,9 @@
         methods: {
             fetchMd() {
                 var path = this.$route.path
-                path = path === '/' ? '/post/ria/js-promise-source.md' : path;
+                if(path === '/'){
+                    path = '/README.md';
+                }
                 fetch(path).then(response => {
                     response.text().then(data => {
                         if (data.substr(0, 4) === '---\n') {
@@ -204,19 +207,18 @@
         },
     }
 
-    const routes = [
-        { path: '/bar', component: { template: '<div>bar</div>' } },
-        { path: '/', component: mdConponent, },
-        { path: '/*', component: mdConponent },
-    ];
+    const router = new VueRouter({
+        routes: [
+            { path: '/bar', component: { template: '<div>bar</div>' } },
+            { path: '/*', component: mdConponent },
+        ],
+        scrollBehavior(to, from, savedPosition) {
+            return { x: 0, y: 0 }
+        },
+    });
 
     const app = new Vue({
-        router: new VueRouter({
-            routes,
-            scrollBehavior(to, from, savedPosition) {
-                return { x: 0, y: 0 }
-            },
-        }),
+        router,
         data: {
             nodes: [],
             path: 'post',
@@ -250,16 +252,16 @@
                     return [err]
                 })
             },
-            openShare(site, o){
+            openShare(site, o) {
                 var link;
                 const title = window.encodeURIComponent(window.title)
-                const url  = window.encodeURIComponent(location.href)
-                if(site==='twitter'){
+                const url = window.encodeURIComponent(location.href)
+                if (site === 'twitter') {
                     link = `http://twitter.com/share?text=${title}&url=${url}`;
-                }else{
+                } else {
                     link = `http://service.weibo.com/share/share.php?url=${url}&title=${title}`;
                 }
-                window.open(link, site+' share', 'width=550,height=235');
+                window.open(link, site + ' share', 'width=550,height=235');
                 return false;
             },
         },

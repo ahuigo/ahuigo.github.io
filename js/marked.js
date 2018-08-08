@@ -19,7 +19,7 @@ var block = {
   heading: /^ *(#{1,6}) *([^\n]+?) *(?:#+ *)?(?:\n+|$)/,
   nptable: noop,
   blockquote: /^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/,
-  latexblock: /^(\${2})\s*((?:[^$]|\\\$|\$[^$])+)\s*\1(?!\$)/,
+  blocklatex: /^(\${2}) *((?:[^$]|\\\$)+?) *\n\1(?:\n|$)/,
   list: /^( *)(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,
   html: '^ {0,3}(?:' // optional indentation
     + '<(script|pre|style)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)' // (1)
@@ -241,6 +241,16 @@ Lexer.prototype.token = function(src, top) {
       this.tokens.push({
         type: 'heading',
         depth: cap[1].length,
+        text: cap[2]
+      });
+      continue;
+    }
+
+    // latex
+    if (cap = this.rules.blocklatex.exec(src)) {
+      src = src.substring(cap[0].length);
+      this.tokens.push({
+        type: 'blocklatex',
         text: cap[2]
       });
       continue;
@@ -523,8 +533,7 @@ var inline = {
   strong: /^__([^\s][\s\S]*?[^\s])__(?!_)|^\*\*([^\s][\s\S]*?[^\s])\*\*(?!\*)|^__([^\s])__(?!_)|^\*\*([^\s])\*\*(?!\*)/,
   em: /^_([^\s][\s\S]*?[^\s_])_(?!_)|^_([^\s_][\s\S]*?[^\s])_(?!_)|^\*([^\s][\s\S]*?[^\s*])\*(?!\*)|^\*([^\s*][\s\S]*?[^\s])\*(?!\*)|^_([^\s_])_(?!_)|^\*([^\s*])\*(?!\*)/,
   code: /^(`+)\s*([\s\S]*?[^`]?)\s*\1(?!`)/,
-  latex: /^(\$)((?:[^\$\n]|\\\$)+)\1(?!\$)/,
-  latexblock: /^(\${2})\s*((?:[^$]|\\\$|\$[^$])+)\s*\1(?!\$)/,
+  inlinelatex: /^(\${2}) *((?:[^$]|\\\$)+?) *\1(?!\$)/,
   br: /^ {2,}\n(?!\s*$)/,
   del: noop,
   text: /^[\s\S]+?(?=[\\<!\[`*$]|\b_| {2,}\n|$)/
@@ -782,24 +791,9 @@ InlineLexer.prototype.output = function(src) {
     }
 
     // latex
-    if (cap = (this.rules.latex.exec(src) || this.rules.latexblock.exec(src))) {
+    if (cap = this.rules.inlinelatex.exec(src)) {
       src = src.substring(cap[0].length);
-      try {
-        if (this.options.latexRender) {
-          console.log('render ',cap[2])
-          var html = this.options.latexRender(cap[2]);
-          if (cap[1] === '$$') {
-            out += '<div style="text-align:center">' + html + '</div>';
-          } else {
-            out += html;
-          }
-        } else {
-          throw new Error('No latexRender');
-        }
-      } catch (e) {
-        console.info('Failed to render latex: "' + cap[2] + '"');
-        out += escape(cap[0]);
-      }
+      out += this.renderer.latex(cap[2])
       continue;
     }
 
@@ -931,6 +925,27 @@ Renderer.prototype.blockquote = function(quote) {
 
 Renderer.prototype.html = function(html) {
   return html;
+};
+
+Renderer.prototype.latex = function(text, block=false) {
+  var out;
+  try {
+    if (marked.defaults.latexRender) {
+      console.log('render ', text)
+      var html = marked.defaults.latexRender(text);
+      if (block) {
+        out = '<div style="text-align:center">' + html + '</div>';
+      }else{
+        out = html;
+      }
+    } else {
+      console.log('No latexRender');
+    }
+  } catch (e) {
+    console.info('Failed to render latex: "' + text + '"');
+    out = '$$' + escape(text) + '$$';
+  }
+  return out;
 };
 
 Renderer.prototype.heading = function(text, level, raw) {
@@ -1181,6 +1196,9 @@ Parser.prototype.tok = function() {
         this.inline.output(this.token.text),
         this.token.depth,
         unescape(this.inlineText.output(this.token.text)));
+    }
+    case 'blocklatex': {
+      return this.renderer.latex(this.token.text, true)
     }
     case 'code': {
       return this.renderer.code(this.token.text,

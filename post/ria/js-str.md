@@ -238,7 +238,17 @@ Create RegExp：test, exec
 	(?<!X)	zero-width negative lookbehind>
 	(?!X)	zero-width negative lookahead
 
-	'?_b=1&b=2'.match(/(?<=[?&])b=(\d+)/)
+    > 'my pre-word'.match(/my.*(?<!pre-)word/)
+    null
+    > 'my pre1-word'.match(/my.*(?<!pre-)word/)
+    my pre1-word
+
+### $,^
+不会成功
+
+    /($end)/
+    /(head^)/
+
 
 ### test
 
