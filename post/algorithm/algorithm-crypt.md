@@ -1,9 +1,3 @@
----
-layout: page
-title:	algorithm crypt
-category: blog
-description:
----
 # 加密算法简介
 
 # Symmetric-key Cryptography 对称密钥加密

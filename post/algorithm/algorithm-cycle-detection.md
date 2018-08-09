@@ -1,10 +1,4 @@
----
-layout: page
-title:	单链表是否有环之龟兔算法(tortoise-hare)
-category: blog
-description: 
----
-# Preface
+# 单链表是否有环之龟兔算法(tortoise-hare)
 ![cycle](/img/cycle-detection.png)
 ![c](http://farm4.staticflickr.com/3843/14971507581_30932e722a_o.jpg)
 

@@ -1,13 +1,6 @@
----
-layout: page
-title:	查找两有序数组中第N 大的值
-category: blog
-description: 
----
-# Preface
-
-# 问题
-A B 两个递增有序数组, 将两数组中的元素合并到一起。请找到其中第N，N+1 大的数
+# 查找两有序数组中第N 大的值
+问题:
+> A B 两个递增有序数组, 将两数组中的元素合并到一起。请找到其中第N，N+1 大的数
 
 > Find the n'th max number of 2 sorted array!
 

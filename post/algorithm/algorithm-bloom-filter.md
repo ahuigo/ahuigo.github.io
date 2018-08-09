@@ -1,12 +1,7 @@
----
-layout: page
-title: 一个bloom filter 的redis实现	
-category: blog
-description: 
----
-# 问题
+# 一个bloom filter 的redis实现	
+问题:
 
-判断uid是否在一个uids集合中。假设uids集合有n=10^7(1k万)，同时假设uid最多10位，那么其值域范围是10^10(100亿)
+> 判断uid是否在一个uids集合中。假设uids集合有n=10^7(1k万)，同时假设uid最多10位，那么其值域范围是10^10(100亿)
 
 # 方案
 

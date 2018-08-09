@@ -1,10 +1,4 @@
----
-layout: page
-title:	crc 循环冗余校验
-category: blog
-description:
----
-# Preface
+# crc 循环冗余校验
 CRC(Cyclic Redundancy Check, 循环冗余校验)
 
 在数字通信中，信号难免会发生错误，为了检测信号错误，就出现了各种检验方法，常见的有奇偶校验(Parity Check)、CRC 校验(Cyclic Redundancy Check)。

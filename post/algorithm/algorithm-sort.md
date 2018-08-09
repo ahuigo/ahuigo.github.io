@@ -1,10 +1,4 @@
----
-layout: page
-title:	排序算法
-category: blog
-description:
----
-# Preface
+# 排序算法
 常规的几种排序算法, 参考[维基sort](http://zh.wikipedia.org/wiki/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95)
 
 |名称	|数据对象	|稳定性	|时间复杂度(平均/最坏)	|空间复杂度	|描述|

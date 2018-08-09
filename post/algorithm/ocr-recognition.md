@@ -1,11 +1,4 @@
----
-layout: page
-title:	验证码识别工具tesseract
-category: blog
-description: 
----
-
-# 序
+# 验证码识别工具tesseract
 
 首先说下我要用到的工具：tesseract/ImageMagick/...etc.
 

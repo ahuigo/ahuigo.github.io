@@ -1,10 +1,4 @@
----
-layout: page
-title:	geohash
-category: blog
-description: 
----
-# Preface
+# geohash
 
 # todo
 http://www.cnblogs.com/dengxinglin/archive/2012/12/14/2817761.html

@@ -1,10 +1,4 @@
----
-layout: page
-title:	Pigeonhole principle, 鸽巢（抽屉）原理
-category: blog
-description: 
----
-# Preface
+# Pigeonhole principle, 鸽巢（抽屉）原理
 
 Pigeonhole principle 鸽巢原理，又名抽屉原理 表述为：
 把多于n个的物体放到n个抽屉里，则至少有一个抽屉里的东西不少于两件。

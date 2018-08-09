@@ -1,10 +1,4 @@
----
-layout: page
-title:	二叉查找树和红黑树
-category: blog
-description: 
----
-# Preface
+# 二叉查找树和红黑树
 
 二叉查找树（Binary Search Tree），也称二叉搜索树、有序二叉树（ordered binary tree），排序二叉树（sorted binary tree），是指一棵空树或者具有下列性质的二叉树：
 

@@ -1,10 +1,4 @@
----
-layout: page
-title:	人民币大写转换
-category: blog
-description:
----
-
+# 人民币大写转换
 
 
 问题我是在德问上看到的。

@@ -1,10 +1,4 @@
----
-layout: page
-title:	傅里叶变换
-category: blog
-description: 
----
-# Preface
+# 傅里叶变换
 
 今天看到一篇韩昊写的好文 [傅里叶分析之掐死教程](http://zhuanlan.zhihu.com/wille/19763358)，生动形象的讲解了傅里叶的本质： 将时域变换到频域。非常有陈皓的文风，极好的马桶教程。
 
