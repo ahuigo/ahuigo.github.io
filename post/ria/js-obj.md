@@ -15,6 +15,12 @@ description:
 
     new cls().property
 
+### loop: entries(use keys())
+
+    for(let [key, value] of Object.entries(myObject)) {
+        console.log(key, value); // "first", "one"
+    }
+
 ## keys
 list forEach
 
@@ -41,8 +47,8 @@ keys / for-in base / getOwnPropertyNames all
     // yes, base
 
 ### has key
-1. hasOwnProperty: 不包括原型链
-2. keys: 也不含proto
+1. keys: 不含proto, enumerable:false
+2. hasOwnProperty: 不包括原型链
 2. `in`: key 它可能是obj 继承的属性, 不一定是obj 本身的属性
 
     'toString' in xiaoming; // true, 不是xiaoming 本身，而是object 都有

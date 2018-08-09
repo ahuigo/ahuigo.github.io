@@ -165,7 +165,8 @@ for string
     'hello world'.includes('hello') //true
     'hello world'.includes('')      //true
 
-不要用：`index in arr`, 他不是`value in arr`
+## index in arr/obj
+不要用：`index in arr`, 他不是`value in arr`(这与python 不同)
 
 	Array.prototype.inArray = function(needle) {
         var length = this.length;
@@ -185,7 +186,7 @@ for string
 
 # for
 
-## for in index
+## for in: index
 1. 用for-in 遍历`array/string + obj` 的属性(length 等不可读的属性除外)
 
     for(var index in arr){
@@ -195,7 +196,7 @@ for string
         'str'[index]
     }
 
-## for of value
+## for of: value
 1. for of：只循环`array/string + map-set-generator`本身的元素
 
     s = new Set([1,2,3])
@@ -218,7 +219,7 @@ string  没有此属性
         console.log(value, map===m);
     });
 
-## entries
+## entries: python
     for(let [key, value] of Object.entries(myObject)) {
         console.log(key, value); // "first", "one"
     }
