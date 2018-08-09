@@ -1,6 +1,14 @@
 /**
  * Create TOC of Markdown
  */
+String.prototype.nthIndex = function(pat, n){
+    var L= this.length, i= -1;
+    while(n-- && i++<L){
+        i= this.indexOf(pat, i);
+        if (i < 0) break;
+    }
+    return i;
+}
 
 String.URIChar = {
     '<':'%3C',

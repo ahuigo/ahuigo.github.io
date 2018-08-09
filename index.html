@@ -176,7 +176,10 @@
             }
             //disqus reset
             const h1node = $('#content h1')
-            window.title = (h1node && h1node.innerText.split(' ', 2).slice(1).join(' ')) || '博文'
+            if(h1node){
+                h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
+                window.title = h1node.innerText = h1node.innerText.split(' ', 2)[1] 
+            }
             disqus()
         },
         methods: {

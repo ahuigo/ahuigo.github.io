@@ -495,7 +495,8 @@ node.value 与node.getAttribute('value') 不同: 前者是真正的值，后者�
 
 ## CSS
 
-	node.style.key;//只能查看显示的
+	node.style.key;
+        $0.style.color='green'
 	node.style.backgroundColor
         node.style['background-color']
 	node.style.cssText
