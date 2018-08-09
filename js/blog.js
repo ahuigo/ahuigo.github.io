@@ -87,9 +87,6 @@ const mdConponent = {
         if(h1node){
             h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
             var title = h1node.innerText.split(' ', 2)[1]
-            if(title === 'Preface'){
-                title = document.title
-            }
             document.title = h1node.innerText = title
         }
         disqus()
@@ -98,7 +95,7 @@ const mdConponent = {
         fetchMd() {
             var path = this.$route.path
             if(path === '/'){
-                path = '/README.md';
+                path = 'README.md';
             }
             fetch(path).then(response => {
                 response.text().then(data => {

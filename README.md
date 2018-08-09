@@ -7,9 +7,9 @@
 1. Fork 到 `{yourname}.github.io`.
 2. 修改 `index.html` 中的`config`变量
 
-## 博客采用的技术方案:
-1. Vue.js: 框架
-2. bulma.css: bulma.css 非常轻量
+## 博客采用的技术方案
+1. Vue.js 框架
+2. bulma.css: 非常轻量
 3. markdown 渲染
     - Marked 修改版: 原生的marked 不能很好的支持数学公式. (由于marked 正考虑解耦一些代码，修改版PR的暂时没被接受)
     - 数学公式采用katex. 用`$$` 做分割符号
@@ -23,7 +23,7 @@
 - [x] 多级动态目录, 适合笔记的归纳总结
 - [x] Disqus
 - [x] 自适应
-- [x] 目录缓存
+- [x] 目录缓存(缓存时间1天)
 - [x] Twitter & 微博分享
 - [x] 音乐
 
