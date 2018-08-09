@@ -52,7 +52,8 @@ katex 支持标准的latex，如果想转义数学符号:
 
 ## 用vscode 写作
 我几乎所有的写作都是通过markdown + vscode 完成的。
-配置好plugin, 就能拥有vim+vscode 的完美体验了。我所指的vscode plugin 包括：
+配置好plugin, 就能拥有vim+vscode 的完美体验了。推荐以下的vscode plugin ：
+
 1. Markdown PDF
 2. Markdown All in One: 支持预览(Mac 快捷键`Cmd+K Cmd+V`)、TOC(outline)
 3. Paste Image
