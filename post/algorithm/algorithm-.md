@@ -21,7 +21,6 @@ description:
 ## Dynamic programming,动态规划算法
 [DP](/p/algorithm/algorithm-dp)
 
-
 ## Reference
 - [Dijkstra]
 - [dp]

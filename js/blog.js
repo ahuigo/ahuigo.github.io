@@ -76,6 +76,7 @@ const mdConponent = {
         document.querySelectorAll('pre code').forEach(function (e) {
             return hljs.highlightBlock(e, '    ');
         });
+        $$('#content a').forEach((v,k,arr)=>{if(v.getAttribute('href').startsWith('/p/')){v.href=v.getAttribute('href').replace(/^\/p/, '#/post')+'.md'}})
         const toc = document.querySelector('#toc');
         if (toc.children.length) {
             toc.children[0].replaceWith(createToc(this.$el))
@@ -147,7 +148,7 @@ const app = new Vue({
                 Vue.set(file, 'nodes', data.nodes);
                 return;
             }
-            return fetch(`https://api.github.com/repos/${config.user}/a/contents/` + file.path, {
+            return fetch(`https://api.github.com/repos/${config.user}/{config.repo}/contents/` + file.path, {
             }).then(r => r.json()).then(data => {
                 let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type, show: true }))
                     .filter((v) =>

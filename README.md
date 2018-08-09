@@ -7,6 +7,16 @@
 1. Fork 到 `{yourname}.github.io`.
 2. 修改 `index.html` 中的`config`变量
 
+config: `index.html`
+
+    var config = {
+        // github user acount
+        'user': 'ahuigo',
+        'repo': 'ahuigo.github.io',
+        'disqus_user': 'ahuigo',
+        'twitter_user': 'ahuigoo',
+    }
+
 ## 博客采用的技术方案
 1. Vue.js 框架
 2. bulma.css: 非常轻量
