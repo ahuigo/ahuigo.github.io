@@ -12,29 +12,24 @@ description:
 - mac 支持全局readline , 字符编辑的效率非常非常高(可以搜索 Emacs-like keybindings system-wide, linux 要做到这一点非常麻烦). 。
 - 呼起程序(搜索/词典/手册/qq(qq下的swift)/计算)：mac 下的Alfred2 非常强大, linux 下有launchy 就比较鸡肋了
 - 更高效稳定的窗口系统和窗口管理器
-	mac 的硬件软件一体化，比ubuntu/archlinux等省心多了。而linux desktop 而因为糟糕的X11, 以及参差不齐的图形软件, 效率很低。
-	mac OSX 使用的Quartz Compositor 较x11 高效稳定太多太多了，Linux 的Wayland 窗口系统或许有望解决这个问题，不过还是到那一天再说吧。大多数流行的桌面软件对mac OSX 的支持比linux 好很多, 比如QQ
-- mac OSX 有很多技巧(有很多linux 是不具备 或者 linux/windows 实现起来特别繁琐)：
+	1. mac 的硬件软件一体化，比ubuntu/archlinux等省心多了。而linux desktop 而因为糟糕的X11, 以及参差不齐的图形软件, 效率很低。
+	2. mac OSX 使用的Quartz Compositor 较x11 高效稳定太多太多了，Linux 的Wayland 窗口系统或许有望解决这个问题，不过还是到那一天再说吧。大多数流行的桌面软件对mac OSX 的支持比linux 好很多, 比如QQ
 
-这个技巧包括：
+mac OSX 有很多技巧(这些在 linux/windows 实现起来特别繁琐)：
 
 	高效使用mac tips 1: http://www.zhihu.com/question/19550256
 	高效使用mac tips 2: http://www.zhihu.com/question/20873070
 	高效使用mac tips 3: http://apple.stackexchange.com/questions/400/please-share-your-hidden-os-x-features-or-tips-and-tricks
 	Automator : http://macshuo.com/?tag=automator
 
-与优点对应的是, linux desktop 能做而mac osx 不能做的事情：
+linux desktop 的优点：
 
 - 更加原汁原味的本地化linux开发环境，而OSX 需要稍微配置一下（其实很简单的啦）, 其实mac OSX 中装个virtualBox(centos 不要装X11) 也是很不错的选择
 - Mac OSX 有极少数私有的命令, 比如：dscl （相当于linux下的用户管理命令 useradd, usermod ）
 - Mac OSX 有一些命令不是gnu版本的: 比如sed，awk, 不过可以一键安装gnu 版的命令: `brew install gsed gawk`
 
-# Best apps?
-https://github.com/hzlzh/Best-App
-prism-break.org/zh-CN/categories/macos/
-
 # Invisible Shortcuts
-> Refer to: http://apple.stackexchange.com/questions/400/please-share-your-hidden-os-x-features-or-tips-and-tricks
+> Reference: http://apple.stackexchange.com/questions/400/please-share-your-hidden-os-x-features-or-tips-and-tricks
 
 ## Space(View content)
 In finder, press `space` to view file content.
@@ -431,6 +426,13 @@ mdfind的索引数据库在后台自动更新，不过你也可以使用mdutil�
 
 > Refer to: http://segmentfault.com/a/1190000000509514
 
+# network
+    sudo ipconfig set en0 DHCP
+    sudo ipconfig set en1 INFORM 192.168.0.150
+        ipconfig getifaddr en0
+
+    sudo ifconfig en1 down ; sudo ifconfig en1 up
+
 # Screen/Video
 
 ## screen record
@@ -475,6 +477,9 @@ Graph::Easy
     http://36kr.com/p/216120.html
 
 ## GIF
+### Kap +KeyCastr
+Kap 开源+简洁, 替代recordit/LICEcap/Gifcam
+KeyCastr 显示按键
 
 ### recordit
 700k, 极简，直接保存图片到recordit 自己的服务器(需要代理), 返回一个url
@@ -503,6 +508,3 @@ Next, you can install iTunes 12.2 update manually with the following command str
 
 	softwareupdate -l
 	softwareupdate -i iTunesXPatch-12.2
-
-# todo
-[Automator mactalk](http://macshuo.com/?tag=automator)

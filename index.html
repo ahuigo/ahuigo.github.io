@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1" />
     <title>AHUIGO的自留地</title>
     <meta name="author" content="ahuigo">
     <link href="https://cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
-    <link href="/css/main.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
 
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
@@ -17,8 +16,17 @@
 
     <link href="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.js"></script>
-    <script src="/js/marked.js"></script>
-    <script src="/js/toc.js"></script>
+    <script src="js/marked.js"></script>
+    <script src="js/toc.js"></script>
+    <script>
+        var config = {
+            // github user acount
+            'user': 'ahuigo',
+            'weibo_uid': 1607772514,
+            'twitter_user': 'ahuigoo',
+            'disqus_user': 'ahuigo',
+        }
+    </script>
 </head>
 
 <body class="layout-documentation page-layout">
@@ -53,8 +61,8 @@
                 <div class="share" style="display:flex">
                     <div>
                         <h4>关注我</h4>
-                        <iframe width="120" height="22" src="https://platform.twitter.com/widgets/follow_button.4a8202e5fcbfb5ba8d36683841f4d020.en.html#screen_name=ahuigoo&width=67&height=22&show_count=false&show_screen_name=true"></iframe>
-                        <iframe width="120" height="22" src="https://widget.weibo.com/relationship/followbutton.php?btn=light&style=1&uid=1607772514&width=67&height=22&language=zh_cn"></iframe>
+                        <iframe width="120" height="22" :src="`https://platform.twitter.com/widgets/follow_button.4a8202e5fcbfb5ba8d36683841f4d020.en.html#screen_name=${config.twitter_user}&width=67&height=22&show_count=false&show_screen_name=true`"></iframe>
+                        <iframe width="120" height="22" :src="`https://widget.weibo.com/relationship/followbutton.php?btn=light&style=1&uid=${config.weibo_uid}&width=67&height=22&language=zh_cn`"></iframe>
                     </div>
                     <div>
                         <h4>分享</h4>
@@ -71,8 +79,13 @@
             </div>
             <div class="right">
                 <div id="toc"></div>
-                <iframe height="450" width="100%" marginheight="0" border="0" src="https://music.163.com/outchain/player?type=0&amp;id=7314556&amp;auto=0&amp;height=430"
-                    frameborder="no"></iframe>
+                <audio width="100%" style="height:50px;width:100%" controls="controls">
+                    <source src="https://m10.music.126.net/20180809204935/fb73d228d140da5206546396ad786b51/ymusic/4760/32d2/1453/fabd13b1307f5a47cde9594a61c32e1e.mp3"
+                        type="audio/mpeg">
+                </audio>
+                <!--
+                <iframe height="450" width="100%" marginheight="0" border="0" src="https://music.163.com/outchain/player?type=0&amp;id=7314556&amp;auto=0&amp;height=430" frameborder="no"></iframe>
+                -->
             </div>
         </div>
     </div>
@@ -92,186 +105,5 @@
     <div id="content" v-html="marked(md)"></div>
 </template>
 
-<script>
-    const $ = document.querySelector.bind(document);
-    function disqus() {
-        if (!window.DISQUS) {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://ahuigo.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-            s.onload = function () {
-                console.log('onload disqus')
-                disqus_reset()
-            }
-        } else {
-            disqus_reset()
-        }
-    }
-    function disqus_reset() {
-        if (window.DISQUS) {
-            DISQUS.reset({
-                reload: true,
-                config: function () {
-                    this.page.url = window.location.href.replace('#', '#!');
-                    this.page.identifier = window.location.hash.slice(1);
-                    this.page.title = window.title;
-                }
-            });
-
-        }
-    }
-
-    Vue.component('tree-folder', {
-        template: '#tree-folder',
-        props: ['nodes', 'show'],
-        methods: {
-            openFolder(file) {
-                if (!file.nodes) {
-                    file.show = true
-                    Vue.set(file, 'nodes', [{ type: 'file', name: "loading...", path: '' }]);
-                    this.$root.fetchFolder(file)
-                } else {
-                    Vue.set(file, 'show', !file.show);
-                }
-            },
-        },
-    });
-
-    marked.setOptions({
-        gfm: true,
-        breaks: true,
-        sanitize: false,
-        latexRender: katex.renderToString.bind(katex),
-    });
-
-    const mdConponent = {
-        template: '#md',
-        data() {
-            return {
-                md: '',
-            }
-        },
-        props: [],
-        watch: {
-            '$route'(to, from) {
-                this.fetchMd()
-            }
-        },
-        mounted: function () {
-            console.log('mounted')
-            this.$nextTick(function () {
-            })
-        },
-        updated() {
-            console.log('updated')
-            document.querySelectorAll('pre code').forEach(function (e) {
-                return hljs.highlightBlock(e, '    ');
-            });
-            const toc = document.querySelector('#toc');
-            if (toc.children.length) {
-                toc.children[0].replaceWith(createToc(this.$el))
-            } else {
-                toc.appendChild(createToc(this.$el))
-            }
-            //disqus reset
-            const h1node = $('#content h1')
-            if(h1node){
-                h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
-                window.title = h1node.innerText = h1node.innerText.split(' ', 2)[1] 
-            }
-            disqus()
-        },
-        methods: {
-            fetchMd() {
-                var path = this.$route.path
-                if(path === '/'){
-                    path = '/README.md';
-                }
-                fetch(path).then(response => {
-                    response.text().then(data => {
-                        if (data.substr(0, 4) === '---\n') {
-                            var pos = data.substr(0, 300).nthIndex('---\n', 2)
-                            data = data.substr(pos);
-                        }
-                        data = data.replace(/\n/g, '\t\n')
-                        this.md = data
-                    })
-                })
-            },
-            marked: function (text) {
-                console.log('marked text')
-                return marked(text)
-            },
-        },
-        created() {
-            console.log('before created')
-            this.fetchMd()
-        },
-    }
-
-    const router = new VueRouter({
-        routes: [
-            { path: '/bar', component: { template: '<div>bar</div>' } },
-            { path: '/*', component: mdConponent },
-        ],
-        scrollBehavior(to, from, savedPosition) {
-            return { x: 0, y: 0 }
-        },
-    });
-
-    const app = new Vue({
-        router,
-        data: {
-            nodes: [],
-            path: 'post',
-            show: true,
-            name: 'ahuigo',
-            showMenu: false,
-        },
-        methods: {
-            fetchFolder(file) {
-                var v = localStorage.getItem(file.path) || '{}'
-                var data = JSON.parse(v)
-                if (data && data.time && new Date - data.time < 86400 * 1000) {
-                    console.log('from cache')
-                    Vue.set(file, 'nodes', data.nodes);
-                    return;
-                }
-                return fetch('https://api.github.com/repos/ahuigo/a/contents/' + file.path, {
-                }).then(r => r.json()).then(data => {
-                    let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type, show: true }))
-                        .filter((v) =>
-                            !(
-                                v.type == 'dir'
-                                && ['ai', 'atom'].includes(v.name)
-                            )
-                        );
-                    Vue.set(file, 'nodes', nodes);
-                    localStorage.setItem(file.path, JSON.stringify({ time: +new Date, nodes }))
-                    return [null, nodes]
-                }).catch(err => {
-                    console.log([err])
-                    return [err]
-                })
-            },
-            openShare(site, o) {
-                var link;
-                const title = window.encodeURIComponent(window.title)
-                const url = window.encodeURIComponent(location.href)
-                if (site === 'twitter') {
-                    link = `http://twitter.com/share?text=${title}&url=${url}`;
-                } else {
-                    link = `http://service.weibo.com/share/share.php?url=${url}&title=${title}`;
-                }
-                window.open(link, site + ' share', 'width=550,height=235');
-                return false;
-            },
-        },
-        created: function () {
-            this.fetchFolder(this.$data)
-        }
-    }).$mount('#app')
-</script>
-
+<script src="js/blog.js"></script>
 </html>

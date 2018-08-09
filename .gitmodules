@@ -31,3 +31,6 @@
 [submodule "demo/xcut"]
 	path = demo/xcut
 	url = https://github.com/ahuigo/xcut
+[submodule "demo/blog"]
+	path = demo/blog
+	url = https://github.com/ahuigo/note-blog

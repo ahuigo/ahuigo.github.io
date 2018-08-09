@@ -222,7 +222,7 @@ PHP 通过设置配置文件中 zlib.output_compression=1  或者在代码中使
 
 ## Cache-Control & Expires
 通常在不关闭浏览器的情况下 一般常用的cache有两种:
-Cache-Control 或者 Expires (会受windows F5 与 Mac Cmd+R 强制刷新的影响) 在cache 有效期内请求时会得到 200 OK (from cache)
+Cache-Control 或者 Expires (会影响 F5 与 Cmd+R) 在cache 有效期内请求时会得到 200 OK (from cache)
 
 	header('Cache-Control: max-age=3600');//1 hour
 
@@ -250,6 +250,8 @@ Cache-Control 或者 Expires (会受windows F5 与 Mac Cmd+R 强制刷新的影�
 	}else{
 		header('Last-Modified: '. $rtime);
 	}
+
+304 禁止包含消息体，通过`curl -D- `可以看到
 
 ## Etag 304
 Etag 类似于Last-Modified, 但是它不是通过比较时间确定缓存是否过期，而是通过实体内容的标记。

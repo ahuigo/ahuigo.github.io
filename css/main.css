@@ -25,7 +25,7 @@ ol,ul{
 }
 
 .folder::before {
-    content: '📘';
+    content: '🌴';
 }
 .weibo-icon::before{
     content: url(http://img.t.sinajs.cn/t4/appstyle/widget/images/shareButton/share_icon.png?id=1375775002754);
