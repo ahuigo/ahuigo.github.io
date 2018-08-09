@@ -3,6 +3,7 @@
  * @author ahuigo
  */
 const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
 function disqus() {
     if (!window.DISQUS) {
         var d = document, s = d.createElement('script');
@@ -76,7 +77,7 @@ const mdConponent = {
         document.querySelectorAll('pre code').forEach(function (e) {
             return hljs.highlightBlock(e, '    ');
         });
-        $$('#content a').forEach((v,k,arr)=>{if(v.getAttribute('href').startsWith('/p/')){v.href=v.getAttribute('href').replace(/^\/p/, '#/post')+'.md'}})
+        this.$root.$$('#content a').forEach((v,k,arr)=>{if(v.getAttribute('href').startsWith('/p/')){v.href=v.getAttribute('href').replace(/^\/p/, '#/post')+'.md'}})
         const toc = document.querySelector('#toc');
         if (toc.children.length) {
             toc.children[0].replaceWith(createToc(this.$el))
@@ -140,15 +141,20 @@ const app = new Vue({
         config:config,
     },
     methods: {
+      $$:$$,
         fetchFolder(file) {
             var v = localStorage.getItem(file.path) || '{}'
             var data = JSON.parse(v)
-            if (data && data.time && new Date - data.time < 86400 * 1000) {
-                console.log('from cache')
-                Vue.set(file, 'nodes', data.nodes);
-                return;
-            }
-            return fetch(`https://api.github.com/repos/${config.user}/{config.repo}/contents/` + file.path, {
+            if (data && data.time){
+              if(new Date - data.time < 86400 * 1000) {
+                  console.log('from cache')
+                  Vue.set(file, 'nodes', data.nodes);
+                  return;
+              }
+              console.log('cache expired:',new Date - data.time)
+
+            } 
+            return fetch(`https://api.github.com/repos/${this.config.user}/${this.config.repo}/contents/` + file.path, {
             }).then(r => r.json()).then(data => {
                 let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type, show: true }))
                     .filter((v) =>

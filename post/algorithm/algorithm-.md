@@ -1,9 +1,3 @@
----
-layout: page
-title:
-category: blog
-description:
----
 # 一些算法
 
 ## BFS(广度优先搜索)
