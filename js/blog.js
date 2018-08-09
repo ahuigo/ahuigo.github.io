@@ -146,7 +146,7 @@ const app = new Vue({
             var v = localStorage.getItem(file.path) || '{}'
             var data = JSON.parse(v)
             if (data && data.time){
-              if(new Date - data.time < 86400 * 1000) {
+              if(new Date - data.time < 86400*24*1000) {
                   console.log('from cache')
                   Vue.set(file, 'nodes', data.nodes);
                   return;

@@ -1,9 +1,3 @@
----
-layout: page
-title:
-category: blog
-description:
----
 # Preface
 基本类型：Undefined、Null、Boolean、Number和String
 复杂类型：由基本类型构成
@@ -33,6 +27,8 @@ chrome: 天生global
     var name = "Tony";
     const name = "Tony";
     let name = "Tony";
+
+`$$`, `$` scope 是devTool, 不是全局的window
 
 ## define variable
 1. let name 只在代码块中有效+不可以重复定义: for(let i=0;;)；
