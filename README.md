@@ -5,7 +5,7 @@
 
 使用方法：
 1. Fork 到 `{yourname}.github.io`.
-2. 修改 `index.html`
+2. 修改 `index.html` 中的`config`变量
 
 ## 博客采用的技术方案:
 1. Vue.js: 框架
