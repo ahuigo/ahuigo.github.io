@@ -92,7 +92,8 @@ div>ul, div>ol {
     height: 3px;
 }
 #content img, {
-    border: 0.3em solid #e0dfcc ;
+    /* border: 0.3em solid #e0dfcc ; */
+    box-shadow: 0 0 10px #555;
     border-radius: 1em;
 }
 #content blockquote{

@@ -421,19 +421,16 @@ createElement:
     toc.children[0].replaceWith(createToc(this.$el))
 
 ### .repalceChild
-    toc.replaceChild(createToc(this.$el), toc.children[0])
+    toc.replaceChild(createToc(this.$el), children[0])
 
 ### .appendChild
 Example 浮层: js-demo/alert-float.js
 
     # resort node
-    var list = $('#test-list')[0]
-    var arr =[];
-    for(let i=0;i<list.children.length;i++){
-        arr.push(list.children[i])
-    }
-    arr.sort((a,b)=>a.innerText>b.innerText)
-    arr.map(node=>list.appendChild(node))
+    var list = $('#test-list')
+    Array.prototype.slice.call(list.children)
+        .sort((a,b)=>a.innerText>b.innerText?1:-1)
+        .map(node=>list.appendChild(node))
 
 ### .insertBefore
 

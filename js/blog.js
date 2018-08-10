@@ -85,11 +85,26 @@ const mdConponent = {
             toc.appendChild(createToc(this.$el))
         }
         //disqus reset
-        const h1node = $('#content h1')
-        if(h1node){
-            h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
-            var title = h1node.innerText.slice(2)
-            document.title = h1node.innerText = title
+        const h1nodes = $$('#content h1')
+
+        // fix title
+        if(h1nodes.length){
+          var h1node;
+          if(h1nodes.length === 1){
+            h1node = h1nodes[0]
+            for(const el of $('#content').children){
+              if(el.tagName.match(/^H\d$/)){
+                el.innerText = el.innerText.replace(/^1\./, '')
+              }
+            }
+          }else{
+            h1node = document.createElement('h1')
+            h1node.innerText = h1nodes[0].innerText.slice(2)
+            $('#content').insertBefore(h1node, h1nodes[0])
+          }
+          //set title
+          h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
+          document.title = h1node.innerText
         }
         disqus()
     },

@@ -159,6 +159,10 @@ replace strip
 	str.fontcolor('red') "<font color="red">s</font>"
 	's'.fontsize('1px')
 
+### map,reduce
+
+    '12345'.split('', 3).map()
+
 ### Match
 
 	//return 存放匹配结果的数组
@@ -210,10 +214,6 @@ eg:
 	card.replace(/\[card\](\w+)\[\/card\]([\w:\/.]+)/,function(ori,card,url){
 		return '<a href="'+url+'">'+card+'</a>';
 	})
-
-### map,reduce
-
-    '12345'.split('', 3).map()
 
 ## RegExp
 Create RegExp：test, exec
