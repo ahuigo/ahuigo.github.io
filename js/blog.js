@@ -88,7 +88,7 @@ const mdConponent = {
         const h1node = $('#content h1')
         if(h1node){
             h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
-            var title = h1node.innerText.split(' ', 2)[1]
+            var title = h1node.innerText.slice(2)
             document.title = h1node.innerText = title
         }
         disqus()

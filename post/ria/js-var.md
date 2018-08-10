@@ -28,7 +28,7 @@ chrome: 天生global
     const name = "Tony";
     let name = "Tony";
 
-`$$`, `$` scope 是devTool, 不是全局的window
+`$$`, `$` 只能用于devTool 的window
 
 ## define variable
 1. let name 只在代码块中有效+不可以重复定义: for(let i=0;;)；
