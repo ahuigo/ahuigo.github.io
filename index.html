@@ -1,24 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1" />
-    <title>AHUIGO的自留地</title>
-    <meta name="author" content="ahuigo">
-    <link href="https://cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
-
-    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
-    <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js"></script>
-
-    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/agate.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-
-    <link href="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.js"></script>
-    <script src="js/marked.js"></script>
-    <script src="js/toc.js"></script>
     <script>
+        if(!('noModule' in HTMLScriptElement.prototype)){
+            alert('你的浏览器不能很好的支持 es6，请用最新的chrome、firefox浏览')
+        }
         var config = {
             // github user acount
             'user': 'ahuigo',
@@ -28,45 +14,59 @@
             'disqus_user': 'ahuigo',
         }
     </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1" />
+    <title>AHUIGO的自留地</title>
+    <meta name="author" content="ahuigo">
+    <link href="https://cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js"></script>
+
+    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/agate.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <link href="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.js"></script>
+    <script src="js/marked.js"></script>
+    <script src="js/toc.js"></script>
 </head>
 
 <body class="layout-documentation page-layout">
     <div id="app">
-        <div class="head level  hero is-dark">
+        <div class="head hero is-dark">
             <div class="level-left">
                 <div class="level-item">
-                    <button class="menu-toggle" @click="showMenu=!showMenu">
-                        <div class="menu-line"></div>
-                        <div class="menu-line"></div>
-                        <div class="menu-line"></div>
-                    </button>
+
                 </div>
 
                 <div class="level-item">
-                    <strong>本博采用纯es6, 请使用chrome/firefox </strong>
+                    <strong>ahuigo's blog</strong>
                 </div>
-                <pre>
-    ☁　✈　　 ☁　　🚁
-　🏬🏨🏫🏢🏤🏥🏦🏪
-👬🌲 /　🚶🚍  \🌳
-　🌳/　🚘   🏃　\🌴🐈
-🌴 /　 🐢  🚔    \🌲
-🌲/    🚖　  　　  \🌳👭 </pre>
             </div>
         </div>
         <div class="main">
-            <tree-folder :class="{left:true, 'active':showMenu}" :show="show" :nodes="nodes"></tree-folder>
+            <div :class="{left:true, 'active':showMenu}" >
+                <button class="button is-primary menu-toggle" :class="{a:true}" @click="showMenu=!showMenu">
+                        <template v-if="showMenu"> Close </template>
+                        <template v-else>Open</template>
+                </button>
+                <tree-folder :nodes="nodes" :class="{'active':showMenu}" :show="show"></tree-folder>
+            </div>
             <div class="middle">
                 <router-view></router-view>
                 <div class="hr"></div>
-                <div class="share" style="display:flex">
+                <div class="share" style="display:flex;justify-content:space-between">
                     <div>
                         <h4>关注我</h4>
+                        <div>
                         <iframe width="120" height="22" :src="`https://platform.twitter.com/widgets/follow_button.4a8202e5fcbfb5ba8d36683841f4d020.en.html#screen_name=${config.twitter_user}&width=67&height=22&show_count=false&show_screen_name=true`"></iframe>
                         <iframe width="120" height="22" :src="`https://widget.weibo.com/relationship/followbutton.php?btn=light&style=1&uid=${config.weibo_uid}&width=67&height=22&language=zh_cn`"></iframe>
+                        </div>
                     </div>
                     <div>
-                        <h4>分享</h4>
+                        <h4>分享文章</h4>
                         <div>
                             <span class="twitter-icon" @click="openShare('twitter', this)">twitter</span>
                             <span class="weibo-icon" @click="openShare('weibo')">微博</span>
@@ -88,8 +88,8 @@
 <template id="tree-folder">
     <ul v-if="show">
         <li v-for="(file,index) in nodes" :key="file.path">
-            <div v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name.toUpperCase()}}
-            </div>
+            <a v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name}}
+            </a>
             <router-link v-else :type="file.type" class="file" :to="'/'+file.path">{{file.name.slice(0,-3)}} </router-link>
             <tree-folder v-if="file.nodes" :show="file.show" :nodes="file.nodes"></tree-folder>
         </li>

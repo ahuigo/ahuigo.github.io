@@ -8,12 +8,11 @@ description:
 css/html5/js 兼容表
 http://caniuse.com/
 
-# todo
-css 权威指南
-
 # priority
 
-	style > id > hover(鼠标悬停) > class
+	style > id > hover(鼠标悬停) > class > tag
+    后者css优先覆盖前者
+    .cls1.cls2 大于 非组合条件
 
 ## 层次
 

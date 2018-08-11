@@ -37,8 +37,27 @@
 
 body type: 不能是 object, 只能是
 
-    formData
-    JSON.stringify(data); //application/json
+    formData, // 默认 multipart/form-data
+    JSON.stringify(data); //默认： text/plain
+
+#### x-www-urlencode
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body: Object.keys(params).map((key) => {
+                return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+            }).join('&'),
+    })
+
+also:
+
+    const searchParams = new URLSearchParams();
+    for (const prop in params) {
+      searchParams.set(prop, params[prop]);
+    }
 
 ### response
 

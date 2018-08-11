@@ -150,6 +150,11 @@ http://zh.learnlayout.com/flexbox.html
 
 	text-align:	left/center/right
 
+    <div style="text-align:center;">
+        <button>button1</button>
+        <button>button2</button>
+    </div>
+
 ## container align
 
 	justify-content: horizonal center
@@ -278,9 +283,11 @@ float+clear 多麻烦，我们用inline-block:
 2. 你需要设置每一列的宽度
 2. 如果HTML源代码中元素之间有空格，那么列与列之间会产生空隙
 
+e.g. http://zh.learnlayout.com/inline-block-layout.html
+
     nav {
         display: inline-block;
-        vertical-align: top;
+        vertical-align: top; /* default: bottom*/
         width: 25%;
     }
     .column {
@@ -340,8 +347,16 @@ float的元素的margin 由于浮动起来了，不再影响父容器，但是ch
 
 		fixed; 以整个视窗为基准,不受鼠标滚动影响
 
-		如果父结点为relative/absolute则以父结点为基准
+		relative/absolute以positioned 父结点为基准
+            没有positioned 的话，则以: window.innerWidth/innerHeight 为基准
 
+
+### relative + height percent
+When you set a percentage height on an element who's parent elements(包括static) don't have heights set:
+
+    height: 0%; //is auto normal height;
+
+absolute 么有这个毛病
 
 ## media
 “响应式设计（Responsive Design”) 要借助媒体查询

@@ -150,12 +150,16 @@ show merged files
 ## git diff-index
 compare a tree to a working tree or index
 
-	# to index
+	# compare index with HEAD
 	git diff-index --cached  HEAD
-	:100644 100644 9c8caea89aa52f8047d9abf8f262745882d35185 0f92c8e9e1116b09c74a6cc6a2e5af66aee3789a M	path/navMenu.html
+	:100644 100644 9c8caea89aa52f.. 0f92c8e9e1116.. M	path/navMenu.html
 
-	# to working tree
+	# working tree with HEAD
 	git diff-index HEAD
+
+e.g. 
+
+    git diff-index --cached --name-only --diff-filter=ACMR HEAD -- PATH
 
 ### filter
 keep
