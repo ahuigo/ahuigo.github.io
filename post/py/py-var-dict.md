@@ -65,8 +65,9 @@ dict, list 赋值都是按引用的，如果是一维的值:
 ## del key
 list 也一样
 
-    dict.pop(key, None) list.pop(index_or_last)
-    del dict[key]
+    dict.pop(key[, val]) 
+        if key not found, return val
+    list.pop(index_or_last)
 
 ### Is a dictionary popitem() atomic?
 `popitem` is *atomic* so you don't have to put locks around it to use it in threads.
@@ -120,8 +121,9 @@ or with update:
 
 ### sort OrderedDict.items
 
-	>>> od=OrderedDict({5:6, 1:5})
-	>>> OrderedDict(sorted(od.items(), key=lambda item: item[1]))
+    from collections import OrderedDict
+	od=OrderedDict({5:6, 1:5})
+	OrderedDict(sorted(od.items(), key=lambda item: item[1]))
 
 ### pop, popitem, last
 

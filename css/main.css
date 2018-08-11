@@ -9,6 +9,7 @@ h3{ font-size:1.4em}
 h4{ font-size:1.3em }
 h5{ font-size:1.2em }
 h6{ font-size:1.1em }
+p{ margin: 0.8em; }
 .head{
     margin-bottom:0;
     position: relative;
@@ -40,10 +41,6 @@ h6{ font-size:1.1em }
     display: block;
 }
 
-div>ul, div>ol {
-    padding-left: 20px;
-}
-
 
 .left, .middle, .right, #toc, #disqus_thread{
     overflow: auto;
@@ -63,7 +60,13 @@ div>ul, div>ol {
     background:rgb(55, 60, 90);
 }
 #content ul{
-    list-style-type: disc;
+    list-style: inside disc;
+    -webkit-padding-start:1em;
+}
+
+
+#content ol {
+    list-style: inside decimal;
 }
 ol,ul{
     -webkit-padding-start:10px;
@@ -78,6 +81,7 @@ ol,ul{
     border: 0.3em solid  lightslategray;
     margin-bottom: 1em;
 }
+
 
 .middle {
     flex: 8;

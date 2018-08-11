@@ -1,53 +1,41 @@
-#!/bin/bash
-<<Usage
-	# 项目本身
-	wget https://raw.githubusercontent.com/hilojack/php-lib/master/git/pre-commit  -O .git/hooks/pre-commit
-	chmod u+x .git/hooks/pre-commit
+#!/usr/bin/env python3
+import sys
+import os
+import re
+from subprocess import getoutput
 
-	# 全局
- 	mkdir -p ~/.git_template/hooks
- 	git config --global init.templatedir '~/.git_template'
-	wget https://raw.githubusercontent.com/hilojack/php-lib/master/git/pre-commit  -O ~/.git_template/hooks/pre-commit
-	chmod u+x ~/.git_template/hooks/pre-commit
-Usage
+cmd = 'git diff-index --cached --name-only --diff-filter=ACMRD HEAD -- post | grep -P "20.+.md$"'
+output = getoutput(cmd).strip()
 
-function push_error(){
-	ERRORS="$ERRORS\n$1"
-}
-ROOT_DIR="$(pwd)/";
-echo $ROOT_DIR;
-LIST=$(git diff-index --cached --name-only --diff-filter=ACMR HEAD)
-ERRORS=""
-for file in $LIST
-do
-    if echo "$file" | grep ".php$" > /dev/null ; then
-		# Check for php grammar error
-        ERROR=$(php -l "$ROOT_DIR$file" 2>&1 | grep "Parse error")
-        if [[ -n "$ERROR" ]]; then
-			push_error "$ERROR";
-            echo "Syntax errors found in file: $file "
-        fi
 
-        # Check for xdebug statments
-        ERROR=$(grep -nH xdebug_ "$ROOT_DIR$file" | sed -e 's/^/Found XDebug Statment : /')
-        if [[ -n "$ERROR" ]]; then
-			push_error "$ERROR";
-        fi
+def basename(path):
+    filename = os.path.split(path)[1]
+    return os.path.splitext(filename)[0]
 
-		# Check for debuging exists
-        ERROR=$(grep -HF debuging "$ROOT_DIR$file")
-        if [ "$ERROR" != "" ]; then
-			push_error "$ERROR";
-        fi
-    fi
-done
-if [ "$ERRORS" != "" ]; then
-    echo
-    echo "Found PHP parse errors: "
-    echo -e $ERRORS
-    echo
-    echo "PHP parse errors found. Fix errors and commit again."
-    exit 1
-else
-    echo "No PHP parse errors found. Committed successfully."
-fi
+if output:
+    indexFile = 'post/0/0.md'
+    blogMd = open(indexFile)
+    blogs = {}
+    for line in blogMd:
+        m = re.match(
+            '^- \[(?P<title>.+)\]\(#/(?P<path>.+md)\) - (?P<date>\d+)', line)
+        if m:
+            title = m.group('title')
+            path = m.group('path')
+            date = m.group('date')
+            blogs[path] = [title, path, date]
+    for path in output.split('\n'):
+        date = basename(path)[:8]
+        if os.path.exists(path) and os.stat(path).st_size:
+            title = next(open(path))[2:].strip()
+            blogs[path] = [title, path, date]
+        else:
+            blogs.pop(path, None)
+
+    with open(indexFile, 'w') as fp:
+        fp.write(f'# 目录\n')
+        for title, path, date in sorted(blogs.values(), key=lambda v: v[2], reverse=True):
+            article = f'- [{title}](#/{path}) - {date}'
+            print(article)
+            fp.write(article+'\n')
+    getoutput(f'git add {indexFile}')

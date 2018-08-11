@@ -107,7 +107,12 @@ remove:
     arr.sort();//从小到大
     arr.sort(function(a,b){return a-b;});//自定义排序
 
+不改变
+
     arr.slice(0).sort()
+    Array.prototype.slice.call(list).sort
+    python:
+        sorted(list)
 
 ### .sort + filter/unique
 

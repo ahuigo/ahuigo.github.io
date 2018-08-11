@@ -19,6 +19,7 @@ os
 	st = os.stat(path)
     if st.st_uid == euid:
         return st.st_mode & stat.S_IRUSR != 0
+    st_size
 
 ### access permision
 Use the real uid/gid to test for access to a path.
@@ -137,10 +138,11 @@ islink:
 1. abspath: simply removes things like . and .. 
 2. realpath: removes things like . and .., and symbolic link
 3. relative path:
-	print os.path.commonprefix(['/usr/var/log', '/usr/var/security'])
+	1. print os.path.commonprefix(['/usr/var/log', '/usr/var/security'])
 		'/usr/var'
-	os.path.relpath('/usr/var/a.xt', common_prefix) 
-	Path('/usr/var/a.xt').relative_to(common_prefix) 
+	2. os.path.relpath('/usr/var/a.xt', '/usr') 
+        var/a.xt
+	3. Path('/usr/var/a.xt').relative_to(common_prefix) 
 
 ### current directory
 change current workspace:  support abspath only
@@ -241,7 +243,7 @@ current file's dir:
 		while line:
 			line = fp.readline()
 	fp.write(string)	Writes string to file(start at file position)
-	fp.writeline(string)	Writes string to file(start at file position)
+	fp.writelines(string or array);	str === ''.join(array)
 	fp.truncate(...)
 		truncate([size]) -> None.  Truncate the file to at most size bytes.
 		Size defaults to the current file position, as returned by tell().

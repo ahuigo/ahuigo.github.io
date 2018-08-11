@@ -77,7 +77,11 @@ const mdConponent = {
         document.querySelectorAll('pre code').forEach(function (e) {
             return hljs.highlightBlock(e, '    ');
         });
-        this.$root.$$('#content a').forEach((v,k,arr)=>{if(v.getAttribute('href').startsWith('/p/')){v.href=v.getAttribute('href').replace(/^\/p/, '#/post')+'.md'}})
+        this.$root.$$('#content a').forEach((v,k,arr)=>{
+          if(v.getAttribute('href').startsWith('/p/')){
+            v.href=v.getAttribute('href').replace(/^\/p/, '#/post')+'.md'
+          }
+        })
         const toc = document.querySelector('#toc');
         if (toc.children.length) {
             toc.children[0].replaceWith(createToc(this.$el))
@@ -112,7 +116,7 @@ const mdConponent = {
         fetchMd() {
             var path = this.$route.path
             if(path === '/'){
-                path = 'README.md';
+                path = '/post/0/0.md';
             }
             fetch(path).then(response => {
                 response.text().then(data => {

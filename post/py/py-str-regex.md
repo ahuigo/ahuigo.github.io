@@ -45,7 +45,7 @@ description:
         \1
     processing match object m	
         m.group('quote')
-        m.end('quote') (etc.)
+            m.end('quote') end index of quote
     in a string passed to the repl argument of re.sub()	
         \g<quote>
         \g<1>

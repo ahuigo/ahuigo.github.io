@@ -43,6 +43,9 @@ alias gitup='git submodule init && git submodule update'
 alias ga.='git add .'
 function gcap(){
 	git commit -am $1;
+    if test $? != 0;then
+        return
+    fi
     if git remote | grep '\w';then
         echo git push;
         git push;

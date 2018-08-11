@@ -12,7 +12,8 @@ http://caniuse.com/
 
 	style > id > hover(鼠标悬停) > class > tag
     后者css优先覆盖前者
-    .cls1.cls2 大于 非组合条件
+    .cls1.cls2 大于 .cls1 .cls2
+    li a.active 优先 a.active
 
 ## 层次
 
