@@ -1,13 +1,14 @@
-# 纯静态笔记博客
+# 纯静态博客
 本博客是完全纯静态blog, 核心js 代码只有100 多行。 
 
-> Fork 地址: [https://github.com/ahuigo/note-blog](https://github.com/ahuigo/note-blog)
+- Fork 地址: [https://github.com/ahuigo/note-blog](https://github.com/ahuigo/note-blog)
+- 示例地址：[https://ahuigo.github.io/#/README.md](https://ahuigo.github.io/#/README.md)
 
 使用方法：
 1. Fork 到 `{yourname}.github.io`.
 2. 修改 `index.html` 中的`config`变量
 
-config: `index.html`
+比如：
 
     var config = {
         // github user acount
@@ -69,7 +70,10 @@ katex 支持标准的latex，如果想转义数学符号:
 3. Paste Image
 
 ### 编写markdown
-直接在`/post` 这个目录下写markdown 文件就可以了, 真正专注于写作
+- 如果想写博文，直接在`/post/0/` 这个目录下写markdown 文件就可以了, 真正专注于写作
+    1. 文件名要求有日期前缀，因为博文是按照日期来排序的，如`/post/0/20180101-my-first-blog.md`。
+    2. 请把钩子文件`/tool/pre-commit` 放到`.git/hooks/pre-commit` 下，它会在你每次commit 时自动生成博文的目录。
+- 如果想想写文章, 直接在`/post/`建立分类别的目录就可以了。
 
 ### 截图
 截图用到了Paste Image 插件. 在Mac 的vsc 中按住`Command+,`, 简单配置下
