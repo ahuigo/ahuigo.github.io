@@ -48,7 +48,6 @@ https://developer.chrome.com/devtools/docs/remote-debugging
 4. On your device, an alert prompts you to allow USB debugging from your computer. Tap OK.
 
 ## debug
-
 1. click elements on devtools and use 'cmd+r' to reload.
 
 ## Port forwarding

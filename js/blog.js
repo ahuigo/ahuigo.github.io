@@ -59,11 +59,13 @@ const mdConponent = {
   data() {
     return {
       md: '',
+      title: '',
     }
   },
   props: [],
   watch: {
     '$route'(to, from) {
+      console.log('watched123')
       this.fetchMd()
     }
   },
@@ -103,26 +105,30 @@ const mdConponent = {
         }
       } else {
         h1node = document.createElement('h1')
-        h1node.innerText = h1nodes[0].innerText.slice(2)
+        h1node.innerText = this.title
         $('#content').insertBefore(h1node, h1nodes[0])
       }
       //set title
       h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
       document.title = h1node.innerText
     }
-    disqus()
+    //disqus()
   },
   methods: {
     fetchMd() {
       var path = this.$route.path
       if (path === '/') {
-        path = '/post/0/0.md';
+        path = '/post/0.md';
       }
       fetch(path).then(response => {
         response.text().then(data => {
           if (data.substr(0, 4) === '---\n') {
-            var pos = data.substr(0, 300).nthIndex('---\n', 2)
+            let pos = data.substr(0, 100).nthIndex('---\n', 2)
+            let m = data.slice(4, pos).match(/title:[ \t]*(\S.*)/);
+            this.title = m ? m[1]:'';
             data = data.substr(pos);
+          }else{
+            this.title = data.split('\n',1)[0].slice(2)
           }
           data = data.replace(/\n/g, '\t\n')
           this.md = data

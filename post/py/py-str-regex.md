@@ -1,16 +1,14 @@
 ---
 layout: page
-title:
+title: python 的正则表达式
 category: blog
 description:
 ---
-# Preface
+# regex 语法
 
 	import re
     re.compile(pattern, [,modifier]).match(str)
     re.match(pattern, str[, modifier])
-
-# 正则语法
 
 ## ignore string Escape
 
@@ -101,7 +99,7 @@ groups 列出所有的分组，但是不包含: group(0)=group()即整个匹配
 
     re.search(r'^(?P<flag><)?[a-z]+(?(flag)>)$', string)
 
-# regex
+# regex 函数
 
 	re.match(r'regex', str)
 	re.compile(r'regex').match(str)
@@ -193,6 +191,7 @@ findall
 	['ahui', 'jack']
 
 ## finditer
+返回分组
 
 	>>> r=re.compile(r'(\w+)-(\w+)')
 	>>> m=r.finditer(' 1-a1 2-a2')

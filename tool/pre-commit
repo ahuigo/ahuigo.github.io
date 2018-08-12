@@ -3,39 +3,60 @@ import sys
 import os
 import re
 from subprocess import getoutput
+from datetime import datetime
+from collections import OrderedDict
 
-cmd = 'git diff-index --cached --name-only --diff-filter=ACMRD HEAD -- post | grep -P "20.+.md$"'
+cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/0\.md$" '
 output = getoutput(cmd).strip()
-
 
 def basename(path):
     filename = os.path.split(path)[1]
     return os.path.splitext(filename)[0]
 
+errors = []
+def breakout(errors):
+    print('\n'.join(errors))
+    quit(1)
+
 if output:
-    indexFile = 'post/0/0.md'
+    indexFile = 'post/0.md'
     blogMd = open(indexFile)
-    blogs = {}
+    blogs = OrderedDict()
     for line in blogMd:
         m = re.match(
-            '^- \[(?P<title>.+)\]\(#/(?P<path>.+md)\) - (?P<date>\d+)', line)
+            '^- \[(?P<title>.+)\]\(#/(?P<path>.+md)\)', line)
         if m:
             title = m.group('title')
             path = m.group('path')
-            date = m.group('date')
-            blogs[path] = [title, path, date]
-    for path in output.split('\n'):
-        date = basename(path)[:8]
-        if os.path.exists(path) and os.stat(path).st_size:
-            title = next(open(path))[2:].strip()
-            blogs[path] = [title, path, date]
-        else:
+            blogs[path] = [title, path]
+    for line in output.split('\n'):
+        status, path = line.split('\t')
+        if status == 'D':
             blogs.pop(path, None)
+            continue
+
+        print(path)
+        if os.stat(path).st_size:
+            continue
+        head = open(path).read(100)
+        if head.startswith('---\n'):
+            try:
+                title = re.search('\ntitle:[ \t]*(?P<title>\S.*)', head).group('title')
+            except Exception as e:
+                errors.append(f'{path} has no title')
+                continue
+        else:
+            title = next(open(path))[2:].strip()
+        blogs[path] = [title, path]
+        blogs.move_to_end(path, last=False)
+
+    if errors:
+        breakout(errors)
 
     with open(indexFile, 'w') as fp:
         fp.write(f'# 目录\n')
-        for title, path, date in sorted(blogs.values(), key=lambda v: v[2], reverse=True):
-            article = f'- [{title}](#/{path}) - {date}'
+        for title, path in blogs.values():
+            article = f'- [{title}](#/{path}) '
             print(article)
             fp.write(article+'\n')
     getoutput(f'git add {indexFile}')

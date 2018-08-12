@@ -63,6 +63,13 @@ Datalist-Option:
 		<option value="Safari">
 	</datalist>
 
+## detail
+
+    this.open = false/true
+    <details open>
+        <summary>Header</summary>
+    </details>
+
 ##　video
 
 	node.play();

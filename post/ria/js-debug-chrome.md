@@ -7,12 +7,9 @@ description:
 # Preface
 chrome://chrome-urls/
 
-# variable
+# print
 
 ## print reference variable
-https://stackoverflow.com/questions/11284663/console-log-shows-the-changed-value-of-a-variable-before-the-value-actually-ch
-http://jsfiddle.net/ju3ZV/2/
-
 console.log happens in an asynchronous manner. 打印对象可能不是语句调用时，也不是最新的。而是语句执行时，
 
 1. 某些ref var按引用传值，可以用json：
@@ -137,10 +134,6 @@ chrome://net-internals/#spdy
 Chrome和Safari的资源选项卡中提供了一项贴心的功能：它保存了你每次修改的版本（按Ctrl + S之后），还允许你往前或往后查看每个版本的变化。
 
 你修改过的文件名旁边会出现一个箭头图标，表示它可以展开/收起以查看修改过的版本列表。在Chrome中，右键点击文件名可以选择保存这个文件。不过在Safari中你只能悲剧地复制和粘贴了。
-
-# Event Listeners
-change:
-	input#url
 
 # Element
 - Dom Breakpoint

@@ -48,6 +48,7 @@ checked, checkbox
 		$('span').parentsUntil('div').parent(); //父节点以div为止, 含div
 
 		$('span').closest('div') = $('span').parentsUntil('div').parent();
+            document.querySelector('span').closest('div')
 
 后代:
 	子、

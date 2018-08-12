@@ -1,3 +1,6 @@
+---
+title: python 字典
+---
 # Dict
 
     key='city'
@@ -129,10 +132,21 @@ or with update:
 
 	self.popitem(last=True) 默认删除尾部: LIFO
 	self.popitem(last=False) 删除头部: FIFO
+
 	self.pop(key='key') del self['key']
+	self.pop('key', None)
 
     next(reversed(self))
 
+### unshift(move_to_end)
+
+    >>> d1 = OrderedDict([('a', '1'), ('b', '2')])
+    >>> d1.update({'c':'3'})
+    >>> d1.move_to_end('c', last=False)
+    >>> d1
+    OrderedDict([('c', '3'), ('a', '1'), ('b', '2')])
+
+### FIFO
 OrderedDict可以实现一个FIFO（先进先出）的dict，当容量超出限制时，先删除最早添加的Key：
 
 	from collections import OrderedDict
@@ -156,18 +170,14 @@ OrderedDict可以实现一个FIFO（先进先出）的dict，当容量超出限�
 			OrderedDict.__setitem__(self, key, value)
 
 ## defaultdict
-dict subclass that calls a factory function to supply missing values: `defaultdict(callable_or_None)`
-```
-from collections import defaultdict
->>> defaultdict()['k']
-KeyError: 'k'
->>> defaultdict(None)['k']
-KeyError: 'k'
->>> defaultdict(lambda:1)['k']
-1
-```
 除了在Key不存在时返回默认值，defaultdict的其他行为跟dict是完全一样的。
 
+    from collections import defaultdict
+    >>> defaultdict()['k']
+    KeyError: 'k'
+    >>> defaultdict(None)['k']
+    KeyError: 'k'
+    >>> defaultdict(lambda:1)['k']
 
 ### Counting with defaultdict
 

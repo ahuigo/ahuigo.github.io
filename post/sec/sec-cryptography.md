@@ -1,12 +1,6 @@
 ---
-layout: page
-title:	密码安全
-category: blog
-description: 
+title: 密码安全与签名安全
 ---
-# Preface
-本文总结了密码学(cryptography) 中的密码安全与签名安全
-
 # Signature, 签名
 MAC(Message Authentication Code) 与 hash 的区别: http://stackoverflow.com/questions/2836100/what-is-the-difference-between-a-hash-and-mac-message-authentication-code
 

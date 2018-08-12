@@ -175,8 +175,10 @@ replace strip
 #### match group
 
 	//如果regexp没有g, 则会匹配子模式
-	matches = "first 1".match(/(\w+) 1/);//如果没有g, 则返回包括子表达式  ["first 1", "first"]
-	matches.index //0 相当于indexOf返回的位置
+    "first 1 second 1".match(/(\w+) 1/);  [ 'first 1', 'first', index: 0, input: 'first 1 second 1']
+        matches.index //0 相当于indexOf返回的位置
+
+    "first 1 second 1".match(/(\w+) 1/g); // [ 'first 1', 'second 1' ]
 
 > 如果需要同时支持regExp global 及 子表达式, 请使用RegExp.prototype.exec
 > match 成功后，`RegExp.$1~$9` 代表子组，`RegExp.$0` 不存在
@@ -263,7 +265,8 @@ Create RegExp：test, exec
 
 	r.compile(/\d/); //改变正则表达式
 
-### exec
+### exec 
+like python findall/finditer(返回分组)
 
 	str=' 1ing 2ing 3ing';
 	r=/\d(ing)/igm;
