@@ -1,16 +1,11 @@
 ---
 layout: page
-title:
+title: js debug 技术
 category: blog
 description:
 ---
-# Preface
-
-# todo
-Chrome开发者工具不完全指南
-	http://web.jobbole.com/82562/
-
-# reloadCSS
+# Cache
+## reloadCSS
 
     function reloadCSS() {
         const links = document.getElementsByTagName('link');

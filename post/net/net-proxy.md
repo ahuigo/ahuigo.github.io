@@ -11,6 +11,9 @@ HowTo: Proxy Non-Proxy-Aware Android Applications through Burp
 http://blog.dornea.nu/2014/12/02/howto-proxy-non-proxy-aware-android-applications-through-burp/
 
 # In shell
+
+## http proxy
+### http proxy env
 Set http_proxy shell variable on Linux/OS X/Unix bash shell
 
 Type the following command to set proxy server:
@@ -25,6 +28,22 @@ If the proxy server requires a username and password then add these to the URL. 
 	$ export http_proxy=http://USERNAME:PASSWORD@proxy-server.mycorp.com:3128/
 
 > 另外，还有一个https_proxy
+
+### node-http-proxy
+support https
+
+    var http = require('http');
+    var httpProxy = require('http-proxy');
+    var proxy = httpProxy.createProxyServer({});
+
+    var server = http.createServer(function(req, res) {
+        console.log(req.url);
+        proxy.web(req, res, { target: 'http://127.0.0.1:7001' }); 
+    }).listen(3399, function(){
+        console.log("listen chrome request");
+    });
+
+### fiddle/charles
 
 ## socks5
 参考: [在终端下间接使用Socks5代理的几种方法(privoxy,tsocks,proxychains) ][privoxy,tsocks,proxychains]

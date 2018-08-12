@@ -10,3 +10,4 @@
 rm -Rf .git/refs/original
 rm -Rf .git/logs/
 git gc --aggressive --prune=now
+git prune --expire now

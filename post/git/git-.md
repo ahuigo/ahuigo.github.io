@@ -4,14 +4,8 @@ title:    Git Commands Wiki
 category: blog
 description: Abstract of git commmands.
 ---
-
-# Preface
-Abstract of git commmands.
-- git-checkout.md: sparse
-
 # git server
-参考廖老师的文章在本地建一个git server
-http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000
+> 参考廖老师的文章在本地建一个git server http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000
 
 ## ssh git
 need 收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pub文件，把所有公钥导入到`/home/git/.ssh/authorized_keys`文件里，一行一个。
@@ -182,6 +176,22 @@ if 401
 
 	git clone https://username@github.com/org/project.git
 
+
+## export repo sub folder
+This creates an empty repository with your remote, and fetches `-f` all objects but doesn't check them out. 
+
+    git init
+    git remote add -f origin <url>
+
+    git config core.sparseCheckout true
+
+Now you need to define which files/folders you want to actually check out. 
+
+    echo "some/dir/" >> .git/info/sparse-checkout
+    echo "another/sub/tree" >> .git/info/sparse-checkout
+    git pull origin master
+
+
 # git clean (untracked file)
 
 	git clean -fd
@@ -244,9 +254,21 @@ http://gitbook.liuhui998.com/6_1.html
 恢复到HEAD 之前的提交:
 
 	git revert HEAD //Creat a new commit to drop HEAD's modifies. '
-	git revert HEAD -m 1
-	git revert -m 1
-		working copy `merge` from commit(Should No working copy or index change)
+        相当于merge HEAD^ based on HEAD: 
+        git checkout HEAD^ . ; // 让working === index == HEAD^. 
+        git commit -m 'rever version xxx'
+
+    # merge parent based on HEAD^^
+	git revert HEAD^^ -m 1
+	git revert A2 -m 1
+
+        git log --graph
+        A0 -- A1 -- A2 -- A3 -- A4(HEAD)
+         \        /      
+          B0-----B1
+
+        -m 1 :merge A1 (Base on A2)
+        -m 2 :merge B1 (Base on A2)
 
 > Note: git revert is used to record some new commits to reverse the effect of some earlier commits (often only a faulty one).
 
@@ -766,7 +788,7 @@ You can also use diffmerge instead
 
 ## 取消储藏(Un-applying a Stash)
 
-# rebase branch
+# git rebase branch
 
 	git rebase <branchA> //rebase current branch,based on branchA
 	git rebase <onto branch> <branch>
@@ -881,11 +903,6 @@ Output:
 	git apply --check 01.patch//test patch
 	git apply /tmp/01.patch //apply patch to current branch
 
-# git hooks
-
-## server-side
-https://www.atlassian.com/git/tutorials/git-hooks/server-side-hooks/
-
 # git check 数据库维护
 > https://www.shiyanlou.com/questions/3781
 
@@ -905,8 +922,3 @@ Git 通常不需要大量维护，它基本上可以自我维护。然而，你�
 
 如果检查 “dangling” 或 “unreachable” 的结果一切正常，这经常是由于回退HEAD或 rebasing的结果。
 如果检查“missing” 或 “sha1 mismatch” 出了问题...得找专业人士了
-
-# page
-page147 stashing
-
-[git vim merge]:http://vim.wikia.com/wiki/A_better_Vimdiff_Git_mergetool
