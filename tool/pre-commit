@@ -49,9 +49,11 @@ if output:
             if not title:
                 errors.append(f'{path} has no title')
 
-        blogs[path] = [title, path]
-        if status == 'A':
+        if path not in blogs:
+            blogs[path] = [title, path]
             blogs.move_to_end(path, last=False)
+        else:
+            blogs[path] = [title, path]
 
     if errors:
         breakout(errors)

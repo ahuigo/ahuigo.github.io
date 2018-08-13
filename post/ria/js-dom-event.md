@@ -243,10 +243,6 @@ e.preventDefault() 冒泡阻止：
             if (typeof history.onpushstate == "function") {
                 history.onpushstate({state: state});
             }
-            if(history.onpushState){
-                console.log(state, arguments)
-                history.onpushState()
-            }
             return pushState.apply(history, arguments);
         };
     })(window.history);

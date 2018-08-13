@@ -1,10 +1,4 @@
----
-layout: page
-title:
-category: blog
-description:
----
-# Array
+# Js Array 整理
 array 不像string 是primitive value, 所以length 可以缩短放大array。
 
 	arr = [1,2,3]
@@ -230,6 +224,7 @@ string  没有此属性
     }
 
 # Map/Set
+python 早就提供了
 
 ## Map
 这里的map/set 不是数组的method, 而是一个原型类:
@@ -243,6 +238,22 @@ map crud:
     m.has('Adam'); // 是否存在key 'Adam': true
     m.delete('Adam'); // 删除key 'Adam'
     m.get('Adam'); // undefined
+
+### WeakMap
+key 只能对象，wm不可遍历
+
+    var obj = {};
+    var wm = new WeakMap();
+    wm.set(obj, 1);
+    wm.get(obj);	// 1
+
+    obj = null;     //wm 没有引用obj, 被垃圾回收了
+    wm.get(obj);	// like python: wm[id(obj)]
+
+wm 适合记录对象额外信息， 比如标记对象状态，对象呗回收就失效了
+
+    wm[obj1] = ...
+    wm[obj2] = ...
 
 ## Set
 Set中自动被过滤：

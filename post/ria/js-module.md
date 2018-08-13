@@ -124,6 +124,17 @@ default 与其他变量混用
 
     import _, { each, each as forEach } from 'lodash';
 
+## export *
+    // lib/mathplusplus.js
+    export * from "lib/math";
+    export var e = 2.71828182846;
+    export default function(x) {
+        return Math.exp(x);
+    }
+    // app.js
+    import exp, {pi, e} from "lib/mathplusplus";
+    console.log("e^π = " + exp(pi));
+
 ## export 与 import 的复合写法 
 
     export { foo, bar } from 'my_module';
