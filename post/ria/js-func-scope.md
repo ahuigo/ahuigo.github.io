@@ -1,5 +1,5 @@
-# this scope
-一般this 是使用的时候才确实
+# Js 中的this scope
+一般this 是使用的时候才确定指向
 
     function A(){
         this.name='ahui'

@@ -45,7 +45,10 @@ if output:
                 errors.append(f'{path} has no title')
                 continue
         else:
-            title = head.split('\n',1)[0][2:]
+            title = head.split('\n',1)[0][2:].strip()
+            if not title:
+                errors.append(f'{path} has no title')
+
         blogs[path] = [title, path]
         if status == 'A':
             blogs.move_to_end(path, last=False)
