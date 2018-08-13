@@ -126,7 +126,7 @@ const mdConponent = {
         }else{
           let data = await r.text()
           if (data.substr(0, 4) === '---\n') {
-            let pos = data.substr(0, 100).nthIndex('---\n', 2)
+            let pos = data.indexOf('---\n', 4)
             let m = data.slice(4, pos).match(/title:[ \t]*(\S.*)/);
             this.title = m ? m[1]:'';
             data = data.substr(pos+4);
