@@ -120,19 +120,22 @@ const mdConponent = {
       if (path === '/') {
         path = '/post/0.md';
       }
-      fetch(path).then(response => {
-        response.text().then(data => {
+      fetch(path).then(async r=> {
+        if(!r.ok){
+          this.md = '# 文章不存在!'
+        }else{
+          let data = await r.text()
           if (data.substr(0, 4) === '---\n') {
             let pos = data.substr(0, 100).nthIndex('---\n', 2)
             let m = data.slice(4, pos).match(/title:[ \t]*(\S.*)/);
             this.title = m ? m[1]:'';
-            data = data.substr(pos);
+            data = data.substr(pos+4);
           }else{
             this.title = data.split('\n',1)[0].slice(2)
           }
           data = data.replace(/\n/g, '\t\n')
           this.md = data
-        })
+        }
       })
     },
     marked: function (text) {
@@ -168,7 +171,6 @@ const app = new Vue({
   methods: {
     $$: $$,
     fetchFolder(file) {
-      const that = this;
       var v = localStorage.getItem(file.path) || '{}'
       var data = JSON.parse(v)
       if (data && data.time) {
@@ -180,13 +182,13 @@ const app = new Vue({
         console.log('cache expired:', new Date - data.time)
 
       }
-      return fetch(`https://api.github.com/repos/${this.config.user}/${this.config.repo}/contents/` + file.path, {
+      return fetch(`https://api.github.com/repos/${this.config.user}/${this.config.repo}/contents/${file.path}`, {
       }).then(r => r.json()).then(data => {
-        const ignorePath = that.config.user === 'ahuigo' ? ['ai', 'atom', '0'] : ['0'];
+        const ignorePath = this.config.user === 'ahuigo' ? ['ai', 'atom', '0'] : ['0'];
         let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type, show: true })).filter(
           (v) => !(
             v.type == 'dir'
-            && ignorePath.includes(v.path.slice(that.path.length+1))
+            && ignorePath.includes(v.path.slice(this.path.length+1))
           )
         );
         Vue.set(file, 'nodes', nodes);

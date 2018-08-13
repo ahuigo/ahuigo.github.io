@@ -56,7 +56,7 @@
                 </button>
                 <tree-folder :nodes="nodes" :class="{'active':showMenu}" :show="show"></tree-folder>
             </div>
-            <div class="middle">
+            <div class="middle" v-on="showMenu?{click:r=>showMenu=false}:{}">
                 <router-view></router-view>
                 <div class="hr"></div>
                 <div class="share" style="display:flex;justify-content:space-between">

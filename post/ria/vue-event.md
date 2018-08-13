@@ -14,11 +14,8 @@
 
 ## condition event
 
-    <div v-on="{ mouseover: condition ? handler : null }">
-
     v-on="condition ? { mouseover: handler } : {}"
     v-on="condition ? { mouseover:e=> handler(e,arg) } : {}"
-    v-on="condition ? { mouseover } : {}"
 
 ## event type
 

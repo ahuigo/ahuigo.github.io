@@ -25,7 +25,7 @@
 module `this` is `{}`, not `global===window`
 
 ## 单独调用函数的情况(坑)
-strict 指向undefined, 否则指window
+strict 指向undefined, 否则指window. (回调函数this 指向闭包)
 3. 如果单独调用函数，比如getAge()，此时，该函数的this指向全局对象，也就是window。
 
     getAge(); //window
@@ -52,6 +52,36 @@ strict 指向undefined, 否则指window
         }
     };
     xiaoming.age(); //window
+
+4. 回调方法内部：指向闭包this
+
+    var xiaoming = {
+        name: '小明',
+        birth: 1990,
+        call(func){
+            func()
+        },
+        age: function () {
+            this.call(()=>console.log(this))
+        }
+    };
+    xiaoming.age(); 
+
+5. 双层回调也一样
+
+    var xiaoming = {
+        name: '小明',
+        birth: 1990,
+        call(func){
+            func()
+        },
+        age: function () {
+            this.call(()=>{
+                [1].map(v=>console.log(v, this))
+            })
+        }
+    };
+    xiaoming.age(); 
 
 修改方法1: that=this:
 
