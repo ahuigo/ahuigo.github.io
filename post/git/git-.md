@@ -1,3 +1,4 @@
+
 ---
 layout: page
 title: Git 命令大全
@@ -156,50 +157,39 @@ Now you need to define which files/folders you want to actually check out.
     git pull origin master
 
 
-# git clean (untracked file)
+# git clean
+clean files
 
-	git clean -fd
-		-f
-			force
-		-X
-			remove ignored files
-		-d
-			clear dir
+	git clean " clean untracked files only
+        -X  "ignore only
+        -x  "ignore and untrack
+        -d  "directory
+        -f  "force
+        -n -f " with check
+
+If you want to also remove *directories*, run
+
+	git clean -f -d or git clean -fd
 
 # file status convert
-There are 4 file statuses.
-
-	untracked->	modified->	stage->	commited
 
 ## stage status
 
 ### add stage(working to stage)
 
-	git add <file> //stage file(Untracked file is also included )
-	git add -i //interactive
-	git add -u //添加已经track的文件，而非新加的文件
-	#ignore
-	$cat .gitignore //ignore When stage file
-		*.tmp
-		!a.tmp #do not ignore a.tmp
-		*~
-		.svn/ #ignore dir
-		*.[oa] or *.o & *.a
-		/TODO #just ignore /TODO
 
 ## rm
 
 	#(rm file from working & staged)
 	git rm <file> //rm file from working & stage
+
 	#(rm file from staged)
 	git rm --cached <file> //rm file from stage only
+
 	#rm file recurse
 	git rm log/\*~  //recurse
 
 # modify
-## modify revision
-
-	git add a.c;git commit --amend
 
 ## modify messages
 
@@ -228,8 +218,13 @@ There are 4 file statuses.
 > Note: git revert is used to record some new commits to reverse the effect of some earlier commits (often only a faulty one).
 
 # git add
+
+	git add <file> //stage file(Untracked file is also included )
+	git add -i //interactive
+	git add -u //添加已经track的文件，而非新加的文件
+
 checkout 适合working 回滚到某一分支
-- git revert 
+- git revert: checkout+add+commit
 	Revert some existing commits
 - git reset: 改变commit+index: 顺便清理working
  	rollback commit: (clean index)
@@ -294,7 +289,7 @@ undo commit -am 'msg'
 
 In this case the result is:
 
-	   (F(working)) : lost index
+	   (F(working)) : lost index+commit
 	A-B-C
 	  ↑
 	master
@@ -609,13 +604,17 @@ Add upstream (tracking) reference:
 
 	git merge <branch>
 	git merge origin/test
+	git merge origin test
 	git merge origin
+
+merge old, keeping "our" (master's) content
+
+    git merge -s ours old-master
 
 ## merge other remote
 Step 1. Fetch other code
 
-	git remote add other others.git
-	git fetch other master
+	git fetch origin master
 
 Step 2. Merge the branch and push the changes to GitLab
 
@@ -635,19 +634,18 @@ to keep the remote or local file, :
 
 ## merge option
 
+    git pull -X
 	git merge -X theirs branchB #use theirs, not take everything from branch B as is, but when Conflicts!
-		-Xours
-		-s ours
-		-Xtheirs
-
-## Usage
+		-s       ours ignore all theirs changes
+        -Xours   keep ours if conflict
+        -Xtheirs
 
 ### option
 
 	git merge --no-commits //告诉 Git 此时无需自动生成和记录(合并)提交.最后一起提交
 	git merge --squash //选项将目标分支上的所有更改全拿来应用到当前分支上
 
-### pull
+### git pull
 
 	git pull //auto fetch and merge the newest vertion of remote branch
 	git pull --rebase //auto fetch and rebase the newest vertion of remote branch
@@ -683,22 +681,10 @@ Vim's operation:
 
 > Use `v` to select all, then use `diffg LO` to replace current block from LO. A better way is `:%diffg LO`, `:%diffput Working`
 
-You can also use diffmerge instead
+# git stash
+现在你想切换分支或者pull，但是你还不想提交你正在进行中的工作；所以你储藏这些变更。
 
-	git config --global diff.tool diffmerge
-	git config --global difftool.diffmerge.cmd 'diffmerge "$LOCAL" "$REMOTE"'
-	git config --global merge.tool diffmerge
-	git config --global mergetool.diffmerge.cmd 'diffmerge --merge --result="$MERGED" "$LOCAL" "$(if test -f "$BASE"; then echo "$BASE"; else echo "$LOCAL"; fi)" "$REMOTE"'
-	git config --global mergetool.diffmerge.trustExitCode true
-
-# git Stashing
-储藏(stash)
-
-	error: Your local changes to the following files would be overwritten by merge:
-		a.txt
-	Please, commit your changes or stash them before you can merge.
-
-现在你想切换分支或者pull，但是你还不想提交你正在进行中的工作；所以你储藏这些变更。为了往堆栈推送一个新的储藏，只要运行 git stash：
+为了往堆栈推送一个新的储藏，只要运行 git stash：
 
 	$ git stash
 	Saved working directory and index state WIP on master: bb6dd9c haha

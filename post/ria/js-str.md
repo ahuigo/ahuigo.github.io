@@ -1,5 +1,5 @@
-# String
-与python 一样的定义, 而且不区分双引号：
+# Js 字符串大全
+字符定义与python 一样, 而且不区分双引号：
 
     '\x00' == '\u0000'
 	'\x31' == "\x31"
@@ -19,6 +19,7 @@ Note: '\x87' 并不是单字节字符！它其实表示的是双位uicode(所以
 	`multiple
 	line`
 
+    # 可能适合用于复杂的正则
     String.raw`\a` === `\\a`
 
 ### charcode(unicode)

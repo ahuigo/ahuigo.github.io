@@ -178,20 +178,6 @@ create date:
 
 # git 维护、数据恢复
 
-## git clean
-clean files
-
-	git clean " clean untracked files only
-        -X  "ignore only
-        -x  "ignore and untrack
-        -d  "directory
-        -f  "force
-        -n -f " with check
-
-If you want to also remove *directories*, run
-
-	git clean -f -d or git clean -fd
-
 ## git gc
 Git 会不定时地自动运行称为 "auto gc" 的命令, 一般有 7,000 个左右的松散对象或是 50 个以上的 packfile， Git 才会真正调用 gc 命令。
 
