@@ -370,5 +370,7 @@ Vue.js 的插件应当有一个公开方法 install 。这个方法的第一个�
       }
     })
 
+着我们继续延伸约定，组件不允许直接修改属于 store 实例的 state，而应执行 action 来分发 (dispatch) 事件通知 store 去改变
+
 # Single Vue 组件
 https://codesandbox.io/s/o29j95wx9

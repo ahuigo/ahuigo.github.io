@@ -21,7 +21,7 @@
     var component = new Component() // => "hello from mixin!"
 
 ## 选项合并的优先级
-### 组件同名优先
+### 组件data同名优先
 
     var mixin = {
       data: function () {
@@ -80,13 +80,16 @@
     // => "hello!"
 
 ### 自定义选项合并策略
-myOption的 合并策略
+在合并自定义选项(custom option)时，Vue 会使用默认策略，即覆盖已有值。
+
+如果想要定制自定义选项的合并逻辑，则需要向 `Vue.config.optionMergeStrategies` 添加一个函数：
 
     Vue.config.optionMergeStrategies.myOption = function (toVal, fromVal) {
+		.... 合并策略
         // return mergedVal
     }
 
-也可以用别的策略， methods 是组件优先
+对于大多数基于对象(object-based)的选项，可以使用 methods 的合并策略：
 
     var strategies = Vue.config.optionMergeStrategies
     strategies.myOption = strategies.methods

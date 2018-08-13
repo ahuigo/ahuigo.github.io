@@ -21,16 +21,20 @@
     //or xiaoming.age=getAge
 
 
-## module this
-module `this` is `{}`, not `global===window`
+## this in module
+Within module: `this` is `{}`, not `global===window`
 
 ## 单独调用函数的情况(坑)
-strict 指向undefined, 否则指window. (回调函数this 指向闭包)
-3. 如果单独调用函数，比如getAge()，此时，该函数的this指向全局对象，也就是window。
+1. strict 指向undefined, 否则指window. 
+2. Lexical this 指向闭包(es6)
+
+分情况举例
+
+a. 如果单独调用函数，比如getAge()，此时，该函数的this指向全局对象，也就是window。
 
     getAge(); //window
 
-3. 方法变函数单独调用，指向window
+b. 方法变函数单独调用，指向window
 
     var xiaoming = {
         birth: 1990,
@@ -39,7 +43,7 @@ strict 指向undefined, 否则指window. (回调函数this 指向闭包)
     age=xiaoming.age
     age();//window
 
-4. 对像方法内部：单独函数定义及调用，this 指window 
+c. 对像方法内部：单独函数定义及调用，this 指window 
 
     var xiaoming = {
         name: '小明',
@@ -53,7 +57,7 @@ strict 指向undefined, 否则指window. (回调函数this 指向闭包)
     };
     xiaoming.age(); //window
 
-4. 回调方法内部：指向闭包this
+d. 回调方法内: window, (除非改arrow lexical this)
 
     var xiaoming = {
         name: '小明',
@@ -67,7 +71,7 @@ strict 指向undefined, 否则指window. (回调函数this 指向闭包)
     };
     xiaoming.age(); 
 
-5. 双层回调也一样
+## Lexical this 是闭包this
 
     var xiaoming = {
         name: '小明',
@@ -77,12 +81,29 @@ strict 指向undefined, 否则指window. (回调函数this 指向闭包)
         },
         age: function () {
             this.call(()=>{
-                [1].map(v=>console.log(v, this))
+                [1].map(v=>console.log(v, this)); //xiaoming
             })
         }
     };
     xiaoming.age(); 
 
+改匿名函数还是window
+
+    var xiaoming = {
+        name: '小明',
+        birth: 1990,
+        call(func){
+            func()
+        },
+        age: function () {
+            this.call(function(){ // 传this=window
+                [1].map(v=>console.log(v, this)); //lexical this 收到的还是window
+            })
+        }
+    };
+    xiaoming.age(); 
+
+## 修改this
 修改方法1: that=this:
 
         var that = this; // 在方法内部一开始就捕获this
@@ -132,7 +153,7 @@ strict 指向undefined, 否则指window. (回调函数this 指向闭包)
 
     Math.max.apply(null, [3, 5, 4]); // 5
 
-## var scope
+# var scope
 匿名函数/被传递函数中的scope 是定义所在的scope:
 global -> caller -> callback(anonymous)
 
@@ -165,3 +186,20 @@ global -> caller -> callback(anonymous)
 		call();
 	}
 	caller();//I'm global
+
+
+# Lexical arguments
+    function square() {
+    let example = () => {
+        let numbers = [];
+        for (let number of arguments) {
+        numbers.push(number * number);
+        }
+
+        return numbers;
+    };
+
+    return example();
+    }
+
+    square(2, 4, 7.5, 8, 11.5, 21); // returns: [4, 16, 56.25, 64, 132.25, 441]

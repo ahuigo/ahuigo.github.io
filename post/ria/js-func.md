@@ -1,4 +1,5 @@
-# generator
+# async
+## generator
     function* foo() {
         yield 11
         return 22;//没用
@@ -9,6 +10,21 @@
     f.next(); // {value: undefined, done: true}
 
     for(var x of foo())
+
+##  iterator
+    let fibonacci = {
+      [Symbol.iterator]() {
+        let pre = 0, cur = 1;
+        return {
+          next() {
+            [pre, cur] = [cur, pre + cur];
+            return { done: false, value: cur }
+          }
+        }
+      }
+    }
+    for (var n of fibonacci) { }
+
 
 # define arrow func 
 
@@ -79,7 +95,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
         console.log([params, arguments, 'ahui'])
     }(1,2,3)
 
-## 解构参数
+## Destructuring
 ### 解构赋值(不要求数量一致`_`)
 析构array
 
@@ -90,12 +106,18 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
     [...Array(5).keys()]; //0,1,2,3,4,5
     Array.from({length: 5}, (x,i) => i);
 
+    //default
+    var [a = 1] = [];
 
 析构 dict:
 
     let {name, age, pass} = {name:'ahui',pass:'pass',age:10}; //不存在就是undefined
-    let {id:uid} = {id:1}; // uid=id
-    let {uid=0} = {}
+    var {id:uid} = {id:1}; // uid=id
+    var {uid=0} = {}
+
+    //multiple level
+    var {a:{b}} = {a:{b:2}}
+    b===2
 
 ### 解构命名参数
 无效，除非python:

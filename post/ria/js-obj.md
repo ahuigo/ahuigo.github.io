@@ -208,6 +208,25 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 
 # 定义与创建
 
+## Object Literal
+    var obj = {
+        // Computed (dynamic) property names
+        [ "prop_" + (() => 42)() ]: 42, //obj.prop_42
+
+        //obj.f1() === obj.__proto__.f1()
+        __proto__: {f1(){return 'parent call1'}}, 
+
+        // duplicate __proto__ properties.
+        // 1. does not set prototype: obj.f2 === undefined 
+        // 2. obj.__proto__.f2() works
+        ['__proto__']: {f2(){return 'parent call2'}}, //
+
+        test() {
+         // Super calls
+         return "call: " + super.f1();
+        },
+    };
+
 ## 对象实例的原型
 1. prototype是原型独有的属性,也就是有constructor可以实例化对象的方法才有;
 2. `__proto__` 是对象才有的属性, 指向原型属性，实现原型继承.
@@ -271,6 +290,7 @@ new func() 相当于:
     class Cat extends Animal{
         constructor(name){
             super(name) //super 是编译时确定 必须在前
+            super.method1()
             this.xxx()
         }
         say(){
@@ -370,8 +390,9 @@ new.target会返回子类
 
     console.log(instance.property); //=> undefined,
 
-es6 private:
+private 用闭包:
 
+    new Person('ahui').getName()
     class Person {
         constructor(name) {
             var _name = name

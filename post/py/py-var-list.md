@@ -250,7 +250,7 @@ remove and insert(in place)
 	.insert(index, object)
 	.remove(value) -- remove first occurrence of value.
 
-### sort list
+## sort list
 
     colors = ['red', 'green', 'blue', 'yellow']
     sorted(colors):
@@ -262,14 +262,14 @@ remove and insert(in place)
 
 > 如果要改变自身，则用l.sort(key, reverse=True) *IN PLACE*
 
-### reversed list and tuple(not include dict):     
+## reversed list and tuple(not include dict):     
 
     for color in reversed([1,2,3]):
     for color in list[::-1]:
 
 `list.reverse()` is *IN PLACE*
 
-### bisect
+## bisect
 用于插入有序数组
 
 	import bisect

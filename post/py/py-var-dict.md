@@ -278,7 +278,7 @@ If you mutate something while you're iterating over it, you're living in a state
     	a.remove(i) # or a.pop(0) 也会发生错误
     # a = [2,4]
 
-正确的方式：
+正确的方式: copy or reverse
 
 	a = [1,2,3,4,5]
 	# for i in a[:]: 
@@ -310,4 +310,3 @@ py3: items/iteritems 是iter(.keys()/.values() 都是generator) 都不可以直�
 	list.items() //error
 	for k, v in list(dict.items())
 		dict.pop(k)
-

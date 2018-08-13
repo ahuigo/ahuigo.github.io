@@ -365,8 +365,8 @@ Refer: [http://www.esqsoft.com/javascript_examples/iframe_talks_to_parent/](http
 
 	//模拟jquery 选择器
 	var $ = document.querySelectorAll.bind(document);
-	//querySelectorAll.bind 返回的是NodeList 而不是数组,不支持push/pop，但可以转为数组
-	myList = Array.prototype.slice.call(myNodeList);
+	myListArr = Array.prototype.slice.call(myNodeList);
+    mylistArr = [..myNodeList]
 
 ### global node
 
@@ -429,6 +429,7 @@ Example 浮层: js-demo/alert-float.js
     # resort node
     var list = $('#test-list')
     Array.prototype.slice.call(list.children)
+    [...list.children]
         .sort((a,b)=>a.innerText>b.innerText?1:-1)
         .map(node=>list.appendChild(node))
 

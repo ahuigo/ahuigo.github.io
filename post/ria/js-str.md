@@ -23,10 +23,32 @@ Note: '\x87' 并不是单字节字符！它其实表示的是双位uicode(所以
     String.raw`\a` === `\\a`
 
 ### charcode(unicode)
+length/slice/substr/都是基于字符的
 
-	.charAt(pos) str[pos=0]
-	.charCodeAt(pos) //返回unicode 十进制表示
+	'中'.charAt(0) str[pos=0]
+        '中'
+	'中'.charCodeAt(pos) //返回unicode 十进制表示
+        30475
 	String.fromCharCode(97,98)
+
+但是js 对四字节utf8 的unicode 支持不好
+
+    // same as ES5.1
+    "𠮷".length == 2
+
+    // new RegExp behaviour, opt-in ‘u’
+    "𠮷".match(/./u)[0].length == 2
+
+    // new form
+    "\u{20BB7}" == "𠮷" == "\uD842\uDFB7"
+
+    // new String ops
+    "𠮷".codePointAt(0) == 0x20BB7
+
+    // for-of iterates code points
+    for(var c of "𠮷") {
+        console.log(c);
+    }
 
 ### 模板字符
 
