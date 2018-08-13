@@ -47,7 +47,8 @@ if output:
         else:
             title = head.split('\n',1)[0][2:]
         blogs[path] = [title, path]
-        blogs.move_to_end(path, last=False)
+        if status == 'A':
+            blogs.move_to_end(path, last=False)
 
     if errors:
         breakout(errors)

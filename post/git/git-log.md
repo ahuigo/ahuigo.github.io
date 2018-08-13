@@ -17,7 +17,6 @@ description:
 	git log banch1 branch2 ^branch3 #show commits that are not in branch3 but in branch1 or branch2
 	git log banch1..branch2 #show commits that are not in branch2 but in branch1
 
-
 ### by range
 
     git log <since>..<until>
@@ -178,6 +177,21 @@ create date:
         like: grep -B5 -A5
 
 # git 维护、数据恢复
+
+## git clean
+clean files
+
+	git clean " clean untracked files only
+        -X  "ignore only
+        -x  "ignore and untrack
+        -d  "directory
+        -f  "force
+        -n -f " with check
+
+If you want to also remove *directories*, run
+
+	git clean -f -d or git clean -fd
+
 ## git gc
 Git 会不定时地自动运行称为 "auto gc" 的命令, 一般有 7,000 个左右的松散对象或是 50 个以上的 packfile， Git 才会真正调用 gc 命令。
 
@@ -260,6 +274,8 @@ Notice: 我们移除对一个大文件的引用ref(commit)，从最早包含该�
 此时:
 1. 如果运行 git gc，所有对象(包括大文件对象)会存入一个 packfile 文件；
 2. 运行另一个底层命令 git verify-pack 以识别出大对象blob，对输出的第三列信息即文件大小进行排序
+
+e.g.
 
     git verify-pack -v .git/objects/pack/pack-3f8c0...bb.idx | sort -k 3 -n | tail -3
     e3f094f522629ae358806b17daf78246c27c007b blob   1486 734 4667

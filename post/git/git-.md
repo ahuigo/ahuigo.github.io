@@ -1,24 +1,9 @@
 ---
 layout: page
-title:    Git Commands Wiki
-
+title: Git 命令大全
 category: blog
 description: Abstract of git commmands.
 ---
-# git server
-> 参考廖老师的文章在本地建一个git server http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000
-
-## ssh git
-need 收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pub文件，把所有公钥导入到`/home/git/.ssh/authorized_keys`文件里，一行一个。
-
-	$ git clone git@127.0.0.1:/Users/hilojack/www/bat.git
-
-## 管理公钥
-如果团队很小，把每个人的公钥(*.pub)收集起来放到服务器的`/home/git/.ssh/authorized_keys` 文件里就是可行的。如果团队有几百号人，就没法这么玩了，这时，可以用Gitosis来管理公钥。
-
-## 管理权限
-有很多不但视源代码如生命，而且视员工为窃贼的公司，会在版本控制系统里设置一套完善的权限控制，每个人是否有读写权限会精确到每个分支甚至每个目录下。因为Git是为Linux源代码托管而开发的，所以Git也继承了开源社区的精神，不支持权限控制。不过，因为Git支持钩子（hook），所以，可以在服务器端编写一系列脚本来控制提交等操作，达到权限控制的目的。Gitolite就是这个工具。
-
 # Config
 
 ## ConfigFile
@@ -26,16 +11,21 @@ need 收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pu
 2. ~/.gitconfig 	#git config --global
 3. working/.git/config	#git config
 
-## Custom
+## user, editor, email
 
 	## User
-	git config --global user.name 'hilojack'
-	git config --global user.email	a132811@gmail.com
+	git config --global user.name 'ahuigo'
+	git config --global user.email	xxx@gmail.com
 
 	## Core.Editor
 	git config --global core.editor vim
 
-### Merge
+## alias
+
+	git config --global alias.ci commit
+	git config --global alias.unstage 'reset HEAD'
+
+## Merge tool
 
 	git config --global merge.tool vimdiff
 	git config --global mergetool.keepBackup false //Do not create backed file *.orig
@@ -52,46 +42,19 @@ need 收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pu
 	git config --global color.branch auto
 	git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 
-# git clean
-clean *untracked files*
-
-	" clean untracked files only
-	git clean
-	"force
-	git clean -f
-	"force plus directories
-	git clean -fd
-	"with check
-	git clean -f -n
-	"ignore only
-	-X
-	"ignore and untrack
-	-x
-
-If you want to also remove *directories*, run
-
-	git clean -f -d or git clean -fd
-
-If you just want to remove *ignored files*, run
-
-	git clean -f -X or git clean -fX
-
-If you want to remove *ignored and untracked files*, run:
-
-	git clean -f -x or git clean -fx
-
-# Help
+## Help
 
 	git help config
 	man git-config
 
-# debug
+## debug
 
-## verbose
+### verbose
 
     export GIT_CURL_VERBOSE=1
 
-# git https
+## git auth
+### git https
 Put this in your ~/.netrc and it won't ask for your username/password (at least on Linux and Mac):
 
 	machine github.com
@@ -102,14 +65,14 @@ or:
 
 	git remote set-url origin https://name:password@github.org/repo.git
 
-# git ssh
+## git ssh
 生活在墙内的我们或者使用代理的朋友难免会遇到:`error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed while accessing https://github.com/zsh-users/zsh/info/refs?service=git-upload-pack`. 如果只是想用git clone, 最方便的方法是忽略SSL：
 
 	export GIT_SSL_NO_VERIFY=1
     //or
     git config http.sslVerify false
 
-## 使用代理时的ssh
+### 使用代理时的ssh
 参考: [ssl github](http://stackoverflow.com/questions/3777075/ssl-certificate-rejected-trying-to-access-github-over-https-behind-firewall)
 执行下列命令，或者编辑`~/.git/config`：
 
@@ -121,17 +84,17 @@ or:
     "unset proxy
     git config [--global] unset https.proxy
 
-## 多用户下的SSH
+### 多用户下的SSH
 参阅：[Multiple SSH Keys](https://gist.github.com/jexchan/2351996)
 1. https://developer.github.com/guides/using-ssh-agent-forwarding/#your-key-must-be-available-to-ssh-agent
 
-- Ensure ssh-agent is enabled:
+a. Ensure ssh-agent is enabled:
 
 	# start the ssh-agent in the background
 	$ eval "$(ssh-agent -s)"
 	Agent pid 59566
 
-- Add these two keys as following
+b. Add these two keys as following
 
 	$ ssh-add ~/.ssh/id_rsa_activehacker
 	$ ssh-add ~/.ssh/id_rsa_jexchan
@@ -144,20 +107,20 @@ you can delete all cached keys before
 
 	$ ssh-add -D
 
-Config `private rsa` and the fake `host` to be replaced and the realhost `HostName` in `~/.ssh/config`:
+c. Config `private rsa` and the fake `host` to be replaced and the realhost `HostName` in `~/.ssh/config`:
 
     #jexchan account
-    Host github.com-hilojack
+    Host github.com-ahuigo
         HostName github.com
         User git
-        IdentityFile ~/.ssh/id_rsa_hilojack
+        IdentityFile ~/.ssh/id_rsa_ahuigo
 
 Config the fake `host` to be replaced , `name`, `email` in `.git/config`
 
     [remote "origin"]
-        url = git@github.com-hilojack:hilojack/php-lib.git
+        url = git@github.com-ahuigo:ahuigo/a.git
 
-# git status
+## git status
 
 	git status -s
 
@@ -233,16 +196,7 @@ There are 4 file statuses.
 	#rm file recurse
 	git rm log/\*~  //recurse
 
-## rename
-It works for Stage && Working Copy
-
-	git mv fileA fileB //same as: mv fileA fileB; git rm fileA;git add fileB
-
-
-# recovery
-找回丢失的对象：
-http://gitbook.liuhui998.com/6_1.html
-
+# modify
 ## modify revision
 
 	git add a.c;git commit --amend
@@ -321,6 +275,7 @@ You want to nuke commit C and never see it again.
 ### git reset hard
 `--hard` You do this:
 
+	git reset --hard;	# same: git reset HEAD . --hard
 	git reset --hard HEAD~1 (revert commit/index/working)
 		clean unstaged/staged files
 
@@ -331,16 +286,11 @@ The result is:
 	  ↑
 	master
 
-Now B is the HEAD. Because you used --hard, your files are reset to their state at commit B.
-
 ### git reset
+undo commit -am 'msg'
 
-	git reset ;			# same as: git reset HEAD .
-	git reset --hard;	# same as: git reset HEAD . --hard
-
-Ah, but suppose commit C wasn't a disaster, but just a bit off. You want to undo the commit but keep your changes for a bit of editing before you do a better commit.  You can do this, leaving off the --hard:
-
-	git reset HEAD~1 (revert commit/index, leave F working)
+	git reset ;	# same as: git reset HEAD .
+	git reset HEAD~1 
 
 In this case the result is:
 
@@ -349,22 +299,12 @@ In this case the result is:
 	  ↑
 	master
 
-In both cases, HEAD is just a pointer to the latest commit. When you do a git reset HEAD~1, you tell Git to move the HEAD pointer back one commit. But (unless you use --hard) you leave your files as they were. So now git status shows the changes you had checked into C. You haven't lost a thing!
-
 ### git reset soft
-For the lightest touch, you can even undo your commit but `leave your files and your index`:
+undo commit
 
 	git reset --soft HEAD~1 (commit) (保留working and stage index)
 	git update-ref refs/heads/master SHA; # 指定其它分支
 	git update-ref refs/heads/master HEAD~1; # 指定其它分支, HEAD是当前分支的SHA
-
-> One more thing: Suppose you destroy a commit as in the first example, but then discover you needed it after all? Tough luck, right?
-
-Nope, there's still a way to get it back. Type git reflog and you'll see a list of (partial) commit shas that you've moved around in. Find the commit you destroyed, and do this:
-
-	git checkout -b someNewBranchName shaYouDestroyed
-
-You've now resurrected that commit. Commits don't actually get destroyed in Git for some 90 days, so you can usually go back and rescue one you didn't mean to get rid of.
 
 # git diff
 [/p/git-diff](/p/git-diff)
@@ -372,7 +312,7 @@ You've now resurrected that commit. Commits don't actually get destroyed in Git 
 # git log
 [/p/git-log](/p/git-log)
 
-# revision
+# SHA revision
 Here are some revision types:SHA-1, short SHA-1,
 
 ## SHA-1
@@ -385,9 +325,10 @@ Here are some revision types:SHA-1, short SHA-1,
 如果你想知道某个分支指向哪个特定的 SHA
 
 	git rev-parse <branch>
+	git rev-parse head
 	2af3fsdfwe324
 
-## ~ parent commit revision
+## parent commit revision
 
 	git log HEAD^  or git log HEAD~ //parent commit,父提交
 	git log HEAD^^ or git log HEAD~~ or git log HEAD~2 //父提交的父提交
@@ -396,14 +337,33 @@ Here are some revision types:SHA-1, short SHA-1,
 	git log HEAD^2 //follow the other parent upwards.(仅用于merged commit) 它会指向第2个合并分支
 	git log HEAD^1 //follow the first parent upwards.(仅用于merged commit) 它会指向第1个合并分支, 这是默认的
 
-> Rather than specifying the number of generations to go back (what ~ takes), the modifier on ^ specifies which parent reference to follow from a merge commit. Remember that merge commits have multiple parents, so the path to choose is ambiguous.
-Git will normally follow the "first" parent upwards from a merge commit, but specifying a number with ^ changes this default behavior.
+    G   H   I   J
+    \ /     \ /
+    D   E   F
+    \  |  / \
+        \ | /   |
+        \|/    |
+        B     C
+        \   /
+            \ /
+            A
+
+    A =      = A^0
+    B = A^   = A^1     = A~1
+    C = A^2  = A^2
+    D = A^^  = A^1^1   = A~2
+    E = B^2  = A^^2
+    F = B^3  = A^^3
+    G = A^^^ = A^1^1^1 = A~3
+    H = D^2  = B^^2    = A^^^2  = A~2^2
+    I = F^   = B^3^    = A^^3^
+    J = F^2  = B^3^2   = A^^3^2
 
 ## HEAD
-它指向当前分支引用的revision
+HEAD 指向当前分支引用的revision
 
 	git log HEAD
-	git log HEAD@{2}
+	git log HEAD@{2} != HEAD~2
 	git show HEAD@{2}
 
 查看昨天分支指向哪里
@@ -421,7 +381,7 @@ Git will normally follow the "first" parent upwards from a merge commit, but spe
 
 Example:
 
-	git remote add origin ssh://git@ahuigo.github.io:hilojack/wiki.git
+	git remote add origin ssh://git@ahuigo.github.io:ahuigo/wiki.git
 	git remote add upstream https://github.com/octocat/Spoon-Knife.git
     git -C "/usr/local/Homebrew" remote set-url origin https://github.com/Homebrew/brew.git
 
@@ -514,17 +474,6 @@ Create an archive of files from a named tree.
 
 	git archive <object> --prefix='project/' | gzip > `git describe master`.tar.gz
 	git archive --format=tar.gz --prefix='project/' <object> > `git describe`.tar.gz
-
-# Tips
-
-## alias
-
-	git config --global alias.ci commit
-	git config --global alias.unstage 'reset HEAD'
-
-## bash-complete
-
-	sourte ~/.git-completion.bash //https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
 
 # git branch
 
@@ -633,7 +582,7 @@ Remove host:
 Ignore HostKey
 
 	$ vim ~/.ssh/config
-	Host github.com-hilojack
+	Host github.com-ahuigo
 		HostName github.com
 		User git
 		StrictHostKeyChecking no
@@ -819,50 +768,6 @@ https://hub.github.com/
 
 # dilivery
 主要有以下几种方式
-
-## request-pull
-Generates a *summary of pending changes*. Then you can send these messages to maintainer.
-
-它和github 的pull-request 不同，见http://stackoverflow.com/questions/6235379/how-to-send-pull-request-on-git
-
-Refer to:
-http://git-scm.com/docs/git-request-pull
-
-	git request-pull <branch> <repo> //diff start from <branch> to current branch(and check if commits do exist in <repo>)
-
-	git request-pull [-p] <start_point> <url> [<end>]
-		<start> commit to start at.
-		<url>	The repository URL to be pulled from
-		<end>  commit to end at(defaluts to HEAD)
-
-	git request-pull ecbc7 <url> <local_branch>[:remote_branch] | pbcopy
-
-Example:
-
-	myfork$ git checkout featureC //U should switch featureC first if u want to merge featureC to trunk(master)
-	myfork$ git request-pull origin/master myfork //compare current branch fetureC(changes between master and myfork|featureC)
-
-Output:
-
-	The following changes since commit 10f52ac8957eadf0072dc3c37bd2250cd7f7af2f:
-
-	  xx (2013-11-23 18:27:15 +0800)
-
-	are available in the git repository at:
-
-	  ../myfork/ featureC
-
-	for you to fetch changes up to d9b613c2a197c40bcb0914d2eae86ec8e8111065:
-
-	  del (2013-11-23 18:47:59 +0800)
-
-	----------------------------------------------------------------
-	hilojack (1):
-		  del
-
-	 TODO | 1 -
-	 1 file changed, 1 deletion(-)
-
 ## create patch
 
 ### format-patch
@@ -903,23 +808,3 @@ Output:
 	#It is more strictly than patch. 事务性的
 	git apply --check 01.patch//test patch
 	git apply /tmp/01.patch //apply patch to current branch
-
-# git check 数据库维护
-> https://www.shiyanlou.com/questions/3781
-
-Git 通常不需要大量维护，它基本上可以自我维护。然而，你可以使用如下命令查看数据库统计信息：
-
-	$ git count-objects -v
-
-如果数值很高，你可以选择使用垃圾回收你的重复内容。这不会影响推送或者其它用户，但却可以让你的命令运行更快且占用更少空间：
-
-	$ git gc
-
-经常运行一致性检查也是值得推荐的做法：
-
-	$ git fsck --full
-
-你也可以在行尾添加一个 `—auto`参数，如果统计数据表明必须进行要进行一致性检查，只要fsck命令就行。
-
-如果检查 “dangling” 或 “unreachable” 的结果一切正常，这经常是由于回退HEAD或 rebasing的结果。
-如果检查“missing” 或 “sha1 mismatch” 出了问题...得找专业人士了
