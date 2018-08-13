@@ -1,11 +1,10 @@
-
 ---
 layout: page
 title: Git 命令大全
 category: blog
 description: Abstract of git commmands.
 ---
-# Config
+# Git 配置
 
 ## ConfigFile
 1. /etc/gitconfig #git config --system
