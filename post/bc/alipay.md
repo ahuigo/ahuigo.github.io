@@ -1,11 +1,3 @@
----
-layout: page
-title:
-category: blog
-description:
----
-# Preface
-
 # 支付宝商户授权
 https://openauth.alipay.com/auth/tokenManage.htm
 
