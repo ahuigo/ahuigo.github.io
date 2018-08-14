@@ -411,6 +411,8 @@ static 不可以被实例继承(因为不是prototype), static属于类自己(�
 2. 如果静态方法包含this关键字，这个this指的是类，而不是实例。
 3. super.staticMethod() ，super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类
 
+e.g.
+
     class Foo {
         static bar () {
             this.baz();

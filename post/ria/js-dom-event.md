@@ -237,6 +237,17 @@ e.preventDefault() 冒泡阻止：
     document.forms[0].dispatchEvent(event);
 
 ## history event
+trigger:
+
+    $('#container').on('click', 'a', function(e) {
+　　　　window.history.pushState(null, null, $(this).attr('href'));
+　　　　// ajax fetch & render
+　　　　e.preventDefault();
+　　});
+
+### onpushstate
+listen pushstate:
+
     (function(history){
         var pushState = history.pushState;
         history.pushState = function(state) {
@@ -246,3 +257,22 @@ e.preventDefault() 冒泡阻止：
             return pushState.apply(history, arguments);
         };
     })(window.history);
+
+### onpopstate, onhashchange
+listen popstate(on user click back only): 
+
+    //window.onpopstate
+    window.addEventListener('popstate', function(e) {     
+　　　　anchorClick(location.pathname); 	
+ 　　});
+
+Note:
+这popstate/hashchange only triggered by doing a `browser action`
+1. history.back() 会trigger popstate/hashchange
+2. 调用history.pushState() 本身不会trigger(这个算是bug) 
+
+manully trigger popstate/hashchange
+
+    history.pushState(state, '', url);
+    var popStateEvent = new PopStateEvent('popstate', { state: state });
+    dispatchEvent(popStateEvent);

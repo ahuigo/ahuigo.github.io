@@ -2,7 +2,7 @@
 Proxies enable creation of objects with the full range of behaviors available to host objects. 
 Can be used for interception, object virtualization, logging/profiling, etc
 
-// Proxying a normal object
+Proxying a normal object
 
     var target = {};
     var handler = {
@@ -14,7 +14,7 @@ Can be used for interception, object virtualization, logging/profiling, etc
     var p = new Proxy(target, handler);
     p.world === "Hello, world!";
 
-// Proxying a function object
+Proxying a function object
 
     var target = function () { return "I am the target"; };
     var handler = {

@@ -1,4 +1,4 @@
-# 自定义指令
+# Vue 自定义指令
 类似 v-model 和 v-show, 举个聚焦输入框的例子，如下：
 
     <input v-focus>
