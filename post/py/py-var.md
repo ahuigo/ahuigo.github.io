@@ -1,11 +1,7 @@
 ---
-layout: page
-title:
-category: blog
-description:
+title: python 变量笔记
+date: 20180303
 ---
-# Preface
-
 # const
 
 	from inspect import currentframe, getframeinfo
@@ -90,6 +86,20 @@ deepcopy:
 
     from copy import deepcopy
     myCopy = deepcopy(myDict)
+
+## sequence unpacking assign(解包赋值)
+
+    >>> person = ('Bob', 20, 50, (11, 20, 2000))
+    >>> name, *_, (*_, year) = person
+    >>> name
+    'Bob'
+    >>> year
+    2000
+
+Divide a dictionary into variables
+
+    // 有可能是无序的! warn
+    (_, a),(_,b) = {'a':1, 'b':2}.items()
 
 # Data Type
 数据类型

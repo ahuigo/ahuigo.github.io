@@ -1,11 +1,7 @@
 ---
-layout: page
-title:
-category: blog
-description:
+title: python 时间函数的用法笔记
+date: 20180402
 ---
-# Preface
-
 # time
 
 	import time
@@ -74,13 +70,11 @@ pd.date_range():
 
 和shell 一样
 
-	%Y-%m-%d %H:%M:%S
-
-	>>> from datetime import datetime
 	>>> datetime.strptime('2015-6-1 18:19:59', '%Y-%m-%d %H:%M:%S')
 	2015-06-01 18:19:59
-	>>> print(now.strftime('%a, %b %d %H:%M'))
-	Mon, May 05 16:28
+
+	>>> datetime.now().replace(microsecond=0).isoformat()
+    '2018-08-16T15:16:47'
 
 formater: https://docs.python.org/3/library/datetime.html
 
@@ -181,39 +175,37 @@ formater: https://docs.python.org/3/library/datetime.html
 ## keep time
 ### replece timezone(keep time, change timestamp)
 使用replace(tzinfo=tz) 标注时区，timestamp随着tz变化，不会改变字面时间
-```
-; 默认locale时:没有时区
->>> datetime.fromtimestamp(0).__str__()
-'1970-01-01 08:00:00'
 
-; 标注当前时区(字面时间不变)
->>> datetime.fromtimestamp(0).replace(tzinfo=timezone(timedelta(hours=8))).__str__()
-'1970-01-01 08:00:00+08:00'
->>> datetime.fromtimestamp(0).replace(tzinfo=timezone(timedelta(hours=8))).timestamp()
-0.0
+    ; 默认locale时:没有时区
+    >>> datetime.fromtimestamp(0).__str__()
+    '1970-01-01 08:00:00'
 
-; 标为时区为UTC+0(字面时间不变)
->>> datetime.fromtimestamp(0).replace(tzinfo=timezone.utc).__str__()
-'1970-01-01 08:00:00+00:00'
->>> datetime.fromtimestamp(0).replace(tzinfo=timezone.utc).timestamp()
-28800.0
-```
+    ; 标注当前时区(字面时间不变)
+    >>> datetime.fromtimestamp(0).replace(tzinfo=timezone(timedelta(hours=8))).__str__()
+    '1970-01-01 08:00:00+08:00'
+    >>> datetime.fromtimestamp(0).replace(tzinfo=timezone(timedelta(hours=8))).timestamp()
+    0.0
+
+    ; 标为时区为UTC+0(字面时间不变)
+    >>> datetime.fromtimestamp(0).replace(tzinfo=timezone.utc).__str__()
+    '1970-01-01 08:00:00+00:00'
+    >>> datetime.fromtimestamp(0).replace(tzinfo=timezone.utc).timestamp()
+    28800.0
+
 ### datetime(...,tzinfo=), (keep time, change timestamp)
-```
->>> datetime(2015, 5, 18, 17, 2, 10, 871012, tzinfo=timezone(timedelta(0, 3600))).__str__()
-'2015-05-18 17:02:10.871012+01:00'
-```
+    >>> datetime(2015, 5, 18, 17, 2, 10, 871012, tzinfo=timezone(timedelta(0, 3600))).__str__()
+    '2015-05-18 17:02:10.871012+01:00'
+
 ## keep timestamp, switch timezone
-### now(tz=), (change time, keep timestamp)
-使用now(tz=tz) 标注时区，不会改变timestamp，字面时间随着tz变化
-```
-datetime.now(tz=timezone(timedelta(hours=7))).__str__()  # ok: 自动基于utc 时间加时区
-```
+### now(tz=)/utcnow(), (change time, keep timestamp)
+使用now(tz=tz)/utcnow() 标注时区，不会改变timestamp，字面时间随着tz变化
+
+    datetime.now(tz=timezone(timedelta(hours=7))).__str__()  # ok: 自动基于utc 时间加时区
+
 ### d.astimezone(tz)
-```
+
 	tokyo_dt = utc_dt.astimezone(timezone(timedelta(hours=9)))
 	2015-05-18 18:05:12.377316+09:00
-```
 
 ### utcnow() is evil!
 utcnow()一开始就是错误的timestamp, 不要使用: 它只是单纯的当timestamp 减小了8个小时，时区居然不变！拿到的还是错误的时间!

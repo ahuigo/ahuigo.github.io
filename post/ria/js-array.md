@@ -121,7 +121,8 @@ sort()方法会直接对Array进行修改，它返回的结果仍是当前Array
 for list:
 
     var list = document.querySelector('#test-list')
-    Array.prototype.slice.call(list)
+    //Array.prototype.slice.call(list)
+    [...list]
         .sort((a,b)=>a.innerText>b.innerText?1:-1)
         .map(node=>list.appendChild(node))
 
@@ -197,6 +198,8 @@ for string
 
 ## for of: value
 1. for of：只循环`array/string + map-set-generator`本身的元素
+
+e.g.
 
     s = new Set([1,2,3])
     for(var it of s){

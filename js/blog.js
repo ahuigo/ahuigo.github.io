@@ -112,7 +112,7 @@ const mdConponent = {
       h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
       document.title = h1node.innerText
     }
-    //disqus()
+    disqus()
   },
   methods: {
     fetchMd() {
@@ -125,14 +125,14 @@ const mdConponent = {
           this.md = '# 文章不存在!'
         }else{
           let data = await r.text()
+          let title;
           if (data.substr(0, 4) === '---\n') {
-            let pos = data.indexOf('---\n', 4)
+            let pos = data.indexOf('\n---\n', 4)
             let m = data.slice(4, pos).match(/title:[ \t]*(\S.*)/);
-            this.title = m ? m[1]:'';
-            data = data.substr(pos+4);
-          }else{
-            this.title = data.split('\n',1)[0].slice(2)
+            title = m ? m[1]:'';
+            data = data.substr(pos+5);
           }
+          this.title = title || data.split('\n',1)[0].slice(2)
           data = data.replace(/\n/g, '\t\n')
           this.md = data
         }

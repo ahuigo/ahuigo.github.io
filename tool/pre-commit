@@ -5,6 +5,7 @@ import re
 from subprocess import getoutput
 from datetime import datetime
 from collections import OrderedDict
+from bs4 import BeautifulSoup as BS
 
 cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/0\.md$" '
 output = getoutput(cmd).strip()
@@ -14,9 +15,55 @@ def basename(path):
     return os.path.splitext(filename)[0]
 
 errors = []
+
 def breakout(errors):
     print('\n'.join(errors))
     quit(1)
+
+def parseBlog(path):
+    blog = {}
+    data = open(path).read()
+    if data.startswith('---\n'):
+        pos = data.index('\n---\n', 4)
+        blogStr = data[4:pos]
+        data = data[pos+5:]
+        for line in blogStr.split('\n'):
+            k, v = line.split(':', 1)
+            blog[k] = v.strip()
+    title, content = data.split('\n', 1)
+    if 'title' not in blog:
+        blog['title'] = title[2:]
+    if 'date' not in blog:
+        blog['date'] = datetime.now().strftime('%Y%m%d')
+    blog['content'] = content
+    return blog
+
+def updateAtom(blogs):
+    from copy import copy
+    bs = BS(open('atom.xml').read(), 'lxml-xml')
+    bs.updated.string = datetime.now().replace(microsecond=0).isoformat()
+    l = len(bs.feed.findChildren('entry'))
+    if l > 20:
+        for i in bs.feed.findChildren('entry')[20:]:
+            i.extract()
+
+    for path, blog in blogs.items():
+        href = '#/'+path
+        if bs.find('link', href=href):
+            entry =  bs.find('link', href=href).parent
+        else:
+            entry = copy(bs.entry)
+
+        entry.title.string =  blog['title']
+        entry.published.string =  blog['date']
+        entry.updated.string =  datetime.now().strftime('%Y%m%d')
+        if bs.find('link', href=href):
+            # update
+            entry.title.string = title
+        else:
+            entry.link['href'] =  href
+            bs.entry.insert_before(entry)
+    open('atom.xml', 'wb').write(bs.encode())
 
 if output:
     indexFile = 'post/0.md'
@@ -28,7 +75,9 @@ if output:
         if m:
             title = m.group('title')
             path = m.group('path')
-            blogs[path] = [title, path]
+            blogs[path] = {'title':title, 'path':path,}
+
+    new_blogs = {}
     for line in output.split('\n'):
         status, path = line.split('\t')
         if status == 'D':
@@ -37,31 +86,26 @@ if output:
 
         if not os.stat(path).st_size:
             continue
-        head = open(path).read(100)
-        if head.startswith('---\n'):
-            try:
-                title = re.search('\ntitle:[ \t]*(?P<title>\S.*)', head).group('title')
-            except Exception as e:
-                errors.append(f'{path} has no title')
-                continue
-        else:
-            title = head.split('\n',1)[0][2:].strip()
-            if not title:
-                errors.append(f'{path} has no title')
 
+        blog = parseBlog(path)
+        title = blog['title']
+        new_blogs[path] = (blog)
         if path not in blogs:
-            blogs[path] = [title, path]
+            blogs[path] = blog
             blogs.move_to_end(path, last=False)
         else:
-            blogs[path] = [title, path]
+            blogs[path] = blog
 
     if errors:
         breakout(errors)
 
+    if new_blogs:
+        updateAtom(new_blogs)
+
     with open(indexFile, 'w') as fp:
         fp.write(f'# 目录\n')
-        for title, path in blogs.values():
-            article = f'- [{title}](#/{path}) '
+        for path, blog in blogs.items():
+            article = f'- [{blog["title"]}](#/{path}) '
             print(article)
             fp.write(article+'\n')
     getoutput(f'git add {indexFile}')

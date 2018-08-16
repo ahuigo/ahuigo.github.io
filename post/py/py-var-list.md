@@ -1,3 +1,7 @@
+---
+date: 20180303
+title: python 的list/tuple 笔记
+---
 # list and tuple
 因为tuple 是增加删除元素的不可变的list(数据可以变)，所以代码更安全。
 如果可能，能用tuple代替list就尽量用tuple。
