@@ -35,24 +35,30 @@ def parseBlog(path):
         blog['title'] = title[2:]
     if 'date' not in blog:
         blog['date'] = datetime.now().strftime('%Y%m%d')
+    blog['date'] = datetime.strptime(blog['date'], '%Y%m%d').replace(microsecond=0).isoformat()+'Z'
     blog['content'] = content
     return blog
 
 def updateAtom(blogs):
     from copy import copy
     bs = BS(open('atom.xml').read(), 'lxml-xml')
-    bs.updated.string = datetime.now().replace(microsecond=0).isoformat()
+    bs.updated.string = datetime.now().replace(microsecond=0).isoformat()+'Z'
+    ori_entry = copy(bs.entry)
+    ori_entry.content.string = ''
+
+    # clear
     l = len(bs.feed.findChildren('entry'))
     if l > 20:
         for i in bs.feed.findChildren('entry')[20:]:
             i.extract()
 
+    # update
     for path, blog in blogs.items():
         href = '#/'+path
         if bs.find('link', href=href):
             entry =  bs.find('link', href=href).parent
         else:
-            entry = copy(bs.entry)
+            entry = copy(ori_entry)
 
         entry.title.string =  blog['title']
         entry.content.string =  blog['content']

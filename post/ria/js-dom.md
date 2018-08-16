@@ -433,11 +433,13 @@ Example 浮层: js-demo/alert-float.js
         .sort((a,b)=>a.innerText>b.innerText?1:-1)
         .map(node=>list.appendChild(node))
 
-### .insertBefore
+### .insertBefore, .before
 
+	node.before(child);
 	node.parentNode.insertBefore(child, parent.childNodes[0]);
     $("#holder > div:nth-child(2)").before("<div>foobar</div>");
     $("#holder > div:eq(2)").before("<div>foobar</div>");
+
     # dom 没有after
     $("#holder > div:nth-child(2)").after("<div>foobar</div>");
 

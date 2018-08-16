@@ -31,11 +31,11 @@ calling a func by name
 ## equal
 判断两个变量是否相等（值相同）使用==， 而判断两个变量是否指向同一个对象使用 is。
 
->>> a1, a2 = [], []
->>> a1 == a2
-True
->>> a1 is a2
-False
+    >>> a1, a2 = [], []
+    >>> a1 == a2
+    True
+    >>> a1 is a2
+    False
 
 ### is
 is 比较的是id

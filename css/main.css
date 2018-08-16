@@ -69,6 +69,7 @@ p{ margin: 0.8em; }
     list-style: inside decimal;
 }
 ol,ul{
+    list-style-position: inside ;
     -webkit-padding-start:10px;
 }
 .menu li ul{

@@ -95,7 +95,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
         console.log([params, arguments, 'ahui'])
     }(1,2,3)
 
-## Destructuring
+## Destructuring, unpacking
 ### 解构赋值(不要求数量一致`_`)
 析构array
 
@@ -111,6 +111,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
 
 析构 dict:
 
+    {...dict}
     let {name, age, pass} = {name:'ahui',pass:'pass',age:10}; //不存在就是undefined
     var {id:uid} = {id:1}; // uid=id
     var {uid=0} = {}

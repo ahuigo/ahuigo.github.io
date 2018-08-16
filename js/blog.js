@@ -93,7 +93,7 @@ const mdConponent = {
     //disqus reset
     const h1nodes = $$('#content h1')
 
-    // fix title
+    // fix title + date
     if (h1nodes.length) {
       var h1node;
       if (h1nodes.length === 1) {
@@ -108,6 +108,10 @@ const mdConponent = {
         h1node.innerText = this.title
         $('#content').insertBefore(h1node, h1nodes[0])
       }
+      const dateNode = document.createElement('p')
+      dateNode.style.cssText = 'text-align:center; color:#ccc'
+      dateNode.innerHTML = this.date
+      h1node.before(dateNode)
       //set title
       h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
       document.title = h1node.innerText
@@ -125,15 +129,18 @@ const mdConponent = {
           this.md = '# 文章不存在!'
         }else{
           let data = await r.text()
-          let title;
+          let title, date;
           if (data.substr(0, 4) === '---\n') {
             let pos = data.indexOf('\n---\n', 4)
-            let m = data.slice(4, pos).match(/title:[ \t]*(\S.*)/);
+            var m = data.slice(4, pos).match(/title:[ \t]*(\S.*)/);
             title = m ? m[1]:'';
+            var m = data.slice(4, pos).match(/date:[ \t]*(\S.*)/);
+            date = m ? m[1]:'';
             data = data.substr(pos+5);
           }
           this.title = title || data.split('\n',1)[0].slice(2)
-          data = data.replace(/\n/g, '\t\n')
+          this.date = date? `${date.slice(0,4)}-${date.slice(4,6)}-${date.slice(6,8)}` : ''
+          //data = data.replace(/\n/g, '\t\n')
           this.md = data
         }
       })
@@ -174,7 +181,7 @@ const app = new Vue({
       var v = localStorage.getItem(file.path) || '{}'
       var data = JSON.parse(v)
       if (data && data.time) {
-        if (new Date - data.time < 86400 * 24 * 1000) {
+        if (new Date - data.time < 86400 * 1000) {
           console.log('from cache')
           Vue.set(file, 'nodes', data.nodes);
           return;
