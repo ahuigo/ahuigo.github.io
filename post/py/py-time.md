@@ -2,7 +2,8 @@
 title: python 时间函数的用法笔记
 date: 20180402
 ---
-# time
+# time 工具
+time 提供基本的时间，sleep
 
 	import time
 	time.time()
@@ -180,7 +181,7 @@ formater: https://docs.python.org/3/library/datetime.html
     >>> datetime.fromtimestamp(0).__str__()
     '1970-01-01 08:00:00'
 
-    ; 标注当前时区(字面时间不变)
+    ; 标注当前时区(字面时间不变)
     >>> datetime.fromtimestamp(0).replace(tzinfo=timezone(timedelta(hours=8))).__str__()
     '1970-01-01 08:00:00+08:00'
     >>> datetime.fromtimestamp(0).replace(tzinfo=timezone(timedelta(hours=8))).timestamp()

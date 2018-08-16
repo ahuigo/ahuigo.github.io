@@ -55,12 +55,10 @@ def updateAtom(blogs):
             entry = copy(bs.entry)
 
         entry.title.string =  blog['title']
+        entry.content.string =  blog['content']
         entry.published.string =  blog['date']
         entry.updated.string =  datetime.now().strftime('%Y%m%d')
-        if bs.find('link', href=href):
-            # update
-            entry.title.string = title
-        else:
+        if not bs.find('link', href=href):
             entry.link['href'] =  href
             bs.entry.insert_before(entry)
     open('atom.xml', 'wb').write(bs.encode())
