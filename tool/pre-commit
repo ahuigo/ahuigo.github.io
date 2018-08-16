@@ -63,7 +63,7 @@ def updateAtom(blogs):
         entry.title.string =  blog['title']
         entry.content.string =  blog['content']
         entry.published.string =  blog['date']
-        entry.updated.string =  datetime.now().strftime('%Y%m%d')
+        entry.updated.string =  datetime.now().replace(microsecond=0).isoformat()+'Z'
         if not bs.find('link', href=href):
             entry.link['href'] =  href
             bs.entry.insert_before(entry)
