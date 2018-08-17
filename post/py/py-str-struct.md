@@ -4,7 +4,7 @@ date: 20180505
 ---
 # python3 的字节处理
 1. 而在C语言中，我们可以很方便地用struct、union来处理字节，以及字节和int，float的转换。
-2. Python3 中处理bytes 字节也很方便，同时还提供了强大的struct 处理工具
+2. Python3 中处理bytes 字节也很方便，同时还提供了强大的struct 处理工具
 
 # 一般的字节处理
 在Python中，比方说要把一个32位无符号整数变成字节，也就是4个长度的bytes，你得配合位运算符这么写：
