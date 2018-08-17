@@ -22,11 +22,16 @@ date: 20180505
 
 好在Python提供了一个struct模块来解决bytes和其他二进制数据类型的转换。
 
-## buffer
-int to bytes： like js Buffer.from([1,2,3])
+## int to bytes(Buffer) 
+int to bytes： as Js's `Buffer.from([1,2,3])`
 
 	>>> bytes([0, 1, 97])
 	b'\x00\x01a'
+
+int to strhex
+
+    >>> hex(16)
+    '0x10'
 
 ### str2hex
 
@@ -35,12 +40,7 @@ int to bytes： like js Buffer.from([1,2,3])
     bytes.fromhex('6162')
         b'abc'
 
-int to strhex
-
-    >>> hex(16)
-    '0x10'
-
-see: py/py-strack for unpack
+Refer: py/py-strack for unpack
 
 ## base64
 
