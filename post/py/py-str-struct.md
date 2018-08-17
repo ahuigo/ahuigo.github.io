@@ -1,13 +1,12 @@
 ---
-layout: page
-title:
-category: blog
-description:
+title: python3 的struct 字节处理工具
+date: 20180505
 ---
-# Preface
+# python3 的字节处理
 1. 而在C语言中，我们可以很方便地用struct、union来处理字节，以及字节和int，float的转换。
-2. Python没有专门处理字节的数据类型。但由于str既是字符串，又可以表示字节，所以，字节数组＝str。
+2. Python3 中处理bytes 字节也很方便，同时还提供了强大的struct 处理工具
 
+# 一般的字节处理
 在Python中，比方说要把一个32位无符号整数变成字节，也就是4个长度的bytes，你得配合位运算符这么写：
 
 	>>> n = 10240099

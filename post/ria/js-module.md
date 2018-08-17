@@ -1,5 +1,5 @@
 ---
-title:	ES6 Modudle 使用
+title: ES6 Modudle 使用
 date: 20180405
 ---
 # global variable
