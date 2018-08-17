@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Ahuigo 的网络日志</title>
 <link href="https://ahuigo.github.io/atom.xml" rel="self" type="application/atom+xml"/>
-<updated>2018-08-16T17:12:59</updated>
+<updated>2018-08-16T17:12:59Z</updated>
 <subtitle>ahuigo's Blog</subtitle>
 <entry xml:base="https://ahuigo.github.io/">
 <title>Js Array </title>

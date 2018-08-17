@@ -1,20 +1,15 @@
 ---
-layout: page
 title:	ES6 Modudle 使用
-category: blog
-description:
+date: 20180405
 ---
-# ES6 Modudle 使用
-## 防止变量污染
-1. 'use strict';//es6 默认
-2. var v=1; //适用于 commandJS 
+# global variable
+Module: don't use globals in my applications.
 
-## global variable
+    // es5
+    ROOT_DIR=__dirname;  // 不要用 const, var(es5)
 
-    //app.js
-    ROOT_DIR=__dirname;  // 不要用 const, var
-    global.ROOT_DIR=__dirname; //node
-    window.ROOT_DIR=__dirname; //browser
+    // es6
+    (global||window).ROOT_DIR=__dirname;
 
     // module.js
     let users = require(ROOT_DIR+'/conf/users')
@@ -22,37 +17,29 @@ description:
     let users = require('../conf/users')
 
 ## module storage
+ES6 recommend import global module:
 
     //a.js
     require('./config')['name']='ahui'
     //b.js
     require('./config')['name']==='ahui'
 
+in webpack, use definePlugin to config new consants:
+
+    /* Webpack configuration */
+    const webpack = require('webpack');
+    new webpack.DefinePlugin({
+        'VALUE_1': 123,
+        'VALUE_2': 'abc'
+    });
+
+    /* SomeComponent.js */
+    if (VALUE_1 === 123) {
+        // do something
+    }
+
 ## module this
 module `this` is `{}`, not `global===window`
-
-# 模块的定义(对象定义)
-本文参考阮一峰的: [js 模块化](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
-
-## 模块规范
-js 的模块规范有两种：
-1. Node: CommonJs 
-2. Browser: AMD js, CMD.js(sea)
-
-### CommonJS 规范
-
-	var math = require('math');
-	math.add(5,6)
-
-### AMD(Asynchronous Module Definition)
-
-	require([module], callback);
-
-Example:
-
-	require(['math'], function(math){
-		math.add(2,3);//异步
-	});
 
 # Es6 module
 - export 定义值
@@ -151,12 +138,13 @@ default 与其他变量混用
 ## Create module
 hello module: hello.js
 
-    function greet(name) {
-        console.log(s + ', ' + name + '!');
-    }
-
     //暴露变量
-    module.exports = greet;
+    module.exports = {
+        hello: hello,
+        greet: greet
+    };
+    exports.hello = hello;
+    exports.greet = greet;
 
 ## 加载模块
 
@@ -168,32 +156,6 @@ hello module: hello.js
 如果没有`.`或者`绝对路劲`, Node会依次在内置模块、全局模块和当前模块下查找hello.js, 但是不会在当前目录查找
 
     var greet = require('hello');
-
-### exports 暴露
-
-    // 准备module对象:
-    var module = {
-        exports: {}
-    };
-
-    (function(module, exports) {
-        exports.multiply = function (n) { return n * 1000 };
-    }(module, module.exports))
-
-    var f = module.exports.multiply;
-    f(5) // 5000 
-
-
-多个变量暴露可以用`exports.var=xxx`:
-1. 但是不可以直接覆盖exports, 导致module.exports不会指向exports
-2. 直接对module.exports对象赋值, 适合返回所有类型: func/obj/arr
-
-    module.exports = {
-        hello: hello,
-        greet: greet
-    };
-    exports.hello = hello;
-    exports.greet = greet;
 
 # Package, 打包
 http://www.ruanyifeng.com/blog/2014/09/package-management.html

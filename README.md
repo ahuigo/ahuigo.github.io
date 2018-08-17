@@ -5,7 +5,7 @@
 - 示例地址：[https://ahuigo.github.io/#/README.md](https://ahuigo.github.io/#/README.md)
 
 使用方法：
-1. Fork 到 `{yourname}.github.io`.
+1. Fork 到 `{yourname}.github.io`.
 2. 修改 `index.html` 中的`config`变量
 
 比如：
@@ -36,7 +36,7 @@
 - [x] 自适应
 - [x] 目录缓存(缓存时间1天)
 - [x] Twitter & 微博分享
-- [x] 音乐
+- [x] RSS+首页目录(pre-commit hooks 自动生成)
 
 ## 数学公式
 展示数学公式的库主要有 mathjax 和katex, 本博采用了非常轻量的katex。
