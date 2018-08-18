@@ -1,5 +1,5 @@
 ---
-title: ES6 Modudle 使用
+title: ES6 Modudle 使用
 date: 20180405
 ---
 # global variable
@@ -83,8 +83,8 @@ profile.js
 
 profile.js
 
-    export var foo = 'bar';
-    export var area = 'China';
+    export var foo = 'bar';     //export.foo = ...
+    export var area = 'China';  //export.area = ...
 
 main.js(babel)
 
@@ -101,15 +101,17 @@ main.js(babel)
 
     // 正确
     var a = 1;
-    export default a;
-    export default 42;
+    export default a; //default = a
+    export default 42; //default = 42
+    export {a as default}
 
     // 错误
-    export default var a = 1;
+    export default var a = 1; // default = var a=1
+    export default a = 1;      // default = a = 1 // a is not defined(strict)
 
 default 与其他变量混用
 
-    import _, { each, each as forEach } from 'lodash';
+    import AnyDefaultName, { each, each as forEach } from 'lodash';
 
 ## export *
     // lib/mathplusplus.js

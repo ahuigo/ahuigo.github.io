@@ -1,5 +1,8 @@
+---
+date: 20130102
+---
 # 验证码识别工具tesseract
-
+> 这是一篇2013写的旧文
 首先说下我要用到的工具：tesseract/ImageMagick/...etc.
 
 ## tesseract是什么？ 
@@ -48,17 +51,17 @@ Leptonica 是一图像处理与图像分析工具，tesseract依赖于它。而�
 # 识别验证码
 ## 一般应用
 比如我有一张a.jpg的图片：
-<a href="http://hilojack-wordpress.stor.sinaapp.com/uploads/2013/01/a.2.png"><img title="a.2.png" alt="a.2.png" src="http://hilojack-wordpress.stor.sinaapp.com/uploads/2013/01/a.2.png" class="aligncenter" /></a>
 
 	[hilo@hilo ~]$ convert a.jpg  a.tif #先转为可识别的a.tif
 	[hilo@hilo ]$ tesseract a.tif out
 	[hilo@hilo ]$ cat out.txt #查看识别到的验证码
+
 ##　提高图片质量
-	识别成功率跟图片质量关系密切，一般拿到后的验证码都得经过灰度化，二值化，去噪，利用imgick就可以很方便的做到．
+识别成功率跟图片质量关系密切，一般拿到后的验证码都得经过灰度化，二值化，去噪，利用imgick就可以很方便的做到．
 
 	convert -monochrome foo.png bar.png　#将图片二值化
 
-这是推荐读下鬼仔的[高级验证码识别]
+这里推荐读下鬼仔的[高级验证码识别]
 
 ## 我只想识别字符和数字？
 ok, 没有问题，可以参考[faq],结尾仅需要加digits

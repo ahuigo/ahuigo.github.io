@@ -20,9 +20,9 @@ def breakout(errors):
     print('\n'.join(errors))
     quit(1)
 
-def parseBlog(path):
+def parseBlog(path, max_len=500):
     blog = {}
-    data = open(path).read()
+    data = open(path).read(max_len)
     if data.startswith('---\n'):
         pos = data.index('\n---\n', 4)
         blogStr = data[4:pos]
@@ -93,7 +93,7 @@ if output:
 
         blog = parseBlog(path)
         title = blog['title']
-        new_blogs[path] = (blog)
+        # new_blogs[path] = (blog)
         if path not in blogs:
             blogs[path] = blog
             blogs.move_to_end(path, last=False)
@@ -112,4 +112,4 @@ if output:
             article = f'- [{blog["title"]}](#/{path}) '
             print(article)
             fp.write(article+'\n')
-    getoutput(f'git add {indexFile}')
+    getoutput(f'git add {indexFile} atom.xml')

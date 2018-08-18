@@ -1,4 +1,7 @@
-# vim-plug
+---
+date: 20180509
+---
+# vim plug 插件系统
 
     curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -24,7 +27,6 @@
 
     :so %
     :source %
-
 
 # ag
 a code search cli tool with focus on speed.
@@ -52,3 +54,9 @@ let ack use ag:
 
     nnoremap <C-p> :Denite file/rec buffer<CR>
     :h denite-usage
+
+shortcuts:
+
+    <ESC> <C-o> normal 选择
+        p preview
+    i   insert filter
