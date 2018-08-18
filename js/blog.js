@@ -1,6 +1,5 @@
 /**
- * main.js for note-blog
- * @author ahuigo
+ * blog.js for note-blog
  */
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
@@ -84,6 +83,13 @@ const mdConponent = {
         v.href = v.getAttribute('href').replace(/^\/p/, '#/post') + '.md'
       }
     })
+    console.log('haha')
+    this.$root.$$('#content img').forEach((v, k, arr) => {
+    console.log('haha')
+      if (v.getAttribute('src').startsWith('/img/')) {
+        v.src = v.getAttribute('src').replace(/^\/img/, 'img')
+      }
+    })
     const toc = document.querySelector('#toc');
     if (toc.children.length) {
       toc.children[0].replaceWith(createToc(this.$el))
@@ -122,7 +128,9 @@ const mdConponent = {
     fetchMd() {
       var path = this.$route.path
       if (path === '/') {
-        path = '/post/0.md';
+        path = 'post/0.md';
+      }else{
+        path = path.slice(1);
       }
       fetch(path).then(async r=> {
         if(!r.ok){
@@ -139,7 +147,7 @@ const mdConponent = {
             data = data.substr(pos+5);
           }
           this.title = title || data.split('\n',1)[0].slice(2)
-          this.date = date? `${date.slice(0,4)}-${date.slice(4,6)}-${date.slice(6,8)}` : ''
+          this.date = date? date : ''
           //data = data.replace(/\n/g, '\t\n')
           this.md = data
         }

@@ -34,3 +34,6 @@
 [submodule "demo/blog"]
 	path = demo/blog
 	url = https://github.com/ahuigo/note-blog
+[submodule "blog"]
+	path = blog
+	url = https://github.com/ahuigo/ahuigo.github.io

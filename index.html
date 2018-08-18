@@ -89,20 +89,20 @@
         </div>
     </div>
     <button class="button is-primary" onclick="window.scroll(0, 10)" id="top">Top</button>
+    <template id="tree-folder">
+        <ul v-if="show">
+            <li v-for="(file,index) in nodes" :key="file.path">
+                <a v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name}}
+                </a>
+                <router-link v-else :type="file.type" class="file" :to="'/'+file.path">{{file.name.slice(0,-3)}} </router-link>
+                <tree-folder v-if="file.nodes" :show="file.show" :nodes="file.nodes"></tree-folder>
+            </li>
+        </ul>
+    </template>
+    <template id="md">
+        <div id="content" v-html="marked(md)"></div>
+    </template>
+    <script src="js/blog.js"></script>
 </body>
-<template id="tree-folder">
-    <ul v-if="show">
-        <li v-for="(file,index) in nodes" :key="file.path">
-            <a v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name}}
-            </a>
-            <router-link v-else :type="file.type" class="file" :to="'/'+file.path">{{file.name.slice(0,-3)}} </router-link>
-            <tree-folder v-if="file.nodes" :show="file.show" :nodes="file.nodes"></tree-folder>
-        </li>
-    </ul>
-</template>
-<template id="md">
-    <div id="content" v-html="marked(md)"></div>
-</template>
 
-<script src="js/blog.js"></script>
 </html>

@@ -1,11 +1,11 @@
 ---
-layout: page
-title: js debug 技术
-category: blog
-description:
+date: 2017-05-16
 ---
-# Cache
-## reloadCSS
+# js debug 方法总结
+
+## Cache
+
+### reloadCSS
 
     function reloadCSS() {
         const links = document.getElementsByTagName('link');
@@ -19,22 +19,22 @@ description:
         });
     }
 
-# chrome
+## chrome
 [ria-debug-chrome](/p/ria-debug-chrome)
 
-# mobile debug
+## mobile debug
 
-## weinre
+### weinre
 weinre, Web Inspector Remote
 
 参考[weinre](http://segmentfault.com/a/1190000000459296)
 
-# ios
+## ios
 http://moduscreate.com/enable-remote-web-inspector-in-ios-6/
 
 	Debug -> Iphone ->
 
-# android
+## android
 https://developer.chrome.com/devtools/docs/remote-debugging
 
 1. Enable debug mode on android(>4.4)
@@ -42,11 +42,11 @@ https://developer.chrome.com/devtools/docs/remote-debugging
 3. Access chrome://inspect and select 'discover USB devices'
 4. On your device, an alert prompts you to allow USB debugging from your computer. Tap OK.
 
-## debug
+### debug
 1. click elements on devtools and use 'cmd+r' to reload.
 
-## Port forwarding
+### Port forwarding
 8080
 
-## Virtual host mapping
+### Virtual host mapping
 A proxy between charles and mobile.

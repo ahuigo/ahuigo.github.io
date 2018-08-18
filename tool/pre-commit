@@ -20,9 +20,9 @@ def breakout(errors):
     print('\n'.join(errors))
     quit(1)
 
-def parseBlog(path, max_len=500):
+def parseBlog(path):
     blog = {}
-    data = open(path).read(max_len)
+    data = open(path).read(500)
     if data.startswith('---\n'):
         pos = data.index('\n---\n', 4)
         blogStr = data[4:pos]
@@ -34,11 +34,21 @@ def parseBlog(path, max_len=500):
     if 'title' not in blog:
         blog['title'] = title[2:]
     if 'date' not in blog:
-        blog['date'] = datetime.now().strftime('%Y%m%d')
-    blog['date'] = datetime.strptime(blog['date'], '%Y%m%d').replace(microsecond=0).isoformat()+'Z'
+        blog['date'] = datetime.now().strftime('%Y-%m-%d')
+    blog['date'] = datetime.strptime(blog['date'], '%Y-%m-%d').replace(microsecond=0).isoformat()+'Z'
     blog['content'] = content
     return blog
 
+def publishBlog(blogs, delete_blogs):
+    #'post/js/rold.md'
+    for path in delete_blogs:
+        pageFileName = path[4:-3]
+        #os.unlink(f'blog/_posts/{pageFileName}')
+    for path,blog in blogs.items():
+        pageFilePath = f'blog/_posts/{blog["date"]}-{path[5:-3].replace("/","-")}'
+        print(f'copy {path} {pageFilePath}')
+        #os.copy(path, pageFilePath)
+    
 def updateAtom(blogs):
     from copy import copy
     bs = BS(open('atom.xml').read(), 'lxml-xml')
@@ -82,10 +92,12 @@ if output:
             blogs[path] = {'title':title, 'path':path,}
 
     new_blogs = {}
+    delete_blogs = []
     for line in output.split('\n'):
         status, path = line.split('\t')
         if status == 'D':
             blogs.pop(path, None)
+            delete_blogs.append(path)
             continue
 
         if not os.stat(path).st_size:
@@ -93,7 +105,7 @@ if output:
 
         blog = parseBlog(path)
         title = blog['title']
-        # new_blogs[path] = (blog)
+        new_blogs[path] = (blog)
         if path not in blogs:
             blogs[path] = blog
             blogs.move_to_end(path, last=False)
@@ -104,7 +116,8 @@ if output:
         breakout(errors)
 
     if new_blogs:
-        updateAtom(new_blogs)
+        #updateAtom(new_blogs)
+        publishBlog(new_blogs, delete_blogs)
 
     with open(indexFile, 'w') as fp:
         fp.write(f'# 目录\n')
