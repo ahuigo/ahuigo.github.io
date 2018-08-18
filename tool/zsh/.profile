@@ -50,6 +50,8 @@ function gcap(){
         echo git push;
         git push && cd blog;
         if test $? = 0;then
+            git add _posts/
+            git commit -m 'push'
             git push
             cd ..
         fi
