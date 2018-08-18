@@ -12,7 +12,7 @@ layout: default
       </div>
   </header>
   <div id="toc"></div>
-  <article class="post-content">
+  <article id="content" class="post-content">
   {{ content }}
   </article>
 

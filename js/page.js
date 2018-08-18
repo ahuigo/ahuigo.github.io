@@ -6,7 +6,15 @@ String.URIChar = {
 String.prototype.encodeURIComponentUnicode = function(){
     return this.replace(/./g, function(k){return String.URIChar[k] || k;}) ;
 }
+function fixImageSrc(){
+	document.querySelectorAll('#content img').forEach((v)=>{
+        if(v.getAttribute('src').startsWith('/img/')){
+            v.src = v.getAttribute('src').replace(/\/img/, '/a/img')
+        }
+    });
+}
 document.addEventListener("DOMContentLoaded", function(event) { 
+    fixImageSrc()
 	toc = {l:0};
 	hList = document.querySelectorAll('h1,h2,h3,h4,h5,h6,h7');
 	for(var i=0; i< hList.length; ++i){
@@ -21,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		h.innerText = id;
 	}
 	document.querySelector('#toc').innerHTML = createToc(toc);
+
 });
 
 function createToc(toc){
