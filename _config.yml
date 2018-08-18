@@ -1,0 +1,14 @@
+# Site settings
+title: ahuigo
+name: ahuigo
+email: 
+description: ''
+baseurl: ""
+url: "http://ahuigo.github.io"
+username: ahuigo 
+
+# Build settings
+markdown: kramdown
+paginate: 10 
+paginate_path: "/p:num"
+permalink: /p/:title
