@@ -43,10 +43,10 @@ def publishBlog(blogs, delete_blogs):
     import shutil
     #'post/js/rold.md'
     for path in delete_blogs:
-        pageFileName = path[4:-3]
+        pageFileName = path[5:]
         #os.unlink(f'blog/_posts/{pageFileName}')
     for path,blog in blogs.items():
-        pageFilePath = f'blog/_posts/{blog["date"]}-{path[5:-3].replace("/","-")}'
+        pageFilePath = f'blog/_posts/{blog["date"]}-{path[5].replace("/","-")}'
         print(f'copy {path} {pageFilePath}')
         shutil.copy2(path, pageFilePath)
     
