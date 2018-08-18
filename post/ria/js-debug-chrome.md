@@ -1,10 +1,7 @@
 ---
-layout: page
-title: js debug chrome 
-category: blog
-description:
+date: 2018-03-03
 ---
-# Chrome 的功能
+# Chrome devtools 使用汇总
 chrome://chrome-urls/
 
 # devTool Source

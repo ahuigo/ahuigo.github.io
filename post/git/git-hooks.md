@@ -1,15 +1,20 @@
 ---
-layout: page
-title:
-category: blog
-description:
+date: 2014-05-07
 ---
-# Preface
+# git hooks
 钩子(hooks)是一些在$GIT-DIR/hooks目录的脚本, 在被特定的事件(certain points)触发后被调用。当git init命令被调用后, 一些非常有用的示例钩子脚本被拷到新仓库的hooks目录中; 但是在默认情况下它们是不生效的。 把这些钩子文件的".sample"文件名后缀去掉就可以使它们生效。
 
-# TODO & Reference
+## TODO & Reference
 - [git-scm]: https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks#Server-Side-Hooks
-- [gitbook]: http://gitbook.liuhui998.com/5_8.html
+
+Useful hooks
+
+    pre-commit
+    prepare-commit-msg
+    commit-msg
+    post-commit
+    post-checkout
+    pre-rebase
 
 # applypatch-msg
 
@@ -48,7 +53,7 @@ description:
 
 	GIT_DIR/hooks/pre-commit
 
-这个钩子被 git commit 命令调用, 而且可以通过在命令中添加`--no-verify` 参数来跳过。这个钩子不需要参数，在得到提交消息和开始提交(commit)前被调用。如果钩子返回值不是0，那么 git commit 命令就会中止执行。
+这个钩子被 git commit 命令调用, 而且可以通过在命令中添加`--no-verify` 参数来跳过。
 
 如果（进行git commit的）命令没有制定一个编辑器来修改提交信息(commit message)，任何的 git-commit 钩子（译注：即无论是否自带）被调用时都会带上环境变量GIT_EDITOR=:
 

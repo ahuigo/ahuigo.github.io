@@ -35,11 +35,12 @@ def parseBlog(path):
         blog['title'] = title[2:]
     if 'date' not in blog:
         blog['date'] = datetime.now().strftime('%Y-%m-%d')
-    blog['date'] = datetime.strptime(blog['date'], '%Y-%m-%d').replace(microsecond=0).isoformat()+'Z'
+    #blog['date'] = datetime.strptime(blog['date'], '%Y-%m-%d').replace(microsecond=0).isoformat()+'Z'
     blog['content'] = content
     return blog
 
 def publishBlog(blogs, delete_blogs):
+    import shutil
     #'post/js/rold.md'
     for path in delete_blogs:
         pageFileName = path[4:-3]
@@ -47,7 +48,7 @@ def publishBlog(blogs, delete_blogs):
     for path,blog in blogs.items():
         pageFilePath = f'blog/_posts/{blog["date"]}-{path[5:-3].replace("/","-")}'
         print(f'copy {path} {pageFilePath}')
-        #os.copy(path, pageFilePath)
+        shutil.copy2(path, pageFilePath)
     
 def updateAtom(blogs):
     from copy import copy

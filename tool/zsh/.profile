@@ -48,7 +48,11 @@ function gcap(){
     fi
     if git remote | grep '\w';then
         echo git push;
-        git push;
+        git push && cd blog;
+        if test $? = 0;then
+            git push
+            cd ..
+        fi
     else
         echo git svn dcommit;
         git svn rebase;
