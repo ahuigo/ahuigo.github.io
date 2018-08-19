@@ -25,9 +25,6 @@ a{
 em{
 	font-weight:bold;
 }
-.post-content a{
-	color:blue;
-}
 
 h1, h2, h3, h4, h5, h6 { font-weight: bold; color:#000;}
 h1 a{
@@ -133,6 +130,7 @@ height: 40px;
 .site-footer {
   border-top: 1px solid #e8e8e8;
   padding: 30px 0;
+  margin: 1em;
 }
 
 .footer-heading {
@@ -158,43 +156,13 @@ height: 40px;
   width: calc(41.875%);
 }
 
-.site-footer ul { list-style: none; }
-
-.site-footer li,
 .site-footer p {
   font-size: 15px;
-  letter-spacing: -.3px;
   color: #828282;
 }
 
-
-
-/* Home styles */
-/* ----------------------------------------------------------*/
-
-
-.posts { list-style-type: none; }
-
-.posts li { margin-bottom: 30px; }
-
-.posts .post-link {
-  font-size: 24px;
-  letter-spacing: -1px;
-  line-height: 1;
-}
-
-/* Post styles */
-.post-header .meta {
-  font-size: 15px;
-  color: #818181;
-  margin-top: 5px;
-}
-
-
-.post-content > * { margin: 10px 0; }
-
 /* blockquote */
-.post-content blockquote {
+.page-content blockquote {
   padding-left: 20px;
   border-left: 8px solid #bbb;
   font-size: 18px;
@@ -205,10 +173,11 @@ height: 40px;
 
 
 /* ul ol */
-.post-content ul,
-.post-content ol { padding-left: 20px; }
-.post ul,
-.post ol { margin-left: 1.35em; }
+ul,ol{
+    list-style-position: inside;
+    margin-left: 1em;
+}
+
 
 /* code */
 code { padding: 1px 5px; background-color:#ccd;}
