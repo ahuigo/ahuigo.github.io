@@ -61,7 +61,7 @@ p{ margin: 0.8em; }
 }
 #content ul{
     list-style: inside disc;
-    -webkit-padding-start:1em;
+    margin-left:1em;
 }
 
 
@@ -70,7 +70,7 @@ p{ margin: 0.8em; }
 }
 ol,ul{
     list-style-position: inside ;
-    -webkit-padding-start:10px;
+    margin-left:10px;
 }
 .menu li ul{
     border-left: 1px solid #dbdbdb;

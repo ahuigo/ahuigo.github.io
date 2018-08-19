@@ -1,8 +1,8 @@
 ---
-title:	js dom notes
+title:	js dom 笔记
 date: 2016-01-23
 ---
-# document
+# Js dom 笔记
     document.documentElement ;//html
     document.body;  //html
 
