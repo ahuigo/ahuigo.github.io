@@ -18,6 +18,17 @@ description:
 	>>> print(r'abc\n001')
 	abc\n001
 
+escape regex string
+
+    >>> re.escape('[]')
+    \[\]
+
+in js:
+
+    function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    }
+
 ## 分组:
 
 	>>> import re

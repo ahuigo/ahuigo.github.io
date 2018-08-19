@@ -1,9 +1,11 @@
 ---
-layout: page
-title:	js notes
-category: blog
-description:
+title:	js dom notes
+date: 2016-01-23
 ---
+# document
+    document.documentElement ;//html
+    document.body;  //html
+
 # Navigator
 navigator.appName：浏览器名称；
 navigator.appVersion：浏览器版本；
@@ -305,8 +307,13 @@ foreach elements
 
 	document
 		document.getElementById('frameId').contentDocument; //有跨域限制.
+		frameId.contentDocument; //有跨域限制.
 	window:
 		document.getElementById('frameId').contentWindow; //有跨域限制.
+		frameId.contentWindow; //有跨域限制.
+    ele:
+        <body 
+        oninput="i.srcdoc=h.value+'<style>'+c.value+'</style><script>'+j.value+'<\/script>'">
 
 	属性	描述
 	align	根据周围的文字排列 iframe。
@@ -378,14 +385,17 @@ child:
 
     # 不包括#text、commnent, CDATA_SECTION
 	children 
+
     # all
 	childNodes 
 
+    # no: text,comment CDATA
     test.firstElementChild;
     test.lastElementChild;
 
-    // 所有
-    test.childNodes
+    # all
+    test.firstChild
+    test.lastChild
 
 同胞`next/previous [Element]Sibling`:
 
@@ -414,8 +424,17 @@ createElement:
 	function createNode(html){
 		var p = document.createElement("p");
 		p.innerHTML = html;
-		return p.childNodes[0];
+		return p.childNodes[0];//firstChild
 	}
+
+via range:
+
+    var range =document.createRange();
+    var fragment =range.createContextualFragment(innerHTML_JS);
+
+### append
+
+    div.append('text')
 
 ### .repalceWith
     toc.children[0].replaceWith(createToc(this.$el))

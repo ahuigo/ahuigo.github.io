@@ -7,50 +7,13 @@ from datetime import datetime
 from collections import OrderedDict
 from bs4 import BeautifulSoup as BS
 
-cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/0\.md$" '
-output = getoutput(cmd).strip()
+errors = []
 
 def basename(path):
     filename = os.path.split(path)[1]
     return os.path.splitext(filename)[0]
 
-errors = []
-
-def breakout(errors):
-    print('\n'.join(errors))
-    quit(1)
-
-def parseBlog(path):
-    blog = {}
-    data = open(path).read(500)
-    if data.startswith('---\n'):
-        pos = data.index('\n---\n', 4)
-        blogStr = data[4:pos]
-        data = data[pos+5:]
-        for line in blogStr.split('\n'):
-            k, v = line.split(':', 1)
-            blog[k] = v.strip()
-    title, content = data.split('\n', 1)
-    if 'title' not in blog:
-        blog['title'] = title[2:]
-    if 'date' not in blog:
-        blog['date'] = datetime.now().strftime('%Y-%m-%d')
-    #blog['date'] = datetime.strptime(blog['date'], '%Y-%m-%d').replace(microsecond=0).isoformat()+'Z'
-    blog['content'] = content
-    return blog
-
-def publishBlog(blogs, delete_blogs):
-    import shutil
-    #'post/js/rold.md'
-    for path in delete_blogs:
-        pageFileName = path[5:]
-        #os.unlink(f'blog/_posts/{pageFileName}')
-    for path,blog in blogs.items():
-        pageFilePath = f'blog/_posts/{blog["date"]}-{path[5].replace("/","-")}'
-        print(f'copy {path} {pageFilePath}')
-        shutil.copy2(path, pageFilePath)
-    
-def updateAtom(blogs):
+def updateAtom(blogs, max_items = 20):
     from copy import copy
     bs = BS(open('atom.xml').read(), 'lxml-xml')
     bs.updated.string = datetime.now().replace(microsecond=0).isoformat()+'Z'
@@ -59,8 +22,8 @@ def updateAtom(blogs):
 
     # clear
     l = len(bs.feed.findChildren('entry'))
-    if l > 20:
-        for i in bs.feed.findChildren('entry')[20:]:
+    if l > max_items:
+        for i in bs.feed.findChildren('entry')[max_items:]:
             i.extract()
 
     # update
@@ -80,6 +43,47 @@ def updateAtom(blogs):
             bs.entry.insert_before(entry)
     open('atom.xml', 'wb').write(bs.encode())
 
+
+def breakout(errors):
+    print('\n'.join(errors))
+    quit(1)
+
+def parseBlog(path):
+    blog = {}
+    data = open(path).read(500)
+    if data.startswith('---\n'):
+        pos = data.index('\n---\n', 4)
+        blogStr = data[4:pos]
+        data = data[pos+5:]
+        for line in blogStr.split('\n'):
+            k, v = line.split(':', 1)
+            blog[k] = v.strip()
+    title, content = data.split('\n', 1)
+    if 'title' not in blog:
+        blog['title'] = title[2:]
+    if 'date' not in blog:
+        blog['date'] = ''; #datetime.now().strftime('%Y-%m-%d')
+    blog['content'] = content
+    return blog
+
+def publishBlog(blogs, delete_blogs):
+    import shutil
+    #'post/git/git-hooks-rold.md'
+    for path in delete_blogs:
+        pageFileName = path[5:]
+        #os.unlink(f'blog/_posts/{pageFileName}')
+    for path,blog in blogs.items():
+        if blog['date']:
+            tpath = path[5:]
+            paths = tpath.split('/', 1)
+            if len(paths) > 1 and paths[1].startswith(paths[0]):
+                tpath = paths[1]
+            pageFilePath = f'blog/_posts/{blog["date"]}-{tpath.replace("/","-")}'
+            print(f'copy {path} {pageFilePath}')
+            shutil.copy2(path, pageFilePath)
+    
+cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/0\.md$" '
+output = getoutput(cmd).strip()
 if output:
     indexFile = 'post/0.md'
     blogMd = open(indexFile)

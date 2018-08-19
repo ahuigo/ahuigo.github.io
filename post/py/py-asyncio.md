@@ -83,6 +83,9 @@ asyncio future.set_result() and result():
     await p.wait()
 
 ## Future
+> http://blog.gusibi.com/post/python-concurrency-with-futures/
+Future 是 concurrent.futures 模块和 asyncio 包的重要组件。从Python3.4起，标准库中有两个为Future的类：concurrent.futures.Future 和 asyncio.Future。这两个Future作用相同。
+
 Future 是抽象的Task, Task is subclass of Future, Future 也是一种Awaitable
 
 1. Encapsulates(包括) the asynchronous execution of a callable.
