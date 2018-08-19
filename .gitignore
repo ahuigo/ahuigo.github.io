@@ -1,0 +1,20 @@
+*.tmp
+tmp
+pri
+Gemfile.lock
+.vscode
+jek.exvim
+.exvim.jek/
+.DS_Store
+__pycache__
+.netrwhist
+
+# node
+package-lock.json
+node_modules
+
+# em
+/img/em
+
+# nvim
+#tool/nvim/plugged
