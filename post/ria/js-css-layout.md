@@ -1,11 +1,12 @@
 ---
 layout: page
-title:
+title: css 布局
+date: 2018-03-03
 category: blog
 description:
 ---
-# Preface
-http://zh.learnlayout.com/position.html
+# CSS 布局
+> 参考: http://zh.learnlayout.com/position.html
 
 # display
 
