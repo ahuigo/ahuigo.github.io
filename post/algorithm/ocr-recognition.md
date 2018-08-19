@@ -2,7 +2,6 @@
 date: 20130102
 ---
 # 验证码识别工具tesseract
-> 这是一篇2013写的旧文
 首先说下我要用到的工具：tesseract/ImageMagick/...etc.
 
 ## tesseract是什么？ 

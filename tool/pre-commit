@@ -138,4 +138,4 @@ if output:
             article = f'- [{blog["title"]}](#/{path}) '
             print(article)
             fp.write(article+'\n')
-    getoutput(f'git add {indexFile} atom.xml')
+    getoutput(f'git add {indexFile}')
