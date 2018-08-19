@@ -1,7 +1,7 @@
 # Site settings
 title: ahuigo
 name: ahuigo
-email: 
+email: ''
 description: ''
 baseurl: ""
 url: "http://ahuigo.github.io"
@@ -12,3 +12,5 @@ markdown: kramdown
 paginate: 10 
 paginate_path: "/p:num"
 permalink: /p/:title
+plugins:
+  - jekyll-feed

@@ -1,7 +1,3 @@
----
-date: 2018-08-19
-title: 让innerHTML 执行js
----
 # 让innerHTML 执行js
 我们改变 InnerHTML 时，DOM 处于 DOMContentLoaded  状态了，js不执行, style执行 
 
