@@ -50,7 +50,7 @@ def breakout(errors):
 
 def parseBlog(path):
     blog = {}
-    data = open(path).read(500)
+    data = open(path).read()
     if data.startswith('---\n'):
         pos = data.index('\n---\n', 4)
         blogStr = data[4:pos]
@@ -67,7 +67,7 @@ def parseBlog(path):
     return blog
 
 def publishBlog(blogs, delete_blogs):
-    import shutil
+    #import shutil
     #'post/git/git-hooks-rold.md'
     for path in delete_blogs:
         pageFileName = path[5:]
@@ -80,8 +80,9 @@ def publishBlog(blogs, delete_blogs):
                 tpath = paths[1]
             pageFilePath = f'blog/_posts/{blog["date"]}-{tpath.replace("/","-")}'
             print(f'copy {path} {pageFilePath}')
-            shutil.copy2(path, pageFilePath)
-    
+            open(pageFilePath,'w').write(f'# {blog["title"]}\n'+blog['content'])
+            #shutil.copy2(path, pageFilePath)
+
 cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/0\.md$" '
 output = getoutput(cmd).strip()
 if output:
