@@ -132,6 +132,8 @@ align-items 用来定义`伸缩项目`在`侧轴`的对齐方式
     [align-self]用来在单独的伸缩项目上覆写默认的对齐方式，这个属性是用来覆盖伸缩容器属性align-items对每一行的对齐方式。
         align-self: auto | flex-start | flex-end | center | baseline | stretch
 
+> flex container 会限制item: max-width
+
 ## flex center
 http://zh.learnlayout.com/flexbox.html
 控制本item在父容器中的位置
@@ -141,6 +143,18 @@ http://zh.learnlayout.com/flexbox.html
 	justify-content: center;
 
 # align
+## container align
+
+	justify-content: horizonal center
+	align-items: vertical center)
+
+	align-content: justify-content属性类似。只不过这里元素是以一行为单位。
+
+居中:
+
+    display:  flex;
+    justify-content: center;
+    align-items: center; //height: 
 
 ## inline align
 
@@ -155,41 +169,44 @@ http://zh.learnlayout.com/flexbox.html
         <button>button2</button>
     </div>
 
-## container align
-
-	justify-content: horizonal center
-	align-items: vertical center)
-
-	align-content: justify-content属性类似。只不过这里元素是以一行为单位。
-
-居中:
-
-    display:  flex;
-    justify-content: center;
-    align-items: center;
-
 ## 传统居中
 ### 水平
 1. margin: 0 auto;
 2. margin-right/left+float: 计算量大
     3. width:200px; margin-right: -200px;float:right; 
 3. flex: 大招
-4. absolue+margin: 
+4. absolue/relative+translate: 
+    transform: translate(-50%, -50%);
+5. absolue/relative+margin: 
     5. left:50%, margin-left: -width:
-4. absolue+margin: 
-    5. left:50%, margin-left: -width:
-4. absolue+relative: 两层
+5. absolue+relative: 两层
     1. div_parent: left:50%; div_sub: relative,left: -50% 
 
 ### page center
-利用absolute + margin 修正(一层, 但得算margin=-width/2)
+one: flex
+
+    display: flex
+    justify-content: center;
+    align-items: center; 
+    height: 100px;
+
+one: 利用absolute + margin 修正(一层, 但得算margin=-width/2)
 
 	<div style="position: absolute; left: 50%;top: 50%;z-index: 99;background: red;
 			width: 500px;height: 500px;
 			margin-top: -250px;margin-left: -250px;">
     </div>
 
-利用absolute + 内层relative top/left 修正(两层)(absolue/relative 随便用哪个都一样)
+one: absolute + translate
+
+    position: absolute;
+    width: 800px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+
+两层: 利用absolute + 内层relative top/left 修正(两层)(absolue/relative 随便用哪个都一样)
 
     <div style="
 		position: absolute;
@@ -347,16 +364,23 @@ float的元素的margin 由于浮动起来了，不再影响父容器，但是ch
 
 		fixed; 以整个视窗为基准,不受鼠标滚动影响
 
-		relative/absolute以positioned 父结点为基准
+		relative/absolute以parent positioned 结点为基准
             没有positioned 的话，则以: window.innerWidth/innerHeight 为基准
 
 
-### relative + height percent
-When you set a percentage height on an element who's parent elements(包括static) don't have heights set:
+### relative/static + height percent
+When you set a percentage height on an element who's parent elements(包括static/relative) don't have valid heights set:
 
     height: 0%; //is auto normal height;
 
-absolute 么有这个毛病
+Summary
+1. absolute 么有这个毛病: 严格依赖 parent positioned 一定有height
+2. body: height:100% not work 是因为 html is static
+
+解决方案：
+1. 自己变absolute
+2. parent: valid height(not auto height)
+3. html: height: 100% valid(即使是static/relative)
 
 ## media
 “响应式设计（Responsive Design”) 要借助媒体查询

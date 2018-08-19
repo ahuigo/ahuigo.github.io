@@ -199,7 +199,8 @@ If you want to also remove *directories*, run
 
 	git revert HEAD //Creat a new commit to drop HEAD's modifies. '
         相当于merge HEAD^ based on HEAD: 
-        git checkout HEAD^ . ; // 让working === index == HEAD^. 
+        git checkout HEAD^ . ; // copy HEAD^ -> working === index 
+            git checkout . ; // copy index -> working
         git commit -m 'rever version xxx'
 
     # merge parent based on HEAD^^
@@ -266,7 +267,7 @@ Say you have this, where C is your HEAD and (F) is the state of your files.
 
 You want to nuke commit C and never see it again.
 
-### git reset hard
+### git reset hard(index/working)
 `--hard` You do this:
 
 	git reset --hard;	# same: git reset HEAD . --hard
@@ -280,7 +281,7 @@ The result is:
 	  ↑
 	master
 
-### git reset
+### git reset(index)
 undo commit -am 'msg'
 
 	git reset ;	# same as: git reset HEAD .

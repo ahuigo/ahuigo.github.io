@@ -125,6 +125,8 @@ css3:
     [attribute^=value]	a[src^="https"]	选择其 src 属性值以 "https" 开头的每个 <a> 元素。	3
     [attribute$=value]	a[src$=".pdf"]	选择其 src 属性以 ".pdf" 结尾的所有 <a> 元素。	3
     [attribute*=value]	a[src*="abc"]	选择其 src 属性中包含 "abc" 子串的每个 <a> 元素。	3
+    [attribute~=value]	[title~=flower]	选择 title 属性包含单词 "flower" 的所有元素。	2
+    [attribute|=value]	[lang|=en]	选择 lang 属性值以 "en" 开头的所有元素。
 
 jquery 独有
 

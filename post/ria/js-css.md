@@ -1,10 +1,8 @@
 ---
-layout: page
-title:
-category: blog
-description:
+title: CSS 笔记
+date: 2017-12-12
 ---
-# Preface
+# CSS 笔记
 css/html5/js 兼容表
 http://caniuse.com/
 
@@ -24,11 +22,6 @@ http://caniuse.com/
 # ide
 css snippets plugin
 http://docs.emmet.io/
-
-# lib
-
-## bootstrap
-http://getbootstrap.com/getting-started/
 
 # autosize
 如果想让网页宽度等于屏幕宽度（width=device-width），原始缩放比例（initial-scale=1）为1.0，即网页初始大小占屏幕面积的100%。
@@ -119,17 +112,17 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 - 多列布局
 - 用户界面
 
-# opacity透明度
+## opacity透明度
 
 	opacity: 0~1
 	background: rgba(red,green,blue,opacity);
 
-# background
+## background
 
 	background:url x y no-repeat;//xy表示位置, 左上角是(0,0)
 	background:rgba/hsla;
 
-## background-color
+### background-color
 
 	background-color:
 		//rgba color
@@ -137,7 +130,7 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 		//hsla
 		rgba(0,100%,0,0.5)
 
-## background-size
+### background-size
 背景尺寸
 
 	background-size:
@@ -145,38 +138,32 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 		10px 20px;放缩
 		50% 50%;放缩
 
-## background-position(位置)
+#### background-position(位置)
 
  	background-position:
 		center center;//x y
 		left;//x y
 
-## background-origin
+### background-origin
 背景定位区域
 
 	content-box
 	padding-box
 	border-box
 
-## background-image:
+### background-image:
 	img1,img2, ...;
 
 	background-repeat: no-repeat;
 	background-attachment: fixed; //do not scroll with the page
 
-# input
+## input
 
 	input[type="submit"] {
 		background: limegreen;
 		color: black;
 		border:0;
 	}
-
-# boder
-
-	border-radius: 10px;//圆角半径
-	box-shadow: 2px 4px 6px 8px #ccc;
-	box-shadow: x  y 模糊值 延伸值 #ccc;//模糊值不能为负
 
 ## box-shadow
 box-shadow: h-shadow v-shadow blur spread color inset;
@@ -187,7 +174,16 @@ box-shadow: h-shadow v-shadow blur spread color inset;
 	color:颜色
 	inset: 内部显示
 
-## boder-image
+## boder
+
+	border-radius: 10px;//圆角半径
+	box-shadow: 2px 4px 6px 8px #ccc;
+	box-shadow: x  y 模糊值 延伸值 #ccc;//模糊值不能为负
+
+### border 合并间隔
+	border-collapse: collapse
+
+### boder-image
 
 	border-image: url top right bottom left  repeat|initial|inherit;
 	object.style.borderImage="url(border.png) 30 30 round"
@@ -196,26 +192,14 @@ box-shadow: h-shadow v-shadow blur spread color inset;
 		repeat	重复	不改变大小
 		stretch		拉伸	改变大小 1个
 
-## border-color
-
-	color 颜色
-	initial 默认值
-	transparent 透明
-
-# Table
+## Table
 set column width:
 
 	th,td{width:100px;overflow:hidden}
 	table{width:1000px;table-layout:fixed}
 
-## border
-
-	合并间隔
-	border-collapse: collapse
-
-# About Text
-
-## text base
+## About Text
+### text base
 
 	属性	描述
 	color	文本颜色
@@ -232,18 +216,18 @@ set column width:
 	white-space	元素中空白的处理方式
 	word-spacing	字间距
 
-## text-shadow
+### text-shadow
 	text-shadow: 5px 5px 5px #FF0000;
 	text-shadow: 水平 垂直 模糊 #FF0000;
 
-## text-transform
+### text-transform
 	text-transform:
 		uppercase|lowercase|capitalize;
 
-## white-space
+### white-space
 https://www.zhihu.com/question/19895400
 
-## wrap
+### wrap
 
 	word-wrap:
 		break-word; //对长单词不截断，强制换行, 短单词不受影响(配合 word-break 生效)
@@ -260,7 +244,7 @@ https://www.zhihu.com/question/19895400
 		pre-wrap;不合空格| 回车换行 | 长句要拆行
 		pre-line;合并空格| 回车换行 | 长句要拆行
 
-## overflow
+### overflow
 overflow 控制元素内容不超出元素本身width/height.
 
 	overflow:
@@ -289,7 +273,7 @@ overflow 控制元素内容不超出元素本身width/height.
 		  <img src="http://www.hdwallpapers.in/walls/cute_dog_boo-wide.jpg" width="300">
 	</div>
 
-## text-overflow
+### text-overflow
 超出长度时加省略号"..."
 
 	div {
@@ -297,7 +281,7 @@ overflow 控制元素内容不超出元素本身width/height.
 		text-overflow: ellipsis;
 	}
 
-# content
+## content
 设定显示内容：
 
 	content:none | normal |<string>	| url | open-quote | close-quote | no-open-quote | no-close-quote | attr(attribute) | counter(name[, style])
@@ -317,14 +301,16 @@ overflow 控制元素内容不超出元素本身width/height.
 
 Refer to http://www.qianduan.net/css-content-counter-increment-counter-reset.html
 
-# Font
-
+## Font
 	font-family:
 	font-size:2em;
 	font-weight:
 		normal bold 100 200
 	font-style:
 		normal	italic
+
+## cursor
+cursor: pointer
 
 # transform(2D)
 旋转、移位....
