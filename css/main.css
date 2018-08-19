@@ -1,10 +1,6 @@
 /* for mobile*/
 @media screen and (max-width: 480px) {
-   
 }
-
-/* Base */
-/* ----------------------------------------------------------*/
 
 * {
   margin: 0;
@@ -79,12 +75,6 @@ width: 100%;
 height: 40px;
 }
 
-
-.wrap {
-  max-width: 85%;
-  padding: 5px 3%;
-  margin: 0 auto;
-}
 .page-content .wrap{
   box-shadow: 1px 2px 1px rgba(0,0,0,.15);
   border-radius: 15px;
@@ -100,40 +90,41 @@ height: 40px;
 
 .site-header {
   border-top: 5px solid #333;
+    padding: 5px 3%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.menu{
+    font-size: 1.8em;
+    display: flex;
+}
+.menu .site-title{
+  margin: 0px 5px;
+  position: relative;
+}
+.site-title::bebore{
+    border-bottom: 2px solid;
+    width: 0%;
+    height: 100%;
+    content: "";
+    position: absolute;
+}
+.site-title:hover::bebore{
+    height: 100%;
+    left:0;
 }
 
-.header-ico{float:left;}
+.header-ico{float:right;}
 .header-ico a{
    display:inline-block;
    width:32px;
    height:32px;
 }
 
-.site-title,
-.site-title:hover,
-.site-title:visited {
-  display: block;
-  color: #333;
-  letter-spacing: -1px;
-  float: left;
-  margin: 0px 5px;
-}
 
-.site-nav {
-  float: right;
-  line-height: 56px;
-}
-
-.site-nav .menu-icon { display: none; }
-
-.site-nav .page-link {
-  margin-left: 20px;
-  color: #727272;
-  letter-spacing: -.5px;
-}
 
 /* Site footer */
-
 .site-footer {
   border-top: 1px solid #e8e8e8;
   padding: 30px 0;
