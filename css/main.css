@@ -103,16 +103,21 @@ height: 40px;
   margin: 0px 5px;
   position: relative;
 }
-.site-title::bebore{
+.site-title::before{
     border-bottom: 2px solid;
     width: 0%;
+    left: 100%;
     height: 100%;
     content: "";
     position: absolute;
+    transition: 0.2s all linear;
 }
-.site-title:hover::bebore{
-    height: 100%;
+.site-title:hover::before{
+    width: 100%;
     left:0;
+}
+.site-title:hover ~ .site-title::before{
+    left: 0;
 }
 
 .header-ico{float:right;}
