@@ -1,4 +1,5 @@
 ---
+layout: page
 date: 2018-08-19
 title: 让innerHTML 执行js
 ---

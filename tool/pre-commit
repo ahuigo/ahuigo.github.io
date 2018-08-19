@@ -80,7 +80,14 @@ def publishBlog(blogs, delete_blogs):
                 tpath = paths[1]
             pageFilePath = f'blog/_posts/{blog["date"]}-{tpath.replace("/","-")}'
             print(f'copy {path} {pageFilePath}')
-            open(pageFilePath,'w').write(f'# {blog["title"]}\n'+blog['content'])
+            meta = f'''---
+layout: page
+title: {blog['title']}
+category: blog
+description: 
+---
+'''
+            open(pageFilePath,'w').write(f'{meta}# {blog["title"]}\n'+blog['content'])
             #shutil.copy2(path, pageFilePath)
 
 cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/0\.md$" '
