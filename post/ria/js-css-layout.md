@@ -80,8 +80,6 @@ display:flex, 比 inline-block 简单
         width:300px; 
     }
 
-
-
 ## flex 容器
 flex 容器有主轴，侧轴之分
 
