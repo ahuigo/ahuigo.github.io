@@ -1,3 +1,9 @@
+---
+layout: page
+title: Chrome devtools 使用汇总
+category: blog
+description: 
+---
 # Chrome devtools 使用汇总
 chrome://chrome-urls/
 
@@ -5,13 +11,13 @@ chrome://chrome-urls/
 参考文章:
 - https://umaar.com/dev-tips/162-network-overrides/
 
-我们做web 开发时常常想直接在devtools 中实时修改js/css/html 文件
+我们做web 开发时常常想直接在devtools 中实时修改js/css/html 文件
 
 chrome devtool 的source 选项卡(`cmd+6`) 正好提供了这两个功能
 2. Filesystem
     - 用于直接修改本地文件 
     - chrome 会智能的将filesystem 与localhost 请求绑定(link to filesystem), 
-    - 绑定后有一个绿色的标志，这样就不会cache 请求，(127.0.0.1)网络请求就会实时生效。(如果不是绿色，强制刷新下)
+    - 绑定后有一个绿色的标志，这样就不会cache 请求，(127.0.0.1)网络请求就会实时生效。
 1. Overrides
     - 用于覆盖网络请求: 在`source/page`右键`save for override`或直接`edit`，保存的文件都被存储到overrides 指定目录(`按照域名建立文件夹`). 这种改写是`临时的`
     - 只能指定一个目录
