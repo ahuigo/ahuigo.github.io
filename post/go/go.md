@@ -1,17 +1,11 @@
 ---
 layout: page
-title:	go
-category: blog
+title:	go book
+date: 2016-06-19
 description:
 ---
-# Preface
-
-5. To get started writing web applications, watch A simple programming environment (slides) and read the Writing Web Applications tutorial.
-
-6. The First Class Functions in Go codewalk gives an interesting perspective on Go's function types.
-
-# book
-
+# The go book
+1. https://go101.org/article/101.html
 1. spec:
 https://golang.org/ref/spec#Lexical_elements
 https://tour.golang.org/basics/5

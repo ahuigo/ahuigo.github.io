@@ -8,7 +8,7 @@ chrome://chrome-urls/
 参考文章:
 - https://umaar.com/dev-tips/162-network-overrides/
 
-我们做web 开发时常常想直接在devtools 中实时修改js/css/html 文件
+我们做web 开发时常常想直接在devtools 中实时修改js/css/html 文件
 
 chrome devtool 的source 选项卡(`cmd+6`) 正好提供了这两个功能
 2. Filesystem

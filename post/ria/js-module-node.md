@@ -130,3 +130,26 @@ PWD不固定:
 
 ## Reference
 1. https://juejin.im/post/5add67986fb9a07ab83da106 by bestswifter 
+
+# Node: CommonJS
+## Create module
+hello module: hello.js
+
+    //暴露变量
+    module.exports = {
+        hello: hello,
+        greet: greet
+    };
+    exports.hello = hello;
+    exports.greet = greet;
+
+## 加载模块
+
+    // 引入./hello.js模块,
+    var s = 'Hello';
+    var greet = require('./hello');
+    greet('Michael'); // Hello, Michael!
+
+如果没有`.`或者`绝对路劲`, Node会依次在内置模块、全局模块和当前模块下查找hello.js, 但是不会在当前目录查找
+
+    var greet = require('hello');

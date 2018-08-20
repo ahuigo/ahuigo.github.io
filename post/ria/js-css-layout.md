@@ -184,7 +184,7 @@ http://zh.learnlayout.com/flexbox.html
     1. div_parent: left:50%; div_sub: relative,left: -50% 
 
 ### page center
-one: flex
+one: flex (inner center)
 
     display: flex
     justify-content: center;
@@ -198,14 +198,12 @@ one: 利用absolute + margin 修正(一层, 但得算margin=-width/2)
 			margin-top: -250px;margin-left: -250px;">
     </div>
 
-one: absolute + translate
+one: absolute + translate(self)
 
     position: absolute;
-    width: 800px;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-
+    transform: translate(-50%, -50%);// 基于自己的width/height
 
 两层: 利用absolute + 内层relative top/left 修正(两层)(absolue/relative 随便用哪个都一样)
 
@@ -223,6 +221,23 @@ one: absolute + translate
     </div>
 
 ## screen center
+flex
+
+    <div style="
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 99%;
+		height: 99%;
+		background: red;
+		opacity: 0.5;
+		">
+        <div style="background:blue">center</div>
+    </div>
+
 利用fixed + margin修正(margin = -width/2):
 ` margin-top: -50px;	//不可以用百分比`
 

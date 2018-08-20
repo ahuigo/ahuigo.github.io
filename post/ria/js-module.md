@@ -1,6 +1,6 @@
 ---
 title: ES6 Modudle 使用
-date: 20180405
+date: 2018-04-05
 ---
 # global variable
 Module: don't use globals in my applications.
@@ -134,30 +134,6 @@ default 与其他变量混用
 
     export * from 'my_module';
     export { es6 as default } from './someModule';
-
-
-# Node: commonJS
-## Create module
-hello module: hello.js
-
-    //暴露变量
-    module.exports = {
-        hello: hello,
-        greet: greet
-    };
-    exports.hello = hello;
-    exports.greet = greet;
-
-## 加载模块
-
-    // 引入./hello.js模块,
-    var s = 'Hello';
-    var greet = require('./hello');
-    greet('Michael'); // Hello, Michael!
-
-如果没有`.`或者`绝对路劲`, Node会依次在内置模块、全局模块和当前模块下查找hello.js, 但是不会在当前目录查找
-
-    var greet = require('hello');
 
 # Package, 打包
 http://www.ruanyifeng.com/blog/2014/09/package-management.html

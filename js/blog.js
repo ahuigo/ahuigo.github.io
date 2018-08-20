@@ -96,7 +96,6 @@ const mdConponent = {
     } else {
       toc.appendChild(createToc(this.$el))
     }
-    //disqus reset
     const h1nodes = $$('#content h1')
 
     // fix title + date
@@ -122,7 +121,7 @@ const mdConponent = {
       h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
       document.title = h1node.innerText
     }
-    disqus()
+    disqus_reset()
   },
   methods: {
     fetchMd() {
