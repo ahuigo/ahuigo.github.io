@@ -1,5 +1,5 @@
 ---
-date: 20180818
+date: 2018-08-18
 ---
 # Node import/export 支持
 Node10 已经支持es6 的import/export, 

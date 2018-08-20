@@ -1,11 +1,10 @@
 ---
 layout: page
 title:	Shell Programming
-category: blog
+date: 2014-3-5
 description:
 ---
-
-# Preface
+# Shell Programming
 
 # Variable
 
