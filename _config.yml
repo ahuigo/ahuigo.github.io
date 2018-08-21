@@ -12,5 +12,6 @@ markdown: kramdown
 paginate: 10 
 paginate_path: "/p:num"
 permalink: /p/:title
-plugins:
-  - jekyll-feed
+
+#plugins:
+#  - jekyll-feed
