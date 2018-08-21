@@ -23,6 +23,8 @@
     </script>
 
 ## ignore component
+v-pre
+
     <com v-pre>
 
 ## 简单组件

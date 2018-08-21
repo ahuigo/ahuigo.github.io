@@ -332,12 +332,17 @@ type 用于查看命令的属性
 
     sh -c 'ls ; ls'
     sh -c 'cmd1 && cmd2'
+    sh -c 'cmd1 & cmd2'
+    sh -c 'cmd1 ; cmd2'
     sudo -- sh -c 'date; who am i'
 
-ampersand`&`
+1. ampersand `&` is for Asynchronous lists:
+1. semi-column `;` is actually a sequential list.
+2. `&&` is for combine cmd to one
 
-    sh -c 'ls & ;ls'; # error
-    sh -c 'ls & ls';  # ampersand 本身代替了;
+Empty command is fobidden:
+
+    sh -c 'ls & ;ls'; # syntax error
 
 ## execute command `cmd` or $(cmd)
 以子进程执行cmd.(你也可通过source 以当前进程执行cmd)

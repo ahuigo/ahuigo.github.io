@@ -1,27 +1,30 @@
 # 分类
 
-    实数: x 的整数部分[x], 小数部分{x}
-        整数, Integer: ℕ
-            正整数, positive:
-        有理无理:
-            有理数: 两个整数比的数
-            无理数: $\sqrt {2}$,  \\(\pi\\)
-            a+b+2√(ab) = (√a+√b)^2
-            4-√12 = (√3-1)^2
-    虚数:1+1i
+- 实数: x 的整数部分[x], 小数部分{x}
+    - 整数, Integer: ℕ
+        - 正整数, positive:
+    - 有理无理:
+        - 有理数: 两个整数比的数
+        - 无理数: $$\sqrt {2}$$,  $$\pi$$
+        - $$a+b+2√(ab) = (√a+√b)^2$$
+        - $$4-√12 = (√3-1)^2$$
+- 虚数: 1+1i
 
 ## function
-Power function  幂函数 x^a=y x=y^(1/a)
+Power function  幂函数 $$x^a=y$$ $$ x=y^(1/a) $$
 
-Exponential_function 指数函数e^x
+Exponential_function 指数函数 $$e^x$$
 Logarithm:
 
 翻倍：
+
+$$
     (1+x)^10 = 2 ; x=70/10 = 7%
     (1+0.05)^n = 2 ; n=70/5 = 14
+$$
 
 ## 整除
-y被x整除: x|y, 即y=ax, 且a不为0
+y被x整除: $$ x|y $$, 即y=ax, 且a不为0
 
 
 ## 公倍数, 公约数
@@ -29,9 +32,9 @@ y被x整除: x|y, 即y=ax, 且a不为0
 a,b 的最小公倍数(包含所有元素): [a,b]
 a,b 的最大公约数(包含公共元素): (a,b)
 
-性质0:  a^2*b^2 与b^2*c^2 的最大公约数是: b^2, 最小公倍数是a^2*b^2*c^2
-性质1:  $[a,b] * (a,b) = ab$
-性质2:  若 $a|bc$ 且 $(a,b)=1$, 则 $a|c$
+性质0:  $$ a^2*b^2 $$ 与 $$ b^2*c^2 $$ 的最大公约数是: $$ b^2 $$, 最小公倍数是 $$ a^2*b^2*c^2 $$
+性质1:  $$ [a,b] * (a,b) = ab $$
+性质2:  若 $$ a|bc $$ 且 $(a,b)=1$, 则 $$a|c$$
 
 ### 互质, relatively prime
 互质（英文：coprime，符号：⊥，又称互素、relatively prime、mutually prime、co-prime）
@@ -95,5 +98,3 @@ a,b 的最大公约数(包含公共元素): (a,b)
 3. 若g!=1, 
     4. 不存在x使 ax (mod n) = 1 (mod n)，
     5. 否则就出现 ax+ny (mod n) = 1 (mod n) 与g!=1矛盾
-
-### 中国剩余定理
