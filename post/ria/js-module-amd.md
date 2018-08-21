@@ -1,20 +1,8 @@
+---
+date: 2018-03-04
+---
 # JS AMD 模块规范
 由于浏览器同步加载js 会阻塞，AMD 的出现时为了异步加载. (es6 将代替这一规范)
-
-# js load
-
-## defer vs async
-
-    <script src="async.js" async></script>
-    <script src="async.js" defer></script>
-
-1. defer: guarantees the order of execution in which they appear. (after html parsed done)
-    1. defer: html 解析完成后, 顺序阻塞, 一定在 `DOMContentLoaded`/onload前, 
-2. async: excute as soon as loaded(no order, 无序)
-    2. async: 非阻塞异步，可能在 `DOMContentLoaded` 事件前后，但是一定在`window.onload 事件`之前
-
-onready:  DomContentLoaded
-onload: inlude dom+pic
 
 # RequireJs: AMD
 以下js 加载是按顺序加载的，它有两个问题:

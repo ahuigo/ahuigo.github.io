@@ -432,17 +432,11 @@ via range:
     var range =document.createRange();
     var fragment =range.createContextualFragment(innerHTML_JS);
 
-### append
+### .append .appendChild
 
-    div.append('text')
+    div.append('text'or node)
+    $("#holder > div:nth-child(2)").after("<div>foobar</div>");
 
-### .repalceWith
-    toc.children[0].replaceWith(createToc(this.$el))
-
-### .repalceChild
-    toc.replaceChild(createToc(this.$el), children[0])
-
-### .appendChild
 Example 浮层: js-demo/alert-float.js
 
     # resort node
@@ -452,25 +446,26 @@ Example 浮层: js-demo/alert-float.js
         .sort((a,b)=>a.innerText>b.innerText?1:-1)
         .map(node=>list.appendChild(node))
 
-### .insertBefore, .before
+### .before, .insertBefore
 
-	node.before(child);
+	node.before(sibling);
 	node.parentNode.insertBefore(child, parent.childNodes[0]);
     $("#holder > div:nth-child(2)").before("<div>foobar</div>");
     $("#holder > div:eq(2)").before("<div>foobar</div>");
 
-    # dom 没有after
-    $("#holder > div:nth-child(2)").after("<div>foobar</div>");
-
-### .removeChild
-    #self
+### .remove, .removeChild 
 	child.parentNode.removeChild(child);
+	jqueryNode.remove(subnode)
+
+    #self
 	child.remove();
 	jqueryNode.remove() 
 
-    # subnode
-	jqueryNode.remove(subnode)
+### .repalceWith
+    toc.children[0].replaceWith(createToc(this.$el))
 
+### .repalceChild
+    toc.replaceChild(createToc(this.$el), children[0])
 
 ## node 属性
 

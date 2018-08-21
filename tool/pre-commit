@@ -138,5 +138,5 @@ if output:
             article = f'- [{blog["title"]}](#/{path}) '
             print(article)
             fp.write(article+'\n')
-    getoutput(f'cd blog && git add _posts&& git commit -am "sync" && git push')
+
     getoutput(f'ls {indexFile}')

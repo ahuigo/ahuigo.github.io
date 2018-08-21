@@ -16,6 +16,8 @@ Useful hooks
     post-checkout
     pre-rebase
 
+> Warn: 不要在hooks 操作 submodules 
+
 # applypatch-msg
 
 	GIT_DIR/hooks/applypatch-msg

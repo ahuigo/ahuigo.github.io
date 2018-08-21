@@ -169,10 +169,17 @@ for class:
 	:enabled
 	:image
 
+## 伪类、伪元素
+css3 才区分
+1. :伪类 pseudo-classes 
+    1. :first-child ，:link:，vistited，:hover:，active:focus，:lang，:not(s)，：root等...
+2. ::伪元素 A pseudo-element. 基于元素的抽象，并不存在于文档中，所以叫伪元素。
+    1. ::first-line，::first-letter，::before，::after，::placeholder,::selection
+
 ## create jq node
 
 	$('<span></span>')
 
-## Convert dom node to jquery object:
+### Convert dom node to jquery object:
 
 	 $jqNode = $(Node)
