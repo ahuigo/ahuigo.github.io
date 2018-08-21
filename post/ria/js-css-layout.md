@@ -264,13 +264,13 @@ flex
 # 位置的css 核心属性
 
 ## float
-float 因为自己漂浮起来，导致`下面的块`的滑动，`上面的块`不会滑动:
+float 因为自己漂浮起来，导致`下面的块`的滑动，`上面的块`不会滑动: `自己`float 不会挤上面的空间
 1. 下面的float 块按宽度往上挤的效果(属性为float:left/right 且有空间)
 2. 非float 块, 会向上移动(注意: 文字不是block, 本身会排斥float 块, 所以文字不会向上移动)
 3. 文字不会去挤压float 块，产生文字环绕的效果
 
 ### 关于float+clear: 
-1. parent 有height时，`下面的块`不会滑动上去(本质上的原因是，float 本身不占用parent.height)
+1. parent 有height时，`下面的块`不会滑动上去(本质上的原因是，float 本身不占用parent.height)
 1. clear 是告诉自己不要往左上、右上挤，
 2. 也不要去填补 float 浮动起来后的空位
 
@@ -282,6 +282,13 @@ e.g.
     # clear 内部无效(冲突的)
     <div style="float:left; background:red;">你好<div style="clear:left"></div></div>
 
+    # 自己清理
+    &::after: {
+        clear: "both",
+        content: "",
+        display: "table"
+    }
+
 example:
 
     nav {
@@ -291,8 +298,6 @@ example:
     section {
         margin-left: 200px;
     }
-
-
 
 ### overflow
 浮动元素不占用父容器的宽高，可能会溢出容器，可以加overflow, item 会继承的(flex box也如此):
@@ -350,13 +355,13 @@ margin 控制的是相邻元素之间的border 外边界间距。float和普通�
 2. 如果当前元素是float-right, 那么以margin-right为准, 而非margin-left.
 
 ### margin 的原点坐标
-1. 两个div 之间：border 外沿
+1. 两个div 之间：border 外沿
     2. 如果当前元素是float, 则margin就是距离其下元素的border外沿的距离.
 2. parent/child 之间：
-    1. parent有border_or_padding: **child/parent's padding 内边界**; parent/不影响
-    2. parent 无border+无padding: 
+    1. parent有border_or_padding: **child/parent's padding 内边界**; parent/不影响
+    2. parent 无border+无padding: 
         1. all child has float: child/parent's padding 内边界; parent/不影响
-        2. any child not float: `first non-float child上升到最顶`; **parent/first non-float child的margin绝对值最大者**
+        2. any child not float: `first non-float child's margin-top传parent`; **parent/first non-float child 二者的margin绝对值最大者**(no border/padding/float)
 
 float的元素的margin 由于浮动起来了，不再影响父容器，但是child's margin 起点是parent's padding内边界开始
 

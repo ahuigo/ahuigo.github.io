@@ -1,12 +1,11 @@
 ---
 layout: page
-title:
+date: 2018-03-03
 category: blog
 description:
 ---
-# Preface
-
-# git submodule add
+# git submodule
+## add
 
 	$ git submodule add https://github.com/ahuigo/c-lib
 	Cloning into 'c-lib'...
@@ -23,7 +22,7 @@ description:
 
 > 可通过在本地执行 `git config submodule.c-lib.url <URL>` 来覆盖这个选项的值
 
-## git diff
+### git diff
 
 	$ git diff --cached ;# 简化信息
 	$ git diff --cached --submodule; # 显示submodule 的sha
@@ -51,18 +50,18 @@ description:
 	 create mode 100644 .gitmodules
 	 create mode 160000 c-lib
 
-# 克隆含有子模块的项目
+## clone
 克隆项目时，默认会包含该子模块目录，但其中还没有任何文件, 需要init 并拉取update(fetch+checkout)
 
 0. git submodule init
+    .gitmodules -> .git/config.
 	Initialize the submodules recorded in the index
-    by copying submodule names and urls from .gitmodules to .git/config.
-1. git submodule update
+2. git submodule sync
+    .gitmodules -> .git/config + mod/.git/config
+	1. updates the *metadata* about a submodule to reflect changes in the submodule URL.
+1. git submodule update(fetch+checkout)
 	0. with init: git submodule update --init
 	1. updates the contents of the submodules: It is effectively running a "git fetch" and "git checkout" in each of your submodules.
-2. git submodule sync
-	1. updates the *metadata* about a submodule to reflect changes in the submodule URL.
-	2. It re-synchronizes the information in *.git/config* with the information in *.gitmodules*.
 
 更简单的方式在克隆时：
 
@@ -77,24 +76,27 @@ description:
 
 	git config -f .gitmodules submodule.c-lib.branch stable
 
-## submodule sync
-
 ### change remote url
-1. You should just be able to edit the `.gitmodules` file to update the URL
-	1. or via command: `git config --file=.gitmodules submodule.SubmodName.url https://github.com/username/ABC.git`
-
+1. edit `.gitmodules` file 
+    1. or edit `git config --file=.gitmodules submodule.SubmodName.url https://github.com/username/ABC.git`
 2. then run `git submodule sync` to reflect that change to the superproject and your working copy.
 
-# 合并submodule
+## merge 
 
 	$ git submodule update --remote --merge
 
-# log
+## commit
+
+    git submodule foreach 'git add .'
+    git submodule foreach 'git commit -am "new"'
+    git submodule foreach 'git push'
+
+## log
 提交之后，你也可以运行 git log -p 查看这个信息。
 
 	$ git log -p --submodule
 
-# Reference
+## Reference
 - [scm submodule]
 
 [scm submodule]: https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97
