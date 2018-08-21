@@ -47,8 +47,8 @@ function gcap(){
         return
     fi
     if git remote | grep '\w';then
-        echo git push;
-        git push && cd blog;
+        echo git push blog;
+        git push && test -d blogx && cd blog;
         if test $? = 0;then
             git add _posts/
             git commit -am 'push'
