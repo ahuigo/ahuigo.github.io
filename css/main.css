@@ -112,6 +112,8 @@ height: 40px;
 .site-title:hover::before{
     width: 100%;
     left:0;
+    /* background: black; */
+    /* color: #fff; */
 }
 .site-title:hover ~ .site-title::before{
     left: 0;

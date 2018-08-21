@@ -316,6 +316,29 @@ type 用于查看命令的属性
 
 	unalias rgrep
 
+## exec self process
+
+    $ bash -c 'echo $$ ; ls -l /proc/self ; echo foo'
+    7218
+    lrwxrwxrwx 1 root root 0 Jun 30 16:49 /proc/self -> 7219
+    foo
+    with
+
+    $ bash -c 'echo $$ ; exec ls -l /proc/self ; echo foo'
+    7217
+    lrwxrwxrwx 1 root root 0 Jun 30 16:49 /proc/self -> 7217
+
+## multiple command to one
+
+    sh -c 'ls ; ls'
+    sh -c 'cmd1 && cmd2'
+    sudo -- sh -c 'date; who am i'
+
+ampersand`&`
+
+    sh -c 'ls & ;ls'; # error
+    sh -c 'ls & ls';  # ampersand 本身代替了;
+
 ## execute command `cmd` or $(cmd)
 以子进程执行cmd.(你也可通过source 以当前进程执行cmd)
 
