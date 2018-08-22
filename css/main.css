@@ -1,3 +1,9 @@
+.share iframe{
+    border:0;
+}
+.pure-menu-horizontal{
+    white-space: normal;
+}
 .clock {
     width: 64px;
     height: 64px;
@@ -52,14 +58,19 @@ p{ margin: 0.8em; }
     word-wrap:break-word;
     margin:0;
     padding:0;
-    /* word-break:break-all; */
+    word-break:break-all;
 }
-
-.weibo-icon::before{
-    content: url(http://img.t.sinajs.cn/t4/appstyle/widget/images/shareButton/share_icon.png?id=1375775002754);
+.icon{
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
 }
-.twitter-icon::before{
-    content: url(http://twitter.com/favicon.ico);
+.twitter-icon{
+}
+.weibo-icon{
+    background: url(http://img.t.sinajs.cn/t4/appstyle/widget/images/shareButton/share_icon.png?id=1375775002754);
+    background-size: cover;
 }
 .hr{
     height: 1px; background-color: #dededc; margin: 25px 0;

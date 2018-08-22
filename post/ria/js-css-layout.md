@@ -67,6 +67,8 @@ display:flex, 比 inline-block 简单
 
     .container {
         display: flex;
+        white-space:pre-wrap; normal, pre,
+        flex-wrap:wrap;
     }
     nav {
         width: 200px; //先占有左边，右边的剩余空间给items 
@@ -142,12 +144,11 @@ http://zh.learnlayout.com/flexbox.html
 	justify-content: center;
 
 # align
-## container align
+## flex container align
 
 	justify-content: horizonal center
 	align-items: vertical center)
-
-	align-content: justify-content属性类似。只不过这里元素是以一行为单位。
+	align-content: justify-content属性类似。只不过这里元素是以多行生效。
 
 居中:
 
@@ -155,9 +156,10 @@ http://zh.learnlayout.com/flexbox.html
     justify-content: center;
     align-items: center; //height: 
 
-## inline align
+## inline align(self)
 
-    vertical-align: top/bottom
+    vertical-align: top/bottom/center
+    margin: 0 auto;
 
 ## text align
 
