@@ -15,6 +15,7 @@ Useful hooks
     post-commit
     post-checkout
     pre-rebase
+    pre-push
 
 > Warn: 不要在hooks 操作 submodules 
 

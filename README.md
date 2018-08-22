@@ -57,7 +57,10 @@ katex 支持标准的latex，如果想转义数学符号:
     \	\backslash
 
 ### 数学公式示例
-当`$$`出现在空行后，公式将以段落居中显示。可以参看这个例子：
+1. `$` 用与行内公式;
+2. `$$`用于段落公式;
+
+可以参看这个例子：
 
 <iframe width="100%" height="400px" src="md.html"></iframe>
 
@@ -72,7 +75,7 @@ katex 支持标准的latex，如果想转义数学符号:
 ### 编写markdown
 - 如果想写博文，直接在`/post/0/` 这个目录下写markdown 文件就可以了, 真正专注于写作
     1. 文件名要求有日期前缀，因为博文是按照日期来排序的，如`/post/0/20180101-my-first-blog.md`。
-    2. 请把钩子文件`/tool/pre-commit` 放到`.git/hooks/pre-commit` 下，它会在你每次commit 时自动生成博文的目录。
+    2. 请把钩子文件`/tool/pre-commit` 放到`.git/hooks/pre-commit` 下，它会在你每次commit 时自动生成博文的目录。
 - 如果想想写文章, 直接在`/post/`建立分类别的目录就可以了。
 
 ### 截图
