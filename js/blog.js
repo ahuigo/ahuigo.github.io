@@ -21,7 +21,6 @@ var middle = clock.circle(32,32,3).attr({
 // CLOCK Timer
 
 var updateTime = function() {
-  console.log(1)
   var currentTime, data, hour, minute, second;
   currentTime = new Date();
   second = currentTime.getSeconds();
@@ -122,9 +121,7 @@ const mdConponent = {
         v.href = v.getAttribute('href').replace(/^\/p/, '#/post') + '.md'
       }
     })
-    console.log('haha')
     this.$root.$$('#content img').forEach((v, k, arr) => {
-    console.log('haha')
       if (v.getAttribute('src').startsWith('/img/')) {
         v.src = v.getAttribute('src').replace(/^\/img/, 'img')
       }
