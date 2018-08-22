@@ -1,7 +1,13 @@
+---
+date: 2018-05-15
+title: Vue 的模板系统
+---
 # 属性合并
 对于class/style 来说，它们会合并, 这是dom 自己决定的，不是vue 控制的
 
     <div is="tpl" class="cls1 cls2" :class="cls" :title="'title'"></div>
+
+> 为了防止Render 冲突，外部的动态Render 应该放到Vue 后。比如：https://codepen.io/ahuigo/pen/dqPgJQ?
 
 # 值的绑定
     new Vue({
@@ -10,7 +16,7 @@
             message: 'hello',
             seen: true
         }
-        })
+    })
 
 ## bind, 单向绑定
 ### bind text

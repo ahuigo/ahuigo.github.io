@@ -84,7 +84,6 @@ def publishBlog(blogs, delete_blogs):
 layout: page
 title: {blog['title']}
 category: blog
-description: 
 ---
 '''
             open(pageFilePath,'w').write(f'{meta}# {blog["title"]}\n'+blog['content'])
@@ -102,7 +101,7 @@ if output:
             '^- \[(?P<title>.+)\]\(#/(?P<path>.+md)\)', line)
         if m:
             max_index_num += 1
-            if max_index_num > 20:
+            if max_index_num > 50:
                 break;
             title = m.group('title')
             path = m.group('path')
