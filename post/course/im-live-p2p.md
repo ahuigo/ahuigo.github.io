@@ -31,17 +31,9 @@
 1. 带宽不够，节点分享率低. 我们用CDN 节点+第三方节点补充啊
 2. 多层级延迟大. 我们使用平铺的结构啊
 
-有人考虑到P2P+CDN 结合为PCDN. 
+有人考虑到P2P+CDN 结合为PCDN. 参考又拍云的架构
 
-### P2p+CDN
-比如又拍云的 PrismCDN支持HLS协议的方式与HLS+降低延时的方式相似，HLS+是在CDN边缘节点切片，而PrismCDN则是在客户端本地完成切片以及传输FLV数据流。
-
-![](https://pic4.zhimg.com/80/v2-57cfb16a6414e4967a22690aae683854_hd.jpg)
-
-### PrismCDN单层级
-针对多层级延迟，PrismCDN 使用单层级(注意：解决了延时，但是带来分享率限制)
-左为传统P2P直播树，右为又拍云PrismCDN直播模型(低延时):
-![](https://pic3.zhimg.com/80/v2-9401ca75aeeab5efa9a70d317d19925d_hd.jpg)
+![](https://upload-images.jianshu.io/upload_images/80097-68c2a3e271a1867d.png)
 
 PCDN 的优化: 
 1. 增加大量的第三方设备数量: 提高上行带宽供应量，降低CDN节点压力，从而提高节点分享比例. 不存在P2P “只有播放者，才是供应者”的局限。
