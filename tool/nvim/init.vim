@@ -1,3 +1,4 @@
+set backupdir=~/.data/backup
 "info
 set laststatus=2
 "open

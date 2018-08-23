@@ -5,12 +5,12 @@
 
 ## String, 字符串
 
-#### count_chars
+### count_chars
 
 	echo 'ahui ahui' | grep -o a | wc -l
 	a='ahui ahui'; b=${a//[^a]}; echo ${#b}
 
-#### expr
+### expr
 ERE
 
 	expr "$SHELL" : '.*/\(.*\)'
@@ -21,12 +21,12 @@ ERE
 
 	match($2, /1(.*)/, m){}
 
-#### Str2Hex & Hex2Str
+### Str2Hex & Hex2Str
 
 	echo '12' | xxd -p
 	echo '3132' | xxd -r -p
 
-#### print
+### print
 打印原始字符串，请用
 
    `printf "%s" "$var"`
@@ -331,6 +331,26 @@ local 与 assignment 需要分开：
 清除:
 
 	unset var[0] #清除下标, 其它下标的顺序不会变
+    
+### access array
+    arr=('1 2'
+    3)
+    printf "%s -- " '$arr:'
+    printf "%s," $arr 
+    printf "%s -- " $'\n"$arr":'
+    printf "%s," "$arr" 
+    printf "%s -- " $'\n$arr[@]:'
+    printf "%s," ${arr[@]}
+    printf "%s -- " $'\n"$arr[@]":'
+    printf "%s," "${arr[@]}"
+
+强烈建议只用`"$arr[@]"`
+
+    # bash test.sh
+    $arr: -- 1,2,
+    "$arr": -- 1 2,
+    $arr[@]: -- 1,2,3,
+    "$arr[@]": -- 1 2,3,%
 
 ### pass array
 
@@ -338,7 +358,7 @@ local 与 assignment 需要分开：
 	"${arr[@]}"
 		'1 2' 3 //zsh & bash
 	${arr[@]}
-		1 2 3	//bash
+		1 2 3	//bash 按literal 字面处理
 
 ### print array
 
@@ -351,11 +371,20 @@ With Bash4.3, it only creates a reference to the original array, it doesn't copy
 
 正确的做法是：
 
+    a=(1 2 3)
 	b=("${a[@]}")
+
+错误的是
+
+    arr=('1 2' 3 4)
+    b="${arr[@]}"; # 结果: ('1 2 3 4' 3 4)
+	b=${arr[@]}" ; # 结果: ('1 2 3 4' 3 4)
 
 ### loop array
 
-	for i in "${array[@]}";
+	for i in ('1 2', 3);
+	for i in ${array[@]}; //3 个
+	for i in "${array[@]}";// 2个
 	do
 		echo $i
 	done

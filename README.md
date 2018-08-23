@@ -2,7 +2,7 @@
 本博客是完全纯静态blog, 核心js 代码只有100 多行。 
 
 - Fork 地址: [https://github.com/ahuigo/note-blog](https://github.com/ahuigo/note-blog)
-- 示例地址：[https://ahuigo.github.io/#/README.md](https://ahuigo.github.io/#/README.md)
+- 示例地址：[https://ahuigo.github.io/a#/README.md](https://ahuigo.github.io/a#/README.md)
 
 使用方法：
 1. Fork 到 `{yourname}.github.io`.
@@ -20,7 +20,7 @@
 
 ## 博客采用的技术方案
 1. Vue.js 框架
-2. bulma.css: 非常轻量
+2. pure.css: 非常轻量
 3. markdown 渲染
     - Marked 修改版: 原生的marked 不能很好的支持数学公式. (由于marked 正考虑解耦一些代码，修改版PR的暂时没被接受)
     - 数学公式采用katex. 用`$$` 做分割符号

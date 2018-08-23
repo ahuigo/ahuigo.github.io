@@ -47,15 +47,20 @@ function gcap(){
         return
     fi
     if git remote | grep '\w';then
-        git push && test -d blog && cd blog;
-        if test $? = 0;then
-            echo git push blog;
-            git add _posts/
-            git commit -am "msg:$1"
-            git push
-            cd ..
+        if git push; then
+            subdirs=(blog vue)
+            for subdir in "${subdirs[@]}"; do
+                test -d $subdir && cd $subdir;
+                if test $? = 0;then
+                    echo git push $subdir;
+                    git add .
+                    git commit -am "msg:$1"
+                    git push
+                    cd ..
+                fi
+            done
         fi
-    else
+    elif git svn info | grep '\w';then
         echo git svn dcommit;
         git svn rebase;
         git svn dcommit;
