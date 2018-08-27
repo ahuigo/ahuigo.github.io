@@ -1,4 +1,4 @@
-# Promise
+# JS Promise
 实现异步串行写法
 1. generator
 1. Promise: resove-then, reject-catch

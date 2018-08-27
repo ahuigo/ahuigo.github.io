@@ -1,3 +1,6 @@
+---
+title: go time
+---
 # tick and after
 
   //send a channel tick every time
