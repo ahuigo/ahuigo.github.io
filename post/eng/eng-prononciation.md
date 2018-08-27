@@ -7,6 +7,7 @@ description:
 # Preface
 
 # phonetic symbol
+语音符号
 
 	i 	一般i 发短元音i, 比如 tip, ship
 	i:	一般ee/ea 发长元音i:, 比如sleep, sea

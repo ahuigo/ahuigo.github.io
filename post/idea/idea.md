@@ -1,12 +1,9 @@
 ---
-layout: page
-title:	idea
-category: idea
-description:
+private:
 ---
 # Preface
-
 1. sideidea.com
+2. 失物招领: http://www.bjgaj.gov.cn/swzl/index.do
 
 # 知乎
 1. 企业与知乎合作点评与反馈, 也就是企业Tag 接口
@@ -81,10 +78,6 @@ p2p, 基金, 股票
 预测股票走势图
 
 # 小程序
-## 英语词根分析
-
-## 发投票、报名
-基于地图
 
 ## 协作
 重点：

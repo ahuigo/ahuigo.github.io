@@ -1,5 +1,8 @@
+---
+date: 2015-03-15
+---
 # Js 字符串大全
-字符定义与python 一样, 而且不区分双引号：
+字符定义与python 一样, 而且不区分双引号：
 
     '\x00' == '\u0000'
 	'\x31' == "\x31"
@@ -60,8 +63,8 @@ see py-str-struct: like bytes
 
 string:
 
-    // Buffer -> String
-    var text = buf.toString('utf-8');
+    // Buffer -> String: text = buf+''
+    var text = buf.toString('utf-8');  
     // String -> Buffer
     var buf = Buffer.from(text, 'utf-8');
 

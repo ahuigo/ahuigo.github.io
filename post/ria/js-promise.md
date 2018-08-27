@@ -153,6 +153,7 @@ await reject:
     await new Promise(r=>{})
 
 ## try catch 
+catch err+data
 
     export function catchEm(promise) {
       return promise.then(data => [null, data])
@@ -180,6 +181,13 @@ async is used to await promise:
 Notice: 
 1. 即使没有await, 程序也要等promise 执行完毕才能退出！
 2. `await p` 阻塞局部，但是`async` 不会阻塞整体, 所以两者要`成对存在`
+
+await async:
+
+    async function f(){return 1}
+    (async ()=>console.log(
+        1+await f()
+    ))()
 
 ## asyncFunc() is promise
 1. As promoise support both: then/catch/await

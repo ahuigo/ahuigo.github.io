@@ -120,7 +120,8 @@ if output:
             continue
 
         blog = parseBlog(path)
-        title = blog['title']
+        if 'private' in blog:
+            continue
         new_blogs[path] = (blog)
         if path not in blogs:
             blogs[path] = blog

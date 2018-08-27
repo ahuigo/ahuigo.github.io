@@ -30,18 +30,19 @@ for ticker
       fmt.Println("Tick at", t)
   }
 
-# time unit
+# Sleep
+
+	time.Sleep(100 * time.Millisecond)
+
+# DateTime
+## time unit
 
   time.Second
   time.Millisecond
   time.Microsecond
   time.Nanosecond
 
-# Sleep
-
-	time.Sleep(100 * time.Millisecond)
-
-# now
+## now
 
     time.Now()
 

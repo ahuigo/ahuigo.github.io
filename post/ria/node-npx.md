@@ -2,18 +2,18 @@
 date: 2018-08-20
 ---
 # node 的npx 是什么？
-Before:
+以前我们要手动输入路径:
 
-    npm i -D webpack
     ./node_modules/.bin/webpack -v
     `npm bin`/webpack -v
+    ./node_modules/.bin/livereload.js dist
 
-npx简化
+用npx 就不用手动写路径，以及后缀了：
 
-    npm i -D webpack
     npx webpack -v
+    npx livereload dist
 
-npx 远程执行:
+npx 还可以远程执行:
 
     npx github:piuccio/cowsay hello
     npx cowsay hello

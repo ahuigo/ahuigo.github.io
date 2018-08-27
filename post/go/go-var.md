@@ -1,13 +1,21 @@
 ---
 layout: page
-title:
 category: blog
 description:
 ---
-# Preface
+# go 的变量
 
 # new make
-内置函数 new 计算类型  ,为其分配零值内存,返回指针。  make 会被编译器翻译 成具体的创建函数,由其分配内存和初始化成员结构,返回对象  指针。
+new 的作用是:为其分配零值内存, 初始化 一个指向类型的指针 `(*T)`，
+`someInt := new(int)` 相当于:
+
+    func newInt *int {
+        var i int
+        return &i; //golang 和 c 语言不一样，栈区分配的存储空间不会随着函数的返回而释放，本地变量地址所占据的存储空间会生存下来。 
+    }
+    someInt := newInt()
+
+make 的作用是为 slice, map 或者 channel 初始化，并且返回引用 `T`
 
 	a := []int{0, 0, 0}
 	a[1] = 10
@@ -26,6 +34,15 @@ The var statement declares a list of variables
 	var c, python, java bool
 	var i int
 	fmt.Println(i, c, python, java)
+
+## printf
+
+    var i int
+	var f float64
+	var b bool
+	var s string
+	fmt.Printf("%v %v %v %q\n", i, f, b, s)
+        0 0 false ""
 
 ## initializers
 A var declaration can include initializers, one per variable.
@@ -49,11 +66,10 @@ The zero value is:
 	"" (the empty string) for strings.
 	nil for pointer
 
-```
-var i int
-var f float64
-var b bool
-```
+
+    var i int
+    var f float64
+    var b bool
 
 ## Short variable declarations
 Inside a function, the `:=` short assignment statement can be used in place of `a var declaration with implicit type`.
@@ -70,6 +86,11 @@ Inside a function, the `:=` short assignment statement can be used in place of `
 
 		fmt.Println(i, j, k, c, python, java)
 	}
+
+## pointer
+
+    var input float64
+    fmt.Scanf("%f", &input)
 
 # Datatype
 Go's basic types are
