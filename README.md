@@ -23,7 +23,7 @@
 2. pure.css: 非常轻量
 3. markdown 渲染
     - Marked 修改版: 原生的marked 不能很好的支持数学公式. (由于marked 正考虑解耦一些代码，修改版PR的暂时没被接受)
-    - 数学公式采用katex. 用`$$` 做分割符号
+    - 数学公式采用katex. 用`$$`,`$` 做分割符号
     - 自动生成 Markdown TOC
 4. highlight: 用于代码高亮
 5. disqus: 用于评论，懒加载

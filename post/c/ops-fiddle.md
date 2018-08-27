@@ -1,7 +1,10 @@
+---
+date: 2018-08-27
+category: ops
+---
 # 各种语言的fiddle
 > 几行代码写的js fiddle(加入到标签就可以)：
 https://gist.github.com/ahuigo/ea584caed67ffcfdc55b332e7ff1b45d
-
 
 各种语言的fiddle
 1. go:
