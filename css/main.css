@@ -45,7 +45,7 @@ h3{ font-size:1.4em}
 h4{ font-size:1.3em }
 h5{ font-size:1.2em }
 h6{ font-size:1.1em }
-p{ margin: 0.8em; }
+p{margin: 0.6em 0;}
 .head{
     margin-bottom:0;
     position: relative;
@@ -112,14 +112,17 @@ a:hover{
     list-style: inside disc;
     margin-left:1em;
 }
-
-
 #content ol {
-    list-style: inside decimal;
+    list-style: outside decimal;
+    margin-left: 2.1em;
+}
+
+#toc ol {
+    list-style: outside disc;
 }
 ol,ul{
-    list-style-position: inside ;
-    margin-left:10px;
+    list-style-position: outside ;
+    margin-left:14px;
 }
 .left ul li{
     margin:0;

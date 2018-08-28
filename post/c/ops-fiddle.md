@@ -9,16 +9,19 @@ https://gist.github.com/ahuigo/ea584caed67ffcfdc55b332e7ff1b45d
 各种语言的fiddle
 1. go:
     https://play.golang.org/
+
 2. js:
     jsbin.com 有点老了
     jsfiddle
     http://tinkerbin.com/# 实时运行
     http://codepen.io/ 实时
     http://rendur.com/# 超级轻量级, 不支持分享
+
 2. css:
     chrome://devtool
     http://cssdesk.com/ 
     http://dabblet.com/
+
 2. httpbin
     requests.post('https://httpbin.org/post', headers={'Content-Type': 'application/json'}, data=json.dumps({'bar':'员'}, ensure_ascii=False).encode('utf-8')).text
 
