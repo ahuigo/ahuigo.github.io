@@ -295,6 +295,9 @@ Proxy Auto Configuration file(PAC)
 smart vpn
 http://huzi.name/2015/04/28/mac-smart-vpn/
 
+# UniFi
+https://help.ubnt.com/hc/en-us/articles/360002426234-UniFi-USG-VPN-How-to-Configure-Site-to-Site-VPN
+
 # Reference
 - [在终端下间接使用Socks5代理的几种方法(privoxy,tsocks,proxychains) ][privoxy,tsocks,proxychains]
 
