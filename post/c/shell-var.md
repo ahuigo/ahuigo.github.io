@@ -1,4 +1,4 @@
-# Datatype, 数据类型
+# shell 的数据类型
 ## export
 
 	unset PYTHONPATH
