@@ -10,7 +10,7 @@ description:
 HowTo: Proxy Non-Proxy-Aware Android Applications through Burp
 http://blog.dornea.nu/2014/12/02/howto-proxy-non-proxy-aware-android-applications-through-burp/
 
-# In shell
+# Within shell
 
 ## http proxy
 ### http proxy env
@@ -53,7 +53,7 @@ https://en.wikipedia.org/wiki/Comparison_of_proxifiers
 ### graftcp
 一个可以把指定程序的 TCP 连接重定向到 SOCKS5 proxy 的工具。
 
-### proxychains with shadowsocks
+### proxychains
 > https://github.com/shadowsocks/shadowsocks/wiki/Using-Shadowsocks-with-Command-Line-Tools
 
 proxychains 调用的好像是Privoxy, 在mac 需要:

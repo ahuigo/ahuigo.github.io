@@ -97,7 +97,8 @@ a. Ensure ssh-agent is enabled:
 b. Add these two keys as following
 
 	$ ssh-add ~/.ssh/id_rsa_activehacker
-	$ ssh-add ~/.ssh/id_rsa_jexchan
+    # macOSX
+    ssh-add -K ~/.ssh/<private_key_file>
 
 You can check that your key is visible to ssh-agent by running the following command:
 
@@ -114,6 +115,8 @@ c. Config `private rsa` and the fake `host` to be replaced and the realhost `Hos
         HostName github.com
         User git
         IdentityFile ~/.ssh/id_rsa_ahuigo
+    Host *
+        UseKeychain yes
 
 Config the fake `host` to be replaced , `name`, `email` in `.git/config`
 

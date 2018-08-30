@@ -10,7 +10,7 @@ date: 2014-05-07
 Useful hooks
 
     pre-commit
-    prepare-commit-msg
+    prepare-commit-msg //.git/COMMIT_EDITMSG
     commit-msg
     post-commit
     post-checkout

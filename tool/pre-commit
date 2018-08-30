@@ -145,6 +145,6 @@ if output:
 
     getoutput(f'ls {indexFile}')
 
-if next(open('.git/COMMIT_EDITMSG')).startswith('no-commit'):
-    print('not-commit')
+if os.path.exists('no-commit'):
+    print('no-commit')
     quit(1)
