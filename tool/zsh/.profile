@@ -102,4 +102,10 @@ function mda (){
         sudo chmod a+rwx $1
 }
 
+#alias for cnpm
+alias npm="npm --registry=https://registry.npm.taobao.org \
+  --cache=$HOME/.npm/.cache/cnpm \
+  --disturl=https://npm.taobao.org/dist \
+  --userconfig=$HOME/.cnpmrc"
+
 [ -f ~/.private ] && source ~/.private

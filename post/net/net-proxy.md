@@ -51,7 +51,28 @@ Comparison_of_proxifiers:
 https://en.wikipedia.org/wiki/Comparison_of_proxifiers
 
 ### graftcp
-一个可以把指定程序的 TCP 连接重定向到 SOCKS5 proxy 的工具。
+graftcp 可以把任何指定程序（应用程序、脚本、shell 等）的 TCP 连接重定向到 SOCKS5 代理。
+https://www.v2ex.com/t/476594
+
+1. 对比 tsocks、proxychains 或 proxyChains-ng，graftcp 并不使用 LD_PRELOAD 技巧来劫持共享库的 connect()、getaddrinfo() 等系列函数达到重定向目的，这种方法只对使用动态链接编译的程序有效，对于静态链接编译出来的程序，例如默认选项编译的 Go 程序，proxychains-ng 就无效了。
+2. graftcp 使用 ptrace(2) 系统调用跟踪或修改任意指定程序的 connect 信息，对任何程序都有效。
+
+工作原理后面将会解释。
+
+#### 使用
+假设你正在运行默认地址 "localhost:1080" 的 SOCKS5 代理，首先启动 graftcp-local：
+
+    ./graftcp-local/graftcp-local
+
+通过 graftcp 安装来自 golang.org 的 Go 包:
+
+    ./graftcp go get -v golang.org/x/net/proxy
+
+如果是一个已经运行的程序， graftcp 目前没有实现对正在运行的进程 attach 进行跟踪。
+1. Linux 里 ptrace 可以跟踪一个没有血缘关系的运行时进程，但需要以 root 权限修改默认的 `/proc/sys/kernel/yama/ptrace_scope` 值为 0：
+    1. `echo "0" > /proc/sys/kernel/yama/ptrace_scope`
+
+
 
 ### proxychains
 > https://github.com/shadowsocks/shadowsocks/wiki/Using-Shadowsocks-with-Command-Line-Tools
@@ -152,13 +173,18 @@ brew install tsocks: https://github.com/Anakros/homebrew-tsocks
 	$ tsocks wget ....
 
 ### Privoxy
-Privoxy 能
-
 1. 将http代理转发至 socks5/socks4 代理: 能支持http 代理的命令就可以用了
 2. 支持类似PAC 的自动代理
 
+Privoxy 配置
+
 	forward-socks5	/	127.0.0.1:1080	.    # socks v5
 	forward-socks5t	/	127.0.0.1:1080	.    # socks v5, reduce the latency for the newly connection.(可能有问题)
+
+默认的`listen-address 127.0.0.1:8080`, 转发到socks5:
+1. /代表所有的URL都转发，
+2. 127.0.0.1:1080 是socks代理的位置，
+3. `.`代表没有设置http代理地址。
 
 安装(Mac osx)
 

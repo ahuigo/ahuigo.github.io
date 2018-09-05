@@ -111,7 +111,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
 
 析构 dict:
 
-    {...dict}
+    {...dict} ; //剩余参数
     let {name, age, pass} = {name:'ahui',pass:'pass',age:10}; //不存在就是undefined
     var {id:uid} = {id:1}; // uid=id
     var {uid=0} = {}

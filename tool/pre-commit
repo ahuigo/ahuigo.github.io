@@ -143,7 +143,7 @@ if output:
             print(article)
             fp.write(article+'\n')
 
-    getoutput(f'ls {indexFile}')
+    getoutput(f'git add {indexFile}')
 
 if os.path.exists('no-commit'):
     print('no-commit')

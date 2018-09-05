@@ -1,5 +1,5 @@
 # Js 中的this scope
-一般this 是使用的时候才确定指向
+一般this 是使用的时候才确定指向:
 
     function A(){
         this.name='ahui'
@@ -25,8 +25,9 @@
 Within module: `this` is `{}`, not `global===window`
 
 ## 单独调用函数的情况(坑)
+你只需要记住谁调用的，this就指向谁，也就是.前面的对象，假如没有.，默认补一个window.;
 1. strict 指向undefined, 否则指window. 
-2. Lexical this 指向闭包(es6)
+2. Lexical this 指向闭包(es6), 闭包是定义所在的this
 
 分情况举例
 
@@ -57,7 +58,7 @@ c. 对像方法内部：单独函数定义及调用，this 指window
     };
     xiaoming.age(); //window
 
-d. 回调方法内: window, (除非改arrow lexical this)
+d. 回调方法内: window, (除非改arrow lexical this)
 
     var xiaoming = {
         name: '小明',
@@ -71,7 +72,7 @@ d. 回调方法内: window, (除非改arrow lexical this)
     };
     xiaoming.age(); 
 
-## Lexical this 是闭包this
+## Lexical this 是闭包this
 
     var xiaoming = {
         name: '小明',
@@ -80,14 +81,28 @@ d. 回调方法内: window, (除非改arrow lexical this)
             func()
         },
         age: function () {
-            this.call(()=>{
+            this.call(()=>{                       //声明的时候就绑定了this
                 [1].map(v=>console.log(v, this)); //xiaoming
             })
         }
     };
+
     xiaoming.age(); 
 
-改匿名函数还是window
+Lexical this 是定义处是window
+
+    let someObj = {
+        a() {
+            console.log(this);
+        },
+        b: () => {
+            console.log(this);
+        }
+    }
+    someObj.a(); //someObj
+    someObj.b(); // window
+
+改匿名函数还是window
 
     var xiaoming = {
         name: '小明',
@@ -96,8 +111,8 @@ d. 回调方法内: window, (除非改arrow lexical this)
             func()
         },
         age: function () {
-            this.call(function(){ // 传this=window
-                [1].map(v=>console.log(v, this)); //lexical this 收到的还是window
+            this.call(function(){                 // 不是lexical, 传this=window (modified)
+                [1].map(v=>console.log(v, this)); //lexical this 收到的还是window
             })
         }
     };

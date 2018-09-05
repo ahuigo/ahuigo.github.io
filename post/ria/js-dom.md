@@ -311,6 +311,7 @@ foreach elements
 	window:
 		document.getElementById('frameId').contentWindow; //有跨域限制.
 		frameId.contentWindow; //有跨域限制.
+		frameName
     ele:
         <body 
         oninput="i.srcdoc=h.value+'<style>'+c.value+'</style><script>'+j.value+'<\/script>'">
