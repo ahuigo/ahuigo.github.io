@@ -3,19 +3,21 @@
 vue 肯定要先处理SFC(Single File Component)后才能用babel 处理, 但是Vue 又不能处理decorator。
 
 但是vue 能很好的解析typescript, ts 不仅提供decorator, 还提供强类型，代码提示，所以今天就来了解下typescript。 
-> 隆重推荐下typescript 精通指南：https://nodelover.gitbook.io/typescript/ji-chu-ren-zhi
+> 隆重推荐下typescript 精通指南：
+https://nodelover.gitbook.io/typescript/ji-chu-ren-zhi
 
 ## ts hello world
 编写ts hello world 后，用tsc 编译
 
     tsc hello.ts
 
-如果想编译为es6, 我们生成编译配置
+如果想编译为es6, 我们生成编译配置 tsconfig.json
 
     tsc --init; # vi tsconfig.json 手动配置
     tsc 
     tsc --p tsconfig.json
     tsc hello.ts; # 编译单文件 和 使用tsconfig.json 不能同时
+
 
 ## 代码补全
 输入关键字后，vscode 会自动基于`ts`补全。但是对于纯js 文件，由于没有强类型，很难做到补全。我们可以手写`.d.ts`. 
@@ -31,6 +33,26 @@ vue 肯定要先处理SFC(Single File Component)后才能用babel 处理, 但是
     Array<string> or string[]
     enum Choose { Wife = 1, Mother = 2} // 选择 妻子 还是 妈妈
 
+### 枚举enum
+    let str = 'something'
+    ​
+    enum test{
+        test01,
+    }
+    ​
+    enum FileAccess {
+        None,
+        Read    = 1 << 1,
+        Write   = 1 << 2,
+        ReadWrite  = Read | Write,
+        Test = test.test01,
+        O = str.length
+    }
+
+### 类型转换
+    let c = (a as number).toExponential()
+    let d = (<number>a).toExponential()
+
 ## interface 接口
 
     interface Person{
@@ -44,6 +66,39 @@ vue 肯定要先处理SFC(Single File Component)后才能用babel 处理, 但是
 或者字面量
 
     let person: Person =  { IdCard:'43xxxxxxxxx' }
+
+### 接口extends
+    interface mEvent { timestamp: number; }
+    interface mMouseEvent extends mEvent { x: number; y: number }
+
+### 接口组合
+`interfaceA & interfaceB`, `interfaceA | interfaceB`
+
+    interface a {
+        name: string;
+    }
+
+    interface b {
+        age: number;
+    }
+
+    let some = <T, U>(a: T & U) => {
+
+    }
+
+    some<a, b>({ name: '123', age: 28 })
+
+### 接口别名
+
+    interface a {
+        name: string;
+    }
+    ​
+    interface b {
+        age: number;
+    }
+    ​
+    type aAndB = a & b & {sayHello(name: string)};
 
 ### 可选属性
 
@@ -78,6 +133,20 @@ vue 肯定要先处理SFC(Single File Component)后才能用babel 处理, 但是
         default_something;
         constructor(){}
     }
+    class ZooKeeper {
+        constructor(public nametag: string){
+    ​
+        }
+    }
+
+有困惑，其实它等于
+
+    class ZooKeeper {
+        public nametag
+        constructor(nametag: string){
+            this.nametag = nametag
+        }
+    }
 
 ### 描述 function
 
@@ -95,6 +164,17 @@ vue 肯定要先处理SFC(Single File Component)后才能用babel 处理, 但是
         return '';
     }
 
+### 描述 class
+    interface Db {
+        host: string;
+        port: number;
+    }
+    ​
+    class MySQL implements Db {
+        host: string;
+        port: number;
+        ...
+​
 ### 描述method
 
     interface test{
@@ -108,6 +188,8 @@ vue 肯定要先处理SFC(Single File Component)后才能用babel 处理, 但是
     }
 
 ### 描述 实例化
+new 是特殊的method
+
     interface MyDateInit {
         new (year: string, month: string, day: string) : MyDate;
     }
@@ -148,6 +230,25 @@ vue 肯定要先处理SFC(Single File Component)后才能用babel 处理, 但是
             console.log("煮鸡肉呀~ 我最喜欢吃~");
         }
     }
+
+## 泛型(generic)
+如果想支持多种类型补全提示，可以这样:（或者函数重载）
+
+    function one(a: any) : any{
+        if(typeof a === 'number'){
+            let r = (a as number)
+            return r
+        }
+    }
+
+有了泛型，我们可以一随便指定T：
+
+    function one<T>(a: T) : T{
+        return a;
+    }
+
+    let a1 = one<number>(1)
+    let a2 = one(520)
 
 ## 创建一个ts 项目
 手动或者用vue-cli 自动创建

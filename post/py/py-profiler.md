@@ -1,6 +1,10 @@
+# profile
 - cProfile
 类似于xdebug cachegrind profiler 性能画像
-# profile
+- py-spy python 版的top
+    - py-spy --pid 12345
+    - py-spy --flame profile.svg --pid 12345
+    - py-spy -- python myprogram.py
 
 ## Timer
     from redis import Redis

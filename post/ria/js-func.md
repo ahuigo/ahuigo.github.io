@@ -1,3 +1,7 @@
+---
+date: 2017-07-11
+title: js 的函数
+---
 # async
 ## generator
     function* foo() {

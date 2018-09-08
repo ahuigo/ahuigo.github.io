@@ -47,7 +47,7 @@ keys / for-in base / getOwnPropertyNames all
     // yes, base
 
 ### has key
-1. keys: 不含proto, enumerable:false
+1. keys: 不含proto, enumerable:false
 2. hasOwnProperty: 不包括原型链
 2. `in`: key 它可能是obj 继承的属性, 不一定是obj 本身的属性
 
@@ -238,7 +238,7 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
     Object.__proto__//[function] 这个就别管它了
 
 ### new 与 Object.create
-Object.create(func.prototype)相当于: `{__proto__:func.prototype}`
+Object.create(func.prototype)相当于: `{__proto__:func.prototype}` 用于cls2 extends cls1
 Object.create(obj)相当于: `{__proto__:obj}` 相当于对象继承了
 
     Object.create =  function (obj) {
@@ -251,8 +251,9 @@ new func() 相当于:
         `{attrs:vals,__proto__:func.prototype}`
 
     var o1 = new Object();
-    o1['__proto__'] = func.prototype;
-    func.call(o1);
+        //func.prototype.constructor()
+        o1['__proto__'] = func.prototype;
+        func.call(o1); 
 
 > arrow函数不是匿名函数，它没有`[[Construct]] internal method` ，不能进行`new`,  
 
