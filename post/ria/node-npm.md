@@ -49,6 +49,11 @@ http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
     # verify
     npm config get registry
 
+自动切换源, nrm是个npm镜像管理工具，可以很方便的切换镜像源
+
+    npm i nrm -g
+    nrm use npm
+
 # npm install 说起
 安装之前，会先检查，`node_modules`目录之中是否已经存在指定模块。 如果存在，就不再重新安装了，即使远程仓库已经有了一个新版本，也是如此。
 

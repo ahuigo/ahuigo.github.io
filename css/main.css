@@ -109,8 +109,8 @@ a:hover{
     color:#000;
 }
 #content ul{
-    list-style: inside disc;
-    margin-left:1em;
+    list-style: outside disc;
+    margin-left:2.1em;
 }
 #content ol {
     list-style: outside decimal;

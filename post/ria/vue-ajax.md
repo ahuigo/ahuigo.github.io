@@ -22,6 +22,7 @@
         credentials: "same-origin"
         credentials: "include", // crosee-origin
     }).then(...).then(..).catch(...);
+    fetch(url).then(async r=> console.log(await r.text()))
 
 ### fetch post
 
@@ -65,6 +66,7 @@ also:
     response.text().then(function (text) {
         // do something with the text response 
     });
+
 
 ## this.$http
 

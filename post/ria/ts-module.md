@@ -1,5 +1,5 @@
-# module
-a.ts
+# Typescript 的module
+ts 的模块其实就是es6 module. 比如 a.ts
 
     export default {
         name: 'a'

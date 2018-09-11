@@ -151,8 +151,8 @@ via a threadsafe threading.Event():
 		t.start() t.join()
 
 	async_result = multiprocessing.pool.ThreadPool(processes=1).apply_async(foo, ('world', 'foo')) # tuple of args for foo
-		print(async_result.get()) # 阻塞+返回结果
-		pool.close() # 阻塞等待所有线程结束, 相当于Thread.join()
+    print(async_result.get()) # 阻塞+返回结果
+    pool.close() # 阻塞等待所有线程结束, 相当于Thread.join()
 	```
 
 e.g.
@@ -175,16 +175,15 @@ e.g.
 要想把N核CPU的核心全部跑满，就必须启动N个死循环线程。
 
 试试用Python写个死循环：
-```
-import threading, multiprocessing
-def loop():
-    x = 0
-    while True:
-        x = x ^ 1
-for i in range(multiprocessing.cpu_count()):
-    t = threading.Thread(target=loop)
-    t.start()
-```
+
+    import threading, multiprocessing
+    def loop():
+        x = 0
+        while True:
+            x = x ^ 1
+    for i in range(multiprocessing.cpu_count()):
+        t = threading.Thread(target=loop)
+        t.start()
 
 启动与CPU核心数量相同的N个线程，在4核CPU上可以监控到CPU占用率仅有102%，也就是仅使用了一核。
 但是用C、C++或Java来改写相同的死循环，直接可以把全部核心跑满，4核就跑到400%，8核就跑到800%，为什么Python不行呢？
@@ -313,4 +312,3 @@ Queue  is thread safe
 
 ## signal for thread
 signal.pthread_kill(thread_id, signum)
-

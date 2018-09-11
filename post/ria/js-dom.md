@@ -418,6 +418,8 @@ parent:
 text
 
 	document.createElement("p");
+	document.createElement("img");
+        === new Image() 自动load. 不需要插入
 	document.createTextNode("这是新段落。");
 
 createElement:

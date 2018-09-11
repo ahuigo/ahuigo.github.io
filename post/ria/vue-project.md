@@ -374,3 +374,5 @@ Vue.js 的插件应当有一个公开方法 install 。这个方法的第一个�
 
 # Single Vue 组件
 https://codesandbox.io/s/o29j95wx9
+
+https://github.com/vuejs/rollup-plugin-vue/blob/master/cookbook/typescript-simple/src/
