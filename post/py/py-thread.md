@@ -1,11 +1,9 @@
 ---
 layout: page
-title:
+title: python thread 线程笔记
 category: blog
 description:
 ---
-# Preface
-
 # threading
 Python的标准库提供了两个模块：`_thread`和`threading`: `_thread`是低级模块，threading是高级模块，对_thread进行了封装。
 
@@ -146,14 +144,13 @@ via a threadsafe threading.Event():
 ## communicate via pool.apply_async().get()
 对比下ThreadPool vs Thread
 
-	```python
-	t = threading.Thread(target=loop, name='LoopThread')
-		t.start() t.join()
+    t = threading.Thread(target=loop, name='LoopThread')
+        #t.start() t.join()
 
-	async_result = multiprocessing.pool.ThreadPool(processes=1).apply_async(foo, ('world', 'foo')) # tuple of args for foo
+    import multiprocessing.pool as pool
+    async_result = pool.ThreadPool(processes=1).apply_async(foo, ('world', 'foo')) 
     print(async_result.get()) # 阻塞+返回结果
     pool.close() # 阻塞等待所有线程结束, 相当于Thread.join()
-	```
 
 e.g.
 
