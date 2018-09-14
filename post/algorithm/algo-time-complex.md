@@ -23,21 +23,21 @@ Solution:
 1. guess O(n^2)
 2. Assume: T(k) = C * k^2
 3. Then: 
-    $$ 
+$$ 
     T(n) = 4(C*(\frac{n}{2})^2) +n 
         = Cn^2+n
-    $$
+$$
 4. n 无法消去
 
 我们重新假设
 1. Assume: $T(k) = C1 * k^2 - C2*k$
 2. Then: 
-    $$ 
+$$ 
     T(n) = 4(C1*(n/2)^2 - C2*n/2) +n 
         = C1n^2 - 2*C2n +n
         = C1n^2 - C2n - (C2 -1)n
         <= C1n^2 - C2n      (if C2>=1)
-    $$
+$$
 3. T(1) 满足肯定满足, 证毕
 
 ## 递归树法(Recurrence Tree Method)
