@@ -1,3 +1,6 @@
+---
+date: 2018-09-15
+---
 # Analysis of Algorithm
 ## 大O/Omega/Thelta 本质
     A、大O的定义：
@@ -93,6 +96,8 @@ e.g. T(n) = 4T(n/2)+f(n)
     f(n) = n^2 => n^2*Log n
     f(n) = n^3 => n^3
 
+![](/img/algo/master-theorem-tree.png)
+
 ### 证明梗概/思路(Proof sketch/intuition)
 https://sites.google.com/site/algorithmssolution/home/c4/master_method
 
@@ -100,7 +105,7 @@ https://sites.google.com/site/algorithmssolution/home/c4/master_method
 http://homepages.math.uic.edu/~leon/cs-mcs401-s08/handouts/extended_master_theorem.pdf
 
 我的手动证明:
-![](/img/algo-master-theorem-case2-extended-proof.png)
+![](/img/algo/master-theorem-case2-extended-proof.png)
 
 ## Reference
 - Analysis of Algorithm | Set 4 
