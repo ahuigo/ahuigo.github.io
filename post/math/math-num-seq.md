@@ -38,5 +38,7 @@ $\frac{1}{1\times 2}+\frac{2}{1\times 2\times 3}+\frac{3}{1\times 2\times 3\time
 
 注意:
 1. $\frac{3}{1\times 2\times 3\times 4}=\frac 1{1\times 2\times 3}-\frac{1}{1\times 2\times 3\times 4}$
-1. $\frac{3}{3\times 4}=\frac {1}{3}-\frac{1}{3\times 4}$
 1. ${\displaystyle \frac{n}{(n+1)!}=\frac {1}{n!}-\frac{1}{(n+1)!}}$
+1. $\frac{3}{3\times 4}=\frac {1}{3}-\frac{1}{3\times 4}$
+1. ${\displaystyle \frac{1}{n+1}=\frac {1}{n}-\frac{1}{n(n+1)}}$
+

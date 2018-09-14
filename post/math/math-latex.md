@@ -118,7 +118,7 @@ https://bcc16.ncu.edu.tw/7/latex/math_tex/2-html/
     \omega $\omega$产生字符ω,Ω
     \pi \Pi 得到: π, Π
 
-
+https://www.wolframalpha.com/input/?i=lnx
 Α	α	Alpha	a
 Β	β	Beta	b
 Γ	γ	Gamma	g
@@ -249,7 +249,8 @@ https://www.howtotype.net/category/all_symbols/
 	Ω≈ç√∫∫µ≤≥÷
 	¸˛Ç◊ı˜Â¯˘¿
 
-For more details,refer to [Type Symbols](http://www.wikihow.com/Type-Symbols-Using-the-ALT-Key)
+For more details,refer to [Type Symbols]
+http://www.wikihow.com/Type-Symbols-Using-the-ALT-Key
 
 ### Latex符号
 

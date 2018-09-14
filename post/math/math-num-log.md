@@ -1,4 +1,7 @@
 # 对数
+Power function: x^n
+Exponential function: a^x
+Logarithmic function: lnx
 
 ## 性质1
     m^{logp{n}} = n^{logp{m}} 
