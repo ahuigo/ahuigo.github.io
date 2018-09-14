@@ -55,7 +55,6 @@ http://docs.mathjax.org/en/latest/misc/mathjax-in-use.html 全局渲染
     katex.render(String.raw`c = \pm\sqrt{a^2 + b^2}`, element);
     var html = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}");
 
-
 ### MathJax+markdown
 1. MathJax 与 Markdown 的究极融合 https://yihui.name/cn/2017/04/mathjax-markdown/
 1. 支持markdown 的库: showdown/pageDown/marked
@@ -85,6 +84,9 @@ http://www.cnblogs.com/houkai/p/3399646.html
 
 ${\overline a}_{n}$
 ${\bar a}$
+
+## limit
+    \displaystyle \lim_{u \rightarrow \infty}
 
 ## Vectors, 向量
 

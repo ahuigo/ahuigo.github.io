@@ -2,11 +2,10 @@
 private:
 ---
 # Preface
-1. sideidea.com
+1. sideidea.com: http://sideidea.com/article/42
 2. 失物招领: http://www.bjgaj.gov.cn/swzl/index.do
 3. 付费问卷
-
-# 知乎
+3. 目标管理: 甘道图
 1. 企业与知乎合作点评与反馈, 也就是企业Tag 接口
 
 # 滑雪网站

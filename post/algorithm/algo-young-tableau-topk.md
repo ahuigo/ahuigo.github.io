@@ -1,9 +1,17 @@
-# 行列有序矩阵的topK
-[问题](http://segmentfault.com/q/1010000000715010)
-是这样的，有两个长度都为n的有序递增数组A、 B, 它们的任意两个元素相加构成一个矩阵M(n, n), 求这个矩阵的前K 个最小数。
+---
+layout: page
+title:	杨氏矩阵（Young Tableau）的topK 算法
+category: blog
+date: 2014-10-10
+description: 
+---
+# 杨氏矩阵（Young Tableau）的topK
+sg上有一个[问题](http://segmentfault.com/q/1010000000715010):
+
+有两个长度都为n的有序递增数组A、 B, 它们的任意两个元素相加构成一个矩阵M(n, n), 求这个矩阵的前K 个最小数。
+这个矩阵属于杨氏矩阵（Young Tableau）.
 
 # 数据集定义
-
 > 非常感谢 @brayden 的启发, 我将M(n*n)矩阵分为三个区域：
 
 - **已经遍历 && 已经选择(结果集R)**

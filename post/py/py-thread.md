@@ -147,11 +147,6 @@ via a threadsafe threading.Event():
     t = threading.Thread(target=loop, name='LoopThread')
         #t.start() t.join()
 
-    import multiprocessing.pool as pool
-    async_result = pool.ThreadPool(processes=1).apply_async(foo, ('world', 'foo')) 
-    print(async_result.get()) # 阻塞+返回结果
-    pool.close() # 阻塞等待所有线程结束, 相当于Thread.join()
-
 e.g.
 
     def foo(bar, baz):
@@ -160,7 +155,6 @@ e.g.
 
     from multiprocessing.pool import ThreadPool
     pool = ThreadPool(processes=1)
-
     async_result = pool.apply_async(foo, ('world', 'foo')) # tuple of args for foo
     print(async_result.get()) # 阻塞+get
 
