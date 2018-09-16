@@ -291,3 +291,33 @@ privat 变量:
         count += 1;
         return oldParseInt.apply(null, arguments); // 调用原函数
     };
+
+another example:
+
+    function  cacheMethod(cls, methodName) {
+        func = cls.prototype[methodName]
+        cls.prototype[methodName] = function(...arg) {
+            if(!this.cached){
+                this.cached={}
+            }
+          if (!this.cached[arg]) {
+            this.cached[arg] = func.call(this, ...arg)
+          }
+          return this.cached[arg];
+        }
+      }
+    
+    class F{
+        foo(a,b){
+            console.log(a,b)
+            return a+b
+        }
+    }
+    console.log(F.prototype)
+    cacheMethod(F, 'foo')
+    
+    f = new F()
+    console.log(f.foo(1,2))
+    console.log(f.foo(1,2))
+    console.log(f.foo(1,2))
+

@@ -175,7 +175,7 @@ async is used to await promise:
         console.log(result); // expected output: "resolved"
         return 'real end!';
     }
-    asyncCall()
+    asyncCall(); // not 'real end', but promise
     console.log('not end!');
 
 Notice: 

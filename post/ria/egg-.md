@@ -321,7 +321,7 @@ plugin 可以支持扩展：
 5. Response **请求级别**的
 
 ### context extend
-以context 为例子
+以context 为例子: app.context
 
     // app/extend/context.js
     module.exports = {
@@ -370,6 +370,35 @@ plugin.{env}.js根据环境配置: 比如只希望在本地环境加载，可以
             database: 'test',
         },
     };
+
+## lib
+    // {app_root}/lib/foo.js
+    module.exports = class Foo {
+      constructor(app) {
+        this.app = app;
+      }
+      sayHi() {}
+    }
+    
+    // {app_root}/app/extend/application.js
+    const Foo = require('../../lib/foo');
+    const FOO = Symbol('Application#foo');
+    module.exports = {
+      get foo() {
+        if (!this[FOO]) {
+          this[FOO] = new Foo(this);
+        }
+        return this[FOO];
+      }
+    }
+    
+    // 使用
+    this.app.foo.sayHi()
+
+也可以通过 loader 方式：
+    
+    // app.js
+    app.xx = app.loader.loadFile('path/to/file');
 
 ## middleware
 与koa midllerware 兼容，所以可以直接用koa-compress, koa-bodyParser

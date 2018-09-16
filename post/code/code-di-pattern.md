@@ -53,9 +53,11 @@ Injector 需要为注射的方法传入合适的参数
      //  构建参数绑定数组
       deps = deps ? deps[1]
         .split(/\s?,\s?/)
-        .map(function (dep) {
-          return this.dependency[dep];
-        }.bind(this)) : [];
+        .map(
+            function (dep) {
+                return this.dependency[dep];
+            }.bind(this)
+        ) : [];
 
       // 通过apply将依赖参数传入函数
       return function () {

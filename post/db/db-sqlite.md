@@ -6,6 +6,27 @@ sqlite3 /tmp/flaskr.db < schema.sql
 
 ## client
 
+    .tables
+    .databases
+    .help
+    .table '%es'
+    .schema albums
+
+    .indexes albums
+    .indexes %es
+
+### output
+http://www.sqlitetutorial.net/sqlite-commands/
+
+    sqlite> .output albums.txt
+    sqlite> SELECT title FROM albums;
+
+show field:
+
+    $ sqlite3 -header
+    or 
+    > .header on
+
 ### .show 默认配置
 
     sqlite>.show
@@ -53,7 +74,6 @@ sqlite>.help -- This is a single line comment
 sqlite>.help /* This is a single line comment */
 ### 结尾
 所有的语句以分号（;）结束。命令.help，.show 等则不需要
-
 
 ## CRUD
 ### update 
