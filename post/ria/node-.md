@@ -1,3 +1,7 @@
+# 为什么用Node
+2017，我们从Node.js的版本号大飞跃谈起
+http://www.techug.com/post/2017-node-js.html
+
 # global
 node 没有window, 但是有global
 

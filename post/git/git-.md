@@ -547,6 +547,9 @@ Create an archive of files from a named tree.
 	git push <repo> <local_branch>[:remote_branch]
 	git push origin master:test
 
+    # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
+
+
 > `git config http.postBuffer 5242880000` 设置push 时的大小限制, 否则会报 The remote end hung up unexpectedly。 还有一个原因是服务端限制
 
 	http {
