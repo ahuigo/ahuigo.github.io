@@ -29,7 +29,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		h.innerText = id;
 	}
 	document.querySelector('#toc').innerHTML = createToc(toc);
-
+    document.querySelectorAll('pre code').forEach(function (e) {
+      return hljs.highlightBlock(e, '    ');
+    });
 });
 
 function createToc(toc){
