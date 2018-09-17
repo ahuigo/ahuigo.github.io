@@ -26,9 +26,9 @@ global 能自动解决依赖，安装后就可以: vue serve 和 vue build 命�
 vue 命令
 
     serve [options] [entry]
-                   serve a .js or .vue file in development mode with zero config
+        serve a .js or .vue file in development mode with zero config
     build [options] [entry]
-                   build a .js or .vue file in production mode with zero config
+        build a .js or .vue file in production mode with zero config
 
     create [options] <app-name>           
         create a new project powered by vue-cli-service
@@ -86,11 +86,9 @@ vuePlugins 选项设置在 package.json.
 
 你也可以通过 vuePlugins.ui 选项添加像 UI 插件一样工作的文件：
 
-    {
-        "vuePlugins": {
+    { "vuePlugins": {
             "ui": ["my-ui.js"]
-        }
-    }
+        } }
 
 ### Preset
 1.默认值： preset 是包含创建新项目所需`预定义选项和插件`的 `JSON 对象`，让用户无需在命令提示中选择它们。
@@ -147,6 +145,7 @@ vuePlugins 选项设置在 package.json.
     yarn serve
 
 ### vue-cli-service serve
+entry 默认自动发现入口, main.js
 
     用法：vue-cli-service serve [options] [entry]
 
@@ -176,6 +175,8 @@ vuePlugins 选项设置在 package.json.
 
     vue-cli-service inspect [options] [...paths]
         --mode    指定环境模式 (默认值：development)
+
+    vue-cli-service inspect > output.js
 
 ### help
 

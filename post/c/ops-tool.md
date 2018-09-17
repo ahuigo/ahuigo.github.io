@@ -223,9 +223,10 @@ Remove grep command while use ps
 	ps aux | grep perl | grep -v grep
 	ps aux | grep [p]erl
 
-## exclude file
+## exclude file & dir
 
 	--exclude=\*.{html,htm,js}
+    grep -R --exclude-dir=node_modules 'some pattern' /path/to/search
 
 ## multi patterns
 

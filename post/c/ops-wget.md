@@ -43,6 +43,9 @@ Example: Dump Site
 	-v, --verbose
 		Makes the  fetching more verbose
 
+## header
+
+    wget --header='User-Agent: Chrome/68.0.97' ahuigo.com -O index
 
 ## output log
 
