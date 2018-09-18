@@ -279,12 +279,9 @@ const app = new Vue({
       }
       return fetch(`https://api.github.com/repos/${this.config.user}/${this.config.repo}/contents/${file.path}`, {
       }).then(r => r.json()).then(data => {
-        const ignorePath = this.config.user === 'ahuigo' ? ['ai', 'atom', '0'] : ['0'];
+        const ignorePath = this.config.user === 'ahuigo' ? ['ai', 'atom', '0', '0.md'] : ['0'];
         let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type, show: true })).filter(
-          (v) => !(
-            v.type == 'dir'
-            && ignorePath.includes(v.path.slice(this.path.length+1))
-          )
+          (v) => !( ignorePath.includes(v.path.slice(this.path.length+1)))
         );
         Vue.set(file, 'nodes', nodes);
         localStorage.setItem(file.path, JSON.stringify({ time: +new Date, nodes }))

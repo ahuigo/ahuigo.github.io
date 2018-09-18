@@ -1,10 +1,11 @@
 ---
 layout: page
-title:	
+title: ELF 文件格式
+date: 2015-07-13
 category: blog
 description: 
 ---
-# Preface
+# ELF 文件格式
 ELF 文件格式是一个开放标准，linux 系统的可执行文件都采用此格式。它用于三种不同的文件类型：
 
 - 可重定位的目标文件（Relocatable, Object file）
