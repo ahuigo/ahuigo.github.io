@@ -352,6 +352,18 @@ public 中的静态资源会被复制到输出目录中, 而不经过 webpack。
 1. 文件丢失会直接在编译时报错，而不是到了用户端才产生 404 错误。
 1. 最终生成的文件名包含了内容哈希，因此你不必担心浏览器会缓存它们的老版本。
 
+### Es6 module
+
+    //vue.config.js
+    module.exports = {
+        configureWebpack: {
+            devtool: 'source-map',
+            externals: {
+                'vueRouter':'vueRouter', // import VueRouter from 'vueRouter'
+            },
+        },
+    }
+
 
 ## 构建目标
 当你运行 vue-cli-service build 时，你可以通过 --target 选项指定不同的构建目标
