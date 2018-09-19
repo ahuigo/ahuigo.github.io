@@ -423,3 +423,12 @@ to https://github.com/<USERNAME>/<REPO>, set baseUrl to "/<REPO>/".
         ? '/REPO/'
         : '/'
     }
+
+## Debug
+
+    // vue.config.js
+    module.exports = {
+        configureWebpack: {
+            devtool: 'source-map'
+        }
+    }

@@ -11,7 +11,7 @@ Node10 已经支持es6 的import/export,
         console.log(`Hello, ${name}!`)
     MM
 
-    node  --experimental-modules --loader ./loader.mjs hello.js
+    node  --experimental-modules --loader ~/loader.mjs hello.js
 
 其中 loader.mjs 内容参考: https://github.com/ChenShenhai/blog/issues/24
 
