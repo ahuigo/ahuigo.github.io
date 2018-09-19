@@ -3,16 +3,15 @@ date: 2018-08-27
 category: ops
 ---
 # 各种语言的fiddle
-> 几行代码写的js fiddle(加入到标签就可以)：
-https://gist.github.com/ahuigo/ea584caed67ffcfdc55b332e7ff1b45d
 
 各种语言的fiddle
 1. go:
     https://play.golang.org/
 
 2. js:
-    jsbin.com 有点老了
-    jsfiddle
+    https://gist.github.com/ahuigo/ea584caed67ffcfdc55b332e7ff1b45d # 几行代码写的，放到chrome 的书签就行
+    http://jsbin.com 有点老了
+    http://jsfiddle.com
     http://tinkerbin.com/# 实时运行
     http://codepen.io/ 实时
     http://rendur.com/# 超级轻量级, 不支持分享

@@ -424,7 +424,8 @@ to https://github.com/<USERNAME>/<REPO>, set baseUrl to "/<REPO>/".
         : '/'
     }
 
-## Debug
+## Debug with vscode for chrome
+vscode https://vuejs.org/v2/cookbook/debugging-in-vscode.html
 
     // vue.config.js
     module.exports = {
@@ -432,3 +433,13 @@ to https://github.com/<USERNAME>/<REPO>, set baseUrl to "/<REPO>/".
             devtool: 'source-map'
         }
     }
+
+然后
+1. vue-cli 配置并生成source-map
+2. vscode下载： debugger for chrome
+3. vscode 在lanuch.json 添加: chrome lanuch
+4. F5
+
+### HMR
+vue-cli 默认支持webpack HMR
+https://zhuanlan.zhihu.com/p/30669007
