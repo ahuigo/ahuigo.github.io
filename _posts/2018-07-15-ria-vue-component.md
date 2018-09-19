@@ -2,7 +2,6 @@
 layout: page
 title: Vue 组件
 category: blog
-description: 
 ---
 # Vue 组件
 
@@ -634,6 +633,16 @@ code:
         <div v-html="post.content"></div>
     </div>
 
+### 异步
+    Vue.component('async-example', function (resolve, reject) {
+      setTimeout(function () {
+        // 将组件定义对象(component definition)传递给 resolve 回调函数
+        resolve({
+          template: '<div>I am async!</div>'
+        })
+      }, 1000)
+    })
+    
 # tpl
 
 ## 强制更新
