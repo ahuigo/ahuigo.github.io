@@ -44,8 +44,8 @@ child_process 提供了很多shell 包
     const { execSync } = require('child_process');
     // stderr is sent to stdout of parent process
     // you can set options.stdio if you want it to go elsewhere
-    let stdout = execSync('ls').toString();
-    let stdout = execSync('ls')+'';
+    let stdout = execSync('ls -l').toString();
+    let stdout = execSync('ls -l')+'';
 
 ## spawn(stream)
 
@@ -64,7 +64,7 @@ child_process 提供了很多shell 包
       console.log(`child process exited with code ${code}`);
     });
 
-## spawnSync
+### spawnSync
     const { spawnSync} = require('child_process');
     const child = spawnSync('ls', ['-lh', '/usr']);
 

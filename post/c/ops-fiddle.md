@@ -9,7 +9,7 @@ category: ops
     https://play.golang.org/
 
 2. js:
-    https://gist.github.com/ahuigo/ea584caed67ffcfdc55b332e7ff1b45d # 几行代码写的，放到chrome 的书签就行
+    https://github.com/ahuigo/js-lib/blob/master/fiddle.html # 加上`data:text/html,`前缀，放到chrome 的书签就行
     http://jsbin.com 有点老了
     http://jsfiddle.com
     http://tinkerbin.com/# 实时运行
