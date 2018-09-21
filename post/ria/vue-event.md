@@ -156,6 +156,10 @@ methods(带参数):
 
     <button v-on:click="greet('hello', $event.target.value)">
 
+### handler value
+
+    $event.target.value
+    $event.target.checked
 
 ## 程序化的事件侦听器
  $emit 的用法，除了被 v-on 侦听, 还有：

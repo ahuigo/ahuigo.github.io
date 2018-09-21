@@ -22,7 +22,7 @@ title: Vue 的模板系统
 ### bind text
 
     <h1>{{user.name}}</h1>
-    //页面加载时不显示{{}} 
+    //equal to
     <h1 v-text="user.name"></h1>
 
 ### v-html:

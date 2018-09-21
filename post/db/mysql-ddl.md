@@ -1,6 +1,6 @@
 ---
 layout: page
-title:	mysql
+title:	mysql ddl
 category: blog
 description:
 ---

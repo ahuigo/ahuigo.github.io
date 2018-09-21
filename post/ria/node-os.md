@@ -7,6 +7,11 @@
     const execSync = require('child_process').execSync;	
     execSync(`kill ${process.ppid}`)
 
+## env
+
+    process.env.NODE_ENV
+    process.env.SHELL
+
 ## process
 
     > process.argv
@@ -24,9 +29,19 @@
     > process.cwd();
     '/private/tmp'
 
+end:
+
+    process.exit(1)
+
 ### process event
 JavaScript程序是由事件驱动执行的单线程模型，Node.js也不例外。
 1. 没有任何响应事件的函数可以执行时，Node.js就退出了。
+
+Signal 信号
+
+    process.on('SIGKILL', function(){
+
+    })
 
 #### nextTick
 如果我们想要在下一次事件响应中执行代码，可以调用process.nextTick()：

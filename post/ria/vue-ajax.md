@@ -26,6 +26,7 @@
 
 ### fetch post
 
+    options:
         credentials: "include"
         method: 'POST',
         headers : new Headers(),
@@ -62,11 +63,14 @@ also:
 
 ### response
 
-    response.json()
+    response.json().then
     response.text().then(function (text) {
         // do something with the text response 
     });
 
+e.g. 
+    .then(async r => await r.json())
+    .then(data=>console.log(data))
 
 ## this.$http
 

@@ -8,6 +8,13 @@ child_process 提供了很多shell 包
 - spawn
 - spawnSync
 
+## process(sys)
+    process.argv
+    process.chdir('/')
+    process.cwd()
+        __dirname
+
+
 ## exec
     const { exec } = require('child_process');
     exec('cat *.js bad_file | wc -l', (err, stdout, stderr) => {

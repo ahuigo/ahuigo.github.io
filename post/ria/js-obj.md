@@ -15,7 +15,14 @@ description:
 
     new cls().property
 
+动态属性:
+
+    let a = {
+        [ city + 'population' ]: 350000
+    };
+
 ### loop: entries(use keys())
+like python's .items()
 
     for(let [key, value] of Object.entries(myObject)) {
         console.log(key, value); // "first", "one"
