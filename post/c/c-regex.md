@@ -1,16 +1,14 @@
 ---
-layout: page
+date: 2018-05-17
 title:	c 语言的正则库
 category: blog
-description: 
 ---
-# Preface
-
+# c 语言的正则库
 c 语言的posix 正则库参考: man 3 regex, 不过我更喜欢用pcre, 可参考 `man 3 pcreapi`
 
 以下是两个例子
 
-# Posix Regex
+## Posix Regex
 这个posix regex 例子来自于:  
 http://blog.csdn.net/sahusoft/article/details/4196342
 
@@ -89,7 +87,7 @@ Results:
 	begin: 4, len = 26d  match: <title>Hello World</title>
 	subexpression 1 begin: 11, len = 11d  match: Hello World
 
-# PCRE Regex
+## PCRE Regex
 pcre 比posix 功能更强大，效率更高。它使用了pcre_compile 和pcre_exec
 
 	/* Compile thuswise:    

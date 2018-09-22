@@ -28,17 +28,7 @@ sed 命令行基本格式为:
 基本语法为:
 
 	/pattern/action
-
-`/pattern/` 一般是可选的
-
-	"10000013700\tSHUNFENG\t"$USERID"\t"
-	$username"\t"
-	$password"\t"
-	$nickname"\t"
-	$status"\t"
-	$register_time"\t"
-	$last_modifer"\t"
-	$"\t"
+	range{/pattern/action}
 
 # action, 操作码
 s替换d删除i插入a追加 q退出
@@ -49,6 +39,19 @@ pattern:
 	\[a-z\]
 	^strin$
 	\r \n
+
+## p
+
+	sed -n '1p' a.txt //不输出原文
+
+	$ sed -n '2p' a.txt
+	$ sed '2,3p' a.txt
+	$ sed '/my/p' a.txt
+
+## q
+找到pattern 就退出：
+
+	tail -f a.log | sed '/^failed$/q'
 
 ## s字符串替换
 
@@ -77,7 +80,7 @@ example:
 ## i and a
 插入和追加
 
-	$ sed '1 i a' pets.txt//sed '1ia' pets.txt
+	$ sed '1 i a' pets.txt; # sed '1ia' pets.txt
 	$ sed '1 a sth.' pets.txt
 
 ## search insert(s+a)
@@ -97,21 +100,6 @@ example:
 	$ sed '/my/d' a.txt
 	$ sed '2s/^pattern.*//' a.txt; # 清空第二行，而不是删除第二行
 	$ sed '2{/pattern/d}' a.txt; # 删除第二行
-
-## p
-
-	$ sed -n '2p' a.txt
-	$ sed '2,3p' a.txt
-	$ sed '/my/p' a.txt
-
-# q
-找到pattern 就退出：
-
-	tail -f a.log | sed '/^failed$/q'
-
-# -n
-
-	sed -n '1p' a.txt //不输出原文
 
 # 行范围
 
@@ -136,7 +124,7 @@ example:
 	# 对3行到第6行，匹配/This/成功后，再匹配/fish/，成功后执行d命令
 	$ sed '3,6 {/This/{/fish/d}}' pets.txt
 
-## 串行命令
+## 串行命令`;`
 
 	# 从第一行到最后一行，如果匹配到This，则删除之；如果前面有空格，则去除空格
 	$ sed '1,${/This/d;s/^ *//g}' pets.txt #用分号分割多个命令
@@ -260,6 +248,6 @@ sed 默认使用BRE 正则， 使用 -r 参数是 sed 会支持ERE 正则
 > 最新的sed 好像在-r 参数时，会支持perl 正则了
 
 # Reference
-[sed 简明教程]
+- [sed 简明教程]
 
 [sed 简明教程]: http://coolshell.cn/articles/9104.html

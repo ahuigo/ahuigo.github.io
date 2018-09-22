@@ -308,6 +308,10 @@ foreach elements
 	document
 		document.getElementById('frameId').contentDocument; //有跨域限制.
 		frameId.contentDocument; //有跨域限制.
+    document.documentElement
+        document.documentElement
+        document.head
+        document.body
 	window:
 		document.getElementById('frameId').contentWindow; //有跨域限制.
 		frameId.contentWindow; //有跨域限制.

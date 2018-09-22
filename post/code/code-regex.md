@@ -1,20 +1,41 @@
 ---
 layout: page
 title:	Posix Regex
+date: 2018-08-18
 category: blog
 description:
 ---
-# Preface
+# Wildcard 通配符 和 Posix 正则
 正则分两大类:Posix和PCRE(Perl Compatible Regular Expression ). posix 已经很老了, 效率也没有PCRE高. 但是它被linux命令行广泛支持.
-在介绍Posix Regex之前, 我们先看看wildcard
+在介绍Posix Regex之前, 我们先看看wildcard 通配符
 
 # wildcard 通配符
 
 	* 多个字符
 	? 单个字符
 	\* \? 转义特殊字符
+    [...] 字符集合
+        [^...]和[!...] 两种写法是等价的。
 	[a-z] 字符范围
-	[^a-z] 不在此字符范围(unix系统shell)
+        [^a-z] 不在此字符范围(unix系统shell)
+        [!1-9]
+    {abc,def} 字符串集合
+        echo {j{p,pe}g,png}
+    {a..z} 字符串范围
+        echo {10..20}.txt
+
+目录匹配: `*` 不匹配`/`, `*/`匹配单层目录, 但最`**/` 则匹配多层目录
+
+    # 单层目录
+    $ ls */*.md |grep s-if
+    # 多层目录
+    $ ls **/*.md |grep s-if
+    eng/s/s-if.md
+
+.gitignore 的特殊性:
+
+    # 不含`/` 则默认为: **/*.log
+    *.log
 
 ## Mysql 中的wildcard
 
@@ -40,7 +61,6 @@ description:
     Out[16]: ['', 'switchport', '']
 
 # Posix Expression
-
 POSIX正则表达式分为：BRE (Basic Regular Expression) 和 ERE (Extended Regular Expressions)。
 
 BRE 并非是ERE的子集.以下是它们的交集:
@@ -80,11 +100,16 @@ BRE 并非是ERE的子集.以下是它们的交集:
 	\B
 		The oppsite of `\b` (`\y`)
 
+`*` 共有的， 0个或以上元字符或子模式
+
+    *? 去贪婪(不生效)
+
 ## BRE 专有
 
 	\{n,m\} \{n,\} 限制它之前的元字符或者子模式重现的次数区间
 	\( \) 子模式
 	\| 或
+    \+
 
 ## ERE 专有
 
@@ -92,8 +117,6 @@ BRE 并非是ERE的子集.以下是它们的交集:
     ? 0/1个元字符或子模式
     + 1个或多个元字符或子模式
 		+? 去贪婪(不生效)
-    * 0个或以上元字符或子模式
-		*? 去贪婪(不生效)
     | 或
     () 子模式
 	^ 行首
@@ -105,6 +128,8 @@ BRE 并非是ERE的子集.以下是它们的交集:
 Example:
 
     echo -n ' ./alxxxxal 1.txt' | grep -E './(al).+\1'
+    $ echo -n $'ba123' | gsed -nr '/ba?123/p'
+    ba123%
 
 ERE,BRE 都不支持：
 
@@ -134,14 +159,25 @@ ERE,BRE 都不支持：
 	(?<!exp)word(?!exp)    # >
 
 # 支持情况
-grep, sed 默认使用BRE. 但是*部分grep* 不支持\r\n, 通用的做法是：使用$'\r'
+常用命令的支持对wildcard/posix/perl 的支持情况
+1. grep 通过`-E` 启用ERE
+    2. grep 通过`-P` 启用Perl Regex(gnu grep only)
+2. find 同时支持POSIX (`-regex '.*\.txt$'` )正则，以及Wildcard 通配符(`-path '*.txt'`)。
+3. sed 通过`-r` 启用ERE
+4. gawk 默认ERE
 
-	$ echo -n $'abc\r123' | grep -o $'abc\r123'
-	123
+sed/gsed 默认使用BRE, 也支持ERE. 但是*sed* 不支持`\r\n` 
 
-grep 通过`-E` 启用ERE
-grep 通过`-P` 启用Perl Regex(gnu grep only)
-sed 通过`-r` 启用ERE
-gawk 默认ERE
+    $ echo -n $'abc\r123' | sed -n '/abc\r123/p'
+    $ echo -n $'abc\r123' | gsed -n '/abc\r123/p'
+    123%
+    $ echo -n $'abc\r123' | sed -n $'/abc\r123/p'
+    123%
 
-> mac OSX 下的grep -E 与linux 下的grep -P 是等价的
+mac OSX 下的`grep -E` 与GNU 的`grep -P` 是等价的, 你也可以安装GNU grep:
+
+    // /usr/local/bin/grep
+    brew install grep
+
+## Reference
+- http://www.ruanyifeng.com/blog/2018/09/bash-wildcards.html
