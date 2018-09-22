@@ -69,10 +69,13 @@ MESI 协议是以缓存行(缓存的基本数据单位，在Intel的CPU上一般
 缺点：查询到的结果，可能是已经过期的。
 优点：不需要等待某事务结束，可直接查询到结果。
 
-## Shared Lock, 共享锁
+## Shared Lock, 共享锁(读锁)
 共享锁会被互斥锁阻塞. 直到互斥锁所在的事务commit
 
 	SELECT …… LOCK IN SHARE MODE（共享锁）
+
+读锁：共享读，但是不能写
+写锁: 除了自己，所有其他请求都不能读写
 
 ## Pessimistic Lock, 悲观锁(Mutual Exclusive Lock, 互斥锁)
 被查询到的数据(id=1)，都将不能再进行修改、删除、SELECT …… LOCK IN SHARE MODE(所有id?)操作
