@@ -7,7 +7,7 @@ title: Vue 的模板系统
 
     <div is="tpl" class="cls1 cls2" :class="cls" :title="'title'"></div>
 
-为了防止Render 冲突，外部的动态Render 应该放到Vue 后。比如这个例子：https://codepen.io/ahuigo/pen/dqPgJQ?
+为了防止Render 冲突，外部的动态Render 应该放到Vue 后。参考这个例子：https://codepen.io/ahuigo/pen/dqPgJQ?
 
 # 值的绑定
     new Vue({

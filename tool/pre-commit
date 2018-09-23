@@ -86,7 +86,7 @@ title: {blog['title']}
 category: blog
 ---
 '''
-            open(pageFilePath,'w').write(f'{meta}# {blog["title"]}\n'+blog['content'].replace('\n', '    \n'))
+            open(pageFilePath,'w').write(f'{meta}# {blog["title"]}\n'+blog['content'].replace('\n', '\n    '))
             #shutil.copy2(path, pageFilePath)
 
 cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/0\.md$" '
