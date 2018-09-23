@@ -40,6 +40,12 @@
 
 ## 数学公式
 展示数学公式的库主要有 mathjax 和katex, 本博采用了非常轻量的katex。
+1. `$` 用与行内公式;
+2. `$$`用于段落公式;
+
+可以参考这个例子：
+
+<iframe width="100%" height="400px" src="md.html"></iframe>
 
 katex 支持标准的latex，如果想转义数学符号:
 
@@ -55,14 +61,6 @@ katex 支持标准的latex，如果想转义数学符号:
     >	>
     <	<
     \	\backslash
-
-### 数学公式示例
-1. `$` 用与行内公式;
-2. `$$`用于段落公式;
-
-可以参看这个例子：
-
-<iframe width="100%" height="400px" src="md.html"></iframe>
 
 ## 用vscode 写作
 我几乎所有的写作都是通过markdown + vscode 完成的。
