@@ -183,7 +183,7 @@ e.preventDefault() 冒泡阻止：
     }
     </script>
 
-1. addEvent submit handler: 只能用e.preventDefault() 
+addEvent submit handler: 只能用e.preventDefault() 
 
     function handler(e){
         e.preventDefault();//work
@@ -193,14 +193,31 @@ e.preventDefault() 冒泡阻止：
 
 ## keyborad event:
 
+    e.key vs e.code
+        's', 'S' vs 'KeyS'
+        'Shift' vs 'ShiftLeft', 'ShiftRight', 
     e.keyCode == e.which:
-         16-shift, 17-ctrl, 18-alt
+         16-Shift, 17-Ctrl, 18-Alt
     e.ctrlKey, e.altKey
 
+    //body.onkeydown = handler
     document.addEventListener('keydown', function(e){
         isShiftKey = window.event ? window.event.shiftKey : e.shiftKey
         console.log(e.which,e.keyCode,e.ctrlKey, isShiftKey)
      })
+
+### keyEvent with textarea
+
+    document.addEventListener('keydown', e=>{
+        if (e.keyCode === 9 && e.target.tagName === 'TEXTAREA') {
+           var target = e.target;   
+            var start = target.selectionStart;   
+            var end = target.selectionEnd;
+            target.value=target.value.slice(0, start) + "\t" + target.value.slice(end);
+            target.selectionStart = target.selectionEnd = start + 1;
+            e.preventDefault();
+        }
+    })
 
 ### trigger event
 

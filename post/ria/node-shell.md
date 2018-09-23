@@ -1,8 +1,8 @@
 ---
 date: 2018-08-25
 ---
-# Node 执行shell
-child_process 提供了很多shell 包
+# Node 执行shell 的方法
+child_process 提供了很多执行shell 的包:
 - exec+ util.promisify
 - execSync
 - spawn
@@ -13,7 +13,6 @@ child_process 提供了很多shell 包
     process.chdir('/')
     process.cwd()
         __dirname
-
 
 ## exec
     const { exec } = require('child_process');

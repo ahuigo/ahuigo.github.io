@@ -1,4 +1,4 @@
-# Index
+# Postgre Index
 本文主要围绕postgre 总结一下索引, 参考：[PostgreSQL 9种索引的原理和应用场景](https://yq.aliyun.com/articles/111793)
 
 ## 索引算法

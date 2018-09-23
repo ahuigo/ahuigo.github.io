@@ -1,6 +1,4 @@
-# 安装\配置\管理
-
-# install
+# Postgre 安装\配置\管理
 ```bash
 rpm -Uvh https://yum.postgresql.org/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm
 yum install postgresql10-server postgresql10 -y

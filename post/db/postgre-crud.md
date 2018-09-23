@@ -1,8 +1,8 @@
 
-# CRUD
+# Postgre CRUD
 ## insert 
-CREATE TABLE users (id INT, counters JSONB NOT NULL DEFAULT '{}');
-INSERT INTO users (id, counters) VALUES (1, '{"bar": 10}');
+    CREATE TABLE users (id INT, counters JSONB NOT NULL DEFAULT '{}');
+    INSERT INTO users (id, counters) VALUES (1, '{"bar": 10}');
 
 ### last insert id
 3 ways,all are concurrent safe:

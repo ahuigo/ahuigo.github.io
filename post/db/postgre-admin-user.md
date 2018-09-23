@@ -1,4 +1,4 @@
-# Authentication
+# Postgre User and Authentication
 vim /var/lib/pgsql/10/data/pg_hba.conf
 
     host    all             all             127.0.0.1/32            md5

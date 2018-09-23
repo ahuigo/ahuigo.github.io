@@ -1,9 +1,9 @@
-# IndexedDb 的使用
+# IndexedDb 的使用之Dexie
 IndexedDb API 封装的很难用，[IndexedDB使用与出坑指南](https://juejin.im/post/5a9d65916fb9a028e46e257a) ，
 
 对比了各大lib, 发现Dexie 这个封装最好。
 
-# Dexie
+# DDL
 ## Create Database+Table
 
     <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
@@ -30,11 +30,11 @@ Init your DB with some default statuses:
         statuses: "++id,name,openess"
     });
     db.on("populate", function() {
-        db.statuses.add({id: 1, name: "opened", openess: true});
+        db.statuses.bulkAdd([{id: 1, name: "opened", openess: true},...]);
     });
     db.open()
 
-### version
+## Alter Version
 Client Database 与 Server Database 不同，当时修改表结构时，每个Client 表结构都可能不同。所以IndexedDB 引入了database 的版本。所有的js的表结构操作都需要保留, 不能缺失，就是为了不能client migration 时的一致性。
 
 如果版本不全: UpgradeError Dexie specification of currently installed DB version is missing
@@ -63,6 +63,10 @@ Note: Dexie will provide the migration in backround in case a user with version 
         });
     });
 
+Note:
+1. Upgrade: Not yet support for changing primary key.(要先删除table) `++id` 变`id` 都不行
+Refer to: https://github.com/dfahlander/Dexie.js/issues/88
+
 ### alter change
 
     db.version(1).stores({
@@ -81,13 +85,76 @@ Note: Dexie will provide the migration in backround in case a user with version 
     // Drop table 'foo3':
     db.version(4).stores({foo3: null});
 
-### index
+## primary key 
+out of line: '' empty key
 
-    ++id auto increment
-    *to unique key
-    index2 normal key
+    db.version(1).stores({
+        simple: ''
+    });
+    db.simple.add('one', 1); // insert
+    db.simple.add({name:'ahui'}, 2); // insert
+    db.simple.put('three', 3); // insert    
 
-### Detect DB changed
+out of line: '++' auto increment
+
+    db.version(2).stores({
+        simple: '++,name'
+    });
+    db.simple.add('one', 1);
+    db.simple.put({name:'ahui', skill:'code'}, 2); // update
+
+inline: key in object
+
+    db.version(1).stores({
+     objects: '++id,name'
+    });
+ 
+    db.objects.put({id: 'one', name: 'ahuigo'}); 
+
+inline: key with dot notation(deep level)
+
+    db.version(1).stores({
+        objects: 'pk.id'
+    });
+    db.objects.add({data: 'one', pk: {id: 1, ts: 1928198298}});
+    db.objects.add({data: 'two', pk: {id: 2, ts: 1928198299}});
+
+Composite keys
+
+    db.version(1).stores({
+        objects: '[first+last]'
+    });
+    
+    db.objects.add({first: '1', last: 1, data: 'test'}); //insert
+    db.objects.put({first: '2', last: 2, data: 'test2'}); //insert
+    const result = await db.objects.get(['2',2]);
+    // {first: "2", last: 2, data: "test22"
+
+## indexes
+4种:
+
+    property : hold duplicates
+    &property : Unique index.
+    *property : Multi-entry index(array)
+    [property1+property2] : Compound index
+        where('[properties.tsunami+properties.mag]')
+
+e.g. 
+
+    db.version(1).stores({
+        contacts: '++id,name,&email,*hobbies,[postCode+city]'
+    });
+    db.contacts.add({
+        name: 'John',
+        email: 'john@test.com',
+        hobbies: ['Reading', 'Traveling', 'Cycling'],
+        postCode: 11111,
+        city: 'BigCity'
+    });
+    // use multi-entry index
+    const contact = await db.contacts.where('hobbies').equals('Cycling').first();
+
+## Detect DB changed
 
     window.addEventListener('storage', function (event) {
         if (event.key === "Dexie.DatabaseNames") {
@@ -107,9 +174,9 @@ IndexedDB 没有借口，Dexie 是通过`__dbnames` 记录的
     });
 
 ## Delete DB+Table
-    db.delete();
     // Static method
     Dexie.delete('database_name');
+    db.delete();
 
     Dexie.getDatabaseNames((l)=>{
         l.forEach(console.log)
@@ -119,84 +186,173 @@ delete table
 
     db.version(x).stores(tableName:null)
 
-## CRUD
+# CURD
 
-    //add + select
+## add
+
+    //add
+    db.contacts.bulkAdd([{id:1, ....}, {id:2, ....},  ......  ,{id:100, ....} ]);
+
     // put = add+update
     db.friends.put({name: "Nicolas", shoeSize: 8}).then (function(){
         console.log(db.friends.get('Nicolas'));
     })
 
-    //delete
-    db.orders
-        .where("state").anyOf("finished", "discarded")
-        .delete()
+## update
+put: insert+update
+
+    db.objects.put({first:'1',last:1, data:2})
+
+update(partial update): given primarty key as first
+
+    db.friends.update(2, {name: "ahui"}).then(isUpdated=>{}) 
+    // 区分'1' vs 1 
+    db.objects.update({first:'1',last:1},{a:[1,2,3]})
+
+modify(partial update): based on query
+
+    db.inspections.where('id').equals(id).modify({a:[1,2,3]}) );
+    db.inspections.where('id').equals(id).modify(x => {x.a.push(6); delete x.age;});
+
+modify: override via ref.value
+
+    db.contacts.where('name').equals('Jane').modify((contact, ref) => {
+        ref.value = {id: 1, name: 'Sarah', hobbies: ['Reading']}; //pk(id) 不能变
+    });
+    // delete record
+    delete ref.value
+
+## delete
+delete on query
+
+    db.contacts.where('name').equals('Jane').delete()
         .then(function (deleteCount) {
             console.log( "Deleted " + deleteCount + " objects");
         });
 
-    //query
-    db.table.toArray()
-    db.table.each(callbackFn);
+delete on pk
 
+    db.objects.delete(2)
+    // {first:'1',last:2}
+    db.objects.delete(['1',2])
 
-### collection
+批量删除
 
-    Collection.sortBy()
-    Collection.each(row=>{})
-    Collection.first()
-    Collection.last()
+    db.contacts.bulkDelete([1,2]);
 
-    Collection.toArray() //end
+clear all:
 
-delete
+    Table.clear()
 
-    // 等价
-    Collection.delete()
-    Collection.modify(function () {delete this.value;});
+## Read
+pk:
 
-equal(不是collection), above, below
+    const contact = await db.contacts.get(1);
 
-    db.users.get(2) 
-        will give you the user with id 2
+each:
+
+    //each
+    db.contacts.each(contact => console.log(contact));
+
+    // reverse:
+    db.contacts.reverse().each(contact => console.log(contact));
+ 
+toArray:
+
+    const all = await db.contacts.toArray();
+
+### distinct:
+
+    .distinct().limit(10)
+
+### orderBy:
+
+    const allOrderedByAge = await db.contacts.orderBy('age').toArray();
+
+### limit, offset
+
+    db.contacts.reverse().limit(1)
+    db.contacts.offset(1000).limit(2)
+    table.first()
+    table.last()
+
+### count
+
+    db.contacts.count()
+
+### where
+`where(<indexes>)` accept indexed only. 
+
+`':id'` allows you to create queries with the primary key. 
+
+    db.contacts.where(':id').below(3).
+
+equal:
+
     db.users.where('username').equals('usrname').first() 
         - will give you the user with username ‘usrname’
     database.users.where('id').equals(2).delete();
 
-`anyof()`, `between(37, 40)`
+shortland equals:
 
-    db.relations.where('relation').anyOf('wife', 'husband', 'son', 'daughter') 
-        - will give you all family relations.
+    db.contacts.where({firstName: 'Ryan', age: 35}).toArray();
+
+compound indexes 组合索引
+
+    db.objects.where('[first+last]').equals(['1',1])
 
 string:startsWith + IngoreCase
 
     db.users.where('email').startsWith('david@').distinct()
-        - will give you the users that have any of their emails starting with ‘david@’
     db.users.where('name').startsWithIgnoreCase('da') 
-        - will give you all users starting with “da”
+    // dot indexes(多层)
     db.users.where('address.city').equalsIgnoreCase('malmö') 
-        - will give you all users residing in Malmö.
 
-`or()`, `+`, `and()`
+above(), aboveOrEqual(), below(), belowOrEqual():
+
+    db.contacts.where('age').aboveOrEqual(35).toArray();
+
+between:
+
+    // [27, 35)
+    where('age').between(27, 35)
+    // (27, 35]
+    where('age').between(27, 35, false, true)
+
+`anyOf()`, `noneOf`
+
+    .where('relation').anyOf('wife', 'husband', 'son', 'daughter') 
+    .where('relation').noneOf('wife', 'husband', 'son', 'daughter') 
+
+`or()`, `and()`
 
     db.relations.where('userId1').equals(2).or('userId2').equals(2) 
         - will give you all relations that user with id 2 has to other users or other users have to user 2
+    .and(function(friend) { return friend.isCloseFriend; })
+
+pk:
+
     db.relations.where('[userId1+userId2]').equals([2,3]) 
         - will give you all the relations that user 2 has to user 3
     db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2]) 
         - will give you all the relations that user 2 has to user 3 or user 3 has to user 2.
 
-    .and(function(friend) { return friend.isCloseFriend; })
+### Key results
+primary key values
 
-limit, distinct:
+    await db.contacts.where('age').above(30).primaryKeys();
+    // [1, 5, 6, 2]
 
-    .distinct()
-    .limit(10)
+keys() and uniqueKeys() return the index value
 
-sortBy
+    const result = await db.contacts.where('age').above(30).uniqueKeys(); 
+    // [32, 35, 40, 47]
+    const result = await db.contacts.orderBy('hobbies').keys();
 
-    collection.sortBy(keyPath, callback?)
-    collection.sortBy('name')
+eachPrimaryKey, eachKey, eachUniqueKey
+
+    db.contacts.where('age').above(30).eachPrimaryKey(pk => console.log(pk));
+
 
 
 ### Promise
@@ -234,7 +390,6 @@ sortBy
     }).finally(function(){
         console.log("Finally the query succeeded or failed.");
     });
-
 
 ### CRUD Hooks (CREATE, READ, UPDATE, DELETE)
 常常用来做序列化、反序列化.
@@ -291,6 +446,16 @@ http://dexie.org/docs/Tutorial/Best-Practices
         // Notice that when using a transaction, it's enough to catch
         // the transaction Promise instead of each db operation promise.
     });
+
+### transaction level
+('rw!', 'rw?', 'r!', 'r?')
+
+    ! : Always start a new top level transaction
+    ? : Reuse parent transaction when they are compatible otherwise start a new top-level transaction
+
+### abort
+
+    Dexie.currentTransaction.abort(); 
 
 ### Avoid using other async APIs inside transactions
 IndexedDB will commit a transaction as soon as it isn’t used within a tick
@@ -353,3 +518,4 @@ In case you really need to call a short-lived async-API, Dexie 2.0 can actually 
 
 ## Reference
 - http://dexie.org/docs/Tutorial/Design
+- https://golb.hplar.ch/2018/01/IndexedDB-programming-with-Dexie-js.html
