@@ -11,6 +11,7 @@ Python支持多种图形界面的第三方库，包括：
 1. wxWidgets
 1. Qt 超级跨平台
 1. GTK
+1. pysimplegui: https://opensource.com/article/18/8/pysimplegui
 
 但是Python自带的库是支持Tk的Tkinter，使用Tkinter，无需安装任何包，就可以直接使用。本章简单介绍如何使用Tkinter进行GUI编程。
 
@@ -23,7 +24,7 @@ Python支持多种图形界面的第三方库，包括：
 
 所以，我们的代码只需要调用Tkinter提供的接口就可以了。
 
-# 第一个GUI程序
+## 第一个GUI程序
 使用Tkinter十分简单，我们来编写一个GUI版本的“Hello, world!”。
 
 
@@ -59,7 +60,7 @@ Python支持多种图形界面的第三方库，包括：
 
 GUI程序的主线程负责监听来自操作系统的消息，并依次处理每一条消息。因此，如果消息处理非常耗时，就需要在新线程中处理。
 
-# 输入文本
+## 输入文本
 
 我们再对这个GUI程序改进一下，加入一个文本框，让用户可以输入文本，然后点按钮后，弹出消息对话框。
 

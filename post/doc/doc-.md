@@ -4,14 +4,23 @@ title:
 category: blog
 description:
 ---
-# Preface
+# 文档生成器
+SEO 
+- vuepress 需要依赖服务端SSR
+- gogs+Drone.io/gitlab
+- Hexo 纯静态
+
+非SEO, 运行时
+- docute/docsify 无需编译、快速生成 Vue 风格的文档网站: https://zhuanlan.zhihu.com/p/24540753
+
+# DOC Api
+- http://overapi.com/
+- http://devdocs.io/
 - Api Doc
 - Markdown Doc
     1. markdown-js
 
-# DOC Api
-http://overapi.com/
-http://devdocs.io/
+# Blog Doc
 
 ## Create API DOC
 RESTfull ApiDoc gen

@@ -21,6 +21,8 @@ inoremap ∂ <C-d>
 inoremap <C-d> <DEL>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
+inoremap <C-k>  <C-o>D
+nnoremap <C-k>  D
 
 " provide hjkl movements in ex mode
 cnoremap <C-a> <Home>

@@ -34,3 +34,6 @@
 [submodule "blog"]
 	path = blog
 	url = https://github.com/ahuigo/ahuigo.github.io
+[submodule "demo/fiddle"]
+	path = demo/fiddle
+	url = https://github.com/ahuigo/local-jsfiddle.git

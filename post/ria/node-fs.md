@@ -1,7 +1,7 @@
 ---
-title: node File System
+title: Node File System API
 ---
-# fs
+# node 下的文件 API
 默认buffer 
 
 ## watchFile, watch
@@ -12,11 +12,6 @@ title: node File System
     fs.watch('.', ()=>{
         console.log('dir changed')
     })
-
-## dir
-
-    fs.readdirSync('.')
-    fs.readdir('.', (err, files)=>{})
 
 ## readFile
 同步与异步
@@ -183,3 +178,75 @@ koa append: https://github.com/koajs/examples/tree/master/upload
     remoteWriteStream.once('finish', function() {
       console.log('GC Bytes', byteCountStream.bytesWritten)
     })
+
+# Dir 文件系统
+
+## readdir
+
+    fs.readdirSync('.')
+    fs.readdir('.', (err, files)=>{})
+
+## path
+
+    const path = require('path')
+    path.resolve(__dirname, '../') 
+    path.basename(__filename) 
+
+## rm
+
+    fs.rmdirSync(dir)
+    fs.unlinkSync(file)
+
+## dir/file/line info
+    __dirname # current js file's dir
+    __filename # file path
+
+    fs.existsSync('a.csv')
+
+__line:
+
+        Object.defineProperty(global, '__stack', {
+            get: function(){
+                var orig = Error.prepareStackTrace;
+                Error.prepareStackTrace = function(_, stack){ return stack; };
+                var err = new Error;
+                Error.captureStackTrace(err, arguments.callee);
+                var stack = err.stack;
+                Error.prepareStackTrace = orig;
+                return stack;
+            }
+        });
+
+        Object.defineProperty(global, '__line', {
+            get: function(){
+                return __stack[1].getLineNumber();
+            }
+        });
+
+    console.log(__line);
+
+## mkdir
+
+    fs.mkdirSync()
+
+### tmp
+file: 
+
+    var tmp = require('tmp');
+
+    var tmpobj = tmp.fileSync();
+        console.log('File: ', tmpobj.name);
+        console.log('Filedescriptor: ', tmpobj.fd);
+
+dir:
+
+    var tmpobj = tmp.dirSync();
+    console.log('Dir: ', tmpobj.name);
+
+    // Manual cleanup
+    tmpobj.removeCallback();//fd 
+
+mkdtemp specify:
+
+    fs.mkdtempSync('tmp/aa.txt')
+        tmp/aa.txt7FxN
