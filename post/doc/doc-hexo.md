@@ -89,6 +89,33 @@ mathjax 太臃肿了，我安装的是更快的katex:(参考: themes/next/docs/M
 当指定`per_page:true`时, 必须在文件头指定`mathjax: true`
 当指定`per_page:false`时, 就是所有文章都会采用math latex render
 
+## 解决Hexo 的Template render error: (unknown path) 
+Template render error: (unknown path) 的原因三种：
+1. YML 解析错误: 每个markdown 文件应该检查好是否有正确的YML 头
+2. Render 插件问题
+3. MD 文件遇到nunjuck 解析问题: 建议禁止 nunjuck 解析MD
+
+### 禁止Nunjucks 处理MD
+这里有一个PR, 实现了解析MD 时 disableNunjucks: https://github.com/hexojs/hexo/pull/2593/files
+如果遇到如下报错，就需要 disableNunjucks
+
+    Template render error: (unknown path)
+    at blog2/node_modules/nunjucks/src/environment.js:545:19
+
+### Render 插件禁止html
+如过时在 github page 等纯静态网站，支持html 没有问题。
+
+但是在动态网站上, 支持html 就有问题了。而且render 处理html 可能就会报render error. 在`_config.yml`中禁用 html吧:
+
+    markdown_it_plus:
+        html: false
+
+## 让Hexo 支持分享
+    git clone https://github.com/theme-next/theme-next-needmoreshare2 themes/next/source/lib/needsharebutton
+
+## 调试debug
+    hexo generate --debug
+
 ## Hexo 开启RSS
 直接在`_config.yml` 加入
 
@@ -101,6 +128,20 @@ mathjax 太臃肿了，我安装的是更快的katex:(参考: themes/next/docs/M
       content_limit: 14
       content_limit_delim: ' '
       order_by: -date
+
+## Hexo 生成基于目录的自动分类，标签
+自动基于目录生成分类, 需要安装插件
+
+    yarn add hexo-directory-category
+
+然后还要启用categories, 
+
+    $ hexo new page tags
+    $ hexo new page categories
+    $ vim source/tags/index.md 
+    ### add line: type: "tags"
+    $ vim source/categories/index.md
+    ### add line: type: "categories"
 
 ## hexo 的评论系统
 涉及comments 的布局位于 themes/next/layout/_layout.swig 

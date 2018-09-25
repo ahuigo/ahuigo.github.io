@@ -1,6 +1,6 @@
 ---
 title: GMT,UTC,DST,CST 各种时间标准
-date: 20120708
+date: 2012-07-08
 description:
 ---
 # 各世界时间标准

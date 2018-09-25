@@ -10,12 +10,12 @@ http://mirror.eggjs.org/zh-cn/advanced/loader.html
 ### headers 
 ctx.headers，ctx.header，ctx.request.headers，ctx.request.header：这几个方法是等价
 
-  ctx.get('user-agent') || ''; //自动处理大小写
-  ctx.get('content-type') ==='application/json'
+    ctx.get('user-agent') || ''; //自动处理大小写
+    ctx.get('content-type') ==='application/json'
 
-  ctx.host
-  ctx.protocol
-  ctx.ip
+    ctx.host
+    ctx.protocol
+    ctx.ip
 
 ### query
     //router.get('/user/:id'
