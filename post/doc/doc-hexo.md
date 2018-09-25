@@ -1,6 +1,6 @@
 ---
 layout: page
-title:	
+title:	将博客迁移到hexo
 category: blog
 description: 
 ---
@@ -15,15 +15,30 @@ description:
     hexo clean;
     hexo g; # 生成文档 
     hexo s; # 启动服务器预览
-
+    hexo d; # 发布
 
 ## 配置
-这是我的配置:
+现在流行 next 主题, 把它直接放到根目录下就可以了
 
-    git clone https://github.com/ahuigo/hexo-conf.git blog
+    git clone https://github.com/theme-next/hexo-theme-next themes/next
 
-git clone https://github.com/iissnan/hexo-theme-next themes/next
+此时有两个配置文件：
 
+    _config.yml     
+        全局配置: 解析到config, 比如: config.feed.path
+    themes/next/_config.yml
+        theme 配置: 解析到theme, 比如: theme.math.engine
+
+在global config.yml 中，可以用`theme_config` 覆盖theme 默认的配置: https://github.com/hexojs/hexo/pull/757/files
+
+markdown 文件也有独立配置：一下 YML 代码会被解析到page.mathjax
+
+    ---
+    mathjax: true
+    ---
+
+配置里面的说明非常详尽，自己看看就明白了。可以参考我的配置:
+https://github.com/ahuigo/hexo-conf.git
 
 ## hexo 的日常使用
 
@@ -34,16 +49,17 @@ git clone https://github.com/iissnan/hexo-theme-next themes/next
     hexo n page title
 
 ## file format
+markdown 文件的写法：
 
     ---
-    title: HelloWorld！ # 文章页面上的显示名称，可以任意修改，不会出现在URL中
-    date: 2015-11-09 15:56:26 # 文章生成时间，一般不改
-    categories:   # 文章分类目录，参数可省略
-        - 随笔
-        - 瞬间
-    tags:   # 文章标签，参数可省略
-        - hexo
-        - blog # 个数不限，单个可直接跟在tags后面
+    title: HelloWorld！
+    date: 2015-11-09 15:56:26 
+    categories:   
+        - 一级分类
+        - 二级分类
+    tags: 
+        - tag1
+        - tag2
     photos:
         - http://xxx.com/photo1.jpg
         - http://xxx.com/photo2.jpg
@@ -52,5 +68,97 @@ git clone https://github.com/iissnan/hexo-theme-next themes/next
     <!--more-->
     以下是余下全文
 
-## Reference
+next 默认用`<!--more-->` 来分割文章摘要的。
+如果不想手动写more, 也可以在配置里面用`auto_excerpt` 基于字数自动分割摘要。
+
+## 让Hexo 支持数学公式Katex
+我们next 提供了数学公式支持, next 支持了mathjax/katex. 
+
+mathjax 太臃肿了，我安装的是更快的katex:(参考: themes/next/docs/MATH.md)
+
+    npm un hexo-renderer-marked --save
+    yarn add hexo-renderer-markdown-it-plus --save
+
+然后在`_config.yml` 开启math:
+
+    math:
+        enable: true
+        engine: katex
+        per_page: true
+
+当指定`per_page:true`时, 必须在文件头指定`mathjax: true`
+当指定`per_page:false`时, 就是所有文章都会采用math latex render
+
+## Hexo 开启RSS
+直接在`_config.yml` 加入
+
+    feed:
+      type: atom
+      path: atom.xml
+      limit: 5
+      hub:
+      content: true
+      content_limit: 14
+      content_limit_delim: ' '
+      order_by: -date
+
+## hexo 的评论系统
+涉及comments 的布局位于 themes/next/layout/_layout.swig 
+
+    {% include '_partials/comments.swig' %} # 占位符代码
+    {% include '_third-party/comments/index.swig' %}
+
+_third-party/comments 罗列了支持的评论系统:
+
+    {% include 'valine.swig' %}
+    {% include 'disqus.swig' %}
+
+### Valine 评论
+Valine 使用leancloud 存储。需要自行注册，参考：https://valine.js.org/quickstart.html
+
+简单说说下过程
+1. 注册leancloud 并创建app，拿到appid appkey
+2. 配置安全域名
+3. hexo 设置appid/appkey, 加入valine 评论
+4. 评论的管理在leancloud：选择你创建的应用>存储>选择Class Comment
+
+### utterances
+[更好的基于 github issues 的评论系统——utterances](http://www.xianmin.org/post/utterances-comment-system/) 提到：
+1. 对作者更安全，不像gitment 那样需要暴露自己的secret token, 只需要提供一个仓库的issue 写入权限。
+2. 对用户更安全, 不用像gitment 那样提供自己仓库的读写权限.
+3. 仅需要给 utterances 授权一次(authorized github app)
+
+在要评论的位置引入一行script 就可以了: https://utteranc.es/
+
+### 点击加载disqus 评论
+
+    let disqus_user = 'ahuigo';
+    function disqus() {
+      if (!window.DISQUS) {
+        var d = document, s = d.createElement('script');
+        s.src = `https://${disqus_user}.disqus.com/embed.js`;
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        s.onload = function () {
+          console.log('onload disqus')
+          disqus_reset()
+        }
+      } else {
+        disqus_reset()
+      }
+    }
+    function disqus_reset() {
+      if (window.DISQUS) {
+        DISQUS.reset({
+          reload: true,
+          config: function () {
+            this.page.url = window.location.href.replace('#', '#!');//为了便于识别不同的锚点
+            this.page.identifier = window.location.hash.slice(1);
+            this.page.title = document.title;
+          }
+        });
+      }
+    }
+
+## References
 - http://lovenight.github.io/2015/11/10/Hexo-3-1-1-%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/

@@ -67,6 +67,7 @@ def parseBlog(path):
     return blog
 
 def publishBlog(blogs, delete_blogs):
+    return
     #import shutil
     #'post/git/git-hooks-rold.md'
     for path in delete_blogs:
