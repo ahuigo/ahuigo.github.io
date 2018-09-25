@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Vue 的模板系统
+date: 2018-05-15
 category: blog
 ---
 # Vue 的模板系统
