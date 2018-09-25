@@ -15,3 +15,5 @@ permalink: /p/:title
 
 plugins:
   - jekyll-feed
+
+theme: jekyll-theme-cayman
