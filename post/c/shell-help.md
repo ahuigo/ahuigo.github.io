@@ -1,11 +1,9 @@
 ---
-layout: page
 title:	linux 的帮助系统
-category: blog
+date: 2018-09-27
 description: 
 ---
-
-# 序
+# linux 的帮助系统
 linux的帮助系统主要有以下三种,本文参考了[鸟哥的Linux私房菜]，总结了man和info
 
 1. 程序自带的，比如命令 --help,还比如安装手册提供的README
@@ -82,6 +80,7 @@ MAN 手册默认的PAGER 是less
 	
 	man 1 curl //指定查看分类1下的curl手册
 
+具体的说有：
 1. 用户在 shell 环境中可以操作的命令
 2. 系统核心可呼叫的凼数
 3. 一些常用的凼数(function)不凼式库(library),大部分为 C 的凼式库(libc)

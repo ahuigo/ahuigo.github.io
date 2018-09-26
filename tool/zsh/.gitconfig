@@ -5,6 +5,7 @@
 	editor = vim
 	filemode = false
 	quotepath = false
+	symlinks = false
 [color]
 	diff = auto
 	status = auto

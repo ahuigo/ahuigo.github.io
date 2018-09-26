@@ -19,6 +19,7 @@ description: Abstract of git commmands.
 
 	## Core.Editor
 	git config --global core.editor vim
+	git config --global core.symlinks false
 
 ## alias
 

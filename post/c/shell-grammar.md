@@ -1,11 +1,10 @@
 ---
 layout: page
-title:
+title: shell 表达式
 category: blog
 description:
 ---
-# Preface
-shell 表达式
+# shell 表达式
 
 # Loop
 

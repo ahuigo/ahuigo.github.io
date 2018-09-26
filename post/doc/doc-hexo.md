@@ -15,7 +15,6 @@ description:
     hexo clean;
     hexo g; # 生成文档 
     hexo s; # 启动服务器预览
-    hexo d; # 发布
 
 ## 配置
 现在流行 next 主题, 把它直接放到根目录下就可以了
@@ -39,6 +38,19 @@ markdown 文件也有独立配置：一下 YML 代码会被解析到page.mathjax
 
 配置里面的说明非常详尽，自己看看就明白了。可以参考我的配置:
 https://github.com/ahuigo/hexo-conf.git
+
+## 部署
+在主配置中写自己的部署地址
+
+    deploy:
+      type: git
+      repository: git@github.com:ahuigo/b.git
+      branch: master
+
+然后部署
+
+    yarn add hexo-deployer-git
+    hexo d -g; 
 
 ## hexo 的日常使用
 

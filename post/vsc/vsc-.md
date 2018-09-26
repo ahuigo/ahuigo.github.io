@@ -1,3 +1,7 @@
+---
+title: vscode 笔记
+date: 2018-01-03
+---
 # vscode
 cmd+p
 
@@ -23,8 +27,12 @@ cmd+p
 div.test>h3.title+ul>li*3>span.text
 
 ## Snippet
-Select User snippets under:  (Code > Preferences )
-        http://codepen.io/mrmlnc/pen/GqrqPg
+Select `User snippets` under:  `Code > Preferences`
+
+Sinippet 转义:
+http://codepen.io/mrmlnc/pen/GqrqPg
+
+snippets 的在键入prefix 后，用`Ctrl+Space` 触发
 
 # extension
 1. markdown all in one: ctrl+B
