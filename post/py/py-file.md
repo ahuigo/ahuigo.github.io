@@ -103,8 +103,8 @@ Starting with Python version 3.5, the glob module supports the `"**"` directive 
 	glob.glob(pathname, *, recursive=False); # list
 	glob.iglob(pathname, *, recursive=False); # iterator
 
-	for filename in glob.iglob('src/**/*.c', recursive=True):
-		print(filename)
+	for filepath in glob.iglob('src/**/*.c', recursive=True):
+		print(filepath)
 
 If you need an list, just use `glob.glob` instead of `glob.iglob` with iterator
 
