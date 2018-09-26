@@ -1,3 +1,7 @@
+---
+title: Futures, 期货
+date: 2018-09-26
+---
 # Futures, 期货
 ## stock index futres 股指期货
 股票指数期货是指以股票价格指数作为标的物的金融期货合约。

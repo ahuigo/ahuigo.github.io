@@ -1,3 +1,7 @@
+---
+title: RSA
+date: 2018-09-26
+---
 # RSA
 参考 http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html
 
@@ -96,4 +100,3 @@ $x = a_2 + k_2{p_2}$
 它等价于
 
     x≡x0(mod lcm(m1,m2,⋯,mn))
-

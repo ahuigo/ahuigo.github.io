@@ -1,3 +1,7 @@
+---
+title: Pigeonhole principle, 鸽巢（抽屉）原理
+date: 2018-09-26
+---
 # Pigeonhole principle, 鸽巢（抽屉）原理
 
 Pigeonhole principle 鸽巢原理，又名抽屉原理 表述为：
@@ -7,5 +11,3 @@ Pigeonhole principle 鸽巢原理，又名抽屉原理 表述为：
 已知n+ 1个不等正整数，它们全都小于或等于2n，证明当中一定有两个数是互质的。
 
 tips: 连续两个正整数互质
-
-

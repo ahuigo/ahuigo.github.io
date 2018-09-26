@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: 广度优先算法(BFS)
 category: blog
-description:
+description: 
+date: 2018-09-26
 ---
 # 广度优先算法(BFS)
 广度优先算法(Breadth First Search) 是一种盲目搜索法

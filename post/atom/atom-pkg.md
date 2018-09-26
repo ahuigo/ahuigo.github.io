@@ -1,3 +1,7 @@
+---
+title: package location
+date: 2018-09-26
+---
 # package location
 
     ~/.atom/packages/vim-mode-plus/

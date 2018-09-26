@@ -1,3 +1,7 @@
+---
+title: Atom插件安装
+date: 2018-09-26
+---
 # Atom插件安装
 其实，`markdown preview`是Atom的一个插件，查看步骤如下：
 

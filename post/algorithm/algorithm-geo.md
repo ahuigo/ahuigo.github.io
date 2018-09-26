@@ -1,3 +1,7 @@
+---
+title: geohash
+date: 2018-09-26
+---
 # geohash
 
 # todo
@@ -14,5 +18,3 @@ http://segmentfault.com/q/1010000000345194
 
 ## geohash 原理
 http://www.cnblogs.com/LBSer/p/3310455.html
-
-

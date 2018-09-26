@@ -23,10 +23,11 @@ def parseBlog(path):
 
     content = data.strip()
     title,_ = content.split('\n', 1)
+    title = title.strip('# ')
     content = content.replace('\n# Reference\n', '\n# References\n')
     if title.lower() == 'preface':
         title = path.split('/')[-1][:-3]
-    blog['title'] = title.strip('# ')
+    blog['title'] = title
     if not blog.get('date', ''):
         blog['date'] = datetime.now().strftime('%Y-%m-%d')
     blog['content'] = content
@@ -38,9 +39,10 @@ def loopMd():
     for path in glob('post/**/*.md'):
         yield path
 
-for _,path in zip(range(1), loopMd()):
+import itertools
+for path in itertools.islice(loopMd(), 50, 60):
     blog = parseBlog(path)
-    if blog['content']:
+    if isinstance(blog, dict) and blog['content']:
         print(path)
         yaml = '---\n'
         for k,v in blog.items():
@@ -48,6 +50,10 @@ for _,path in zip(range(1), loopMd()):
                 yaml += f'{k}: {v}\n'
         yaml+='---\n'
         content = yaml + blog['content']
-        print(content)
-        # open(path, 'w').write(content)
+        print(content[:100])
+        print(content[-100:])
+        #y = input('confirm:')
+        #if not y:
+        #    print('%r'%y)
+        open(path, 'w').write(content)
 

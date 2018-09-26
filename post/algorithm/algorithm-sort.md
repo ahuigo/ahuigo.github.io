@@ -1,4 +1,8 @@
-# 排序算法
+---
+title: 经典排序算法实现
+date: 2013-09-26
+---
+# 经典排序算法实现
 常规的几种排序算法, 参考[维基sort](http://zh.wikipedia.org/wiki/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95)
 
 |名称	|数据对象	|稳定性	|时间复杂度(平均/最坏)	|空间复杂度	|描述|
@@ -22,7 +26,9 @@
 > 其中基于比较的算法的极限是O(n*logn). 比较排序可以被抽象为一棵完全二叉树(数列组合有n! 种)，每一次比较只能排除一半的可能，至少需要比较x次，2^x > n!,
 > x >= log2(n!) 才能区分所有的情况，否则不能区分满射。根据特林公式：n! ~ (2*pi*n)^(1/2) * (n/e)^n, 有O(n!) ~ O(n*log(n/e))
 
-<img src="//zhihu.com/equation?tex=k%5Cgeq+log_%7B2%7D%28%5Csqrt%7B2%5Cpi+n%7D+%5Cleft%28+%5Cfrac%7Bn%7D%7Be%7D++%5Cright%29%5E%7Bn%7D%29+%3Dlog_%7B2%7D%28%5Csqrt%7B2%5Cpi+n%7D%29%2Bnlog%5Cleft%28+%5Cfrac%7Bn%7D%7Be%7D++%5Cright%29%3DO%5Cleft%28+nlogn+%5Cright%29+" alt="k\geq log_{2}(\sqrt{2\pi n} \left( \frac{n}{e}  \right)^{n}) =log_{2}(\sqrt{2\pi n})+nlog\left( \frac{n}{e}  \right)=O\left( nlogn \right) " eeimg="1">
+$k\geq log_{2}(\sqrt{2\pi n} \left( \frac{n}{e}  \right)^{n}) =log_{2}(\sqrt{2\pi n})+nlog\left( \frac{n}{e}  \right)=O\left( nlogn \right)$
+
+<img src="//zhihu.com/equation?tex=k%5Cgeq+log_%7B2%7D%28%5Csqrt%7B2%5Cpi+n%7D+%5Cleft%28+%5Cfrac%7Bn%7D%7Be%7D++%5Cright%29%5E%7Bn%7D%29+%3Dlog_%7B2%7D%28%5Csqrt%7B2%5Cpi+n%7D%29%2Bnlog%5Cleft%28+%5Cfrac%7Bn%7D%7Be%7D++%5Cright%29%3DO%5Cleft%28+nlogn+%5Cright%29+"  eeimg="1">
 
 	OS: winxp, Compiler: vc8, CPU：Intel T7200,  Memory: 2G
 	不同数组长度下调用6种排序1000次所需时间（秒）
@@ -98,6 +104,9 @@
 希尔排序(Shell Sort) 是对插入排序的推广。
 其基本思想是， 希尔排序通过将比较的全部元素分为几个区域来提升插入排序的性能。这样可以让一个元素可以一次性地朝最终位置前进一大步。然后算法再取越来越小的步长进行排序，算法的最后一步就是普通的插入排序，但是到了这步，需排序的数据几乎是已排好的了（此时插入排序较快）
 从这个角度上说Shell Sort 属于分组排序
+
+![希尔排序图解](/img/algo/algo-shell-sort.png)
+Shell 排序图解出处： http://www.cnblogs.com/chengxiao/  @dreamcatcher-cx 
 
 复杂度:
 Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Sequence), 这涉及到数学上未解决的难题, 通常认为是O(n^(5/4))。下表展示了常见序列下的时间复杂度。此外，希尔排序是不稳定的, 因为分组移动时扰乱了同值元素的次序。
@@ -690,7 +699,7 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 		}
 	}
 
-# Reference
+# References
 - [线性排序]
 - [维基sort]
 - [c math func]

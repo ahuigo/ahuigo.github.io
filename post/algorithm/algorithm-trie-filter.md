@@ -1,3 +1,7 @@
+---
+title: trie-filter
+date: 2018-09-26
+---
 # trie-filter
 
 # php word filter

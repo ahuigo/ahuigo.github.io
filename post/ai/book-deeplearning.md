@@ -1,3 +1,7 @@
+---
+title: 吴恩达给你的人工智能第一课
+date: 2018-09-26
+---
 # 吴恩达给你的人工智能第一课
 https://mooc.study.163.com/smartSpec/detail/1001319001.htm?forcelogin=true&edusave=1
 https://study.163.com/topics/deepLearning/

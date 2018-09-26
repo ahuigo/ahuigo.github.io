@@ -267,7 +267,7 @@ detect bytes encoding:
     # -*- coding: utf-8 -*-
 
 ### raw string
-string literals: r'...', r'''...''', r"...", r"""...""" are all byte strings,
+string literals: r'...', r'''...''', r"...", r"""...""" are all literal strings for regex
 
     >>> r'a\n\t'
     'a\\n\\t'

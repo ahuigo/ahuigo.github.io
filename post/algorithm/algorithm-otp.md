@@ -1,3 +1,7 @@
+---
+title: 利用google authentication 构建otp 动态口令
+date: 2018-09-26
+---
 # 利用google authentication 构建otp 动态口令
 otp是一次密码，有两种: totp是基于时间的，htop是基于次数的。
 
@@ -9,7 +13,7 @@ otp是一次密码，有两种: totp是基于时间的，htop是基于次数的�
 # Implement
 https://github.com/stolendata/totp
 
-# Reference
+# References
 - [google-ota-xiaorui]
 
 [google-ota-xiaorui]: http://xiaorui.cc/2014/11/09/%E5%88%A9%E7%94%A8google-authenticator%E6%9E%84%E5%BB%BA%E5%B9%B3%E5%8F%B0%E7%9A%84otp%E5%8A%A8%E6%80%81%E5%8F%A3%E4%BB%A4/#6553914-tsina-1-86843-1435db7ae6428e307c2c15a8c8543b8f

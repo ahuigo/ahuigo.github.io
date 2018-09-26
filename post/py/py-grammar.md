@@ -212,7 +212,7 @@ with 可以捕获异常, 类必须支持`__enter__, __exit__`相当于文件open
 
     for _, item in zip(range(limit), items):
         print(item)
-    for item in itertools.islice(items, 0, stop): # stop=None like -1
+    for item in itertools.islice(items, 0, stop): # stop=None include end
         print(item)
 
 # Distinguishing multiple exit points in loops

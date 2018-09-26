@@ -1,5 +1,6 @@
 ---
 date: 2013-01-02
+title: 验证码识别工具tesseract
 ---
 # 验证码识别工具tesseract
 首先说下我要用到的工具：tesseract/ImageMagick/...etc.

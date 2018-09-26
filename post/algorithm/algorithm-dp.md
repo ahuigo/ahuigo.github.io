@@ -1,3 +1,7 @@
+---
+title: 动态规划(Dynamic programing, DP)
+date: 2018-09-26
+---
 # 动态规划(Dynamic programing, DP)
 
 动态规则(Dynamic programing, DP) 的大体思路是：将一个特定的问题，切割成若干类似的子问题，最后合并子问题的解并得出总问题的解。
@@ -55,7 +59,7 @@
 ## LCS 最长公共子序列
 http://en.wikipedia.org/wiki/Longest_common_substring_problem
 
-# Reference
+# References
 
 - [dp]
 - [Knapsack problem]

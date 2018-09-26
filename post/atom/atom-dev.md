@@ -1,3 +1,7 @@
+---
+title: todo
+date: 2018-09-26
+---
 # todo
 http://flight-manual.atom.io/
 

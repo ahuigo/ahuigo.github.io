@@ -1,3 +1,7 @@
+---
+title: crc 循环冗余校验
+date: 2018-09-26
+---
 # crc 循环冗余校验
 CRC(Cyclic Redundancy Check, 循环冗余校验)
 
@@ -286,7 +290,7 @@ http://www.simplycalc.com/crc32-source.php
 	}
 
 
-# Reference
+# References
 - [CRC]
 - [crc 校验-csdn]
 

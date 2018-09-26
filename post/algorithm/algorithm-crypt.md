@@ -1,3 +1,7 @@
+---
+title: 加密算法简介
+date: 2018-09-26
+---
 # 加密算法简介
 
 # Symmetric-key Cryptography 对称密钥加密
@@ -408,7 +412,7 @@ java中此私钥需要转换下格式才能使用:
     [17] => rc2
     [18] => tripledes
 
-# Reference
+# References
 - [Block_cipher_mode_of_operation]
 - [block chiper]
 - [blowfish]

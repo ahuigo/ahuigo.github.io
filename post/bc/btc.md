@@ -1,3 +1,7 @@
+---
+title: bitfinex
+date: 2018-09-26
+---
 # bitfinex
 https://api.bitfinex.com/v1/lends/btc
 https://docs.bitfinex.com/docs/introduction

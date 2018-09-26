@@ -1,3 +1,7 @@
+---
+title: coder试题:有几个bing?	
+date: 2018-09-26
+---
 # coder试题:有几个bing?	
 
 [题目](http://hero.csdn.net/question/details?id=215&examid=210)

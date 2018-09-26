@@ -1,3 +1,7 @@
+---
+title: 圆周率算法
+date: 2018-09-26
+---
 # 圆周率算法
 
 # 梅钦类公式
@@ -6,7 +10,7 @@
 http://en.wikipedia.org/wiki/Arithmetic%E2%80%93geometric_mean
 
 
-# Reference
+# References
 - [pi]
 - [梅钦类公式]
 - [Machin's formula Proof]

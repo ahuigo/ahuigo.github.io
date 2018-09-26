@@ -1,3 +1,7 @@
+---
+title: 支付宝商户授权
+date: 2018-09-26
+---
 # 支付宝商户授权
 https://openauth.alipay.com/auth/tokenManage.htm
 

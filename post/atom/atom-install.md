@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: Preface
 category: blog
-description:
+description: 
+date: 2018-09-26
 ---
 # Preface
 

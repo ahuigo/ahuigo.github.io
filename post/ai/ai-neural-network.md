@@ -1,3 +1,7 @@
+---
+title: Neural Network
+date: 2018-09-26
+---
 # Neural Network
 人工智能的底层模型是"神经网络"（neural network）。许多复杂的应用（比如模式识别、自动控制）和高级模型（比如深度学习）都基于它。学习人工智能，一定是从它开始。
 
@@ -23,6 +27,6 @@ axon    n. 轴突 【医】 提轴, 轴突, 轴索
 既然思考的基础是神经元，如果能够"人造神经元"（artificial neuron），就能组成人工神经网络，模拟思考。上个世纪六十年代，提出了最早的"人造神经元"模型，叫做"感知器"（perceptron），直到今天还在用。
 
 
-# Reference
+# References
 [神经网络入门]: 
 http://www.ruanyifeng.com/blog/2017/07/neural-network.html
