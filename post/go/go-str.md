@@ -1,3 +1,7 @@
+---
+title: bytes
+date: 2018-09-27
+---
 # bytes
 
   var out bytes.Buffer

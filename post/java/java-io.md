@@ -1,3 +1,7 @@
+---
+title: println
+date: 2018-09-27
+---
 # println
 System.out.println
 System.out.print

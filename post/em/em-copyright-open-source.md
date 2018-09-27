@@ -1,3 +1,7 @@
+---
+title: 开源软件的版权保护
+date: 2018-09-27
+---
 # 开源软件的版权保护
 - 姓名：
 - 学号：
@@ -96,4 +100,3 @@ http://choosealicense.online/
 
 
 [中国法院为什么保护违反GPL软件协议的行为]:http://www.legalservice.cn/%E4%B8%AD%E5%9B%BD%E6%B3%95%E9%99%A2%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BF%9D%E6%8A%A4%E8%BF%9D%E5%8F%8Dgpl%E8%BD%AF%E4%BB%B6%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%A1%8C%E4%B8%BA%EF%BC%9F/
-

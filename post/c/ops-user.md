@@ -1,10 +1,10 @@
 ---
 layout: page
-title:
+title: tool
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
-
 # tool
 last #显示最后登录者
 who #显示当前登录者

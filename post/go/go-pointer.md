@@ -1,3 +1,7 @@
+---
+title: Pointers
+date: 2018-09-27
+---
 # Pointers
 支持指针类型 *T,指针的指针 **T,以及包含包名前缀的 *<package>.T。
 The type `*T` is a pointer to a T value. Its zero value is `nil`.

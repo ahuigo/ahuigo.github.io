@@ -1,3 +1,7 @@
+---
+title: 不要用mongodb
+date: 2018-09-27
+---
 # 不要用mongodb
 http://coolshell.cn/articles/5826.html
 

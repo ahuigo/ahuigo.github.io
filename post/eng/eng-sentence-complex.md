@@ -1,3 +1,7 @@
+---
+title: eng-sentence-complex
+date: 2018-09-27
+---
 # Preface
 参考李一的：如何理解各种从句逻辑：https://www.zhihu.com/question/31730389/answer/53104347?group_id=602183152467374080
 英语中从句包两个概念:

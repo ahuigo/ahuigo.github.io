@@ -50,15 +50,6 @@ https://github.com/phodal/ideabook
 《计算机程序的结构和解释》公开课
 https://coolshell.cn/articles/4990.html by coolshell
 
-## swift
-所见即所得的playground
-
-1. http://numbbbbb.gitbooks.io/-the-swift-programming-language-/content/
-2. https://github.com/ipader/SwiftGuide#getting_started
-
-## mooc
-http://study.163.com/curricula/cs.htm
-
 # eng
 
 ## Spoken English in 6 month

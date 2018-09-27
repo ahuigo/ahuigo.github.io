@@ -1,3 +1,7 @@
+---
+title: hadoop 介绍
+date: 2018-09-27
+---
 # hadoop 介绍
 http://www.cnblogs.com/sunddenly/p/3977011.html
 hadoop 大数据时代的宠儿-池建强

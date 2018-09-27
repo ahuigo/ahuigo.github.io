@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: ide-netbeans
 category: blog
 description: 
+date: 2018-09-27
 ---
 # Preface
 ## shortcut
@@ -19,4 +20,4 @@ description:
 	Shift+Alt+Up/Down
   #append ;
   Cmd-; 
-  Cmd-Shift-; 
+  Cmd-Shift-;

@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: 文档生成器
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # 文档生成器
 SEO 

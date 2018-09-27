@@ -1,3 +1,7 @@
+---
+title: Debug
+date: 2018-09-27
+---
 # Debug
 ZookeeperConsumerConnector can create message streams at most once
 

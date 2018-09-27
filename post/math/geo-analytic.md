@@ -1,3 +1,7 @@
+---
+title: Analytic Geometry, 解析几何
+date: 2018-09-27
+---
 # Analytic Geometry, 解析几何
 又称为坐标几何（Coordinate geometry）或卡氏几何（Cartesian geometry），早先被叫作笛卡儿几何
 

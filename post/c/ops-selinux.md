@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: ops-selinux
 category: blog
 description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -67,4 +68,3 @@ Typing `getfacl .` in the current directory to see what access controls those fi
 	sudo setenforce 0
 	# 永久关闭
 	sudo sed -i '/^SELINUX=/c SELINUX=disabled' /etc/selinux/config
-

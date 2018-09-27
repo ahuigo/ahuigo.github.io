@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: laravel-route
 category: blog
 description: 
+date: 2018-09-27
 ---
 # Preface
 

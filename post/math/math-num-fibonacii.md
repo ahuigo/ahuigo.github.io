@@ -1,3 +1,7 @@
+---
+title: Fibonacii and gold(φ)
+date: 2018-09-27
+---
 # Fibonacii and gold(φ)
 Fibonacii/gold 有很多有趣的性质
 1. 广义fibonacii 逼近gold 的证明

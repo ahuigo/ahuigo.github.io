@@ -1,3 +1,7 @@
+---
+title: 寻找替代的球
+date: 2018-09-27
+---
 寻找替代的球
 http://bbs.badmintoncn.com/forum.php?mod=viewthread&tid=499202&extra=page%3D2
 亚4 5 6 7 川崎8 尤尼5 李宁AE19 品特6 都比较下

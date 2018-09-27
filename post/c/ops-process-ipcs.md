@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: ops-process-ipcs
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 ipcs是Linux下显示进程间通信设施状态的工具。可以显示消息队列、共享内存和信号量的信息

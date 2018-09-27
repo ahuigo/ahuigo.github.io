@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: c-debug-gdb
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -348,4 +349,3 @@ set命令可以直接修改变量的值。示例代码如下：
 	......
 
 上例中num值从1变成了10时，程序暂停了。需要注意的是，你的程序中可能有多个同名的变量。那么使用watch命令会观察那个变量呢？这个要依赖于变量的作用域。即，在使用watch设置观察点时，可以直接访问的变量就是被观察的变量。
-

@@ -1,3 +1,7 @@
+---
+title: 询问时间
+date: 2018-09-27
+---
 # 询问时间
 2. Until when are you staying? 你要呆到什么时候？
 

@@ -1,3 +1,7 @@
+---
+title: Mysql 的字符串处理
+date: 2018-09-27
+---
 # regexp
 
   > select 'string or column' regexp 'key1|key2' ;

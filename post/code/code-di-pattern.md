@@ -1,3 +1,7 @@
+---
+title: Dependency Injector(IoC)
+date: 2018-09-27
+---
 # Dependency Injector(IoC)
 依赖注入（Dependency Injection）又称控制反转（Inversion of Control）主要用来实现不同模块或类之间的解耦，可以根据需要动态地把某种依赖关系注入到对象中
 

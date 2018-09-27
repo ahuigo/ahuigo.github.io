@@ -1,3 +1,7 @@
+---
+title: make
+date: 2018-09-27
+---
 # make
 auto allocate
 

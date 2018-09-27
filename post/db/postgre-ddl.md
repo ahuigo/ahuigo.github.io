@@ -1,3 +1,7 @@
+---
+title: FUNCTION
+date: 2018-09-27
+---
 # FUNCTION
 pg update /delete 都不支持limit, 建议用array 而不是IN:
 

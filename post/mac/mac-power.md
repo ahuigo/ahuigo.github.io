@@ -1,3 +1,7 @@
+---
+title: adapter
+date: 2018-09-27
+---
 # adapter
 https://support.apple.com/zh-cn/HT201700
 Apple 笔记本电脑的电源适配器有 29W、45W、60W 和 85W 四种功率规格。

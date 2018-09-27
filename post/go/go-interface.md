@@ -1,3 +1,7 @@
+---
+title: Interfaces
+date: 2018-09-27
+---
 # Interfaces
 An interface type is defined as `a set of method signatures`.
 

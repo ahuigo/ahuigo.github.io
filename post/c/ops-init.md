@@ -1,8 +1,9 @@
 ---
-layout:	post
-title:
+layout: post
+title: ops-init
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 

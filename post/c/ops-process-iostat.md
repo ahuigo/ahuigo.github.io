@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: ops-process-iostat
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 通过iostat方便查看CPU、网卡、tty设备、磁盘、CD-ROM 等等设备的活动情况, 负载信息。
@@ -66,7 +67,7 @@ tps：该设备每秒的传输次数（Indicate the number of transfers per seco
 	kB_wrtn/s：每秒向设备（drive expressed）写入的数据量；
 	kB_read：读取的总数据量；kB_wrtn：写入的总数量数据量；
 
-# Reference
+# References
 - [iostat]
 
 [iostat]: http://linuxtools-rst.readthedocs.org/zh_CN/latest/tool/iostat.html

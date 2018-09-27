@@ -1,3 +1,7 @@
+---
+title: QBus消息如何入HDFS？
+date: 2018-09-27
+---
 # QBus消息如何入HDFS？
 http://chuansong.me/n/867540
 

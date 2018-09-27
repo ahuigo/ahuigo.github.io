@@ -1,3 +1,7 @@
+---
+title: MongoDB 数据类型
+date: 2018-09-27
+---
 # MongoDB 数据类型
 下表为MongoDB中常用的几种数据类型。
 

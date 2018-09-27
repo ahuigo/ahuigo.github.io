@@ -1,3 +1,7 @@
+---
+title: article: managers for the 21st century
+date: 2018-09-27
+---
 # article: managers for the 21st century
 historical 历史相关的， historic 历史意义的
 historic site 历史景点

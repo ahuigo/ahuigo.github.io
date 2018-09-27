@@ -1,3 +1,7 @@
+---
+title: 知识产权课程总结
+date: 2018-09-27
+---
 # 知识产权课程总结
 
 ## 知识产权(Intellectual Property Right)

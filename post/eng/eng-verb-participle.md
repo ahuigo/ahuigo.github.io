@@ -1,3 +1,7 @@
+---
+title: 分词 participle
+date: 2018-09-27
+---
 # 分词 participle
 
 ## 分词在句子中的作用：

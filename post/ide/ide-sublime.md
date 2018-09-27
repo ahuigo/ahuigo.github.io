@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: ide-sublime
 category: blog
 description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -16,5 +17,3 @@ description:
 
 1. 按下Ctrl+Shift+P调出命令面板
 1. 输入install 调出 Install Package 选项并回车，然后在列表中选中要安装的插件。
-
-

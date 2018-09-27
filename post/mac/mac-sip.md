@@ -1,11 +1,12 @@
 ---
 layout: page
-title:
+title: mac-sip
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
-# Reference
+# References
 http://havee.me/mac/2015-10/system-integrity-protection-on-el-capitan.html
 http://www.jianshu.com/p/0572336a0771
 

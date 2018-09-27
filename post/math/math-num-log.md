@@ -1,3 +1,7 @@
+---
+title: 对数
+date: 2018-09-27
+---
 # 对数
 Power function: x^n
 Exponential function: a^x

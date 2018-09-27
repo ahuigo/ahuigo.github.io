@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: ops-supervisor
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 Supervisor 是一个超级简单的监控-重启命令

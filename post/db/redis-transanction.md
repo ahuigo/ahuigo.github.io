@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: redis-transanction
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -134,7 +135,7 @@ Lua 脚本功能是 Reids 2.6 版本的最大亮点， 通过内嵌对 Lua 环�
 2. 代替事物、更高效、简单
 
 
-# Reference
+# References
 - [redis-transaction]
 
 [redis-transaction]: http://redisdoc.com/topic/transaction.html

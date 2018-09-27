@@ -1,8 +1,7 @@
-# combination
-2. $\binom mn=\binom {n-m}n$
-2. $\binom m{n+1}=\binom mn+ \binom {m-1}n$
-解释下, 原来是n中选m, 增加1个后, 如果选出这1个, 还需要从剩余n个中, 再选m-1个
-
+---
+title: combination
+date: 2018-09-27
+---
 # probility
 德摩根定律: $(A\cup B)^{C}=A^{C}\cap B^{C}$
 
@@ -33,3 +32,8 @@ $\binom kn p^k (1-p)^{n-k}$
 #### 二项定理
 每个 ${\tbinom  nk}$ 为一个称作二项式系数的特定正整数
 ${\displaystyle (x+y)^{n}={n \choose 0}x^{n}y^{0}+{n \choose 1}x^{n-1}y^{1}+{n \choose 2}x^{n-2}y^{2}+\cdots +{n \choose n-1}x^{1}y^{n-1}+{n \choose n}x^{0}y^{n},}$
+
+## combination 组合
+2. $\binom mn=\binom {n-m}n$
+2. $\binom m{n+1}=\binom mn+ \binom {m-1}n$
+解释下, 原来是n中选m, 增加1个后, 如果选出这1个, 还需要从剩余n个中, 再选m-1个

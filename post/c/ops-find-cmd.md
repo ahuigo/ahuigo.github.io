@@ -1,3 +1,7 @@
+---
+title: find dir of command
+date: 2018-09-27
+---
 # find dir of command
 
     which lshw

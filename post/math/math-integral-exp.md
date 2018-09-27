@@ -1,3 +1,7 @@
+---
+title: 整式, integral expression
+date: 2018-09-27
+---
 # 整式, integral expression
 
 ## 整除及带余除法

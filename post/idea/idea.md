@@ -1,5 +1,7 @@
 ---
-private:
+private: 
+title: idea
+date: 2018-09-27
 ---
 # Preface
 1. sideidea.com: http://sideidea.com/article/42

@@ -1,3 +1,7 @@
+---
+title: 企业管理(business management, 商业经营)
+date: 2018-09-27
+---
 # 企业管理(business management, 商业经营)
 - 134.外部治理机制（9，10章）
 

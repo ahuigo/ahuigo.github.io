@@ -1,4 +1,7 @@
-
+---
+title: rand
+date: 2018-09-27
+---
 ## rand
 
   import "math/rand"

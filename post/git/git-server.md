@@ -1,3 +1,7 @@
+---
+title: 搭建 git server
+date: 2018-09-27
+---
 # 搭建 git server
 方案参考:
 0. git-scm 教程

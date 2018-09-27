@@ -1,3 +1,7 @@
+---
+title: go routines
+date: 2018-09-27
+---
 # go routines
 A goroutine is a `lightweight thread` managed by the Go runtime.
 

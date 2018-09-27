@@ -1,3 +1,7 @@
+---
+title: 基于webRTC 的p2p 直播架构
+date: 2018-09-27
+---
 # 基于webRTC 的p2p 直播架构
 在[im-live-p2p](/a#/post/course/im-live-p2p.md) 提到了p2p 架构的两大缺点：
 

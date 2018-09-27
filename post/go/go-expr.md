@@ -1,3 +1,7 @@
+---
+title: go expression
+date: 2018-09-27
+---
 # for
 
   sum := 0

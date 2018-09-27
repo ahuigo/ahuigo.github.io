@@ -1,3 +1,7 @@
+---
+title: ADD 分心者
+date: 2018-09-27
+---
 # ADD 分心者
 https://www.evernote.com/shard/s246/sh/402d9485-6f7a-43a8-8c07-31c24cab010d/5ec5967edda9c5feca831b377a56c95e
 

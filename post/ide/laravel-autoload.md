@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: laravel-autoload
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 Based on composer
@@ -113,4 +114,3 @@ registerBaseServiceProvider 来自Application:
 
 		if ($basePath) $this->setBasePath($basePath);
 	}
-

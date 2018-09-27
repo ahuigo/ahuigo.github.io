@@ -1,3 +1,7 @@
+---
+title: dd
+date: 2018-09-27
+---
 # dd
 创建文件时,
 1. 用count=n blocks, 会copy zero

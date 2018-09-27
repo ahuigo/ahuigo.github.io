@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: mysql-charset
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -140,5 +141,3 @@ SQL语句中的裸字符串会受到连接字符集或introducer设置的影响�
 – 插入时根据连接字符集设置，character_set_client、character_set_connection和character_set_results均为utf8；
 
 – 插入数据将经过utf8=>utf8=>latin1的字符集转换，若原始数据中含有\u0000~\u00ff范围以外的Unicode字 符，会因为无法在latin1字符集中表示而被转换为“?”(0x3F)符号，以后查询时不管连接字符集设置如何都无法恢复其内容了。
-
-

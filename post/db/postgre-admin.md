@@ -1,3 +1,7 @@
+---
+title: Postgre 安装\配置\管理
+date: 2018-09-27
+---
 # Postgre 安装\配置\管理
 ```bash
 rpm -Uvh https://yum.postgresql.org/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm

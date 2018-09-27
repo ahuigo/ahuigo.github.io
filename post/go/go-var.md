@@ -1,7 +1,9 @@
 ---
 layout: page
 category: blog
-description:
+description: 
+title: go 的变量
+date: 2018-09-27
 ---
 # go 的变量
 

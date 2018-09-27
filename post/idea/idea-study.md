@@ -1,3 +1,7 @@
+---
+title: 日常生活中有哪些十分钟就能学会并可以终生受用的技能？ 
+date: 2018-09-27
+---
 日常生活中有哪些十分钟就能学会并可以终生受用的技能？ - 回答作者: 曾加 http://zhihu.com/question/20894671/answer/30171083 (想看更多？下载知乎 App：http://weibo.com/p/100404711598)
 
 # 如何快速阅读。
@@ -23,7 +27,6 @@ http://fourhourworkweek.com/2009/07/30/speed-reading-and-accelerated-learning/
 提问时应当说“我有一个疑问"（ "I have a question"）而不是“我有一个怀疑”（ "I have a doubt"）
 因为这会对非印度裔的阅读者造成困扰：我曾经看到印度作者写到： "I have a doubt about your research paper."，对一个美国人来说，那听起来像：“ I suspect there is a problem with your research paper”，意义可是完全不同啊。
 
-
 # 感到压力太大？
 试试这些：
 切断你的网络连接。
@@ -37,7 +40,6 @@ http://fourhourworkweek.com/2009/07/30/speed-reading-and-accelerated-learning/
 去吧。别忘了给我点赞。
 
 （应原作者要求，注明以下内容：Niharika Banerjee, Co Founder and Writers' Lead on Page on fadbulletin.com with the link present）
-
 
 # （记忆方法）
 如何在10分钟内记住某一年的日历。
@@ -58,7 +60,7 @@ http://fourhourworkweek.com/2009/07/30/speed-reading-and-accelerated-learning/
 
 P.S. 你不必记住每一年的12个数字，如果你记住了2014年的 255 136 140 250时，对于2015年，你只要把每个数+1就行—>366 240 251 361，当然，如果遇到了闰年，那从第3个数字开始，后面的数字需要再加1，而第2年的起始数字需要+2。（原回答太复杂，略作修改）
 
-# （社交技巧）
+# 社交技巧
 建立和保持人与人之间的关系。这是生存之道。
 
 照镜子，观察自己的肢体语言。

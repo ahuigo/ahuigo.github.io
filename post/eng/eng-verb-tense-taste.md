@@ -1,3 +1,7 @@
+---
+title: 动词时态, verb tense
+date: 2018-09-27
+---
 # 动词时态, verb tense
 ## 一般现在时
 经常性动作：I leave home at 7:00 am every day.

@@ -1,3 +1,7 @@
+---
+title: install kafka
+date: 2018-09-27
+---
 # install kafka
 
   wget http://kafka.apache.org/downloads.html下载相应的版本，我使用的是kafka_2.9.1-0.8.2.2.tgz。

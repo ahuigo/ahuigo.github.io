@@ -1,10 +1,10 @@
 ---
 layout: page
-title:
+title: 全屏
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
-
 # 全屏
 
 # 网络

@@ -1,3 +1,7 @@
+---
+title: Postgre User and Authentication
+date: 2018-09-27
+---
 # Postgre User and Authentication
 vim /var/lib/pgsql/10/data/pg_hba.conf
 

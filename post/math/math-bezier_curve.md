@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: math-bezier_curve
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 

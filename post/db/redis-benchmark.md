@@ -1,3 +1,7 @@
+---
+title: redis-benchmark
+date: 2018-09-27
+---
 # redis-benchmark
 
     redis-benchmark [-h <host>] [-p <port>] [-c <clients>] [-n <requests]> [-k <boolean>]

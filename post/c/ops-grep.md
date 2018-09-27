@@ -1,3 +1,7 @@
+---
+title: grep & ag 的使用
+date: 2018-09-27
+---
 # grep & ag 的使用
 # ag
 ag 比ack/grep 还快

@@ -1,3 +1,7 @@
+---
+title: Type
+date: 2018-09-27
+---
 # Type
 
 ## Type Convert

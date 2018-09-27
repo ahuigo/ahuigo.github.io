@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: c-debug-tool
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -24,7 +25,7 @@ description:
 	xxd 十六进制显示数据
 	od
 
-# Reference
+# References
 - [c-debug-tool]
 
 [c-debug-tool]: http://linuxtools-rst.readthedocs.org/zh_CN/latest/advance/02_program_debug.html#nm

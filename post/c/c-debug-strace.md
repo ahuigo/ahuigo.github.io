@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: c-debug-strace
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -174,7 +175,7 @@ when employed with the FUTEX_WAIT (since Linux 2.6.22) and FUTEX_WAIT_BITSET (si
 	#2  0x00000000008c4cca in main ()
 ```
 
-# Reference
+# References
 - [c-debug-tool]
 
 [c-debug-tool]: http://linuxtools-rst.readthedocs.org/zh_CN/latest/advance/02_program_debug.html#nm

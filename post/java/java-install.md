@@ -1,3 +1,7 @@
+---
+title: install java
+date: 2018-09-27
+---
 # install java
 
 ## jdk

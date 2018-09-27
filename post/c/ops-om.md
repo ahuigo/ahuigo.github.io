@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: ops-om
 category: blog
 description: 
+date: 2018-09-27
 ---
 # Preface
 OM(Operation Maintenance) 运维

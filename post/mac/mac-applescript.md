@@ -1,3 +1,7 @@
+---
+title: AppleScript
+date: 2018-09-27
+---
 # AppleScript
 
 ## shutdown

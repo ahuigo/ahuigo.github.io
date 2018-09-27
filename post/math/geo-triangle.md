@@ -1,3 +1,7 @@
+---
+title: 三角形triangle
+date: 2018-09-27
+---
 # 三角形triangle
 ## 三角心
 http://math001.com/triangle_lines_onepoint/

@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: eng-spoken
 category: blog
 description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -36,6 +37,3 @@ This is not about money
 Thi si ze not about money
 This is nothing about money
 这不是钱的问题
-
-
-

@@ -1,3 +1,7 @@
+---
+title: brew
+date: 2018-09-27
+---
 # brew
 - brew(Homebrew) 是近来极流行的 安装gawk,gsed,macvim等命令的安装工具，所有的包都被安装到/usr/local/Cellar下，然后再以`ln -s` 软链接的形式链接到`/usr/local/`目录下
 
@@ -152,4 +156,3 @@ Refer to : [brew-cask](http://ksmx.me/blog/2013/10/05/homebrew-cask-cli-workflow
 
 	 brew update && brew upgrade brew-cask
 	 brew cleanup && brew cask cleanup
-     

@@ -1,3 +1,7 @@
+---
+title: hospital
+date: 2018-09-27
+---
 # hospital
 http://www.bjguahao.gov.cn/comm/index.html
 

@@ -22,6 +22,7 @@ def parseBlog(path):
             return True;
 
     content = data.strip()
+    print(path, '--------')
     title,_ = content.split('\n', 1)
     title = title.strip('# ')
     content = content.replace('\n# Reference\n', '\n# References\n')
@@ -40,7 +41,7 @@ def loopMd():
         yield path
 
 import itertools
-for path in itertools.islice(loopMd(), 50, 60):
+for path in loopMd():
     blog = parseBlog(path)
     if isinstance(blog, dict) and blog['content']:
         print(path)
@@ -55,5 +56,5 @@ for path in itertools.islice(loopMd(), 50, 60):
         #y = input('confirm:')
         #if not y:
         #    print('%r'%y)
-        open(path, 'w').write(content)
+        #open(path, 'w').write(content)
 

@@ -1,3 +1,7 @@
+---
+title: shell command
+date: 2018-09-27
+---
 # shell command
 $ sqlite3
 

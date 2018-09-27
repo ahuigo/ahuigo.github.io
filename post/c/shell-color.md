@@ -1,3 +1,7 @@
+---
+title: shell color
+date: 2018-09-27
+---
 # shell color
 https://en.wikipedia.org/wiki/ANSI_escape_code
 http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html

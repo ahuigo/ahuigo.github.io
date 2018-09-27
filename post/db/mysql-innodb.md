@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: mysql-innodb
 category: blog
 description: 
+date: 2018-09-27
 ---
 # Preface
 

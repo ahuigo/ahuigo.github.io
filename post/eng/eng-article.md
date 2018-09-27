@@ -1,4 +1,8 @@
-# Perface
+---
+title: 冠词
+date: 2018-09-27
+---
+# 定冠词/不定冠词/部分冠词/零冠词
 definite/indefinite/partitive/zero article
 定冠词/不定冠词/部分冠词/零冠词
 冠词article: 是印欧语系和闪含语系的诸语中，位于名词或名词词组之前或之后，在句子里主要是对名词起限定作用的词。 冠词是一种虚词。

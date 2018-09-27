@@ -1,3 +1,7 @@
+---
+title: Cpu 优化
+date: 2018-09-27
+---
 # Cpu 优化
 https://help.aliyun.com/knowledge_detail/43562.html
 

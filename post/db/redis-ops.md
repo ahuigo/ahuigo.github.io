@@ -1,3 +1,7 @@
+---
+title: master-slave 主从同步
+date: 2018-09-27
+---
 # master-slave 主从同步
 参考:[陌陌redis 实践](http://blog.codingnow.com/2014/03/mmzb_redis.html)
 

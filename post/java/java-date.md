@@ -1,3 +1,7 @@
+---
+title: gettime
+date: 2018-09-27
+---
 # gettime
 
     long unixTime = System.currentTimeMillis() / 1000L;

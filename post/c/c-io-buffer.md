@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: c-io-buffer
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 

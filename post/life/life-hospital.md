@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: life-hospital
 category: blog
 description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -78,4 +79,4 @@ description:
 烧伤科 
 北京积水潭医院－最好的烧伤医院（全国烧伤科第1） 
 北京解放军304医院－北京最好的烧伤科医院（全国烧伤科第3） 
-北京朝阳医院－北京最好的呼吸内科医院（全国呼吸内科第50） 
+北京朝阳医院－北京最好的呼吸内科医院（全国呼吸内科第50）

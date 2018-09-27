@@ -1,3 +1,7 @@
+---
+title: Mongo crud 操作
+date: 2018-09-27
+---
 # index
 By default, mongo has no index at all(include `_id`, it does not occur in the condition)
 

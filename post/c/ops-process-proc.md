@@ -1,3 +1,7 @@
+---
+title: /proc
+date: 2018-09-27
+---
 # /proc
 
     # sudo fuser 9000/tcp

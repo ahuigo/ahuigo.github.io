@@ -1,3 +1,7 @@
+---
+title: blog sync
+date: 2018-09-27
+---
 # blog sync
 ifttt.com 同步各大社交网站：twitter/weibo
 

@@ -1,3 +1,7 @@
+---
+title: filepath
+date: 2018-09-27
+---
 # filepath
 
   import "path/filepath"

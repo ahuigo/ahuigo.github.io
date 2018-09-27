@@ -1,5 +1,6 @@
 ---
 date: 2014-05-07
+title: git hooks
 ---
 # git hooks
 钩子(hooks)是一些在$GIT-DIR/hooks目录的脚本, 在被特定的事件(certain points)触发后被调用。当git init命令被调用后, 一些非常有用的示例钩子脚本被拷到新仓库的hooks目录中; 但是在默认情况下它们是不生效的。 把这些钩子文件的".sample"文件名后缀去掉就可以使它们生效。
@@ -93,4 +94,4 @@ Useful hooks
 	GIT_DIR/hooks/pre-receive
 
 ## post-receive
-The `post-receive` hook runs after the entire process is completed and can be used to update other services or notify users. 
+The `post-receive` hook runs after the entire process is completed and can be used to update other services or notify users.

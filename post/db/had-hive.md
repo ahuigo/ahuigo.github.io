@@ -1,3 +1,7 @@
+---
+title: hive 命令
+date: 2018-09-27
+---
 # hive 命令
 
     hive –e 'select * from test';

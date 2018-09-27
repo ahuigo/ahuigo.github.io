@@ -1,3 +1,7 @@
+---
+title: more and more, increasing / accumulating numbers
+date: 2018-09-27
+---
 more and more, increasing / accumulating numbers
 # listen traffic jam
 交通拥堵

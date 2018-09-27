@@ -1,3 +1,7 @@
+---
+title: ad-killer
+date: 2018-09-27
+---
 # ad-killer
 
 ## uBlock

@@ -1,3 +1,7 @@
+---
+title: 形容词和副词, adjective and adverb
+date: 2018-09-27
+---
 # 形容词和副词, adjective and adverb
 
 # Adjective
@@ -208,4 +212,3 @@ a bit worse.
 2. 要注意对应句型，遵循前后一致的原则。
     The population of Shanghai is larger than that of Beijing. 上海的人口比北京的人口要多。
     It is easier to make a plan than to carry it out. 作计划要比实现它要容易。
-

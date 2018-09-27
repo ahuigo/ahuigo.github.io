@@ -1,3 +1,7 @@
+---
+title: web
+date: 2018-09-27
+---
 # web
 https://golang.org/doc/articles/wiki/final.go
 https://golang.org/doc/articles/wiki

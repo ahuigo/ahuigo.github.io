@@ -1,3 +1,7 @@
+---
+title: Mysql 的调试记录
+date: 2018-09-27
+---
 # log
 
     /var/log/mariadb/mariadb.log

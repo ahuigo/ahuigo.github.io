@@ -1,3 +1,7 @@
+---
+title: stock index
+date: 2018-09-27
+---
 # stock index
 ## ROE 是什么
 ROE, 净资产收益率（ROE） 股本回报率，产权收益率，产权报酬率(Return On Equity,简称ROE)

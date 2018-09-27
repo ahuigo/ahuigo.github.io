@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: doc-keynote
 category: blog
 description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -31,6 +32,5 @@ description:
 	Choose Format > Copy Animation.
 	Choose Format > Paste Animation.
 
-# Reference
+# References
 http://support.apple.com/kb/PH5986
-

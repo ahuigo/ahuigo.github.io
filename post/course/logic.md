@@ -1,3 +1,7 @@
+---
+title: Logic Mistick
+date: 2018-09-27
+---
 # Logic Mistick
 作者：六百八十寺
 链接：https://www.zhihu.com/question/26004407/answer/53788330

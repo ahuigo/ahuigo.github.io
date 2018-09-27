@@ -1,3 +1,7 @@
+---
+title: PMBOK
+date: 2018-09-27
+---
 # PMBOK
 - PMBOK:
     1. 项目集成+整合

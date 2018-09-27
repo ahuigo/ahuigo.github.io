@@ -2,7 +2,8 @@
 layout: page
 date: 2018-03-03
 category: blog
-description:
+description: 
+title: git submodule
 ---
 # git submodule
 ## add

@@ -1,3 +1,7 @@
+---
+title: in general term
+date: 2018-09-27
+---
 in general term
 in more specific terms
 in practical term 实际情况

@@ -1,7 +1,9 @@
 ---
 layout: page
-private:
+private: 
 category: blog
+title: 租房
+date: 2018-09-27
 ---
 # 租房
 支付宝找房

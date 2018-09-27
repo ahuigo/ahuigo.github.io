@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: ops-device
 category: blog
 description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -26,4 +27,3 @@ https://support.apple.com/zh-cn/HT202013
 Airport 或者以太网
 
 	Wifi(Airport), Device Name:en0
-

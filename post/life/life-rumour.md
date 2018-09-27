@@ -1,3 +1,7 @@
+---
+title: Spirulina, 螺旋藻
+date: 2018-09-27
+---
 # Spirulina, 螺旋藻
 方舟子：螺旋藻是健康食品吗
 Ark: is Spirulina healthy food?

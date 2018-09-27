@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: mysql-myisam
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -15,4 +16,4 @@ When you say:
 
 MySQL creates files named `Table1.MYD ("MySQL Data")`, `Table1.MYI ("MySQL Index")`, and `Table1.frm ("Format")`. These files will be in the directory:
 
-	/<datadir>/<database>/ 
+	/<datadir>/<database>/

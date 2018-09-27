@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: ops-process-lsof
 category: blog
-description:
+description: 
+date: 2018-09-27
 ---
 # Preface
 
@@ -93,7 +94,7 @@ example
 		-k kill 占用的进程
 
 
-# Reference
+# References
 - [c-debug-tool]
 
 [c-debug-tool]: http://linuxtools-rst.readthedocs.org/zh_CN/latest/advance/02_program_debug.html#nm

@@ -1,3 +1,7 @@
+---
+title: struct
+date: 2018-09-27
+---
 # struct
 
 	type Vertex struct {

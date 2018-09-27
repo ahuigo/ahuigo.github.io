@@ -1,3 +1,7 @@
+---
+title: 量化
+date: 2018-09-27
+---
 # 量化
 book
 https://www.zhihu.com/question/26594258

@@ -1,3 +1,7 @@
+---
+title: go-test
+date: 2018-09-27
+---
 # Preface
 Go has a lightweight test framework composed of the go test command and the testing package.
 

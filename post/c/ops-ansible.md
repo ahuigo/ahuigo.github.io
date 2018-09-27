@@ -1,3 +1,7 @@
+---
+title: Ansible
+date: 2018-09-27
+---
 # Ansible
 Ansible 是一个比Puppet, Chef 更轻量的provisioning 工具，不需要启动daemon进程。这点跟跟pssh差不多，但是比pssh更加强大。
 

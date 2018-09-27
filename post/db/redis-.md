@@ -1,3 +1,7 @@
+---
+title: Redis
+date: 2018-09-27
+---
 # Redis
 redis所有的数据都是redisObject存储的。redisObject来表示所有的key/value数据是比较浪费内存的(为了支持各种数据类型嘛)，还好redis 作者也考虑了很多内存优化的方法。
 
@@ -304,7 +308,7 @@ http://www.cnblogs.com/stephen-liu74/archive/2012/02/18/2357783.html
 RebornDB：下一代分布式Key-Value数据库架构介绍
 http://mp.weixin.qq.com/s?__biz=MzAwNjMxNjQzNA==&mid=208050108&idx=1&sn=05f972ab35726fcaa0fc3a8c4e9a33f8&scene=1&from=groupmessage&isappinstalled=0#rd
 
-# Reference
+# References
 - [深入理解Redis主键失效原理及实现机制][key expire]
 
 [key expire]: http://blog.nosqlfan.com/html/4218.html
