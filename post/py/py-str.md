@@ -1,4 +1,8 @@
-# Preface
+---
+title: Python 字符处理
+date: 2017-08-09
+---
+# Python 字符处理
 - serialize
 见/py/py-serial.md
 

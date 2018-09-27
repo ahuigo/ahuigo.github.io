@@ -1,5 +1,7 @@
-# Preface
-
+---
+title: Python 语法
+date: 2018-03-01
+---
 # compare
 ```s
 >>> 1<3>=3>1==1<100

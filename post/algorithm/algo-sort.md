@@ -349,9 +349,16 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 - 空间复杂度 `O(logN)`
 - 稳定性： 否
 
-与Merge Sort 不同的是, Merge Sort 通过位置做划分（主要是合并, 合并时需要空间O(n)）,
-而Quick Sort 是通过值做划分，主要工作是划分本身, 划分时只需要给一点栈空间(logN)，而且Quick Sort 排序不稳定. 如果需要稳定的 Quick Sort, 则需要空间O(n);
-> 从概率上说， 快速排序的平均速度比堆排序要快一些
+比较
+1. 与Merge Sort 不同的是, Merge Sort 通过位置做划分（主要是合并, 合并时需要空间O(n)）,
+2. 而Quick Sort 是通过值做划分，主要工作是划分本身, 划分时只需要给调用栈空间(logN)，而且Quick Sort 排序不稳定(因为pivot 主元位置不确定). 如果需要稳定的 Quick Sort, 则需要空间O(n);
+
+示意图:
+
+        i     j
+        _ ... x     x > pivot? arr[i]=arr[j]
+
+从概率上说， 快速排序的平均速度比堆排序要快一些
 
 	void quick_sort(int *arr, int n){
 		if(n>1){
@@ -382,6 +389,12 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 		if(i>1) quick_sort(arr, i);
 		if(n-i>2) quick_sort(arr+i+1, n-i-1);
 	}
+
+    /*
+    while i<j and arr[j]>=pivot:
+        j-=1
+    arr[i] = arr[j]; # after j is null
+    */
 
 上面的代码利用到了递归，如果调用栈过深，可以直接给定一个比较大的调用栈
 

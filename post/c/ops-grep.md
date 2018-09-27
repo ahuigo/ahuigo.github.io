@@ -13,6 +13,11 @@ ag 比ack/grep 还快
 ## ag regex
     echo abc1234 |ag 'abc\d{3}$'
 
+## ag AB
+ag after before 不会重复输出：
+
+    ag getsizeof . -A 3 -B 3
+
 # grep
 
 	grep [-acinv] [--color=auto] [--] 'pattern' filename
