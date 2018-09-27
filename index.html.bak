@@ -1,0 +1,44 @@
+---
+layout: default
+---
+
+<div class="home">
+
+    {% for post in paginator.posts %}
+    <h1>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    </h1>
+    {% endfor %}
+    <style>
+        .pager{margin:10px}
+        .pager > a{
+            background-color: #00d1b2;
+            border-color: transparent;
+            color: #fff;
+            display: inline-block;
+            border-radius: 1em;
+            padding: 0.5em 1em;
+            text-align: center;
+        }
+    </style>
+    <div class="pager">
+        {% if paginator.previous_page %}
+            <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" >Previous</a>
+        {% endif %}
+
+        {% for page in (1..paginator.total_pages) %}
+            {% if page == paginator.page %}
+            <span class="active">{{ page }}</span>
+            {% elsif page == 1 %}
+            <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+            {% else %}
+            <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if paginator.next_page %}
+            <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next</a>
+        {% endif %}
+    </div>
+
+</div>

@@ -1,44 +1,27 @@
----
-layout: default
----
-
-<div class="home">
-
-    {% for post in paginator.posts %}
-    <h1>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-    </h1>
-    {% endfor %}
-    <style>
-        .pager{margin:10px}
-        .pager > a{
-            background-color: #00d1b2;
-            border-color: transparent;
-            color: #fff;
-            display: inline-block;
-            border-radius: 1em;
-            padding: 0.5em 1em;
-            text-align: center;
-        }
-    </style>
-    <div class="pager">
-        {% if paginator.previous_page %}
-            <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" >Previous</a>
-        {% endif %}
-
-        {% for page in (1..paginator.total_pages) %}
-            {% if page == paginator.page %}
-            <span class="active">{{ page }}</span>
-            {% elsif page == 1 %}
-            <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
-            {% else %}
-            <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
-            {% endif %}
-        {% endfor %}
-
-        {% if paginator.next_page %}
-            <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next</a>
-        {% endif %}
-    </div>
-
+<head>
+   <meta http-equiv="refresh" content="0; url=http://www.mydomain.com/new-page.html">
+</head>
+<style>
+a{
+    text-decoration: none;
+    color: white;
+}
+body{
+background-color: #0a1922
+}
+h1{
+text-align:center;
+font-family: "Muli",avenir,"helvetica neue",helvetica,ubuntu,roboto,noto,"segoe ui",arial,sans-serif;
+font-size: 3em;
+}
+#main{
+        display:  flex;
+    justify-content: center;
+    align-items: center; 
+}
+</style>
+<div id=main>
+<h1>
+<a href="/b"> AHUIGO </a>
+</h1>
 </div>
