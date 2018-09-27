@@ -1,3 +1,7 @@
+---
+title: c10k 问题
+date: 2018-09-28
+---
 使用四种框架分别实现百万websocket常连接的服务器:
 http://colobu.com/2015/05/22/implement-C1000K-servers-by-spray-netty-undertow-and-node-js/
 

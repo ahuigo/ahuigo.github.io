@@ -1,3 +1,7 @@
+---
+title: Demo
+date: 2018-09-28
+---
 # Demo
 
     from bottle import run, get, static_file, redirect, template

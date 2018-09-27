@@ -1,3 +1,7 @@
+---
+title: python 加密实例
+date: 2018-09-28
+---
 # python 加密实例
 [加密算法简介](/p/algorithm/algorithm-crypt)
 

@@ -1,3 +1,7 @@
+---
+title: py-debug-pdb
+date: 2018-09-28
+---
 # Preface
 - pdb 相当于是c里面的gdb
 - ipdb：之于pdb, 相当于ipython 之于python. 

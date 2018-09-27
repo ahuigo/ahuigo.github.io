@@ -37,7 +37,8 @@ def parseBlog(path):
 
 from glob import glob
 def loopMd():
-    for path in glob('post/**/*.md'):
+    #for path in glob('post/eng/**/*.md', recursive=True):
+    for path in glob('post/proj/**/*.md', recursive=True):
         yield path
 
 import itertools
@@ -56,5 +57,5 @@ for path in loopMd():
         #y = input('confirm:')
         #if not y:
         #    print('%r'%y)
-        #open(path, 'w').write(content)
+        open(path, 'w').write(content)
 

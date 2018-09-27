@@ -1,3 +1,7 @@
+---
+title: comcast
+date: 2018-09-28
+---
 # comcast
 Simulating shitty network connections so you can build better systems.
 https://github.com/tylertreat/comcast

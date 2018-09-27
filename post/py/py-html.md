@@ -1,3 +1,7 @@
+---
+title: 用BeautifulSoup 处理 html/xml
+date: 2018-09-28
+---
 # 用BeautifulSoup 处理 html/xml
 一般转义html 用一下几个方法
 

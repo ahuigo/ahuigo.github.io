@@ -1,3 +1,7 @@
+---
+title: python lxml 的使用
+date: 2018-09-28
+---
 # python lxml 的使用
 BeautifulSoup 可以使用lxml 解释器，lxml 这个解释器的使用并不复杂。
 

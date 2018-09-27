@@ -1,3 +1,7 @@
+---
+title: ipv4
+date: 2018-09-28
+---
 # ipv4
 ## ip_forward
 首先要开启端口转发器必须先修改内核运行参数ip_forward,打开转发:

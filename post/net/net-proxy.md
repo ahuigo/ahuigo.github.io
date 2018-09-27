@@ -4,8 +4,6 @@ title:	shell proxy
 category: blog
 description:
 ---
-# Preface
-
 # Android
 HowTo: Proxy Non-Proxy-Aware Android Applications through Burp
 http://blog.dornea.nu/2014/12/02/howto-proxy-non-proxy-aware-android-applications-through-burp/
@@ -256,6 +254,8 @@ or via -e options placed after the URL:
 
 - ngrok
 将处于内网的开发机服务暴露到公网上，就是类似 花生壳[ngrok](/p/net-proxy-ngrok)
+./ngrok -config=ngrok.cfg -subdomain <domain> 80
+./ngrok -config=ngrok.cfg -hostname xxx.xxx.xxx 80
 -frp
 frp 比较ngrok 是开源的
 

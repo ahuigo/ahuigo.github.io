@@ -1,3 +1,7 @@
+---
+title: QUIC
+date: 2018-09-28
+---
 # QUIC
 链接：https://www.zhihu.com/question/29705994/answer/46357120
 QUIC: next generation multiplexed transport over UDP（https://www.youtube.com/watch?v=hQZ-0mXFmk8）

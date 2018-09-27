@@ -1,3 +1,7 @@
+---
+title: pac(Proxy Auto Config)
+date: 2018-09-28
+---
 # pac(Proxy Auto Config)
 iOS实际上支持socks代理的，但在 iPhone和iPad设备的`Setting -> WLAN` 下只能看到HTTP Proxy
 

@@ -1,3 +1,7 @@
+---
+title: http-p3p
+date: 2018-09-28
+---
 IE 默认不允许iframe 种cookie, Firefox/Chrome 则默认允许(P3P)
 
     <iframe src="http://a.com/setcookie.php">

@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: net-ssl
 category: blog
-description:
+description: 
+date: 2018-09-28
 ---
 # Preface
 参考阮一峰的[ssl运行机制]，TLS/SSL 基于非对称加密，它解决了以下风险：
@@ -330,7 +331,7 @@ SNI should work completely transparently when running on Java 1.7 or newer. No c
 # 证书级别
 http://www.ruanyifeng.com/blog/2016/08/migrate-from-http-to-https.html
 
-# Reference
+# References
 - [nginx_https]
 - [wiki_ssl]
 - [ssl运行机制]

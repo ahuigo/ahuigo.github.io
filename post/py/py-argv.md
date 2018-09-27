@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: py-argv
 category: blog
-description:
+description: 
+date: 2018-09-28
 ---
 # Preface
 - click

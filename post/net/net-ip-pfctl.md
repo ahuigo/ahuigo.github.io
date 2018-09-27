@@ -1,3 +1,7 @@
+---
+title: net-ip-pfctl
+date: 2018-09-28
+---
 # Preface
 Mac使用pf命令可代替iptables, 而icefloor这个图形化的Mac防火墙，它是pf的GUI前端
 

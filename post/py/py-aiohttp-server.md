@@ -1,3 +1,7 @@
+---
+title: server
+date: 2018-09-28
+---
 # server
 异步编程要小心循环阻塞, 不可以使所有任务task被阻塞的函数：
 1. time.sleep(10)

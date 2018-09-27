@@ -1,3 +1,7 @@
+---
+title: help
+date: 2018-09-28
+---
 # help
 http://initd.org/psycopg/docs/cursor.html
 
@@ -63,4 +67,3 @@ table name 这些则不支持，应该使用:
 
     cursor.fetchone()
     cursor.fetchmany([size=cursor.arraysize])
-

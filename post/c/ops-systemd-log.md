@@ -1,5 +1,5 @@
 ---
-title: Systemd 日志管理: journalctl
+title: Systemd 日志管理
 date: 2018-09-27
 ---
 # Systemd 日志管理: journalctl

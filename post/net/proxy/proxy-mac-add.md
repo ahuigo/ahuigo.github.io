@@ -1,3 +1,7 @@
+---
+title: change mac address
+date: 2018-09-28
+---
 # change mac address
 https://www.google.com/search?q=macbook+change+mac+address
 2015

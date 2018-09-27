@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: py-gui
 category: blog
-description:
+description: 
+date: 2018-09-28
 ---
 # Preface
 Python支持多种图形界面的第三方库，包括：

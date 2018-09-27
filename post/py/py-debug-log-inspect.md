@@ -1,3 +1,7 @@
+---
+title: py-debug-log-inspect
+date: 2018-09-28
+---
 # Preface
 1. traceback
 2. inspect.getsource(func)
@@ -169,4 +173,3 @@ current function:
 ## inspect function args
     print(inspect.getargspec(func)[0])
     print(inspect.getargspec(func).args)
-

@@ -1,3 +1,7 @@
+---
+title: SQLite
+date: 2018-09-28
+---
 # SQLite
 我们在Python交互式命令行实践一下：
 ```

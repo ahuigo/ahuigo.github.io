@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: py-file-io
 category: blog
-description:
+description: 
+date: 2018-09-28
 ---
 # Preface
 
@@ -110,4 +111,3 @@ string 与 bytes 相互转换
 	>>> b'\xe2\x82\xac20'.decode('utf-8')
 	'€20'
 	>>> '123'.encode('utf-8')
-

@@ -1,4 +1,7 @@
-
+---
+title: robustness
+date: 2018-09-28
+---
 # robustness
 鲁棒性（robustness）就是系统的健壮性
 

@@ -1,3 +1,7 @@
+---
+title: net-route
+date: 2018-09-28
+---
 # Preface
 1. traceroute [option] host, 路由经过的节点
     1. -m 10 跳数设置

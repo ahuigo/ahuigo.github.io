@@ -1,3 +1,7 @@
+---
+title: Context Managers
+date: 2018-09-28
+---
 # Context Managers
 http://arnavk.com/posts/python-context-managers/
 https://docs.python.org/3/library/contextlib.html

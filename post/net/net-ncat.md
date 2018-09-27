@@ -1,7 +1,10 @@
-# Reference
+---
+title: netcat
+date: 2018-09-28
+---
+# netcat,
 [nc](http://www.oschina.net/translate/linux-netcat-command?p=2#comments)
 
-# netcat,
 # nc
 Netcat 或者叫 nc 是 Linux 下的一个用于调试和检查网络工具包。可用于创建 TCP/IP 连接，最大的用途就是用来处理 TCP/UDP 套接字。
 

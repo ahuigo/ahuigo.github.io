@@ -1,3 +1,7 @@
+---
+title: FUTEX_WAIT_PRIVATE
+date: 2018-09-28
+---
 ## FUTEX_WAIT_PRIVATE 
 经常发现程序死在这里:
 

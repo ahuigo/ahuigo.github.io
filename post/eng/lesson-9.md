@@ -1,5 +1,5 @@
 ---
-title: article: managers for the 21st century
+title: lession9
 date: 2018-09-27
 ---
 # article: managers for the 21st century

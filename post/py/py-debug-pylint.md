@@ -1,3 +1,7 @@
+---
+title: pylint
+date: 2018-09-28
+---
 # pylint
 用来规范代码风格
 

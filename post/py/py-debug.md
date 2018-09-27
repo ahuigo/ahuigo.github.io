@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: py-debug
 category: blog
-description:
+description: 
+date: 2018-09-28
 ---
 # Preface
 1. exception
@@ -180,4 +181,3 @@ To use, just call the listen() function at some point when your program starts u
 This will cause the program to break to a python console at the point it is currently at, 
 1. showing you the stack trace, and letting you manipulate the variables. 
 2. Use control-d (EOF) to continue running (though note that you will probably interrupt any I/O etc at the point you signal, so it isn't fully non-intrusive.
-

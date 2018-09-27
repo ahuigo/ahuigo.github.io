@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: net-socks
 category: blog
-description:
+description: 
+date: 2018-09-28
 ---
 # Preface
 
@@ -165,7 +166,7 @@ SOCKS是一种网络传输协议，主要用于客户端与外网服务器之间
 > 详细文档参考rfc1928
 
 
-# Reference
+# References
 - [socks-note]
 - [socks-wiki]
 

@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: py-email
 category: blog
-description:
+description: 
+date: 2018-09-28
 ---
 # Preface
 1. yagmail 高效简单的email工具

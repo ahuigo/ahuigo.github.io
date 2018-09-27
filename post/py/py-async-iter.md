@@ -1,3 +1,7 @@
+---
+title: py-async-iter
+date: 2018-09-28
+---
 # Preface
 http://nvie.com/posts/iterators-vs-generators/
 ## Iterable

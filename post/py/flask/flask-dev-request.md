@@ -1,3 +1,7 @@
+---
+title: request
+date: 2018-09-28
+---
 # request
 request 用ctx.py: RequestCtx中被引用:
 
@@ -41,7 +45,3 @@ from werkzeug.formparser import FormDataParser:
     1. wsgi.py: pair_iter = make_chunk_iter(stream) : a=1 构成一个pair
     1. urls.py:_url_decode_impl(pair_iter)
         2. _compat.py: s=make_literal_wrapper(stream_pair)
-
-
-
-

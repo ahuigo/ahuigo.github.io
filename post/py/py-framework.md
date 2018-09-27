@@ -1,3 +1,7 @@
+---
+title: framework list
+date: 2018-09-28
+---
 # framework list
 0. Flask(果壳网) 很轻, 类似 bottle但对大项目组织支持更好, Flask 框架学会以后，可以考虑学习插件的使用。例如:
 用 WTForm + Flask-WTForm 来验证表单数据，

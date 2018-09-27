@@ -1,3 +1,7 @@
+---
+title: Disassemble
+date: 2018-09-28
+---
 # Disassemble
 ```
 def myfunc(alist):

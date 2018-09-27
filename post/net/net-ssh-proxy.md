@@ -1,3 +1,7 @@
+---
+title: ssh proxy
+date: 2018-09-28
+---
 # ssh proxy
 
     -f Rquests ssh to go to background just before command execution.

@@ -1,3 +1,7 @@
+---
+title: py-debug-log
+date: 2018-09-28
+---
 # Preface
 - logging
 https://docs.python.org/3.4/howto/logging.html
