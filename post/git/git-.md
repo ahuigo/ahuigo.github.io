@@ -572,6 +572,8 @@ Create an archive of files from a named tree.
 
 ## push all remote
 
+    git push remote [branch]
+
 ## push buffer
 > `git config http.postBuffer 5242880000` 设置push 时的大小限制, 否则会报 The remote end hung up unexpectedly。 还有一个原因是服务端限制
 
