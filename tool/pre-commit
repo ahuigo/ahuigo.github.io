@@ -152,22 +152,21 @@ if output:
     max_index_num = 0
     for line in blogMd:
         m = re.match(
-            '^- (?P<updated>\S+) \[(?P<title>.+)\]\(/(?P<path>)\)', line)
+            '^- (?P<updated>\S+) \[(?P<title>.+)\]\((?P<path>/p/.+)\)', line)
         if m:
             max_index_num += 1
             if max_index_num > 50:
                 break;
-            path = m.group('path').replace('/p/',ROOT+'/', 1)+'.md'
+            path = m.group('path').replace('/p/','post/', 1)+'.md'
             index_blogs[path] = {
                 'title': m.group('title'),
                 'path':path,
                 'updated': m.group('updated'),
             }
 
-    print(index_blogs)
-    quit()
     new_blogs = {}
     delete_blogs = []
+    old_index_path_list = list(index_blogs.keys())
     for line in output.split('\n'):
         status, path = line.split('\t')
         if status == 'D':
@@ -183,7 +182,7 @@ if output:
             continue
         new_blogs[path] = blog
         index_blogs[path] = blog
-        if path not in index_blogs:
+        if path not in old_index_path_list:
             index_blogs.move_to_end(path, last=False)
 
     if errors:

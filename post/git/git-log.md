@@ -1,10 +1,10 @@
 ---
 layout: page
-title: git 日志、数据恢复
+title: git 使用之日志、数据恢复
 category: blog
 description:
 ---
-# filter log
+# 日志过滤
 
 ## by branch
 1. `^` means not in
