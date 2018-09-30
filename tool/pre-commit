@@ -31,7 +31,6 @@ def updateAtom(blogs, max_items = 10):
         s = open(atomPath).read()
     else:
         s = f'''
-<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Ahuigo 的网络日志</title>
 <link href="https://ahuigo.github.io{ROOT}/atom.xml" rel="self" type="application/atom+xml"/>
@@ -67,8 +66,8 @@ def updateAtom(blogs, max_items = 10):
 
         entry.title.string =  blog['title']
         entry.content.string =  ''
-        entry.published.string =  blog['date']
-        entry.updated.string =  datetime.now().replace(microsecond=0).isoformat()+'Z'
+        entry.updated.string =  datetime.now().replace(microsecond=0).isoformat()+'+00:00'
+        entry.published.string = entry.updated.string
         if not bs.find('link', href=href):
             entry.link['href'] =  href
             bs.entry.insert_before(entry)
