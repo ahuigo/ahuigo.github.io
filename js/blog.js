@@ -162,8 +162,8 @@ const mdConponent = {
       return hljs.highlightBlock(e, '    ');
     });
     this.$root.$$('#content a').forEach((v, k, arr) => {
-      if (v.getAttribute('href').startsWith('/p/')) {
-        v.href = v.getAttribute('href').replace(/^\/p/, '#/post') + '.md'
+      if (!v.getAttribute('href').match('^\/p\/.*\.html')) {
+        v.href = v.getAttribute('href').replace(/^\/p/, `#/post`).slice(0,-5) + '.md'
       }
     })
     this.$root.$$('#content img').forEach((v, k, arr) => {
