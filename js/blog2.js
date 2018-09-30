@@ -61,7 +61,7 @@ const mdConponent = {
         return hljs.highlightBlock(e, '    ');
       });
       this.$root.$$('#content a').forEach((v, k, arr) => {
-        if (!v.getAttribute('href').match('^\/p\/.*\.html')) {
+        if (v.getAttribute('href').startsWith('/p/')) {
           v.href = v.getAttribute('href').replace(/^\/p/, `${ROOT}/`) + '.html'
         }
       })

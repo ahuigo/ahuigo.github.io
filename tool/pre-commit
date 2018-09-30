@@ -59,8 +59,7 @@ def updateAtom(blogs, max_items = 10):
 
     # update
     for path, blog in blogs.items():
-        post_path = path[5:-3]+'.html'
-        href = '/'+post_path
+        href = '/'+path[5:-3]
         if bs.find('link', href=href):
             entry =  bs.find('link', href=href).parent
         else:
@@ -151,15 +150,15 @@ if output:
     max_index_num = 0
     for line in blogMd:
         m = re.match(
-            '^- (?P<updated>\S+) \[(?P<title>.+)\]\(/(?P<path>.+md)\)', line)
+            '^- (?P<updated>\S+) \[(?P<title>.+)\]\(/(?P<path>)\)', line)
         if m:
             max_index_num += 1
             if max_index_num > 50:
                 break;
-            path = m.group('path')
+            path = m.group('path')+'.md'
             index_blogs[path] = {
                 'title': m.group('title'),
-                'path':m.group('path'),
+                'path':path,
                 'updated': m.group('updated'),
             }
 
@@ -189,7 +188,7 @@ if output:
     with open(indexFile, 'w') as fp:
         fp.write(f'# 近期日志\n')
         for path, blog in index_blogs.items():
-            article = f'- {blog["updated"]} [{blog["title"]}](/{getPostPath(path)}) '
+            article = f'- {blog["updated"]} [{blog["title"]}](/{getPostPath(path)[:-3]}) '
             print(article)
             fp.write(article+'\n')
     getoutput(f'git add {indexFile}')
