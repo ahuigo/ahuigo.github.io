@@ -188,7 +188,7 @@ if output:
     with open(indexFile, 'w') as fp:
         fp.write(f'# 近期日志\n')
         for path, blog in index_blogs.items():
-            article = f'- {blog["updated"]} [{blog["title"]}](/{getPostPath(path)[:-3]}) '
+            article = f'- {blog["updated"]} [{blog["title"]}](/{getPostPath(path)[:-5]}) '
             print(article)
             fp.write(article+'\n')
     getoutput(f'git add {indexFile}')
