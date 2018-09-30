@@ -140,14 +140,14 @@ Vue 将观察数组(observed array)的变化数组方法(mutation method)包裹�
 4. 以及在数据变化时更新 DOM(update the DOM when data change)。
 5. 在这个过程中，Vue 实例还会调用执行一些生命周期钩子函数，这样用户能够在特定阶段添加自己的代码。
 
-hooks:
+hooks: mount=add, update=update
 
     beforeCreate
     created
-    beforeMount
-    mounted
-    beforeUpdate
-    updated
+    beforeMount (before vm.$el created)
+    mounted     
+    beforeUpdate (data changed: before dom rendered)
+    updated 
     activated
     deactivated
     beforeDestroy

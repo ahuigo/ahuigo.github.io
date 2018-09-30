@@ -1,1 +1,0 @@
-https://wohugb.gitbooks.io/wechat/content/qrconnent/step_three.html

@@ -123,7 +123,7 @@ left:
 1. offsetLeft = left + margin(left)
 2. clientLeft = the width of left border
 
-	ele.offsetLeft, ele.offsetTop; //ele.style.left, ele.style.top 也是相对偏移不过带有字符串"px"
+	ele.offsetLeft, ele.offsetTop; //ele.style.left, ele.style.top 也是相对偏移，不过带有字符串"px"(必须显式指定)
 	$(this).offset().left; $(this).offset().top;
 
 ##### touch 偏移
@@ -157,7 +157,7 @@ left:
 
 ##### 根据窗口的(innerWidth,innerHeight) 查询element
 
-	document.elementFromPoint(500,300)
+	document.elementFromPoint(500,10)
     document.elementFromPoint(x, y).click();
 
 ## location

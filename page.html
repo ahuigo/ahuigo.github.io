@@ -20,8 +20,6 @@
     <meta name="author" content="ahuigo">
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
 
-    <link href="css/main.css" rel="stylesheet">
-
     <script src="https://unpkg.com/vue@2.5.17/dist/vue.min.js"></script>
     <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js"></script>
 
@@ -30,23 +28,22 @@
 
     <link href="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.js"></script>
-    <script src="js/marked.js"></script>
-    <script src="js/toc.js"></script>
+    <link href="{ROOT}/../a/css/main.css" rel="stylesheet">
+    <script src="{ROOT}/../a/js/marked.js"></script>
+    <script src="{ROOT}/../a/js/toc.js"></script>
 </head>
 
 <body class="layout-documentation page-layout">
     <div>
-        <div class="pure-menu pure-menu-horizontal" style=" background: #363636; ">
-            <a href="#" class="pure-menu-heading pure-menu-link"><strong>AHUIGO'S BLOG</STRONG></a>
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a class="button is-primary" href="/b">Home</a></li>
-                <li class="pure-menu-item"><a class="button is-primary" href="#/">Archive</a></li>
-                <li class="pure-menu-item"><a class="button is-primary" href="#/README.md">Readme</a></li>
-                <li class="pure-menu-item"><a class="button is-primary" href="/feed.xml">Rss</a></li>
-                <li class="pure-menu-item"><a class="button is-primary" href="demo/fiddle/fiddle.html">Fiddle</a></li>
-            </ul>
-            <div class="pure-menu-heading" style="width:128px;height:128px" v-pre>
-                <canvas id="canvas" width="128" height="128" style="background-color:#333"></canvas>
+        <div class="pure-menu pure-menu-horizontal">
+            <div>
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item"><a href="//github.com/ahuigo">AHUIGO</a></li>
+                    <li class="pure-menu-item"><a class="button is-primary" href="{ROOT}/index.html">Home</a></li>
+                    <li class="pure-menu-item"><a class="button is-primary" href="{ROOT}/atom.xml">Rss</a></li>
+                    <li class="pure-menu-item"><a class="button is-primary" href="/a#/README.md">Readme</a></li>
+                    <li class="pure-menu-item"><a class="button is-primary" href="/a/demo/fiddle/fiddle.html">Fiddle</a></li>
+                </ul>
             </div>
         </div>
 
@@ -60,6 +57,7 @@
             </div>
             <div class="middle" v-on="showMenu?{click:r=>showMenu=false}:{}">
                 <router-view></router-view>
+                <pre id="markdown"></pre>
                 <div class="hr"></div>
                 <div class="share" style="display:flex;justify-content:space-between">
                     <div>
@@ -80,12 +78,31 @@
                     </div>
                 </div>
                 <div class="hr"></div>
-                <div id="disqus_thread">
-                    <button id="show-comments" class="button is-primary" onclick="disqus();return false;">Load Discus</button>
-                </div>
+                <div id="comments"></div>
+                <script src='https://unpkg.com/valine/dist/Valine.min.js'></script>
+                <script>
+                    new Valine({
+                        el: '#comments' ,
+                        notify: false,// # mail notifier 
+                        verify: false,// # Verification code
+                        appid:  'bmveuJdEEaT5OWICGyCMpaVc-gzGzoHsz',
+                        appkey:  'VhaQW20n3QnLFXnmViBld9lw',
+                        placeholder: 'Just go go',
+                        avatar: 'mm',
+                        meta: 'nick,mail,link'.split(','),
+                        pageSize:10,
+                        visitor: false,
+                    });
+                </script>
             </div>
             <div class="right">
                 <div id="toc"></div>
+                <div id="search" class="pure-form">
+                    <fieldset>
+                    <input id="search_q">
+                    <button @click="searchBlog($('#search_q').value)" class="pure-button pure-button-primary">搜索</button>
+                    </fieldset>
+                </div>
             </div>
         </div>
         <button class="button is-primary" onclick="window.scroll(0, 10)" id="top">Top</button>
@@ -95,7 +112,7 @@
             <li class="pure-menu-item" v-for="(file,index) in nodes" :key="file.path">
                 <a v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name}}
                 </a>
-                <router-link v-else :type="file.type" class="file" :to="'/'+file.path">{{file.name.slice(0,-3)}} </router-link>
+                <a v-else :type="file.type" class="file" :href="('/'+file.path).replace(/^\/post\b/, '{ROOT}').slice(0,-3)+'.html'">{{file.name.slice(0,-3)}} </a>
                 <tree-folder v-if="file.nodes" :show="file.show" :nodes="file.nodes"></tree-folder>
             </li>
         </ul>
@@ -103,6 +120,7 @@
     <template id="md">
         <div id="content" v-html="marked(md)"></div>
     </template>
-    <script src="js/blog.js"></script>
+    <script src="{ROOT}/../a/js/blog2.js"></script>
 </body>
+
 </html>

@@ -157,11 +157,15 @@ http://zh.learnlayout.com/flexbox.html
     align-items: center; //height: 
 
 ## inline align(self)
+这给针对行内元素的，
 
-    vertical-align: top/bottom/center
+    vertical-align: 
+        top/bottom              与行中`最高元素`的顶/底端对齐
+        text-top/text-bottom    与父元素`字体`的底端对齐(line-height)
+        center
     margin: 0 auto;
 
-## text align
+## text align(inner)
 
 	text-align:	left/center/right
 

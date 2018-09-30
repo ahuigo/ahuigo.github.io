@@ -5,17 +5,48 @@ import re
 from subprocess import getoutput
 from datetime import datetime
 from collections import OrderedDict
+ROOT = '/p'
 
 errors = []
+
+log = print
 
 def basename(path):
     filename = os.path.split(path)[1]
     return os.path.splitext(filename)[0]
 
-def updateAtom(blogs, max_items = 20):
+def getPostPath(path):
+    print(f'{ROOT[1:]}/{path[5:-3]}.html')
+    return f'{ROOT[1:]}/{path[5:-3]}.html'
+
+def updateAtom(blogs, max_items = 10):
     from copy import copy
     from bs4 import BeautifulSoup as BS
-    bs = BS(open('atom.xml').read(), 'lxml-xml')
+    atomPath = f'{ROOT[1:]}/atom.xml'
+    if os.path.exists(atomPath):
+        s = open(atomPath).read()
+    else:
+        s = f'''
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>Ahuigo 的网络日志</title>
+<link href="https://ahuigo.github.io{ROOT}/atom.xml" rel="self" type="application/atom+xml"/>
+<updated>2018-08-17T13:46:49Z</updated>
+<subtitle>ahuigo's Blog</subtitle>
+<entry xml:base="https://ahuigo.github.io{ROOT}/">
+<title>Js Array </title>
+<link href="#/post/ria/js-array.md" rel="alternate" type="text/html"/>
+<author>
+<name>ahuigo</name>
+<uri>https://ahuigo.github.io{ROOT}/</uri>
+</author>
+<published>2018-08-16T17:22:32Z</published>
+<updated>2018-08-16T17:22:32Z</updated>
+<summary/>
+<content/>
+</entry></feed>
+        '''
+    bs = BS(s, 'lxml-xml')
     bs.updated.string = datetime.now().replace(microsecond=0).isoformat()+'Z'
     ori_entry = copy(bs.entry)
     ori_entry.content.string = ''
@@ -28,29 +59,33 @@ def updateAtom(blogs, max_items = 20):
 
     # update
     for path, blog in blogs.items():
-        href = '#/'+path
+        post_path = path[5:-3]+'.html'
+        href = '/'+post_path
         if bs.find('link', href=href):
             entry =  bs.find('link', href=href).parent
         else:
             entry = copy(ori_entry)
 
         entry.title.string =  blog['title']
-        entry.content.string =  blog['content']
+        entry.content.string =  ''
         entry.published.string =  blog['date']
         entry.updated.string =  datetime.now().replace(microsecond=0).isoformat()+'Z'
         if not bs.find('link', href=href):
             entry.link['href'] =  href
             bs.entry.insert_before(entry)
-    open('atom.xml', 'wb').write(bs.encode())
-
+    open(atomPath, 'wb').write(bs.encode())
 
 def breakout(errors):
     print('\n'.join(errors))
     quit(1)
 
-def parseBlog(path):
+current_date = datetime.now().strftime('%Y-%m-%d')
+def parseBlog(path, withContent=False):
     blog = {}
-    data = open(path).read()
+    if withContent:
+        data = open(path).read()
+    else:
+        data = open(path).read(200)
     if data.startswith('---\n'):
         pos = data.index('\n---\n', 4)
         blogStr = data[4:pos]
@@ -62,58 +97,78 @@ def parseBlog(path):
     if 'title' not in blog:
         blog['title'] = title[2:]
     if 'date' not in blog:
-        blog['date'] = ''; #datetime.now().strftime('%Y-%m-%d')
+        blog['date'] = ''; 
     blog['content'] = content
+    blog['updated'] = current_date
     return blog
 
-def publishBlog(blogs, delete_blogs):
-    return
-    #import shutil
-    #'post/git/git-hooks-rold.md'
-    for path in delete_blogs:
-        pageFileName = path[5:]
-        #os.unlink(f'blog/_posts/{pageFileName}')
-    for path,blog in blogs.items():
-        if blog['date']:
-            tpath = path[5:]
-            paths = tpath.split('/', 1)
-            if len(paths) > 1 and paths[1].startswith(paths[0]):
-                tpath = paths[1]
-            pageFilePath = f'blog/_posts/{blog["date"]}-{tpath.replace("/","-")}'
-            print(f'copy {path} {pageFilePath}')
-            meta = f'''---
-layout: page
+def publishBlog(path):
+    import html
+    # post/a/t.md
+    post_path = getPostPath(path)
+    post_dir = os.path.dirname(post_path)
+    if not os.path.exists(post_dir):
+        os.mkdir(post_dir)
+    print(f'copy {path} {post_path}')
+    blog = parseBlog(path, True)
+    meta = f'''---
 title: {blog['title']}
-category: blog
+date: {blog['date']}
+updated: {blog['updated']}
 ---
 '''
-            open(pageFilePath,'w').write(f'{meta}# {blog["title"]}\n'+blog['content'])
-            #shutil.copy2(path, pageFilePath)
+    md = f'{meta}# {blog["title"]}\n{blog["content"]}';
+    render_md = (open('page.html')
+            .read()
+            .replace(f'<pre id="markdown"></pre>', f'<pre id="markdown" v-pre>{html.escape(md)}</pre>')
+            .replace('{ROOT}', ROOT))
+    open(post_path,'w').write(render_md)
 
-cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/0\.md$" '
+def publishBlogs(blogs, delete_blogs):
+    '''
+    发布的博客列表
+    '''
+    for path in delete_blogs:
+        post_path = getPostPath(path)
+        if os.path.exists(post_path):
+            os.unlink(post_path)
+    for path,blog in blogs.items():
+        #if blog['date']:
+        publishBlog(path)
+
+if 'all' in sys.argv:
+    from glob import glob
+    for path in glob('post/**/*.md', recursive=True):
+        publishBlog(path)
+    quit('compile all')
+
+cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/index.md$" '
 output = getoutput(cmd).strip()
 if output:
-    indexFile = 'post/0.md'
+    indexFile = 'post/index.md'
     blogMd = open(indexFile)
-    blogs = OrderedDict()
+    index_blogs = OrderedDict()
     max_index_num = 0
     for line in blogMd:
         m = re.match(
-            '^- \[(?P<title>.+)\]\(#/(?P<path>.+md)\)', line)
+            '^- (?P<updated>\S+) \[(?P<title>.+)\]\(/(?P<path>.+md)\)', line)
         if m:
             max_index_num += 1
             if max_index_num > 50:
                 break;
-            title = m.group('title')
             path = m.group('path')
-            blogs[path] = {'title':title, 'path':path,}
+            index_blogs[path] = {
+                'title': m.group('title'),
+                'path':m.group('path'),
+                'updated': m.group('updated'),
+            }
 
     new_blogs = {}
     delete_blogs = []
     for line in output.split('\n'):
         status, path = line.split('\t')
         if status == 'D':
-            blogs.pop(path, None)
+            index_blogs.pop(path, None)
             delete_blogs.append(path)
             continue
 
@@ -123,28 +178,31 @@ if output:
         blog = parseBlog(path)
         if 'private' in blog:
             continue
-        new_blogs[path] = (blog)
-        if path not in blogs:
-            blogs[path] = blog
-            blogs.move_to_end(path, last=False)
-        else:
-            blogs[path] = blog
+        new_blogs[path] = blog
+        index_blogs[path] = blog
+        if path not in index_blogs:
+            index_blogs.move_to_end(path, last=False)
 
     if errors:
         breakout(errors)
 
-    if new_blogs:
-        #updateAtom(new_blogs)
-        publishBlog(new_blogs, delete_blogs)
-
     with open(indexFile, 'w') as fp:
         fp.write(f'# 近期日志\n')
-        for path, blog in blogs.items():
-            article = f'- [{blog["title"]}](#/{path}) '
+        for path, blog in index_blogs.items():
+            article = f'- {blog["updated"]} [{blog["title"]}](/{getPostPath(path)}) '
             print(article)
             fp.write(article+'\n')
-
     getoutput(f'git add {indexFile}')
+
+    if new_blogs:
+        updateAtom(new_blogs)
+        new_blogs[indexFile] = {
+            'title':'近期日志',
+            'date':current_date,
+            'updated':current_date,
+            'content': open(indexFile).read(),
+        }
+        publishBlogs(new_blogs, delete_blogs)
 
 if os.path.exists('no-commit'):
     print('no-commit')

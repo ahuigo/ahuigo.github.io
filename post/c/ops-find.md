@@ -46,6 +46,16 @@ case insensitive
 
 	find . -atime +7 type f -print
 
+## mtime
+最近1天修改
+
+    find /directory_path -mtime -1 -ls
+    find /<directory> -newermt "1 day ago" -ls
+
+最近120min:
+
+    -mmin -120
+
 # size
 按大小搜索： w字 k M G 寻找大于2k的文件:
 

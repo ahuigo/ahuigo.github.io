@@ -17,8 +17,8 @@ node_modules
 # em
 /img/em
 
-# nvim
-#tool/nvim/plugged
+# blog
+no-commit
 blog2
-b
+p
 a.py

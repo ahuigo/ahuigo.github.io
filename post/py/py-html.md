@@ -5,20 +5,15 @@ date: 2018-09-28
 # 用BeautifulSoup 处理 html/xml
 一般转义html 用一下几个方法
 
-via cgi
-
-    cgi.escape(u'<看>')
-    >>> cgi.escape(u'<看>')
-    '&lt;看&gt;'
-    >>> cgi.escape(u'<看>').encode('ascii', 'xmlcharrefreplace')
-    b'&lt;&#30475;&gt;'
-
 via html
 
-	import html
-	print(html.unescape('&pound;682m'))
+    html.escape(u'<看>')
+    >>> html.escape(u'<看>')
+    '&lt;看&gt;'
+    >>> html.escape(u'<看>').encode('ascii', 'xmlcharrefreplace')
+    b'&lt;&#30475;&gt;'
 
-via bs4, 自动转：
+via bs4, 只能输出：
 
 	BeautifulSoup("<p>&pound;682m</p>")
 	<html><body><p>£682m</p></body></html>

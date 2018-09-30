@@ -25,9 +25,10 @@ title: Vue 的模板系统
     //equal to
     <h1 v-text="user.name"></h1>
 
-### v-html:
+### v-html: literal
 
     <span v-html="rawHtml"></span>
+    <pre v-pre>rawHTML</pre>
 
 ### bind attribute
 

@@ -208,7 +208,7 @@ const mdConponent = {
     fetchMd() {
       var path = this.$route.path
       if (path === '/') {
-        path = 'post/0.md';
+        path = 'post/index.md';
       }else{
         path = path.slice(1);
       }
@@ -279,7 +279,7 @@ const app = new Vue({
       }
       return fetch(`https://api.github.com/repos/${this.config.user}/${this.config.repo}/contents/${file.path}`, {
       }).then(r => r.json()).then(data => {
-        const ignorePath = this.config.user === 'ahuigo' ? ['ai', 'atom', '0', '0.md'] : ['0'];
+        const ignorePath = this.config.user === 'ahuigo' ? ['ai', 'atom', 'index.md'] : [];
         let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type, show: true })).filter(
           (v) => !( ignorePath.includes(v.path.slice(this.path.length+1)))
         );

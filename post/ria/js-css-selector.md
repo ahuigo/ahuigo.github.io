@@ -6,6 +6,7 @@ chrome 原生的`$(selector)==document.querySelector() 、$$(selector)==jquery==
 
 	$(selector)
 		$('div span');//span 可能是儿子，孙子，孙孙子....
+		$('div .sec1');//.sec1可能是自己，儿子，孙子，孙孙子....
         $('table tr:not(:first)');
 		$('#mydiv')
 	$(selector, this)
@@ -48,7 +49,7 @@ checked, checkbox
 		$('span').parentsUntil('div').parent(); //父节点以div为止, 含div
 
 		$('span').closest('div') = $('span').parentsUntil('div').parent();
-            document.querySelector('span').closest('div')
+            document.querySelector('span').closest('div.cls1')
 
 后代:
 	子、

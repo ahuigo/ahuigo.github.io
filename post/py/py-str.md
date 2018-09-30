@@ -48,10 +48,14 @@ old
 
 > %r displays the "raw" data
 
-### f-str
+### f-string
     x=1; user={'name':'ahui'};
     f'x={x}, user["name"]={user["name"]}, id(user)={id(user)}'
         'x=1, user["name"]=ahui, id(user)=4500547264'
+
+    f'{{"str"}}'
+        {"str"}
+    '{0}'.format('{')
 
 ### string Template
 

@@ -3,6 +3,17 @@
 }
 .pure-menu-horizontal{
     white-space: normal;
+    background: #363636;
+    padding:1em;
+}
+.pure-menu-list>li{line-height: 2em;vertical-align: middle;}
+.pure-menu-list>li>a{
+    vertical-align: bottom;
+    color: #fff;
+    font-family: "Muli",avenir,"helvetica neue",helvetica,ubuntu,roboto,noto,"segoe ui",arial,sans-serif;
+    color:#fff;
+    /* vertical-align: middle; */
+    /* vertical-align: baseline; */
 }
 .clock {
     width: 64px;
@@ -27,12 +38,13 @@
     padding-right: calc(.625em - 1px);
     padding-top: calc(.375em - 1px);
     position: relative;
-    vertical-align: top;
+    /* vertical-align: top; */
 }
 .button.is-primary {
     background-color: #00d1b2;
     border-color: transparent;
     color: #fff;
+    vertical-align: middle;
 }
 h1,h2,h3,h4,h5,h6 {
 	text-rendering:optimizelegibility;
