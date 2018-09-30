@@ -5,7 +5,7 @@ const ROOT = '/b'
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 function searchBlog(kword){
-  location.href="https://google.com?q="+encodeURIComponent(`${kword} site:${location.host}`)
+  location.href="https://google.com/search?q="+encodeURIComponent(`${kword} site:${location.host}`)
 }
 Vue.component('tree-folder', {
   template: '#tree-folder',
