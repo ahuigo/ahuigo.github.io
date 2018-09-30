@@ -42,6 +42,7 @@ def updateAtom(blogs, max_items = 10):
 <link href="/b/ria/vue-ins" rel="alternate" type="text/html"/>
 <updated>2018-09-30T20:29:15Z</updated>
 <summary/>
+<published/>
 <content/>
 </entry></feed>
         '''

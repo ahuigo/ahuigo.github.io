@@ -570,13 +570,16 @@ Create an archive of files from a named tree.
 
     # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
 
+## push all remote
 
+## push buffer
 > `git config http.postBuffer 5242880000` 设置push 时的大小限制, 否则会报 The remote end hung up unexpectedly。 还有一个原因是服务端限制
 
 	http {
     	# ...
 		client_max_body_size 1G;
 
+## push branch
 push 时，remote 必须存在相应的branch, 比如master. 否则会报: No refs in common and none specified; doing nothing.
 
 此时应该指定此branch:
@@ -595,6 +598,19 @@ untrack
 
 	git branch --unset-upstream
 
+## default branch
+Push all branches
+
+    git config --global push.default matching
+
+Push only the current branch
+
+    git config --global push.default simple
+
+push all branch
+
+    git push --all
+
 ## DNS SPOOFING DETECTED
 WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!
 Remove host:
@@ -608,15 +624,6 @@ Ignore HostKey
 		HostName github.com
 		User git
 		StrictHostKeyChecking no
-
-## default branch
-Push all branches
-
-	git config --global push.default matching
-
-Push only the current branch
-
-	git config --global push.default simple
 
 ## del remote branch
 
