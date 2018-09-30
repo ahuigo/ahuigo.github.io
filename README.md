@@ -1,7 +1,7 @@
 # 纯静态博客
 本博客是完全纯静态blog, 核心js 代码只有100 多行。 
 
-- Fork 地址: [https://github.com/ahuigo/note-blog](https://github.com/ahuigo/note-blog)
+- Fork 地址: [https://github.com/ahuigo/a](https://github.com/ahuigo/a)
 - 示例地址：[https://ahuigo.github.io/a#/README.md](https://ahuigo.github.io/a#/README.md)
 
 使用方法：
