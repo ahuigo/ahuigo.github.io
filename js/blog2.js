@@ -11,7 +11,7 @@ function loadComments(){
     verify: false,// # Verification code
     appId:  'bmveuJdEEaT5OWICGyCMpaVc-gzGzoHsz',
     appKey:  'VhaQW20n3QnLFXnmViBld9lw',
-    placeholder: 'Just go go1',
+    placeholder: 'Just go go',
     avatar: 'mm',
     meta: 'nick,mail,link'.split(','),
     pageSize:10,
@@ -76,9 +76,7 @@ const mdConponent = {
         return hljs.highlightBlock(e, '    ');
       });
       this.$root.$$('#content a').forEach((v, k, arr) => {
-        if (v.getAttribute('href').startsWith('/p/')) {
-          v.href = v.getAttribute('href').replace(/^\/p/, `${ROOT}/`) + '.html'
-        }
+        v.href = v.getAttribute('href').replace(/^\/p\//, `${ROOT}/`);
       })
       this.$root.$$('#content img').forEach((v, k, arr) => {
         if (v.getAttribute('src').startsWith('/img/')) {

@@ -99,7 +99,7 @@
             <li class="pure-menu-item" v-for="(file,index) in nodes" :key="file.path">
                 <a v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name}}
                 </a>
-                <a v-else :type="file.type" class="file" :href="('/'+file.path).replace(/^\/post\b/, '{ROOT}').slice(0,-3)+'.html'">{{file.name.slice(0,-3)}} </a>
+                <a v-else :type="file.type" class="file" :href="('/'+file.path).replace(/^\/post\b/, '{ROOT}').slice(0,-3)">{{file.name.slice(0,-3)}} </a>
                 <tree-folder v-if="file.nodes" :show="file.show" :nodes="file.nodes"></tree-folder>
             </li>
         </ul>

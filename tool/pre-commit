@@ -6,6 +6,7 @@ from subprocess import getoutput
 from datetime import datetime
 from collections import OrderedDict
 ROOT = '/b'
+PAGE_TPL = open('page.html').read()
 
 errors = []
 
@@ -19,7 +20,8 @@ def getPostPath(path):
     return f'{ROOT[1:]}/{path[5:-3]}.html'
 
 def getPostUrl(path):
-    return f'/p/{path[5:-3]}'
+    #return f'/p/{path[5:-3]}'
+    return f'{ROOT}/{path[5:-3]}'
 
 def updateAtom(blogs, max_items = 10):
     from copy import copy
@@ -119,7 +121,7 @@ updated: {blog['updated']}
 ---
 '''
     md = f'{meta}# {blog["title"]}\n{blog["content"]}';
-    render_md = re.sub(r'(?<=\n)\s+', '',open('page.html') .read())
+    render_md = re.sub(r'(?<=\n)\s+', '', PAGE_TPL)
     render_md = (render_md
             .replace(f'<pre id="markdown"></pre>', f'<pre id="markdown" v-pre>{html.escape(md)}</pre>')
             .replace('{ROOT}', ROOT))
@@ -152,12 +154,12 @@ if output:
     max_index_num = 0
     for line in blogMd:
         m = re.match(
-            '^- (?P<updated>\S+) \[(?P<title>.+)\]\((?P<path>/p/.+)\)', line)
+            '^- (?P<updated>\S+) \[(?P<title>.+)\]\((?P<path>/.+)\)', line)
         if m:
             max_index_num += 1
             if max_index_num > 50:
                 break;
-            path = m.group('path').replace('/p/','post/', 1)+'.md'
+            path = m.group('path').replace(f'{ROOT}/','post/', 1)+'.md'
             index_blogs[path] = {
                 'title': m.group('title'),
                 'path':path,
@@ -202,7 +204,6 @@ if output:
             'title':'近期日志',
             'date':current_date,
             'updated':current_date,
-            'content': open(indexFile).read(),
         }
         publishBlogs(new_blogs, delete_blogs)
 

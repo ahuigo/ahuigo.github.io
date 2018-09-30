@@ -153,11 +153,11 @@ change current workspace:  support abspath only
 
 	path = Path('/etc')
 	os.chdir(path)
-	os.chroot(path)
 
 	os.getcwd()
 	os.path.abspath('.')
 	os.path.abspath(amodule.__file__)
+	os.chroot(path)
 
 current file's dir:
 

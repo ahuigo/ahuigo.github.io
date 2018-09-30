@@ -167,8 +167,6 @@ see ![](https://img-blog.csdn.net/20170919221428421?watermark/2/text/aHR0cDovL2J
         this.$nextTick(function () {})
     },
 
-
-
 ### created hook
 发生在实例创建后:
 
@@ -208,3 +206,7 @@ Vue 异步执行 DOM 更新。只要观察到数据变化，Vue 将开启一个�
         done()
       })
     })
+
+# Notice
+1. Render must be setted within vue instance(vue render will take over all render work)
+https://codepen.io/ahuigo/pen/dqPgJQ
