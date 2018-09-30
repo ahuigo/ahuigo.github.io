@@ -37,15 +37,10 @@ def updateAtom(blogs, max_items = 10):
 <link href="https://ahuigo.github.io{ROOT}/atom.xml" rel="self" type="application/atom+xml"/>
 <updated>2018-08-17T13:46:49Z</updated>
 <subtitle>ahuigo's Blog</subtitle>
-<entry xml:base="https://ahuigo.github.io{ROOT}/">
-<title>Js Array </title>
-<link href="#/post/ria/js-array.md" rel="alternate" type="text/html"/>
-<author>
-<name>ahuigo</name>
-<uri>https://ahuigo.github.io{ROOT}/</uri>
-</author>
-<published>2018-08-16T17:22:32Z</published>
-<updated>2018-08-16T17:22:32Z</updated>
+<entry xml:base="https://ahuigo.github.io">
+<title>vue instance</title>
+<link href="/b/ria/vue-ins" rel="alternate" type="text/html"/>
+<updated>2018-09-30T20:29:15Z</updated>
 <summary/>
 <content/>
 </entry></feed>
