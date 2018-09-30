@@ -119,8 +119,8 @@ updated: {blog['updated']}
 ---
 '''
     md = f'{meta}# {blog["title"]}\n{blog["content"]}';
-    render_md = (open('page.html')
-            .read()
+    render_md = re.sub(r'(?<=\n)\s+', '',open('page.html') .read())
+    render_md = (render_md
             .replace(f'<pre id="markdown"></pre>', f'<pre id="markdown" v-pre>{html.escape(md)}</pre>')
             .replace('{ROOT}', ROOT))
     open(post_path,'w').write(render_md)

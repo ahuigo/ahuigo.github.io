@@ -79,9 +79,11 @@ p{margin: 0.6em 0;}
     cursor: pointer;
 }
 .twitter-icon{
+    background: url(/a/img/ico/twitter.png);
+    background-size: cover;
 }
 .weibo-icon{
-    background: url(http://img.t.sinajs.cn/t4/appstyle/widget/images/shareButton/share_icon.png?id=1375775002754);
+    background: url(/a/img/ico/weibo.png);
     background-size: cover;
 }
 .hr{

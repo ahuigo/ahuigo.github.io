@@ -325,7 +325,8 @@ float+clear 多麻烦，我们用inline-block:
 2. 你需要设置每一列的宽度
 2. 如果HTML源代码中元素之间有空格，那么列与列之间会产生空隙
 
-e.g. http://zh.learnlayout.com/inline-block-layout.html
+e.g.1. https://codepen.io/ahuigo/pen/ZqYVmv
+e.g.2. http://zh.learnlayout.com/inline-block-layout.html
 
     nav {
         display: inline-block;
@@ -337,6 +338,7 @@ e.g. http://zh.learnlayout.com/inline-block-layout.html
         vertical-align: top;
         width: 75%;
     }
+
 
 example
 

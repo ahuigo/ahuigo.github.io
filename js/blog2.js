@@ -4,6 +4,20 @@
 const ROOT = '/b'
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
+function loadComments(){
+  new Valine({
+    el: '#comments' ,
+    notify: false,// # mail notifier 
+    verify: false,// # Verification code
+    appId:  'bmveuJdEEaT5OWICGyCMpaVc-gzGzoHsz',
+    appKey:  'VhaQW20n3QnLFXnmViBld9lw',
+    placeholder: 'Just go go1',
+    avatar: 'mm',
+    meta: 'nick,mail,link'.split(','),
+    pageSize:10,
+    visitor: false,
+  });
+}
 function searchBlog(kword){
   location.href="https://google.com/search?q="+encodeURIComponent(`${kword} site:${location.host}`)
 }
@@ -49,6 +63,7 @@ const mdConponent = {
     console.log('mounted: renderMd')
     this.renderMd()
     this.$nextTick(function () { })
+    loadComments()
     $('#markdown').remove()
   },
   updated() {
