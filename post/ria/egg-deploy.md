@@ -60,3 +60,17 @@
     访问控制台 控制台地址：https://node.console.aliyun.com
 
 
+# 热部署&负载均衡(LB)
+- 怎么实现热部署:
+https://cnodejs.org/topic/59c4e33fb53b601512be4370
+
+热部署的主要方法有:
+1. LB 分流
+    1. via nginx upstream(单机IB): 至少双实例，一个停, 一个跑
+        https://juejin.im/entry/5aed72636fb9a07ab508c918 
+2. delete require.cache[path] ： 这个会造成内存泄露不能用。
+    https://zhuanlan.zhihu.com/p/34702356
+3. 强制 reload worker 会中断流量
+
+## LB:load balance book
+http://i5ting.github.io/stuq-koa/koa-deployment/slb.html

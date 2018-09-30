@@ -1,4 +1,5 @@
 # 近期日志
+- 2018-09-30 [build](/b/ria/egg-deploy) 
 - 2018-09-30 [vue instance](/b/ria/vue-ins) 
 - 2018-09-30 [Python 文件处理](/b/py/py-file) 
 - 2018-09-30 [icon](/b/ui/ui-icon) 
