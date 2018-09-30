@@ -48,7 +48,7 @@ function gcap(){
     fi
     if git remote | grep '\w';then
         if git push; then
-            subdirs=(blog vue)
+            subdirs=(b vue)
             for subdir in "${subdirs[@]}"; do
                 test -d $subdir && cd $subdir;
                 if test $? = 0;then

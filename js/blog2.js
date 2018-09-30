@@ -1,7 +1,7 @@
 /**
- * blog.js for note-blog
+ * blog render
  */
-const ROOT = '/p'
+const ROOT = '/b'
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 function searchBlog(kword){
