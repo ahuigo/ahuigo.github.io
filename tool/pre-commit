@@ -16,8 +16,10 @@ def basename(path):
     return os.path.splitext(filename)[0]
 
 def getPostPath(path):
-    print(f'{ROOT[1:]}/{path[5:-3]}.html')
     return f'{ROOT[1:]}/{path[5:-3]}.html'
+
+def getPostUrl(path):
+    return f'/p/{path[5:-3]}'
 
 def updateAtom(blogs, max_items = 10):
     from copy import copy
@@ -59,7 +61,7 @@ def updateAtom(blogs, max_items = 10):
 
     # update
     for path, blog in blogs.items():
-        href = '/'+path[5:-3]
+        href = getPostUrl(path)
         if bs.find('link', href=href):
             entry =  bs.find('link', href=href).parent
         else:
@@ -155,13 +157,15 @@ if output:
             max_index_num += 1
             if max_index_num > 50:
                 break;
-            path = m.group('path')+'.md'
+            path = m.group('path').replace('/p/',ROOT+'/', 1)+'.md'
             index_blogs[path] = {
                 'title': m.group('title'),
                 'path':path,
                 'updated': m.group('updated'),
             }
 
+    print(index_blogs)
+    quit()
     new_blogs = {}
     delete_blogs = []
     for line in output.split('\n'):
@@ -188,7 +192,7 @@ if output:
     with open(indexFile, 'w') as fp:
         fp.write(f'# 近期日志\n')
         for path, blog in index_blogs.items():
-            article = f'- {blog["updated"]} [{blog["title"]}](/{getPostPath(path)[:-5]}) '
+            article = f'- {blog["updated"]} [{blog["title"]}]({getPostUrl(path)}) '
             print(article)
             fp.write(article+'\n')
     getoutput(f'git add {indexFile}')

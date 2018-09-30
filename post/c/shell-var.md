@@ -1,8 +1,8 @@
 ---
-title: shell 的数据类型
+title: Shell 变量之数据类型
 date: 2018-09-27
 ---
-# shell 的数据类型
+# Shell 变量之数据类型
 ## export
 
 	unset PYTHONPATH
