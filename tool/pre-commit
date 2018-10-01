@@ -5,11 +5,11 @@ import re
 from subprocess import getoutput
 from datetime import datetime
 from collections import OrderedDict
+from glob import glob
+
 ROOT = '/b'
 PAGE_TPL = open('page.html').read()
-
 errors = []
-
 log = print
 
 def basename(path):
@@ -79,7 +79,7 @@ def breakout(errors):
 
 current_date = datetime.now().strftime('%Y-%m-%d')
 def parseBlog(path, withContent=False):
-    blog = {}
+    blog = {'path': path}
     if withContent:
         data = open(path).read()
     else:
@@ -107,7 +107,7 @@ def publishBlog(path):
     post_dir = os.path.dirname(post_path)
     if not os.path.exists(post_dir):
         os.mkdir(post_dir)
-    print(f'copy {path} {post_path}')
+    print(f'Generate: {path} -> {post_path}')
     blog = parseBlog(path, True)
     meta = f'''---
 title: {blog['title']}
@@ -116,59 +116,85 @@ updated: {blog['updated']}
 ---
 '''
     md = f'{meta}# {blog["title"]}\n{blog["content"]}';
-    render_md = re.sub(r'(?<=\n)\s+', '', PAGE_TPL)
-    render_md = (render_md
+    render_md = (re.sub(r'(?<=\n)\s+', '', PAGE_TPL)
+            .replace('{ROOT}', ROOT)
             .replace(f'<pre id="markdown"></pre>', f'<pre id="markdown" v-pre>{html.escape(md)}</pre>')
-            .replace('{ROOT}', ROOT))
+    )
+
     open(post_path,'w').write(render_md)
 
-def publishBlogs(blogs, delete_blogs):
+def publishBlogs(new_files, delete_files):
     '''
     发布的博客列表
     '''
-    for path in delete_blogs:
+    for path in delete_files:
         post_path = getPostPath(path)
         if os.path.exists(post_path):
             os.unlink(post_path)
-    for path,blog in blogs.items():
+    for path in new_files:
         #if blog['date']:
         publishBlog(path)
 
-if 'all' in sys.argv:
-    from glob import glob
-    for path in glob('post/**/*.md', recursive=True):
-        publishBlog(path)
-    quit('compile all')
+def genIndexPages(index_blogs):
+    files_num = len(index_blogs)
+    SIZE = 40
+    pager = '\n'
+    page_files = []
+    for i in range(0, files_num, SIZE):
+        n = i//40
+        index_path = 'post/index.md' if n==0 else f'post/p/p{n}.md'
+        post_url = getPostUrl(index_path)
+        pager += f' [p{n}]({post_url})'
+        page_files.append(index_path)
 
-cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/index.md$" '
-output = getoutput(cmd).strip()
-if output:
-    indexFile = 'post/index.md'
-    blogMd = open(indexFile)
+    from itertools import islice
+    it_blogs = iter(index_blogs)
+    for n,page_file in enumerate(page_files):
+        with open(page_file, 'w') as fp:
+            fp.write(f'# 日志\n')
+            for path in islice(it_blogs, SIZE):
+                blog = index_blogs[path]
+                article = f'- {blog["updated"]} [{blog["title"]}]({getPostUrl(path)}) '
+                fp.write(article+'\n')
+            fp.write(pager)
+    #getoutput(f'git add {indexFile}')
+    return page_files
+        
+
+def getIndexBlogs():
     index_blogs = OrderedDict()
-    max_index_num = 0
-    for line in blogMd:
-        m = re.match(
-            '^- (?P<updated>\S+) \[(?P<title>.+)\]\((?P<path>/.+)\)', line)
-        if m:
-            max_index_num += 1
-            if max_index_num > 50:
-                break;
-            path = m.group('path').replace(f'{ROOT}/','post/', 1)+'.md'
-            index_blogs[path] = {
-                'title': m.group('title'),
-                'path':path,
-                'updated': m.group('updated'),
-            }
+    for index_path in ['post/index.md']+glob('post/p/*.md'):
+        for line in open(index_path):
+            m = re.match('^- (?P<updated>\S+) \[(?P<title>.+)\]\((?P<path>/.+)\)', line)
+            if m and m.group('path').startswith(f'{ROOT}/'):
+                path = m.group('path').replace(f'{ROOT}/','post/', 1)+'.md'
+                index_blogs[path] = {
+                    'title': m.group('title'),
+                    'path':path,
+                    'updated': m.group('updated'),
+                }
+    return index_blogs
 
+if 'all' in sys.argv:
+    modified_linelist = []
+    for path in glob('post/**/*.md', recursive=True):
+        if not path.startswith('post/p/'):
+            modified_linelist.append(f'A\t{path}')
+else:
+    cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/(index|p/.+).md$" '
+    modified_linelist = getoutput(cmd).strip().split('\n')
+
+#breakout(modified_linelist)
+if modified_linelist:
+    index_blogs = getIndexBlogs()
     new_blogs = {}
-    delete_blogs = []
+    delete_files = []
     old_index_path_list = list(index_blogs.keys())
-    for line in output.split('\n'):
+    for line in modified_linelist:
         status, path = line.split('\t')
         if status == 'D':
             index_blogs.pop(path, None)
-            delete_blogs.append(path)
+            delete_files.append(path)
             continue
 
         if not os.stat(path).st_size:
@@ -185,22 +211,14 @@ if output:
     if errors:
         breakout(errors)
 
-    with open(indexFile, 'w') as fp:
-        fp.write(f'# 近期日志\n')
-        for path, blog in index_blogs.items():
-            article = f'- {blog["updated"]} [{blog["title"]}]({getPostUrl(path)}) '
-            print(article)
-            fp.write(article+'\n')
-    getoutput(f'git add {indexFile}')
-
     if new_blogs:
-        updateAtom(new_blogs)
-        new_blogs[indexFile] = {
-            'title':'近期日志',
-            'date':current_date,
-            'updated':current_date,
-        }
-        publishBlogs(new_blogs, delete_blogs)
+        from itertools import islice
+        log('updateAtom')
+        updateAtom({k:new_blogs[k] for k in islice(new_blogs, 10)})
+        log('genIndexPages')
+        new_files = genIndexPages(index_blogs) + list(new_blogs.keys()) 
+        log('publishBlogs')
+        publishBlogs(new_files, delete_files)
 
 if os.path.exists('no-commit'):
     print('no-commit')

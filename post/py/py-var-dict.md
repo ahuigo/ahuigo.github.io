@@ -256,6 +256,15 @@ or with collections.Counter:
     >>> k, v = 1,3
     >>> k, v = (1,3)
 
+### chunk dict
+
+    from itertools import islice
+
+    def chunks(data, SIZE=10000):
+        it = iter(data)
+        for i in range(0, len(data), SIZE):
+            yield {k:data[k] for k in islice(it, SIZE)}
+
 # loop modifify inplace 
 ## update inplace
 

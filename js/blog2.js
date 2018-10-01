@@ -2,6 +2,7 @@
  * blog render
  */
 const ROOT = '/b'
+const IMG_URI = '/a'
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 function loadComments(){
@@ -80,7 +81,7 @@ const mdConponent = {
       })
       this.$root.$$('#content img').forEach((v, k, arr) => {
         if (v.getAttribute('src').startsWith('/img/')) {
-          v.src = v.getAttribute('src').replace(/^\/img/, ROOT+'img/')
+          v.src = v.getAttribute('src').replace(/^\/img/, `${IMG_URI}/img/`)
         }
       })
       const toc = document.querySelector('#toc');

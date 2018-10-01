@@ -1,4 +1,4 @@
-# build
+# egg build
     $ npm install --production
 
 # deploy
