@@ -1,6 +1,7 @@
 ---
-title: 经典排序算法实现
+title: 经典排序算法的实现
 date: 2013-09-26
+priority:
 ---
 # 经典排序算法实现
 常规的几种排序算法, 参考[维基sort](http://zh.wikipedia.org/wiki/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95)

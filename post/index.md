@@ -1,4 +1,6 @@
 # 日志
+- 2018-10-01 [经典排序算法的实现](/b/algorithm/algo-sort) 
+- 2018-10-01 [Bellard 大神的项目 -- jslinux](/b/news/geek-proj) 
 - 2018-10-01 [Python 的math 语法](/b/py/py-math) 
 - 2018-10-01 [vim 使用之变量](/b/vim/vim-var) 
 - 2018-10-01 [vim 笔记](/b/vim/vim-notes) 
@@ -37,7 +39,5 @@
 - 2018-10-01 [Trie 树](/b/algorithm/algorithm-trie) 
 - 2018-10-01 [trie-filter](/b/algorithm/algorithm-trie-filter) 
 - 2018-10-01 [数据结构之树](/b/algorithm/algorithm-tree) 
-- 2018-10-01 [如何避免深度递归](/b/algorithm/algorithm-self-call) 
-- 2018-10-01 [Pigeonhole principle, 鸽巢（抽屉）原理](/b/algorithm/algorithm-pigeonhole_principle) 
 
  p0 [p1](/b/p/p1) [p2](/b/p/p2) [p3](/b/p/p3) [p4](/b/p/p4) [p5](/b/p/p5) [p6](/b/p/p6) [p7](/b/p/p7) [p8](/b/p/p8) [p9](/b/p/p9) [p10](/b/p/p10) [p11](/b/p/p11) [p12](/b/p/p12) [p13](/b/p/p13) [p14](/b/p/p14) [p15](/b/p/p15) [p16](/b/p/p16)

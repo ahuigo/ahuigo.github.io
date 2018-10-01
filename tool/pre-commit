@@ -213,7 +213,7 @@ if modified_linelist:
             continue
         new_blogs[path] = blog
         index_blogs[path] = blog
-        if path not in old_index_path_list:
+        if 'priority' in blog or path not in old_index_path_list:
             index_blogs.move_to_end(path, last=False)
 
     if errors:

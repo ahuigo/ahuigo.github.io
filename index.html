@@ -86,7 +86,8 @@
                 <div id="toc"></div>
             </div>
         </div>
-        <button class="button is-primary" onclick="window.scroll(0, 10)" id="top">Top</button>
+        <button class="button is-primary" onclick="window.scroll(0, 10)" id="up">Up</button>
+        <button class="button is-primary" onclick="window.scrollTo(0,document.body.scrollHeight)" id="down">Down</button>
     </div>
     <template id="tree-folder">
         <ul class="pure-menu-list" v-if="show">

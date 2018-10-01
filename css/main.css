@@ -63,8 +63,14 @@ p{margin: 0.6em 0;}
     position: relative;
     padding: 1.5rem;
 }
-#top{
-    position: fixed;z-index: 2;display: block;bottom: 0;right: 0;
+#up,#down,#top{
+    position: fixed;z-index: 2;display: block;right:0;
+}
+#up,#top{
+    bottom: 0;
+}
+#down{
+    top:0;
 }
 *{
     word-wrap:break-word;
