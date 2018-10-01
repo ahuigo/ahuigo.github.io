@@ -183,6 +183,7 @@ if 'all' in sys.argv:
 else:
     cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/(index|p/.+).md$" '
     modified_linelist = getoutput(cmd).strip().split('\n')
+    modified_linelist = (filter(lambda x:x, modified_linelist))
 
 #breakout(modified_linelist)
 if modified_linelist:
@@ -190,6 +191,7 @@ if modified_linelist:
     new_blogs = {}
     delete_files = []
     old_index_path_list = list(index_blogs.keys())
+    print(modified_linelist)
     for line in modified_linelist:
         status, path = line.split('\t')
         if status == 'D':
