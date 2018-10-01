@@ -1,11 +1,6 @@
 ---
-layout: page
-title:
-category: blog
-description:
+title: Python 的math 语法
 ---
-# Preface
-
 # number
 
     0x61
@@ -16,6 +11,7 @@ description:
 
     2**5	math.pow(2,5)
     5//2	floor(5,2)
+    -(-5//2) ceil(5,2)
 
 ## number type
 

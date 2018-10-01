@@ -86,7 +86,7 @@
                 <div id="toc"></div>
                 <div id="search" class="pure-form">
                     <fieldset>
-                    <input id="search_q">
+                    <input id="search_q" @keyup.enter="searchBlog($('#search_q').value)">
                     <button @click="searchBlog($('#search_q').value)" class="pure-button pure-button-primary">搜索</button>
                     </fieldset>
                 </div>

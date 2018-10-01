@@ -91,12 +91,13 @@ def parseBlog(path, withContent=False):
         for line in blogStr.split('\n'):
             k, v = line.split(':', 1)
             blog[k] = v.strip()
-    title, content = data.split('\n', 1)
     if 'title' not in blog:
-        blog['title'] = title[2:]
+        blog['title'] = data.split('\n', 1)[0][2:].strip()
+    if not blog['title']:
+        quit(f'{path} has no title')
     if 'date' not in blog:
         blog['date'] = ''; 
-    blog['content'] = content
+    blog['content'] = data
     blog['updated'] = current_date
     return blog
 
@@ -107,7 +108,8 @@ def publishBlog(path):
     post_dir = os.path.dirname(post_path)
     if not os.path.exists(post_dir):
         os.mkdir(post_dir)
-    print(f'Generate: {path} -> {post_path}')
+    if not path.startswith('post/p/'):
+        log(f'Generate: {path} -> {post_path}')
     blog = parseBlog(path, True)
     meta = f'''---
 title: {blog['title']}
@@ -115,7 +117,7 @@ date: {blog['date']}
 updated: {blog['updated']}
 ---
 '''
-    md = f'{meta}# {blog["title"]}\n{blog["content"]}';
+    md = f'{meta}{blog["content"]}';
     render_md = (re.sub(r'(?<=\n)\s+', '', PAGE_TPL)
             .replace('{ROOT}', ROOT)
             .replace(f'<pre id="markdown"></pre>', f'<pre id="markdown" v-pre>{html.escape(md)}</pre>')
@@ -135,28 +137,33 @@ def publishBlogs(new_files, delete_files):
         #if blog['date']:
         publishBlog(path)
 
+def genPager(page_urls, pos):
+    pager = '\n'
+    for i,page_url in enumerate(page_urls):
+        pager += f' [p{pos}]({page_url})' if i!=pos else f' p{pos}'
+    return pager
+
 def genIndexPages(index_blogs):
     files_num = len(index_blogs)
     SIZE = 40
-    pager = '\n'
+    page_urls = []
     page_files = []
     for i in range(0, files_num, SIZE):
         n = i//40
-        index_path = 'post/index.md' if n==0 else f'post/p/p{n}.md'
-        post_url = getPostUrl(index_path)
-        pager += f' [p{n}]({post_url})'
-        page_files.append(index_path)
+        page_file = 'post/index.md' if n==0 else f'post/p/p{n}.md'
+        page_files.append(page_file)
+        page_urls.append(getPostUrl(page_file))
 
     from itertools import islice
     it_blogs = iter(index_blogs)
-    for n,page_file in enumerate(page_files):
+    for pos,page_file in enumerate(page_files):
         with open(page_file, 'w') as fp:
             fp.write(f'# 日志\n')
             for path in islice(it_blogs, SIZE):
                 blog = index_blogs[path]
                 article = f'- {blog["updated"]} [{blog["title"]}]({getPostUrl(path)}) '
                 fp.write(article+'\n')
-            fp.write(pager)
+            fp.write(genPager(page_urls, pos))
     #getoutput(f'git add {indexFile}')
     return page_files
         
@@ -191,7 +198,6 @@ if modified_linelist:
     new_blogs = {}
     delete_files = []
     old_index_path_list = list(index_blogs.keys())
-    print(modified_linelist)
     for line in modified_linelist:
         status, path = line.split('\t')
         if status == 'D':

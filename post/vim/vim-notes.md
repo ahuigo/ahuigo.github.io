@@ -1,12 +1,7 @@
 ---
-layout: page
-title:	Vim Notes
-category: blog
-description:
+title: vim 笔记
 ---
-
-# 前言
-
+# vim 笔记
 本文是vim 相关的总结，不会有太多的注释 —— 只是方便回顾.
 
 > 使用vim 时建议将key repeat调到最快, 把key delay调到最小

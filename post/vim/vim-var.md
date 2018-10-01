@@ -1,10 +1,10 @@
 ---
 layout: page
-title:
+title: vim 使用之变量
 category: blog
 description:
 ---
-# Preface
+# vim 使用之变量
 本文会系统描述vim 的语法，如果想了解具体选项和操作技巧，参考我的vim 笔记
 
 主要参考 [book]:

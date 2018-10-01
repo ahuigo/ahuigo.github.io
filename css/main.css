@@ -151,6 +151,7 @@ ol,ul{
 
 .middle {
     flex: 8;
+    padding:2em;
 }
 
 .right {
