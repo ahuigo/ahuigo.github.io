@@ -140,7 +140,7 @@ def publishBlogs(new_files, delete_files):
 def genPager(page_urls, pos):
     pager = '\n'
     for i,page_url in enumerate(page_urls):
-        pager += f' [p{pos}]({page_url})' if i!=pos else f' p{pos}'
+        pager += f' [p{i}]({page_url})' if i!=pos else f' p{i}'
     return pager
 
 def genIndexPages(index_blogs):
