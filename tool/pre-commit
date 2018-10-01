@@ -164,7 +164,7 @@ def genIndexPages(index_blogs):
                 article = f'- {blog["updated"]} [{blog["title"]}]({getPostUrl(path)}) '
                 fp.write(article+'\n')
             fp.write(genPager(page_urls, pos))
-    #getoutput(f'git add {indexFile}')
+    getoutput(f'git add post/index.md')
     return page_files
         
 
