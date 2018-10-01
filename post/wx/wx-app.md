@@ -1,6 +1,4 @@
-# shortcut
-format:
-    shift+alt+f
+# Wx app
 
 # Page.js
     page({

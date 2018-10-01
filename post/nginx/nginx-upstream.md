@@ -1,4 +1,4 @@
-### upstream, 负载均衡
+# nginx upstream, 负载均衡
 定义一组服务器， UNIX/TCP 可以 混合使用
 
 	语法:	upstream name { ... }
@@ -48,7 +48,7 @@ upstream 每个设备的状态:
 	fail_timeout:max_fails 次失败后，暂停的时间。
 	backup： 其它所有的非backup机器down或者忙的时候，请求backup机器。所以这台机器压力会最轻。
 
-#### memcache upstream
+## memcache upstream
 
 	upstream memcached_backend {
 		server 127.0.0.1:11211;
@@ -63,7 +63,7 @@ upstream 每个设备的状态:
 		}
 	}
 
-#### http keepalive(proxy_pass)
+## http keepalive(proxy_pass)
 启用对后端机器HTTP 长连接支持
 只有 http1.1 才支持 keepalive, 所以要传一个版本1.1 请求头
 
@@ -79,7 +79,7 @@ upstream 每个设备的状态:
 		}
 	}
 
-#### fastcgi keepalive(fastcgi_pass)
+### fastcgi keepalive(fastcgi_pass)
 启用fastcgi 长连接支持 增加 `fastcgi_keep_conn on`, 见nginx-fastcgi.md
 
 	upstream fastcgi_backend {
@@ -95,8 +95,7 @@ upstream 每个设备的状态:
 		}
 	}
 
-
-### fastcgi_next_upstream
+## fastcgi_next_upstream
 
 	Syntax:	fastcgi_next_upstream error | timeout | invalid_header | http_500 | http_503 | http_403 | http_404 | off ...;
 	Default:
@@ -104,11 +103,3 @@ upstream 每个设备的状态:
 	Context:	http, server, location
 
 Specifies in which cases a request should be passed to the next server(upstream)
-
-### timeout
-Limits the time allowed to pass a request to the next server. The 0 value turns off this limitation.
-
-	Syntax:	fastcgi_next_upstream_timeout time;
-	Default:
-	fastcgi_next_upstream_timeout 0;
-	Context:	http, server, location

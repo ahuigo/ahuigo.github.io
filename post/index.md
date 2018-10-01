@@ -3,8 +3,8 @@
 - 2018-10-01 [vim 使用之变量](/b/vim/vim-var) 
 - 2018-10-01 [vim 笔记](/b/vim/vim-notes) 
 - 2018-10-01 [x5 调试](/b/wx/wx-debug) 
-- 2018-10-01 [shortcut](/b/wx/wx-app) 
-- 2018-10-01 [smb](/b/win/win-server) 
+- 2018-10-01 [Wx app](/b/wx/wx-app) 
+- 2018-10-01 [smb server](/b/win/win-server) 
 - 2018-10-01 [BAT](/b/win/win-bat) 
 - 2018-10-01 [babun](/b/win/win-babun) 
 - 2018-10-01 [Vsc for python](/b/vsc/vsc-python) 
@@ -40,4 +40,4 @@
 - 2018-10-01 [如何避免深度递归](/b/algorithm/algorithm-self-call) 
 - 2018-10-01 [Pigeonhole principle, 鸽巢（抽屉）原理](/b/algorithm/algorithm-pigeonhole_principle) 
 
- p0 [p0](/b/p/p1) [p0](/b/p/p2) [p0](/b/p/p3) [p0](/b/p/p4) [p0](/b/p/p5) [p0](/b/p/p6) [p0](/b/p/p7) [p0](/b/p/p8) [p0](/b/p/p9) [p0](/b/p/p10) [p0](/b/p/p11) [p0](/b/p/p12) [p0](/b/p/p13) [p0](/b/p/p14) [p0](/b/p/p15) [p0](/b/p/p16)
+ p0 [p1](/b/p/p1) [p2](/b/p/p2) [p3](/b/p/p3) [p4](/b/p/p4) [p5](/b/p/p5) [p6](/b/p/p6) [p7](/b/p/p7) [p8](/b/p/p8) [p9](/b/p/p9) [p10](/b/p/p10) [p11](/b/p/p11) [p12](/b/p/p12) [p13](/b/p/p13) [p14](/b/p/p14) [p15](/b/p/p15) [p16](/b/p/p16)

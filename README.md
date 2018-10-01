@@ -1,11 +1,11 @@
 # 纯静态博客
-本博客是完全纯静态blog, 核心js 代码只有100 多行。 
+本博客是完全纯静态blog, 核心js 代码只有200 多行。 
 
 - Fork 地址: [https://github.com/ahuigo/a](https://github.com/ahuigo/a)
 - 示例地址：[https://ahuigo.github.io/a#/README.md](https://ahuigo.github.io/a#/README.md)
 
 使用方法：
-1. Fork 到 `{yourname}.github.io`.
+1. Fork 到任意其它的仓库, 比如: `{yourname}.github.io` 
 2. 修改 `index.html` 中的`config`变量
 
 比如：
