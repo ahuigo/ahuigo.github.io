@@ -1,10 +1,10 @@
 ---
-layout: page
-title:	
-category: blog
-description: 
+title:	js dom file
 ---
-# Preface
+# Focus
+
+    var isFocused = (document.activeElement === dummyEl);
+    ele.focus()
 
 # FormData
 

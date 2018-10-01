@@ -221,9 +221,16 @@ string  没有此属性
         console.log(value, map===m);
     });
 
-## entries: python
+## entries: python enumerate
     for(let [key, value] of Object.entries(myObject)) {
         console.log(key, value); // "first", "one"
+    }
+
+## loop circle
+
+    var len = myArray.length
+    for (const [i, value] of myArray.entries()) {
+        console.log('%d: %s', i, myArray[(i+1)%len]);
     }
 
 # Map/Set
@@ -241,6 +248,11 @@ map crud:
     m.has('Adam'); // 是否存在key 'Adam': true
     m.delete('Adam'); // 删除key 'Adam'
     m.get('Adam'); // undefined
+
+map to array
+
+    const newArr1  = [ ...map  ]; 
+    const newArr2 = Array.from( map );
 
 ### WeakMap
 key 只能对象，wm不可遍历
