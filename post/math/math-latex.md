@@ -97,15 +97,15 @@ $\overrightarrow{AB}$ 和 $\overleftarrow{AB}$
 
 ## Latex符号
 
+    \, space
 	\pi 表示希腊字母 π，\infty 表示 ∞。更多的符号请参见：Special Symbols 。
 	\sqrt{被开方数} 表示平方根。另外，\sqrt[n]{x} 表示 n 次方根。
 	\sum_{下标}^{上标} 表示求和符号。
         _{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个字符，可以省略 { 和 } 。
 	\frac{分子}{分母} 表示分数。另外，\tfrac{分子}{分母} 表示小号的分数。
-	\prod{i=0}^N x_i 表示乘积符号，
-    \int 表示积分符号。
-	\int_{-N}^{N} e^x\, dx 表示积分符号。
-	\iint_{D}^{W} \, dx\,dy	双重积分
+	$\prod_{i=1}^{\infty} a_{i}$, $\prod$表示乘积符号，
+	$\int_{-N}^{N} e^x,dx$, \int 表示积分符号。
+    $\iint_{D}^{W} \, dx\,dy$	双重积分
 
 	此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。
 	还有：\pm：±、\times：×、\div：÷ 。
