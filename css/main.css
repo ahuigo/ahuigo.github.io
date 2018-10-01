@@ -164,10 +164,11 @@ ol,ul{
     flex: 3;
 }
 
-#content img, {
+#content img{
     /* border: 0.3em solid #e0dfcc ; */
     box-shadow: 0 0 10px #555;
     border-radius: 1em;
+    width:100%;
 }
 #content blockquote{
     background-color:lightgray;
