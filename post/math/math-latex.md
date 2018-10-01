@@ -95,181 +95,18 @@ ${\bar a}$
 另`\overrightarrow `和`\overleftarrow`在定义从A 到B 的向量时非常有用:
 $\overrightarrow{AB}$ 和 $\overleftarrow{AB}$
 
-## Greece, 希腊字符
-http://blog.sina.com.cn/s/blog_5e16f1770100lxq5.html
-https://bcc16.ncu.edu.tw/7/latex/math_tex/2-html/
-
-    \alpha产生字符α;\beta产生字符β；\gamma产生字符γ；\delta产生字符δ;
-    \epsilon产生字符ε; \zeta产生字符ζ；
-    \eta产生字符η;
-    \iota I产生字符ι,I；
-    \kappa产生字符κ；
-    \1ambda产生字符λ；\mu产生字符μ；\xi产生字符ξ：
-    \nu产生字符ν；\o产生字符o； \pi产生字符π；
-    \rho P产生字符ρ,P；
-    \sigma \Sigma产生字符σ, Σ(⌥+w)；
-    \varsigma ς
-    \tau产生字符τ;
-    \upsilon产生字符υ；
-    \theta \Theta  øΘ(⌥ +o)
-    \phi \Phi产生字 𝛗ϕΦ
-    \psi \Psi产生字 ψΨ；
-    \chi X产生字符χ,Χ；
-    \omega $\omega$产生字符ω,Ω
-    \pi \Pi 得到: π, Π
-
-https://www.wolframalpha.com/input/?i=lnx
-Α	α	Alpha	a
-Β	β	Beta	b
-Γ	γ	Gamma	g
-Δ	δ	Delta	d
-Ε	ε	Epsilon	e
-Ζ	ζ	Zeta	z
-Η	η	Eta	h
-Θ	θ	Theta	th
-Ι	ι	Iota	i
-Κ	κ	Kappa	k
-Λ	λ	Lambda	l
-Μ	μ	Mu	m
-Ν	ν	Nu	n
-Ξ	ξ	Xi	x
-Ο	ο	Omicron	o
-Π	π	Pi	p
-Ρ	ρ	Rho	r
-Σ	σ,ς *	Sigma	s
-Τ	τ	Tau	t
-Υ	υ	Upsilon	u
-Φ	φ	Phi	ph
-Χ	χ	Chi	ch
-Ψ	ψ	Psi	ps
-Ω	ω	Omega	o
-
-### Mathematical Symbols, 数学符号
-https://www.howtotype.net/category/all_symbols/
-
-    √ (square root): OPTION + v
-    ÷ (division): OPTION + ?
-    ≤ (less than or equal to): OPTION + <
-    ≥ (greater than or equal to): OPTION + >
-    ^ (circumflex): OPTION + i
-    ≠ (not equal to): OPTION + =
-    ≈ (almost equal to): OPTION + x
-    ± (plus-minus): OPTION + shift + =
-    ∞ (infinity): OPTION + 5
-    ø (empty set): OPTION + o
-    ∑ (N-ary summation or Sigma): OPTION + w
-    ƒ (function): OPTION + f
-    ∫ (integral): OPTION + b
-    ∂ (partial differential): OPTION + d
-
-	Asymptotic	≈
- 	Degree symbol	°
- 	Delta	Δ
- 	Division sign	÷
- 	Fraction 1/2	½
- 	Fraction 1/4	¼
- 	Fraction 3/4	¾
- 	Greater than	>
- 	Greater than or equal	≥
- 	Infinity symbol	∞
- 	Left Angle Bracket	〈
- 	Less than	<
- 	Less than or equal	≤
- 	Micro	µ
- 	Multiplication sign	×
- 	not symbol	¬
- 	Ohm sign	Ω
- 	Per Mille (1/1000) sign	‰
- 	Pi symbol	π
- 	Plus/minus sign	±
- 	Right Angle Bracket	〉
- 	square root radical sign	√
- 	Sum sign	∑
- 	Superscript one	¹
- 	Superscript three - cubed	³
- 	Superscript two - squared	²
-
-### Input Symbols, 常用输入符号
-
-	⌥ +K 
-	⌥ +R ‰
-	⌥ += ≠
-	⌥ ++ ±
-	⌥ +@ €
-	⌥ +2 ™
-	⌥ +3 £
-	⌥ +5 ∞
-	⌥ +6 §
-	⌥ +( ·
-	⌥ +z Ω
-	⌥ +o ø
-	⌥ +O Ø
-	⌥ +p π
-	⌥ +v √
-	⌥ +w ∑
-	⌥ +b ∫
-	⌥ +r ®
-	⌥ +g ©
-	⌥ +, ≤
-	⌥ +. ≥
-	⌥ +j ∆
-	⌥ +x ≈
-	⌥ +m µ
-	⌥ +f ƒ
-    苹果标志 （Shift+Option+K）
-    Copyright © (Option+G)
-    美元 $ (Shift+4)
-    美分 ￠ (Option+4)
-    英镑 ￡ （Option+3)
-    日元 ￥(Option+Y)
-    欧元 €（Shift+Option+2）
-    破折号 –(Option+-)
-    约等于 ≈（Option+X)
-    度 °(Shift+Option+8)
-    除号 ÷（Option+/)
-    循环 ∞（Option+5）
-    小于等于≤（Option+,)
-    大于等于≥（Option+.)
-    不等于≠（Option+=）
-    Pi π（Option+P）
-    正负号 ±(Shift+Option+=)
-    平方根√（Option+V)
-    求和 ∑（option+w）
-    产品标识 ™（Option+2)
-
-	¶•ªº–≠
-	`⁄€‹›ﬁﬂ‡°·‚—±
-
-	œ∑®†¥øπ“‘«
-	Œ„´‰ˇÁ¨ˆØ∏”’»
-
-	åß∂ƒ©˙∆˚¬…æ
-	ÅÍÎÏ˝ÓÔÒÚÆ
-
-	Ω≈ç√∫∫µ≤≥÷
-	¸˛Ç◊ı˜Â¯˘¿
-
-For more details,refer to [Type Symbols]
-http://www.wikihow.com/Type-Symbols-Using-the-ALT-Key
-
-### Latex符号
+## Latex符号
 
 	\pi 表示希腊字母 π，\infty 表示 ∞。更多的符号请参见：Special Symbols 。
 	\sqrt{被开方数} 表示平方根。另外，\sqrt[n]{x} 表示 n 次方根。
-	_{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个字符，可以省略 { 和 } 。
-	此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。
-	还有：\pm：±、\times：×、\div：÷ 。
-
 	\sum_{下标}^{上标} 表示求和符号。
+        _{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个字符，可以省略 { 和 } 。
+	\frac{分子}{分母} 表示分数。另外，\tfrac{分子}{分母} 表示小号的分数。
 	\prod{i=0}^N x_i 表示乘积符号，
+    \int 表示积分符号。
 	\int_{-N}^{N} e^x\, dx 表示积分符号。
 	\iint_{D}^{W} \, dx\,dy	双重积分
 
-	\pi 表示希腊字母 π，\infty 表示 ∞。更多的符号请参见：Special Symbols 。
-	\frac{分子}{分母} 表示分数。另外，\tfrac{分子}{分母} 表示小号的分数。
-	\sqrt{被开方数} 表示平方根。另外，\sqrt[n]{x} 表示 n 次方根。
-	\sum_{下标}^{上标} 表示求和符号。另外，\prod 表示乘积符号，\int 表示积分符号。
-	_{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个字符，可以省略 { 和 } 。
 	此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。
 	还有：\pm：±、\times：×、\div：÷ 。
 
