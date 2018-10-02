@@ -1,4 +1,5 @@
 # 日志
+- 2018-10-02 [实现](/b/py/py-str-replace) 
 - 2018-10-01 [js dom file](/b/ria/js-dom-file) 
 - 2018-10-01 [二叉查找树和红黑树](/b/algorithm/ds-binary-search-tree) 
 - 2018-10-01 [数据结构之树](/b/algorithm/algorithm-tree) 
@@ -38,6 +39,5 @@
 - 2018-10-01 [验证码识别工具tesseract](/b/algorithm/ocr-recognition) 
 - 2018-10-01 [coder试题:有几个bing?](/b/algorithm/game-countword) 
 - 2018-10-01 [跳跃表](/b/algorithm/ds-skiplist) 
-- 2018-10-01 [人民币大写转换](/b/algorithm/code-rmb) 
 
  p0 [p1](/b/p/p1) [p2](/b/p/p2) [p3](/b/p/p3) [p4](/b/p/p4) [p5](/b/p/p5) [p6](/b/p/p6) [p7](/b/p/p7) [p8](/b/p/p8) [p9](/b/p/p9) [p10](/b/p/p10) [p11](/b/p/p11) [p12](/b/p/p12) [p13](/b/p/p13) [p14](/b/p/p14) [p15](/b/p/p15) [p16](/b/p/p16)
