@@ -66,7 +66,7 @@ old
 ### tab length(to space)
 '\t'.expandtabs(4)
 
-
+## format()
 ### value type
 ```
 '{:s}'.format('str')
@@ -324,6 +324,13 @@ like list
 	str.replace(needle, word, 1); //replace the first needle with word
 
     'ab'.replace(['a','b'], ['A','B']) # wrong
+
+replace with dict(不能出现干扰的边界字符`%{}`)
+
+    address = "123 %(direction)s anywhere street"
+    address % {"direction": "N"}
+
+    '{direction}'.format(**{'direction':'Y'})
 
 ### startwith
 
