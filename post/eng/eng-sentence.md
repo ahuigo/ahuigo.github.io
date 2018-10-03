@@ -194,15 +194,14 @@ ought to, dare,need,used to
 3. 半助动2: have to, seem to
 
 ### 16种时态与助动词
-16 种时态: https://www.hjenglish.com/shitai/p973032/
+16 种时态, 时态与时间两个维度： 
+![](/img/eng/eng-tense-and-auxiliary-verbs.png)
 
-时态与时间两个维度： ![eng/eng-sentence-1.png](/img/eng/eng-active-voice.jpg)
-
-        过去的过去     过去        过去的将来           现在      将来
-    一般              did/did do  would do            do      will do
-    进行              was doing   would be doing      be doing will be doing
-    进行 had been doing|have been doing|would have been doing|    |will have been doing
-    完成 had done     have done   would have done     |       |will have done
+                过去             过去的将来               现在              将来
+    一般        did/did do      would do                do                will do
+    进行        was doing       would be doing          be doing          will be doing
+    持续进行     had been doing  would have been doing   have been doing  will have been doing
+    完成        had done        would have done         have done         will have done
 
 *关于两个维度*
 1. 实义动词区分时态:do 是一般(does/did)，doing是进行，done是完成
@@ -277,6 +276,15 @@ I guessed that Helen *would have told* her something.
 
 ![eng-sentence-1.png](/img/eng/eng-passive-voice.jpg)
 
+    do -> be done
+    doing -> being done
+    done -> been done
+                过去                  过去的将来                  现在                      将来
+    一般        was/were done        would be done              is/are done                will be done
+    进行        was/were being done  would be being done        be being done           will be being done
+    持续进行     had been being done  would have been being done have been being done   will have been being done
+    完成        had been done        would have been done        have been done         will have been done
+
 ### 3种语气
 陈述语气:陈述问、疑问问、感叹句
 祈使语气：祈使句
@@ -287,6 +295,7 @@ I guessed that Helen *would have told* her something.
 逻辑主语与主句的*主语相同*，省略主谓:
 (S + V1) +(S + V2) = S + V1 and V2
 (S + V1) +(S + be + X) = S + V1, X
+
     X = 非谓语动词
         to do
         doing
