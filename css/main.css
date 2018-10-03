@@ -6,6 +6,13 @@
     background: #363636;
     padding:1em;
 }
+code{
+    color: white;
+    border: 1px solid;
+    background: lightslategrey;
+    border-radius: 5px;
+    padding: 3px;
+}
 .pure-menu-list>li{line-height: 2em;vertical-align: middle;}
 .pure-menu-list>li>a{
     vertical-align: bottom;
@@ -157,7 +164,7 @@ ol,ul{
 
 .middle {
     flex: 8;
-    padding:2em;
+    margin:1.2em;
 }
 
 .right {
