@@ -1,5 +1,5 @@
 # 日志
-- 2018-10-02 [实现](/b/py/py-str-replace) 
+- 2018-10-03 [Python replace with dict](/b/py/py-str-replace) 
 - 2018-10-01 [js dom file](/b/ria/js-dom-file) 
 - 2018-10-01 [二叉查找树和红黑树](/b/algorithm/ds-binary-search-tree) 
 - 2018-10-01 [数据结构之树](/b/algorithm/algorithm-tree) 
