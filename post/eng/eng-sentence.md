@@ -279,11 +279,11 @@ I guessed that Helen *would have told* her something.
     do -> be done
     doing -> being done
     done -> been done
-                过去                  过去的将来                  现在                      将来
-    一般        was/were done        would be done              is/are done                will be done
-    进行        was/were being done  would be being done        be being done           will be being done
-    持续进行     had been being done  would have been being done have been being done   will have been being done
-    完成        had been done        would have been done        have been done         will have been done
+              过去                  过去的将来                  现在                  将来
+    一般      was/were done        would be done              is/are done           will be done
+    进行      was/were being done  would be being done        be being done         will be being done
+    持续进行   had been being done  would have been being done have been being done  will have been being done
+    完成      had been done        would have been done       have been done         will have been done
 
 ### 3种语气
 陈述语气:陈述问、疑问问、感叹句
