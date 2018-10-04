@@ -1,4 +1,5 @@
 # 日志
+- 2018-10-04 [抢票](/b/news/ticketing-software) 
 - 2018-10-04 [vim-window](/b/vim/vim-window) 
 - 2018-10-04 [vim-tags](/b/vim/vim-tags) 
 - 2018-10-04 [vim-syntax](/b/vim/vim-syntax) 
@@ -38,6 +39,5 @@
 - 2018-10-04 [py-tcp](/b/py/py-tcp) 
 - 2018-10-04 [py-str-hashlib](/b/py/py-str-hashlib) 
 - 2018-10-04 [py-server-framework](/b/py/py-server-framework) 
-- 2018-10-04 [py-process](/b/py/py-process) 
 
  p0 [p1](/b/p/p1) [p2](/b/p/p2) [p3](/b/p/p3) [p4](/b/p/p4) [p5](/b/p/p5) [p6](/b/p/p6) [p7](/b/p/p7) [p8](/b/p/p8) [p9](/b/p/p9) [p10](/b/p/p10) [p11](/b/p/p11) [p12](/b/p/p12) [p13](/b/p/p13) [p14](/b/p/p14) [p15](/b/p/p15) [p16](/b/p/p16) [p17](/b/p/p17) [p18](/b/p/p18)

@@ -83,6 +83,10 @@ const mdConponent = {
         if (v.getAttribute('src').startsWith('/img/')) {
           v.src = v.getAttribute('src').replace(/^\/img\//, `${IMG_URI}/img/`)
         }
+        v.addEventListener('click', e=>{
+          console.log(e)
+          this.$root.imgsrc = e.target.src;
+        })
       })
       const toc = document.querySelector('#toc');
       if (toc.children.length) {
@@ -109,9 +113,9 @@ const mdConponent = {
         }
         const dateNode = document.createElement('p')
         dateNode.style.cssText = 'text-align:center; color:#ccc; border-bottom:1px solid #007998'
-        //dateNode.innerHTML = 'Created: '+this.date
+        dateNode.innerHTML = 'Created: '+this.date;
         if(this.updated){
-          dateNode.innerHTML += 'Updated: '+this.updated
+          dateNode.innerHTML += '; Updated: '+this.updated
         }
         h1node.after(dateNode)
         //set title
@@ -165,6 +169,7 @@ const app = new Vue({
     show: true,
     showMenu: false,
     config: config,
+    imgsrc:'',
   },
   methods: {
     $$: $$,
