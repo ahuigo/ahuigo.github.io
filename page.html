@@ -37,10 +37,16 @@
 </head>
 
 <body class="layout-documentation page-layout">
-    <div>
+    <div id="app">
         <div class="pure-menu pure-menu-horizontal">
             <div>
                 <ul class="pure-menu-list">
+                    <li class="pure-menu-item">
+                        <button class="button is-primary menu-toggle" :class="{a:true}" @click="showMenu=!showMenu">
+                        <template v-if="showMenu"> Close </template>
+                        <template v-else>Open</template>
+                        </button>
+                    </li>
                     <li class="pure-menu-item"><a href="//github.com/ahuigo">AHUIGO</a></li>
                     <li class="pure-menu-item"><a class="button is-primary" href="{ROOT}/index.html">Home</a></li>
                     <li class="pure-menu-item"><a class="button is-primary" href="{ROOT}/atom.xml">Rss</a></li>
@@ -50,12 +56,8 @@
             </div>
         </div>
 
-        <div class="main"  id="app">
+        <div class="main">
             <div :class="{left:true, 'active':showMenu}" >
-                <button class="button is-primary menu-toggle" :class="{a:true}" @click="showMenu=!showMenu">
-                        <template v-if="showMenu"> Close </template>
-                        <template v-else>Open</template>
-                </button>
                 <tree-folder :nodes="nodes" :class="{'active':showMenu}" :show="show"></tree-folder>
             </div>
             <div class="middle" v-on="showMenu?{click:r=>showMenu=false}:{}">
