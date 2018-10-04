@@ -1,3 +1,7 @@
+---
+title: js-var
+date: 2018-10-04
+---
 # Preface
 基本类型：Undefined、Null、Boolean、Number和String
 复杂类型：由基本类型构成

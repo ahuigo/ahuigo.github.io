@@ -1,3 +1,7 @@
+---
+title: named tuples
+date: 2018-10-04
+---
 # named tuples
 
     # Old testmod return value

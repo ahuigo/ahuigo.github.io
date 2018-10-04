@@ -1,3 +1,7 @@
+---
+title: metaclass
+date: 2018-10-04
+---
 # metaclass
 通过元类，我们可以实例元类 创建类
 

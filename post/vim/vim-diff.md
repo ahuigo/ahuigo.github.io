@@ -1,3 +1,7 @@
+---
+title: diffget all file
+date: 2018-10-04
+---
 # diffget all file
 1. delete all current content
 2. :diffget 1

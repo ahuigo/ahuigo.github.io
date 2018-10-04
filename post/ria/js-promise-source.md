@@ -1,3 +1,7 @@
+---
+title: 如何实现一个 Promise
+date: 2018-10-04
+---
 # 如何实现一个 Promise 
 
 ## 什么是Promise?

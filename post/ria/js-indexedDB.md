@@ -1,3 +1,7 @@
+---
+title: IndexedDb 的使用之Dexie
+date: 2018-10-04
+---
 # IndexedDb 的使用之Dexie
 IndexedDb API 封装的很难用，[IndexedDB使用与出坑指南](https://juejin.im/post/5a9d65916fb9a028e46e257a) ，
 

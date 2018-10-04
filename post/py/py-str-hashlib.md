@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: py-str-hashlib
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 Python的hashlib提供了常见的摘要算法，如MD5，SHA1等等。

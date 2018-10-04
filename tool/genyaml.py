@@ -38,7 +38,7 @@ def parseBlog(path):
 from glob import glob
 def loopMd():
     #for path in glob('post/eng/**/*.md', recursive=True):
-    for path in glob('post/proj/**/*.md', recursive=True):
+    for path in glob('post/**/*.md', recursive=True):
         yield path
 
 import itertools

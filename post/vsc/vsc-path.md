@@ -1,3 +1,7 @@
+---
+title: path
+date: 2018-10-04
+---
 # path
 Available variables which can be used inside of strings.
 

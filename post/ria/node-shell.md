@@ -1,5 +1,6 @@
 ---
 date: 2018-08-25
+title: Node 执行shell 的方法
 ---
 # Node 执行shell 的方法
 child_process 提供了很多执行shell 的包:

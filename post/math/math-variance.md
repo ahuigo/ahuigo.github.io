@@ -1,3 +1,7 @@
+---
+title: Variance, 方差
+date: 2018-10-04
+---
 # Variance, 方差
 https://en.wikipedia.org/wiki/Variance
 

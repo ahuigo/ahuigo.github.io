@@ -1,3 +1,7 @@
+---
+title: wolframalpha
+date: 2018-10-04
+---
 # wolframalpha
 http://is.gd/iJSbT
 $$

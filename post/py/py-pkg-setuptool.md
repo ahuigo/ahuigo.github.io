@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: py-pkg-setuptool
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 https://packaging.python.org/tutorials/packaging-projects/

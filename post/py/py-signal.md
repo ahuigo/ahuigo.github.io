@@ -1,3 +1,7 @@
+---
+title: signal
+date: 2018-10-04
+---
 # signal
 help: pydoc signal, c-signal.md
 

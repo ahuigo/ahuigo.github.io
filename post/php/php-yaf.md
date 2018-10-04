@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: php-yaf
 category: blog
 description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -570,4 +571,3 @@ Yaf_Route_Rewrite是一个强大的路由协议, 它能满足我们绝大部分�
 2. 
 
 	Yaf_Dispatcher::getInstance()->disableView();
-

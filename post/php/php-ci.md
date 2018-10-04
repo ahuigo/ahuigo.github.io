@@ -1,13 +1,9 @@
 ---
 layout: page
-title:
+title: CI Framework 改造
 category: blog
 description:
 ---
-# Preface
-
-CI Framework 改造计划
-
 # autoload
 
 vim src/config/config.php

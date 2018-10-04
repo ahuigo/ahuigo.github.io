@@ -1,3 +1,7 @@
+---
+title: nginx upload
+date: 2018-10-04
+---
 # upload
 add the following option to your NGINX ./configure command:
 
@@ -11,7 +15,7 @@ nginx 提供了简单的upload
 
         # Store files to this directory
         # The directory is hashed, subdirectories 0 1 2 3 4 5 6 7 8 9 should exist
-        upload_store /data/nginx/upload/image.huajiao.com/ 1;
+        upload_store /data/nginx/upload/ 1;
 
         # Set specified fields in request body
         upload_set_form_field $upload_field_name.name "$upload_file_name";

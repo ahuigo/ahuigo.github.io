@@ -1,3 +1,7 @@
+---
+title: egg model
+date: 2018-10-04
+---
 # egg model
 https://eggjs.org/zh-cn/tutorials/sequelize.html
 

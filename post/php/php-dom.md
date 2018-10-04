@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: php-dom
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 

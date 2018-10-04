@@ -1,3 +1,7 @@
+---
+title: nginx 相关
+date: 2018-10-04
+---
 # nginx 相关
 - nginx-install.md
 - nginx-tcp.md

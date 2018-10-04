@@ -1,3 +1,7 @@
+---
+title: egg build
+date: 2018-10-04
+---
 # egg build
     $ npm install --production
 

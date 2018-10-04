@@ -1,3 +1,7 @@
+---
+title: 用js proxies 继承别的对象
+date: 2018-10-04
+---
 # 用js proxies 继承别的对象
 Proxies enable creation of objects with the full range of behaviors available to host objects. 
 Can be used for interception, object virtualization, logging/profiling, etc

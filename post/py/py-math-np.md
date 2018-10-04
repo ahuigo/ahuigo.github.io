@@ -1,3 +1,7 @@
+---
+title: py-math-np
+date: 2018-10-04
+---
 # Preface
 numpy是SciPy、Pandas等数据处理或科学计算库最基本的函数功能库。
 
@@ -363,4 +367,3 @@ np.sin support: number, array, numpy.ndarray
 
     X = np.linspace(-np.pi, np.pi, 256,endpoint=True)
     C,S = np.cos(X), np.sin(X)
-

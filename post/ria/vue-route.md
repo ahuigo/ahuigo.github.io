@@ -1,3 +1,7 @@
+---
+title: vue router 笔记
+date: 2018-10-04
+---
 # vue router 笔记
 
     routes: [

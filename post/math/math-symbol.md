@@ -1,5 +1,7 @@
 ---
-priority:
+priority: 
+title: 数学符号与古希腊字符
+date: 2018-10-04
 ---
 # 数学符号与古希腊字符
 

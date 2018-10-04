@@ -1,4 +1,7 @@
-
+---
+title: Nunjucks(=Jinjia2)
+date: 2018-10-04
+---
 # Nunjucks(=Jinjia2) 
 还有一个xtemplate
 
@@ -78,10 +81,10 @@ http://javascript.ruanyifeng.com/nodejs/koa.html#toc8
     app
     .use(body())
     .use(function * () {
-        console.log(this.request.body)    // if buffer or text
-        console.log(this.request.files)   // if multipart or urlencoded
-        console.log(this.request.fields)  // if json or _POST
         console.log(this.request.query)  
+        console.log(this.request.body)    // if buffer or text
+        console.log(this.request.fields)  // if multipart or urlencoded or json
+        console.log(this.request.files)   // if json
     }).listen(8080, function () {
         console.log('koa server start listening on port 8080')
     })

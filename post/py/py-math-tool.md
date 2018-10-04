@@ -1,3 +1,7 @@
+---
+title: Data tool
+date: 2018-10-04
+---
 # Data tool
 作者：关丹辉
 链接：https://www.zhihu.com/question/20408598/answer/25751602

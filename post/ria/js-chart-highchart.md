@@ -1,3 +1,7 @@
+---
+title: highcharts
+date: 2018-10-04
+---
 # highcharts
 [hicharts](/p/js/js-chart-highcharts)
 

@@ -1,5 +1,6 @@
 ---
 date: 2018-09-21
+title: Vue CLI 引入CDN 外部资源
 ---
 # Vue CLI 引入CDN 外部资源
 Vue CLI 引入外部资源的方法有:

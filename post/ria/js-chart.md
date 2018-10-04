@@ -1,6 +1,6 @@
 ---
 layout: page
-title:
+title: js charts
 category: blog
 description:
 ---

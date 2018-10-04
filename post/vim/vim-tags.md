@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: vim-tags
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 

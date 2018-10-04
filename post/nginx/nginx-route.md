@@ -1,3 +1,7 @@
+---
+title: deny ngx_http_access_module
+date: 2018-10-04
+---
 ### deny ngx_http_access_module
 Allows/Deny access for the specified network or address. If the special value unix: is specified (1.5.1), allows/drops access for all UNIX-domain sockets.
 

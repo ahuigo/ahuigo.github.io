@@ -1,3 +1,7 @@
+---
+title: vue instance
+date: 2018-10-04
+---
 # vue instance
     // 此对象将会添加到 Vue 实例上
     data = {a:1}

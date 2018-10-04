@@ -1,3 +1,7 @@
+---
+title: Typescript 的module
+date: 2018-10-04
+---
 # Typescript 的module
 ts 的模块其实就是es6 module. 比如 a.ts
 

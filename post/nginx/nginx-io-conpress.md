@@ -1,3 +1,7 @@
+---
+title: compress
+date: 2018-10-04
+---
 # compress
 
 ## gzip
@@ -60,5 +64,5 @@ Sets the number and size of the buffers used for reading a response from a disk.
 
 The open file cache is a caching system for metadata operations (file mtime, file existence etc), not for file content
 
-# Reference
+# References
 - [nginx-performance]: http://www.slashroot.in/nginx-web-server-performance-tuning-how-to-do-it

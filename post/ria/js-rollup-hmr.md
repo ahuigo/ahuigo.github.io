@@ -1,3 +1,7 @@
+---
+title: Rollup 该支持HMR 吗?
+date: 2018-10-04
+---
 # Rollup 该支持HMR 吗?
 Rollup 已经开始支持codesplit(要手动开启)，不过Rollup 本身至今还没有打算支持HMR(Hot Module Reload)。
 

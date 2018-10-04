@@ -1,9 +1,26 @@
-# ajax
-- fetch: 可能有兼容性问题, 底层，xhr 升级, 原生
+---
+title: 新一代ajax api--fetch、axios
+date: 2018-
+---
+# 新一代ajax api--fetch、axios
+- fetch: 底层，相当于xhr 升级版, 原生
     1. https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
-- axios：promise, 需要外部资源, 支持并发
-- vue-resource
-- $http 
+- axios：非原生, 支持并发
+- vue-resource: vue 提供的，只提供基本的功能
+
+## ajax 请求类型
+不同的请求头，会被解析为不同的变量(以php 为例)
+1. `application/x-www-form-urlencode` 才会传`$_POST`, 
+2. `enctype="multipart/form-data"` 则包括`POST+FILES`
+3. `Content-Type:text/plain:json + POST `只会传`RAW_POST_DATA` ,
+
+	$GLOBALS['HTTP_RAW_POST_DATA'] or $HTTP_RAW_POST_DATA; # 这个在php7中被废弃了
+    file_get_contents('php://input'); # 不是php://stdin
+
+Detect Ajax(php 为例)：
+
+	$_SERVER['HTTP_X_REQUESTED_WITH']
+	$_SERVER['HTTP_ACCEPT'] === 'application/json';
 
 ## fetch
 
@@ -35,14 +52,18 @@
             "Accept": "application/json", 
             //'content-type':'application/x-www-form-urlencode', 
         },
-        body: new FormData() //不是data!!!!!
+        body: new FormData() //不能是object!!!!!
 
-body type: 不能是 object, 只能是
+body: 不能是 object, 只能是: (是`body` 不是`data`)
 
     formData, // 默认 multipart/form-data
+    input.files[0], // 默认 multipart/form-data
+
     JSON.stringify(data); //默认： text/plain
 
 #### x-www-urlencode
+如果想发送  application/x-www-form-urlencoded
+可以用手动拼body
 
     fetch(url, {
       method: 'POST',
@@ -54,12 +75,16 @@ body type: 不能是 object, 只能是
             }).join('&'),
     })
 
-also:
+或者用 URLSearchParams:
 
     const searchParams = new URLSearchParams();
     for (const prop in params) {
       searchParams.set(prop, params[prop]);
     }
+    fetch(url, {
+        method: 'POST',
+        body: searchParams
+    })
 
 ### response
 
@@ -68,13 +93,18 @@ also:
         // do something with the text response 
     });
 
+    fetch('/api/clipboard/header?get=1', {
+        method:'POST',
+        headers:{'content-type':'application/x-www-form-urlencoded'}, 
+        body:'a=1',
+    }).then(
+        async r=>await r.text()
+    ).then(txt=>console.log(txt))
+
 e.g. 
+
     .then(async r => await r.json())
     .then(data=>console.log(data))
-
-## this.$http
-
-    this.$http.get('/message').then((response) {}
 
 ## axios
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
@@ -114,3 +144,8 @@ get:
 post:
 
     that.$resource('/api/todos').save(todo).then(function (resp) {
+
+也可以全局或局部引用：
+
+    this.$http Vue.http
+    this.$http.get('/message').then((response) {}

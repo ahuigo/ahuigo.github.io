@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: vim-style
 category: blog
 description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -128,4 +129,3 @@ Preference - profiles - Terminal - select 'vt100' as terminal emulation.
 On linux:
 
 	export TERM=vt100
-

@@ -1,3 +1,7 @@
+---
+title: 死亡
+date: 2018-10-04
+---
 # 死亡
 关于国家机关工作人员及离退休人员死亡一次性抚恤金发放办法的通知
 http://www.bjrbj.gov.cn/LDJAPP/search/zxfgdetail.jsp?no=201208211543486226

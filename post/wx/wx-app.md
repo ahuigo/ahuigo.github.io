@@ -1,3 +1,7 @@
+---
+title: Wx app
+date: 2018-10-04
+---
 # Wx app
 
 # Page.js

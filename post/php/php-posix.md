@@ -1,4 +1,7 @@
-
+---
+title: pipe
+date: 2018-10-04
+---
 # pipe
 
     bool posix_mkfifo ( string $pathname , int $mode )

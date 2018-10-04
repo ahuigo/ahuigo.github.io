@@ -81,7 +81,7 @@ const mdConponent = {
       })
       this.$root.$$('#content img').forEach((v, k, arr) => {
         if (v.getAttribute('src').startsWith('/img/')) {
-          v.src = v.getAttribute('src').replace(/^\/img/, `${IMG_URI}/img/`)
+          v.src = v.getAttribute('src').replace(/^\/img\//, `${IMG_URI}/img/`)
         }
       })
       const toc = document.querySelector('#toc');

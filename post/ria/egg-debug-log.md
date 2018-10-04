@@ -1,3 +1,7 @@
+---
+title: egg debug
+date: 2018-10-04
+---
 # egg debug
 https://eggjs.org/zh-cn/core/development.html#%E4%BD%BF%E7%94%A8-vscode-%E8%BF%9B%E8%A1%8C%E8%B0%83%E8%AF%95
 

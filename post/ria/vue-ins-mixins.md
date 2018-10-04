@@ -1,3 +1,7 @@
+---
+title: mixins
+date: 2018-10-04
+---
 # mixins
 混入 (mixins) 用于分发 Vue 组件中可复用功能
 
@@ -106,5 +110,3 @@
         actions: merge(toVal.actions, fromVal.actions)
       }
     }
-
-

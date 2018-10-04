@@ -1,3 +1,7 @@
+---
+title: TypeScript 装饰器
+date: 2018-10-04
+---
 # TypeScript 装饰器
 
     function addAge(constructor: Function) {

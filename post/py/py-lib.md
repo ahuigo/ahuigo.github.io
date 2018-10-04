@@ -1,10 +1,9 @@
 ---
 layout: page
-title:
+title: 哪些python lib 让你相见恨晚
 category: blog
 description:
 ---
-# Preface
 # 哪些python lib 让你相见恨晚
 https://www.zhihu.com/question/24590883/answer/119304448
 python 资源大全
@@ -47,12 +46,11 @@ Lightwing 总结的：
     6. 爬虫方面也不少有用的库，比如beautifulsoup、scrapy。
     7. 还有mechanize这种自动控制多个浏览器做事的库，利用浏览器引擎等。
 
-４. 其他：
+4. 其他：
     1. TK, WX, QT（做界面）
     2. pyglet、pygame、等（更好处理多个界面，各令块渲染，渲染频率，这些）
     3. geopy、shapely、gdal、geos、pyproj（地图处理，可能还有些，早就忘了）
     　但是数据库一定要选择PostGIS
-
     4. arrow、pendulum（python内带的datetime处理太弱了）
     5. py2exe类（把代码直接编译成executable，所有人能运行）
     6. simplejson（更快）

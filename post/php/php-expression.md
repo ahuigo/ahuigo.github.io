@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: php-expression
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -39,4 +40,3 @@ shell 没有三元运算符：不过可以这样
 	if $r; then
 		echo true
 	fi
-

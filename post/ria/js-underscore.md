@@ -1,3 +1,7 @@
+---
+title: 通用array,obj,..
+date: 2018-10-04
+---
 # 通用array,obj,..
 ## map
 

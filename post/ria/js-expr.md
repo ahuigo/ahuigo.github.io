@@ -1,3 +1,7 @@
+---
+title: js fuck
+date: 2018-10-04
+---
 # js fuck
 https://www.qqwenda.com/wenda/22114.html
 
@@ -101,4 +105,3 @@ or 优先级更高(不要写这种)
 				0 && NaN //return 0
 	var || var
 		逻辑 OR 运算并不一定返回 Boolean 值(同上)
-

@@ -38,6 +38,7 @@
 
 <body class="layout-documentation page-layout">
     <div id="app">
+        <div id="imgview" v-if="imgsrc" @click="imgsrc=Null"><img :src="imgsrc"></div>
         <div class="pure-menu pure-menu-horizontal">
             <div>
                 <ul class="pure-menu-list">

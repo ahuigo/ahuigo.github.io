@@ -1,3 +1,7 @@
+---
+title: extend，扩展 插件
+date: 2018-10-04
+---
 # extend，扩展 插件
 
 ## $.fn

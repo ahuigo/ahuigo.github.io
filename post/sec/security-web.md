@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: security-web
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -127,5 +128,5 @@ SameSite 分两种:
 
 ## File Upload, 文件上传
 
-# Reference
+# References
 http://wiki.open.qq.com/wiki/Web%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B%E5%8F%8A%E4%BF%AE%E5%A4%8D#1.2_XSS.E6.BC.8F.E6.B4.9E

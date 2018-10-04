@@ -1,3 +1,7 @@
+---
+title: nginx process
+date: 2018-10-04
+---
 # nginx process
 nginx是比apache 更先进的web server. 以BSD许可证发布. 内核简洁, 模块强大(与apache不同, 其所有的模块都是静态编译的, 更快). 简单的是nginx接收到http请求后. 
 1. 当分析到请求是js/css/img等静态资源, 就交给静态资源模块去处理. 

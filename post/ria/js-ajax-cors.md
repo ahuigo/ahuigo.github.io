@@ -1,3 +1,7 @@
+---
+title: ajax cors
+date: 2018-10-04
+---
 # ajax cors
 
 ## 请求分类

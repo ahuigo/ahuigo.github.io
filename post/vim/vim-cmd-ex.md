@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: vim-cmd-ex
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -150,4 +151,3 @@ eg:
 		'<cWORD>'
 	:echom shellescape(expand("<cWORD>"))
 	:nnoremap <leader>g :exe "grep -R " . shellescape(expand("<cWORD>")) . " ."<cr>
-

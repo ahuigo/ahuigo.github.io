@@ -1,3 +1,7 @@
+---
+title: ipython
+date: 2018-10-04
+---
 # ipython
 
 # exit without confirm

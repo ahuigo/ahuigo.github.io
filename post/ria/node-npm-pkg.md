@@ -1,3 +1,7 @@
+---
+title: 写npm 包
+date: 2018-10-04
+---
 # 写npm 包
 1. 生成包信息package.json
     npm init

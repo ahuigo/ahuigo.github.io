@@ -1,10 +1,9 @@
 ---
 layout: page
-title:	
-category: blog
-description: 
+title:	Apache 的配置备忘录
+date: 2012-05-05
 ---
-# Preface
+# Apache 的配置备忘录
 apache服务器配置文件httpd.conf里的一些描述： 
 1、如何设 置请求等待时间 
 　　在httpd.conf里面设置： 

@@ -1,3 +1,7 @@
+---
+title: python-pattern
+date: 2018-10-04
+---
 # python-pattern
 https://github.com/ahuigo/python-patterns
 

@@ -1,3 +1,7 @@
+---
+title: egg-test
+date: 2018-10-04
+---
 # egg-test
 
 ## mock app
@@ -181,5 +185,3 @@ mock
 
     //1. 不想在终端 console 输出任何日志，可以通过  来模拟
     mock.consoleLevel('NONE')
-
-

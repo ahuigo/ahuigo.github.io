@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: vim-syntax
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 > http://learnvimscriptthehardway.stevelosh.com/chapters/45.html
@@ -187,4 +188,3 @@ These commands are normally in the file $VIMRUNTIME/syntax/synload.vim.
 Now you can start using your syntax file manually:
 
 	:set syntax=mine
-

@@ -1,3 +1,7 @@
+---
+title: smb server
+date: 2018-10-04
+---
 # smb server
 1. 防火墙端口打开: 139或445
 2. 服务: windows server 服务要打开

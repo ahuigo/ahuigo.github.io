@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: php-new
 category: blog
 description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -135,7 +136,7 @@ php 5.5
 	php -S localhost:8000
 	php -S 127.0.0.1:8000
 
-# Reference
+# References
 php5.6:
 http://wulijun.github.io/2014/01/25/whats-new-in-php-5-6.html
 

@@ -1,3 +1,7 @@
+---
+title: command
+date: 2018-10-04
+---
 # command
 
     npm list -g; # global

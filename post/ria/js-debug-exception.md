@@ -1,3 +1,7 @@
+---
+title: try-catch
+date: 2018-10-04
+---
 # try-catch
     try {
         r1 = s.length; // 此处应产生错误

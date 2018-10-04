@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: vim-cmd
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -443,7 +444,7 @@ see [/p/vim-script](/p/vim-script#if)
 
 	if 1| echo "true" | endif
 
-# Reference
+# References
 - [learnvim]
 
 [learnvim]: http://learnvimscriptthehardway.stevelosh.com/chapters/12.html

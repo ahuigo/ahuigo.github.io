@@ -1,12 +1,9 @@
 ---
 layout: page
-title:
+title: nginx 的变量类型
 category: blog
 description:
 ---
-# Preface
-
-
 # Variable Env Type
 
 ## Embedded Variables

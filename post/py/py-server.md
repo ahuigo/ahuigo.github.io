@@ -1,3 +1,7 @@
+---
+title: py-server
+date: 2018-10-04
+---
 # Preface
 参考：https://zhuanlan.zhihu.com/p/30056870
 # CGI

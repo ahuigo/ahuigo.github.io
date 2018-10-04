@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: vim-script
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -289,4 +290,3 @@ If not loaded, Vim will look for a file called `autoload/somefile.vim` in your `
 
 	"enable loading the indent file for specific file types with:
 	:filetype plugin indent on
-

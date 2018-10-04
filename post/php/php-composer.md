@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: php-composer
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 不是一个包管理器, 而是一个依赖管理器.

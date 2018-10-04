@@ -1,3 +1,7 @@
+---
+title: 浏览器同源政策及其规避方法
+date: 2018-10-04
+---
 # 浏览器同源政策及其规避方法
 http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html
 http://www.ruanyifeng.com/blog/2016/04/cors.html

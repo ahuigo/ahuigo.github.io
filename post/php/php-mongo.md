@@ -1,3 +1,7 @@
+---
+title: extensions
+date: 2018-10-04
+---
 # extensions
 用mongodb extensions, 不用过时的mongo ext
 

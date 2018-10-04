@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: py-virtualenv
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 - virtualenv 提供了 Python 虚拟环境的隔离，但是命令复杂，目录的管理也比较混乱，

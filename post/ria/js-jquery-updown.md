@@ -1,4 +1,8 @@
-    <div id="updown">
+---
+title: <div id="updown">
+date: 2018-10-04
+---
+<div id="updown">
         <div class="section">x0</div>
         <div class="section">x1</div>
     </div>

@@ -1,4 +1,7 @@
-
+---
+title: egg http 之获取文件流信息(multipart)
+date: 2018-09-10
+---
 # httpclient
 app.curl === app.httpclient === ctx.curl
 
@@ -17,6 +20,38 @@ app.curl === app.httpclient === ctx.curl
       headers: result.headers,
       package: result.data,
     };
+
+## request
+
+    this.request.query
+    this.request.body   // if multipart or urlencoded or json
+                        //相当于koa-better-body 的fields ()
+                        // httpbin.org 的form
+    this.request.rawBody //相当于koa-better-body 的body(需要enables: text)
+                        // httpbin.org 的data (any types)
+
+### raw data
+
+    // config.default.js support raw text
+    const bodyParserConfig = {
+        enable: true,
+        encoding: 'utf8',
+        formLimit: '100kb',
+        jsonLimit: '100kb',
+        strict: true,
+        // @see https://github.com/hapijs/qs/blob/master/lib/parse.js#L8 for more options
+        queryString: {
+            arrayLimit: 100,
+            depth: 5,
+            parameterLimit: 1000,
+        },
+        enableTypes: ['json', 'form', 'text'],
+        extendTypes: {
+            text: ['text/xml', 'application/xml'],
+        },
+    };
+    // 覆盖egg自带的配置
+    exports.bodyParser = bodyParserConfig;
 
 ## multipart
 

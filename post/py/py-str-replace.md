@@ -1,3 +1,7 @@
+---
+title: Python replace with dict
+date: 2018-10-04
+---
 # Python replace with dict
 so 上提到了这个问题
 https://stackoverflow.com/questions/14156473/can-you-write-a-str-replace-using-dictionary-values-in-python/52611134

@@ -1,3 +1,7 @@
+---
+title: 序列化
+date: 2018-10-04
+---
 # 序列化
 > http://fabien.potencier.org/php-serialization-stack-traces-and-exceptions.html
 

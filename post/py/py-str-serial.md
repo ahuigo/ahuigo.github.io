@@ -1,3 +1,7 @@
+---
+title: serialize
+date: 2018-10-04
+---
 # serialize
 - json
 - pickle
@@ -203,4 +207,3 @@ json dumps 类实例时，因为类实例not JSON serializable，得用default �
 
 	>>> json_str = '{"age": 20, "score": 88, "name": "Bob"}'
 	>>> print(json.loads(json_str, object_hook=dict2student))
-

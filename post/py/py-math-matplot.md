@@ -1,3 +1,7 @@
+---
+title: matplotlib
+date: 2018-10-04
+---
 # matplotlib
 
 > 原文:

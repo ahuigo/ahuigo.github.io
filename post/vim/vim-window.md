@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: vim-window
 category: blog
 description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -339,4 +340,4 @@ loop arglist
 		map <D-8> 8gt
 		map <D-9> 9gt
 		map <D-0> :tablast<CR>
-	endif	
+	endif

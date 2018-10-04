@@ -273,7 +273,6 @@ I guessed that Helen *would have told* her something.
 
 ### 2种语态
 主动语态就是上面16种，现在看16种被动语态
-
 ![](/img/eng/eng-passive-verb-tense.png)
 
     do -> be done

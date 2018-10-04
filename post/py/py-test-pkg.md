@@ -1,3 +1,7 @@
+---
+title: setup.py
+date: 2018-10-04
+---
 # setup.py
     from setuptools import setup
     setup(

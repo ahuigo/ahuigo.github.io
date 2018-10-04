@@ -1,3 +1,7 @@
+---
+title: profile
+date: 2018-10-04
+---
 # profile
 - cProfile
 类似于xdebug cachegrind profiler 性能画像

@@ -1,5 +1,6 @@
 ---
 date: 20180509
+title: vim plug 插件系统
 ---
 # vim plug 插件系统
 

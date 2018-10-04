@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: vim-options
 category: blog
 description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -85,5 +86,3 @@ with zero left:
 	:set statusline+=%l        " Current line
 	:set statusline+=/         " Separator
 	:set statusline+=%L        " Total line
-	
-	

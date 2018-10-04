@@ -1,3 +1,7 @@
+---
+title: type vs object
+date: 2018-10-04
+---
 # type vs object
 type 即代表class 本身, 他继承: type-object
 1. type: root instance: __class__, type(obj) === obj.__class__,

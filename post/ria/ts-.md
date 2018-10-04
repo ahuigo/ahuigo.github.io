@@ -1,3 +1,7 @@
+---
+title: 初学 Typescript
+date: 2018-10-04
+---
 # 初学 Typescript
 最近一直在使用vue+babel 做东西（rollup来打包）。不过babel+vue 这两货的配合在遇到装饰器时就有点问题：
 vue 肯定要先处理SFC(Single File Component)后才能用babel 处理, 但是Vue 又不能处理decorator。

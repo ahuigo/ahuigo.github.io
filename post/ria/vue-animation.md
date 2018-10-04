@@ -1,3 +1,7 @@
+---
+title: transition
+date: 2018-10-04
+---
 # transition
 https://cn.vuejs.org/v2/guide/transitions.html
 
@@ -266,4 +270,3 @@ e.g.
     <transition v-bind:name="transitionName">
     <!-- ... -->
     </transition>
-

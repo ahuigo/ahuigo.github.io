@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: vim-abbreviate
 category: blog
 description: 
+date: 2018-10-04
 ---
 # Preface
 

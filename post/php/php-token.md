@@ -1,3 +1,7 @@
+---
+title: php-token
+date: 2018-10-04
+---
 # Preface
 
   $tokens = token_get_all('<?php echo; ?>'); /* => array(

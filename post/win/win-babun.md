@@ -1,3 +1,7 @@
+---
+title: babun
+date: 2018-10-04
+---
 # babun
 babun: 封装了cygwin, 开箱即用。
 1. 提供git

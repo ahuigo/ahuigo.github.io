@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: php-session
 category: blog
 description: 
+date: 2018-10-04
 ---
 # Preface
 

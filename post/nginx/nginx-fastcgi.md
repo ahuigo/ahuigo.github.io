@@ -1,3 +1,7 @@
+---
+title: fastcgi
+date: 2018-10-04
+---
 # fastcgi
 
 	location = / {

@@ -1,3 +1,7 @@
+---
+title: php str
+date: 2018-10-04
+---
 # encoding
 ## internal encoding
 mb_internal_encoding('UTF-8');

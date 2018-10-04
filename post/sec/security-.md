@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: security-
 category: blog
 description: 
+date: 2018-10-04
 ---
 # Preface
 
@@ -11,4 +12,3 @@ The OWASP(The Open Web Application Security Project) 已经提供了详尽的已
 
 # Hash and Password
 Refer: [security-cryptography](/p/security-cryptography)
-

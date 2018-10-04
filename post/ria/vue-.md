@@ -1,3 +1,7 @@
+---
+title: vue
+date: 2018-10-04
+---
 # vue
 https://cn.vuejs.org/guide/comparison.html
 

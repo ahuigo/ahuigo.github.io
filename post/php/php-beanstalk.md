@@ -1,11 +1,9 @@
 ---
 layout: page
-title:
+title: php beanstalk
 category: blog
 description:
 ---
-# Preface
-
 # Installation with Composer
 
 

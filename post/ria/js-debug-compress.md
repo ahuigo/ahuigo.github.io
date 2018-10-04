@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: js-debug-compress
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 关于jquery.min.js 这样的压缩代码如何调试呢？

@@ -1,3 +1,7 @@
+---
+title: Vue event(v-on事件对象)
+date: 2018-10-04
+---
 # Vue event(v-on事件对象)
 使用 $on(eventName) 监听事件
 使用 $emit(eventName, optionalPayload) 触发事件

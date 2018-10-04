@@ -1,3 +1,7 @@
+---
+title: PHP Array
+date: 2018-10-04
+---
 # Array
 
 ## 像mysql 一样对多列数据排序

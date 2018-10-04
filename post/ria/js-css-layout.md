@@ -9,7 +9,6 @@ description:
 > 参考: http://zh.learnlayout.com/position.html
 
 # display
-
 1. block: This makes the element a block box. It won't let anything sit next to it on the page! *It takes up the full width*.
 2. inline-block: This makes the element a block box, but will allow other elements to sit next to it on the *same line*.
 3. inline: Makes the element sit on the same line as another element. only takes up as much width as it needs(*width/height:auto*)
@@ -152,9 +151,14 @@ http://zh.learnlayout.com/flexbox.html
 
 居中:
 
-    display:  flex;
-    justify-content: center;
-    align-items: center; //height: 
+    <div style=" display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center; //height
+        height: 100%;
+        display: flex;
+        position: fixed;
+    "><img src="/a/img//eng/eng-tense-and-auxiliary-verbs.png" alt=""></div>
 
 ## inline align(self)
 这给针对行内元素的，

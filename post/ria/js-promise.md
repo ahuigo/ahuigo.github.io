@@ -1,3 +1,7 @@
+---
+title: JS Promise
+date: 2018-10-04
+---
 # JS Promise
 实现异步串行写法
 1. generator

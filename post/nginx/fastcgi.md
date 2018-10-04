@@ -1,3 +1,7 @@
+---
+title: 关于FastCGI协议
+date: 2018-10-04
+---
 # 关于FastCGI协议
 FastCGI is a binary protocol for interfacing interactive programs with a web server
 
@@ -24,5 +28,3 @@ FastCGI接口方式在脚本解析服务器上启动一个或者多个守护进�
 
 1. spawn-fcgi是HTTP服务器lighttpd的一部分;  ligttpd的spwan-fcgi在高并发访问的时候，会出现内存泄漏甚至自动重启FastCGI的问题
 2. PHP-FPM也是一个第三方的FastCGI进程管理器，它是作为PHP的一个补丁来开发 就是说PHP-FPM被编译到PHP内核中，因此在处理性能方面更加优秀；同时它在处理高并发方面也比spawn-fcgi引擎好很多，因此，推荐Nginx+PHP/PHP-FPM这个组合对PHP进行解析
-
-

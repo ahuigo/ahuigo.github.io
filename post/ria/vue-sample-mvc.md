@@ -1,8 +1,9 @@
 ---
 layout: page
-title:
+title: vue-sample-mvc
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
 # Preface
 30行代码实现Javascript中的MVC

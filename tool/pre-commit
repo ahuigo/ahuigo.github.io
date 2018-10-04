@@ -94,6 +94,8 @@ def parseBlog(path, withContent=False):
     if 'title' not in blog:
         blog['title'] = data.split('\n', 1)[0][2:].strip()
     if not blog['title']:
+        print('-----')
+        print(data)
         quit(f'{path} has no title')
     if 'date' not in blog:
         blog['date'] = ''; 

@@ -1,3 +1,7 @@
+---
+title: logger
+date: 2018-10-04
+---
 # logger
 按照简洁度比较： trace > log4js > waston
 

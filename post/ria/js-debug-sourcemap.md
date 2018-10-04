@@ -1,3 +1,7 @@
+---
+title: JS webpack sourceMap 结构
+date: 2018-10-04
+---
 # JS webpack sourceMap 结构
 如果我们用chrome devtool source 查看webpack 打包项目app.js.map, 会发现存在`webpack://` source.
 

@@ -1,3 +1,7 @@
+---
+title: user
+date: 2018-10-04
+---
 # user
 
 	get_current_user() Gets PHP script owner's name

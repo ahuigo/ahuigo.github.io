@@ -1,3 +1,7 @@
+---
+title: Js 中的this scope
+date: 2018-10-04
+---
 # Js 中的this scope
 一般this 是使用的时候才确定指向:
 

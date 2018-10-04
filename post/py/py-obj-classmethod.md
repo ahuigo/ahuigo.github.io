@@ -1,3 +1,7 @@
+---
+title: py-obj-classmethod
+date: 2018-10-04
+---
 # Preface
     >>> class A(object):
     ...     def a(self):
@@ -97,4 +101,3 @@ Test output:
     >>> d2 = Derived.make_obj(0) # Derived.__init__(Derived, 0)
     >>> d2.val
     3
-

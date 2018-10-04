@@ -1,3 +1,7 @@
+---
+title: nodemon like watch dog
+date: 2018-10-04
+---
 # nodemon like watch dog
 nodemon --config nodemon.json app.js
 nodemon app.js

@@ -1,10 +1,10 @@
 ---
 layout: page
-title:
+title: selector
 category: blog
-description:
+description: 
+date: 2018-10-04
 ---
-
 # selector
 # each
 

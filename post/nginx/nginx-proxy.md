@@ -1,3 +1,7 @@
+---
+title: nginx proxy
+date: 2018-10-04
+---
 ## http_proxy
 The ngx_http_proxy_module module allows passing requests to another server.
 

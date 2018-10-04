@@ -1,3 +1,7 @@
+---
+title: Vsc for python
+date: 2018-10-04
+---
 # Vsc for python
 https://code.visualstudio.com/docs/python/python-tutorial
 

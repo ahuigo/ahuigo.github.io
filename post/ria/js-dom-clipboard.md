@@ -2,7 +2,8 @@
 layout: page
 date: 2018-05-30
 category: blog
-description:
+description: 
+title: js copy to clipboard
 ---
 # js copy to clipboard
 > http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript

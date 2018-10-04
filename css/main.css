@@ -1,6 +1,18 @@
 .share iframe{
     border:0;
 }
+#imgview{
+    display: flex;
+    width: 100%;
+    background: #ddd;
+    justify-content: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    overflow: auto;
+    z-index: 3;
+}
 .pure-menu-horizontal{
     white-space: normal;
     background: #363636;
@@ -64,7 +76,7 @@ h3{ font-size:1.4em}
 h4{ font-size:1.3em }
 h5{ font-size:1.2em }
 h6{ font-size:1.1em }
-p{margin: 0.6em 0;}
+p{margin: 0.5em 0;}
 .head{
     margin-bottom:0;
     position: relative;
@@ -174,13 +186,12 @@ ol,ul{
 #content img{
     /* border: 0.3em solid #e0dfcc ; */
     box-shadow: 0 0 10px #555;
-    border-radius: 1em;
+    border-radius: 0.6em;
     width:100%;
 }
 #content blockquote{
     background-color:lightgray;
-    padding: 1em;
-    margin: 2em;
+    padding: 0.5em;
     font-family: Consolas, Monaco, 'Andale Mono', monospace;
     border-radius: 1em;
     border: 0.3em solid  lightslategray;

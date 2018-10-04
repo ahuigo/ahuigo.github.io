@@ -1,12 +1,10 @@
 ---
 layout: page
-title:
+title: js ajax legacy
 category: blog
 description:
 ---
-# Preface
-
-# ajax
+# js ajax legacy
 
 ## prototype
 	var xhr=new XMLHttpRequest();
@@ -17,33 +15,7 @@ description:
 	xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	xhr.send("xuehui1=1&xuehui2=2");
 
-Detect Ajax：
-
-	$_SERVER['HTTP_X_REQUESTED_WITH']
-	$_SERVER['HTTP_ACCEPT'] === 'application/json';
-
-1. `Content-Type:text/plain + POST `只会传`RAW_POST_DATA` ,
-2. `application/x-www-form-urlencode` 才会传`$_POST`, 
-3. `enctype="multipart/form-data"` 则包括`POST+FILES`
-
-	$GLOBALS['HTTP_RAW_POST_DATA'] or $HTTP_RAW_POST_DATA; # 这个在php7中被废弃了
-    file_get_contents('php://input'); # 不是php://stdin
-
-## debug
-每次请求xhr 最好新建一下xhr. 或者销毁覆盖`xhr` 过去的变量
-
-	var xhr = new XMLHttpRequest();
-	xhr.addEventListener('load',func);//多次addEventListener 产生多个listener
-
-## jquery
-
-    $.getJSON('/api/products').done(function (data) {
-        vm.products = data.products;
-    }).fail(function (jqXHR, textStatus) {
-        alert('Error: ' + jqXHR.status);
-    });
-
-# listener
+## listener
 所有的e.target 指向xhr
 
         # download
@@ -53,24 +25,23 @@ Detect Ajax：
 		xhr.addEventListener("error", uploadFailed, false);
 		xhr.addEventListener("abort", uploadCanceled, false);
 
-
-## upload progress
+### upload progress
 
         # upload
 		xhr.upload.addEventListener("progress", uploadProgress, false); //e is ProgressEvent
 
         <progress max="100" value="0"></progress>
 
-## download progress
+### download progress
 
     xhr.onload = function(e){
         //e is ProgressEvent
-        if(o.e.lengthComputable){
+        if(e.lengthComputable){
             e.loaded/e.total
         }
     }
 
-## onreadystate
+### onreadystate
 
 	xhr.onreadystatechange=function(e) { //e = Event
 		if (xhr.readyState==4 && xhr.status==200) {
@@ -79,7 +50,8 @@ Detect Ajax：
 		}//redayState=!4 请求还在继续
 	}
 
-## chunk upload
+## Request
+### chunk upload
 demo: [js-lib/chunk/](js-lib/chunk/)
 refer: http://stackoverflow.com/questions/7853467/uploading-a-file-in-chunks-using-html5
 
@@ -124,22 +96,12 @@ refer: http://stackoverflow.com/questions/7853467/uploading-a-file-in-chunks-usi
 > here is an demo:
 http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
 
-## FormData Jquery
-
-	$.ajax({
-		url: '/admin/banlance/sendbanlance?act=addTask',
-		data: fd,
-		contentType: false,//这两行必须加
-		processData: false,//
-		method: 'POST'
-	}).done(function(data){})
-
 # Response
-# ResponseType
-https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=http://m.weibo.cn
+# ResponseType:json
 
+    url = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=http://m.weibo.cn'
 	var x = new XMLHttpRequest();
-	x.open('GET', searchUrl);
+	x.open('GET', url);
 	x.responseType = 'json';
 	x.onload = function(){
 		res = x.response;

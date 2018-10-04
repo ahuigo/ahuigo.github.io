@@ -1,3 +1,7 @@
+---
+title: install:
+date: 2018-10-04
+---
 install:
 ```
 pip3 install pyyaml

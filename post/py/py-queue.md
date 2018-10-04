@@ -1,3 +1,7 @@
+---
+title: Queue
+date: 2018-10-04
+---
 # Queue
 其实管道也是一种queue, queue 是进程-线程安全的
 

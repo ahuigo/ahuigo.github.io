@@ -1,8 +1,9 @@
 ---
 layout: page
-title:	
+title: vim-quickfix
 category: blog
 description: 
+date: 2018-10-04
 ---
 # Preface
 [vim-quickfix](/p/vim-quickfix)
@@ -85,4 +86,3 @@ shellescape() is a shell function(即php中的`escapeshellarg`), and `expand()` 
 		'<cWORD>'
 	:echom shellescape(expand("<cWORD>"))
 	:nnoremap <leader>g :exe "grep -R " . shellescape(expand("<cWORD>")) . " ."<cr>
-

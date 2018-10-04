@@ -1,3 +1,7 @@
+---
+title: Agent
+date: 2018-10-04
+---
 # Agent
 http://mirror.eggjs.org/zh-cn/core/cluster-and-ipc.html
 

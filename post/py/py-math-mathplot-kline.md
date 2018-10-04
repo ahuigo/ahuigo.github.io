@@ -1,3 +1,9 @@
+---
+date: 2018-04-04
+title: 用 Python mathplot 画K 线图
+---
+# 用 Python mathplot 画K 线图
+看过一些例子，年久失修。最新的库应该是用 mpl_finance 来做
 
 ## kline k线
 
