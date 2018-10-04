@@ -1,26 +1,30 @@
-/**
- * blog render
- */
+const config = {
+  'user': 'ahuigo', // github user acount
+  'repo': 'a', //'repo': 'ahuigo.github.io',
+  'weibo_uid': 1607772514,
+  'twitter_user': 'ahuigoo',
+  'disqus_user': 'ahuigo',
+}
 const ROOT = '/b'
 const IMG_URI = '/a'
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
-function loadComments(){
+function loadComments() {
   new Valine({
-    el: '#comments' ,
+    el: '#comments',
     notify: false,// # mail notifier 
     verify: false,// # Verification code
-    appId:  'bmveuJdEEaT5OWICGyCMpaVc-gzGzoHsz',
-    appKey:  'VhaQW20n3QnLFXnmViBld9lw',
+    appId: 'bmveuJdEEaT5OWICGyCMpaVc-gzGzoHsz',
+    appKey: 'VhaQW20n3QnLFXnmViBld9lw',
     placeholder: 'Just go go',
     avatar: 'mm',
     meta: 'nick,mail,link'.split(','),
-    pageSize:10,
+    pageSize: 10,
     visitor: false,
   });
 }
-function searchBlog(kword){
-  location.href="https://google.com/search?q="+encodeURIComponent(`${kword} site:${location.host}`)
+function searchBlog(kword) {
+  location.href = "https://google.com/search?q=" + encodeURIComponent(`${kword} site:${location.host}`)
 }
 Vue.component('tree-folder', {
   template: '#tree-folder',
@@ -83,9 +87,9 @@ const mdConponent = {
         if (v.getAttribute('src').startsWith('/img/')) {
           v.src = v.getAttribute('src').replace(/^\/img\//, `${IMG_URI}/img/`)
         }
-        v.addEventListener('click', e=>{
-          console.log(e)
+        v.addEventListener('click', e => {
           this.$root.imgsrc = e.target.src;
+          //$('#imgview').style.display = 'flex';
         })
       })
       const toc = document.querySelector('#toc');
@@ -113,9 +117,9 @@ const mdConponent = {
         }
         const dateNode = document.createElement('p')
         dateNode.style.cssText = 'text-align:center; color:#ccc; border-bottom:1px solid #007998'
-        dateNode.innerHTML = 'Created: '+this.date;
-        if(this.updated){
-          dateNode.innerHTML += '; Updated: '+this.updated
+        dateNode.innerHTML = 'Created: ' + this.date;
+        if (this.updated) {
+          dateNode.innerHTML += '; Updated: ' + this.updated
         }
         h1node.after(dateNode)
         //set title
@@ -124,21 +128,28 @@ const mdConponent = {
       }
     },
     fetchMd() {
-      let data = $('#markdown').innerText
-      let meta = {}
-      if (data.substr(0, 4) === '---\n') {
-        let pos = data.indexOf('\n---\n', 4)
-        data.slice(4, pos).split('\n').forEach((line)=>{
-          let [k,v] = line.split(':',2)
-          meta[k] = v || ''
-        });
-        data = data.substr(pos+5);
-      }
-      this.title = meta.title || data.split('\n',1)[0].slice(2)
-      this.date = meta.date
-      this.updated = meta.updated
-      //data = data.replace(/\n/g, '\t\n')
-      this.md = data
+      fetch(`/${config.repo}/${MD_URL}`).then(async r => {
+        if (!r.ok) {
+          this.md = '# 文章不存在!'
+        } else {
+          let data = await r.text()
+          let meta = {}
+          if (data.substr(0, 4) === '---\n') {
+            let pos = data.indexOf('\n---\n', 4)
+            data.slice(4, pos).split('\n').forEach((line) => {
+              let [k, v] = line.split(':', 2)
+              meta[k] = v || ''
+            });
+            data = data.substr(pos + 5);
+          }
+          this.title = meta.title || data.split('\n', 1)[0].slice(2)
+          this.date = meta.date
+          this.updated = meta.updated
+          //data = data.replace(/\n/g, '\t\n')
+          this.md = data
+        }
+      })
+      //
     },
     marked: function (text) {
       console.log('marked text')
@@ -169,7 +180,7 @@ const app = new Vue({
     show: true,
     showMenu: false,
     config: config,
-    imgsrc:'',
+    imgsrc: '',
   },
   methods: {
     $$: $$,
@@ -189,7 +200,7 @@ const app = new Vue({
       }).then(r => r.json()).then(data => {
         const ignorePath = this.config.user === 'ahuigo' ? ['ai', 'atom', 'index.md'] : [];
         let nodes = data.map(v => ({ name: v.name, path: v.path, type: v.type, show: true })).filter(
-          (v) => !( ignorePath.includes(v.path.slice(this.path.length+1)))
+          (v) => !(ignorePath.includes(v.path.slice(this.path.length + 1)))
         );
         Vue.set(file, 'nodes', nodes);
         localStorage.setItem(file.path, JSON.stringify({ time: +new Date, nodes }))

@@ -29,6 +29,8 @@ php 本身的性能与c 相比差了好几个数量级. 所以有的耗时耗资
 1. 使用非捕获子表达式
 2. 避免正则表达式的长回溯
 
+e.g.
+
 	$reg = "/<script>.*?<\/script>/is";
 	$str = "<script>********</script>"; //长度大于100014
 	$ret = preg_replace($reg, "", $str); //返回NULL

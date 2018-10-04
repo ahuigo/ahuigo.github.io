@@ -105,6 +105,7 @@ def parseBlog(path, withContent=False):
 
 def publishBlog(path):
     import html
+    import markdown2
     # post/a/t.md
     post_path = getPostPath(path)
     post_dir = os.path.dirname(post_path)
@@ -119,11 +120,12 @@ date: {blog['date']}
 updated: {blog['updated']}
 ---
 '''
-    md = f'{meta}{blog["content"]}';
+    md = f'{meta}{blog["content"]}'.replace('<','&lt;');
     render_md = (re.sub(r'(?<=\n)\s+', '', PAGE_TPL)
             .replace('{ROOT}', ROOT)
+            .replace('{MD_URL}', '%r'%path)
             .replace('{TITLE}', html.escape(blog['title']))
-            .replace(f'<pre id="markdown"></pre>', f'<pre id="markdown" v-pre>{html.escape(md)}</pre>')
+            .replace(f'<pre id="markdown"></pre>', f'<div id="markdown" v-pre>{markdown2.markdown(md)}</div>')
     )
 
     open(post_path,'w').write(render_md)

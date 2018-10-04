@@ -2,7 +2,6 @@
     border:0;
 }
 #imgview{
-    display: flex;
     width: 100%;
     background: #ddd;
     justify-content: center;
@@ -12,6 +11,7 @@
     position: fixed;
     overflow: auto;
     z-index: 3;
+    opacity: 0.9;
 }
 .pure-menu-horizontal{
     white-space: normal;
@@ -183,10 +183,11 @@ ol,ul{
 }
 
 #content img{
-    border: 0.3em solid #e0dfcc ;
+    border: 0.3em solid #e0dfcc;
     box-shadow: 0 0 10px #555;
     border-radius: 0.6em;
     width:100%;
+    overflow: auto;
 }
 #content blockquote{
     background-color:lightgray;

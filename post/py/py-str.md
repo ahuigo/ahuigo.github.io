@@ -281,6 +281,13 @@ string literals: r'...', r'''...''', r"...", r"""...""" are all literal strings 
     'a\\n\\t'
     >>> r'''start
      end'''
+    
+for var
+
+    >>> print('%r' % '\n')
+    '\n'
+    >>> print(r'\n')
+    \n
 
 ## len
 python3:
@@ -331,6 +338,10 @@ replace with dict(不能出现干扰的边界字符`%{}`)
     address % {"direction": "N"}
 
     '{direction}'.format(**{'direction':'Y'})
+
+### translate
+
+    a_string.translate(str.maketrans({"a":  "A"})
 
 ### startwith
 
