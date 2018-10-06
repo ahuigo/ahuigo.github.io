@@ -74,7 +74,7 @@ def updateAtom(blogs, max_items = 10):
     open(atomPath, 'wb').write(bs.encode())
 
 def breakout(errors):
-    print('\n'.join(errors))
+    log('\n'.join(errors))
     quit(1)
 
 current_date = datetime.now().strftime('%Y-%m-%d')
@@ -94,16 +94,14 @@ def parseBlog(path, withContent=False):
     if 'title' not in blog:
         blog['title'] = data.split('\n', 1)[0][2:].strip()
     if not blog['title']:
-        print('-----')
-        print(data)
         quit(f'{path} has no title')
     if 'date' not in blog:
-        blog['date'] = ''; 
+        blog['date'] = current_date; 
     blog['content'] = data
     blog['updated'] = current_date
     return blog
 
-def publishBlog(path):
+def publishBlog(path, pager=''):
     import html
     import markdown2
     # post/a/t.md
@@ -120,12 +118,13 @@ date: {blog['date']}
 updated: {blog['updated']}
 ---
 '''
-    md = f'{meta}{blog["content"]}'.replace('<','&lt;');
+    md = f'{meta}{blog["content"]}';
     render_md = (re.sub(r'(?<=\n)\s+', '', PAGE_TPL)
             .replace('{ROOT}', ROOT)
             .replace('{MD_URL}', '%r'%path)
             .replace('{TITLE}', html.escape(blog['title']))
-            .replace(f'<pre id="markdown"></pre>', f'<div id="markdown" v-pre>{markdown2.markdown(md)}</div>')
+            .replace(f'<pre id="pager"></pre>', f'<div id="pager" v-pre>{pager}</div>')
+            .replace(f'<pre id="markdown"></pre>', f'<pre id="markdown" v-pre>{html.escape(md)}</pre>')
     )
 
     open(post_path,'w').write(render_md)
@@ -143,9 +142,9 @@ def publishBlogs(new_files, delete_files):
         publishBlog(path)
 
 def genPager(page_urls, pos):
-    pager = '\n'
+    pager = ''
     for i,page_url in enumerate(page_urls):
-        pager += f' [p{i}]({page_url})' if i!=pos else f' p{i}'
+        pager += f' <a href="{page_url}">p{i}</a>' if i!=pos else f' p{i}'
     return pager
 
 def genIndexPages(index_blogs):
@@ -154,7 +153,7 @@ def genIndexPages(index_blogs):
     page_urls = []
     page_files = []
     for i in range(0, files_num, SIZE):
-        n = i//40
+        n = i//SIZE
         page_file = 'post/index.md' if n==0 else f'post/p/p{n}.md'
         page_files.append(page_file)
         page_urls.append(getPostUrl(page_file))
@@ -166,31 +165,30 @@ def genIndexPages(index_blogs):
             fp.write(f'# 日志\n')
             for path in islice(it_blogs, SIZE):
                 blog = index_blogs[path]
-                article = f'- {blog["updated"]} [{blog["title"]}]({getPostUrl(path)}) '
-                fp.write(article+'\n')
-            fp.write(genPager(page_urls, pos))
+                article = f'- {blog["date"]} [{blog["title"]}]({getPostUrl(path)}) '
+                fp.write(article + '\n')
+        publishBlog(page_file, genPager(page_urls, pos))
     getoutput(f'git add post/index.md')
     return page_files
-        
 
 def getIndexBlogs():
     index_blogs = OrderedDict()
-    for index_path in ['post/index.md']+glob('post/p/*.md'):
+    for index_path in ['post/index.md']+ sorted(glob('post/p/*.md'), key=lambda x: int(x[8:-3])):
         for line in open(index_path):
-            m = re.match('^- (?P<updated>\S+) \[(?P<title>.+)\]\((?P<path>/.+)\)', line)
+            m = re.match('^- (?P<created>\S+) \[(?P<title>[^\]]+)\]\((?P<path>/[^\)]+)\)', line)
             if m and m.group('path').startswith(f'{ROOT}/'):
                 path = m.group('path').replace(f'{ROOT}/','post/', 1)+'.md'
                 index_blogs[path] = {
                     'title': m.group('title'),
                     'path':path,
-                    'updated': m.group('updated'),
+                    'date': m.group('created'),
                 }
     return index_blogs
 
 if 'all' in sys.argv:
     modified_linelist = []
     for path in glob('post/**/*.md', recursive=True):
-        if not path.startswith('post/p/'):
+        if not path.startswith('post/p/') and path != 'post/index.md':
             modified_linelist.append(f'A\t{path}')
 else:
     cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/(index|p/.+).md$" '
@@ -199,6 +197,7 @@ else:
 
 #breakout(modified_linelist)
 if modified_linelist:
+    # index_blogs = OrderedDict()
     index_blogs = getIndexBlogs()
     new_blogs = {}
     delete_files = []
@@ -218,7 +217,8 @@ if modified_linelist:
             continue
         new_blogs[path] = blog
         index_blogs[path] = blog
-        if 'priority' in blog or path not in old_index_path_list:
+        # 'priority' in blog: 
+        if path not in old_index_path_list:
             index_blogs.move_to_end(path, last=False)
 
     if errors:
@@ -229,10 +229,10 @@ if modified_linelist:
         log('updateAtom')
         updateAtom({k:new_blogs[k] for k in islice(new_blogs, 10)})
         log('genIndexPages')
-        new_files = genIndexPages(index_blogs) + list(new_blogs.keys()) 
+        genIndexPages(index_blogs) 
         log('publishBlogs')
-        publishBlogs(new_files, delete_files)
+        publishBlogs(list(new_blogs.keys()), delete_files)
 
 if os.path.exists('no-commit'):
-    print('no-commit')
+    log('no-commit')
     quit(1)

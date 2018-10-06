@@ -1,9 +1,8 @@
 ---
-title: Security
+title: Eggjs 之 Security
 date: 2018-10-04
 ---
 # Security
-
 ## XSS
 利用 extend 机制扩展了 Helper API, 提供了各种模板过滤函数，防止钓鱼
 

@@ -1,8 +1,6 @@
 ---
-layout: page
-title:	安全 - 帐号设计
-category: blog
-description:
+title:	安全的帐号设计
+priority:
 ---
 # Preface
 帐号设计可以涉及到很多细节，本文主要从安全的角度作一个总结:

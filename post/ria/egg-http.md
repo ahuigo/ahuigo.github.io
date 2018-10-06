@@ -1,9 +1,11 @@
 ---
-title: egg http 之获取文件流信息(multipart)
+title: egg request 相关笔记
 date: 2018-09-10
+priority:
 ---
 # httpclient
-app.curl === app.httpclient === ctx.curl
+eggjs 提供了方便的curl api: 
+`app.curl === app.httpclient === ctx.curl`
 
     const result = await ctx.curl('https://registry.npm.taobao.org/egg/latest', {
         method: 'POST',

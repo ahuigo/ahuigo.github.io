@@ -1,5 +1,5 @@
 ---
-date: 20180303
+date: 2018-03-03
 title: python 的list/tuple 笔记
 ---
 # list and tuple
@@ -237,8 +237,8 @@ repeat
 
 	.count(value) -> integer -- return number of occurrences of value
 	.reverse() -> reverse *IN PLACE*
-	.sort(cmp=None, key=None, reverse=False) -- stable sort *IN PLACE*;
-	sorted(l, cmp=None, key=None, reverse=False) -- stable sort *Not IN PLACE*;
+	.sort(key=None, reverse=False) -- stable sort *IN PLACE*;
+	sorted(l, key=None, reverse=False) -- stable sort *Not IN PLACE*;
 
     >>> d=['a','C', 'A','z']; d.sort(key=str.lower))
     ['a', 'A', 'C', 'z']
@@ -248,6 +248,10 @@ repeat
     [(1, 2), (2, 4), (3, 3), (4, 1)]
     >>> sorted(a.items(), key=lambda x:x[1])
     [(4, 1), (1, 2), (3, 3), (2, 4)]
+
+利用python 的magic`__gt__,__eq__,...` 实现cmp:
+
+    key=functools.cmp_to_key(compare)
 
 remove and insert(in place)
 

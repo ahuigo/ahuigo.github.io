@@ -1,8 +1,6 @@
 ---
-layout: page
 title:	字符编码简介
-category: blog
-description: 
+priority:
 ---
 
 #序

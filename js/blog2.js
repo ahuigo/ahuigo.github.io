@@ -117,9 +117,11 @@ const mdConponent = {
         }
         const dateNode = document.createElement('p')
         dateNode.style.cssText = 'text-align:center; color:#ccc; border-bottom:1px solid #007998'
-        dateNode.innerHTML = 'Created: ' + this.date;
+        if(this.date){
+          dateNode.innerHTML = 'Created: ' + this.date;
+        }
         if (this.updated) {
-          dateNode.innerHTML += '; Updated: ' + this.updated
+          dateNode.innerHTML += ' Updated: ' + this.updated
         }
         h1node.after(dateNode)
         //set title
@@ -128,28 +130,22 @@ const mdConponent = {
       }
     },
     fetchMd() {
-      fetch(`/${config.repo}/${MD_URL}`).then(async r => {
-        if (!r.ok) {
-          this.md = '# 文章不存在!'
-        } else {
-          let data = await r.text()
-          let meta = {}
-          if (data.substr(0, 4) === '---\n') {
-            let pos = data.indexOf('\n---\n', 4)
-            data.slice(4, pos).split('\n').forEach((line) => {
-              let [k, v] = line.split(':', 2)
-              meta[k] = v || ''
-            });
-            data = data.substr(pos + 5);
-          }
-          this.title = meta.title || data.split('\n', 1)[0].slice(2)
-          this.date = meta.date
-          this.updated = meta.updated
-          //data = data.replace(/\n/g, '\t\n')
-          this.md = data
-        }
-      })
-      //
+      //fetch(`/${config.repo}/${MD_URL}`)
+      let data = $('#markdown').innerText;
+      let meta = {};
+      if (data.substr(0, 4) === '---\n') {
+        let pos = data.indexOf('\n---\n', 4)
+        data.slice(4, pos).split('\n').forEach((line) => {
+          let [k, v] = line.split(':', 2)
+          meta[k] = v.trim() || ''
+        });
+        data = data.substr(pos + 5);
+      }
+      this.title = meta.title || data.split('\n', 1)[0].slice(2)
+      this.date = meta.date
+      this.updated = meta.updated
+      //data = data.replace(/\n/g, '\t\n')
+      this.md = data
     },
     marked: function (text) {
       console.log('marked text')

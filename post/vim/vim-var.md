@@ -2,6 +2,7 @@
 layout: page
 title: vim 使用之变量
 category: blog
+priority:
 description:
 ---
 # vim 使用之变量

@@ -1,6 +1,7 @@
 ---
 title: Shell 变量之数据类型
 date: 2018-09-27
+priority:
 ---
 # Shell 变量之数据类型
 ## export

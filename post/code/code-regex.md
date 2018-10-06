@@ -1,9 +1,6 @@
 ---
-layout: page
-title:	Posix Regex
+title:	Posix Regex 正则语法
 date: 2018-08-18
-category: blog
-description:
 ---
 # Wildcard 通配符 和 Posix 正则
 正则分两大类:Posix和PCRE(Perl Compatible Regular Expression ). posix 已经很老了, 效率也没有PCRE高. 但是它被linux命令行广泛支持.

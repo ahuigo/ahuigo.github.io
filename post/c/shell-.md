@@ -1,8 +1,7 @@
 ---
-layout: page
 title:	Shell Programming
-date: 2014-3-5
-description:
+date: 2014-03-05
+priority:
 ---
 # Shell Programming
 

@@ -1,5 +1,6 @@
 ---
 title: Python 的math 语法
+priority:
 ---
 # number
 

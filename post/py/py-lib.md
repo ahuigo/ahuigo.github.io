@@ -1,8 +1,6 @@
 ---
-layout: page
 title: 哪些python lib 让你相见恨晚
-category: blog
-description:
+priority:
 ---
 # 哪些python lib 让你相见恨晚
 https://www.zhihu.com/question/24590883/answer/119304448

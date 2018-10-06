@@ -1,6 +1,7 @@
 ---
 title: Js Array 整理
 date: 2018-10-04
+priority:
 ---
 # Js Array 整理
 array 不像string 是primitive value, 所以length 可以缩短放大array。

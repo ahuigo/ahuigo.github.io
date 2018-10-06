@@ -1,13 +1,11 @@
 ---
 layout: page
 title:	红包飞的概率问题
-category: blog
-description:
+date: 2015-03-04
+priority:
 ---
-# Preface
-
+# 红包飞的概率问题
 100元的红包，分给10个人，每个人得的数额是随机的。请设计一个公平的算法，保证每个人得到的金额从数学期望上是相等的。
-
 
 # 生成红包时就拆分好
 

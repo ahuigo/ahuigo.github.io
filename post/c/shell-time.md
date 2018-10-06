@@ -1,7 +1,7 @@
 ---
 title: GMT,UTC,DST,CST 各种时间标准
 date: 2012-07-08
-description:
+priority:
 ---
 # 各世界时间标准
 我们经常遇到这4种时间：GMT,UTC,DST,CST。google了一下，在此做个小结.

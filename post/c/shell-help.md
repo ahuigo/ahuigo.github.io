@@ -1,7 +1,7 @@
 ---
 title:	linux 的帮助系统
 date: 2018-09-27
-description: 
+priority:
 ---
 # linux 的帮助系统
 linux的帮助系统主要有以下三种,本文参考了[鸟哥的Linux私房菜]，总结了man和info

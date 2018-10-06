@@ -1,8 +1,6 @@
 ---
-layout: page
 title:	shell 终端使用技巧
-category: blog
-description:
+priority:
 ---
 # Preface
 本文总结了shell 终端的使用技术: 主要包括Readline 使用，以及zsh 与iTerm2 的使用
