@@ -64,10 +64,3 @@ date: 2018-09-26
 					继续
 	当p1 = p2 与p1<p2 一样
 	当p1 > p2 与p1<p2 相反的过程
-
-# 随机打乱一个数组
-
-	len = length(arr)
-	for i=0; i< len-1; i++ 
-		p = rand(0, len-i-1)	
-		swap_pos(p, len-i-1)
