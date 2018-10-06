@@ -1,11 +1,9 @@
 ---
-layout: page
 title: js-time
 category: blog
-description: 
 date: 2018-10-04
 ---
-# Date
+# Date Format
 > https://zh.wikipedia.org/wiki/ISO_8601
 
 The only format in the spec is a simplified version of ISO-8601:
@@ -49,7 +47,7 @@ Then you can clear it like so:
         return new Promise(resolve=>setTimeout(resolve, ms))
     }
 
-# getdate
+# Date
 
 ## yesterday
 
@@ -57,7 +55,7 @@ Then you can clear it like so:
 	date ; //# => Fri Apr 01 2011 11:14:50 GMT+0200 (CEST)
 	date.setDate(date.getDate() - 1);
 
-## Date
+## get
 
 	$d = new Date("October 13, 1975 11:13:00");
 	$d = new Date(miliseconds);
@@ -110,11 +108,11 @@ short:
 	}
     (new Date()).format()
 
-### compare
+## compare
 
 	d1 > d2
 
-### set
+## set
 
 	//day
 	.setDate()	设置 Date 对象中月的某一天 (1 ~ 31)。

@@ -1,9 +1,6 @@
 ---
-layout: page
 title:	杨氏矩阵（Young Tableau）的topK 算法
-category: blog
 date: 2014-10-10
-description: 
 ---
 # 杨氏矩阵（Young Tableau）的topK
 sg上有一个[问题](http://segmentfault.com/q/1010000000715010):

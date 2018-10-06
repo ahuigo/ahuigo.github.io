@@ -3,14 +3,20 @@
 }
 #imgview{
     width: 100%;
-    background: #ddd;
-    justify-content: center;
     height: 100%;
+    justify-content: center;
     display: flex;
     align-items: center;
     position: fixed;
     overflow: auto;
     z-index: 3;
+}
+.popup-back{
+    z-index:-1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ddd;
     opacity: 0.9;
 }
 .pure-menu-horizontal{
