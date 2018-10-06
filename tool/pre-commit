@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# This script is used to generate a static site.
 import sys
 import os
 import re
@@ -65,7 +66,7 @@ def updateAtom(blogs, max_items = 10):
             entry = copy(ori_entry)
 
         entry.title.string =  blog['title']
-        entry.content.string =  ''
+        entry.content.string =  '' #blog['content']
         entry.updated.string =  datetime.now().replace(microsecond=0).isoformat()+'+00:00'
         entry.published.string = entry.updated.string
         if not bs.find('link', href=href):

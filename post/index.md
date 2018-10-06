@@ -10,7 +10,7 @@
 - 2012-07-08 [GMT,UTC,DST,CST 各种时间标准](/b/c/shell-time) 
 - 2018-09-27 [Shell 变量之数据类型](/b/c/shell-var) 
 - 2018-10-06 [shell 终端使用技巧](/b/c/shell-zsh) 
-- 2018-10-06 [字符编码简介](/b/code/code-character) 
+- 2014-05-10 [字符编码简介](/b/code/code-character) 
 - 2018-09-27 [开源软件的版权保护](/b/em/em-copyright-open-source) 
 - 2015-03-04 [红包飞的概率问题](/b/math/math-envelope) 
 - 2018-10-04 [数学符号与古希腊字符](/b/math/math-symbol) 
