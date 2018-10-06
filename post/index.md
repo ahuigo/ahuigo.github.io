@@ -1,4 +1,4 @@
-# 日志
+# AHUIGO
 - 2018-10-04 [关于抢票以及12306 的票仓的sku 设计](/b/news/ticketing-software) 
 - 2018-09-26 [查找两有序数组中第N 大的值](/b/algorithm/algorithm-find-the-nth-of-2-sorted-array) 
 - 2018-09-26 [coder试题:有几个bing?](/b/algorithm/game-countword) 

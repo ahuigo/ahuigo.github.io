@@ -163,7 +163,7 @@ def genIndexPages(index_blogs):
     it_blogs = iter(index_blogs)
     for pos,page_file in enumerate(page_files):
         with open(page_file, 'w') as fp:
-            fp.write(f'# 日志\n')
+            fp.write(f'# AHUIGO\n')
             for path in islice(it_blogs, SIZE):
                 blog = index_blogs[path]
                 article = f'- {blog["date"]} [{blog["title"]}]({getPostUrl(path)}) '

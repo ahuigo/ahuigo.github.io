@@ -5,8 +5,6 @@ category: blog
 description: 
 date: 2018-10-04
 ---
-# Preface
-
 # Date
 > https://zh.wikipedia.org/wiki/ISO_8601
 
@@ -24,6 +22,7 @@ If you change the space to a T, you'll be in spec:
 	var d = new Date(dateString.replace(' ', 'T'));
 
 # moment
+https://github.com/you-dont-need/You-Dont-Need-Momentjs#string--format--locale
 
 	moment('20180101').valueOf(); // getTime():
 	moment().format('MMMM Do YYYY, HH:mm:ss a'); // January 1st 2018, 10:36:01 pm
