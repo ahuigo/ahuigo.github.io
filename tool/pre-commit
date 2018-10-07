@@ -124,8 +124,8 @@ updated: {blog['updated']}
             .replace('{ROOT}', ROOT)
             .replace('{MD_URL}', '%r'%path)
             .replace('{TITLE}', html.escape(blog['title']))
-            .replace(f'<pre id="pager"></pre>', f'<div id="pager" v-pre>{pager}</div>')
-            .replace(f'<pre id="markdown"></pre>', f'<pre id="markdown" v-pre>{html.escape(md)}</pre>')
+            .replace(f'<pre id="pager"></pre>', f'<div id="pager">{pager}</div>')
+            .replace(f'<pre id="markdown"></pre>', f'<pre id="markdown">{html.escape(md)}</pre>')
     )
 
     open(post_path,'w').write(render_md)
