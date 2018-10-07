@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-10-07 [原生js 写的SlideUp、SlideDown 教程(收藏)](/b/ria/js-dom-event-slide) 
 - 2018-10-04 [关于抢票以及12306 的票仓的sku 设计](/b/news/ticketing-software) 
 - 2018-09-26 [查找两有序数组中第N 大的值](/b/algorithm/algorithm-find-the-nth-of-2-sorted-array) 
 - 2018-09-26 [coder试题:有几个bing?](/b/algorithm/game-countword) 
@@ -38,4 +39,3 @@
 - 2018-09-26 [圆周率算法](/b/algorithm/algorithm-pi) 
 - 2018-09-26 [利用google authentication 构建otp 动态口令](/b/algorithm/algorithm-otp) 
 - 2018-09-26 [NPC, NP完全](/b/algorithm/algorithm-np) 
-- 2014-03-03 [LibSvm](/b/algorithm/algorithm-libsvm) 
