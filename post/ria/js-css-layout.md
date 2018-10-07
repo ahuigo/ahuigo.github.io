@@ -321,6 +321,26 @@ example:
     overflow: auto; #浮动元素不会被hidden，而会撑大容器
     overflow: scroll; #浮动元素不会被hidden，而会撑大容器
 
+    <style type="text/css">
+    div {
+        background-color:#00FFFF;
+        width:50px;
+        height:50px;
+        overflow: scroll;
+    }
+    .sub{width:100px;height:100px;background:red}
+    </style>
+    <div><div class="sub">abc</div></div>
+
+#### img + overflow
+
+    .img-wrapper{
+        max-width:100%;
+        max-height:100%;
+        overflow:auto;
+    }
+    img { border: 0; }
+
 #### overflow + list-style conflict
 包一层div 避免conflict
 
