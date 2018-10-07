@@ -24,7 +24,7 @@ def getPostUrl(path):
     #return f'/p/{path[5:-3]}'
     return f'{ROOT}/{path[5:-3]}'
 
-def updateAtom(blogs, max_items = 10):
+def updateAtom(blogs, max_items = 40):
     from copy import copy
     from bs4 import BeautifulSoup as BS
     atomPath = f'{ROOT[1:]}/atom.xml'
@@ -51,12 +51,6 @@ def updateAtom(blogs, max_items = 10):
     ori_entry = copy(bs.entry)
     ori_entry.content.string = ''
 
-    # clear
-    l = len(bs.feed.findChildren('entry'))
-    if l > max_items:
-        for i in bs.feed.findChildren('entry')[max_items:]:
-            i.extract()
-
     # update
     for path, blog in blogs.items():
         href = getPostUrl(path)
@@ -64,14 +58,20 @@ def updateAtom(blogs, max_items = 10):
             entry =  bs.find('link', href=href).parent
         else:
             entry = copy(ori_entry)
+            entry.link['href'] =  href
+            bs.entry.insert_before(entry)
 
         entry.title.string =  blog['title']
         entry.content.string =  '' #blog['content']
         entry.updated.string =  datetime.now().replace(microsecond=0).isoformat()+'+00:00'
         entry.published.string = entry.updated.string
-        if not bs.find('link', href=href):
-            entry.link['href'] =  href
-            bs.entry.insert_before(entry)
+
+    # clear
+    l = len(bs.feed.findChildren('entry'))
+    if l > max_items:
+        for i in bs.feed.findChildren('entry')[max_items:]:
+            i.extract()
+
     open(atomPath, 'wb').write(bs.encode())
 
 def breakout(errors):
@@ -125,8 +125,11 @@ updated: {blog['updated']}
             .replace('{MD_URL}', '%r'%path)
             .replace('{TITLE}', html.escape(blog['title']))
             .replace(f'<pre id="pager"></pre>', f'<div id="pager">{pager}</div>')
-            .replace(f'<pre id="markdown"></pre>', f'<pre id="markdown" v-pre>{html.escape(md)}</pre>')
     )
+    if pager:
+        render_md = render_md.replace(f'<pre id="markdown"></pre>', f'<div id="markdown2" v-pre>{markdown2.markdown(blog["content"])}</div>')
+    else:
+        render_md = render_md.replace(f'<pre id="markdown"></pre>', f'<pre id="markdown" v-pre>{html.escape(md)}</pre>')
 
     open(post_path,'w').write(render_md)
 
@@ -163,7 +166,7 @@ def genIndexPages(index_blogs):
     it_blogs = iter(index_blogs)
     for pos,page_file in enumerate(page_files):
         with open(page_file, 'w') as fp:
-            fp.write(f'# AHUIGO\n')
+            fp.write(f'# AHUIGO 的笔记\n')
             for path in islice(it_blogs, SIZE):
                 blog = index_blogs[path]
                 article = f'- {blog["date"]} [{blog["title"]}]({getPostUrl(path)}) '

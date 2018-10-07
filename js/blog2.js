@@ -66,10 +66,12 @@ const mdConponent = {
   },
   mounted: function () {
     console.log('mounted: renderMd')
-    this.renderMd()
-    this.$nextTick(function () { })
-    loadComments()
-    $('#markdown').remove()
+    if(this.md){
+      this.renderMd()
+      this.$nextTick(function () { })
+      loadComments()
+      $('#markdown').remove()
+    }
   },
   updated() {
     console.log('updated:renderMd')
@@ -132,6 +134,7 @@ const mdConponent = {
     fetchMd() {
       //fetch(`/${config.repo}/${MD_URL}`)
       let data = $('#markdown').innerText;
+      if(!data) return;
       let meta = {};
       if (data.substr(0, 4) === '---\n') {
         let pos = data.indexOf('\n---\n', 4)
