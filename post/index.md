@@ -38,4 +38,4 @@
 - 2018-09-26 [圆周率算法](/b/algorithm/algorithm-pi) 
 - 2018-09-26 [利用google authentication 构建otp 动态口令](/b/algorithm/algorithm-otp) 
 - 2018-09-26 [NPC, NP完全](/b/algorithm/algorithm-np) 
-- 2018-10-06 [LibSvm](/b/algorithm/algorithm-libsvm) 
+- 2014-03-03 [LibSvm](/b/algorithm/algorithm-libsvm) 

@@ -1,12 +1,8 @@
 ---
-layout: page
 title:	LibSvm	
-category: blog
-description: 
+date: 2014-03-03
 ---
-
 # SVM
-
 支持向量机（Support vector machine）是在统计学习理论的基础上发展起来的新一代学习算法，它在文本分类、手写识别、图像分类、生物信息学等领域中获行较好的应用。  
 如果你还没有忘记大学微积分/线代/概统...，可以试着点击以下链接：
 

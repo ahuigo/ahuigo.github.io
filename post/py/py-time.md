@@ -1,6 +1,6 @@
 ---
 title: python 时间函数的用法笔记
-date: 20180402
+date: 2018-04-02
 ---
 # time 工具
 time 提供基本的时间，sleep
@@ -131,7 +131,7 @@ formater: https://docs.python.org/3/library/datetime.html
 	2015-04-19 04:20:00
 	>>> datetime.now().timestamp()
 
-### by formate
+### by format
 
     from dateutil.parser import parse as strptime
     strptime('2011-12-31')

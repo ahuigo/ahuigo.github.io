@@ -62,9 +62,9 @@ def updateAtom(blogs, max_items = 40):
             bs.entry.insert_before(entry)
 
         entry.title.string =  blog['title']
-        entry.content.string =  '' #blog['content']
-        entry.updated.string =  datetime.now().replace(microsecond=0).isoformat()+'+00:00'
-        entry.published.string = entry.updated.string
+        entry.content.string =  blog['content'][:100]
+        entry.published.string = datetime.strptime(blog['date'], '%Y-%m-%d').replace(microsecond=0).isoformat()+'Z'
+        entry.updated.string =  datetime.strptime(blog['updated'], '%Y-%m-%d').replace(microsecond=0).isoformat()+'Z'
 
     # clear
     l = len(bs.feed.findChildren('entry'))

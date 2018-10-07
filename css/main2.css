@@ -27,8 +27,9 @@
 code{
     color: white;
     border: 1px solid;
+    display: inline-block;
     background: lightslategrey;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 3px;
 }
 .pure-menu-list>li{line-height: 2em;vertical-align: middle;}
