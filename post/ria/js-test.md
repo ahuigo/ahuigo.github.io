@@ -1,10 +1,7 @@
 ---
-layout: page
 title:	前端自动化测试
-category: blog
-description: 
 ---
-# Preface
+# 前端自动化测试
 原文: http://fex.baidu.com/blog/2015/07/front-end-test/
 前端自动化测试可以在几个方向进行尝试：
 
@@ -35,45 +32,13 @@ Puppeteer 是 Google Chrome 团队官方的无界面（Headless）Chrome 工具�
 
 Chrome 作为浏览器市场的领头羊，Chrome Headless 必将成为 web 应用 自动化测试 的行业标杆。 https://github.com/csbun/thal
 
+    PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i --save puppeteer
+
 ## Phantomjs
 大名鼎鼎的PhantomJS当然要隆重介绍啦！前面界面对比测试基本都是基于PhantomJS开发的， Phantom JS是一个服务器端的 JavaScript API 的 WebKit。
 
 ## CasperJS
 casperjs是对PhantomJS的封装，提供了更加易用的API, 增强了测试等方面的支持。例如通过CasperJS可以轻松实现贴吧的自动发帖功能：
-
-	casper.test.begin('测试发帖功能', function suite(test) {   
-		
-	//登录百度
-		casper.loginBaidu();
-	//实现略，可以通过cookie或者表单登录实现
-		casper.thenOpen('http://tieba.baidu.com/p/3817915520', function () {  
-			var text = "楼主好人";
-			
-	//等待发帖框出现
-			this.waitForSelector(
-				'#ueditor_replace', 
-				function() {
-					
-	//开始发帖
-					this.echo("开始发帖。发帖内容: " + text,"INFO");
-					
-	//执行js
-					this.page.evaluate(function(text) {
-						$("#ueditor_replace").text(text);
-						$("a.poster_submit").click();
-	//点击提交
-					},text);
-				},function(){
-					test.fail("找不到发帖框#ueditor_replace");
-				}
-			);
-		})
-		.run(function () {
-			test.done();
-		});
-	});
-
-相对于单测来说，casperjs能用简单的API、从真实用户操作的角度来快速测试网站的功能是否正常，并且可以保留每一步测试的截图最终实现操作流可视化。
 
 例如下面这个GitHub项目便使用Casperjs测试一个电子商务网站的登录、下单等重要流程是否正常。case完善之后一条命令便可测试整个网站。
 casperjs能监听测试和页面的各个状态进行截图等操作，如果针对测试运行结果稍作优化，便可以形成一个可视化操作流：
