@@ -11,7 +11,6 @@ date: 2014-03-03
 * [支持向量机通俗导论] by july&pluskid
 
 # Libsvm
-
 如果你只是想知道如何使用Libsvm,或者不想花时间学习一门新课程，那么Libsvm可以满足你——它是svm算法的实现工具，并且为各种语言(php/python/...)和工程软件（matlab/octave）,都提供了扩展支持。下面是相关链接：
 
 * [libSVM 简易入门]

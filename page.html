@@ -24,9 +24,6 @@
 
     <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.10.0/dist/av-min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/valine@1.3.3/dist/Valine.min.js"></script>
-    <link href="{ROOT}/../a/css/main2.css" rel="stylesheet">
-    <script src="{ROOT}/../a/js/marked.js"></script>
-    <script src="{ROOT}/../a/js/toc.js"></script>
 </head>
 
 <body class="layout-documentation page-layout">
@@ -102,6 +99,9 @@
     <template id="md">
         <div id="content" v-html="marked(md)"></div>
     </template>
+    <link href="{ROOT}/../a/css/main2.css" rel="stylesheet" async>
+    <script src="{ROOT}/js/marked.js"></script>
+    <script src="{ROOT}/js/toc.js"></script>
     <script src="{ROOT}/../a/js/blog2.js"></script>
 </body>
 
