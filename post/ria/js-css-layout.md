@@ -38,6 +38,11 @@ box 的 horizonal 水平居中
         column-gap: 1em;
     }
 
+## img 
+img 会超出div范围, 可以用max-width 限制
+
+    <img style='max-height: 100%; max-width: 100%; '/> 
+
 # 自适应
 ## 下拉菜单列表
 http://imweb.io/topic/559f902a3d7bb8096b69cfdd

@@ -193,7 +193,7 @@ ol,ul{
     border: 0.3em solid #e0dfcc;
     box-shadow: 0 0 10px #555;
     border-radius: 0.6em;
-    width:100%;
+    max-width:100%;
     overflow: auto;
 }
 #content blockquote{
