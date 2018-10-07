@@ -133,8 +133,8 @@ const mdConponent = {
     },
     fetchMd() {
       //fetch(`/${config.repo}/${MD_URL}`)
+      if(!$('#markdown')) return;
       let data = $('#markdown').innerText;
-      if(!data) return;
       let meta = {};
       if (data.substr(0, 4) === '---\n') {
         let pos = data.indexOf('\n---\n', 4)
