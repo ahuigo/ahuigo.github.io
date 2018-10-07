@@ -9,6 +9,9 @@ date: 2018-10-04
 3. `npm adduser` 添加账号
 3. `npm whoami` 验证
 5. `npm publish` 发布
+6. `npm unpublish <package>@<version>` //可以撤销发布自己发布过的某个版本代码。
+
+参考: [js-dom-event-slide](/p/ria/js-dom-event-slide)
 
 ## bin
 如果要编写bin cli, 配置package.json
