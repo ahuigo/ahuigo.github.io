@@ -14,6 +14,7 @@ date: 2018-09-27
 1. $(\sin{b},\cos{b}\cos{n},\cos{b}\sin{n})$
 
 AB直线距离:
+
 $$
 AB^2 =(\sin{a}-\sin{b})^2
     +(\cos{a}\cos{m}-\cos{b}\cos{n})^2
