@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [计算球面两点的距离](/b/math/geo-distance)
 - 2018-10-08 [搜索附近的地点](/b/math/geo-distance-geohash) 
 - 2018-10-08 [shell 环境变量](/b/c/shell-var-env) 
 - 2018-10-07 [原生js 写的SlideUp、SlideDown 教程(收藏)](/b/ria/js-dom-event-slide) 
