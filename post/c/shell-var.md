@@ -41,15 +41,15 @@ Note:
 - `$(cmd)` , ``` `cmd` ``` 会过滤最后连续的换符符, 且被视为多个参数
 - `"$(cmd)"` , ```"`cmd`"``` 会过滤最后连续的换符符,且被视为1个参数
 
-#### shell 字符解析
+### shell 字符解析
 
-##### 单引号
+#### 单引号
 要注意的是shell中的单引号内所有字符都会原样输出.
 
 	str='a  '\'\"'  b';
 	echoraw 'It'\''s Jack'; //output: It's Jack
 
-##### 双引号
+#### 双引号
 而双引号内: `$`, `!`字符会被解析, 
 
 	echoraw "${HOME}"
@@ -69,13 +69,13 @@ Or turn off history expandsion:
 	//or
 	set +o histexpand
 
-##### 无引号
+#### 无引号
 `\t\n\r\'\"` 全部转义为`字面字符`
 
     echoraw 0\t0\n0\rabc\'\"
         0t0n0rabc'"
 
-##### 无引号`$''`
+#### 无引号`$''`
 `\t\n\r` 转义为特殊字符，`\'\"` 转义为字面字符
 
     # Press Ctrl-v + Tab
@@ -87,14 +87,14 @@ Or turn off history expandsion:
         0	0
         abc'"
 
-##### 无引号`$`
+#### 无引号`$`
 
     cmd='arg1 arg2'
     echoraw $cmd
         zsh: 一个参数
         bash: 多个参数
 
-##### 无引号`$""` 不要用
+#### 无引号`$""` 不要用
 shell 不兼容
 
     # zsh
@@ -104,8 +104,8 @@ shell 不兼容
 	$ echoraw $"var"
         var
 
-#### echo 命令
-对于`echo` 来说，它处理的字符已经是经过shell 解析过的。
+### echo 命令
+对于`echo` 来说，它是将经过shell 解析过的字符，再用自己的规则解析一次。
 
 zsh 中的echo 会解析 \007 \x31 (建议不要这样使用)
 
@@ -118,6 +118,7 @@ zsh 中的echo 会解析 \007 \x31 (建议不要这样使用)
 
 	echo -e "\x31" //1
 
+### str 函数
 #### concat 拼接
 
 	$PATH:otherStr #拼接.
@@ -210,6 +211,7 @@ substr is beginning:
 
 	${var##??} 删除最前面的两个字符
 	${var//[^s|S]} 只保保留s|S
+    [ "$answer" != "${answer#[Yy]}" ]
 
 #### dirname
 

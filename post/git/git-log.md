@@ -223,7 +223,7 @@ git reglog 就可以找到丢失的commit 引用记录
     $ git branch -D recover-branch
     $ rm -Rf .git/logs/
 
-`reflog` 数据是保存在 `.git/logs/` 目录下的，这样就没有 reflog 了. 就需要`fsck`
+`reflog` 数据是保存在 `.git/logs/` 目录下的，这样就没有 reflog 了. 此时找回commit 就需要`fsck`
 
 ## git fsck（数据恢复）
 git fsck 工具，该工具会检查仓库的数据完整性。如果指定 --full 选项，该命令显示所有未被其他对象引用 (指向) 的所有对象：
@@ -267,7 +267,7 @@ e.g.
     e3f094f522629ae358806b17daf78246c27c007b blob   1486 734 4667
     05408d195263d853f09dca71d55116663690c27c blob   12908 3478 1189
     7a9eb2fba2b1811321254ac360970fc169ba2330 blob   2056716 2056872 5401
-    # note: pack 包含 blog/tree/commit
+    # note: pack 包含 blob/tree/commit
 
 最底下blob 的2MB, 查看这到底是哪个大文件，用rev-list 命令。
 若给 rev-list 命令传入 --objects 选项，它会列出所有 commit SHA 值，blob SHA 值及相应的文件路径。可以这样查看 blob 的文件名：
@@ -298,6 +298,7 @@ note:
 1. git rm 的 --ignore-unmatch 选项指定当你试图删除的内容并不存在时不显示错误
 2. --index-filter: 要用`git rm --cached`
 2. 如果用 --tree-filter: 要用`git rm`
+4. `6df7640^..` 指后来的commit.  也可以用`--all`
 
 ### 清理ref+打包
 commit 中的引用已经被清除, 但是还有一些引用

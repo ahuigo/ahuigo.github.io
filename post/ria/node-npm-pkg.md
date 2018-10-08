@@ -30,3 +30,18 @@ npm install 的bin 位于`/usr/local/bin/{mocha, egg-bin}`
     $ npm link ../egg-ua
     $ npm i
     $ npm test
+
+## install
+
+    yarn add ./your-project
+
+npm:
+
+    cd ~/projects/node-bloggy  # go into the dir of your main project
+    npm link ../node-redis     # link the dir of your dependency
+
+you can declare local dependencies in package.json
+
+    "dependencies": {
+        "bar": "file:../foo/bar"
+    }
