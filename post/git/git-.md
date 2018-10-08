@@ -271,7 +271,7 @@ Say you have this, where C is your HEAD and (F) is the state of your files.
 
 You want to nuke commit C and never see it again.
 
-### git reset hard(index/working)
+### git reset hard(commit/index/working)
 `--hard` You do this:
 
 	git reset --hard;	# same: git reset HEAD . --hard
@@ -285,7 +285,7 @@ The result is:
 	  ↑
 	master
 
-### git reset(index)
+### git reset(commit+index)
 undo commit -am 'msg'
 
 	git reset ;	# same as: git reset HEAD .
@@ -298,7 +298,7 @@ In this case the result is:
 	  ↑
 	master: lost index+commit
 
-### git reset soft
+### git reset soft(commit)
 undo commit
 
 	   (F(working))
@@ -321,24 +321,27 @@ undo commit
 	A--x1--x2
 	    ↑(index)
 
-##	checkout stage/commit
+##	checkout(index/working)
+lost index+working: like `git reset A`, except `index+untracked:new file`. So it's very safe
 
-        working
-        ↑
-	A--x1--x2       git checkout file
-	    ↑(index)
     working
     ↑
 	A--x1--x2       git checkout A file
     ↑(index)
 
+lost working only
+
+        working
+        ↑
+	A--x1--x2       git checkout file
+	    ↑(index)
 
 	#(stage|commit) -> working
 	git checkout -- file //cp staged or commited file to working copy.(如果没有stage就用commit)，不会改变stage
 	git checkout HEAD file
 	git checkout HEAD^ file //回滚单个文件(index+work)
 	git checkout HEAD^ .//回滚dir(index+work)
-	git checkout HEAD^ //切换分支
+	git checkout HEAD^ //切换分支(需要先`gco .`，否则报错)
 
 ### switch branch
 > Not change not staged, staged, untracked files
@@ -443,16 +446,16 @@ Example:
 # git show(svn cat, git cat)
 git show specify commit
 
-	git show $REV [FILE]
-	git show --name-only SHA1
-		show log $REV only
 	git show $REV:$FILE
 	git show somebranch:from/the/root/myfile.txt
 	git show HEAD^^^:test/test.py
 
-## show diff
-    git show $REV $FILE
-
+## show commit diff
+	git show $REV [FILE]
+    git show head
+    git show head file.txt
+    git show head^ file.txt
+	git show --name-only SHA1
 
 # git tag
 tag 相当于commit 的别名
