@@ -215,7 +215,8 @@ substr is beginning:
 
 #### dirname
 
-    dirname=$(dirname $path)
+    path=$(dirname $path)
+    path=$(cd $(dirname $0) && pwd)
 
 #### var-test 变量测试
 
