@@ -9,19 +9,21 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 fi
 
 ## see https://github.com/18F/C2/issues/439
+echo -n "Start?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) echo "Cleanup refs and logs"
+            rm -Rf .git/refs/original
+            rm -Rf .git/logs/
 
-echo -n "Start?(y/n)? "
-read answer
-if [ "$answer" != "${answer#[Yy]}" ] ;then
-    echo "Cleanup refs and logs"
-    rm -Rf .git/refs/original
-    rm -Rf .git/logs/
+            echo "Cleanup unnecessary files"
+            git gc --aggressive --prune=now
 
-    echo "Cleanup unnecessary files"
-    git gc --aggressive --prune=now
-
-    echo "Prune all unreachable objects"
-    git prune --expire now
-fi
+            echo "Prune all unreachable objects"
+            git prune --expire now
+            break;;
+        No ) exit;;
+    esac
+done
 
 #git push -f origin master
