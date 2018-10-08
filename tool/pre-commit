@@ -133,18 +133,6 @@ updated: {blog['updated']}
 
     open(post_path,'w').write(render_md)
 
-def publishBlogs(new_files, delete_files):
-    '''
-    发布的博客列表
-    '''
-    for path in delete_files:
-        post_path = getPostPath(path)
-        if os.path.exists(post_path):
-            os.unlink(post_path)
-    for path in new_files:
-        #if blog['date']:
-        publishBlog(path)
-
 def genPager(page_urls, pos):
     pager = ''
     for i,page_url in enumerate(page_urls):
@@ -227,8 +215,10 @@ if modified_linelist:
         if path not in old_index_path_list:
             index_blogs.move_to_end(path, last=False)
 
-    if errors:
-        breakout(errors)
+    for path in delete_files:
+        post_path = getPostPath(path)
+        if os.path.exists(post_path):
+            os.unlink(post_path)
 
     if new_blogs:
         from itertools import islice
@@ -237,7 +227,11 @@ if modified_linelist:
         log('genIndexPages')
         genIndexPages(index_blogs) 
         log('publishBlogs')
-        publishBlogs(list(new_blogs.keys()), delete_files)
+        for path in new_blogs.keys():
+            publishBlog(path)
+
+    if errors:
+        breakout(errors)
 
 if os.path.exists('no-commit'):
     log('no-commit')

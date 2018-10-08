@@ -137,6 +137,27 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 		cover; 全覆盖
 		10px 20px;放缩
 		50% 50%;放缩
+    /* 关键字 */
+    background-size: cover
+    background-size: contain
+
+    /* 一个值: 这个值指定图片的宽度，图片的高度隐式的为auto */
+    background-size: 50%
+    background-size: 3em
+    background-size: 12px
+    background-size: auto
+
+    /* 两个值 */
+    /* 第一个值指定图片的宽度，第二个值指定图片的高度 */
+    background-size: 50% auto
+    background-size: 3em 25%
+    background-size: auto 6px
+    background-size: auto auto
+
+    /* 逗号分隔的多个值：设置多重背景 */
+    background-size: auto, auto     /* 不同于background-size: auto auto */
+    background-size: 50%, 25%, 25%
+    background-size: 6px, auto, contain
 
 #### background-position(位置)
 
@@ -506,6 +527,7 @@ outline-offset 属性对轮廓进行偏移，并在超出边框边缘的位置�
 	}
 
 # image
+e.g. https://codepen.io/handsomeone/pen/Kgmbqg?editors=0100
 
 	Formal grammar: linear-gradient(  [ <angle> | to <side-or-corner> ,]? <color-stop> [, <color-stop>]+ )
 									  \---------------------------------/ \----------------------------/
@@ -519,6 +541,7 @@ outline-offset 属性对轮廓进行偏移，并在超出边框边缘的位置�
 
 	linear-gradient( 0deg, blue, green 40%, red ); /* A gradient going from the bottom to top, starting blue, being green after 40%
 													  and finishing red */
+
 
 # Reference
 - [matrix]
