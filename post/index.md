@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-11-4 [ADHD：分心者的自我认知训练](/b/life/adhd) 
 - 2018-09-27 [计算球面两点的距离](/b/math/geo-distance) 
 - 2018-10-08 [搜索附近的地点](/b/math/geo-distance-geohash) 
 - 2018-10-08 [shell 环境变量](/b/c/shell-var-env) 
@@ -38,4 +39,3 @@
 - 2018-10-06 [vim 使用之变量](/b/vim/vim-var) 
 - 2018-09-26 [trie-filter](/b/algorithm/algorithm-trie-filter) 
 - 2018-09-26 [如何避免深度递归](/b/algorithm/algorithm-self-call) 
-- 2018-09-26 [Pigeonhole principle, 鸽巢（抽屉）原理](/b/algorithm/algorithm-pigeonhole_principle) 
