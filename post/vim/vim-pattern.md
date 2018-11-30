@@ -115,6 +115,7 @@ replace 比较特别：
     \r 代表\n
     ^M  在replace中居然表示\n
         不表示<c-v><c-m>, <c-v>013
+
 The full table of character search patterns includes some additional options:
 
     \%u20ac

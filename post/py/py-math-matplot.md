@@ -19,6 +19,7 @@ When we start it with the command line argument -pylab (--pylab since IPython ve
         from matplotlib import *
         from matplotlib.pyplot import *
 
+        from pylab import *
         import numpy
         import numpy as np
         from numpy import *

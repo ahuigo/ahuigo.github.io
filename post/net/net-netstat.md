@@ -95,6 +95,18 @@ mac only:
 find which process occupy specified port:
 http://www.cyberciti.biz/faq/what-process-has-open-linux-port/
 
+### windows
+1. 找到port 对应的pid
+    1. netstat -ano|findstr 8080
+2. kill pid:
+    1. 方法一：使用任务管理器杀死进程
+        2. 打开任务管理器->查看->选择列->然后勾选PID选项，回到任务管理器上可以查看到对应的pid，然后结束进程
+    2. 方法二：使用命令杀死进程
+        1. 首先找到进程号对应的进程名称
+            tasklist|findstr [进程号]；如：tasklist|findstr 3112
+        2. 然后根据进程名称杀死进程
+            taskkill /f /t /im [进程名称]；如：taskkill /f /t /im /javaw.exe
+
 ### netstat
 1. netstat - a command-line tool that displays network connections, routing tables, and a number of network interface statistics.
 
@@ -104,13 +116,13 @@ http://www.cyberciti.biz/faq/what-process-has-open-linux-port/
 	lrwxrwxrwx 1 hilojack hilojack 0 Jun  8 17:09 /proc/10557/exe -> /usr/bin/php
 
 ### fuser port/protocol
-2. fuser - a command line tool to identify processes using files or sockets.
+1. fuser - a command line tool to identify processes using files or sockets.
 
-	# sudo fuser port/protocol
-	# sudo fuser 80/tcp
-	80/tcp:             3813
-	# ls -l /proc/3813/exe
-	lrwxrwxrwx 1 vivek vivek 0 2010-10-29 11:00 /proc/3813/exe -> /usr/bin/transmission
+    # sudo fuser port/protocol
+    # sudo fuser 80/tcp
+    80/tcp:             3813
+    # ls -l /proc/3813/exe
+    lrwxrwxrwx 1 vivek vivek 0 2010-10-29 11:00 /proc/3813/exe -> /usr/bin/transmission
 
 ### /proc/
 Task: Find Out Current Working Directory Of a Process

@@ -5,14 +5,10 @@ category: blog
 description: 
 date: 2018-09-27
 ---
-# Preface
-
-
 # lsof
 [/p/linux-process-lsof](/p/linux-process-lsof)
 
 List Open File
-
 
 ## format
 

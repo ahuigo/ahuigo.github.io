@@ -47,7 +47,7 @@ WireShark 主要分为这几个界面
 一种是捕获过滤器，用来过滤捕获的封包，以免捕获太多的记录。 在Capture -> Capture Filters 中设置
 
 ### Display Filter
-位于主界面Filter. Example:
+位于主界面Filter expression. Example:
 
 	ip.src==192.168.1.1 or ip.dst==192.168.1.2
 	ip.src==10.17.10.138
@@ -64,9 +64,11 @@ Shortcuts:
 	tcp，只显示TCP协议。
 	http
 	udp
+    tcp.port eq 25 or icmp
 
 2. IP 过滤
 
+    ip.addr == 192.168.1.102
 	比如 ip.src ==192.168.1.102 显示源地址为192.168.1.102，
 	ip.dst==192.168.1.102, 目标地址为192.168.1.102
 
@@ -75,6 +77,7 @@ Shortcuts:
 	tcp.port ==80,  端口为80的
 	tcp.port eq 80,  端口为80的
 	tcp.srcport == 80,  只显示TCP协议的愿端口为80的。
+	tcp.dstport == 80,  只显示TCP协议的愿端口为80的。
 
 4. Http模式过滤
 
@@ -84,7 +87,8 @@ Shortcuts:
 
 5. 逻辑运算符为 and or
 
-	adn &&
+    ip.src_host == wap.baidu.com and ip.src == ....
+	and &&
 	or ||
 
 Example:

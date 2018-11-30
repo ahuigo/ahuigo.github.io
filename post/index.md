@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-11-30 [同一主体账号迁移](/b/wx/wx-account) 
+- 2018-11-30 [群共享](/b/wx/qq-group) 
 - 2018-11-4 [ADHD：分心者的自我认知训练](/b/life/adhd) 
 - 2018-09-27 [计算球面两点的距离](/b/math/geo-distance) 
 - 2018-10-08 [搜索附近的地点](/b/math/geo-distance-geohash) 
@@ -37,5 +39,3 @@
 - 2018-10-06 [安全的帐号设计](/b/sec/security-account) 
 - 2018-10-06 [vim 笔记](/b/vim/vim-notes) 
 - 2018-10-06 [vim 使用之变量](/b/vim/vim-var) 
-- 2018-09-26 [trie-filter](/b/algorithm/algorithm-trie-filter) 
-- 2018-09-26 [如何避免深度递归](/b/algorithm/algorithm-self-call) 
