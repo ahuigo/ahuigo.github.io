@@ -142,7 +142,9 @@ Refer to : http://segmentfault.com/blog/jslite/1190000002465197
 
 ### stop
 
+    //event.cancelBubble = true
 	event.preventDefault()  prevents the default action the browser makes on that event.
+    //event.returnValue = false;
 	event.stopPropagation() stops the event from bubbling up/capturing the event chain.
 
 ### method target
@@ -200,8 +202,9 @@ addEvent submit handler: 只能用e.preventDefault()
     e.key vs e.code
         's', 'S' vs 'KeyS'
         'Shift' vs 'ShiftLeft', 'ShiftRight', 
-    e.keyCode == e.which:
+    e.keyCode == e.which == e.button+1:
          16-Shift, 17-Ctrl, 18-Alt
+         1-click 3-right-click
     e.ctrlKey, e.altKey
 
     //body.onkeydown = handler
