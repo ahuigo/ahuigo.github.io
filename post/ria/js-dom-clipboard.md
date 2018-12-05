@@ -89,9 +89,15 @@ Note： 如果用`<input>` 它会吧`\n` 替换成` `
 ## 破除限制
 
     javascript:(function(){var doc=document;var bd=doc.body;
+    doc.oncontextmenu = doc.onmousedown = null;
     bd.onselectstart=bd.oncopy=bd.onpaste=bd.onkeydown=bd.oncontextmenu=bd.onmousemove=bd.onselectstart=bd.ondragstart=doc.onselectstart=doc.oncopy=doc.onpaste=doc.onkeydown=doc.oncontextmenu=null;
     doc.onselectstart=doc.oncontextmenu=doc.onmousedown=doc.onkeydown=function(){return true};
-    document.oncontextmenu = document.onmousedown = null;
-    document.body.style.userSelect='auto';
+
+    for(var el of document.getElementsByTagName('*')){
+        with(el.wrappedJSObject||el){
+            onmouseup=null;onmousedown=null
+        }
+    }
+    doc.body.style.userSelect='auto';
     bd.style.webkitUserSelect='auto';
     })()

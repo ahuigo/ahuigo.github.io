@@ -693,9 +693,14 @@ https://jsfiddle.net/4fn2h4vL/545/
       template: '<div class="hello">{{ text }}</div>',
     };
 
+    /*Hello 别添加到了HelloCtor*/
     const HelloCtor = Vue.extend(Hello);
     const vm = new HelloCtor({
       propsData: {
         text: 'HI :)'
       }
     }).$mount('#mount');
+
+# 更多
+Vue.js 实践（3）：实现一个漂亮、灵活、可复用的提示组件
+https://segmentfault.com/a/1190000005932457?utm_source=weekly&utm_medium=email&utm_campaign=email_weekly#articleHeader8

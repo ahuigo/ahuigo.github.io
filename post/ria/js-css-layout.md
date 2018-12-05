@@ -190,6 +190,7 @@ http://zh.learnlayout.com/flexbox.html
     3. width:200px; margin-right: -200px;float:right; 
 3. flex: 大招
 4. absolue/relative+translate: 
+    relative: left/top:50%
     transform: translate(-50%, -50%);
 5. absolue/relative+margin: 
     5. left:50%, margin-left: -width:

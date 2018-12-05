@@ -21,7 +21,7 @@ Vue CLI 是一个基于 Vue.js 进行快速开发的完整系统，提供：
 4. 一套完全`图形化的创建和管理` Vue.js 项目的用户界面: `vue ui`
 
 ## 快速原型开发
-global 能自动解决依赖，安装后就可以: vue serve 和 vue build 命令对单个 *.vue 文件进行快速原型开发，
+global 能自动解决依赖，安装后就可以: `vue serve 和 vue build` 命令对单个 `*.vue` 文件进行快速原型开发，
 
     npm install -g @vue/cli-service-global
     echo '<template><h1>Hello!</h1></template>' > App.vue
