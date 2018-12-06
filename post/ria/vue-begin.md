@@ -10,7 +10,6 @@ rollup:
     git checkout rollup-with-vue-babel
     rollup -c -w --watch
 
-nihaoma:
 
 # 其他
 

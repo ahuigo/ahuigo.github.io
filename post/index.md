@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-12-06 [“第一次”面试](/b/news/interview) 
 - 2018-09-27 [写论文要用到的网站](/b/em/em-paper) 
 - 2018-12-06 [时间管理工具](/b/em/em-time) 
 - 2018-11-30 [同一主体账号迁移](/b/wx/wx-account) 
@@ -38,4 +39,3 @@
 - 2018-10-06 [Python 的math 语法](/b/py/py-math) 
 - 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
 - 2018-10-04 [Js Array 整理](/b/ria/js-array) 
-- 2018-10-06 [安全的帐号设计](/b/sec/security-account) 
