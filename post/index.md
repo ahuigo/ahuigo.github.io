@@ -32,7 +32,7 @@
 - 2018-09-26 [跳跃表](/b/algorithm/ds-skiplist) 
 - 2018-09-26 [数据结构之树](/b/algorithm/algorithm-tree) 
 - 2013-09-26 [经典排序算法的实现](/b/algorithm/algo-sort) 
-- 2018-10-06 [tcp/ip 协议](/b/net/net-tcpip) 
+- 2018-12-07 [tcp/ip 协议](/b/net/net-tcpip) 
 - 2018-10-06 [python 字典](/b/py/py-var-dict) 
 - 2018-10-04 [named tuples](/b/py/py-var-collections) 
 - 2018-04-04 [用 Python mathplot 画K 线图](/b/py/py-math-mathplot-kline) 

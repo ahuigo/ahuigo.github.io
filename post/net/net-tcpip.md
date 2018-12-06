@@ -607,12 +607,50 @@ UDP 中如果发送方的速度快于接收方，会导致接收方因来不及�
 # Security
 
 ## SYN FLOOD
-如果C 向S 发送大量的带有伪造的client ip 的询问包SYN, S 就会向不存在的client ip 发送SYN/ACK 包信息。 当S 发送了SYN/ACK 后，S 会进程一个half-open 的半开状态，这种状态非常耗费系统的资源，Client ip 是伪造的，S 就会进入漫长的等待。当这种半开状态的连接超过一定值时，服务器会因为资源耗尽而瘫痪。
+如果C 向S 发送大量的带有伪造的client ip 的询问包SYN, S 就会向不存在的client ip 发送SYN/ACK 包信息。 当S 发送了SYN/ACK 后，S 会进程一个half-open 的半开状态(不是半连接单工)，这种状态非常耗费系统的资源，Client ip 是伪造的，S 就会进入漫长的等待。当这种半开状态的连接超过一定值时，服务器会因为资源耗尽而瘫痪。
 
 - 如果确定服务器受到了SYN FLOOD?
 用netstat 查看是否有大量的`SYN_RCVD`连接(握手的第二步)
 
 服务器往往半开连接数限制都比较大（或者干脆没限制)，可以设置一下这个值以应对SYN FLOOD.
+
+## http 请求无响应
+杨哥有次排查了一个奇怪的问题：
+
+    for ((i=0;i<100;i++>)); do curl 'http://local/hello'; done
+    有几台卡在connect(syn_sent)
+
+奇怪的是localhost 都卡在connect
+1. 先netstat -an 发现TIME_WAIT 非常多
+    1. /var/log/messager 也有包time wait bucket table overflow
+        1. 统计TIME_WAIT 有1w: `netstat -nt|awk  '/^tcp/{++state[$NF]} END{for k in state print k,"\t",state[k]}'`
+            TIME_WAIT 135975
+            CLOSE_WAIT 2...
+        2. 但是net.ipv4.tcp_max_tw_buckets 为18000 没超啊, 改大也没用 `sysctl -w net.ipv4.tcp_max_tw_buckets=500000`
+    2. 对比两台机器参数: `sysctl -a|grep net` 发现改成`net.ipv4.tcp_syncookies=1`就正常了. 
+
+`man 7 tcp;man listen` 了解下:
+> tcp_syncookies (Boolean; since Linux 2.2)
+Enable TCP syncookies. The kernel must be compiled with CONFIG_SYN_COOKIES. 
+Send out syncookies when the syn backlog queue of a socket overflows. 
+The syncookies feature attempts to protect a socket from a SYN flood attack.
+This should be used as a last resort, if at all. This is a violation of the TCP protocol, and conflicts with other areas of TCP such as TCP extensions. It can cause problems for clients and relays. It is not recommended as a
+tuning mechanism for heavily loaded servers to help with overloaded or misconfigured conditions
+
+1. net.ipv4.tcp_max_syn_backlog 服务端处理SYN_RECV状态的连接队列长度，就是半连接，多余的就丢包，客户端无响应
+2. net.core.somaxconn
+    1. 首先，listen方法支持一个叫backlog的参数，这个参数定义的值为已经完成三次握手但应用层还没有来得及accept的连接队列长度。当队列满时，新来的请求将收到ECONNREFUSED错误。
+    2. somaxconn限制了这个backlog可以设置的最大上限(比如1024). 
+        1. 如果listen的backlog大于net.core.somaxconn，那么实际的backlog将是net.core.somaxconn。
+3. net.ipv4.tcp_syncookies=1, 用于阻止 SYN flood 攻击的技术
+    1. syn_backlog满时，内核不会简单的丢弃请求，而是返回一个特殊的回包SYN Cookies。
+    2. SYN Cookies的机制是根据客户端发过来的SYN包，计算了一个cookie值，这个cookie作为将要返回的SYN ACK包的初始序列号
+    3. 允许服务器当 SYN 队列被填满时避免丢弃连接。相反，服务器会表现得像 SYN 队列扩大了一样。服务器会返回适当的 SYN+ACK 响应，但会丢弃 SYN 队列条目
+
+复盘：
+SYN_RECV队列已经超过了tcp_max_syn_backlog的长度，导致后续的请求直接被丢弃，客户端无法收到任何响应直到请求超时。通过设置syn_cookie的值，使得在半连接队列满时仍然可以响应请求。
+
+
 
 # Config
 如果压测的时候出现大量的`[error] socket: 2001824064 address is unavailable.: Cannot assign requested address`
@@ -623,7 +661,7 @@ UDP 中如果发送方的速度快于接收方，会导致接收方因来不及�
 
 	sysctl net.ipv4.tcp_tw_reuse=1 # 表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；
 	sysctl net.ipv4.tcp_timestamps=1 # 开启对于TCP时间戳的支持,若该项设置为0，则下面一项设置 不起作用
-	sysctl net.ipv4.tcp_tw_recycle=1 # 表示开启TCP连接中TIME-WAIT sockets的快速回收
+	sysctl net.ipv4.tcp_tw_recycle=1 # 表示开启TCP连接中TIME-WAIT sockets的快速回收( removed from Linux 4.12)
 
 # 参考
 - 本文图文均参考[TCP/IP 协议]
