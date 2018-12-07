@@ -1,11 +1,8 @@
 ---
 layout: page
 title:	tcp/ip 协议
-category: blog
-description:
+date: 2011-11-11
 ---
-# Preface
-
 # 互联网协议栈
 分为链路层(link), 网络层(Network), 传输层(Transport), 应用层(Application)
 

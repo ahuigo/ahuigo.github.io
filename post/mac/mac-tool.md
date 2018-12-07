@@ -64,33 +64,6 @@ The bevel won't go away and you can repeat this for as many applications as you 
 # Airdrop
 使用Airdrop 传文件吧，不要再用什么蓝牙，u 盘这个老古董了
 
-# Digital color meter
-1. Digital color meter 原生的取色器
-1. ColorSync Utility 原生的颜色工具（带rgb/hsv 转换）
-
-# grapher
-MAC自带的grapher 画方程的图比matlab还给力啊
-
-# iTerm2
-If `env | grep PATH` output two items, old iTerm2 will use the first PATH. Here are some methods to solove this problem:
-
-- Install newer iTerm2.
-- Unset the first PATH in `/etc/zshenv`:
-
-	if [ -x /usr/libexec/path_helper ]; then
-		#echo $PATH
-		unset PATH
-		eval `/usr/libexec/path_helper -s`
-		#echo $PATH
-	fi
-
-- Preferences - profile - command
-
-	/usr/bin/login -f hilojack
-
-Refer to: https://github.com/Homebrew/homebrew/issues/29843
-
-
 # cssh
 [cssh](http://macshuo.com/?p=1111) SSH多会话管理器
 安装很简单，执行：brew install csshX。
@@ -202,6 +175,11 @@ mac 自带的dict非常方便. 可以通过shortcut呼出. 也可以通过alfred
     tl word
     df word
 
+## F5:word completion.
+绝大部分mac app 都支持用F5完成 word completion.
+
+>Word completion seems to only work in Apple crafted cocoa apps, so you’ll be able to use the feature in Safari, Pages, Keynote, TextEdit, iCal, etc, but in a browser like Chrome you’re out of luck.
+
 ## text to voice
 In System Preference -> [Text to voice](http://computers.tutsplus.com/tutorials/give-your-mac-a-voice-with-text-to-speech--mac-4943)
 
@@ -223,18 +201,39 @@ In System Preference -> [Text to voice](http://computers.tutsplus.com/tutorials/
 这里[mail]('/p/mail')
 
 # clipboard( pbpaste )
-
 1. Copy a string: `echo "ohai im in ur clipboardz" | pbcopy`
 2. Copy the HTML of StackOverflow.com: `curl "http://stackoverflow.com/" | pbcopy`
 2. Open a new buffer in VIM, initialized to the content of the clipboard: `pbpaste | vim -`
 2. Save the contents of the clipboard directly to a file: `pbpaste > newfile.txt`
 
-# Thin out
+# service
+mac 下的任何app 都可以写成服务，通过服务你也可以为之设定相应的快捷键
+
+## create service shortcut
+	http://computers.tutsplus.com/tutorials/how-to-launch-any-app-with-a-keyboard-shortcut--mac-31463
+
+## delete service
+	ls ~/Library/Services
+	rm ~/Library/Services/*
+
+# Automator
+
+## Shortcuts
+ls ~/Library/Services/
+[via Automator services]( http://computers.tutsplus.com/tutorials/how-to-launch-any-app-with-a-keyboard-shortcut--mac-31463)
+
+### google in chrome
+http://superuser.com/questions/369934/mac-os-x-lion-chrome-shortcut-for-search-with-google
+> U can also set shortcut for translate in google.
+
+# System
+
+## Thin out
 给air 瘦身， 先通过这个命令查找最占用空间的目录/文件。
 
 	du -s * path | sort -nr > path.du
 
-## weixin
+### weixin
 微信视频本地存储位置：
 
 	~/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/Wechat/1.2/{一串字符}/Message/MessageTemp/{一串字符}/Video
@@ -247,11 +246,11 @@ In System Preference -> [Text to voice](http://computers.tutsplus.com/tutorials/
 
 	~/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/Wechat/1.2/{一串字符}/Message/MessageTemp/{一串字符}/OpenData
 
-## /Application Support
+### /Application Support
 
 	/Users/hilojack/Library/Application Support/WebIde80
 
-## /Var
+### /Var
 var目录是放置临时文件/日志的地方，你可以通过`man hier`得到更详细的目录简介
 有可能这里占用了很多空间，比如我的
 
@@ -273,24 +272,24 @@ var目录是放置临时文件/日志的地方，你可以通过`man hier`得到
 	25672	/private/var/root
 	4240	/private/var/audit
 
-## cache
+### cache
 
 	/Library/Caches/Homebrew
 	/Library/Caches/*
 
-## iPhoto
+### iPhoto
 	uninstall iPhoto or del /Applications/iPhoto.app//iPhoto/Contents/Resources/Themes/
 
-## Speech synthesis voices
+### Speech synthesis voices
 	rm /System/Library/Speech/Voices/ #just keep one(My favorite voice is Tom and Alex )
 	sudo mv Tom.SpeechVoice/ Tom.SpeechVoice.ori
 	sudo find . -maxdepth 1 -name '*.SpeechVoice' -exec rm -rf {} \;
 	sudo mv Tom.SpeechVoice.ori/ Tom.SpeechVoice
 
-## mail
+### mail
 	rm /Users/hilojack/Library/Containers/com.apple.mail/Data/Library/Mail\ Downloads/*
 
-## dict(This is my Dictionary List)
+### dict(This is my Dictionary List)
 
 	 du -sh /Library/Dictionaries/*
 	 du -sh ~/Library/Dictionaries/*
@@ -307,77 +306,57 @@ var目录是放置临时文件/日志的地方，你可以通过`man hier`得到
 > ps:
 在任何文字区域上按下 control+cmd+D 就可呼出取词窗口，词典会根据鼠标的位置自动取词
 
-## ~/Library
+### ~/Library
 
-### Netbeans
+#### Netbeans
 
 	rm ~/Library/Application\ Support/NetBeans/7.4/var/log/heapdump.hprof.old (800M)
 
-### QQ
+#### QQ
 
 	rm -r ~/Library/Containers/com.tencent.qq/Data/Library/Application\ Support/QQ/* (1.2G)
 
-## Music
+### Music
 
 	rm ~/Music/*
 
-## ctags
+### ctags
 自带的ctags/etags 不好用，改用brew install 安装新的
 
 	sudo rm /usr/bin/{ctags,etags}
 
-# Command line tool for xcode
+## Command line tool for xcode
 mac 下一些工具的编译，比如brew/macvim/gcc 等，都需要command line tool for xcode 的支持。（这个tool 不依赖于xcode, 如果不开发mac/iphone app, 那么xcode 本身就不必安装）
 
 https://developer.apple.com/downloads/
 
-# service
-mac 下的任何app 都可以写成服务，通过服务你也可以为之设定相应的快捷键
-
-## create service shortcut
-	http://computers.tutsplus.com/tutorials/how-to-launch-any-app-with-a-keyboard-shortcut--mac-31463
-
-## delete service
-	ls ~/Library/Services
-	rm ~/Library/Services/*
-
-
-# Automator
-
-## Shortcuts
-[via Automator services]( http://computers.tutsplus.com/tutorials/how-to-launch-any-app-with-a-keyboard-shortcut--mac-31463)
-
-### google in chrome
-http://superuser.com/questions/369934/mac-os-x-lion-chrome-shortcut-for-search-with-google
-> U can also set shortcut for translate in google.
-# monitor
+## monitor
 mac 有gui 版的monitor , 还有一个命令行的top
 
-# chrome
-如果你的google chrome helper 占用CPU 较高,不防这样做:
-
-> If you open the Activity Monitor and see that a process called "google chrome helper" is using too much CPU, here's how I fixed it:
-I went to Chrome settings/content settings/Plugins and selected Click To Play for all plugins.  (The default is Run Automatically.)
-
-# diskutil
+## diskutil
 diskutil是OS X磁盘工具应用的命令行版。既可以完成图形界面应用的所有任务，也可以做一些全盘填0、全盘填随机数等额外的任务。
 先使用`diskutil list`查看所有磁盘的列表和所在路径，然后对特定的磁盘执行命令。
 
 警告：不正确使用diskutil可能意外的破坏磁盘数据。请小心。
 
-## view UUID
+### view UUID
 
 	diskutil info /dev/disk1s2
-
-# F5
-绝大部分mac app 都支持用F5完成 word completion.
-
->Word completion seems to only work in Apple crafted cocoa apps, so you’ll be able to use the feature in Safari, Pages, Keynote, TextEdit, iCal, etc, but in a browser like Chrome you’re out of luck.
-
 
 # 流程图/脑图
 - processon flowchart + mind + UI(Wireframes) + UML
 http://www.processon.com/diagrams/new
+
+## PS
+https://www.photopea.com/
+在线图像编辑器，免费，可以替代 PhotoShop 的一部分功能
+
+## Digital color meter
+1. Digital color meter 原生的取色器
+1. ColorSync Utility 原生的颜色工具（带rgb/hsv 转换）
+
+## grapher & wolfram
+MAC自带的grapher 画方程的图比matlab还给力啊
 
 ## 脑图
 
@@ -426,13 +405,6 @@ mdfind的索引数据库在后台自动更新，不过你也可以使用mdutil�
 如果Spotlight的工作不正确，`mdutil -E`命令可以强制重建索引数据库。也可以用`mdutil -i`彻底关闭文件索引。
 
 > Refer to: http://segmentfault.com/a/1190000000509514
-
-# network
-    sudo ipconfig set en0 DHCP
-    sudo ipconfig set en1 INFORM 192.168.0.150
-        ipconfig getifaddr en0
-
-    sudo ifconfig en1 down ; sudo ifconfig en1 up
 
 # Screen/Video
 
