@@ -218,8 +218,10 @@ http://www.zhihu.com/question/22062795
 http://www.ttlsa.com/web/the-difference-between-four-and-seven-load-balance/
 http://www.ttlsa.com/nginx/using-nginx-as-http-loadbalancer/
 
-DNS 负载均衡，
-haproxy 4层或7层, lvs 4层
+DNS 负载均衡:
+1. 4层:lvs、F5
+2. 7层: nginx、apache等 可以过滤判断SYN Flood攻击
+3. haproxy 4层或7层, 
 haproxy 做均衡器时可以使用多个内网ip 连后端, 突我了port 数 65535 的限制
 
 # 架构

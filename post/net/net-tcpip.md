@@ -594,10 +594,42 @@ UDP 中如果发送方的速度快于接收方，会导致接收方因来不及�
 ![](/img/tcp-ip-state-transfer.3.png)
 
 关于 TIME_WAIT 过渡到 CLOSED 状态说明：
-从 TIME_WAIT 进入 CLOSED 需要经过 2MSL，其中 MSL 就叫做 最长报文段寿命（Maxinum Segment Lifetime），根据 RFC 793 建议该值这是为 2 分钟，也就是说需要经过 4 分钟，才进入 CLOSED 状态。
-
+从 TIME_WAIT 进入 CLOSED 需要经过 2MSL，其中 MSL 就叫做 最长报文段寿命（Maxinum Segment Lifetime），根据 RFC 793 建议该值(TCP_TIMEWAIT_LEN)这是为 2 分钟,(Linux 默认是30s)，也就是说需要经过 4 分钟，才进入 CLOSED 状态。
 
 [tcp-ip.key](/doc/tcp-ip.key)
+
+## 为什么要有2MSL的 TIME_WAIT, 不直接进入CLOSED：
+1. 防止因为客户端因为回应的ACK丢失，*服务端一直处于LAST_ACK 状态*: 在MSL 时间内，服务端没有收到ACK, 会重新发起FIN, 直到：
+    1. 放弃断开连接
+    2. 收到ACK包结束
+    3. 收到RST包重启
+2. 防止上一次连接中的包，迷路后重新出现，影响新连接(经过2MSL,上一次连接中所有的重复包都会消失)
+
+TIME_WAIT 连接太多会占用端口资源(src:ip+port,dst:ip+port)和内存，可以考虑:
+1. tcp_tw_recycle tcp_tw_reuse
+2. tcp_max_tw_buckets设置为很小的值(默认是18000). 
+    1. 当TIME_WAIT连接数量达到给定的值时，所有的TIME_WAIT连接会被立刻清除，并打印警告信息。没有等到2MSL 关闭，会影响新连接
+3. 减小TCP_TIMEWAIT_LEN值，减少等待时间，需要编译
+
+## tcp_tw_reuse tcp_tw_recycle 
+### tcp_tw_reuse 
+将处于TIME_WAIT状态的socket用于新的TCP连接，影响连出的连接。
+1. 只适合客户端发起方(TIME_WAIT一般出现在发起方)
+2. TIME_WAIT创建时间超过1秒才可以被复用
+
+tcp_tw_recycle=1 是更激进的快速回收( removed from Linux 4.12), 
+1. 没有1秒的限制(远端来的包时间戳小于上次记录的时间戳就丢). 
+但是这个时间戳是相对的，nat/lvs 等没法保证时间戳是单调递增的(多个客户端的时间戳不同步）
+
+LVS 做负载均衡(一种NAT)，当请求到达 LVS 后，它修改地址数据后便转发给后端服务器，但不会修改时间戳数据
+1. 对于后端服务器来说，请求的源地址就是 LVS 的地址: 原本不同客户端的请求经过 LVS 的转发，就可能会被认为是同一个连接
+2. 加之不同客户端的时间可能不一致，所以就会出现时间戳错乱的现象
+
+导致客户端明明发送的 SYN，但服务端就是不响应 ACK，确认数据包不断被丢弃的现象：
+
+    shell> netstat -s | grep timestamp … packets rejects in established connections because of timestamp
+
+参考：https://juejin.im/post/5c0642e65188251a82662912
 
 ## socket: Broken pipe
 对一个对端已经关闭的socket调用两次write, 第二次将会生成SIGPIPE信号
@@ -630,27 +662,18 @@ UDP 中如果发送方的速度快于接收方，会导致接收方因来不及�
     2. 对比两台机器参数: `sysctl -a|grep net` 发现改成`net.ipv4.tcp_syncookies=1`就正常了. 
 
 `man 7 tcp;man listen` 了解下:
-> tcp_syncookies (Boolean; since Linux 2.2)
-Enable TCP syncookies. The kernel must be compiled with CONFIG_SYN_COOKIES. 
-Send out syncookies when the syn backlog queue of a socket overflows. 
-The syncookies feature attempts to protect a socket from a SYN flood attack.
-This should be used as a last resort, if at all. This is a violation of the TCP protocol, and conflicts with other areas of TCP such as TCP extensions. It can cause problems for clients and relays. It is not recommended as a
-tuning mechanism for heavily loaded servers to help with overloaded or misconfigured conditions
-
 1. net.ipv4.tcp_max_syn_backlog 服务端处理SYN_RECV状态的连接队列长度，就是半连接，多余的就丢包，客户端无响应
 2. net.core.somaxconn
     1. 首先，listen方法支持一个叫backlog的参数，这个参数定义的值为已经完成三次握手但应用层还没有来得及accept的连接队列长度。当队列满时，新来的请求将收到ECONNREFUSED错误。
-    2. somaxconn限制了这个backlog可以设置的最大上限(比如1024). 
-        1. 如果listen的backlog大于net.core.somaxconn，那么实际的backlog将是net.core.somaxconn。
+    2. somaxconn限制了这个backlog可以设置的最大上限(比如1024).
+        如果listen的backlog大于net.core.somaxconn，那么实际的backlog将是net.core.somaxconn。
 3. net.ipv4.tcp_syncookies=1, 用于阻止 SYN flood 攻击的技术
     1. syn_backlog满时，内核不会简单的丢弃请求，而是返回一个特殊的回包SYN Cookies。
     2. SYN Cookies的机制是根据客户端发过来的SYN包，计算了一个cookie值，这个cookie作为将要返回的SYN ACK包的初始序列号
-    3. 允许服务器当 SYN 队列被填满时避免丢弃连接。相反，服务器会表现得像 SYN 队列扩大了一样。服务器会返回适当的 SYN+ACK 响应，但会丢弃 SYN 队列条目
+    3. 允许服务器当 SYN 队列被填满时避免丢弃*新连接*。相反，服务器会表现得像 SYN 队列扩大了一样。服务器会返回适当的 SYN+ACK 响应，但会*丢弃 SYN 队列条目*
 
 复盘：
 SYN_RECV队列已经超过了tcp_max_syn_backlog的长度，导致后续的请求直接被丢弃，客户端无法收到任何响应直到请求超时。通过设置syn_cookie的值，使得在半连接队列满时仍然可以响应请求。
-
-
 
 # Config
 如果压测的时候出现大量的`[error] socket: 2001824064 address is unavailable.: Cannot assign requested address`
@@ -659,8 +682,8 @@ SYN_RECV队列已经超过了tcp_max_syn_backlog的长度，导致后续的请�
 
 在/etc/sysctl.conf里加, 或者在命令行：
 
+	sysctl net.ipv4.tcp_timestamps=1 # 开启对于TCP时间戳的支持,若该项设置为0，则下面两项设置 不起作用
 	sysctl net.ipv4.tcp_tw_reuse=1 # 表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；
-	sysctl net.ipv4.tcp_timestamps=1 # 开启对于TCP时间戳的支持,若该项设置为0，则下面一项设置 不起作用
 	sysctl net.ipv4.tcp_tw_recycle=1 # 表示开启TCP连接中TIME-WAIT sockets的快速回收( removed from Linux 4.12)
 
 # 参考
