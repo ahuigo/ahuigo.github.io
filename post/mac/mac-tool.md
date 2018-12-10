@@ -2,6 +2,7 @@
 layout: page
 title:	mac 工具集
 category: blog
+date: 2018-10-10
 description:
 ---
 # Preface
@@ -61,84 +62,6 @@ While Cmd tabbing between applications, without releasing CMD, you can hit 'Q' t
 
 The bevel won't go away and you can repeat this for as many applications as you like as long as you're holding CMD.
 
-# Airdrop
-使用Airdrop 传文件吧，不要再用什么蓝牙，u 盘这个老古董了
-
-# cssh
-[cssh](http://macshuo.com/?p=1111) SSH多会话管理器
-安装很简单，执行：brew install csshX。
-运行方式：
-
-	csshX user1@10.10.10.1 user2@10.10.10.2 user3@10.10.10.3 user4@10.10.10.4 ……
-
-或者把这些信息存入文件，以文件的方式运行：
-
-	csshX –hosts hostsfile
-
-运行结果是csshX会自动打开并均匀排列这些 SSH 会话窗口，最底部是总控制台，你在控制台输入一个命令，该命令会被同步到所有打开的终端并执行。
-csshX 可以在 OS X 的默认终端中正常执行，如果你用 iTerm 2的话，可以使用另一个类似的工具：i2cssh。
-
-# doc(textutil)
-
-	textutil -convert txt /path/to/DOCX/files/*.docx
-	textutil -convert rtf /path/to/DOCX/files/*.docx
-
-## 石墨文档
-
-# pkgutil
-pkgutil 是原生的管理mac 安装包的命令行工具
-
-	man pkgutil
-	//List all currently installed package IDs
-	pkgutil --pkgs |grep -i xcode
-	//List all package IDs
-	pkgutil --pkgs-plist
-
-	//list installed files
-	pkgutil --files com.apple.pkg.XcodeMAS_iOSSDK_8_1 |grep php
-
-	//check app's location
-	pkgutil --pkg-info the-package-name.pkg
-	pkgutil --pkg-info com.apple.pkg.XcodeMAS_iOSSDK_8_1
-
-	//specify files or dirs
-	pkgutil --only-files --files com.apple.pkg.XcodeMAS_iOSSDK_8_1
-	pkgutil --only-dirs --files com.apple.pkg.XcodeMAS_iOSSDK_6_1
-
-The forget argument removes an entry from the installer database but without removing the actual files:
-
-	//Discard receipt data for the specified package
-    sudo pkgutil --forget org.netbeans.ide.php.201310111528
-
-[pkgutil](https://wincent.com/wiki/Uninstalling_packages_(.pkg_files)_on_Mac_OS_X)
-[pkg uninstall](https://github.com/mpapis/pkg_uninstaller)
-
-
-# Alfred2
-比spotlight更强大的高效快捷键工具, 通过它你可以呼起任意的app, url. 而且可以定制呼起关键词, 传递的参数
-
-	wolfram x^2+y^2+z^2=10
-
-> Flashlight 是一个Spotlight Plugin ，很强大:
-http://sspai.com/27734
-
-	brew cask info flashlight
-
-# scutil
-系统配置命令: scutil , Manage system configuration parameters
-
-	scutil --set ComputerName 'Hilo Book'
-
-## local HostName
-> http://support.apple.com/kb/ph3763
-
-Local hostname (or “local network name”): Other computers on the same network subnet can find your computer by this name using Bonjour, a network technology developed by Apple Inc. Bonjour-compatible devices and services (such as computers or printers) automatically advertise their availability on the local network, so you can easily find devices and services you want to use. You can change the local network name.
-
-To find your network address:
-Choose Apple menu > System Preferences, and then click Sharing.
-The network address appears below the Computer Name field.
-If the computer name ends in “.local,” it is visible on your local subnet; users on other network subnets or on different networks can’t see it.
-
 # dict
 mac 自带的dict非常方便. 可以通过shortcut呼出. 也可以通过alfred2呼出
 字典文件在: $ ls /Library/Dictionaries ~/Library/Dictionaries 见[mac-install]
@@ -197,36 +120,71 @@ In System Preference -> [Text to voice](http://computers.tutsplus.com/tutorials/
 
     /System/Library/Speech/Voices
 
-# mail
-这里[mail]('/p/mail')
-
-# clipboard( pbpaste )
+# System
+## clipboard( pbpaste )
 1. Copy a string: `echo "ohai im in ur clipboardz" | pbcopy`
 2. Copy the HTML of StackOverflow.com: `curl "http://stackoverflow.com/" | pbcopy`
 2. Open a new buffer in VIM, initialized to the content of the clipboard: `pbpaste | vim -`
 2. Save the contents of the clipboard directly to a file: `pbpaste > newfile.txt`
 
-# service
+## service
 mac 下的任何app 都可以写成服务，通过服务你也可以为之设定相应的快捷键
 
-## create service shortcut
+### create service shortcut
 	http://computers.tutsplus.com/tutorials/how-to-launch-any-app-with-a-keyboard-shortcut--mac-31463
 
-## delete service
+### delete service
 	ls ~/Library/Services
 	rm ~/Library/Services/*
 
-# Automator
+## pkgutil
+pkgutil 是原生的管理mac 安装包的命令行工具
 
-## Shortcuts
+	man pkgutil
+	//List all currently installed package IDs
+	pkgutil --pkgs |grep -i xcode
+	//List all package IDs
+	pkgutil --pkgs-plist
+
+	//list installed files
+	pkgutil --files com.apple.pkg.XcodeMAS_iOSSDK_8_1 |grep php
+
+	//check app's location
+	pkgutil --pkg-info the-package-name.pkg
+	pkgutil --pkg-info com.apple.pkg.XcodeMAS_iOSSDK_8_1
+
+	//specify files or dirs
+	pkgutil --only-files --files com.apple.pkg.XcodeMAS_iOSSDK_8_1
+	pkgutil --only-dirs --files com.apple.pkg.XcodeMAS_iOSSDK_6_1
+
+The forget argument removes an entry from the installer database but without removing the actual files:
+
+	//Discard receipt data for the specified package
+    sudo pkgutil --forget org.netbeans.ide.php.201310111528
+
+[pkgutil](https://wincent.com/wiki/Uninstalling_packages_(.pkg_files)_on_Mac_OS_X)
+[pkg uninstall](https://github.com/mpapis/pkg_uninstaller)
+
+
+## Automator
+
+### Shortcuts
 ls ~/Library/Services/
 [via Automator services]( http://computers.tutsplus.com/tutorials/how-to-launch-any-app-with-a-keyboard-shortcut--mac-31463)
 
-### google in chrome
+google in chrome
 http://superuser.com/questions/369934/mac-os-x-lion-chrome-shortcut-for-search-with-google
 > U can also set shortcut for translate in google.
 
-# System
+## Alfred2
+比spotlight更强大的高效快捷键工具, 通过它你可以呼起任意的app, url. 而且可以定制呼起关键词, 传递的参数
+
+	wolfram x^2+y^2+z^2=10
+
+> Flashlight 是一个Spotlight Plugin ，很强大:
+http://sspai.com/27734
+
+	brew cask info flashlight
 
 ## Thin out
 给air 瘦身， 先通过这个命令查找最占用空间的目录/文件。
@@ -346,6 +304,12 @@ diskutil是OS X磁盘工具应用的命令行版。既可以完成图形界面�
 # 流程图/脑图
 - processon flowchart + mind + UI(Wireframes) + UML
 http://www.processon.com/diagrams/new
+
+## logo
+https://thenounproject.com/
+
+## 矢量图
+adobe XD
 
 ## PS
 https://www.photopea.com/

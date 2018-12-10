@@ -5,6 +5,24 @@ date: 2018-10-04
 # egg model
 https://eggjs.org/zh-cn/tutorials/sequelize.html
 
+1.config/plugin.js 中引入 egg-sequelize 插件
+
+    $ npm install --save egg-sequelize mysql2
+    exports.sequelize = {
+        enable: true,
+        package: 'egg-sequelize'
+    }
+
+
+2.在 config/config.default.js 中编写 sequelize 配置
+
+    config.sequelize = {
+        dialect: 'mysql',
+        host: '127.0.0.1',
+        port: 3306,
+        database: 'egg-sequelize-doc-default',
+    };
+
 ## mongo model
 app/model/users.js example
 
@@ -23,17 +41,11 @@ app/model/users.js example
         }));
     };
 
-Use(注意大写！！):
+Use(注意大写`Users`！！):
 
     await this.ctx.model.Users.findOne({ userName, password });
 
-## sqlite,mysql,postgre
-plugin.js
-
-    exports.sequelize = {
-        enable: true,
-        package: 'egg-sequelize'
-    }
+sqlite,mysql,postgre 类似
 
 ## curd
 

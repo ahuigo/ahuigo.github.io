@@ -7,13 +7,27 @@ description:
 # Preface
 在工作中，我们可能会有同步操作多台linux 服务器的需要。过去的做法是用for 循环执行: `ssh $ip < work.sh $1 $2 &`
 
-其实，我们还可以借助以下命令(前提是已经建立信任):
+其实，我们还可以借助以下这些命令更方便的完成我们的工作(前提是已经建立信任):
 
     pssh pdsh clusterssh clusterit mussh
 
 # Gravitational Teleport
 Gravitational Teleport
 Modern SSH server for teams managing distributed infrastructure
+
+# cssh
+[cssh](http://macshuo.com/?p=1111) SSH多会话管理器
+安装很简单，执行：brew install csshX。
+运行方式：
+
+	csshX user1@10.10.10.1 user2@10.10.10.2 user3@10.10.10.3 user4@10.10.10.4 ……
+
+或者把这些信息存入文件，以文件的方式运行：
+
+	csshX –hosts hostsfile
+
+运行结果是csshX会自动打开并均匀排列这些 SSH 会话窗口，最底部是总控制台，你在控制台输入一个命令，该命令会被同步到所有打开的终端并执行。
+csshX 可以在 OS X 的默认终端中正常执行，如果你用 iTerm 2的话，可以使用另一个类似的工具：i2cssh。
 
 # pssh
 pssh 与mpssh, 都是多主机并行运行命令

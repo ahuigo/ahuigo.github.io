@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [学习的本质、效率](/b/course/1.study) 
 - 2016-10-10 [网络扫描器nmap、zmap](/b/net/net-nmap-zmap) 
 - 2018-12-07 [ifconfig](/b/net/2.tool-ifconfig) 
 - 2018-12-07 [centos网络配置](/b/net/1.net-config) 
@@ -38,4 +39,3 @@
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 
 - 2018-10-06 [python 字典](/b/py/py-var-dict) 
 - 2018-10-04 [named tuples](/b/py/py-var-collections) 
-- 2018-04-04 [用 Python mathplot 画K 线图](/b/py/py-math-mathplot-kline) 
