@@ -1,6 +1,5 @@
 # AHUIGO 的笔记
-- 2018-09-27 [谈学习的本质和效率](/b/course/1.study) 
-- 2018-12-06 [“第一次”面试](/b/news/interview) 
+- 2018-09-27 [人脑学习的本质](/b/course/1.study) 
 - 2018-09-27 [写论文要用到的网站](/b/em/em-paper) 
 - 2018-11-4 [ADHD：分心者的自我认知训练](/b/life/adhd) 
 - 2018-09-27 [计算球面两点的距离](/b/math/geo-distance) 
@@ -39,3 +38,4 @@
 - 2018-10-04 [Js Array 整理](/b/ria/js-array) 
 - 2018-10-06 [安全的帐号设计](/b/sec/security-account) 
 - 2018-10-06 [vim 笔记](/b/vim/vim-notes) 
+- 2018-10-06 [vim 使用之变量](/b/vim/vim-var) 
