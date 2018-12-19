@@ -1,8 +1,5 @@
 # AHUIGO 的笔记
 - 2018-09-27 [谈学习的本质和效率](/b/course/1.study) 
-- 2016-10-10 [网络扫描器nmap、zmap](/b/net/net-nmap-zmap) 
-- 2018-12-07 [ifconfig](/b/net/2.tool-ifconfig) 
-- 2018-12-07 [centos网络配置](/b/net/1.net-config) 
 - 2018-12-06 [“第一次”面试](/b/news/interview) 
 - 2018-09-27 [写论文要用到的网站](/b/em/em-paper) 
 - 2018-11-4 [ADHD：分心者的自我认知训练](/b/life/adhd) 
@@ -39,3 +36,6 @@
 - 2018-04-04 [用 Python mathplot 画K 线图](/b/py/py-math-mathplot-kline) 
 - 2018-10-06 [Python 的math 语法](/b/py/py-math) 
 - 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
+- 2018-10-04 [Js Array 整理](/b/ria/js-array) 
+- 2018-10-06 [安全的帐号设计](/b/sec/security-account) 
+- 2018-10-06 [vim 笔记](/b/vim/vim-notes) 

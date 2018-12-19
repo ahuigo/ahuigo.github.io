@@ -127,17 +127,20 @@ align-items 用来定义`伸缩项目`在`侧轴`的对齐方式
         align-content: flex-start || flex-end || center || space-between || space-around || stretch;
 
 ## flex项目items
+http://www.ruanyifeng.com/blog/2018/10/flexbox-form.html 参考
 
     order
         order控制伸缩项目在伸缩容器中的显示顺序，伸缩容器中伸缩项目从序号最小的开始布局，默认值是0。 优先级
     flex:
         flex属性可以用来指定可伸缩长度的部件，是
-        flex-grow:（扩展比例）,
-        flow-shrink: （收缩比例）,flex-basis（伸缩基准值）这个三个属性的缩写写
-    [align-self]用来在单独的伸缩项目上覆写默认的对齐方式，这个属性是用来覆盖伸缩容器属性align-items对每一行的对齐方式。
+        flex-grow:（宽度扩展比例）,
+        flow-shrink: （收缩比例）,
+        flex-basis（伸缩基准值）这个三个属性的缩写写
+    [align-self] （高度对齐）用来在单独的伸缩项目上覆写默认的对齐方式，这个属性是用来覆盖伸缩容器属性align-items对每一行的对齐方式。
         align-self: auto | flex-start | flex-end | center | baseline | stretch
 
 > flex container 会限制item: max-width
+
 
 ## flex center
 http://zh.learnlayout.com/flexbox.html

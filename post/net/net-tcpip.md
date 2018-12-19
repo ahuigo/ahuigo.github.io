@@ -644,7 +644,7 @@ LVS 做负载均衡(一种NAT)，当请求到达 LVS 后，它修改地址数据
 服务器往往半开连接数限制都比较大（或者干脆没限制)，可以设置一下这个值以应对SYN FLOOD.
 
 ## http 请求无响应
-杨哥有次排查了一个奇怪的问题：
+有次排查了一个奇怪的问题：
 
     for ((i=0;i<100;i++>)); do curl 'http://local/hello'; done
     有几台卡在connect(syn_sent)
@@ -664,13 +664,13 @@ LVS 做负载均衡(一种NAT)，当请求到达 LVS 后，它修改地址数据
     1. 首先，listen方法支持一个叫backlog的参数，这个参数定义的值为已经完成三次握手但应用层还没有来得及accept的连接队列长度。当队列满时，新来的请求将收到ECONNREFUSED错误。
     2. somaxconn限制了这个backlog可以设置的最大上限(比如1024).
         如果listen的backlog大于net.core.somaxconn，那么实际的backlog将是net.core.somaxconn。
-3. net.ipv4.tcp_syncookies=1, 用于阻止 SYN flood 攻击的技术
-    1. syn_backlog满时，内核不会简单的丢弃请求，而是返回一个特殊的回包SYN Cookies。
-    2. SYN Cookies的机制是根据客户端发过来的SYN包，计算了一个cookie值，这个cookie作为将要返回的SYN ACK包的初始序列号
-    3. 允许服务器当 SYN 队列被填满时避免丢弃*新连接*。相反，服务器会表现得像 SYN 队列扩大了一样。服务器会返回适当的 SYN+ACK 响应，但会*丢弃 SYN 队列条目*
+3. net.ipv4.tcp_syncookies=1, 用于阻止 SYN flood 攻击的技术: [SYN Cookie的原理和实现](https://blog.csdn.net/zhangskd/article/details/16986931)
+    0. 接收到SYN包并返回TCP SYN+ACK包时，不分配一个专门的数据区，而是根据这个SYN包计算出一个cookie值,作为将要返回的SYN ACK包的初始序列
+    1. 允许服务器当 SYN 队列被填满时避免丢弃*新连接*。相反，服务器会表现得像 SYN 队列扩大了一样。服务器会返回适当的 SYN+ACK 响应，但会*丢弃 SYN 队列条目*
 
 复盘：
-SYN_RECV队列已经超过了tcp_max_syn_backlog的长度，导致后续的请求直接被丢弃，客户端无法收到任何响应直到请求超时。通过设置syn_cookie的值，使得在半连接队列满时仍然可以响应请求。
+SYN_RECV队列已经超过了tcp_max_syn_backlog的长度，导致后续的请求直接被丢弃，客户端无法收到任何响应直到请求超时。
+通过设置syn_cookie的值/或者增加tcp_max_syn_backlog，使得在半连接队列满时仍然可以响应请求。
 
 # Config
 如果压测的时候出现大量的`[error] socket: 2001824064 address is unavailable.: Cannot assign requested address`

@@ -71,7 +71,7 @@ Injector 需要为注射的方法传入合适的参数
     }
 
 ## python di
-Python 半残废的DI
+Python 半残废的DI, 利用**keyword**确定参数
 
     class DI():
         def __init__(this, deps):
