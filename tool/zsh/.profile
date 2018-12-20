@@ -48,15 +48,16 @@ function gcap(){
     fi
     if git remote | grep '\w';then
         if git remote | xargs -L1 git push; then
-            subdirs=(b vue)
+            subdirs=(b vue ../b)
             for subdir in "${subdirs[@]}"; do
+                oridir=$(pwd)
                 test -d $subdir && cd $subdir;
                 if test $? = 0;then
                     echo git push $subdir;
                     git add .
                     git commit -am "msg:$1"
                     git remote | xargs -L1 git push
-                    cd ..
+                    cd $oridir
                 fi
             done
         fi
