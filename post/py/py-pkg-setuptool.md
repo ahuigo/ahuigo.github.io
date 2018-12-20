@@ -60,7 +60,7 @@ test 命令使用: setup.cfg （放在setup.py 同级根目录）指定测试命
 然后执行:`python3 setup.py test`
 
 ### Optional
-*Optional*: 用于打包后, 传输，在其它本地机上解包，非在线安装吧
+*Optional*: 用于打包后, 传输，在其它本地机上解包，非在线安装吧
 1. We can now package the script using:
 
 	$ python setup.py sdist # This will create a dist folder containing all your distributions. 
@@ -75,7 +75,7 @@ test 命令使用: setup.cfg （放在setup.py 同级根目录）指定测试命
     rm /usr/local/Cellar/python3/3.6.1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/pyhttp-server.egg-link
 
 ## MANIFEST.in
-除了python 文件外，如果要打包静态文件, 就建立MNIFEST.in, 写入：
+除了python 文件外，如果要打包静态文件, 就建立MNIFEST.in, 写入：
 - 包含目录用graft, 包含文件用include
 
     graft flaskr/templates
@@ -124,7 +124,7 @@ use:
 Once this is done, `~/.pypirc` file will store the login name and the password. 
 
 ## The next step is to upload your package. 
-create egg-info+sdist
+create sdist+egg-info
 
     python3 setup.py sdist bdist_wheel
 

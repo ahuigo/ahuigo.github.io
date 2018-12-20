@@ -6,7 +6,10 @@ MAC(Message Authentication Code) 与 hash 的区别: http://stackoverflow.com/qu
 
 - HASH 验证消息(message)没有被篡改 `hash = hash(message)`
 - MAC 不仅验证消息没有被篡改，还通过一个`private key`验证*谁*加密的消息, 用`key` 保证消息真实性 `mac = hash(key + message)`. 
+mac只可被持有key的角色来认证
 这个key 类似于salt, 但是意义不一样，key 是需要严格保密的, salt 是用于加固弱密的(加盐)，salt 公开后的风险非常小
+    - HMAC 是构建MAC 的方式，H代表Hash, 就叫做hmac
+    - 也可以使用对称加密函数来构造。
 
 MAC 是用于身份认证的，并且依靠其中的密钥来防止攻击者篡改消息。如果攻击者无需知道密钥和消息，也能构造出包含`key + message + extra` 的一个有效的哈希值, 也就破解了身份验证。
 

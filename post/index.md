@@ -36,6 +36,6 @@
 - 2018-10-06 [Python 的math 语法](/b/py/py-math) 
 - 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
 - 2018-10-04 [Js Array 整理](/b/ria/js-array) 
-- 2018-10-06 [安全的帐号设计](/b/sec/security-account) 
+- 2018-12-20 [安全的帐号设计](/b/sec/security-account) 
 - 2018-10-06 [vim 笔记](/b/vim/vim-notes) 
 - 2018-10-06 [vim 使用之变量](/b/vim/vim-var) 
