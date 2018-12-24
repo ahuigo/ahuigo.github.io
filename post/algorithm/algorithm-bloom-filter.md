@@ -40,8 +40,6 @@ date: 2018-09-26
 
 假使n=10^7(1k万),那么m可以取2^27(1.34亿)。
 
-
-
 # bloomFilet的redis实现示例
 
 	<?php
@@ -89,7 +87,7 @@ date: 2018-09-26
 		}
 
 		/**
-		 * 
+		 * @desc 简单的加权(质数)
 		 * @param type $str
 		 * @param type $seed 7,11,13,17,19,23,29
 		 * @return type

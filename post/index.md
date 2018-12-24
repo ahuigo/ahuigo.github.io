@@ -26,7 +26,7 @@
 - 2018-10-06 [哪些python lib 让你相见恨晚](/b/py/py-lib) 
 - 2018-09-26 [BFPRT 算法](/b/algorithm/algo-topk) 
 - 2018-09-15 [Analysis of Algorithm](/b/algorithm/1.time-complex) 
-- 2018-09-26 [跳跃表](/b/algorithm/ds-skiplist) 
+- 2017-09-26 [跳跃表](/b/algorithm/ds-skiplist) 
 - 2018-09-26 [数据结构之树](/b/algorithm/algorithm-tree) 
 - 2013-09-26 [经典排序算法的实现](/b/algorithm/algo-sort) 
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 

@@ -49,9 +49,10 @@ function gcap(){
     if git remote | grep '\w';then
         if git remote | xargs -L1 git push; then
             subdirs=(b vue ../b)
+            oridir=$(pwd)
+            echo "check oridir $oridir"
             for subdir in "${subdirs[@]}"; do
-                echo "check subidr $subdir"
-                oridir=$(pwd)
+                echo "check subdir $subdir"
                 test -d $subdir && cd $subdir;
                 if test $? = 0;then
                     echo git push $subdir;

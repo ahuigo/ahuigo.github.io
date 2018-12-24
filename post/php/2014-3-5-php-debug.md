@@ -1,17 +1,12 @@
 ---
 layout: page
 title: 关于php的调试方法
-category: blog
+date: 2015-09-11
 description:
 ---
-
 # PHP 调试方法
 
----
-
 ## 基本调试方法
-
-----
 
 ### var_dump 与 二分法
 相信大家确认问题点最常用的就是 以下函数结合二分法了：
@@ -529,7 +524,6 @@ Refer to: [](http://xdebug.org/docs/remote)
 	php a.php
 
 ##### HTTP Debug Sessions
-
 Xdebug contains functionality to keep track of a debug session when started through a browser: cookies. This works like this:
 
 1. When the URL variable `XDEBUG_SESSION_START=name` is appended to an URL Xdebug emits a cookie with the name "XDEBUG_SESSION" and as value the value of the XDEBUG_SESSION_START URL parameter. The expiry of the cookie is one hour.

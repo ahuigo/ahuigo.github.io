@@ -218,11 +218,13 @@ http://www.zhihu.com/question/22062795
 http://www.ttlsa.com/web/the-difference-between-four-and-seven-load-balance/
 http://www.ttlsa.com/nginx/using-nginx-as-http-loadbalancer/
 
-DNS 负载均衡:
-1. 4层:lvs、F5
-2. 7层: nginx、apache等 可以过滤判断SYN Flood攻击
+DNS [负载均衡](https://zhuanlan.zhihu.com/p/34904010):
+1. 4层:lvs、F5, 使用IP加端口的方式进行路由转发
+    1. 通过配置的负载均衡算法选择一台后端服务器，并且将报文中的IP地址信息修改为后台服务器的IP地址信息，因此TCP三次握手连接是与后端服务器直接建立起来的。
+2. 7层: nginx、apache等 可以过滤判断SYN Flood攻击(避免应用服务器直接连接)
+    1. 只能先与负载均衡设备进行TCP连接，然后负载均衡设备再与后端服务器建立另外一条TCP连接通道。
 3. haproxy 4层或7层, 
-haproxy 做均衡器时可以使用多个内网ip 连后端, 突我了port 数 65535 的限制
+    1. haproxy 做均衡器时可以使用多个内网ip 连后端, 突我了port 数 65535 的限制
 
 # 架构
 Linux集群+MySQL优化+Nginx高并发+lvs负载均衡
@@ -231,6 +233,5 @@ cache + message queue + (chubby/zookeeper)
 http://www.zhihu.com/question/23364686
 
 # debug
-
 ## ip_conntrack: table full, dropping packet
 http://www.vpsee.com/2011/11/how-to-solve-ip_conntrack-table-full-dropping-packet-problem/

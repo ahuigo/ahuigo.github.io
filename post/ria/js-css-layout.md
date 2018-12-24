@@ -59,6 +59,11 @@ http://imweb.io/topic/559f902a3d7bb8096b69cfdd
         抽屉    .self postion  -> absolute       position
         wrap   .parent flex    -> block          flex 
 
+## ul,li
+li 之间如果有空白，去掉的方式有几种
+
+     ul{font-size:0}
+     ul { display: flex; }
 
 # flex
 display:flex, 比 inline-block 简单
