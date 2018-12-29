@@ -166,7 +166,7 @@ Read `system variable` with `@@`:
 
 ### add
 
-	set @i=0;
+	set @i=0;// set @i:=0; //The := operator is never interpreted as a comparison operator
 	SELECT (@i:=@i+1) AS rowNumber,id from t1;
 
 # INFORMATION_SCHEMA

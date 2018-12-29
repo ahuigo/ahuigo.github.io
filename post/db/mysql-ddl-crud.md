@@ -16,6 +16,9 @@ description:
 	> DROP DATABASE dbName;
 	$ mysqladmin DROP dbName;
 
+    //show
+    $ show databases;
+
 There is no `rename` for database special, but you could rename database via table
 
 	//For innoDB
@@ -357,6 +360,11 @@ mysql update 多个unique key 时,如果遇到 `duplicate key`, 比如所有的i
 	where name <=> NULL; # 不可以用name=NULL
 	where name!=''; # not null and not empty string
 
+## between 
+
+    2<=a<=3 
+    a between 2 and 3
+
 # join 外连接
 Refer to: 
 http://www.codedata.com.tw/database/mysql-tutorial-5-join-union/
@@ -366,7 +374,8 @@ join分 类：
 1. A^B 交集：from 子句
     2. A [INNER] JOIN B ON （A.uid = B.id）
     2. A JOIN B USING （uid = id）
-    2. A JOIN B USING （uid） #相同
+        2. A JOIN B USING （uid） #相同
+    3. A,B where a.uid=b.id
 
 2. 左右交: Av(A^B) 或 (A^B)vB:
     3. A LEFT JOIN B
@@ -538,7 +547,7 @@ slower(join):
 	+------------+------+---------------------+
 
 # UNION
-它与Join 不一样, UNION 查询就是合并查询，
+它与Join 不一样, UNION 查询就是拼接合并查询，
 
 	select_statement1 UNION select_statement2 [UNION select_statement3 [...]]
 
@@ -707,3 +716,12 @@ Order by 需要放到group by 的后面做最后处理
 
 	select distinct id from table;
 	select id from table group by id;
+
+## count consecutive rows with the same value
+
+    | id    | int(11) | NO   | PRI | NULL    | auto_increment |
+    | num   | int(11) | YES  | MUL | NULL    |                |
+
+    MariaDB [test]> select * from (
+        select id, num,if(@n=t.num,@count:=@count+1, @count:=1) as cnt,@n:=t.num from t
+    ) m where cnt >=3;

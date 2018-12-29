@@ -16,7 +16,7 @@ CAP定理（CAP theorem), 指出对于一个分布式计算系统来说，不可
 2. 提高分区容忍P，就需要越多的节点备份, 节点之间就有C一致性 的问题
 3. 提高一致性C, 就需要越多的等待，降低了可用性(响应慢)
 
-## ACID
+## 事务ACID
 原子性(Atomicity)
 一致性(Consistency)
 隔离性(Isolation)

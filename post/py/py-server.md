@@ -49,10 +49,10 @@ see [/p/py/async-asyncio](/p/py/py-async-asyncio)
 
 基于事件驱动的(像epool) 衍生了大量的框架, 比如
 
-    2.tornado: tornado框架自己实现的IOLOOP;
-    3.picoev: meinheld(greenlet+picoev)使用的网络库，小巧轻量，相较于libevent在数据结构和事件检测模型上做了改进，所以速度更快
-    4.uvloop: uvloop是个高性能的异步非阻塞框架，比Asyncio更加快速. uvloop继承自libuv使用Cython编写，性能比nodejs还要高
-    1. libevent, libev, libuv,greenlet等: 这些库基于协程等
+    1.tornado: tornado框架自己实现的IOLOOP;
+    2.picoev: meinheld(greenlet+picoev)使用的网络库，小巧轻量，相较于libevent在数据结构和事件检测模型上做了改进，所以速度更快
+    3.uvloop: uvloop是个高性能的异步非阻塞框架，比Asyncio更加快速. uvloop继承自libuv使用Cython编写，性能比nodejs还要高
+    4. libevent, libev, libuv,greenlet等: 这些库基于协程等
         1.libevent/libev: Gevent(greenlet+前期libevent，后期libev)使用的网络库，广泛应用;
         1. eventlet(python2 时协程库)
         2. gevent(eventlet 增强版)
@@ -60,9 +60,8 @@ see [/p/py/async-asyncio](/p/py/py-async-asyncio)
             2. inspired by eventlet, more consistent API, simpler implementation and better performance
             3. 其实用go 比gevent 牛逼多了
         3. asyncio 是python3 提供的官方协程库
-    2. Stackless Python: cpython 另一个实现，抛弃了cpython中的堆栈，用微线程"tasklet"取代，tasklet之间通过channel交换数据
-    3. Greenlet: 保留cpython 作为c extension，基于stackless实现, 通过switch将一个greenlet的控制权交给另一个greenlet ![greenlet-demo-sample](https://pic3.zhimg.com/v2-9c51c194e68ceeb897ab850c0cdc9d4e_b.jpg)
-
+    5. Stackless Python: cpython 另一个实现，抛弃了cpython中的堆栈，用微线程"tasklet"取代，tasklet之间通过channel交换数据
+    6. Greenlet: 保留cpython 作为c extension，基于stackless实现, 通过switch将一个greenlet的控制权交给另一个greenlet ![greenlet-demo-sample](https://pic3.zhimg.com/v2-9c51c194e68ceeb897ab850c0cdc9d4e_b.jpg)
 
 EventLoop处理事件触发时的回调比较麻烦: 有了协程(gevent/asyncio/curio 人性化，优雅，内存小)
 
@@ -104,7 +103,6 @@ EventLoop处理事件触发时的回调比较麻烦: 有了协程(gevent/asyncio
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
-
 
 # greenlet
 gevent 是基于greenlet， greenlet封装了libevent+yield 的事件循环高层同步API, 所以它是基于生成器的

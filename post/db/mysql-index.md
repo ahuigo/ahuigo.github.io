@@ -4,36 +4,32 @@ title:	mysql 索引
 category: blog
 description:
 ---
-# Preface
+# Index Type
+> http://stackoverflow.com/questions/12813363/what-is-the-difference-between-a-candidate-key-and-a-primary-key
 
-# todo
-- [索引原理-meituan]
-
-# clustered index
+## clustered index
 聚合索引(clustered index) / 非聚合索引(nonclustered index)
 
 > *Clustered Index* 就是数据内容本身是stored in order, 因为是有序的，所以范围查询(id>100, group by, etc.)、倒序查询都非常的高效
 
-# Data Index Type
-> http://stackoverflow.com/questions/12813363/what-is-the-difference-between-a-candidate-key-and-a-primary-key
-
+## SuperKey
 在数据库中，超键(SuperKey) 包含候选键(Candidate Key), 候选键包含主键(Primary Key)
 1. Primary Key:
 	对数据对象唯一标识和完整标识的列. Primary Key 属于Candidate Key.  Each Candidate Key can qualify as Primary Key. Only one CK can be PK
 2. Candidate Key: Unique can be null, it can not be ck
 	某关系变量的一组属性的集合，且同时满足：
     1. 属性集合能确保在关系中能唯一标识元组(SuperKey)
-    2. 在这个属性集合中找不出合适的子集满足条件(最小子集)
+    2. 在这个属性集合中找不出合适的子集满足条件(*最小子集*)
 3. SuperKey:
 	某关系变量的一组属性的集合，且同时满足：属性集合能确保在关系中能唯一标识元组. 所以候选键Candidate Key是最小超键SuperKey。
 
-外键Foreign Key: 连接两表之间的关系属性或者属性集合，通常是主键属性。
+代理键和自然键: 如果数据表中的所有候选键都不适合做主键(数据太长，意义层面太多), 就会请一个无意义的键做主键（比如自增的id）, 这就是代理键。有意义的主键就是自然键。
+
+## 外键Foreign Key
+连接两表之间的关系属性或者属性集合，通常是主键属性。
 
 	在关系数据库中，关系用来表示表间关系：父数据表(Parent Entity)的Primary Key 会放在另一张表中, 两表通过PK 建立关系，这个PK 属性就是外键。
 
-代理键和自然键: 如果数据表中的所有候选键都不适合做主键(数据太长，意义层面太多), 就会请一个无意义的键做主键（比如自增的id）, 这就是代理键。有意义的主键就是自然键。
-
-## Foreign Key
 用户量大，并发度高: 不要用外键，mysql IO消耗大
 
 
@@ -76,6 +72,7 @@ Example:
 	SELECT * FROM table1 USE INDEX (col1_index,col2_index)..
 	SELECT * FROM table1 IGNORE INDEX (col3_index)
 
+# Index
 ## INDEX/KEY
 普通索引
 
@@ -112,6 +109,19 @@ You should remove the autoincrement property before dropping the key:
 	ALTER TABLE table_name MODIFY id INT NOT NULL;
 	ALTER TABLE table_name DROP PRIMARY KEY;
 
+PK vs UK:
+
+1. Null: PK is not null but UK allows nulls(Note: By Default), so UK may not be unique.
+1. Unique: There can only be one and only one PK on a table but there can be multiple UK's
+1. Clustered index: PK creates a `Clustered index` and UK creates a `Non Clustered Index`.
+1. Candidate: UK may not be candidate key(Because it may be not unique)
+
+*Clustered Index* 就是数据内容本身是stored in order, 因为是有序的，所以范围查询(id>100, group by, etc.)、倒序查询都非常的高效
+
+1. 聚簇索引主键相邻的数据在物理上也相邻，如果主键不是自增，而是随机的，那么频繁的插入会使 innodb 频繁地移动磁盘块，而影响写入性能。
+2. 一般用自增id, 如果用uuid(`select uuid()`) ：一是uuid 太大了浪费索引空间；二是uuid 不连续，插入删除数据时索引操作慢。
+   1. uuid 适合数据离散化便于发布集群
+
 ## UNIQUE(UK)
 Either UK or PK is a column or group of columns that can identify a uniqueness in a row.
 PK is a special UK.
@@ -121,15 +131,6 @@ PK is a special UK.
 	UNIQUE key_name(column_list);
 
 	drop index `key_name`;//drop index and unique has same syntax
-
-By Default:
-
-1. Null: PK is not null but UK allows nulls(Note: By Default), so UK may not be unique.
-1. Unique: There can only be one and only one PK on a table but there can be multiple UK's
-1. Clustered index: PK creates a `Clustered index` and UK creates a `Non Clustered Index`.
-1. Candidate: UK may not be candidate key(Because it may be not unique)
-
-*Clustered Index* 就是数据内容本身是stored in order, 因为是有序的，所以范围查询(id>100, group by, etc.)、倒序查询都非常的高效
 
 ## FULLTEXT
 mysql 全文索引(即对局部字符串的查找的索引) 是按照空格分割的单词(默认单词长度小于4会补忽略)，所以它不支持中文,除非先对中文分词.
@@ -302,70 +303,19 @@ B树数据库充分利用了磁盘块(4K)的原理
 5. 尽量的扩展索引，不要新建索引。比如表中已经有a的索引，现在要加(a,b)的索引，那么只需要修改原来的索引即可
 
 ## 对于准备要索引的列必须使用NOT NULL
-这样就不会存储NULL(含NULL 的列区分度低), 而是默认值。我对这条有
+这样就不会存储NULL(含NULL 的列区分度低), 而是默认值。
 
 ## 对不使用的索引
 请开启`--log-long-format`,日志会记录更详细的信息：谁发出的查询、什么时间发出的等。 方便日后做查询优化
 而`log-short-format` 记录激活的更新日志、二进制更新日志、和慢查询日志的少量信息。但用户名和时间戳不记录下来。
 
-# 优化查询
-
-## show index
-
-	show index from table_name;
-
-## explain
-用explain 获取mysql 如何query, 如何join(联结)，怎样的顺序join 参考：
-http://dev.mysql.com/doc/refman/5.5/en/explain-output.html
-
-	Column		Meaning
-	id			The SELECT identifier
-	select_type	The SELECT type
-	table		The table for the output row
-	partitions	The matching partitions
-	type		The join type
-				All 全表查询，range 范围查询, eq_ref 等值查询 index(也是全表，但是只用index数据，不需要所有数据的情况如count(*))
-				ref 是在 eq_ref 不是 primary/unique 时
-	possible_keys	The possible indexes to choose
-	key			The index actually chosen
-	key_len		The length of the chosen key
-	ref			The columns compared to the index
-	rows		Estimate of rows to be examined
-	filtered	Percentage of rows filtered by table condition
-	Extra		Additional information
-
-这里需要强调rows是核心指标，绝大部分rows小的语句执行一定很快（有例外，下面会讲到）。所以优化语句基本上都是在优化rows。
-
-## 慢查询优化步骤
-0. 先运行看看是否真的很慢，注意设置SQL_NO_CACHE
-1. where条件单表查，锁定最小返回记录表。这句话的意思是把查询语句的where都应用到表中返回的记录数最小的表开始查起，单表每个字段分别查询，看哪个字段的区分度最高
-2. explain查看执行计划，是否与1预期一致（从锁定记录较少的表开始查询）
-3. order by limit 形式的sql语句让排序的表优先查
-4. 了解业务方使用场景
-5. 加索引时参照建索引的几大原则
-6. 观察结果，不符合预期继续从0分析
-
-### ref
-ref can be used for indexed columns that are compared using the = or <=> operator.
-In the following examples, MySQL can use a ref join to process ref_table:
-
-	SELECT * FROM ref_table WHERE key_column=expr;
-
-	SELECT * FROM ref_table,other_table
-	  WHERE ref_table.key_column=other_table.column;
-
-	SELECT * FROM ref_table,other_table
-	  WHERE ref_table.key_column_part1=other_table.column
-	  AND ref_table.key_column_part2=1;
-
-## 优化example
-
-## 明确场景
-
-## 无法优化的语句
 
 # 内存限制
 排序等操作需要消耗大量的内存，请设定足够的内存
+
+# 分区
+快速清理数据的用途: drop partition
+http://mysql.taobao.org/monthly/2017/11/09/
 
 # Reference
 - [索引原理-meituan]

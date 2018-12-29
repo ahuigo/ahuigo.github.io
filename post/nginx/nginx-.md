@@ -22,8 +22,9 @@ https://github.com/taobao/nginx-book
 引述 http://tengine.taobao.org/book/chapter_02.html 的话：
 
 - Apache works by using a dedicated thread per client with blocking I/O.(线程对内存占用太大了)
-- Nginx uses a single threaded non-blocking I/O mechnism to serve requests. As it uses non-blocking I/O, one single process can server too many connection requests.
+- Nginx uses a *single threaded* non-blocking I/O mechnism to serve requests. As it uses non-blocking I/O, one single process can server too many connection requests.
 
+nginx master 不处理网络事件，只管理worker进程实现重启、更换日志文件、配置文件实时生效等功能，slave 才监听网络(惊群效应已经解决)(https://blog.csdn.net/yusiguyuan/article/details/40924415 nginx模型)
 
 # TOC
 - nginx-conf.md 待整理

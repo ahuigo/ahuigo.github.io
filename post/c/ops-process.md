@@ -366,6 +366,7 @@ Linux进程间通信由以下几部分发展而来：
 
 ## 异步同步阻塞非阻塞
 https://cloud.tencent.com/developer/article/1005481
+http://www.cnblogs.com/zm-0713/p/5064168.html
 
 1. 同步：数据由内核空间复制回进程缓冲时阻塞(如recvfrom)
 	1. 同步阻塞BIO： BlockIO
@@ -382,7 +383,7 @@ https://cloud.tencent.com/developer/article/1005481
                 1. int poll(struct pollfd *fds, nfds_t nfds, int timeout)
                 2. 没有FD_SETSIZE 限制: 使用了`pollfd`结构而不是使用宏的1024 的不可变fd_set结构
                 3. 仍然要遍历+性能问题
-            4. epool: 直接返回准备就绪的描述符+不会大规模的拷贝
+            4. epool: 直接返回准备就绪的描述符+不会大规模的拷贝(epoll的时间复杂度O(log n)))
                 1. 将`文件描述符`的事件存放到内核的一个事件表中，这样在用户空间和内核空间的copy只需一次。
                 1. 引入epoll_ctl系统调用(增、删、改、查): 将高频调用的epoll_wait和低频的epoll_ctl隔离开
                     1. epoll_ctl通过(EPOLL_CTL_ADD、EPOLL_CTL_MOD、EPOLL_CTL_DEL)三个操作来分散对需要监控的fds集合的修改，做到了有变化才变更
