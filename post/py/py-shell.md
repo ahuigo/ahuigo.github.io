@@ -46,11 +46,17 @@ via exec
 
 ## exec shell
 
+### escape
+
+    def shellquote(s):
+        return "'" + s.replace("'", "'\\''") + "'"
+    shlex.quote(s)
+
 ### sh
 1. sh.ls("-l", "/tmp", color="never") # equal to getoutput
 	1. sh.ls("-l /tmp".split(' '))
 2. subprocess.check_output("ls -l", shell=True).decode('gbk')
-3. subprocess.getoutput("ls -l"); # only support utf8
+3. subprocess.getoutput("ls -l;pwd"); # only support utf8
 	1. subprocess.getstatusoutput("ls -l") # return list: [code, output_str]
 4. print output: errno = os.system('ls -ls')
 

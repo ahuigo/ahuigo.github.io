@@ -27,7 +27,7 @@ priority:
 
 我们平时所说的UTF-8,UTF-16都处于字符编码表(CEF)的层面.
 
-> Tips: 有vim中通过`g8`可以查询到“刘”这个字的utf8编码（码值）为：0xe58898
+> Tips: 在vim中可以通过快捷键`g8`查询到“刘”这个字的utf8编码（码值）为：0xe58898
 
 ## 字符编码方案(CES:Caracter Encodeing Scheme)
 定义如何将码值对应到8位组的串行,以便网络传输和文件存储.

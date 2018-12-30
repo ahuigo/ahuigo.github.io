@@ -1,11 +1,10 @@
 ---
 layout: page
-title:	mysql tddl sequence
-category: blog
-description: 
+title:	如何生成全局id
+date: 2015-03-29
+updated: 2018-12-29
 ---
 # 如何生成全局id
-
 1. 单点:
 	1. mysql auto_increment
 	2. redis incrnx

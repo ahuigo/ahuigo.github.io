@@ -381,6 +381,15 @@ replace with dict(不能出现干扰的边界字符`%{}`)
 	'a\n  '.strip() + ',end'
     s.lstrip()
 
+left:
+
+    '00a00'.lstrip('0')
+    '00a00'.rstrip('0')
+
+keep one zero:
+
+    '00'.lstrip('0') or '0'
+
 ## Concat String
 
 	>>> print 'a'+'b'+'c'	# with no space
@@ -450,12 +459,12 @@ with no space and new line:
 利用range+step:
 
     def ChunkStr1(string, length):
-        return (string[0+i:length+i] for i in range(0, len(string), length))
+        return (string[i:i+length] for i in range(0, len(string), length))
 
     # 利用regex:
     import re
     def ChunkStr2(string, length):
-    	return re.findall('.{1,'+str(length)+'}',string)
+    	return re.findall('.{1,%d}' % length,string)
 
     list(ChunkStr1(s,10))
 
