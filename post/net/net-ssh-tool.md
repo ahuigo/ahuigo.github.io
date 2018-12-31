@@ -1,10 +1,11 @@
 ---
 layout: page
-title:	linux ssh
+title:	linux ssh tool
 category: blog
+date: 2016-09-09
 description:
 ---
-# Preface
+# ssh tool
 管理多台ssh 可以参考[pssh](/p/linux-pssh)
 
 # Server
@@ -28,7 +29,7 @@ Make sure port 22 is opened:
 
 	netstat -tulpn | grep :22
 
-# Firewall Settings
+## Firewall Settings
 
 	vi /etc/sysconfig/iptables
 
@@ -48,7 +49,7 @@ Save and close the file. Restart iptables:
 
 	service iptables restart
 
-# OpenSSH Server Configuration
+## OpenSSH Server Configuration
 sshd_config 是sshd配置文件
 
 	vi /etc/ssh/sshd_config
@@ -66,16 +67,16 @@ Save and close the file. Restart sshd:
 
 	service sshd restart
 
-## sshd_config
+### sshd_config
 现把/etc/ssh/ssh_config 和 /etc/ssh/sshd_config的配置说下。
 
-### 阿里云sshd 自动断开
+#### 阿里云sshd 自动断开
 打开/etc/ssh/sshd_config 添加或修改:
 
 	ClientAliveInterval 120
 	ClientAliveCountMax 0
 
-### /etc/ssh/ssh_config:
+#### /etc/ssh/ssh_config:
 Refer http://blog.lizhigang.net/archives/249
 
 	Host *
@@ -112,7 +113,6 @@ Refer http://blog.lizhigang.net/archives/249
 	“EscapeChar”设置escape字符。
 
 /etc/ssh/sshd_config:
-
 
 	Port 22
 	“Port”设置sshd监听的端口号。
@@ -245,6 +245,12 @@ From remote to local
 
 	echo str | ssh user@server 'cat'
 
+## autossh
+添加的一个-M 5678参数，负责通过5678端口监视连接状态，连接有问题时就会自动重连，去掉了一个-f参数，因为autossh本身就会在background运行。
+
+    autossh -M 5678 user1@123.123.123.123 -f
+    /bin/su -c '/usr/bin/autossh -M 5678 -NR 1234:localhost:2223 user1@123.123.123.123 -p2221' - user1
+
 ## non interactive login
 
 ### 利用公私钥作验证(e.g.:RSA)
@@ -322,6 +328,14 @@ Then:
 	expect "password:"
 	send "password\r"
 	interact
+
+### 堡垒机
+穿过堡垒机传文件 有几个方法
+1. scp 先传到堡垒机
+2. ssh -N -f -L 2120:目标机IP:22 root@跳板机IP -p 跳板机端口
+3. lrzsz: https://github.com/mmastrac/iterm2-zmodem
+    1. 然后找到iTerm2的配置项：iTerm2的Preferences-> Profiles -> Default -> Advanced -> Triggers 添加triggers。
+    2. 参考: https://yanyinhong.github.io/2017/12/26/How-to-use-lrzsz/
 
 # Security
 参考[ssh security]，保护你的ssh

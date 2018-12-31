@@ -1,6 +1,9 @@
 # AHUIGO 的笔记
+- 2016-10-20 [Linux Network Tool](/b/net/3.net-tool) 
+- 2018-09-28 [英语的否定](/b/eng/s/1.not) 
+- 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
 - 2018-12-29 [mysql explain 的使用](/b/db/mysql-index-explain) 
-- 2018-09-27 [Shell 变量之数据类型](/b/c/1.shell-var) 
+- 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
 - 2018-09-27 [人脑学习的本质](/b/course/1.study) 
 - 2018-09-27 [写论文要用到的网站](/b/em/em-paper) 
 - 2018-11-4 [ADHD：分心者的自我认知训练](/b/life/adhd) 
@@ -36,6 +39,3 @@
 - 2018-04-04 [用 Python mathplot 画K 线图](/b/py/py-math-mathplot-kline) 
 - 2018-10-06 [Python 的math 语法](/b/py/py-math) 
 - 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
-- 2018-10-04 [Js Array 整理](/b/ria/js-array) 
-- 2018-12-20 [安全的帐号设计](/b/sec/security-account) 
-- 2018-10-06 [vim 笔记](/b/vim/vim-notes) 

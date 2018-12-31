@@ -1,16 +1,11 @@
 ---
 layout: page
-title: Reference
+title: Systemd
 category: blog
 description: 
 date: 2018-09-27
 ---
-# Reference
-- [systemd] by ruanyifeng
-
-[systemd]: http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html
-
-# Preface
+# Systemd
 使用了 Systemd，就不需要再用init了。Systemd 取代了initd，成为系统的第一个进程（PID 等于 1），其他进程都是它的子进程。
 
 	$ systemctl --version
@@ -282,9 +277,13 @@ systemctl list-unit-files命令用于列出所有配置文件: `*.service, *.tar
 这个列表显示每个配置文件的状态，一共有四种。
 
 	enabled：已建立启动链接
+        sudo systemctl enable firewalld
 	disabled：没建立启动链接
+        sudo systemctl disable firewalld
 	static：该配置文件没有[Install]部分（无法执行），只能作为其他配置文件的依赖
 	masked：该配置文件被禁止建立启动链接
+        sudo systemctl mask firewalld
+        sudo systemctl unmask firewalld
 
 注意，从配置文件的状态无法看出，该 Unit 是否正在运行。这必须执行前面提到的`systemctl status`命令。
 
@@ -549,3 +548,8 @@ Target 也有自己的配置文件。
 
 # Log 管理
 [linux-systemd-journalctl](/p/linux-systemd-log.md)
+
+# Reference
+- [systemd] by ruanyifeng
+
+[systemd]: http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html

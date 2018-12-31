@@ -22,21 +22,6 @@ http://www.zhihu.com/question/20928639
 BasicTeX 和 MacTeX 类似，也是对 TeX Live 的封装。
 > 不过，相比 MacTeX，BasicTeX 中缺少很多宏包。在使用的时候，需要先手工安装这些宏包，然后使用。对于新手来说，这又是个不小的工程。所以不推荐新手使用。
 
-## LaTeX with markdown
-Mathematics Stack Exchange uses `MathJax` to render LaTeX. You can use single dollar signs to delimit inline equations, and double dollars for blocks:
-
-	The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall
-	n\in\mathbb N$ is via through the Euler integral
-
-	$$
-	\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
-	$$
-
-or
-
-    无理数: $\sqrt {2}$,
-    圆周: \\( \pi *r= circumference\\)
-
 # Api && Lib
 [google api](http://chart.apis.google.com/chart?cht=tx&chl=O%28%5Clog+n%29)
 
@@ -50,12 +35,12 @@ http://docs.mathjax.org/en/latest/misc/mathjax-in-use.html 全局渲染
     src="MathJax.js?config=TeX-AMS-MML_HTMLorMML"
     //via getElementsByTagName("script").filter MathJax 找到config
 
-### katex
+## katex
 
     katex.render(String.raw`c = \pm\sqrt{a^2 + b^2}`, element);
     var html = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}");
 
-### MathJax+markdown
+## MathJax+markdown
 1. MathJax 与 Markdown 的究极融合 https://yihui.name/cn/2017/04/mathjax-markdown/
 1. 支持markdown 的库: showdown/pageDown/marked
 
@@ -75,7 +60,10 @@ marked:
     marked*(text)
 
 # 函数、符号、及字符
-http://www.cnblogs.com/houkai/p/3399646.html
+## 字符
+    换行 $a\\b$
+    tab $b \quad a$
+    tab $b \qquad a$
 
 ## Label
 
@@ -85,7 +73,8 @@ http://www.cnblogs.com/houkai/p/3399646.html
 ${\overline a}_{n}$
 ${\bar a}$
 
-## limit
+## displaystyle
+
     \displaystyle \lim_{u \rightarrow \infty}
 
 ## Vectors, 向量
@@ -116,13 +105,22 @@ $\overrightarrow{AB}$ 和 $\overleftarrow{AB}$
     \cos b
     \tan c
 	O(\log n)
+    \lim_{u \rightarrow \infty}
 
-## 对数, logarithmic
+The *Gamma function* satisfying
+$$\Gamma(n) = (n-1) !\quad\forall n\in\mathbb N$$
+
+$$
+\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
+$$
+
+### 对数, logarithmic
 
     \log_{a}{b}
 
-## 根
+### 根
 
+    \sqrt {2}
 	\sqrt{x} \sqrt[n]{x}
 
 ## 上下标

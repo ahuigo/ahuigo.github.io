@@ -43,7 +43,7 @@
 1. `$` 用与行内公式;
 2. `$$`用于段落公式;
 
-可以参考这个例子：
+可以参考这个[例子](md.html)：
 
 <iframe width="100%" height="400px" src="md.html"></iframe>
 

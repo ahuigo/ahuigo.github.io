@@ -932,15 +932,10 @@ Renderer.prototype.latex = function(text, block=false) {
   var out;
   try {
     if (marked.defaults.latexRender) {
-      var html_math = [];
-      for(let t of text.split('\n')){
-        html_math.push(marked.defaults.latexRender(t));
-      }
+      var html = marked.defaults.latexRender(text);
       if (block) {
-        let html = html_math.join('<br>')
         out = '<div style="text-align:center">' + html + '</div>';
       }else{
-        let html = html_math.join('\n')
         out = html;
       }
     } else {

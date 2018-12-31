@@ -4,13 +4,6 @@ title:	防火墙
 category: blog
 description:
 ---
-# Preface
-On [mac](/p/net-iptables-mac.md)
-
-# todo
-Linux 防火墙 iptables 初学者教程
-http://segmentfault.com/a/1190000000448609
-
 # 原理
 参考[Iptables防火墙原理详解](http://segmentfault.com/a/1190000002540601)
 
@@ -138,7 +131,7 @@ There is no such thing as "iptables is running".
 
 If the kernel modules are loaded and rules defined , the firewall is active. 
 
-## 启动服务
+## 启动服务
 查看是否运行:
 
     service iptables status
@@ -149,7 +142,8 @@ It is possible to go back to a more classic iptables setup. \
 First, stop and mask the firewalld service:
 
     systemctl stop firewalld
-    systemctl mask firewalld
+    systemctl mask firewalld; 
+        #firewalld.service to /dev/null.
 
 Then, install the iptables-services package:
 
@@ -524,11 +518,195 @@ SYN洪水是攻击者发送海量的SYN请求到目标服务器上的一种DoS�
     iptables -A FORWARD -p icmp -m limit --limit 2/s --limit-burst 10 -j ACCEPT
     iptables -A INPUT -p icmp --icmp-type 0 -s ! 172.29.73.0/24 -j DROP
 
-# firewall-cmd
-centos 默认使用firewalld 管理iptables, example:
-```s
-# add ssh port as permanent opened port
-firewall-cmd --zone=public --add-port=22/tcp --permanent
-# Then, you can reload rules to be sure that everything is ok
-firewall-cmd --reload
-```
+# firewalld
+> 参考: https://linux.cn/article-8098-1.html
+
+firewalld是iptables的一个封装，[可以让你更容易地管理iptables规则](https://www.jianshu.com/p/70f7efe3a227)。
+虽然iptables命令仍可用于firewalld
+
+    1，firewalld使用区域和服务而不是链式规则；
+    2，firewalld可以动态修改单条规则，动态管理规则集，允许更新规则而不破坏现有会话和连接。(还是要reload)
+    3，firewalld默认是拒绝的，而iptables默认允许
+    4，firewalld自身并不具备防火墙的功能，是和iptables一样需要通过内核的netfilter来实现。
+
+## firewall 管理
+    启动服务，并在系统引导时启动该服务：
+        sudo systemctl start firewalld
+        sudo systemctl enable firewalld
+
+    要停止并禁用：
+        sudo systemctl stop firewalld
+        sudo systemctl disable firewalld
+
+    检查防火墙状态。输出应该是 running 或者 not running。
+        sudo firewall-cmd --state
+
+    要查看 FirewallD 守护进程的状态：
+        sudo systemctl status firewalld
+
+    重新加载 FirewallD 配置：
+        sudo firewall-cmd --reload
+
+## 配置文件
+FirewallD 使用 XML 进行配置, 不要动他，用firewall-cmd 管理！
+1. /usr/lib/FirewallD 下保存默认配置，如默认区域和公用服务。 更新时都会覆盖这些文件。
+1. /etc/firewalld 下保存系统配置文件。 这些文件将覆盖默认配置。
+
+## 配置集
+有两个集：
+1. 运行集: firewall-cmd 命令适用于运行时配置，但使用 --permanent 标志将保存到持久配置中。
+2. 持久集
+
+将规则同时添加到持久规则集和运行时规则集中。 
+
+    sudo firewall-cmd --zone=public --add-service=http --permanent
+    sudo firewall-cmd --zone=public --add-service=http
+
+将规则添加到持久规则集中并重新加载 FirewallD。 
+
+    sudo firewall-cmd --zone=public --add-service=http --permanent
+    sudo firewall-cmd --reload
+
+reload 命令会删除所有运行时配置并应用永久配置。因为 firewalld 动态管理规则集，所以它不会破坏现有的连接和会话。
+而iptables，在修改了规则后必须得全部刷新才可以生效；iptables --flush
+
+## 区域
+firewall 按区域管理(public, home,...):
+
+get 默认的区域:
+
+    sudo firewall-cmd --get-default-zone
+        public
+
+modify 修改默认的区域
+
+    sudo firewall-cmd --set-default-zone=internal
+
+get active: 查看你网络接口使用的区域
+
+    sudo firewall-cmd --get-active-zones
+        public
+        interfaces: enp0s17
+
+get 特定区域的所有配置：
+
+    sudo firewall-cmd --zone=public --list-all
+
+get all zone with config: 得到所有区域的配置： 
+
+    sudo firewall-cmd --list-all-zones
+
+## 服务
+每个区域可以提供很多服务: http, ssh,...
+1. 默认支持的服务的配置文件位于 /usr/lib /firewalld/services，
+2. 用户创建的服务文件在 /etc/firewalld/services 中。
+
+要查看默认的可用服务：
+
+    sudo firewall-cmd --get-services
+
+比如，要启用或禁用 HTTP 服务： 
+
+    sudo firewall-cmd --zone=public --add-service=http --permanent
+    sudo firewall-cmd --zone=public --remove-service=http --permanent
+
+### 端口/协议 启用
+比如：允许或者禁用 12345 端口的 TCP 流量。
+
+    sudo firewall-cmd --zone=public --add-port=1500/tcp --permanent
+    sudo firewall-cmd --zone=public --remove-port=1500/tcp --permanent
+
+### 端口转发
+下面是在同一台服务器上将 80 端口的流量转发到 12345 端口。
+
+    sudo firewall-cmd --zone="public" --add-forward-port=port=80:proto=tcp:toport=12345
+
+要将端口转发到另外一台服务器上：
+
+1、 在需要的区域中激活 masquerade。
+
+    sudo firewall-cmd --zone=public --add-masquerade
+
+2、 添加转发规则。例子中是将本地的 80 端口的流量转发到 IP 地址为 ：123.456.78.9 的远程服务器上的  8080 端口。
+
+    sudo firewall-cmd --zone="public" --add-forward-port=port=80:proto=tcp:toport=8080:toaddr=123.456.78.9
+
+要删除规则，用 --remove 替换 --add。比如：
+
+    sudo firewall-cmd --zone=public --remove-masquerade
+
+### 构建规则集
+例如，以下是如何使用 FirewallD 为你的服务器配置基本规则（如果您正在运行 web 服务器）。
+
+1.将 eth0 的默认区域设置为 dmz。 在所提供的默认区域中，dmz（非军事区）是最适合于这个程序的，因为它只允许 SSH 和 ICMP。
+
+    sudo firewall-cmd --set-default-zone=dmz
+    sudo firewall-cmd --zone=dmz --add-interface=eth0
+
+2、 把 HTTP 和 HTTPS 添加永久的服务规则到 dmz 区域中：
+
+    sudo firewall-cmd --zone=dmz --add-service=http --permanent
+    sudo firewall-cmd --zone=dmz --add-service=https --permanent
+
+ 3、 重新加载 FirewallD 让规则立即生效：
+
+    sudo firewall-cmd --reload
+
+如果你运行 firewall-cmd --zone=dmz --list-all， 会有下面的输出：
+
+    dmz (default)
+        interfaces: eth0
+        sources:
+        services: http https ssh
+        ports:
+        masquerade: no
+        forward-ports:
+        icmp-blocks:
+        rich rules:
+
+这告诉我们，dmz 区域是我们的默认区域，
+1. 它被用于 eth0 接口中所有网络的源地址和端口。 
+2. 允许传入 HTTP（端口 80）、HTTPS（端口 443）和 SSH（端口 22）的流量，并且由于没有 IP 版本控制的限制，这些适用于 IPv4 和 IPv6。 
+3. 不允许IP 伪装以及端口转发(masquerade) 
+4. 我们没有 ICMP 块，所以 ICMP 流量是完全允许的。
+5. 没有丰富Rich规则，允许所有出站流量。
+
+## 高级
+### 丰富规则
+丰富规则的语法有很多` man firewalld.richlanguage`。 
+使用 `--add-rich-rule、--list-rich-rules 、 --remove-rich-rule 和 firewall-cmd` 命令来管理它们。
+
+这里有一些常见的例子：
+
+允许来自主机 192.168.0.14 的所有 IPv4 流量。
+
+    sudo firewall-cmd --zone=public --add-rich-rule 'rule family="ipv4" source address=192.168.0.14 accept'
+
+拒绝来自主机 192.168.1.10 到 22 端口的 IPv4 的 TCP 流量。
+
+    sudo firewall-cmd --zone=public --add-rich-rule 'rule family="ipv4" source address="192.168.1.10" port port=22 protocol=tcp reject'
+
+允许来自主机 10.1.0.3 到 80 端口的 IPv4 的 TCP 流量，并将流量转发到 6532 端口上。 
+
+    sudo firewall-cmd --zone=public --add-rich-rule 'rule family=ipv4 source address=10.1.0.3 forward-port port=80 protocol=tcp to-port=6532'
+
+将主机 172.31.4.2 上 80 端口的 IPv4 流量转发到 8080 端口（需要在区域上激活 masquerade）。
+
+    sudo firewall-cmd --zone=public --add-rich-rule 'rule family=ipv4 forward-port port=80 protocol=tcp to-port=8080 to-addr=172.31.4.2'
+
+列出你目前的丰富规则：
+
+    sudo firewall-cmd --list-rich-rules
+
+### iptables 的直接接口
+FirewallD 提供了一个直接Direct接口，允许你给它传递原始 iptables 命令。 直接接口规则不是持久的，除非使用 --permanent。
+
+要查看添加到 FirewallD 的所有自定义链或规则：
+
+    firewall-cmd --direct --get-all-chains
+    firewall-cmd --direct --get-all-rules
+
+# 参考
+- [Mac 下的iptables](/p/net-iptables-mac.md)
+- Linux 防火墙 iptables 初学者教程:
+   http://segmentfault.com/a/1190000000448609

@@ -11,6 +11,11 @@ who #显示当前登录者
 w：谁登录进来了
 id：用户/组身份信息
 
+# su
+
+    su -c 'whoami' - root
+    /bin/su -c '/usr/bin/autossh -M 5678 -NR 1234:localhost:2223 user1@123.123.123.123 -p2221' - user1
+
 # useradd
 
 	useradd www -s /sbin/nologin -d /home/www

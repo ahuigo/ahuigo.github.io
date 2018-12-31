@@ -112,6 +112,11 @@ bind_address 参数默认值为空，等价于*:port:host:hostport 并不意味�
 
     (APP) $ ssh -p 2222 ink@mantou.me    
 
+### autossh
+添加的一个-M 5678参数，负责通过5678端口监视连接状态，连接有问题时就会自动重连，去掉了一个-f参数，因为autossh本身就会在background运行。
+
+    /bin/su -c '/usr/bin/autossh -M 5678 -NR 1234:localhost:2223 user1@123.123.123.123 -p2221' - user1
+
 ## ssh over socks
 ~/.ssh/config
 
