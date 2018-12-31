@@ -78,7 +78,7 @@
                 <div id="toc"><ol><li>笔记</li><ol></div>
                 <div id="search" class="pure-form">
                     <fieldset>
-                    <input id="search_q" @keyup.enter="searchBlog($('#search_q').value)">
+                    <input id="search_q" placeholder="Google" @keyup.enter="searchBlog($('#search_q').value)">
                     <button @click="searchBlog($('#search_q').value)" class="pure-button pure-button-primary">搜索</button>
                     </fieldset>
                 </div>
