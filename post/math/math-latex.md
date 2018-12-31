@@ -41,10 +41,7 @@ http://docs.mathjax.org/en/latest/misc/mathjax-in-use.html 全局渲染
     var html = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}");
 
 ## MathJax+markdown
-1. MathJax 与 Markdown 的究极融合 https://yihui.name/cn/2017/04/mathjax-markdown/
-1. 支持markdown 的库: showdown/pageDown/marked
-
-marked:
+marked 配置:
 
 	marked.setOptions({
 		//renderer: new marked.Renderer(),
@@ -57,7 +54,7 @@ marked:
 		smartypants: false,
 		latexRender: katex.renderToString.bind(katex),
 	});
-    marked*(text)
+    marked(text)
 
 # 函数、符号、及字符
 ## 字符
@@ -92,9 +89,6 @@ $\overrightarrow{AB}$ 和 $\overleftarrow{AB}$
 	\sum_{下标}^{上标} 表示求和符号。
         _{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个字符，可以省略 { 和 } 。
 	\frac{分子}{分母} 表示分数。另外，\tfrac{分子}{分母} 表示小号的分数。
-	$\prod_{i=1}^{\infty} a_{i}$, $\prod$表示乘积符号，
-	$\int_{-N}^{N} e^x,dx$, \int 表示积分符号。
-    $\iint_{D}^{W} \, dx\,dy$	双重积分
 
 	此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。
 	还有：\pm：±、\times：×、\div：÷ 。
@@ -127,7 +121,14 @@ $$
 	a^2
 	a_2
 
-# 分数fraction、矩阵和多行列式
+## 排列组合
+    $\binom{n}{k}=\mathrm{C}_n^k$
+
+	$\prod_{i=1}^{\infty} a_{i}$, $\prod$表示乘积符号，
+	$\int_{-N}^{N} e^x,dx$, \int 表示积分符号。
+    $\iint_{D}^{W} \, dx\,dy$	双重积分
+
+## 分数fraction、矩阵和多行列式
 
 	//分数
 	\frac{2}{4}=0.5 2/4=0.5
