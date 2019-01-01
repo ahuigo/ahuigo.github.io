@@ -5,7 +5,8 @@ date: 2018-09-26
 # 券商
 
 ## 区别
-https://www.jisilu.cn/question/46153
+> 本节出处: https://www.jisilu.cn/question/46153
+
 IB、 Scottrade 、 Firstrade 、Sogotrad、老虎证券、冨途证券，我大概都看过了。
 
 Scottrade，史考特，每笔7美元，没有账户管理费，中文网页支持好,有APP。交易品种是美国的股票ETF期权。全部出金要75美元，有点贵。最低开户存款为2500美元。

@@ -2,7 +2,7 @@
 layout: page
 title:	红包飞的概率问题
 date: 2015-03-04
-priority:
+updated: 2019-01-01
 ---
 # 红包飞的概率问题
 100元的红包，分给10个人，每个人得的数额是随机的。请设计一个公平的算法，保证每个人得到的金额从数学期望上是相等的。
@@ -37,35 +37,66 @@ priority:
 对`n*(1-x)^(n-1)*xdx` 积分,上限1，下限0，得到n/(n+1)
 
 ### 第m个值的期望
-在`s1,s2,.sm,..,sn` 中 的底m个值，其等于x的概率为:
-$dx*x^(m-1)$
+在`s1,s2,.sm,..,sn` 中 `sm`来说，其等于x的概率为:
+$$
+f=C_n^1dx * C_{n-1}^{m-1}x^{m-1} * (1-x)^{n-m} \\
+=mC_{n}^{m}x^{m-1} * (1-x)^{n-m} * dx \\
+$$
+
+sm的期望为:
+$$
+\int_0^1 mC_{n}^{m}x*x^{m-1} * (1-x)^{n-m} * dx \\
+=\int_0^1 mC_{n}^{m}*x^m * (1-x)^{n-m} dx \\
+=\int_0^1 mC_n^m [1-(1-x)]^m * (1-x)^{n-m} dx \\
+=\int_0^1 mC_n^m [1-C_m^1(1-x)^1+C_m^2(1-x)^2...+(-1)^mC_m^m(1-x)^m] (1-x)^{n-m} dx \\
+=mC_n^m \int_0^1 (1-x)^{n-m}-C_m^1(1-x)^{n-m+1}+C_m^2(1-x)^{n-m+2}- ...\\
++(-1)^mC_m^m(1-x)^n dx \\
+=-mC_n^m [ \frac{C_m^0}{n-m+1}(1-x)^{n-m+1}
+-\frac{C_m^1}{n-m+2}(1-x)^{n-m+2}+...
+..+(-1)^mC_m^m\frac{1}{n+1}(1-x)^{n+1} ]|_0^1 \\
+=mC_n^m [ \frac{C_m^0}{n-m+1} -\frac{C_m^1}{n-m+2}+...
+..+(-1)^mC_m^m\frac{1}{n+1}] \\
+=\frac{m}{1+n}\\
+$$
+
+我们利用到了公式:
+$$
+\binom nm \sum_{i=0}^{m} (-1)^i\frac{\binom mi}{(n-m+1)+i}\\
+=\frac{n!}{m!(n-m)!} \frac{m!}{(n-m+1)(n-m+2)...n(n+1)}\\
+=\frac{1}{1+n}\\
+$$
+
+参考:
+https://math.stackexchange.com/questions/715706/partial-fraction-expansion-of-frac1xx1x2-cdotsxn/715718#715718  乘积的倒数，就是数列之和
+https://math.stackexchange.com/questions/38623/how-to-prove-sum-limits-r-0n-frac-1rr1-binomnr-frac1n1 数列之和也是分部积分的结果
+https://math.stackexchange.com/questions/3058307/prove-that-binom-nm-sum-i-0m-1i-frac-binom-min-m1i-frac11 汇总的
 
 # 发送红包时拆分好
 
-	total 每次抢的剩余金额为
-	num	剩余人数
-	min	最小金额(不限制最小金额时，min = 0)
-	max	最大金额(不限制最大金额时，max >=total)
+    total 每次抢的剩余金额为
+    num	剩余人数
+    min	最小金额(不限制最小金额时，min = 0)
+    max	最大金额(不限制最大金额时，max >=total)
 
-	//max = total 时
-	if(num == 1)
-		return total;
-	t = total - min*mum;				/t 是可分得最大金额(除去了min)
-	ram = min + t*rand(0,1) * (2/num);	/**期望 E(t*rand*2/num) = t * 0.5 * 2/num = t /num */
-	return ram;
+    //max = total 时
+    if(num == 1)
+        return total;
+    t = total - min*mum;				/t 是可分得最大金额(除去了min)
+    ram = min + t*rand(0,1) * (2/num);	/**期望 E(t*rand*2/num) = t * 0.5 * 2/num = t /num */
+    return ram;
 
 max 为给定值的情况下, 可以使用方式2：
 
-	if(num == 1)
-		return total;
-	t = total - min*mum;				/t 是可分得最大金额(除去了min)
-	tm = min(max-min, t);				//tm 是人为强制的最大金额: if max >= total, then tm = t
+    if(num == 1)
+        return total;
+    t = total - min*mum;				/t 是可分得最大金额(除去了min)
+    tm = min(max-min, t);				//tm 是人为强制的最大金额: if max >= total, then tm = t
 
-	人均期望与tm 期望之比为：
-		ave/(tm/2) = (t/num) /(tm/2) = 2/num * (t/tm)
+    人均期望与tm 期望之比为：
+        ave/(tm/2) = (t/num) /(tm/2) = 2/num * (t/tm)
 
-	ram = min + tm*rand(0,1) * (2/num) * (t/tm) = min + t*rand(0,1) * (2/num)
-	return ram;
+    ram = min + tm*rand(0,1) * (2/num) * (t/tm) = min + t*rand(0,1) * (2/num)
+    return ram;
 
 其实方法2 是错误的，它并没有限制max, 从结果上看这种计算同上面的方法本质上是一样的)：
 在max 指定值的情况下，如何寻找一个概率分布（T分布？正态分布？F分布）的方法，使得值的范围是(min, max), 期望为(total/num)呢？

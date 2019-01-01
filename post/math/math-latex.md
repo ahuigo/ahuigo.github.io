@@ -57,41 +57,37 @@ marked 配置:
     marked(text)
 
 # 函数、符号、及字符
-## 字符
-    换行 $a\\b$
-    tab $b \quad a$
-    tab $b \qquad a$
-
-## Label
-
-    ${\overline a}_{n}$
-    ${\bar a}$
-
-${\overline a}_{n}$
-${\bar a}$
-
 ## displaystyle
 
     \displaystyle \lim_{u \rightarrow \infty}
 
 ## Vectors, 向量
-
-    $\vec{a}$
-
-另`\overrightarrow `和`\overleftarrow`在定义从A 到B 的向量时非常有用:
 $\overrightarrow{AB}$ 和 $\overleftarrow{AB}$
+${\overline {ab}}$ 
+
+$\vec {ab}$
+${\bar {ab}}$
+${\bar a}$
 
 ## Latex符号
-
+    \\ 换行
     \, space
-	\pi 表示希腊字母 π，\infty 表示 ∞。更多的符号请参见：Special Symbols 。
+    \quad tab1
+    \qquad tab2
+    \ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。
+    \pm：±、 \times：×、 \div：÷ 
+	a^2 a_{2} 上下标
+
+	\pi 表示希腊字母 π，
+    \infty 表示 ∞
 	\sqrt{被开方数} 表示平方根。另外，\sqrt[n]{x} 表示 n 次方根。
 	\sum_{下标}^{上标} 表示求和符号。
-        _{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个字符，可以省略 { 和 } 。
 	\frac{分子}{分母} 表示分数。另外，\tfrac{分子}{分母} 表示小号的分数。
-
 	此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。
-	还有：\pm：±、\times：×、\div：÷ 。
+
+### math sign
+
+$\exists \forall$
 
 ## 函数
 	\sin a
@@ -100,6 +96,8 @@ $\overrightarrow{AB}$ 和 $\overleftarrow{AB}$
     \tan c
 	O(\log n)
     \lim_{u \rightarrow \infty}
+    \log_{a}{b} # 对数, logarithmic
+	\sqrt{x} \sqrt[n]{x}
 
 The *Gamma function* satisfying
 $$\Gamma(n) = (n-1) !\quad\forall n\in\mathbb N$$
@@ -108,45 +106,24 @@ $$
 \Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
 $$
 
-### 对数, logarithmic
-
-    \log_{a}{b}
-
-### 根
-
-    \sqrt {2}
-	\sqrt{x} \sqrt[n]{x}
-
-## 上下标
-	a^2
-	a_2
-
 ## 排列组合
-    $\binom{n}{k}=\mathrm{C}_n^k$
+$\binom{n}{k}=\mathrm{C}_n^k$
 
 	$\prod_{i=1}^{\infty} a_{i}$, $\prod$表示乘积符号，
 	$\int_{-N}^{N} e^x,dx$, \int 表示积分符号。
     $\iint_{D}^{W} \, dx\,dy$	双重积分
+    $\sum_{i=1}^{2n} x^i$。
 
 ## 分数fraction、矩阵和多行列式
 
 	//分数
 	\frac{2}{4}=0.5 2/4=0.5
+    \tfrac{分子}{分母} 表示小号的分数。
+
 	//分数嵌套
 	\cfrac{2}{c + \cfrac{2}{d + \cfrac{2}{4}}} = a
 	//
 	\frac{分子}{分母} 表示分数。另外，\tfrac{分子}{分母} 表示小号的分数。
-
-
-\frac{分子}{分母} 表示分数。另外，\tfrac{分子}{分母} 表示小号的分数。
-
-\sqrt{被开方数} 表示平方根。另外，\sqrt[n]{x} 表示 n 次方根。
-
-\sum_{下标}^{上标} 表示求和符号: $\sum_{i=1}^{2n} x^i$。另外，\prod 表示乘积符号，\int 表示积分符号。
-
-_{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个字符，可以省略 { 和 } 。
-此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。
-还有：\pm：±、\times：×、\div：÷ ****。
 
 # table
 
