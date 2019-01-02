@@ -718,6 +718,7 @@ Order by 需要放到group by 的后面做最后处理
 	select id from table group by id;
 
 ## count consecutive rows with the same value
+连续的行
 
     | id    | int(11) | NO   | PRI | NULL    | auto_increment |
     | num   | int(11) | YES  | MUL | NULL    |                |

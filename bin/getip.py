@@ -10,8 +10,15 @@ if m:
     mac = m.group(1)
     l = [mac[i:i+2].lower().lstrip('0') or '0' for i in range(0, len(mac), 2)]
     mac = ':'.join(l)
-    res = sh('arp -a | grep %s' % mac )
     print(mac)
+
+    myip = sh("ifconfig |grep -oP 'inet (\d+\.){3}\d+ .* broadcast' ")
+    myip = re.search(r'[\d\.]+', myip).group(0)
+    if '10.28.' in myip:
+        print('myip %s' % myip)
+        sh('for i in {142..145};do echo $i;ping -t1 -c1 10.28.209.$i ; done')
+
+    res = sh('arp -a | grep %s' % mac )
     print(res)
     m = re.search(r'([\d\.]+)', res)
     if m:
