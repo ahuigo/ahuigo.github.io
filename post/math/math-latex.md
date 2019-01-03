@@ -143,7 +143,8 @@ $$
 & 3 & 55 & 44\\ \hline
 & 4 & 93 & 33\\ \hline
 & 5 & 6 &  22\\ \hline
-\end{array}$$
+\end{array}
+$$
 
 # combination
 $\binom m{n+1}=\binom mn+ \binom {m-1}n$
