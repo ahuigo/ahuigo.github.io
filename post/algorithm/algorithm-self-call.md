@@ -78,31 +78,42 @@ date: 2018-09-26
 从代码结构上来说，所有的尾递归函数都是在最尾调用自身。那如何做到尾递归呢？
 
 ### 去掉尾处理实现tail-call
-有些函数，在调用自身后，还有别的尾运算(tail operation). 那我们可以考虑把tail operation 放到前面！具体怎么实现, 不再赘述。
+有些函数，在调用自身后，还有别的尾运算(tail operation). 
 
-	func(){
+	func fn(){
 		//some general operation
-		self call;
+		fn();
 		//some tail operation
+	}
+
+那我们可以考虑把tail operation 放到前面！构成尾递归：
+
+	func fn(){
+		//some general operation
+		//some tail operation
+		fn()
 	}
 
 ### 迭代递归中的尾处理: 广义的尾递归
 如果递归函数本身包含迭代语句，并且迭代语句会调用递归本身。那么这种递归函数只能改成广义的尾递归.
+
 广义的尾递归有什么意义:
 1. 避免了函数结果的返回(返回栈)，却无法避免调用栈本身的增长;
 2. 但是因为它只有调用栈开销，可以非常容易的改写成基于栈的迭代式(后面会具体描述)。
 
-	//去掉tail operation 就变成广义的尾递归了
-	func(){
+举个例子, 递归函数`fn` 本身包含迭代语句 `while`
+
+	//fn 如果吧 tail operation 放到前面，就可以变成广义的尾递归
+	func fn(){
 		//some operation
 		while(exp){
 			//some operation
-			self call;
+			fn();
 			//some tail operation
 		}
 	}
 
-问题：求26个不同字母排列（26!）
+问题：求26个不同字母排列（`26!` 种情况哦！）
 下列递归代码的递归深度只有26，每一层需要*维护并返回*的 $pChars大小分别是:26!, 25!,...1!
 
 	<?php
@@ -128,7 +139,7 @@ date: 2018-09-26
 	}
 	var_dump(permutationChar(str_split("abc")));
 
-可以不要*维护并返回* $pChars 吗？ 这样就成了广义的尾递归。
+可以不维护调用栈中的`$pChars` 吗？ 可以传`$pre`呀！形成广义的尾递归，比如：
 
 	function permutationChar($chars, &$arr, $pre = ''){
 		$l = strlen($chars);
@@ -139,18 +150,17 @@ date: 2018-09-26
 		$pChars = [];
 		for($i = 0; $i < $l ; $i++){
 			$char = $chars{0};
+			$chars = substr($tChars, 1) . $char;
 
 			permutationChar(substr($tChars, 1), $arr, $pre.$char);
 			/*foreach(permutationChar($tChars) as $sub){
 				$pChars[] = $char.$sub;
 			}*/
-			$chars = substr($tChars, 1) . $char;
 		}
 	}
 	$arr=[];
 	permutationChar("abc", $arr);
 	var_dump($arr);
-
 
 # 用栈+迭代 代替递归
 所有的递归函数都可以用基于栈(stack) 的迭代结构去实现, 这样我们就能直接控制栈的长度。我用两个例子具体阐明这个方法: 深度优先搜索[DFS] (Depth First Search) , 字母列组合。
@@ -165,8 +175,6 @@ date: 2018-09-26
 		= 1*(n+1) + n*n + n(n-1)*(n-1) + ... + n(n-1)(n-2)(n-3)(...)2*2 ~ n*n!
 
 所以最终的时间复杂度为O(n*n!)
-
-
 
 	#include <stdio.h>
 	#include <string.h>
@@ -239,8 +247,6 @@ date: 2018-09-26
 		}
 		printf("Time(n=%d, Time(n) = %d)", NUM, time);
 	}
-
-
 
 ## DFS(Depth First Search) 深度优先搜索
 所有的递归函数都可以用基于stack 的循环结构去实现, 这样我们就能直接控制栈的长度。为了具体阐明这个方法，我举一个关于[DFS] (Depth First Search) 的例子.

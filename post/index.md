@@ -1,9 +1,9 @@
 # AHUIGO 的笔记
 - 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
-- 2016-10-20 [Linux Network Tool](/b/net/3.net-tool) 
 - 2018-09-28 [英语中的否定语句](/b/eng/s/1.not) 
 - 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
 - 2018-12-29 [mysql explain 的使用](/b/db/mysql-index-explain) 
+- 2018-09-26 [如何避免深度递归](/b/algorithm/algorithm-self-call) 
 - 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
 - 2018-09-27 [人脑学习的本质](/b/course/1.study) 
 - 2018-09-27 [写论文要用到的网站](/b/em/em-paper) 
@@ -18,6 +18,7 @@
 - 2018-10-06 [投票类网站的排序算法](/b/algorithm/sort-vote) 
 - 2014-03-05 [Shell Programming](/b/c/shell-) 
 - 2014-10-10 [杨氏矩阵（Young Tableau）的topK 算法](/b/algorithm/algo-young-tableau-topk) 
+- 2016-10-20 [Linux Network Tool](/b/net/3.net-tool) 
 - 2018-10-06 [shell 表达式](/b/c/shell-grammar) 
 - 2018-09-27 [linux 的帮助系统](/b/c/shell-help) 
 - 2012-07-08 [GMT,UTC,DST,CST 各种时间标准](/b/c/shell-time) 
@@ -38,4 +39,3 @@
 - 2018-10-06 [python 字典](/b/py/py-var-dict) 
 - 2018-10-04 [named tuples](/b/py/py-var-collections) 
 - 2018-04-04 [用 Python mathplot 画K 线图](/b/py/py-math-mathplot-kline) 
-- 2018-10-06 [Python 的math 语法](/b/py/py-math) 
