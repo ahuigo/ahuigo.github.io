@@ -19,6 +19,7 @@ date: 2018-10-04
     "bin": {
         "egg-bin": "bin/egg-bin.js",
         "mocha": "bin/mocha.js"
+        "hi": "bin/hi.js"
     },
 
 npm install 的bin 位于`/usr/local/bin/{mocha, egg-bin}`
@@ -32,7 +33,9 @@ npm install 的bin 位于`/usr/local/bin/{mocha, egg-bin}`
     $ npm test
 
 ## install
+安装到本地
 
+    npm install ./your-project -g
     yarn add ./your-project
 
 npm:
@@ -45,3 +48,6 @@ you can declare local dependencies in package.json
     "dependencies": {
         "bar": "file:../foo/bar"
     }
+
+# 参考
+- Node 实现一个命令行程序 https://zhuanlan.zhihu.com/p/28705824

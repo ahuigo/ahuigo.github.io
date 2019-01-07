@@ -1,15 +1,15 @@
 ---
 layout: page
-title: eng-punctuation
+title: english punctuation
 category: blog
 description: 
 date: 2018-09-27
 ---
-# Preface
+# English punctuation
 https://zh.wikipedia.org/wiki/%E8%84%B1%E5%AD%97%E7%AC%A6
-https://zh.wikipedia.org/wiki/%E9%87%8D%E9%9F%B3%E7%AC%A6
 
 	punctuation mark	name	example
+    *   asterisk/star
 	^	caret
 	~	tilde
 	`	grave accent, backquote 重音符或抑音符,反引号

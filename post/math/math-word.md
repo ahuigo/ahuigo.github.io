@@ -4,7 +4,7 @@ title:	数学名词中英文对照 Mathematical Sign
 category: blog
 description:
 ---
-# Preface
+# 数学名词中英文对照 Mathematical Sign
 
 A 　
 abbreviation 简写符号；简写

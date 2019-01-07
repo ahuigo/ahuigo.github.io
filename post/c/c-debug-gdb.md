@@ -5,25 +5,34 @@ category: blog
 description: 
 date: 2018-09-27
 ---
-# Preface
-
-# Preface
-- 调试工具之GDB by 信海龙
-http://www.bo56.com/%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B9%8Bgdb/#0-tsina-1-88680-397232819ff9a47a7b7e80a40613cfe1
-
-以调试php/python 为例子, 文件名为test.php，代码如下：
-
-	<?php
-	echo "hello \n";
-	for($i = 0; $i < 10; $i++){
-		echo $i."\n";
-		sleep(10); }
-
 # 启动gdb
+- First, let excute file records Source file a.c via gcc parameter "-g"
 
-启动gdb可以使用如下几种方式：
+	gcc -g a.c
 
-## 第一种方式：
+- Second, start gdb
+
+	gdb a.out
+
+- Set breakpoint
+
+	gdb> b 9
+
+- Run program
+
+	gdb> run
+
+
+启动gdb php可以使用如下几种方式：
+## 第1种方式：
+
+    $ gdb ./php7.1/bin/php
+    (gdb) b execute_ex
+    break point at execute_ex
+    (gdb) r text.php
+    ....
+
+## 第2种方式：
 
 启动的时候指定要执行的脚本。
 
@@ -40,7 +49,7 @@ http://www.bo56.com/%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B9%8Bgdb/#0-tsina-1-
 
 使用r命令开始执行脚本。r即为run的简写形式。也可以使用run命令开始执行脚本。
 
-# 第二种方式：
+## 第二种方式：
 启动后通过file命令指定要调试的程序。当你使用gdb调试完一个程序，想调试另外一个程序时，就可以不退出gdb便能切换要调试的程序。具体操作步骤如下：
 
 	#sudo gdb ~/home/test/exproxy
@@ -58,16 +67,6 @@ http://www.bo56.com/%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B9%8Bgdb/#0-tsina-1-
 gdb的子命令很多，可能有些你也不太熟悉。没关系，gdb提供了help子命令。通过这个help子命令，我们可以了解指定子命令的一些用法。如：
 
 	(gdb) help set
-	Evaluate expression EXP and assign result to variable VAR, using assignment
-	syntax appropriate for the current language (VAR = EXP or VAR := EXP for
-	example).  VAR may be a debugger "convenience" variable (names starting
-	with $), a register (a few standard names starting with $), or an actual
-	variable in the program being debugged.  EXP is any valid expression.
-	Use "set variable" for variables with names identical to set subcommands.
-
-	With a subcommand, this command modifies parts of the gdb environment.
-	You can see these environment settings with the "show" command.
-
 	List of set subcommands:
 
 	set annotate -- Set annotation_level
@@ -297,19 +296,23 @@ next命令示例：
 	......
 
 # 查看变量
-现在你已经会设置断点，查看断点附近的代码，并可以单步执行和继续执行。接下来你可能会想知道程序运行的一些情况，如查看变量的值。print命令正好满足了你的需求。使用它打印出变量的值。print命令的简写形式为p。示例代码如下：
+print命令的简写形式为p。示例代码如下：
 
-	......
-	Breakpoint 1, zif_sleep (ht=1, return_value=0x7ffff425a398, return_value_ptr=0x0, this_ptr=0x0, return_value_used=0)
-		at /home/php_src/php-5.5.15/ext/standard/basic_functions.c:4439
-	4439    {
-	......
-	(gdb) n
-	4442        if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &num) == FAILURE) {
 	(gdb) n
 	4445        if (num < 0) {
 	(gdb) print num
 	$1 = 10
+
+	(gdb) p/x nu
+	$5 = 0x020304
+	(gdb) x/b nu
+	0x7fffffff05c: 0x02
+	(gdb) x/3 nu
+	0x7fffffff05c: 0x02 0x03 0x04
+
+print substr(str,0,len=5)
+
+	(gdb) p str@5
 	(gdb)
 	......
 
@@ -331,6 +334,14 @@ set命令可以直接修改变量的值。示例代码如下：
 
 上面的代码中我们是把sleep函数传入的10改为了2。即，sleep 2秒。注意，我们示例中修改的变量num是局部变量，只能对本次函数调用有效。下次再调用zif_sleep方法时，又会被设置为10。
 
+
+
+## 看源码
+用gdbtui调试mysql时的截图，这样看代码比使用list命令方便
+http://mingxinglai.com/cn/2013/07/gdbtui/
+
+    (gdb) focus on
+
 ## 设置观察点
 设置观察点的作用就是，当被观察的变量发生变化后，程序就会暂停执行，并把变量的原值和新值都会显示出来。设置观察点的命令是watch。示例代码如下：
 
@@ -349,3 +360,333 @@ set命令可以直接修改变量的值。示例代码如下：
 	......
 
 上例中num值从1变成了10时，程序暂停了。需要注意的是，你的程序中可能有多个同名的变量。那么使用watch命令会观察那个变量呢？这个要依赖于变量的作用域。即，在使用watch设置观察点时，可以直接访问的变量就是被观察的变量。
+
+# gdb & lldb
+> On mac , gdb has been replaced by lldb. [lldb vs gdb](http://lldb.llvm.org/lldb-gdb.html)
+
+## EXECUTION COMMANDS
+
+### launch
+
+#### launch with args
+
+	% gdb --args a.out 1 2 3
+	% lldb -- a.out 1 2 3
+
+or
+
+	gdb> set args 1 2 3
+	lldb> settings set target.run-args 1 2 3
+
+* set env
+
+	gdb> set env DEBUG 1
+	(lldb) env DEBUG=1
+	(lldb) set se target.env-vars DEBUG=1
+	(lldb) settings set target.env-vars DEBUG=1
+
+* unset env
+
+	gdb> unset env DEBUG
+	(lldb) settings remove target.env-vars DEBUG
+	(lldb) set rem target.env-vars DEBUG
+
+* show args
+
+	gdb> show args
+	lldb> settings show target.run-args
+
+* set env and run
+
+	lldb>  process launch -v DEBUG=1
+
+## process
+
+### pid  Attach to a process with pid 123
+
+	gdb> attach 123
+	(lldb) process attach --pid 123
+	(lldb) attach -p 123
+
+### pname Attach to a process named "a.out"
+	gdb> attach a.out
+	(lldb) process attach --name a.out
+	(lldb) pro at -n a.out
+
+### Attach to a remote gdb protocol server running on system "eorgadd", port 8000.
+	(gdb) target remote eorgadd:8000
+	(lldb) gdb-remote eorgadd:8000
+
+### Attach to a remote gdb protocol server running on the local system, port 8000.
+	(gdb) target remote localhost:8000
+	(lldb) gdb-remote 8000
+
+### Attach to a Darwin kernel in kdp mode on system "eorgadd".
+	(gdb) kdp-reattach eorgadd	(lldb) kdp-remote eorgadd
+
+## info & image
+
+### info symbol
+Look up information for a raw address in the executable or any shared libraries.
+
+	gdb >  info symbol 0x1ec4
+	gdb >  info symbol func
+	lldb > image lookup --address 0x1ec4
+	lldb > im loo -a 0x1ec4
+
+## list source code
+
+	# list source code from line 1
+	gdb> list 1
+	# list next 10 line of Source code
+	gdb> list <or> <enter>
+	gdb> list main
+
+> `list` is usually  abbrevited to `l`
+
+## step
+
+	# step in( source level)
+	> s <or> step
+	# step over( source level)
+	> n <or> <enter>
+	# step in ( instruction level )
+	> si
+	# step over ( instruction level )
+	> ni
+	# Step out of the currently selected frame.
+	> finish or fin
+
+### Watchpoint
+
+	# watch var when it is written to
+	gdb> watch var
+	lldb> watch set variable var
+	lldb> wa s v var
+
+	# delete
+	watch del 1
+	wa l
+
+### breakpoint(stop)
+打断点
+
+	#break on line 9
+	b 9
+	# break on func main
+	b main
+	# on file
+	b a.c:12
+	# continue excute instead of step excute
+	c
+	# list
+	gdb> i break
+	lldb> breakpoint list
+	lldb> br l
+	lldb> b
+	# delete
+	gdb> delete 1
+	lldb> br del 1
+
+#### condition
+
+	gdb> break foo if sum != 0
+	(lldb) breakpoint set --name foo --condition '(int)sum != 0'
+	(lldb) br s -n foo -c '(int) sum != 0'
+	(lldb) b foo -c '(int) sum != 0'
+
+### stop-hook
+
+#### display var when stop
+停止时显示变量
+
+	gdb lldb > display var
+	lldb >
+		target stop-hook add -o "fr v var"
+		ta st a -o "fr v var"
+	> undisplay
+
+#### display var when func main stop
+
+	lldb > ta st a -n main -o "fr v var"
+
+### backtrace
+View call stack:
+
+	(gdb lldb) bt
+	#0 add_range (low=1, high=10) at main.c:6
+	#1 0x080483c1 in main () at main.c:14
+
+There are 2 frames: 0, 1.
+
+## Variable
+gdb 参数：
+
+	x/7db
+	x/7w
+	f, the display format
+		`print`
+		`s' (null-terminated string), or
+		`i' (machine instruction).
+		`x' (hexadecimal) initially.
+		`d` decimal
+	u, the unit size
+		7 size 7
+		b Bytes.
+		h Halfwords (two bytes).
+		w Words (four bytes). This is the initial default.
+		g Giant words (eight bytes).
+
+其中, lldb 参数 :
+
+	-f format
+		x hex(default)
+		d decimal
+		b binary
+
+### show via address (x,memory read)
+相当于show pointer
+
+    (lldb)  x 0x010bea04
+    0x010bea04: 68 65 6c 6c 6f 69 6e 74 31 36 69 6e 74 33 32 69  helloint16int32i
+
+#### read memory
+
+	### Read memory from address 0xbffff3c0 and show 4 hex uint32_t values. 推荐用gdb 语法
+	(gdb) x/4xw 0xbffff3c0
+	(lldb) x/4xw 0xbffff3c0
+	(lldb) memory read --size 4 --format x --count 4 0xbffff3c0
+	(lldb) me r -s4 -fx -c4 0xbffff3c0
+	(lldb) x -s4 -fx -c4 0xbffff3c0
+
+	### 对变量取地址input
+	lldb> x/7xb &var
+	lldb> x/7 &var
+	lldb> x -fx -c7 &var
+    (lldb) expr --raw -- &var
+    (*string)  = 0x00000000010bea04
+
+
+#### save results to a local file as text.
+
+	(gdb) set logging on
+	(gdb) set logging file /tmp/mem.txt
+	(gdb) x/512bx 0xbffff3c0
+	(gdb) set logging off
+	(lldb) x/512bx -o/tmp/mem.txt 0xbffff3c0
+	(lldb) memory read --outfile /tmp/mem.txt --count 512 0xbffff3c0
+	(lldb) me r -o/tmp/mem.txt -c512 0xbffff3c0
+
+### show register
+
+	gdb> p $rsp
+
+#### 寄存器间接寻址
+
+	# via register($) 20bytes
+	gdb lldb> x/20 $rsp
+	gdb lldb> x/20 $rsp+4
+
+### show variable
+
+	gdb> p var	"show var
+	gdb> x/1b &var
+	gdb> p &var	"show var's address
+
+show var var pointer:
+
+	gdb> p *pointer
+	gdb> x/1b pointer
+
+### view local Variable(info)
+相关命令和缩写
+
+    info,i
+    frame,fr/f
+    print,p
+
+> Mac OSX has no info, but frame has integrated info
+
+View *all locals* in current frames
+
+	gdb > i locals + i args
+	lldb > fr v
+
+	gdb > i locals
+	lldb > fr v -a (frame variable --no-args)
+
+View specified local variable:
+
+	gdb lldb> p variable
+	lldb> fr v variable
+
+	gdb lldb> x/1x &variable
+
+	# show contents of local variable "bar" formatted as hex.
+	gdb lldb> p/x bar
+	lldb> fr v -fx bar
+
+#### view variable's address
+
+	gdb lldb> p &var
+	gdb lldb> p *&var
+	gdb lldb> p 0x10
+
+#### print result
+
+	gdb lldb> p 11+3&~3
+	gdb lldb> p sizeof(char *)
+
+### Show the global/static variables
+
+	gdb > N/A
+	(lldb) target variable
+	lldb > ta v
+
+	# show contents of global variable "baz"
+	gdb lldb> p paz
+	(lldb) ta v baz
+
+
+### reassign Variable with new value(p)
+
+	gdb> set var sum=0
+	gdb> set var arr[1]=0
+	gdb lldb> p arr[1]=0
+	gdb lldb> p printf("The arr's first value is:%d", arr[1])
+		The arr's first value is:0
+		$6 = 26 //The printf will return length of string.
+
+
+## Register
+gdb 中register  前有`$`
+
+### view register
+
+
+	# via p($)
+	gdb> p $rax (10进制)
+	lldb> p $rax
+
+	# via info/register read (hex)
+	gdb > info registers 显示寄存器的值
+	lldb > register read
+	lldb > reg r
+	lldb > register read rax
+
+### write
+	gdb > p $rax = 123
+	lldb >  register write rax 123
+	gdb >  jump *$pc+8
+	lldb > register write pc `$pc+8`
+
+## disassemble
+
+	gdb> disassemble
+	lldb> disassemble
+	lldb>  disassemble --frame
+	lldb>  di -f
+
+# 参考
+- 调试工具之GDB by 信海龙
+http://www.bo56.com/%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E4%B9%8Bgdb/#0-tsina-1-88680-397232819ff9a47a7b7e80a40613cfe1
