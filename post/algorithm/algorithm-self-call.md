@@ -22,6 +22,7 @@ date: 2018-09-26
 
 ## 一般形式
 尾递归的一般形式:
+
 	int f(n, t){
 		t = f_tmp(n, t);
 		return f(n-1, t);
