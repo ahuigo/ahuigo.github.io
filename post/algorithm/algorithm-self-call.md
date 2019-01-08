@@ -104,11 +104,14 @@ date: 2018-09-26
 举个例子, 递归函数`fn` 本身包含迭代语句 `while`
 
 	//fn 如果吧 tail operation 放到前面，就可以变成广义的尾递归
-	func fn(){
-		//some operation
+	func fn(n){
+		if(condition){
+            ....
+            return 
+        }
 		while(exp){
 			//some operation
-			fn();
+			fn(m);
 			//some tail operation
 		}
 	}
@@ -139,7 +142,7 @@ date: 2018-09-26
 	}
 	var_dump(permutationChar(str_split("abc")));
 
-可以不维护调用栈中的`$pChars` 吗？ 可以传`$pre`呀！形成广义的尾递归，比如：
+可以不维护调用栈中的`$pChars` 吗？ 可以传`$pre`呀！进一步把`tail operation` 放到前面，形成广义的尾递归，比如：
 
 	function permutationChar($chars, &$arr, $pre = ''){
 		$l = strlen($chars);
@@ -147,20 +150,25 @@ date: 2018-09-26
 			$arr[] = $pre.$chars{0};
 			return ;
 		}
-		$pChars = [];
 		for($i = 0; $i < $l ; $i++){
 			$char = $chars{0};
+			$tchars = $chars;
 			$chars = substr($tChars, 1) . $char;
 
 			permutationChar(substr($tChars, 1), $arr, $pre.$char);
-			/*foreach(permutationChar($tChars) as $sub){
-				$pChars[] = $char.$sub;
-			}*/
 		}
 	}
 	$arr=[];
 	permutationChar("abc", $arr);
 	var_dump($arr);
+
+# 用自下向上的方法代替递归
+比如 fibnacii 数:$f(n) = f(n-1)+f(n-2)$ 采用递归的复杂度是$O(2^n)$
+
+
+虽然他不满足尾递归的条件，但是他满足动态规划的**最优子结构**性质。(也就是f(n)) 可以拆分成多个小的f(m), 也就是无后效性）
+ 
+某些dp 问题，我们可以用自下向上的方法替代递归，算法复杂度就变成了线性的`O(n)`
 
 # 用栈+迭代 代替递归
 所有的递归函数都可以用基于栈(stack) 的迭代结构去实现, 这样我们就能直接控制栈的长度。我用两个例子具体阐明这个方法: 深度优先搜索[DFS] (Depth First Search) , 字母列组合。
