@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-01-09 [求数列中最大的连续子序列的和](/b/algorithm/algo-array-max-consecutive-sub) 
 - 2018-09-26 [如何避免深度递归](/b/algorithm/3.algo-self-call) 
 - 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
 - 2018-09-28 [英语中的否定语句](/b/eng/s/1.not) 
@@ -38,4 +39,3 @@
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 
 - 2018-10-06 [python 字典](/b/py/py-var-dict) 
 - 2018-10-04 [named tuples](/b/py/py-var-collections) 
-- 2018-04-04 [用 Python mathplot 画K 线图](/b/py/py-math-mathplot-kline) 
