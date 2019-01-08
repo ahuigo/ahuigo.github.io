@@ -60,9 +60,28 @@ date: 2018-09-26
 1. 贪心法（其中分数背包问题有最优贪心解）等
 2. [遗传算法](http://www.cnblogs.com/heaad/archive/2010/12/23/1914725.html): 
  
-
 ## LCS 最长公共子序列
 http://en.wikipedia.org/wiki/Longest_common_substring_problem
+
+## LIS 最长上升子序列
+
+    3 5 0 1 2 0 8
+
+的LIS 为
+
+    0 1 2 8
+
+设F_{k}为：以数列中第k项结尾的最长递增子序列的长度.
+
+    F_k = max(F_i+1 | A_k>A_i)
+    LIS = max{F_i}
+
+复杂度:
+
+    n + (n-1) + ... + 3 + 2 + 1 = O(n^2)
+
+优化
+
 
 # References
 
