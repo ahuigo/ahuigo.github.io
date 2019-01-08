@@ -1,9 +1,9 @@
 # AHUIGO 的笔记
+- 2018-09-26 [如何避免深度递归](/b/algorithm/3.algo-self-call) 
 - 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
 - 2018-09-28 [英语中的否定语句](/b/eng/s/1.not) 
 - 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
 - 2018-12-29 [mysql explain 的使用](/b/db/mysql-index-explain) 
-- 2018-09-26 [如何避免深度递归](/b/algorithm/algorithm-self-call) 
 - 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
 - 2018-09-27 [人脑学习的本质](/b/course/1.study) 
 - 2018-09-27 [写论文要用到的网站](/b/em/em-paper) 
