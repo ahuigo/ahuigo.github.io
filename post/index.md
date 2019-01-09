@@ -1,5 +1,5 @@
 # AHUIGO 的笔记
-- 2019-01-09 [求数列中最大的连续子序列的和](/b/algorithm/algo-array-max-consecutive-sub) 
+- 2019-01-09 [求数列中和最大的连续子序列的和](/b/algorithm/algo-array-max-consecutive-sub) 
 - 2018-09-26 [如何避免深度递归](/b/algorithm/3.algo-self-call) 
 - 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
 - 2018-09-28 [英语中的否定语句](/b/eng/s/1.not) 

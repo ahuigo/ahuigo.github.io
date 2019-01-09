@@ -71,34 +71,26 @@ https://math.stackexchange.com/questions/715706/partial-fraction-expansion-of-fr
 https://math.stackexchange.com/questions/38623/how-to-prove-sum-limits-r-0n-frac-1rr1-binomnr-frac1n1 数列之和也是分部积分的结果
 https://math.stackexchange.com/questions/3058307/prove-that-binom-nm-sum-i-0m-1i-frac-binom-min-m1i-frac11 汇总的
 
-# 发送红包时拆分好
+# 发送红包时拆分独立
+拆分独立是说发送每一个红包时，独立计算。
 
-    total 每次抢的剩余金额为
+    /**
+    total 为每次抢的剩余金额
     num	剩余人数
     min	最小金额(不限制最小金额时，min = 0)
-    max	最大金额(不限制最大金额时，max >=total)
-
-    //max = total 时
-    if(num == 1)
-        return total;
-    t = total - min*mum;				/t 是可分得最大金额(除去了min)
-    ram = min + t*rand(0,1) * (2/num);	/**期望 E(t*rand*2/num) = t * 0.5 * 2/num = t /num */
-    return ram;
-
-max 为给定值的情况下, 可以使用方式2：
+    **/
 
     if(num == 1)
         return total;
-    t = total - min*mum;				/t 是可分得最大金额(除去了min)
-    tm = min(max-min, t);				//tm 是人为强制的最大金额: if max >= total, then tm = t
+    d = total/num - min;		//差值d, max = min+2d
+    ram = min + 2d*rand(0,1);	/**期望 E(ram) = min+d **/
 
-    人均期望与tm 期望之比为：
-        ave/(tm/2) = (t/num) /(tm/2) = 2/num * (t/tm)
-
-    ram = min + tm*rand(0,1) * (2/num) * (t/tm) = min + t*rand(0,1) * (2/num)
+    total -= ram
+    num -= 1
     return ram;
 
-其实方法2 是错误的，它并没有限制max, 从结果上看这种计算同上面的方法本质上是一样的)：
+以上算法中，min 是可以指定的，但是max 是不可以指定的, 也就是 max = min + 2d
+
 在max 指定值的情况下，如何寻找一个概率分布（T分布？正态分布？F分布）的方法，使得值的范围是(min, max), 期望为(total/num)呢？
 换句话说，值的范围是(0,max-min) 期望为(total/num - min)
 
