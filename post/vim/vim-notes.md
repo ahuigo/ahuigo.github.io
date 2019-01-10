@@ -11,10 +11,10 @@ priority:
 # help 帮助
 > Refer to : http://vim.wikia.com/wiki/Learn_to_use_help
 
-[vim-help](/p/vim-help)
+[vim-help](/p/vim/vim-help)
 
 # motion, 移动范围
-[vim-motion](/p/vim-motion)
+[vim-motion](/p/vim/vim-motion)
 
 ## move cursor光标移动
 
@@ -120,11 +120,10 @@ ps:如果要实现跨行移动,需要指定相应键：
 ### object motion - 按括号对()[]{}移动光标
 
 ### 按标记移动光标(marks)
-[vim-motion](/p/vim-motion)
-
+[vim-motion](/p/vim/vim-motion)
 
 ### 按changelist移动光标
-[vim-motion](/p/vim-motion)
+[vim-motion](/p/vim/vim-motion)
 
 ## 字符移动(charactor move)
 

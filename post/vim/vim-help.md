@@ -5,17 +5,16 @@ category: blog
 description: 
 date: 2018-10-04
 ---
-# Preface
-
 # help 帮助
 > Refer to : http://vim.wikia.com/wiki/Learn_to_use_help
 
-之所以我把help放在最前面，是因为help实在是太重要了。关于d，大家一般是在normal mode使用.其实在:命令下也有:d。关于俩者的区别，直接help吧。
+之所以我把help放在这里，是因为help实在是太重要了。关于d这个操作，大家一般是在normal mode下用来删除. 其实在:命令下也有:d。
+关于俩者的区别，就可以直接help 查看到其用法。
 
 	:h d
 	:h :d
 
-不同模式下命令的help:
+不同模式下命令的help 用法:
 
 	:h CTRL-L　"normal mode
 	:h g_CTRL-G "normal mode
@@ -23,11 +22,11 @@ date: 2018-10-04
 	:h CTRL-q "normal mode
 	:h i_CTRL-R "insert mode
 
-vim中的很多命令都可以结合使用，比如强大的`:g`。
+vim中的很多命令都可以结合使用，比如强大的`:g`, 我们先help 看看他的用法。
 
 	:h :g
 
-如果我想删除所有的空行，怎么做呢？可以用:g 匹配出所有的空行，再:d
+查看完用法后，我们就知道怎么用了。如果我想删除所有的空行，怎么做呢？可以用:g 匹配出所有的空行，再用`:d` 删除
 
 	:g/^\s*$/d
 
@@ -122,7 +121,11 @@ The following mappings (which can go in your vimrc) simplify navigating the resu
 
 `figlet -f ogre "Potion`命令来得到这些有趣的字符的. Figlet is a shell tool(`brew install figlet`)
 
+vim 的很多插件都有vim 文档说明，这些文档说明是怎么编写的呢？查看这里
+
 help doc example: http://learnvimscriptthehardway.stevelosh.com/chapters/54.html
+
+文档示例:
 
 	*potion.txt* functionality for the potion programming language
 

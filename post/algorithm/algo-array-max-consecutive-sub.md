@@ -34,7 +34,7 @@ date: 2019-01-09
 1. F(i) 用sum(partial_sub) 来求解, 它是以ai 为结尾的最大连续子序列的和
 2. Max(F) 用sum(max_sub) 求解，max_sub 就是我们要找的最大连续子序列
 
-具体代码:
+具体代码(python):
 
     arr = [6,-2,-3,5,9,-8,6]
 

@@ -12,6 +12,8 @@ description:
 组合模式(实心菱形): 是聚合组件,组件不可被其它类包含
 装饰器模式: 是改变组件
 
+多个`Unit $o` 组合在一起， 比如员工\学生
+
     function addUnit(Unit $o){
         $this->os[] = $o;
     }
@@ -93,6 +95,7 @@ description:
 # 执行任务及描述任务
 
 ## 解释器模式
+通过子类一层一层去解释剖析问题
 ![php-pattern-1.png](/img/php-pattern-interpret.png)
 
 ## Strategy Pattern, 策略模式
@@ -153,8 +156,13 @@ description:
 
 ## Observer Pattern, 观察者模式
 问题：为了避免类太臃肿，将元素剥离主体！(正交原则，降低耦合)
-观察者模式为您提供了避免组件之间紧密耦合的另一种方法。该模式非常简单：一个对象通过添加一个方法（该方法允许另一个对象，即观察者 注册自己）使本身变得可观察。当可观察的对象更改时，它会将消息发送到已注册的观察者。这些观察者使用该信息执行的操作与可观察的对象无关。结果是对象可以相互对话，而不必了解原因。
-一个简单示例是系统中的用户列表。清单 4 中的代码显示一个用户列表，添加用户时，它将发送出一条消息。添加用户时，通过发送消息的日志观察者可以观察此列表。
+
+观察者模式为您提供了避免组件之间紧密耦合的另一种方法。该模式非常简单：
+1. 一个对象通过添加一个方法（该方法允许另一个对象，即观察者 注册自己）使本身变得可观察。
+2. 当可观察的对象更改时，它会将消息发送到已注册的观察者。
+3. 这些观察者使用该信息执行的操作与可观察的对象无关。结果是对象可以相互对话，而不必了解原因。
+
+代码显示一个用户列表，添加用户时，它将发送出一条消息。添加用户时，通过发送消息的日志观察者可以观察此列表。
 
     //被观察者
 	class UserList implements IObservable {
@@ -179,7 +187,7 @@ description:
 
 	$ul = new UserList();
 
-    //加入观察者
+    //加入观察者(可以是多个)
 	$ul->attach( new UserListLogger() );
 	$ul->addCustomer("Jack");
 
@@ -220,10 +228,29 @@ SplSubject(Obervalbe) 与
     ...
 
 ## 访问者模式(visitor)
-问题：“组合比继承更灵活”，但是你可能事先不知道新操作，每增加一个操作就在类中增加对新操作的组件，会让类变得臃肿。访问者模式可以解决这个问题。
+问题：“组合比继承更灵活”，但是你可能事先不知道新操作，每增加一个操作就在类中增加对新操作的组件，会让类变得臃肿。比如visit 操作
+1. 在基类添加通用集大成的操作，比较臃肿
+1. 在子类添加visit 操作，如果说我要统一visit点别的，要全部子类的visit要更新
+
+访问者模式可以解决这个问题, 把visitor 解耦出来
+在基类为visitor 预留一个调用入口accept
+
+代码： https://github.com/ahuigo/php-lib/tree/master/
+
+    public function accept(Visitor $visitor) {
+        $method = 'visit' . get_class($this);
+        if (method_exists($visitor, $method)) {
+            $visitor->$method($this);
+        }
+    }
+
 
 # CommandChain Pattern, 命令链模式
-命令链 模式以松散耦合主题为基础，发送消息、命令和请求，或通过一组处理程序发送任意内容。每个处理程序都会自行判断自己能否处理请求。如果可以，该请求被处理，进程停止。您可以为系统添加或移除处理程序，而不影响其他处理程序。清单 5 显示了此模式的一个示例。
+命令链 模式以松散耦合主题为基础，发送消息、命令和请求，或通过一组处理程序发送任意内容。
+1. 每个处理程序都会自行判断自己能否处理请求。如果可以，该请求被处理，进程停止。
+2. 您可以为系统添加或移除处理程序，而不影响其他处理程序。
+
+清单 5 显示了此模式的一个示例。
 
 	class CommandChain {
 	  private $_commands = array();
@@ -261,6 +288,16 @@ SplSubject(Obervalbe) 与
 	$cc->addCommand( new MailCommand() );
 	$cc->runCommand( 'addUser', null );
 	$cc->runCommand( 'mail', null );
+
+# 门面模式 Facade
+比如去医院：挂号、看病、化验、取药... 自己一个一个去实现调用
+Facade 模式：就只需要一个接待员，完成所有的调用
+
+    function waiter(){
+        register()
+        doctor()
+        ....
+    }
 
 # Reference
 - [php-pattern]

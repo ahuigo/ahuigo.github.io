@@ -34,6 +34,24 @@ Nosql 的优点：
 
 > leveldb 也是k-v 数据库，但不会像redis 那样把狂吃内存，而是将大部分数据放到硬盘。
 
+# vs memcached
+mc: 多线程，适合小的静态数据进行缓存处理
+1. 使用基于Slab的内存管理方式，有利于减少内存碎片和频繁分配销毁内存所带来的开销。
+2. 各个Slab按需动态分配一个page的内存（和4Kpage的概念不同，这里默认page为1M），
+3. page内部按照不同slab class的尺寸再划分为内存chunk供服务器存储KV键值对使用
+4. LRU 
+redis: 缓存控制更为出色
+2. 单线程，导致所有IO也是串行化的
+1. redis 减少网络通讯时间开销 RTT (Round Trip Time)，支持pipeline和script技术。
+    1. pipeline 命令打包
+    2. redis内嵌了LUA解析器，可以执行lua脚本，
+3. 主动LRU/被动
+
+# 集群
+mc: 一致性hash算法
+redis: 官方推荐是Twitter的开源项目Twemproxy(支持Memcached和Redis协议)
+
+
 # client
 
     >>> import redis
