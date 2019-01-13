@@ -35,7 +35,7 @@ length/slice/substr/都是基于字符的
         30475
 	String.fromCharCode(97,98)
 
-但是js 对四字节utf8 的unicode 支持不好
+但是js 对四字节utf8 的unicode 支持不好
 
     // same as ES5.1
     "𠮷".length == 2

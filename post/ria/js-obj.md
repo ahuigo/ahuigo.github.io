@@ -58,6 +58,8 @@ keys / for-in base / getOwnPropertyNames all
 2. hasOwnProperty: 不包括原型链
 2. `in`: key 它可能是obj 继承的属性, 不一定是obj 本身的属性
 
+e.g.
+
     'toString' in xiaoming; // true, 不是xiaoming 本身，而是object 都有
 
 	function hasValue(obj, key, value) {
