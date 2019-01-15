@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-01-15 [AHUI 的认知作业](/b/life/self-character) 
 - 2019-01-10 [并发模型](/b/code/code-concurrent-model) 
 - 2019-01-09 [求数列中和最大的连续子序列的和](/b/algorithm/algo-array-max-consecutive-sub) 
 - 2018-09-26 [如何避免深度递归](/b/algorithm/3.algo-self-call) 
@@ -38,4 +39,3 @@
 - 2018-09-26 [数据结构之树](/b/algorithm/algorithm-tree) 
 - 2013-09-26 [经典排序算法的实现](/b/algorithm/algo-sort) 
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 
-- 2018-10-06 [python 字典](/b/py/py-var-dict) 
