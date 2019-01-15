@@ -1,5 +1,4 @@
 # AHUIGO 的笔记
-- 2019-01-15 [AHUI 的认知作业](/b/life/self-character) 
 - 2019-01-10 [并发模型](/b/code/code-concurrent-model) 
 - 2019-01-09 [求数列中和最大的连续子序列的和](/b/algorithm/algo-array-max-consecutive-sub) 
 - 2018-09-26 [如何避免深度递归](/b/algorithm/3.algo-self-call) 
