@@ -359,10 +359,23 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 1. 与Merge Sort 不同的是, Merge Sort 通过位置做划分（主要是合并, 合并时需要空间O(n)）,
 2. 而Quick Sort 是通过值做划分，主要工作是划分本身, 划分时只需要给调用栈空间(logN)，而且Quick Sort 排序不稳定(因为pivot 主元位置不确定). 如果需要稳定的 Quick Sort, 则需要空间O(n);
 
-示意图:
+partition 的分方法有两种:
+第一种是两边向中间逼近: `i++> ...  <j--`
 
-        i     j
-        _ ... x     x > pivot? arr[i]=arr[j]
+第二种是单向逼近: `privot=6`
+
+     i j                  exch(2,2) a[i+1]<->a[j], then i++,j++
+     6 2 3 4 10 13 5  9 
+       i j                exch(3,3) a[i+1]<->a[j], then i++,j++
+     6 2 3 4 10 13 5  9 
+         i j              exch(4,4) a[i+1]<->a[j], then i++,j++
+     6 2 3 4 10 13 5  9 
+           i j            
+     6 2 3 4 10 13 5  9
+           i       j      exch(10,5) a[i+1]<->a[j], then i++,j++
+     6 2 3 4 10 13 5  9
+             i        j   exch(i,x)
+     5 2 3 4 6  13 10 9
 
 从概率上说， 快速排序的平均速度比堆排序要快一些
 
@@ -479,9 +492,15 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 		}
 	}
 
-> Quick Sort 中的中值可以应用于 Kth 搜索，平均时间复杂度是: n + n/2 + .. + 1 = 2n
+时间复杂度:
 
-> 下面介绍三种线性排序算法: Counting/Bucket/Radix 它们突破了比较排序的极限: O(NlogN), 要说明的是，它们是通过牺牲空间 以及满足一定特性来达到线性排序的。
+    T(n) = O(n) + T(n-1)+T(1) = O(n^2)  worse time
+    T(n) = O(n) + 2T(n/2)=O(n*logN)     mean time
+
+Quick Sort 中的中值可以应用于 Kth 搜索，平均时间复杂度是: n + n/2 + .. + 1 = 2n
+
+下面介绍三种线性排序算法: Counting/Bucket/Radix 它们突破了比较排序的极限: O(NlogN), 要说明的是，它们是通过牺牲空间 以及满足一定特性来达到线性排序的。
+
 
 # Counting Sort 计数排序
 时间复杂度是 O(2n + 2m) = O(n+m), 空间复杂度: O(n+m). m 指的是数的范围
