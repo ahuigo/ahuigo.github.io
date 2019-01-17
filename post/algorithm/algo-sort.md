@@ -350,6 +350,8 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 	}
 
 # Quick Sort 快速排序
+> 实际应用中，快排比归并排序快3倍，虚拟缓存就是用的快排
+
 Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN, 时间都是O(NlogN)。
 
 - 空间复杂度 `O(logN)`
@@ -360,9 +362,9 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 2. 而Quick Sort 是通过值做划分，主要工作是划分本身, 划分时只需要给调用栈空间(logN)，而且Quick Sort 排序不稳定(因为pivot 主元位置不确定). 如果需要稳定的 Quick Sort, 则需要空间O(n);
 
 partition 的分方法有两种:
-第一种是两边向中间逼近: `i++> ...  <j--`
+1.第一种是两边向中间逼近: `i++> ...  <j--`
 
-第二种是单向逼近: `privot=6`
+2.第二种是单向逼近: `privot=6`
 
      i j                  exch(2,2) a[i+1]<->a[j], then i++,j++
      6 2 3 4 10 13 5  9 
