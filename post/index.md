@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-09-27 [golang 的协程调度](/b/go/18.go-routines-inner) 
+- 2019-01-22 [关于人工标注的思考](/b/code/code-manual-annotation) 
 - 2019-01-09 [求数列中和最大的连续子序列的和](/b/algorithm/algo-array-max-consecutive-sub) 
 - 2018-09-26 [如何避免深度递归](/b/algorithm/3.algo-self-call) 
 - 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
@@ -20,7 +22,7 @@
 - 2014-03-05 [Shell Programming](/b/c/shell-) 
 - 2014-10-10 [杨氏矩阵（Young Tableau）的topK 算法](/b/algorithm/algo-young-tableau-topk) 
 - 2016-10-20 [Linux Network Tool](/b/net/3.net-tool) 
-- 2018-10-06 [shell 表达式](/b/c/shell-grammar) 
+- 2019-01-23 [shell 表达式](/b/c/shell-grammar) 
 - 2018-09-27 [linux 的帮助系统](/b/c/shell-help) 
 - 2012-07-08 [GMT,UTC,DST,CST 各种时间标准](/b/c/shell-time) 
 - 2018-10-06 [shell 终端使用技巧](/b/c/shell-zsh) 
@@ -37,5 +39,3 @@
 - 2018-09-26 [数据结构之树](/b/algorithm/algorithm-tree) 
 - 2013-09-26 [经典排序算法的实现](/b/algorithm/algo-sort) 
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 
-- 2018-10-06 [python 字典](/b/py/py-var-dict) 
-- 2018-10-04 [named tuples](/b/py/py-var-collections) 

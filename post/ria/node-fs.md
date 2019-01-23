@@ -4,12 +4,6 @@ title: Node File System API
 # node 下的文件 API
 默认buffer 
 
-## process.argv
-
-    process.argv.forEach(function (val, index, array) {
-        console.log(index + ': ' + val);
-    });
-
 ## watchFile, watch
 
     fs.watchFile('./a.js', ()=>{

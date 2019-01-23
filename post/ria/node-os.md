@@ -37,6 +37,13 @@ end:
 
     process.exit(1)
 
+### process.argv
+
+    process.argv.forEach(function (val, index, array) {
+        console.log(index + ': ' + val);
+    });
+
+
 ### process event
 JavaScript程序是由事件驱动执行的单线程模型，Node.js也不例外。
 1. 没有任何响应事件的函数可以执行时，Node.js就退出了。

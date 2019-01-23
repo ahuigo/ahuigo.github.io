@@ -66,6 +66,12 @@ search repo by pkg
 
     yum provides mariadb
 
+search repo by so
+
+    $ ldd chrome
+    libgtk3.so.0 => not found
+    $ yun provides libgit3.so.0
+
 # yum & rpm
 
 ## find package

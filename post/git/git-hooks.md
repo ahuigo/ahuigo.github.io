@@ -8,7 +8,7 @@ title: git hooks
 ## TODO & Reference
 - [git-scm]: https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks#Server-Side-Hooks
 
-Useful hooks
+Useful hooks: 按顺序
 
     pre-commit
     prepare-commit-msg //.git/COMMIT_EDITMSG
@@ -67,9 +67,9 @@ Useful hooks
 
 执行git commit命令后，在默认提交消息准备好后但编辑器(editor)启动前，这个钩子就被调用。
 
-它接受一到三个参数。
+它接受一到两个参数。
 
-- 第一个包含了提交消息的文本文件的名字。
+- 第一个包含了提交消息的文本文件的名字: $1=.git/COMMIT_EDITMSG
 - 第二个是提交消息的来源，它可以是：
 	* message（如果指定了-m或者-F选项）
 	* template（如果指定了-t选项，或者在设置（译注：即git config）中开启了commit.template选项）
@@ -77,10 +77,14 @@ Useful hooks
 	* squash（如果存在文件.git/SQUASH_MSG）
 	* commit 并且第三个参数是一个提交(commit)的SHA1值（如果指定了-c,-C或者\--amend选项）
 
-这个钩子的目的是:
-	用来在工作时编辑信息文件，并且不会被`--no-verify`选项略过。一个非0值意味着钩子工作失败，会终止提交(abort the commit)。它不应该用来作为pre-commit钩子的替代。
+这个钩子:
+1. 目的是: 用来在工作时编辑信息文件，并且不会被`--no-verify`选项略过。一个非0值意味着钩子工作失败，会终止提交(abort the commit)。它不应该用来作为pre-commit钩子的替代。
+2. git提供的样本prepare-commit-msg.sample会把当前合并提交信息(a merge's commit message)中的Conflicts:部分注释掉。
 
-> git提供的样本prepare-commit-msg.sample会把当前合并提交信息(a merge's commit message)中的Conflicts:部分注释掉。
+例子:
+
+    .git/hooks/prepare-commit-msg
+    .git/COMMIT_EDITMSG
 
 # pre-push
 

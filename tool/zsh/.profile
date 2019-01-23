@@ -28,8 +28,8 @@ export GOPATH=~/gohome
 export PATH=$PATH:$GOPATH/bin
 
 # brew
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
-
+#export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
 
 #git
 #sh ~/.git.bash

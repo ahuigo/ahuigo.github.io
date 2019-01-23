@@ -5,7 +5,7 @@
 	editor = vi
 	filemode = false
 	quotepath = false
-	symlinks = false
+	symlinks = true
 [color]
 	diff = auto
 	status = auto

@@ -57,6 +57,13 @@ case条件 可以是变量、与或非(不能有引号)、简单的通配符(不
 
 > 不支持BRE, EBR. `[[:digit:]]` 理解为扩展的wildcard
 
+前缀匹配：
+
+    case "$2,$3" in
+    merge,) print' "$3" ;;
+        *) ;;
+    esac
+
 # function
 
 	function fun(){

@@ -61,6 +61,7 @@ or:
     git remote set-url origin https://github.com/Homebrew/homebrew-core.git
 
 ### Homebrew Bottles是Homebrew提供的二进制代码包
+下载二进制会用到
 
     export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
