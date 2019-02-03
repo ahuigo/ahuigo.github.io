@@ -267,6 +267,8 @@ fgetc 可能是调用read 读了1024 个字节到c 标准库的buffer.FILE 结�
 lseek 成功时 返回当前偏移, 失败是返回-1, 并且设置errno 为ESPIPE(该设备不支持偏移). 这与fseek 不同，成功是返回0， 失败时返回-1. 需要获取当前偏移时需要用ftell
 
 # fcntl
+> 配合阅读： https://mengkang.net/559.html
+
 前面以read 为例介绍非阻塞I/O时，为何不直接使用STDIN_FILENO 而重新open 一下`/dev/tty` 呢？
 因为我们需要通过open 指定O_NONBLOCK. 	
 

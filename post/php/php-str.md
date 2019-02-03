@@ -14,6 +14,11 @@ var_dump(mb_detect_order());
 ## detect encoding
 string mb_detect_encoding ( string $str [, mixed $encoding_list = mb_detect_order() 
 
+# print
+
+    var_dump()
+    var_export($a, true)
+    print_r($a,true)
 
 # String
 

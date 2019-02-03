@@ -41,58 +41,15 @@ description:
 			nginx
 			nginx -V
 
-## check conf
+## find conf
 $     nginx -t
 nginx: the configuration file /usr/local/nginx//conf/nginx.conf syntax is ok
 
+find error/access log path:
+
+    sudo lsof -p `ps aux| gawk '/[n]ginx: master process nginx/{print $2}'` | grep log
 
 # nginx.conf
-
-	#user  nobody;
-	worker_processes  1;
-	#pid        logs/nginx.pid;
-
-	events {
-        worker_connections  1024;
-	}
-
-
-	http {
-        upstream  fastcgi_backend {
-            server 127.0.0.1:9015  max_fails=0;
-            keepalive 8;
-        }
-
-        server {
-            listen  80 default_server;
-            server_name  gitWiki.com;
-            root   /Users/hilojack/www/gitWiki;
-            location  ~ "^/(js|img|css|htm)/" {
-                #rewrite "^/(.*)" /yar.php/$1 last;
-            }
-            
-            rewrite "^/(js|img|css|htm)/(.*)" /$1/$2 last; #好像即使rewrite在location后面, 也会在location执行前执行
-            if ( $http_host ~ "^rpc.cn" ){
-                rewrite "^/2/(.*)" /yaf.php/$1 last;
-            }
-
-            location ~* "/proxy" {
-                proxy_pass http://host:8080;
-                proxy_set_header Host            $host;
-                proxy_set_header X-Forwarded-For $remote_addr;
-            }
-
-            # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-            location /{
-                #redirect ^ http://www.google.com/?q=$fastcgi_script_name last; break; # test nginx variable
-                fastcgi_pass   127.0.0.1:9000;
-                #fastcgi_pass   fastcgi_backend;
-                #fastcgi_index  index.php;
-                fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-                include        fastcgi_params;
-            }
-        }
-    }
 
 ## $_SERVER
 hilo.com/a/b?c=1

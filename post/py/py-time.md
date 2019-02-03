@@ -18,6 +18,26 @@ time 提供基本的时间，sleep
 	time.sleep(1)#1s
 	time.sleep(random.random())
 
+## timer
+    from threading import Timer
+
+    def timeout():
+        print("Game over")
+
+    # duration is in seconds
+    t = Timer(10, timeout)
+    t.start()
+
+    # wait for time completion
+    t.join()
+
+Should you want pass arguments to the timeout function, you can give them in the timer constructor:
+
+    def timeout(foo, bar=None):
+        print('The arguments were: foo: {}, bar: {}'.format(foo, bar))
+
+    t = Timer(20 * 60, timeout, args=['something'], kwargs={'bar': 'else'})
+
 # datetime
 
 	from datetime import datetime, timedelta

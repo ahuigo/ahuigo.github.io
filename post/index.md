@@ -1,4 +1,8 @@
 # AHUIGO 的笔记
+- 2019-02-03 [centos网络配置](/b/net/1.net-config) 
+- 2019-01-23 [go汇编示例](/b/go/go-asm) 
+- 2018-09-27 [学习 docker](/b/arch/arch-docker) 
+- 2019-01-29 [AI 入门路线](/b/ai/ai-book) 
 - 2018-09-27 [golang 的协程调度](/b/go/18.go-routines-inner) 
 - 2019-01-22 [关于人工标注的思考](/b/code/code-manual-annotation) 
 - 2019-01-09 [求数列中和最大的连续子序列的和](/b/algorithm/algo-array-max-consecutive-sub) 
@@ -35,7 +39,3 @@
 - 2018-10-06 [哪些python lib 让你相见恨晚](/b/py/py-lib) 
 - 2018-09-26 [BFPRT 算法](/b/algorithm/algo-topk) 
 - 2018-09-15 [Analysis of Algorithm](/b/algorithm/1.time-complex) 
-- 2017-09-26 [跳跃表](/b/algorithm/ds-skiplist) 
-- 2018-09-26 [数据结构之树](/b/algorithm/algorithm-tree) 
-- 2013-09-26 [经典排序算法的实现](/b/algorithm/algo-sort) 
-- 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 

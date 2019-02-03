@@ -19,11 +19,11 @@ There are many compress algorithm: gzip, deflate, sdch
 	location /video/ {
 		sendfile       on;#default off
 		tcp_nopush     on;
-			# `tcp_nopush = on` 时执行系统调用 `tcp_cork()` ，结果就是数据包不会马上传送出去，等到数据包最大时，一次性的传输出去，这样有助于解决网络堵塞。
+			# `tcp_nopush = on` 时执行系统调用 `tcp_cork()` ，结果就是数据包不会马上传送出去，等到数据包最大时(MSS)，一次性的传输出去，这样有助于解决网络堵塞。
 			# tcp_nopush 基本上控制了包的“Nagle化”，Nagle化在这里的含义是采用Nagle算法把较小的包组装为更大的帧。
 		tcp_nodelay   on;
-			# tcp_nodelay 与nopush 相反，不会同时生效, 仅适合于keepalive
-		aio            on; # use of asynchronous file I/O (AIO) on FreeBSD and Linux
+			# tcp_nodelay 与nopush 相反，不会同时生效, 仅适合于keepalive(小包立即发送，不必等接受端返回上一个包的ack)
+		aio on; # use of asynchronous file I/O (AIO) on FreeBSD and Linux
 	}
 
 ## sendfile
@@ -33,7 +33,7 @@ There are many compress algorithm: gzip, deflate, sdch
 	write(socket,tmp_buf, len);
 	硬盘 >> kernel buffer >> user buffer>> kernel socket buffer >>协议栈
 
-用`sendfile()` 来进行网络传输的过程：
+用`sendfile()` 来进行网络传输的过程(zero copy 0拷贝)：
 
 	sendfile(socket,file, len);
 	硬盘 >> kernel buffer (快速拷贝到kernelsocket buffer) >>协议栈

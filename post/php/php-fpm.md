@@ -4,7 +4,7 @@ title: php-fpm
 category: blog
 description:
 ---
-# Preface
+# php-fpm
 FPM 是PHP内置的FastCGI Process Manager(FPM), 在命令行下，可以通过`php-fpm` 启动
 
 传统的CGI 方式，每次 Web请求PHP都必须重新解析php.ini、重新载入全部dll扩展并重初始化全部数据结构, 处理完成后进程结束。
@@ -14,7 +14,7 @@ FPM 是PHP内置的FastCGI Process Manager(FPM), 在命令行下，可以通过`
 4. 修改php.ini之后，php-cgi进程的确是没办法平滑重启的。php-fpm对此的处理机制是新的worker用新的配置，已经存在的worker处理完手上的活就可以歇着了，通过这种机制来平滑过度。
 
 
-# INI
+# INI & conf
 `php -i` 显示的是`Server API => Command Line Interface`
 `php --ini` show configuration file name
 `php-fpm -i` 显示的是`Server API => FPM/FastCGI`, 它会包含 php.ini
@@ -45,19 +45,16 @@ php 本身的配置文件是php.ini `php-fpm | grep php.ini`：
 
 	phpini=`php -d 'display_errors=stderr' -r 'echo php_ini_loaded_file();'`
 
+## fpm.conf
 php-fpm 进程管理器的配置文件是`php-fpm.conf` ,如果编译时指定了配置文件路径则可以通过以下命令查询, 否则默认的路径是/etc/php-fpm.conf):
 
 	php-fpm -t
+    # 或则
 	php-fpm -y /etc/php-fpm.conf
 	php-fpm -i |head
-	--with-config-file-path=/usr/local/etc/php/5.6
-	--with-config-file-scan-dir=/usr/local/etc/php/5.6/conf.d
-	--sysconfdir=/usr/local/etc/php/5.6
-
-在mac 上fpm 的安装:
-
-	brew install php55 --with-fpm
-	export PATH="$(brew --prefix homebrew/php/php55)/bin:$PATH"
+        --with-config-file-path=/usr/local/etc/php/5.6
+        --with-config-file-scan-dir=/usr/local/etc/php/5.6/conf.d
+        --sysconfdir=/usr/local/etc/php/5.6
 
 fpm（FastCGI进程管理器）用于替换PHP FastCGI 的大部分附加功能，它的[功能包括](http://php.net/manual/zh/install.fpm.php)
 
@@ -72,7 +69,7 @@ fpm（FastCGI进程管理器）用于替换PHP FastCGI 的大部分附加功能�
 - 动态／静态子进程产生；
 - 基本 SAPI 运行状态信息（类似Apache的 mod_status）；
 
-## ini 格式
+## conf 格式
 php-fpm.conf 采用ini 格式，用`[global]` 节放blobal directives, 其它包括`[www]` 在内的节 放pool directives.
 
 	[global]
@@ -97,7 +94,10 @@ Refer to: http://php.net/manual/en/install.fpm.configuration.php
 
 分多个pool 池，可以保证一个请求阻塞了一个pool 池后，另外一个池子的请求不会受影响.
 
-不同的池可以写到一个`php-fpm.conf`, 也可以放在不同的文件里面:
+    php-fpm    2915  0.0  0.3 227148  4712 ?        S    19:37   0:00 php-fpm: pool www
+    php-fpm    2916  1.4  0.3 227148  4708 ?        S    19:37   0:00 php-fpm: pool pool_dev
+
+不同的池即可以写到一个`php-fpm.conf`, 也可以放在不同的文件里面:
 
 	php-fpm -y fpm_www.conf
 	php-fpm -y fpm_dev.conf
@@ -224,16 +224,33 @@ If this number(`10`) of child processes exit with Segmentation, page fault, and 
 ## log
 访问日志用`access.log` 错误日志用`error_log`.
 
-### error_log
+    # nginx log
+    sudo lsof -p `ps aux| gawk '/[n]ginx: master process nginx/{print $2}'` | grep log
+        /var/log/nginx/error.log startup log
+        ~/log/nginx.error.log
+        "/usr/local/Cellar/nginx-full/1.6.2/~/log/nginx.access.log"
+    # fpm log
+    sudo lsof -p `ps aux|awk '/^root.*php-fpm -[D]/{print $2}'`|grep log
+
+conf path:
+
+    sudo nginx -t
+    sudo php-fpm -t
+
+### custom error_log
 
 	[global]
+	;tail -f /home/xxx/php/logs/php-error.log
 	error_log = /var/log/fpm.error.log
-	 tail -f /home/xxx/php/logs/php-error.log
-	;默认路径是启动时的当前路径pwd
+
 	;Default value: #INSTALL_PREFIX#/log/php-fpm.log.
 	error_log = log/fpm.error.log
-	; Redirect worker stdout and stderr into main error log.  Default stderr will be redirected to /dev/null according to FastCGI specs.
+
+	;Redirect worker stdout and stderr into main error log.  Default stderr will be redirected to /dev/null 
 	catch_workers_output = yes
+
+    access.log = /Users/hilojack/log/fpm.access.$pool.log
+
 
 Example
 

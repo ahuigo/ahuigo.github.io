@@ -76,13 +76,13 @@ The join type
         select  * from t1 where id in (15,16);
         select id from t1 where id >15;
         select * from t1 where id >15;
-    eq_ref join 查询是前表能匹配到后表，t1 join t2 on t1.id=t2.uid
+    eq_ref join 针对于unique/pk索引,t1 join t2 on t1.id=t2.id
         $ explain select * from t1 join t3 on t1.id=t3.id;
         | id   | select_type | table | type   | possible_keys | key     | key_len | ref        | rows | Extra |
         +------+-------------+-------+--------+---------------+---------+---------+------------+------+-------+
         |    1 | SIMPLE      | t1    | ALL    | PRIMARY       | NULL    | NULL    | NULL       |    4 |       |
         |    1 | SIMPLE      | t3    | eq_ref | PRIMARY       | PRIMARY | 4       | test.t1.id |    1 |       |
-    ref join 查询, 针对于unique/pk索引, 或者是使用了 最左前缀 规则索引的查询
+    ref join 查询,  使用了 最左前缀 规则索引的查询, 或非pk或非uk键
         SELECT * FROM ref_table,other_table 
             WHERE ref_table.key_column=other_table.column;
         > explain select * from t1 join t3 on t1.a=t3.a;
@@ -93,6 +93,11 @@ The join type
         |    1 | SIMPLE      | t3    | ref  | abindex       | abindex | 5       | test.t1.a |    1 | Using index |
     index: 全索引扫描(full index scan), 不是全表扫描。只扫描索引，不扫描数据
         select id from t1 where id in (15,16);
+
+        a.当查询是索引覆盖的，即所有数据均可从索引树获取的时候（Extra中有Using Index）；
+        b.以索引顺序从索引中查找数据行的全表扫描（无 Using Index）；
+        c.如果Extra中Using Index与Using Where同时出现的话，则是利用索引查找键值的意思；
+        d.如单独出现，则是用读索引来代替读行，但不用于查找
     All 全表查询: 扫描整个数据 join t3 where t1.id=t3.id+1
 
 ## 慢查询优化步骤

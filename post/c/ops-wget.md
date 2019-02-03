@@ -8,6 +8,7 @@ description:
 
     wget -r --user="user@login" --password="password" ftp://server.com/
     wget -r ftp://user:pass@server.com/
+    -S 打印http header
 
 # continue
 

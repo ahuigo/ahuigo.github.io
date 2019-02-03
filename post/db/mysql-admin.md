@@ -65,7 +65,7 @@ password=kw.get('password', ''),
 ## via brew
 在mac中安装 mysql
 
-	$ brew install mysql
+	$ brew install mariadb
 
 ## mycli
 > http://mycli.net/install

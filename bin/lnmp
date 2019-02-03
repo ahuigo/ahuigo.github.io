@@ -2,19 +2,22 @@
 echo "stop nginx & php-fpm & memcached & redis-server";
 sudo pkill php-fpm memcached redis-server
 pgrep nginx > /dev/null && sudo nginx -s stop
-mysql.server stop
+#mysql.server stop
+sudo pkill mysqld
 
 if [[ $1 = 'stop' ]];then
 	exit;
 fi
 
 echo "start php-fpm daemon"
+#log_dir=/var/log/nginx
+log_dir=/Users/hilojack/log/nginx
+[[ -d $log_dir ]] || mkdir -p $log_dir
 sudo php-fpm -D
 
 echo "start nginx"
 nginx_dir=/usr/local/var/run/nginx/
-[[ -d $nginx_dir ]] || sudo mkdir -p $nginx_dir
-[[ -d /tmp/nginx ]] || mkdir /tmp/nginx
+[[ -d $nginx_dir ]] || { mkdir -p $nginx_dir; sudo chmod a+rx $nginx_dir; }
 sudo nginx 
 
 # mc

@@ -22,6 +22,23 @@ require(ids, factory(ids){})
 2. 每次load 都检查下是不是所有ids都加载成功(args.length)
 3. 所有ids加载完毕, 就执行: factory(args)
 
+核心类似：
+
+    args = ['vue','math']
+    each(args, function (item, i) {
+        if (item !== callback) {
+            item             = getAsset(item);
+            items[item.name] = item;
+ 
+            load(item, callback && i === args.length - 2 ? function () {
+                if (allLoaded(items)) {
+                    one(callback);
+                }
+ 
+            } : null);
+        }
+    });
+
 ## 引入requireJs
 加载RequireJs 本身也会导致浏览器停止渲染。解决的办法是将其放在浏览器底部。或者写成这样：
 
