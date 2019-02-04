@@ -28,7 +28,7 @@ ag after before 不会重复输出：
 	选项与参数：
 	-x : whole line
 	-a ：将 binary 文件以 text 文件的方式搜寻数据
-	-c ：计算找到 '搜寻字符串' 的次数
+	-c ：计算找到 '搜寻字符串' 的行数
 	-i ：忽略大小写的不同，所以大小写视为相同
 	-I : ingore binary file
 	-n ：顺便输出行号
@@ -52,6 +52,11 @@ ag after before 不会重复输出：
 	-E, --extended-regexp
 	-e 'pattern1' -e pattern2
 	-P perl patterns
+
+## -c wc -l
+
+    grep -P pattern | wc -l
+    grep -Pc pattern
 
 ## max-count
 

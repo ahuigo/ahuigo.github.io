@@ -52,7 +52,15 @@ Nmap命令的格式为：
 	-exclude	排除指定主机。
 	-excludefile	排除指定文件中的主机。
 
+## 使用
+
+    ip=123.125.115.110 
+    nmap --host-timeout 2s 123.125.115.110 -p 443| grep -Pc "443/tcp open"
+    wget https://$ip 2>&1 |grep 'common name'
+
+
 # config network
+
     sudo ipconfig set en0 DHCP
     sudo ipconfig set en1 INFORM 192.168.0.150
         ipconfig getifaddr en0

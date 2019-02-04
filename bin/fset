@@ -12,6 +12,7 @@ act = '+'
 
 def Usage():
     tip = '''
+    fset extend command `comm`
     Usage:
         fset [OPTIONS] FILE1 {SET_OPERATOR} FILE2
 

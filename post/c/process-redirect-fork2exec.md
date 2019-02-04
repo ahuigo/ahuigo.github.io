@@ -8,11 +8,30 @@ description:
 多进程的的内容包括进程控制, 进程通信, 进程本身的结构.
 
 # 重定向
-标准输入输出操作符:
+标准输入输出:
 
-  < : /dev/stderr -> /dev/fd/0
-  > or >> : /dev/stdin -> /dev/fd/1
-  2> or 2>> : /dev/stdout -> /dev/fd/2
+    /dev/stdin -> /dev/fd/0
+    /dev/stdout -> /dev/fd/1
+    /dev/stderr -> /dev/fd/2
+
+重定向：
+
+    < or 0< : 
+        $ cat <a.txt
+    > or >> or 1> or 1>>:
+        $ echo 1 > a.txt
+    2> or 2>> : 重定向标准错误
+        $ { echo ass; xxxxxxx} 2>a.txt
+        zsh: command not found: xxxxxxx
+
+参考下面的exec
+
+    >& or &> : 重定向标准输出和标准错误
+        $ { echo ass; xxxxxxx} >& a.txt
+        ass
+        zsh: command not found: xxxxxxx
+    2>& 重定向标准错误(重复)
+        $ { echo ass; xxxxxxx} 2>& a.txt
 
 ## 输入重定向
 本质是 `fd=open(file, r); 0->fd`
@@ -26,9 +45,10 @@ description:
   command-line1 [1-n]>file
   command-line1 [1-n]>>file
 
-将标准出标准错误导向/dev/null
+将标准出、标准错误导向/dev/null
 
   cmd &>/dev/null
+  cmd >&/dev/null
 
 ## 绑定重定向
 `&[n]` 代表是已经存在的文件描述符，`&1` 代表输出 `&2`代表错误输出 `&-`代表关闭与它绑定的描述符
@@ -43,7 +63,7 @@ description:
 eg:
 
   $ exec 6>&1
-  #将标准输出与fd 6绑定: 1指向6所在的文件
+  #将fd 6绑定 1指向的文件
 
   $ ls  /dev/fd/
   0  1  2  3  6
@@ -129,6 +149,42 @@ exec命令示例
     do
     echo "$pkg"
     done
+
+### 利用pipeline 控制进程数量
+利用wait 等待所有的子进程，利用 read -u9 阻塞等待pipe
+
+    # Author: cloud@txthinking.com
+    max_process=54
+    fd=/tmp/google-hosts.fd
+    mkfifo $fd
+    exec 9<>$fd
+    rm $fd
+    for((i=0;i<$max_process;i++))
+    do
+        echo
+    done >&9
+
+    n=0
+    for((i=$first;i<$last;i++))
+    do
+        {
+            read -u9
+            {
+                out=$(./getssl.sh $i)
+                echo -e "$out"
+                echo -e "$out" >> $output
+                echo >&9
+            }
+        }&
+        n=$(($n+1))
+        if [ $(($n%$(($max_process*2)))) -eq 0 ]
+        then
+            wait
+        fi
+    done
+    wait
+    exec 9>&-
+
 
 # kill 信号
 kill -15 默认向进程发送GIGTERM 信号

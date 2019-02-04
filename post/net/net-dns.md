@@ -94,6 +94,7 @@ PTR：逆向查询记录（Pointer Record），只用于从IP地址查询域名
   $ nslookup  -q=cname ahuigo.github.io
   Non-authoritative answer:
   ahuigo.github.io	canonical name = hilojack.github.io.
+  $ dig CNAME ahuigo.github.io
 
 ## TXT记录
 两个作用:
@@ -109,19 +110,17 @@ PTR：逆向查询记录（Pointer Record），只用于从IP地址查询域名
 
 google ip range:
 
-  $ nslookup -q=TXT _netblocks.google.com 8.8.4.4 | grep -Po '\d+\.\d+\.\d+.\d+\/\d+
-  $ dig TXT +short @8.8.8.8 _netblocks.google.com
-  dig TXT +short _netblocks{,2,3}.google.com
-  mdend_
+    $ nslookup -q=TXT _netblocks.google.com 8.8.4.4 | grep -Po '\d+\.\d+\.\d+.\d+\/\d+
+    $ dig TXT +short @8.8.8.8 _netblocks.google.com
+    dig TXT +short _netblocks{,2,3}.google.com
 
 how many ip google has?
 
-  total=0
-  for slash in $(dig TXT +short _netblocks{,2,3}.google.com | tr ' ' '\n' | grep '^ip4:' | cut -d '/' -f 2); do
-    total=$((total+$(echo "2^(32-$slash)" | bc -l)))
-  done
-  echo $total
-  231424 end_
+    total=0
+    for slash in $(dig TXT +short _netblocks{,2,3}.google.com | tr ' ' '\n' | grep '^ip4:' | cut -d '/' -f 2); do
+        total=$((total+$(echo "2^(32-$slash)" | bc -l)))
+    done
+    echo $total
 
 ## NS记录
 NS记录是域名服务器记录，用来指定域名由哪台服务器来进行解析。
@@ -132,6 +131,10 @@ NS记录是域名服务器记录，用来指定域名由哪台服务器来进行
   ahuigo.github.io	nameserver = f1g1ns2.dnspod.net.
 
   $ dig ns stackexchange.com
+
+## tcp
+
+    dig +tcp baidu.com @208.67.220.220 
 
 ## 层级
 

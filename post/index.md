@@ -1,5 +1,5 @@
 # AHUIGO 的笔记
-- 2019-02-03 [centos网络配置](/b/net/1.net-config) 
+- 2016-10-10 [网络扫描器nmap、zmap](/b/net/net-nmap-zmap) 
 - 2019-01-23 [go汇编示例](/b/go/go-asm) 
 - 2018-09-27 [学习 docker](/b/arch/arch-docker) 
 - 2019-01-29 [AI 入门路线](/b/ai/ai-book) 
