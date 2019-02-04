@@ -106,6 +106,9 @@ linux: strace( mac: dtruss)
 			Specify a delimiter to be printed between each process ID.
 	strace -p `pgrep -d ' -p ' php-fpm ` -s 1024 -f
 		poll([{fd=5, events=POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND}], 1, 1000) = 0 (Timeout)
+    # 统计
+    strace -c -p $(pgrep -n php-fpm)
+    strace -T -p $(pgrep -n php-fpm) | grep -A 2 stat
 
 Example：
 

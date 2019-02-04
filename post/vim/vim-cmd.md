@@ -385,6 +385,7 @@ Examples: `:h :com`
 
 	" Count the number of lines in the range
 	:com! -range -nargs=0 Lines  echo <line2> - <line1> + 1 "lines"
+        ! Redefined existed command
 
 	" Call a user function (example of <f-args>)
 	:com -nargs=* Mycmd call Myfunc(<f-args>)

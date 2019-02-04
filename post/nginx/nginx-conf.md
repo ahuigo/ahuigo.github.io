@@ -41,6 +41,10 @@ description:
 			nginx
 			nginx -V
 
+kiss:
+
+    nginx -p `pwd`/ -c conf/nginx.conf
+
 ## find conf
 $     nginx -t
 nginx: the configuration file /usr/local/nginx//conf/nginx.conf syntax is ok
