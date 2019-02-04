@@ -78,6 +78,10 @@ endfunction
 " crontab with no backup
 autocmd filetype crontab setlocal nobackup nowritebackup
 
+" window
+noremap <c-h> :bp<cr>
+noremap <c-l> :bn<cr>
+
 " Blog
 noremap <F9> :execute "0r _posts/test.md"<CR>
 
@@ -102,28 +106,6 @@ nnoremap <M-A>s :up<CR>
 inoremap <M-A>s <C-o>:up<CR>
 nnoremap <M-A>a ggVG
 nnoremap \p "+p
-
-function! Strip(input_string)
-	return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
-endfunction
-
-function! Pipe2Shell(args)
-  let pos = stridx(a:args, '|')
-  let exCmd = strpart(a:args, 0, pos)
-  let shellCmd = Strip(strpart(a:args, pos+1))
-  redir => message
-  silent execute exCmd
-  redir END
-  if empty(message)
-	echoerr "no output"
-  else
-	new
-	setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
-	silent put=message
-	exec '%!' shellCmd
-  endif
-endfunction
-command! -nargs=+ -complete=command Pipe2Shell call Pipe2Shell(<q-args>)
 
 call plug#begin('~/.vim/plugged')
     Plug 'vim-scripts/AutoComplPop'
@@ -164,6 +146,11 @@ let g:ackprg = 'ag --vimgrep'
 exec "source ".expand('<sfile>:p:h').'/denite.vim'
 nnoremap <C-p> :Denite buffer file/rec<CR>
 
+""""""""""""
+" python3
+"""""""""""""
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 """"""""""""""
 " DEV
 """""""""""""
@@ -178,5 +165,29 @@ set ts=4 sw=4 softtabstop=4 nu autoindent
 set cuc cul
 set ignorecase smartcase
 set expandtab
+""""""""""""""""""""""""""""""""""""""""""""""""
+function! Strip(input_string)
+    return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
+endfunction
+
+" :Pipe2Shell echo 1234 | wc -l
+function! Pipe2Shell(args)
+  let pos = stridx(a:args, '|')
+  let exCmd = strpart(a:args, 0, pos)
+  "let pattern = shellescape(Strip(strpart(a:args, pos+1)))
+  let shellCmd = Strip(strpart(a:args, pos+1))
+  redir => message
+  silent execute exCmd
+  redir END
+  if empty(message)
+    echoerr "no output"
+  else
+    new
+    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+    silent put=message
+    exec '%!' shellCmd
+  endif
+endfunction
+command! -nargs=+ -complete=command Pipe2Shell call Pipe2Shell(<q-args>)
 
 " vim: set ts=2 sw=2 tw=80 noet :

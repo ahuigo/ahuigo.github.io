@@ -343,13 +343,7 @@ The valid escape sequences are
 		into the expansion - for example, to get <bang>, use
 		<lt>bang>.
 
-#### q-args(signle)
-If the first two characters of an escape sequence are `q-` (for example, `<q-args>`)
-then `the value is quoted` in such a way as to make it a valid value for use in an expression.
-
-> This uses the argument as one single value.
-
-#### f-args(multi)
+#### f-args(multi args)
 To allow commands to pass their arguments on to a `user-defined function`,
 there is a special form `<f-args> ("function args")`.
 
@@ -370,18 +364,24 @@ See the Mycmd example below.
 	XX a\\\\b	   'a\\b'
 	XX a\\\\ b	   'a\\', 'b'
 
-Examples >
+Examples: `:h :com`
 
 	" Delete everything after here to the end
 	:com Ddel +,$d
+    :Ddel
 
 	" Rename the current buffer
 	:com -nargs=1 -bang -complete=file Ren f <args>|w<bang>
+    :Ren new.txt
 
 	" Replace a range with the contents of a file
 	" (Enter this all as one line)
 	:com -range -nargs=1 -complete=file
 	 Replace <line1>-pu_|<line1>,<line2>d|r <args>|<line1>d
+    :'<,'>Replace insert.txt
+
+        2-pu_ ” insert blank line before 2 line
+        2pu_ ” insert blank line after 2 line
 
 	" Count the number of lines in the range
 	:com! -range -nargs=0 Lines  echo <line2> - <line1> + 1 "lines"
@@ -396,6 +396,42 @@ When executed as: >
 This will invoke: >
 
 	:call Myfunc("arg1","arg2")
+
+
+#### q-args(single qouted arg)
+If the first two characters of an escape sequence are `q-` (for example, `<q-args>`)
+then `the value is quoted` in such a way as to make it a valid value for use in an expression.
+
+> This uses the argument as one single value.
+
+pipe2shell example:
+
+    " :Pipe2Shell echo 1234 | wc -l | cat
+    " 第一个cmd：echo 1234 是vim 的cmd 不是shell cmd
+    function! Strip(input_string)
+      return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
+    endfunction
+
+    function! Pipe2Shell(args)
+      let pos = stridx(a:args, '|')
+      let exCmd = strpart(a:args, 0, pos)
+      "let pattern = shellescape(Strip(strpart(a:args, pos+1)))
+      let shellCmd = Strip(strpart(a:args, pos+1))
+      redir => message
+      silent execute exCmd
+      redir END
+      if empty(message)
+        echoerr "no output"
+      else
+        new
+        setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+        silent put=message
+        exec '%!' shellCmd
+      endif
+    endfunction
+    command! -nargs=+ -complete=command Pipe2Shell call Pipe2Shell(<q-args>)
+
+q-args example 2:
 
 	:" A more substantial example
 	:function Allargs(command)

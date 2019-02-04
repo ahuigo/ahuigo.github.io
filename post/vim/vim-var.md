@@ -110,6 +110,7 @@ exists:
 
 	exists({expr})	The result is a Number, which is non-zero if {expr} is
 			&option-name
+                exists('&wrap')
 			+option-name
 			$ENVNAME
 			*funcname

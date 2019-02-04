@@ -5,21 +5,22 @@ category: blog
 description: 
 date: 2018-10-04
 ---
-# Preface
+# ex mode
 
-# ex
-
-    gQ
-
-# visual
-
+    gQ ex mode
 	gv	reselect previouse area
 
-# history mode
+## history mode
 :h cmdline-window
 
     q: Ex command-line history
     q/ q? seraching history
+
+## multiple ex command
+
+    :cmd1 | cmd2 | cmd3
+    qQ
+    :source multiple.vim
 
 # Cpture Ex Cmd output
 Redirect ex command output into current buffer ...
@@ -48,6 +49,9 @@ Redirect ex command output into current buffer ...
 		return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
 	endfunction
 
+    " :Pipe2Shell echo 1234 | wc -l | cat
+    " :Pipe2Shell echo join(getline(1,'$'), "\n") | wc -l | cat
+    " 第一个cmd：echo 1234 是vim 的cmd 不是shell cmd
 	function! Pipe2Shell(args)
 	  let pos = stridx(a:args, '|')
 	  let exCmd = strpart(a:args, 0, pos)
@@ -108,11 +112,11 @@ Syntax:
 	:{range}!{program} "program处理完了后，替换range
 
 	# 插入式
-	:{line}r!{program} "program处理完了后，推入到line 后
+	:{range}r!{program} "program处理完了后，推入到line 后
 
-	# pipe to shell(仅:w)
+	# pipe to shell(仅:w 支持)
 	:[range]{w} !{program} "自带cmd 处理内容时，重定向文件描述符到stdin，program 读取stdin
-	:{range}!{program} "自带cmd 处理内容时，重定向文件描述符到stdin，program 读取stdin
+    :echo join(getline(1,'$'),"\n") !cat
 
 	# exec shell
 	:!{program} 直接读取stdin

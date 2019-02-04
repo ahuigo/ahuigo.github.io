@@ -41,30 +41,31 @@ strace常用来跟踪进程执行时的系统调用和所接收的信号。
 		[qualifier=][!]value1[,value2]...
 		qualifier只能是 trace,abbrev,verbose,raw,signal,read,write其中之一.value是用来限定的符号或数字.默认的 qualifier是 trace.感叹号是否定符号.例如:
 	-eopen等价于 -e trace=open,表示只跟踪open调用.而-etrace!=open表示跟踪除了open以外的其他调用.有两个特殊的符号 all 和 none.
-	注意有些shell使用!来执行历史记录里的命令,所以要使用\\.
-	-e trace=set
-	只跟踪指定的系统 调用.例如:-e trace=open,close,rean,write表示只跟踪这四个系统调用.默认的为set=all.
-	-e trace=file
-	只跟踪有关文件操作的系统调用.
-	-e trace=process
-	只跟踪有关进程控制的系统调用.
-	-e trace=network
-	跟踪与网络有关的所有系统调用.
-	-e strace=signal
-	跟踪所有与系统信号有关的 系统调用
-	-e trace=ipc
-	跟踪所有与进程通讯有关的系统调用
-	-e abbrev=set
-	设定 strace输出的系统调用的结果集.-v 等与 abbrev=none.默认为abbrev=all.
-	-e raw=set
-	将指 定的系统调用的参数以十六进制显示.
-	-e signal=set
-	指定跟踪的系统信号.默认为all.如 signal=!SIGIO(或者signal=!io),表示不跟踪SIGIO信号.
-	-e read=set
-	输出从指定文件中读出 的数据.例如:
-	-e read=3,5
-	-e write=set
-	输出写入到指定文件中的数据.
+        注意有些shell使用!来执行历史记录里的命令,所以要使用\\.
+        -e open
+        -e trace=set
+        只跟踪指定的系统 调用.例如:-e trace=open,close,rean,write表示只跟踪这四个系统调用.默认的为set=all.
+        -e trace=file
+        只跟踪有关文件操作的系统调用.
+        -e trace=process
+        只跟踪有关进程控制的系统调用.
+        -e trace=network
+        跟踪与网络有关的所有系统调用.
+        -e strace=signal
+        跟踪所有与系统信号有关的 系统调用
+        -e trace=ipc
+        跟踪所有与进程通讯有关的系统调用
+        -e abbrev=set
+        设定 strace输出的系统调用的结果集.-v 等与 abbrev=none.默认为abbrev=all.
+        -e raw=set
+        将指 定的系统调用的参数以十六进制显示.
+        -e signal=set
+        指定跟踪的系统信号.默认为all.如 signal=!SIGIO(或者signal=!io),表示不跟踪SIGIO信号.
+        -e read=set
+        输出从指定文件中读出 的数据.例如:
+        -e read=3,5
+        -e write=set
+        输出写入到指定文件中的数据.
 	-o filename
 	将strace的输出写入文件filename
 	-p pid
@@ -93,7 +94,7 @@ linux: strace( mac: dtruss)
 	trace -p <pid>
 	-tt 打印系统调用发生时间
 	-T　打印调用耗时
-	-e <name> 特定的系统调用:read write close 等...
+	-e <name> 特定的系统调用:read write close brk 等...
 	-s <size> 打印长度
 	-f
 	   Trace child processes as they are created by currently traced processes as a result of the fork(2) system cal

@@ -36,6 +36,10 @@ vim中的很多命令都可以结合使用，比如强大的`:g`, 我们先help 
     :h 'smartcase'
     :h 'ignorecase'
 
+## help func
+
+    :h substitute()
+
 ## help completion
 
 	:h {pat}
@@ -66,7 +70,9 @@ Each help topic has a context:
 ## helpgrep
 Search all the help files with the :helpgrep command, for example:
 
+    :helpgrep <regex>
 	:helpgrep \csearch.\{,12}file
+	:helpgrep \csearch.\{,12}hilo
 
 `\c` means the pattern is case insensitive.
 The pattern finds "search" then up to 12 characters followed by "file".

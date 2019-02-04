@@ -175,7 +175,7 @@ get window number of buf 1:
 缓冲区跳转常用的命令：
 
 	:hide bn "hide current buffer, then jump to next buffer
-	    map <C-H/L> :EXbp<CR> for exvim
+	    noremap <C-H> :bp<CR> 
 	:bn :bnext
 	:bp :bprevious
 	:bf :bfirst
