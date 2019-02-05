@@ -240,7 +240,7 @@ Act as stdin
 	echo $?
 	MM
 
-	# `<<-` ignore tab
+	# `<<-` ignore tab(not space)
 	if true ; then
 		cat <<- MM | sudo tee -a file > /dev/null
 		The leading tab is ignored.

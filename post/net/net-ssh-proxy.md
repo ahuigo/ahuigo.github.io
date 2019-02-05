@@ -14,6 +14,8 @@ date: 2018-09-28
 	export http_proxy=socks5://127.0.0.1:1080 https_proxy=socks5://127.0.0.1:1080
 	youtube-dl youtube.com/watch?V=3XjwiV-6_CA
 
+    ssh -N -C -D1080 user@hostB &
+
 ## tcp port forwarding
 
 ### ssh over ssh

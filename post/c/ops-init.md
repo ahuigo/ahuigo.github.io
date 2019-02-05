@@ -384,7 +384,7 @@ nohup命令对server.js进程做了三件事。
 2. 关闭标准输入。该进程不再能够接收任何输入，即使运行在前台。
 3. 重定向标准输出和标准错误到文件nohup.out。
 
-默认会将 1+2 pipe append to nohup.out
+nohup 默认会将 1+2 pipe append to nohup.out， 所以不需要加
 
 	>> nohup.out 2>&1
 

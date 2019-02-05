@@ -1,0 +1,40 @@
+#!/usr/local/bin/expect -f
+set timeout 10;
+set arg0 [lindex $argv 0]
+set arg1 [lindex $argv 1]
+set arg2 [lindex $argv 2]
+set arg3 [lindex $argv 3]
+
+# example0
+spawn ssh "j@10.1.1.1"
+expect "password:" {send "password\n"}
+
+if {$arg0=="plat"} {
+    send "sshplat\n"
+} elseif {$arg0=="had"} {
+    send "sshhad\n"
+} elseif {$arg0=="71"} {
+    send "ssh71\n"
+} elseif {$arg0=="live"} {
+    send "sudo -u user1  ssh 10.2.2.2\n"
+}
+interact
+
+# example1
+set password "pass1!"
+expect {
+ "yes/no" { send "yes\r"; exp_continue}
+ "password:" { 
+    puts stdout "input password\n"
+     send "pass2!\n" 
+ }
+}
+
+# example2
+proc sshx { user host password } {
+    spawn ssh "$user@$host"
+    expect "password:" {send "$password\n"}
+    interact
+}
+
+

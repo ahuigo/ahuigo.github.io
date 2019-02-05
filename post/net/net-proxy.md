@@ -70,8 +70,6 @@ https://www.v2ex.com/t/476594
 1. Linux 里 ptrace 可以跟踪一个没有血缘关系的运行时进程，但需要以 root 权限修改默认的 `/proc/sys/kernel/yama/ptrace_scope` 值为 0：
     1. `echo "0" > /proc/sys/kernel/yama/ptrace_scope`
 
-
-
 ### proxychains
 > https://github.com/shadowsocks/shadowsocks/wiki/Using-Shadowsocks-with-Command-Line-Tools
 
@@ -129,15 +127,18 @@ For 10.11, do Restart -> Press COMMAND + R -> Recovery Mode -> Terminal ->
 
 	sudo apt-get install tsocks
 	vim /etc/tsocks.conf
+        server = 127.0.0.1
+        server_type = 5
+        server_port = 1080
 
 brew install tsocks: https://github.com/Anakros/homebrew-tsocks
 
 	tap repo: brew tap Anakros/homebrew-tsocks
 	install tsocks: brew install --HEAD tsocks
-	set up socks proxy: ssh -D 5555 server
+	set up socks proxy: ssh -D 1080 server
 	edit configuration file: vim /usr/local/etc/tsocks.conf
 	set server as localhost: server = localhost
-	set server port as 5555: server_port = 5555
+	set server port as 5555: server_port = 1080
 	check that everything works: tsocks curl ifconfig.me
 
 配置：

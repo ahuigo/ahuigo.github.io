@@ -5,9 +5,6 @@ category: blog
 date: 2016-09-09
 description:
 ---
-# ssh tool
-管理多台ssh 可以参考[pssh](/p/linux-pssh)
-
 # Server
 OpenSSH Installations under CentOS Linux
 

@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [数据库CAP 理论](/b/arch/arch-cap) 
 - 2016-10-10 [网络扫描器nmap、zmap](/b/net/net-nmap-zmap) 
 - 2019-01-23 [go汇编示例](/b/go/go-asm) 
 - 2018-09-27 [学习 docker](/b/arch/arch-docker) 
@@ -38,4 +39,3 @@
 - 2018-10-06 [Bellard 大神的项目 -- jslinux](/b/news/geek-proj) 
 - 2018-10-06 [哪些python lib 让你相见恨晚](/b/py/py-lib) 
 - 2018-09-26 [BFPRT 算法](/b/algorithm/algo-topk) 
-- 2018-09-15 [Analysis of Algorithm](/b/algorithm/1.time-complex) 
