@@ -16,7 +16,7 @@ date: 2018-10-04
 
     with timeit.Timer() as t:
         rdb.lpush("foo", "bar")
-    print "=> elasped lpush: %s s" % t.secs
+    print("=> elasped lpush: %s s" % t.secs)
 
 py:
 

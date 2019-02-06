@@ -18,7 +18,28 @@ time 提供基本的时间，sleep
 	time.sleep(1)#1s
 	time.sleep(random.random())
 
+## timeit
+
+    import time
+    class Timer:
+        def __init__(self, print_at_exit=True):
+            self.print_at_exit = print_at_exit
+
+        def __enter__(self):
+            self.start_time = time.time()
+            return self
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            self.duration = time.time() - self.start_time
+            if self.print_at_exit:
+                print(self.duration)
+
+    with Timer() as t:
+        print(11)
+    print("=> elasped lpush: %s s" % t.duration)
+
 ## timer
+
     from threading import Timer
 
     def timeout():

@@ -4,7 +4,7 @@ title:	tcpdump
 category: blog
 description:
 ---
-# Preface
+# tcpdump
 example: https://www.rationallyparanoid.com/articles/tcpdump.html
 book:
 
@@ -13,6 +13,9 @@ book:
 tcpdump可以分为三大部分内容，第一是“选项”，第二是“过滤表达式”，第三是“输出信息”。
 
 > 要用tcpdump抓包，一定要切换到root账户下，因为只有root才有权限将网卡变更为“混杂模式”。
+
+## tcpdump 解析图
+    /demo/py-demo/tcp/parse-tcp.txt
 
 # tcpdump Example
 

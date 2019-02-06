@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-02-06 [Python 异步tcp](/b/py/py-asyncio-http) 
+- 2019-01-06 [设置系统的PATH](/b/c/ops-path) 
 - 2018-09-27 [数据库CAP 理论](/b/arch/arch-cap) 
 - 2016-10-10 [网络扫描器nmap、zmap](/b/net/net-nmap-zmap) 
 - 2019-01-23 [go汇编示例](/b/go/go-asm) 
@@ -37,5 +39,3 @@
 - 2015-03-04 [红包飞的概率问题](/b/math/math-envelope) 
 - 2018-10-04 [数学符号与古希腊字符](/b/math/math-symbol) 
 - 2018-10-06 [Bellard 大神的项目 -- jslinux](/b/news/geek-proj) 
-- 2018-10-06 [哪些python lib 让你相见恨晚](/b/py/py-lib) 
-- 2018-09-26 [BFPRT 算法](/b/algorithm/algo-topk) 

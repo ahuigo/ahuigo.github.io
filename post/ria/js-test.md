@@ -28,11 +28,13 @@ title:	前端自动化测试
 通过模拟正常的操作流程来判断页面展现是否符合预期。
 
 ## Puppeteer
-Puppeteer 是 Google Chrome 团队官方的无界面（Headless）Chrome 工具。正因为这个官方声明，许多业内自动化测试库都已经停止维护，包括 PhantomJS。Selenium 
+Puppeteer 是 Google Chrome 团队官方的无界面（Headless）Chrome 工具。正因为这个官方声明，许多业内自动化测试库都已经停止维护，包括 PhantomJS/Selenium 
 
 Chrome 作为浏览器市场的领头羊，Chrome Headless 必将成为 web 应用 自动化测试 的行业标杆。 https://github.com/csbun/thal
 
     PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i --save puppeteer
+
+另一款python 爬虫库：Requestium 也结合了chrome headless
 
 ## Phantomjs
 大名鼎鼎的PhantomJS当然要隆重介绍啦！前面界面对比测试基本都是基于PhantomJS开发的， Phantom JS是一个服务器端的 JavaScript API 的 WebKit。

@@ -57,6 +57,10 @@ old
         {"str"}
     '{0}'.format('{')
 
+raw string
+
+    f'{str!r}'
+
 ### string Template
 
     from string import Template

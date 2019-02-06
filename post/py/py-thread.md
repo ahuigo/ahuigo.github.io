@@ -11,7 +11,7 @@ Python的标准库提供了两个模块：`_thread`和`threading`: `_thread`是�
 
 	import time, threading
 	t = threading.Thread(target=loop, name='LoopThread', args = (arg1, arg2, ..))
-	# t.setDaemon(True); # 设置独立线程, 主线程不会管子线程序而结束(子线程也会强制结束, join()才会等待) 
+	# t.setDaemon(True); # 设置独立线程, 主线程不会等待子线程序而结束(子线程也会强制结束, 除非强制join()才会等待) 
                          # 默认主线程结束后，会默认等待子线程(非daemon) 结束后，主线程才退出。
 	t.start()
 	t.join(); 相当于wait
@@ -105,17 +105,17 @@ mutex:
 
 ## close thread: via thread.Event
 via a threadsafe threading.Event():
-1. 利用wait(), set():
+1. 利用e.wait() until e.set():
 
     e = threading.Event()
     while not e.wait(0.5): # wait 会阻塞0.5秒
         time.sleep(1)
     print('end')
 
-2. 利用is_set(), clear():
+2. 利用e.is_set() until e.clear():
 
-    running = threading.Event()
-    running.set()
+    e = threading.Event()
+    e.set()
 
     def loop(running):
         while running.is_set():
@@ -125,7 +125,7 @@ via a threadsafe threading.Event():
     thread = threading.Thread(target=loop, args=(running,))
     thread.start()
 
-    running.clear()
+    e.clear()
     thread.join()
 
 3. close via thread attr:
@@ -140,6 +140,41 @@ via a threadsafe threading.Event():
     thread = threading.Thread(target=loop, args=(running,))
     thread.do_run = False
 
+## thread isAlive
+thread.start() 后为true
+
+    thread.isAlive()
+
+## catch thread excetion
+    import threading
+    import sys
+    class ExcThread(threading.Thread):
+
+        def __init__(self, target, args = None):
+            self.args = args if args else []
+            self.target = target
+            self.exc = None
+            threading.Thread.__init__(self)
+
+        def run(self):
+            try:
+                self.target(*self.args)
+                raise Exception('An error occured here.')
+            except Exception:
+                self.exc=sys.exc_info()
+
+    def main():
+        thread_obj = ExcThread(target=lambda *x:print(f'run target({x})'), args=[1,2,3])
+        thread_obj.start()
+
+        thread_obj.join()
+        exc = thread_obj.exc
+        if exc:
+            exc_type, exc_obj, exc_trace = exc
+            print(exc_type, ':',exc_obj, ":", exc_trace)
+
+    main()
+
 
 ## communicate via pool.apply_async().get()
 对比下ThreadPool vs Thread
@@ -151,7 +186,7 @@ e.g.
 
     def foo(bar, baz):
         print('hello {0}'.format(bar))
-        return 'foo' + baz
+        return 'return baz:' + baz
 
     from multiprocessing.pool import ThreadPool
     pool = ThreadPool(processes=1)
@@ -300,6 +335,9 @@ ThreadLocal最常用的地方:
 
 ## communicate via Queue
 Queue  is thread safe
+
+    import queue
+    q=queue.Queue()
 
 ## signal for thread
 signal.pthread_kill(thread_id, signum)

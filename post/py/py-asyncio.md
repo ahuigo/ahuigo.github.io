@@ -4,11 +4,11 @@ date: 2018-09-28
 ---
 # asyncio
 asyncio是基于coroutine 的，包括了:
-1. 具有特定系统实现的事件循环(event loop)
-2. 数据通讯和协议抽象(类似Twisted中的部分)
-3. TCP/UDP/SSL, 子进程线程管道(ThreadPoolExecutor)，延迟调用和其他
-4. Future类:包装coroutine; ensure_future: set_result() , .result()
-5. 同步支持
+1. 事件循环(event loop)
+2. Task: 对coroutine 的封装，包含各种状态
+    1. Pending Running Done Cancelled
+
+4. Future: 将来执行或没有执行的任务的结果. task就是Future实例
 
 ## asyncio 生态
 同类
@@ -17,7 +17,7 @@ asyncio是基于coroutine 的，包括了:
 asyncio 的生态:
 1. sanic: 比aiohttp 轻量, sanic使用uvloop异步驱动，uvloop基于libuv使用Cython编写，性能比nodejs还要高
 2. aiohttp
-3. uvloop: asyncio 的eventloop 扩展
+3. uvloop: asyncio 的eventloop 扩展
 
 ## asyncio protocol
 Aysncio protocol twisted-like:
@@ -34,50 +34,216 @@ Aysncio protocol twisted-like:
         def connection_lost(self, exc):
             supper().connection_lost(exc)
 
+# asyncio task 
+## create task
+single task: 包装的coroutine
+1. 两种方式等价：
+   1. `loop.create_task()`
+   1. `asyncio.ensure_future()`
+2. task有pending、runing、done、cancel状态
+3. task 是Future的子类：isinstance(task, asyncio.Future)
 
-## result
-### get coroutine result
-
-    async def func():
-        return 1
-    result = loop.run_until_complete(func()) # 1
-
-### get coroutine result from asyncio.wait
-    ```
-    async def func():
-        return 1
-
-    tasks = asyncio.wait([func(), func()])
-    tasks_finished, sets = loop.run_until_complete(tasks) # 不支持直接传run_until_complete([corotine_list])
-    for task in tasks_finished: print(task.result()) # 顺序不定
-    ```
-
-### asyncio.gather() to collect multiple results:
+e.g. create task
 
     import asyncio
-    async def func():
-        return 'saad'
-
     loop = asyncio.get_event_loop()
-    tasks = func_normal(), func_infinite()
-    a, b = loop.run_until_complete(asyncio.gather([func(),func()]))
-    print("func()={a}, func()={b}".format(**vars()))
-    loop.close()
+    async def do_some_work(x):
+        print('Waiting: ', x)
+    
+    coroutine = do_some_work(2)
+    # task = asyncio.ensure_future(coroutine)
+    task = loop.create_task(coroutine)
+    loop.run_until_complete(task)
 
-### Future.set_result
-asyncio future.set_result() and result():
+## task 回调
 
     import asyncio
-    async def slow_operation(future):
-        aswait asyncio.sleep(1)
-        future.set_result('future is done')
+    async def func(x):
+        return x+1
+    def callback(future):
+        print('Callback: ', future.result())
+    
+    loop = asyncio.get_event_loop()
+    task = asyncio.ensure_future(func(1))
+    task.add_done_callback(callback)
 
-    loop asyncio.get_event_loop()
-    future = asyncio.Future()
-    asyncio.ensure_future(slow_operation(future))
-    loop.run_until_complete(future)
-    print(future.result())
+    loop.run_until_complete(task)
+    print(task.result()) # future == task
+
+## task with async/await
+
+    async def func(x):
+        await asyncio.sleep(x)
+        return 'Done after {}s'.format(x)
+
+ async/await 被用来取代yield from, yield from 可建立main 与 subgen的通道
+
+    def gen():
+        yield from subgen()
+        yield from subgen()
+
+    def subgen():
+        i = 0
+        while i<1:
+            x = yield
+            yield x+1
+            i+=1
+        return 100
+
+    def main():
+        g = gen()
+        print(next(g))      #None
+        print(g.send(1))    #2
+        print(g.send(1))    #None
+        print(g.send(1))    #2
+        #g.throw(StopIteration) # 看似向gen()抛入异常
+
+    main()
+
+## task 并行
+借助wait 封装
+
+    import asyncio 
+    async def func(i=2):
+        print('sleep: ',i)
+        await asyncio.sleep(i)
+        #future.set_result('future is done')
+        return i
+
+    loop = asyncio.get_event_loop() # 默认的loop
+
+    # asyncio.wait 封装多个tasks 为coroutine
+    tasks_coroutine = asyncio.wait([
+        asyncio.ensure_future(func(1)),
+        asyncio.ensure_future(func(3)),
+    ])
+
+    # block for all tasks
+    dones, pendings = loop.run_until_complete(tasks_coroutine) 
+    for task in dones: 
+        print(task.result()) # 顺序不定. pendins = set() 空集合. 除非ctrl-c中断
+    #loop.close(1)
+
+wait 会自动将 coroutine 封装为task
+
+    tasks_coroutine = asyncio.wait([func(1), func(3)]) 
+
+## task 中断
+
+    import asyncio
+    loop = asyncio.get_event_loop()
+    async def func(i=2):
+        await asyncio.sleep(i)
+        return i
+
+    try:
+        loop.run_until_complete(asyncio.wait([func(1),func(20),func(33)]))
+    except KeyboardInterrupt as e:
+        # dones + pendings + cancels + runnings
+        for task in asyncio.Task.all_tasks():
+            # 有4个task: 3个func, 1个wait
+            print('cancel: ',task.cancel(), task)  
+    finally:
+        pass #loop.close() 
+
+利用gather 全部执行：
+
+    print(asyncio.gather(*asyncio.Task.all_tasks()).cancel())
+
+# asyncio loop event
+    loop.run_until_complete()
+    loop.stop()
+    loop.run_forever() # 即使所有的任务done 也不停止, 除非loop.stop()
     loop.close()
+
+## 阻塞loop (普通func)
+用`loop.call_soon_threadsafe`往loop 添加普通函数（非coroutine）, 由于time.sleep 阻塞，执行要花3+3=6s
+
+    from threading import Thread
+    import asyncio, time
+ 
+    def start_loop(loop):
+        asyncio.set_event_loop(loop)
+        print('start_loop')
+        loop.run_forever()
+    
+    def more_work(x):
+        print('More work {}'.format(x))
+        time.sleep(x)
+        print(f'Finished more work {x} at ',time.time() - start)
+    
+    start = time.time()
+    new_loop = asyncio.new_event_loop()
+    t = Thread(target=start_loop, args=(new_loop,))
+    t.start()
+    new_loop.call_soon_threadsafe(more_work, 3)
+    new_loop.call_soon_threadsafe(more_work, 3)
+
+线程本身相当于master-worker中，执行more_work 的worker
+
+## 非阻塞loop (coroutine)
+用`loop.call_soon_threadsafe`往loop 添加coroutine, 执行要花3s
+
+    from threading import Thread
+    import asyncio, time
+
+    def start_loop(loop):
+        asyncio.set_event_loop(loop)
+        loop.run_forever()
+
+    async def do_some_work(x):
+        print('Waiting {}'.format(x))
+        await asyncio.sleep(x)
+        print(f'Finished more work {x} at ',time.time() - start)
+
+    start = time.time()
+    new_loop = asyncio.new_event_loop()
+    t = Thread(target=start_loop, args=(new_loop,))
+    t.start()
+    print('TIME: {}'.format(time.time() - start))
+
+    asyncio.run_coroutine_threadsafe(do_some_work(3), new_loop)
+    asyncio.run_coroutine_threadsafe(do_some_work(3), new_loop)
+
+## task 自动加入loop
+新创建的task 会自动放到 loop
+
+    import asyncio
+    import time
+    now = time.time
+    start = now()
+    async def worker(task=1):
+        print('Start worker')
+        await asyncio.sleep(task)
+        print('Done ', task, now() - start)
+    
+    loop = asyncio.get_event_loop()
+
+    asyncio.ensure_future(worker())
+    asyncio.ensure_future(worker())
+    loop.create_task(worker())
+    try:
+        loop.run_forever()
+    except KeyboardInterrupt as e:
+        print(asyncio.gather(*asyncio.Task.all_tasks()).cancel())
+ 
+
+## 停止event loop
+
+    new_loop = asyncio.new_event_loop()
+    t = Thread(target=start_loop, args=(new_loop,))
+    t.setDaemon(True)    # 设置子线程为守护线程, 不用等待
+    t.start()
+    try:
+        while True:
+            task = rcon.rpop("queue")
+            if not task:
+                time.sleep(1)
+                continue
+            asyncio.run_coroutine_threadsafe(do_some_work(int(task)), new_loop)
+    except KeyboardInterrupt as e:
+        print(e)
+        new_loop.stop()
 
 ## create_subprocess_exec
 
@@ -86,42 +252,48 @@ asyncio future.set_result() and result():
         print(line)
     await p.wait()
 
-## Future
-> http://blog.gusibi.com/post/python-concurrency-with-futures/
-Future 是 concurrent.futures 模块和 asyncio 包的重要组件。从Python3.4起，标准库中有两个为Future的类：concurrent.futures.Future 和 asyncio.Future。这两个Future作用相同。
 
-Future 是抽象的Task, Task is subclass of Future, Future 也是一种Awaitable
+# Future executor(包装多线程进程future)
+非coroutine 不能并行，但是可以封装成thread/process.
 
-1. Encapsulates(包括) the asynchronous execution of a callable.
+就是手动封装task 太麻烦了，concurrent.futures 提供了方便的executor
+1. 标准库中有两个为Future的类：concurrent.futures.Future 和 asyncio.Future。这两个Future作用相同。
+
+Future 是抽象的Task, Task is subclass of Future, Future 也是一种特殊 Corutine
+
+1. Future could wrap `coroutine` as task, and *store it's return value*. Important!!
+    1. Future.set_result
+    2. 然后执行add_done_callback()方法添加的回调函数，
 2. Future instances are created by `Executor.submit()` and should not be created directly except for testing.
-3. Future could wrap `coroutine` as task, and *store it's return value*
-4. Future.set_result,result()
 
 Future is Not thread safe!
 
-### Future.executor.submit(包装多线程进程future)
-#### ThreadPoolExecutor.submit
-普通的函数包装成future, 类似这样:
-
-    async def wait_thread(load_url):
-        return ThreadPool(processes=1).apply_async(load_url, args).get()
-
-来一个ThreadPool的例子
-e.g. `[ThreadPoolExecutor.submit list], concurrent.futures.as_completed(futures)`
+## ThreadPoolExecutor
+来一个例子 executor.map, 取数据时会block for all
 
     import concurrent.futures, urllib.request
-    URLS = ['http://baidu.com','https://qq.cn']
-    def load_url(url,timeout):
+    URLS = ['http://localhost?s=2','http://localhost?s=4']
+    def load_url(url,timeout=60):
         with urllib.request.urlopen(url, timeout=timeout) as conn:
+            print(url, 'finished!')
             return conn.read()
+
+    import concurrent.futures
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+       results = executor.map(load_url, URLS)
+       print(list(results)) # block for all
+
+每个io 返回的时间不一样，可以Executor.submit生成Future task, 然后实时处理 `futures.as_completed(futures)`
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
         future_to_url = {executor.submit(load_url, url, 60): url for url in URLS}
-        for future in concurrent.futures.as_completed(future_to_url):
+        for future in concurrent.futures.as_completed(future_to_url): # 任何一个完成都会迭代
             url=future_to_url[future]
+            print('url:', url)
             data = future.result()
 
-#### ProcessPoolExecutor.submit
+## ProcessPoolExecutor
+也支持executor.map(func,urls) 和 executor.submit(func, url, 60) + as_completed()
 
     import concurrent.futures, urllib.request,math
     def is_prime(n):
@@ -141,54 +313,31 @@ e.g. `[ThreadPoolExecutor.submit list], concurrent.futures.as_completed(futures)
             data = future.result()
             print(future_to_num[future],data)
 
-不用async , 用multiprocessing 也可以做到的(只不过asyncio更优雅)
+不用async , 用multiprocessing 也可以做到的(只不过executor 是批量的)
 
     multiprocessing.Pool(4).apply_async(func, args).get() # get是阻塞的
+    multiprocessing.Pool(4).apply_async(func, args).get() # tuple of args for foo
 
 ### Future.executor.map(包装多线程进程)
-map是有序的： [ProcessPoolExecutor](/demo/py/future-processpool-map.py)
+map是有序的： [ProcessPoolExecutor](/demo/py-demo/async/future-processpool-map.py)
 as_completed 以及dict是无序的
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         for x in zip(nums, executor.map(is_prime, nums)):
             print(x)
 
-### Future Objects Method
-Future instances are created by future = asyncio.Future()
+## Future Task Method
 
     future.cancel()
-    Attempt to cancel the call. If the call is currently being executed then it cannot be cancelled and the method will return False,
-
-    future.cancelled()
-    Return True if the call was successfully cancelled.
-
-    future.running()
-    Return True if the call is currently being executed and cannot be cancelled.
-
-    future.done()
-    Return True if the call was successfully cancelled or finished running.
-
+    future.cancelled() bool
+    future.running() bool
+    future.done() bool
     future.result(timeout=None)
-    Return the value returned by the call. If the call hasn’t yet completed then this method will wait up to timeout seconds.
 
-    asyncio.sleep(delay, result=None, *, loop=None)
+# 其他
+## shell
 
-## Delayed calls
-> asyncio.sleep is based on eventloop.call_later
-
-The event loop has its own *internal clock* for computing timeouts. Which will generally be a different clock than `time.time()`.
-
-    AbstractEventLoop.call_later(delay, callback, *args)
-    AbstractEventLoop.call_at(when, callback, *args)
-    AbstractEventLoop.time()
-        Return the current time, as a float value, according to the event loop’s internal clock.
-
-# uvloop
-基于libuv 的asyncio event-loop 实现
-
-    import asyncio,uvloop
-    loop = uvloop.new_event_loop()
-    asyncio.set_event_loop(loop)
+    await asyncio.create_subprocess_exec('ping', '-c', '4', ip, stdout=asyncio.subprocess.PIPE)
 
 # curio
 比asyncio更轻量的协程网络库
@@ -238,15 +387,38 @@ curio的作者是David Beazley，下面是使用curio创建tcp server的例子�
     hello world
     hello world
 
-# sanic
-基于uvloop, python3.5+的类flask的高性能web框架
+# uvloop with asyncio
+基于libuv 的asyncio event-loop 实现
+
+    import asyncio,uvloop
+    loop = uvloop.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+## sanic
+Sanic使用了uvloop作为asyncio的事件循环，uvloop由Cython编写，它的出现让asyncio更快.
+比 nodejs、gevent 和其他Python异步框架要快两倍
 
     from sanic import Sanic
     from sanic.response import json
     app = Sanic()
 
-    @app.route('/')
-    async def test(request):
-        return json({'hello': 'ahui'})
+    @app.route('/<user>')
+    async def test(request, user):
+        return json({'hello': user})
 
     app.run(host='0.0.0.0', port=8000)
+
+route 可参考：https://www.jianshu.com/p/80f4fc313837
+
+    @app.route('/number/<number_arg:number>')
+    @app.route('/folder/<folder_id:[A-z0-9]{0,4}>')
+
+    app.add_route(handler2, '/folder2/<name>')
+    app.add_route(personal_handler2, '/personal2/<name:[A-z]>', methods=['GET'])
+
+看看 《Sanic 的若干吐槽》，感觉Sanic 不像flask 而是像koa
+https://manjusaka.itscoder.com/2018/02/23/why-i-dont-recommend-sanic/
+
+
+# 参考
+- Python黑魔法 --- 异步IO（ asyncio） 协程 http://python.jobbole.com/87310/
