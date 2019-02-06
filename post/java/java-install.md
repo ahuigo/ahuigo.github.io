@@ -33,9 +33,9 @@ You may need to set JAVA_HOME, JRE_HOME, PATH:
 
   export JRE_HOME=$JAVA_HOME/jre
   export PATH=$PATH:$JRE_HOME/bin
+  export CLASSPATH='.;./jdk1.6.0\lib\dt.jar'
 
 ### for mac JAVA_HOME
-With the Java optional package or Oracle JDK installed, adding one of the following lines to your ~/.bash_profile file will set the environment variable accordingly.
 
     java -version
     export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
