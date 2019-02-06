@@ -1,6 +1,5 @@
 ---
 title: Lua 的变量
-private:
 date: 2019-02-05
 ---
 # Lua 变量

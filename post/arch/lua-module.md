@@ -1,6 +1,5 @@
 ---
 title: lua module
-private:
 date: 2019-01-06
 ---
 # 定义module

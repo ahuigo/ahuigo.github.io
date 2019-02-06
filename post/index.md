@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-02-05 [Lua 的变量](/b/arch/lua-var) 
+- 2019-01-06 [lua module](/b/arch/lua-module) 
 - 2019-02-06 [Python 异步tcp](/b/py/py-asyncio-http) 
 - 2019-01-06 [设置系统的PATH](/b/c/ops-path) 
 - 2018-09-27 [数据库CAP 理论](/b/arch/arch-cap) 
@@ -37,5 +39,3 @@
 - 2018-09-26 [二叉查找树和红黑树](/b/algorithm/ds-binary-search-tree) 
 - 2018-09-27 [开源软件的版权保护](/b/em/em-copyright-open-source) 
 - 2015-03-04 [红包飞的概率问题](/b/math/math-envelope) 
-- 2018-10-04 [数学符号与古希腊字符](/b/math/math-symbol) 
-- 2018-10-06 [Bellard 大神的项目 -- jslinux](/b/news/geek-proj) 
