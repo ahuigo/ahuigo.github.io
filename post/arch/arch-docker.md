@@ -64,11 +64,29 @@ Mac OSX Image 不可以修改路径：
     EXPOSE  80
     CMD     /usr/sbin/sshd -D
 
+其他：
+
     # 切换目录
     WORKDIR /var/www/html
+    # ENV
+    ENV MYSQL_VERSION 5.6.31-1debian8
+
+    # 内置目录数据卷VOLUME(容器stop, 数据不会丢失)
+    RUN mkdir /data && chown redis:redis /data
+    VOLUME /data
+    WORKDIR /data
+
+    # copy
+    COPY docker-entrypoint.sh /usr/local/bin/
+
+    # 配置容器启动时运行的命令
+    ENTRYPOINT ["docker-entrypoint.sh"]
+
+    # 启动时默认的命令
     CMD ["php-fpm", "-D"]
 
-
+    # $HOME 不会被shell 替换
+    RUN ["echo", "$HOME"]
 
 开始build
 
