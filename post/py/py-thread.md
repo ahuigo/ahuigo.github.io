@@ -188,8 +188,8 @@ e.g.
         print('hello {0}'.format(bar))
         return 'return baz:' + baz
 
-    from multiprocessing.pool import ThreadPool
-    pool = ThreadPool(processes=1)
+    import multiprocessing.pool
+    pool = multiprocessing.pool.ThreadPool(2)
     async_result = pool.apply_async(foo, ('world', 'foo')) # tuple of args for foo
     print(async_result.get()) # 阻塞+get
 

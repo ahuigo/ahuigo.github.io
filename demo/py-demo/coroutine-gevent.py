@@ -1,7 +1,7 @@
 import gevent
 import random
 def task(pid):
-    gevent.sleep(random.randint(0,2)*.001)
+    gevent.sleep(random.randint(0,1)*1)
     print('Task %s done' % pid)
 def synchronous():
     for i in range(10):
@@ -18,10 +18,11 @@ asynchronous()
 # monekey patching(使得普通的IO函数暂停???)
 from gevent import monkey;
 monkey.patch_all()
-import gevent,urllib2
-def url(url)
-    resp = urllib2.urlopen(url)
-    data.resp.read()
+import gevent,urllib.request
+def url(url):
+    resp = urllib.request.urlopen(url)
+    data = resp.read()
     print('%d bytes received from %s' % (len(data), url))
+    print(data)
 
-gevent.joinall([gevent.spawn(f, 'http://baidu.com'), ])
+gevent.joinall([gevent.spawn(url, 'http://localhost?s=2'), ])

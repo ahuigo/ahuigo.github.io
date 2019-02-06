@@ -313,10 +313,13 @@ Future is Not thread safe!
             data = future.result()
             print(future_to_num[future],data)
 
-不用async , 用multiprocessing 也可以做到的(只不过executor 是批量的)
+也可以不用async , 用multiprocessing.
 
-    multiprocessing.Pool(4).apply_async(func, args).get() # get是阻塞的
-    multiprocessing.Pool(4).apply_async(func, args).get() # tuple of args for foo
+    multiprocessing.Pool(4).apply_async(func, [url, 60]).get() # get是阻塞的
+    multiprocessing.Pool(4).map(math.exp,range(1,11))
+
+    multiprocessing.pool.ThreadPool(4).apply_async(func, [url, 60]).get() # get是阻塞的
+    multiprocessing.pool.ThreadPool(4).map(math.exp,range(1,11))
 
 ### Future.executor.map(包装多线程进程)
 map是有序的： [ProcessPoolExecutor](/demo/py-demo/async/future-processpool-map.py)

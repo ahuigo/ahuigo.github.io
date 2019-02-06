@@ -81,7 +81,9 @@ multiprocessing.Process(func) 则可以直接传func:
 	Run child process test (929)...
 	Process end.
 
-# Pool().apply_async()
+# Pool()
+
+## Pool().apply_async()
 如果要启动大量的子进程，可以用进程池的方式批量创建子进程：
 multiprocessing.Pool(4) 比fork 简单
 
@@ -89,44 +91,46 @@ multiprocessing.Pool(4) 比fork 简单
 2. for i in range(5): res = p.apply_async(func, args=(i,))
 2. p.join() 等待子进程结束后再继续往下运行，通常用于进程间的同步
 3. 或者用res.get() 阻塞获取返回值
-```
-from multiprocessing import Pool
-import os, time, random
 
-def long_time_task(name):
-    print('Run task %s (%s)...' % (name, os.getpid()))
-    start = time.time()
-    time.sleep(random.random() * 3)
-    end = time.time()
-    print('Task %s runs %0.2f seconds.' % (name, (end - start)))
+e.g.
 
-if __name__=='__main__':
-    print('Parent process %s.' % os.getpid())
+    from multiprocessing import Pool
+    import os, time, random
+
+    def long_time_task(name):
+        print('Run task %s (%s)...' % (name, os.getpid()))
+        start = time.time()
+        time.sleep(random.random() * 3)
+        end = time.time()
+        print('Task %s runs %0.2f seconds.' % (name, (end - start)))
+
+    if __name__=='__main__':
+        print('Parent process %s.' % os.getpid())
+        p = Pool(4)
+        for i in range(5):
+            p.apply_async(long_time_task, args=(i,)) # 加5个任务
+        time.sleep(3)
+        print('Waiting for all subprocesses done...')
+        p.close() # Tells the pool not to accept any new job. Once all the tasks have been completed the worker processes will exit
+        p.join() # Wait for the worker processes to exit. One must call close() before using join().
+        print('All subprocesses done.')
+
+Note: 可以使用r.get() 获得返回(阻塞)
+
+    from multiprocessing import Pool
+    import os, time, random
+
+    def long_time_task(name):
+        time.sleep(3)
+        return '%s' %name
+
     p = Pool(4)
-    for i in range(5):
-        p.apply_async(long_time_task, args=(i,)) # 加5个任务
-    time.sleep(3)
-    print('Waiting for all subprocesses done...')
-    p.close() # Tells the pool not to accept any new job. Once all the tasks have been completed the worker processes will exit
-    p.join() # Wait for the worker processes to exit. One must call close() before using join().
-    print('All subprocesses done.')
-```
-Note: 可以使用r.get() 获得返回
-```
-from multiprocessing import Pool
-import os, time, random
+    rr = []
+    for i in range(2):
+        r = p.apply_async(long_time_task, args=(i,)) # 加5个任务
+        rr.append(r)
+    for r in rr: print(r.get())
 
-def long_time_task(name):
-	time.sleep(3)
-    return '%s' %name
-
-p = Pool(4)
-rr = []
-for i in range(2):
-    r = p.apply_async(long_time_task, args=(i,)) # 加5个任务
-    rr.append(r)
-for r in rr: print(r.get())
-```
 执行结果如下：
 
     Parent process 78869.
@@ -142,8 +146,6 @@ for r in rr: print(r.get())
     Task 0 runs 2.99 seconds.
     Waiting for all subprocesses done...
     All subprocesses done.
-
-代码解读：
 
 请注意输出的结果，task 0，1，2，3是立刻执行的，而task 4要等待前面某个task完成后才执行，这是因为Pool的默认大小在我的电脑上是4，因此，最多同时执行4个进程。这是Pool有意设计的限制，并不是操作系统的限制。如果改成：
 
