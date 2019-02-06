@@ -51,6 +51,7 @@ Mac OSX Image 不可以修改路径：
     ahuigo/ubuntu:v2:指定要创建的目标镜像名
 
 #### Dockerfile 创建image
+参考： https://yeasy.gitbooks.io/docker_practice/image/dockerfile/
 
     $ cat ./Dockerfile 
     FROM    centos:6.7
@@ -84,6 +85,11 @@ Mac OSX Image 不可以修改路径：
 
     # 启动时默认的命令
     CMD ["php-fpm", "-D"]
+
+RUN 两种格式
+
+    Shell 格式：RUN
+    Exec 格式：RUN ["executable", "param1", "param2"]
 
     # $HOME 不会被shell 替换
     RUN ["echo", "$HOME"]
