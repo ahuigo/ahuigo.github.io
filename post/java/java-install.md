@@ -73,6 +73,10 @@ You may need to set JAVA_HOME, JRE_HOME, PATH:
     	at Security.encrypt(Security.java:17)
     	at Security.main(Security.java:36)
 
+note:
+1. 类名必须文件名一致，且大小写相同
+2. 必须有main 入口
+
 ## import
 
     import org.apache.commons.codec.binary.Base64;

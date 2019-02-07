@@ -56,16 +56,18 @@ via exec
 1. sh.ls("-l", "/tmp", color="never") # equal to getoutput
 	1. sh.ls("-l /tmp".split(' '))
 2. subprocess.check_output("ls -l", shell=True).decode('gbk')
+    2. subprocess.check_output(["ls", "-l"]).decode('gbk')
 3. subprocess.getoutput("ls -l;pwd"); # only support utf8
 	1. subprocess.getstatusoutput("ls -l") # return list: [code, output_str]
 4. print output: errno = os.system('ls -ls')
+5. errno=call("ls -l", shell=True)
+    2. s.call(["ls","-a"])
 
-不要结果的background:
-
-1. errno=call("ls -l", shell=True)
+background+gui:
 1. errno=call("sleep 10 &", shell=True) 
     2. call 后台执行时，永远返回errno=0
     3. 而getoutput 它需要获取到stdout+stderr, 强制等待任务结束
+1. print output: errno = os.system('ls -ls &')
 
 ### subprocess.check_output
 
@@ -74,7 +76,6 @@ via exec
     res = subprocess.check_output("ls -l", shell=True) # 以shell 角析, 否则"ls -l" 就是一个命令
     print(res.decode()) # 默认返回值为 bytes 类型
         -rw-r--r-- ...
-
 
 ### subprocess.Popen
 Popen 是最基础的类, 它是非阻塞的(除非执行`.stdout.read()`)

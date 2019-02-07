@@ -17,5 +17,8 @@ for i in range(100):
     else:
         break
 
+if '-e' in sys.argv:
+    import subprocess
+    subprocess.call(f"nvim {fp} ", shell=True)
 #print(fp)
 #print(os.path.realpath(filepath))

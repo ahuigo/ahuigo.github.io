@@ -1,6 +1,6 @@
 ---
 layout: page
-title: py-virtualenv
+title: python virtualenv
 category: blog
 description: 
 date: 2018-10-04

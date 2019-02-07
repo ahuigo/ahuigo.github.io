@@ -31,10 +31,22 @@ name rule:
         method/func: test* 一般还是test_*
     directory: test*, 一般写tests
 
+/conftest.py:
+    用于命令行配置
+
+inifile: setup.cfg
+
+    [tool:pytest]
+    minversion = 3.0
+    testpaths = tests
+
+
 ### class case
 class rule:
 1. class 不能有`__init__`
 2. 测试class 的过程像是做遍历: for method in class().methods(): test(method())
+
+example
 
     # content of test_class.py
     class TestClass:
@@ -82,3 +94,52 @@ py.test --version # shows where pytest was imported from
 py.test --fixtures # show available builtin function arguments
 py.test -h | --help # show help on command line and config file options
 ```
+
+# flask test
+conftest.py 通过fixture 生成需要的上下文环境
+
+    @pytest.fixture
+    def app():
+        app = Flask('flask_test', root_path=os.path.dirname(__file__))
+        return app
+
+
+    @pytest.fixture
+    def app_ctx(app):
+        with app.app_context() as ctx:
+            yield ctx
+
+
+    @pytest.fixture
+    def req_ctx(app):
+        with app.test_request_context() as ctx:
+            yield ctx
+
+
+    @pytest.fixture
+    def client(app):
+        return app.test_client()
+
+然后利用上下文：
+
+    # file: test_reqctx.py
+    def test_context_binding(app):
+        @app.route('/')
+        def index():
+            return 'Hello %s!' % flask.request.args['name']
+
+        with app.test_request_context('/?name=World'):
+            assert index() == 'Hello World!'
+
+其实是基于上下文app:
+
+    from flask import Flask
+    app = Flask('myapp')
+
+    @app.route('/')
+    def hi():
+        return 'hi'
+
+    with app.test_request_context('/?name=W'):
+        assert hi() == 'hi lo'
+

@@ -311,45 +311,10 @@ undo commit
 
 # git checkout
 
-## Usage
-切换到要操作的: commit/branch
-同时刷新working 到: commit/branch/stage, stage 优先级最高
+## switch branch
+不能有overwritten: index/working/untracked 
 
-
-         working
-	       ↑
-	A--x1--x2
-	    ↑(index)
-
-##	checkout(index/working)
-lost index+working: like `git reset A`, except `index+untracked:new file`. So it's very safe
-
-    working
-    ↑
-	A--x1--x2       git checkout A file
-    ↑(index)
-
-lost working only
-
-        working
-        ↑
-	A--x1--x2       git checkout file
-	    ↑(index)
-
-	#(stage|commit) -> working
-	git checkout -- file //cp staged or commited file to working copy.(如果没有stage就用commit)，不会改变stage
-	git checkout HEAD file
-	git checkout HEAD^ file //回滚单个文件(index+work)
-	git checkout HEAD^ .//回滚dir(index+work)
-	git checkout HEAD^ //切换分支(需要先`gco .`，否则报错)
-
-### switch branch
-> Not change not staged, staged, untracked files
-
-	git checkout <branch>
-
-### switch & add
-
+    git checkout [-b] <branch>
 	-b new_branch
 		Create a new branch named <new_branch> and start it at <start_point>
 		git checkout [-b] <branch>
@@ -358,6 +323,15 @@ lost working only
 	-t, --track
 		git checkout -b master upstream/master, //tracking branch
 		git checkout -b master -t upstream/master, //tracking branch
+
+##	checkout(index/working)
+override: index -> working
+
+    git checkout -- .
+
+override: index+working
+
+    git checkout HEAD -- .
 
 # git diff
 [/p/git-diff](/p/git-diff)

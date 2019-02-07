@@ -143,9 +143,21 @@ globals 包含全局的变量
 
     func = NoName()
 
-## define func
+## define func annotation
+
     def add(x:int, y:int) -> int:
-    return x + y
+        return x + y
+
+For example, the following annotation:
+
+    def foo(a: 'x', b: 5 + 6, c: list) -> max(2, 9):
+    
+would result in an `__annotations__` mapping of
+
+    {'a': 'x',
+    'b': 11,
+    'c': list,
+    'return': 9}
 
 ## bind
 

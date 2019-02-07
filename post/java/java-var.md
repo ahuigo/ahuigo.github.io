@@ -120,7 +120,7 @@ example:
     // Print the result (5050)
     System.out.println(sum);
 
-## explode
+## split explode
 
     String partsColl = "A,B,C";
     String[] partsCollArr;
