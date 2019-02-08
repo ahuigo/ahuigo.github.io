@@ -5,11 +5,11 @@ category: blog
 description: 
 date: 2018-10-04
 ---
-# Preface
+# virtualenv
+本文介绍两种python 虚拟环境
 - virtualenv 提供了 Python 虚拟环境的隔离，但是命令复杂，目录的管理也比较混乱，
 - VirtualEnvWrapper 基于它提供了更简易的命令和操作。
 
-# virtualenv
 ## install
 
 首先，我们用pip安装virtualenv：
