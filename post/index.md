@@ -1,4 +1,8 @@
 # AHUIGO 的笔记
+- 2019-02-09 [收集了下UI 动画特效](/b/ui/ui-animation) 
+- 2019-02-10 [约瑟夫问题](/b/algorithm/alog-dp-josephus-problem) 
+- 2019-02-09 [前缀、中缀、后缀表达式](/b/algorithm/algo-prefix-postfix-expr) 
+- 2019-01-09 [求数列中和最大的连续子序列的和](/b/algorithm/algo-dp-array-max-consecutive-sub) 
 - 2018-10-04 [python virtualenv](/b/py/py-test-virtualenv) 
 - 2019-02-05 [Lua 的变量](/b/arch/lua-var) 
 - 2019-01-06 [lua module](/b/arch/lua-module) 
@@ -11,7 +15,6 @@
 - 2019-01-29 [AI 入门路线](/b/ai/ai-book) 
 - 2018-09-27 [golang 的协程调度](/b/go/18.go-routines-inner) 
 - 2019-01-22 [关于人工标注的思考](/b/code/code-manual-annotation) 
-- 2019-01-09 [求数列中和最大的连续子序列的和](/b/algorithm/algo-array-max-consecutive-sub) 
 - 2018-09-26 [如何避免深度递归](/b/algorithm/3.algo-self-call) 
 - 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
 - 2018-09-28 [英语中的否定语句](/b/eng/s/1.not) 
@@ -36,6 +39,3 @@
 - 2018-09-27 [linux 的帮助系统](/b/c/shell-help) 
 - 2012-07-08 [GMT,UTC,DST,CST 各种时间标准](/b/c/shell-time) 
 - 2018-10-06 [shell 终端使用技巧](/b/c/shell-zsh) 
-- 2014-05-10 [字符编码简介](/b/code/code-character) 
-- 2018-09-26 [二叉查找树和红黑树](/b/algorithm/ds-binary-search-tree) 
-- 2018-09-27 [开源软件的版权保护](/b/em/em-copyright-open-source) 

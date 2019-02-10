@@ -5,7 +5,12 @@ category: blog
 description: 
 date: 2018-09-28
 ---
-# Preface
+# mkcert
+mkcert 是一个签发本地证书的工具，用于开发环境，最大特色是可以签发 localhost 的证书 (阮一峰博客看到的)
+https://blog.filippo.io/mkcert-valid-https-certificates-for-localhost/
+
+    brew install mkcert
+    brew install nss # if you use Firefox
 
 # openssl
 

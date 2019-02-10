@@ -29,6 +29,7 @@ rollup 已经能支持 codeSplitting。还有极其丰富的插件扩展。
 ## rollup 构建命令
 
     rollup -c -w -m
+        -m generate source map
 
 ## Watch 自动构建
 通过参数`-w/--watch` 就自动实现

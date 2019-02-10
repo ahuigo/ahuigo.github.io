@@ -9,9 +9,6 @@ description:
 # 人工智能
 https://www.gitbook.com/book/yjango/superorganism/details
 
-# python
-py-start.md
-
 # code
 
 ## practice online
@@ -38,7 +35,9 @@ https://github.com/phodal/ideabook
 思想是：狠抓
 - 离散数学: 离散数学及其应用（原书第7版） [Discrete Mathematics and Its Applications] [美] Kenneth H.Rosen
 - 数据结构: 大话数据结构
-- 算法: 入门《Algorithms 4th》, 有精力的话看算法百科全书<算法导论>
+- 算法:
+    - 入门《Algorithms 4th》, 有精力的话看算法百科全书<算法导论>
+        - python 学习者: 开源教程《Problem Solving with Algorithms and Data Structures Using Python》。网上有网友翻译的中文版。
     - 扩展: 编程珠玑（第2版)
 - 操作系统: <深入理解计算机系统>, <现代操作系统>.
     - unix: 《Unix高级环境编程》

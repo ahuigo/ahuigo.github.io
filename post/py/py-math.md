@@ -40,8 +40,10 @@ Also for negative numbers just add lstrip():
 ## random
 
 	import random
-	random.randint(1, 20)
-		20
+	random.randint(0, 19)
+        19
+	random.randrange(20)
+		19
 	random.random() 0~1
 		0.1234
 

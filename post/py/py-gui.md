@@ -16,6 +16,44 @@ Python支持多种图形界面的第三方库，包括：
 
 但是Python自带的库是支持Tk的Tkinter，使用Tkinter，无需安装任何包，就可以直接使用。本章简单介绍如何使用Tkinter进行GUI编程。
 
+# turtle
+tree:
+
+    import turtle
+    def tree(branchLen,t):
+        if branchLen > 5:
+            t.forward(branchLen)
+            t.right(20)
+            tree(branchLen-15,t)
+            t.left(40)
+            tree(branchLen-15,t)
+            t.right(20)
+            t.backward(branchLen)
+
+    def main():
+        t = turtle.Turtle()
+        myWin = turtle.Screen()
+        t.left(90)
+        t.up()
+        t.backward(100)
+        t.down()
+        t.color("green")
+        tree(75,t)
+        myWin.exitonclick()
+
+triangle:
+
+    def drawTriangle(points,color,myTurtle):
+        myTurtle.fillcolor(color)
+        myTurtle.up()
+        myTurtle.goto(points[0][0],points[0][1])
+        myTurtle.down()
+        myTurtle.begin_fill()
+        myTurtle.goto(points[1][0],points[1][1])
+        myTurtle.goto(points[2][0],points[2][1])
+        myTurtle.goto(points[0][0],points[0][1])
+        myTurtle.end_fill()
+
 # Tkinter
 我们来梳理一下概念：
 

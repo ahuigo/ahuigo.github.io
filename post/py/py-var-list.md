@@ -113,7 +113,6 @@ Finding the first occurrence
 
 which will return the first match or raise a StopIteration if none is found. Alternatively, you can use
 
-	next((x for x in lst if ...), [default value])
 	first_or_default = next((x for x in lst if ...), None)
 
 ### find location(index)
@@ -122,8 +121,7 @@ which will return the first match or raise a StopIteration if none is found. Alt
 	[1,2,3].index(2) == 1
 	[1,2,3].index('2') == ValueError
 
-	[1,2,3,2].index(2) # => 1
-	[i for i,x in enumerate([1,2,3,2]) if x==2] # => [1, 3]
+    next((v for v in enumerate([1,2,3]) if v =='2'), 'default')
 
 ## zip list
 

@@ -1,3 +1,6 @@
+# find top 10 files
+git rev-list --objects --all | grep -f <(git verify-pack -v .git/objects/pack/*.idx| sort -k 3 -n | cut -f 1 -d " " | tail -10)
+
 echo -n "Clean all git commit?(y/n)? "
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then

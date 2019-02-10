@@ -277,6 +277,9 @@ e.g.
 
     $ git show 7a9eb2fb ;//等价于 git show branch:bigfile.tgz
 
+#### top 10 files
+    git rev-list --objects --all | grep -f <(git verify-pack -v .git/objects/pack/*.idx| sort -k 3 -n | cut -f 1 -d " " | tail -10)
+
 ### 找到commit
 很容易找出哪些 commit 修改了这个文件：
 

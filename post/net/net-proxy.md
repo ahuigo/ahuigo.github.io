@@ -45,8 +45,13 @@ support https
 
 ## socks5
 参考: [在终端下间接使用Socks5代理的几种方法(privoxy,tsocks,proxychains) ][privoxy,tsocks,proxychains]
+
 Comparison_of_proxifiers:
 https://en.wikipedia.org/wiki/Comparison_of_proxifiers
+
+### cow
+https://github.com/cyfdecyf/cow
+和graftcp 类似
 
 ### graftcp
 graftcp 可以把任何指定程序（应用程序、脚本、shell 等）的 TCP 连接重定向到 SOCKS5 代理。
@@ -55,7 +60,34 @@ https://www.v2ex.com/t/476594
 1. 对比 tsocks、proxychains 或 proxyChains-ng，graftcp 并不使用 LD_PRELOAD 技巧来劫持共享库的 connect()、getaddrinfo() 等系列函数达到重定向目的，这种方法只对使用动态链接编译的程序有效，对于静态链接编译出来的程序，例如默认选项编译的 Go 程序，proxychains-ng 就无效了。
 2. graftcp 使用 ptrace(2) 系统调用跟踪或修改任意指定程序的 connect 信息，对任何程序都有效。
 
-工作原理后面将会解释。
+#### 工作原理
+要达到重定向一个 app 发起的的 TCP 连接到其他目标地址并且该 app 本身对此毫无感知（透明代理）的目的，大概需要这些条件：
+
+1. fork(2) 一个新进程，通过 execv(2) 启动该 app，并使用 ptrace(2) 进行跟踪，
+2. 在 app 执行每一次 TCP 连接前，捕获并拦截这次 connect(2) 系统调用，获取目标地址的参数，并通过管道传给 graftcp-local。
+    1. 修改这次 connect(2) 系统调用的目标地址参数为 graftcp-local 的地址，然后恢复执行被中断的系统调用。
+    2. 返回成功后，这个程序以为自己连的是原始的地址，但其实连的是 graftcp-local 的地址。这个就叫“移花接木”。
+    3. graftcp-local 根据连接信息和目标地址信息，与 SOCKS5 proxy 建立连接，把 app 的请求的数据重定向到 SOCKS5 proxy。
+
+简单的流程如下：
+
+    +---------------+             +---------+         +--------+         +------+
+    |   graftcp     |  dest host  |         |         |        |         |      |
+    |   (tracer)    +---PIPE----->|         |         |        |         |      |
+    |      ^        |  info       |         |         |        |         |      |
+    |      | ptrace |             |         |         |        |         |      |
+    |      v        |             |         |         |        |         |      |
+    |  +---------+  |             |         |         |        |         |      |
+    |  |         |  |  connect    |         | connect |        | connect |      |
+    |  |         +--------------->| graftcp +-------->| socks5 +-------->| dest |
+    |  |         |  |             | -local  |         | proxy  |         | host |
+    |  |  app    |  |  req        |         |  req    |        |  req    |      |
+    |  |(tracee) +--------------->|         +-------->|        +-------->|      |
+    |  |         |  |             |         |         |        |         |      |
+    |  |         |  |  resp       |         |  resp   |        |  resp   |      |
+    |  |         |<---------------+         |<--------+        |<--------+      |
+    |  +---------+  |             |         |         |        |         |      |
+    +---------------+             +---------+         +--------+         +------+
 
 #### 使用
 假设你正在运行默认地址 "localhost:1080" 的 SOCKS5 代理，首先启动 graftcp-local：

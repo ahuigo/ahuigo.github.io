@@ -20,6 +20,8 @@ time 提供基本的时间，sleep
 
 ## timeit
 
+### with Timer context
+
     import time
     class Timer:
         def __init__(self, print_at_exit=True):
@@ -38,7 +40,29 @@ time 提供基本的时间，sleep
         print(11)
     print("=> elasped lpush: %s s" % t.duration)
 
-## timer
+### for test
+
+    from timeit import Timer
+    def test1(): 
+        return list(range(1e4))
+
+    t1 = Timer("test1()", "from __main__ import test1")
+    print("concat ",t1.timeit(number=1000), "milliseconds")
+
+e.g. 2:
+
+    from timeit import Timer
+    popzero = Timer("x.pop(0)", "from __main__ import x")
+    popend = Timer("x.pop()", "from __main__ import x")
+    print("pop(0)   pop()")
+    for i in range(1000000,100000001,1000000):
+        x = list(range(i))
+        pt = popend.timeit(number=1000)
+        x = list(range(i))
+        pz = popzero.timeit(number=1000)
+        print("%15.5f, %15.5f" %(pz,pt))
+
+## timer 定时器
 
     from threading import Timer
 
