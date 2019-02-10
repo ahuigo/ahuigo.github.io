@@ -1,7 +1,5 @@
 # AHUIGO 的笔记
-- 2019-02-09 [收集了下UI 动画特效](/b/ui/ui-animation) 
-- 2019-02-10 [约瑟夫问题](/b/algorithm/alog-dp-josephus-problem) 
-- 2019-02-09 [前缀、中缀、后缀表达式](/b/algorithm/algo-prefix-postfix-expr) 
+- 2019-02-10 [约瑟夫问题](/b/algorithm/algo-dp-josephus-problem) 
 - 2019-01-09 [求数列中和最大的连续子序列的和](/b/algorithm/algo-dp-array-max-consecutive-sub) 
 - 2018-10-04 [python virtualenv](/b/py/py-test-virtualenv) 
 - 2019-02-05 [Lua 的变量](/b/arch/lua-var) 
@@ -24,6 +22,7 @@
 - 2018-09-27 [人脑学习的本质](/b/course/1.study) 
 - 2018-09-27 [写论文要用到的网站](/b/em/em-paper) 
 - 2018-11-4 [ADHD：分心者的自我认知训练](/b/life/adhd) 
+- 2019-02-09 [收集了下UI 动画特效](/b/ui/ui-animation) 
 - 2018-09-27 [计算球面两点的距离](/b/math/geo-distance) 
 - 2018-10-08 [搜索附近的地点](/b/math/geo-distance-geohash) 
 - 2018-10-08 [shell 环境变量](/b/c/shell-var-env) 
@@ -39,3 +38,4 @@
 - 2018-09-27 [linux 的帮助系统](/b/c/shell-help) 
 - 2012-07-08 [GMT,UTC,DST,CST 各种时间标准](/b/c/shell-time) 
 - 2018-10-06 [shell 终端使用技巧](/b/c/shell-zsh) 
+- 2019-02-09 [前缀、中缀、后缀表达式](/b/algorithm/algo-prefix-postfix-expr) 
