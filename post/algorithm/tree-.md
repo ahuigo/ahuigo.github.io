@@ -57,7 +57,14 @@ priority:
 ### 存储
 
 #### 顺序存储
-只适合完全二叉树(包括满二叉)，否则非常浪费空间
+1. 一维数组：适合完全二叉树(包括满二叉)，否则非常浪费空间
+2.多维数组：类似于链表
+
+    myTree = ['a', ['b', ['d',[],[]], ['e',[],[]] ], ['c', ['f',[],[]], []] ]
+    print(myTree)
+    print('left subtree = ', myTree[1])
+    print('root = ', myTree[0])
+    print('right subtree = ', myTree[2])
 
 #### 链表存储
 1. 二叉链表存储: 左右指针指向左右子树

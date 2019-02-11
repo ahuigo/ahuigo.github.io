@@ -153,6 +153,8 @@ description:
 	$f2 = $ul->find( new RandomStrategy() );
 	print_r( $f2 );
 
+策略模式优化的是大量的if-elseif
+
 
 ## Observer Pattern, 观察者模式
 问题：为了避免类太臃肿，将元素剥离主体！(正交原则，降低耦合)
@@ -235,7 +237,7 @@ SplSubject(Obervalbe) 与
 访问者模式可以解决这个问题, 把visitor 解耦出来
 在基类为visitor 预留一个调用入口accept
 
-代码： https://github.com/ahuigo/php-lib/tree/master/
+代码： https://github.com/ahuigo/php-lib/tree/master/pattern
 
     public function accept(Visitor $visitor) {
         $method = 'visit' . get_class($this);

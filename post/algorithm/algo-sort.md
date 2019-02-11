@@ -283,7 +283,35 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 		}
 	}
 
-> 最大堆与最小堆 可以应用于 topK 问题，实现O(n*logK) 的时间复杂度.
+Python 版本：
+
+    def heap_sort(lst):
+        def sift_down(start, end):
+            root = start
+            while True:
+                child = 2 * root + 1
+                if child > end:
+                    break
+                if child + 1 <= end and lst[child] < lst[child + 1]:
+                    child += 1
+                if lst[root] < lst[child]:
+                    lst[root], lst[child] = lst[child], lst[root]
+                    root = child
+                else:
+                    break
+
+        # max heap
+        for start in xrange((len(lst) - 2) // 2, -1, -1):
+            sift_down(start, len(lst) - 1)
+
+        # heap sort 
+        for end in xrange(len(lst) - 1, 0, -1):
+            lst[0], lst[end] = lst[end], lst[0]
+            sift_down(0, end - 1)
+        return lst
+
+
+> 最大堆与最小堆 可以应用于 topK 问题，实现`O(n*logK)` 的时间复杂度(插入和删除是`logK`).
 当K 特别大时，topK 问题也可以通过快速排序(Quick Sort)中的中值索引i, 实现平均时间复杂度O(1+2...+n) = O(2n) = O(n). 这种算法的缺点是原始数据移动(n)和内存消耗(logN)比较大。
 
 # Merge Sort 归并排序
