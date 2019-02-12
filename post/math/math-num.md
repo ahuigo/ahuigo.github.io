@@ -34,15 +34,16 @@ y被x整除: $ x|y $, 即y=ax, 且a不为0
 
 ## 公倍数, 公约数
 质数: >1 的整数, 2,3,5
-a,b 的最小公倍数(包含所有元素): [a,b]
-a,b 的最大公约数(包含公共元素): (a,b)
+a,b 的最小公倍数(包含所有元素): lcm(a,b) = [a,b], 倍数最小的一个正整数称为它们两个的最小公倍数
+a,b 的最大公约数(包含公共元素): gcd(a,b) = (a,b)
 
+性质-1：$gcd(a,b)xlcm(a,b)=|ab|$ , 条件是ab!=0, 虽然gcd(a,0) = a, 但是lcm(a,0)=undefined
 性质0:  $ a^2*b^2 $ 与 $ b^2*c^2 $ 的最大公约数是: $ b^2 $, 最小公倍数是 $ a^2*b^2*c^2 $
 性质1:  $ [a,b] * (a,b) = ab $
 性质2:  若 $ a|bc $ 且 $(a,b)=1$, 则 $a|c$
 
 ### 互质, relatively prime
-互质（英文：coprime，符号：⊥，又称互素、relatively prime、mutually prime、co-prime）
+互质（英文：coprime，符号：⊥，又称互素、relatively prime、mutually prime、co-prime）
 
     //最大公因数为1的 正整数
     gcd(a,b) = 1
@@ -70,7 +71,7 @@ a,b 的最大公约数(包含公共元素): (a,b)
     (5,3) (3, 2) (2, 1) (1, 0) 得最大公因为1
     (8,4) (4, 0) 最大公因4
 
-### 扩展扩展欧几里得算法, Extended Euclidean algorithm
+### 扩展欧几里得算法(), Extended Euclidean algorithm
 扩展算法： 给予二个整数a、b，必存在整数x、y使得
 
     ax + by = gcd(a,b)
@@ -78,15 +79,23 @@ a,b 的最大公约数(包含公共元素): (a,b)
 通解：
 
     x=x0+lcm(a,b)/a*t; //t是任意整数，lcm 是最小公倍数
+    y=y0-lcm(a,b)/b*t; //t是任意整数，lcm 是最小公倍数
 
-归纳法证明：
+归纳法证明： 
 1. 对于b=0, 存在(x,y)=(1, 0) 使得: ax+by=gcd(a,b) 成立
-2. 当a>b>0时，假设
-    3. ax1+by1=gcd(a, b)
-    3. bx2+(a mod b)y2=gcd(a, a mod b)
-3. 根据Euclidean 算法，2中的两式其实是相等的：
-    4. ax1+by1 = bx2+(a-[a/b]*b)y2 = ay2+b(x2-[a/b]*y2)
-4. 所以如果(x2,y2)存在，而一定存在(x1,y1)=(y2, x2-[a/b]*y2)
+    a*1+b*0 = gca(a, b)
+3. 根据Euclidean 算法，2式相等于：
+    3. gcd(a, b)=gcd(b, a mod b)
+    4. ax+by = bx'+(a-[a/b]*b)y' = ay'+b(x'-[a/b]*y')
+4. 存在(x,y) 的条件是存在(x',y'):
+    x = y'
+    y = x'-[a/b]*y'
+5. 收集辗转相除法中产生的式子，倒回去，可以得到ax+by=gcd(a,b)的整数解
+    1. (x', y') 对应gcd(b, a mod b); 
+    2. (x'',y'') 对应gcd(a mod b, b mod(a mod b))
+    3. 一直到gcd(x, 0). 再倒回来求得(x,y)
+
+扩展欧几里得算法可以用来计算模反元素(也叫模逆元)，而模反元素在RSA加密算法中有举足轻重的地位。
 
 ### 模逆元(数论倒数)
 一整数a对同余n之模逆元是指满足以下公式的整数 b
@@ -99,7 +108,7 @@ a,b 的最大公约数(包含公共元素): (a,b)
 
 证明：
 1. exgcd(a,n)为扩展欧几里得算法的函数，则可得到ax+ny=g，g是a,n的最大公因数。
-2. 若互质g=1, 则两边mod n, 得ax (mod n)= 1 (mod n), x 即为模逆元b
+2. 若互质g=1, 则两边mod n, 得ax (mod n)= g (mod n) = 1 (mod n), x 即为模逆元b
 3. 若g!=1, 
     4. 不存在x使 ax (mod n) = 1 (mod n)，
     5. 否则就出现 ax+ny (mod n) = 1 (mod n) 与g!=1矛盾

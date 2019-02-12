@@ -80,7 +80,8 @@ code{
 h1,h2,h3,h4,h5,h6 {
 	text-rendering:optimizelegibility;
 	margin:0.4em 0;
-	font-weight:bold
+    font-weight:bold;
+    font-family: "Russo One", "Arial Black", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 h1{ font-size:1.8em }
 h2{ font-size:1.6em }

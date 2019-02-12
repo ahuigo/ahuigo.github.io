@@ -89,8 +89,48 @@ priority:
 
 在下面的介绍中，将要插入的节点标为N，N的父节点标为P，N的祖父节点标为G，N的叔父节点标为U。S为兄弟结点
 
-
 ### 插入
+插入红色节点到叶子节点，只会破坏不能有连续的两个红色节点这个性质：
+
+    struct node *insert(struct node* root, struct node* n) {
+     // insert new node into the current tree
+     insert_recurse(root, n);
+
+     // repair the tree in case any of the red-black properties have been violated
+     insert_repair_tree(n);
+
+     // find the new root to return
+     root = n;
+     while (parent(root) != NULL)
+      root = parent(root);
+     return root;
+    }
+
+    void insert_recurse(struct node* root, struct node* n) {
+     // recursively descend the tree until a leaf is found
+     if (root != NULL && n->key < root->key) {
+      if (root->left != LEAF) {
+       insert_recurse(root->left, n);
+       return;
+      }
+      else
+       root->left = n;
+     } else if (root != NULL) {
+      if (root->right != LEAF){
+       insert_recurse(root->right, n);
+       return;
+      }
+      else
+       root->right = n;
+     }
+
+     // insert new node n
+     n->parent = root;
+     n->left = LEAF;
+     n->right = LEAF;
+     n->color = RED;
+    }
+
 插入(red)节点后的平衡调节:
 
 |编号|条件|	操作|调节结束吗|
@@ -146,7 +186,7 @@ priority:
 父节点P是红色而叔父节点U是黑色或缺少，并且新节点N是其父节点P的右子节点而父节点P又是其父节点的左子节点。在这种情形下，我们进行一次左旋转调换新节点和其父节点的角色; 接着，我们按情形5处理以前的父节点P以解决仍然失效的性质4。注意这个改变会导致某些路径通过它们以前不通过的新节点N（比如图中1号叶子节点）或不通过节点P（比如图中3号叶子节点），但由于这两个节点都是红色的，所以性质5仍有效。
 
 ![rb-tree](/img/rb-tree-insert.4.png)
-> 这里的图有bug, 4/5本身算黑色叶子点，G到4、5经过的路径黑色点多一个
+> 注意图中：1/2/3比4/5多一个黑色节点
 
 	void insert_case4(node *n) {
 		if (n == n->parent->right && n->parent == grandparent(n)->left) {
@@ -328,6 +368,34 @@ S是黑色，S的右儿子是红色，而N是它父亲的左儿子。在这种�
 	}
 
 同样的，函数调用都使用了尾部递归，所以算法是原地算法。此外，在旋转之后不再做递归调用，所以进行了恒定数目(最多3次)的旋转。
+
+# AVL 树
+AVL 树的每个节点存放了一个平衡因子：
+
+    Balance(node) = height(node.left) - height(node.right)
+
+        parent(+1)
+        /       \
+    New         RightTree
+
+        parent(-1)
+        /       \
+    LeftTree    New
+
+一颗平衡的AVL 的树，Balance 只能为0,-1,1. 
+1. 插入节点的话(一定是插入叶子节点)，父节点的Balance 会变化（+1，-1）, 祖父节点也会(+1,-1)，一直向上传导
+    1. 如果某个传导父节点Balance(>=2,<=2), 就需要通过旋转降低Balance
+2. 删除节点时:
+   1. 如果有两个子树，就与右子树最小值（或左子树最大值交换），再删除这个叶子节点，叶子节点被删除会导致父节点Balance 变化，就需要再平衡
+
+   1. 如果只有一个子树，直接删除此节点，父节点Balance 变化需要再平衡
+   1. 如果没有子树，直接删除此节点，父节点Balance 变化需要再平衡
+
+AVL 树的实现可以参考:
+1. 维基百科
+2. Problem Solving with Algorithms and Data Structures using Python：
+    1. http://interactivepython.org/runestone/static/pythonds/Trees/AVLTreePerformance.html
+    2. https://facert.gitbooks.io/python-data-structure-cn/6.%E6%A0%91%E5%92%8C%E6%A0%91%E7%9A%84%E7%AE%97%E6%B3%95/6.17.AVL%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0/
 
 # 参考
 - [二叉查找树]

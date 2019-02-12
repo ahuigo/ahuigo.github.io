@@ -41,6 +41,7 @@ description:
 		--author='ahuigo'
 
 ## by merge
+
     A0-- A1--A2--A3
       \      /
        --B1--
@@ -75,6 +76,8 @@ description:
 
 	--since, --after
 	--until, --before
+    --until='2018-12-31 17:30:00'
+    --until '2018-12-31 17:30:00'
 
 ### branch with time
 
