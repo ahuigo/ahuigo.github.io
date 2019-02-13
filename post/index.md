@@ -1,9 +1,10 @@
 # AHUIGO 的笔记
+- 2018-09-26 [BFPRT 算法](/b/algorithm/sort-topk) 
+- 2019-02-14 [查找数组中的中值](/b/algorithm/sort-topk-kth) 
 - 2019-02-13 [android 刷包工具](/b/net/net-sniffer-android) 
 - 2019-02-14 [数学运算符](/b/math/math-num-operator) 
 - 2019-02-13 [mac 切换到自带的双拼方案](/b/mac/mac-inputmethod-pinyin) 
 - 2013-09-26 [经典排序算法的实现](/b/algorithm/sort) 
-- 2019-02-14 [查找数组中的中值](/b/algorithm/sort-kth) 
 - 2019-02-10 [约瑟夫问题](/b/algorithm/algo-dp-josephus-problem) 
 - 2019-01-09 [求数列中和最大的连续子序列的和](/b/algorithm/algo-dp-array-max-consecutive-sub) 
 - 2018-10-04 [python virtualenv](/b/py/py-test-virtualenv) 
@@ -38,4 +39,3 @@
 - 2018-10-06 [投票类网站的排序算法](/b/algorithm/sort-vote) 
 - 2014-03-05 [Shell Programming](/b/c/shell-) 
 - 2014-10-10 [杨氏矩阵（Young Tableau）的topK 算法](/b/algorithm/algo-young-tableau-topk) 
-- 2018-09-26 [Trie 树](/b/algorithm/tree-trie) 
