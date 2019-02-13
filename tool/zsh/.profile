@@ -49,9 +49,13 @@ function gcap(){
     if test $? != 0;then
         return
     fi
+
+    oridir0=$(pwd)
     if git remote | grep '\w';then
         if git remote | xargs -L1 git push; then
-            subdirs=(b vue ../b)
+        if git remote | xargs -L1 git push; then
+            cd $(git rev-parse --show-toplevel)
+            subdirs=(b vue )
             oridir=$(pwd)
             echo "check oridir $oridir"
             for subdir in "${subdirs[@]}"; do
@@ -71,6 +75,7 @@ function gcap(){
         git svn rebase;
         git svn dcommit;
     fi
+    cd $oridir0
 }
 
 # grep
