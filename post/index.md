@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-26 [深度优先DFS和广度优先BFS](/b/algorithm/graph-dfs-bfs) 
 - 2018-09-26 [BFPRT 算法](/b/algorithm/sort-topk) 
 - 2019-02-14 [查找数组中的中值](/b/algorithm/sort-topk-kth) 
 - 2019-02-13 [android 刷包工具](/b/net/net-sniffer-android) 
@@ -38,4 +39,3 @@
 - 2018-09-26 [coder试题:有几个bing?](/b/algorithm/game-countword) 
 - 2018-10-06 [投票类网站的排序算法](/b/algorithm/sort-vote) 
 - 2014-03-05 [Shell Programming](/b/c/shell-) 
-- 2014-10-10 [杨氏矩阵（Young Tableau）的topK 算法](/b/algorithm/algo-young-tableau-topk) 
