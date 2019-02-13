@@ -21,13 +21,15 @@ private:
     V1          8
     V2  7
 
-2.邻接表: 适合稀疏矩阵.
+2.邻接表: 适合稀疏矩阵. 不太浪费空间
 
-    Graph = [
-        {'v1':5}, 
-        {'v2':8}, 
-        {'v0':7}, 
-    ]
+    Graph = {
+        v0:{'v1':5}, 
+        v1:{'v2':8}, 
+        v2:{'v0':7}, 
+    }
+
+
 
 # 参考
 - 图的定义：https://facert.gitbooks.io/python-data-structure-cn/7.%E5%9B%BE%E5%92%8C%E5%9B%BE%E7%9A%84%E7%AE%97%E6%B3%95/7.2.%E8%AF%8D%E6%B1%87%E5%92%8C%E5%AE%9A%E4%B9%89/

@@ -19,22 +19,6 @@ description:
 # mitmproxy
 https://blog.heckel.xyz/2013/07/01/how-to-use-mitmproxy-to-read-and-modify-https-traffic-of-your-phone/#Attacking-HTTP-connections
 
-# todo
-
-## tcpdump & wireshark
-http://www.bo56.com/%E7%BA%BF%E4%B8%8Aphp%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/
-
-Capturing mobile phone traffic on wireshark
-http://stackoverflow.com/questions/9555403/capturing-mobile-phone-traffic-on-wireshark
-
-For Android phones, any network: Root your phone, then install tcpdump on it. This app is a tcpdump wrapper that will install tcpdump and enable you to start captures using a GUI. Tip: You will need to make sure you supply the right interface name for the capture and this varies from one device to another, eg -i eth0 or -i tiwlan0 - or use -i any to log all interfaces
-For Android 4.0+ phones: Android PCAP from Kismet uses the USB OTG interface to support packet capture without requiring root. I haven't tried this app, and there are some restrictions on the type of devices supported (see their page)
-For Android phones: tPacketCapture uses the Android VPN service to intercept packets and capture them. I have used this app successfully, but it also seems to affect the performance with large traffic volumes (eg video streaming)
-For IOS 5+ devices, any network: iOS 5 added a remote virtual interface (RVI) facility that lets you use Mac OS X packet trace programs to capture traces from an iOS device. See here for more details
-For all phones, wi-fi only: Set up your PC as a wireless access point, then run wireshark on the PC
-For all phones, wi-fi only: Get a capture device that can sniff wi-fi. This has the advantage of giving you 802.11x headers as well, but you may miss some of the packets
-Capture using a VPN server: Its fairly easy to set-up your own VPN server using OpenVPN. You can then route your traffic through your server by setting up the mobile device as a VPN client and capture the traffic on the server end.
-
 
 # Cocoa Packet Analyzer
 http://www.tastycocoabytes.com/cpa/

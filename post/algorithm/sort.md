@@ -390,17 +390,18 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 2. 而Quick Sort 是通过值做划分，主要工作是划分本身, 划分时只需要给调用栈空间(logN)，而且Quick Sort 排序不稳定(因为pivot 主元位置不确定). 如果需要稳定的 Quick Sort, 则需要空间O(n);
 
 partition 的分方法有两种:
-1.第一种是两边向中间逼近: `i++> ...  <j--`
+1.第一种是两边向中间逼近: `i++> ...  <j--`: 图片出处 https://www.tutorialspoint.com/data_structures_algorithms/quick_sort_algorithm.htm
+![](https://www.tutorialspoint.com/data_structures_algorithms/images/quick_sort_partition_animation.gif)
 
-2.第二种是单向逼近: `privot=6`
+2.第二种是单向逼近: `privot=6`, 全程`a[i])<=6`
 
-     i j                  exch(2,2) a[i+1]<->a[j], then i++,j++
+     i j                  exch(2,2) a[i+1]<->a[j], then i++,j++ if a[j]<=6
      6 2 3 4 10 13 5  9 
-       i j                exch(3,3) a[i+1]<->a[j], then i++,j++
+       i j                exch(3,3) a[i+1]<->a[j], then i++,j++ if a[j]<=6
      6 2 3 4 10 13 5  9 
-         i j              exch(4,4) a[i+1]<->a[j], then i++,j++
+         i j              exch(4,4) a[i+1]<->a[j], then i++,j++ if a[j]<=6
      6 2 3 4 10 13 5  9 
-           i j            
+           i j                      if a[j] > 6; j++ 
      6 2 3 4 10 13 5  9
            i       j      exch(10,5) a[i+1]<->a[j], then i++,j++
      6 2 3 4 10 13 5  9
@@ -599,10 +600,25 @@ Quick Sort 中的中值可以应用于 Kth 搜索，平均时间复杂度是: n 
 - 稳定性: 如果放桶与出桶的顺序是一致的，那么顺序就是稳定的。所以稳定性依赖于对桶内元素的排序
 - 复杂度: 当数据是均匀分布的，每个桶平均有元素 n/m 个，对单独的桶使用快速/冒泡等排序, 设k=n/m。
 
-从下面的代码可以看到，时间复杂度为:
+从下面的代码可以看到，粗略的时间复杂度为:
 
 	初始化的时间 + 放桶时间 + 出桶时间, 一般m 接近n(k 是一个有限的常数), 所以桶排序的时间复杂度被认为是线性的O(n)
 		O(n+m) + O(kn) + O(kn) = O(kn) = O(n)
+
+更严格的时间复杂度证明(http://www.cs.kent.edu/~javed/class-ALG00S/webbook/ALG00S-L08b.pdf), 该证明中`m=n`. 
+n个元素，m个桶, 每个桶对应的size为 m1,m2....mm ，排序复杂度分别为 $m0^2,m1^2,m2^2.....mm^2$ 总期望: $Sum(E(mi^2))$.
+
+每个桶的大小mi 是n次伯努利分布的结果, 每个元素放到一个桶的概率是p=1/m，元素个数mi: 
+
+    E(mi) = np = n/m
+    Var(mi) = npq = n/m(1-1/m)
+    E(mi^2) = npq+(np)^2 = n/m（1+n/m-1/m）
+    Sum(E(mi^2)) = n(1+n/m-1/m）
+
+m=n 时：
+
+    E(mi^2) = 2-1/n = O(1)
+    Sum(E(mi^2)) = O(n)
 
 空间复杂度为：O(n+m) = O(n) (m接近n)
 
@@ -651,12 +667,12 @@ Quick Sort 中的中值可以应用于 Kth 搜索，平均时间复杂度是: n 
 		if(n < 2){
 			return;
 		}
-		//buckets 空间：O(n) 初始化时间:O(n)
+		//buckets 空间：O(n) 初始化时间:O(n) 存放hash_value
 		struct bucket * buckets = calloc(sizeof(struct bucket) , n);
 		int buckets_len = 0;
 
 		int m = n/2;
-		//bucket_head 空间:O(m) 初始化时间:O(m)
+		//bucket_head 空间:O(m) 初始化时间:O(m) 存放hash_key
 		struct bucket * (*bucket_head) = calloc(sizeof(struct bucket *), m);
 		struct bucket * ptr;
 		int i,j;
@@ -728,9 +744,12 @@ Quick Sort 中的中值可以应用于 Kth 搜索，平均时间复杂度是: n 
 
 
 # Radix Sort 基数排序
-- 原理: 从最高位或者最低位开始比较，比较位时，一般采用计数排序(也可以是其它的稳定排序)，此时时间复杂度是O(m * n), m 为排序数字的最大位数, 所以时间复杂度被认为是O(n) 空间复杂度:O(n).
-- 方法: 比较位时，可以从高位开始比MSD(Most Significant Digit), 也可以从最低位开始比较LSD(Least Significant Digit). MSD 排序比LSD 开销大，因为MSD 需要分堆并对每个堆单独排序，而LSD 不需要维护堆
-- 应用: 只能比较整数, 但不限制整数大小.
+- 原理: 假设数字最长b位，`$2^r$`进制的数, 一共有`b/r`位，从最高位或者最低位开始比较，比较位时，一般采用计数排序(需要`2^r`个桶,也可以是其它的稳定排序)
+  - 此时时间复杂度是: $b/r*(n+2^r)$
+    1. 当n>=2^r时, r越大越好，上界就是r=logN. 设$n>=2^d$ 则 $复杂度=2b*n/logN=2*b*n/logN>=2(b/d)*n$
+  - 空间复杂度:O(n).
+- 方法: 比较位时，可以从高位开始比MSD(Most Significant Digit), 也可以从最低位开始比较LSD(Least Significant Digit). MSD 排序比LSD 开销大，因为MSD 需要分堆并对每个堆递归的单独排序，而LSD 不需要维护堆
+- 应用: 只可以比较整数, 也可以将小数位化成整数再比较
 
 代码实现：
 

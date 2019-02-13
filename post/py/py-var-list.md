@@ -69,6 +69,11 @@ or use any part which is hash-able:
 
     dc=dic.copy()
 
+## slice without copy
+
+    >>> a = numpy.arange(3)
+    >>> b = a[1:3]
+
 ## list merge, tuple merge
 
 	[1,2] + [2,3,]
