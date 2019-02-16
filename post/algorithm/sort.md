@@ -392,6 +392,7 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 partition 的分方法有两种:
 1.第一种是两边向中间逼近: `i++> ...  <j--`: 图片出处 https://www.tutorialspoint.com/data_structures_algorithms/quick_sort_algorithm.htm
 ![](https://www.tutorialspoint.com/data_structures_algorithms/images/quick_sort_partition_animation.gif)
+pivot 也可以不用留出空间
 
 2.第二种是单向逼近: `privot=6`, 全程`a[i])<=6`
 

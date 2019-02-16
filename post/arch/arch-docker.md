@@ -179,6 +179,12 @@ Docker Registry 分公开服务和私有服务。
     docker stop <name>
     docker start <name>
 
+daemon:
+
+    systemctl enable docker
+    systemctl start docker
+    systemctl stop docker
+
 ### 查看容器列表
 
     # 列出本机正在运行的容器
@@ -284,7 +290,7 @@ Docker Registry 分公开服务和私有服务。
 如果想将两个容器连接到一起：比如myweb 连接 wordpressdb:mysql(mysql是容器别名)
 
     docker container run -d --name wordpressdb --env MYSQL_ROOT_PASSWORD=123456 --env MYSQL_DATABASE=wordpress mysql:5.7
-    docker container run --name wordpress --volume "$PWD/wordpress/":/var/www/html --link wordpressdb:mysql myweb
+    docker container run --name web --volume "$PWD/wordpress/":/var/www/html --link wordpressdb:mysql myweb
     
 但是大量的容器连接, 就需要用 compose 一键启动\停止\rm 容器:
 
@@ -317,5 +323,5 @@ Docker Registry 分公开服务和私有服务。
     docker stats --help
 
 # 参考
-- https://zhuanlan.zhihu.com/p/38552635
 - http://www.runoob.com/docker/
+-  http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html

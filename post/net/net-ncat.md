@@ -15,6 +15,10 @@ Netcat 或者叫 nc 是 Linux 下的一个用于调试和检查网络工具包�
 
     [A(172.31.100.7) B(172.31.100.23)]
 
+## install ncat
+
+    yum install nmap-ncat
+
 ## 端口扫描
 端口扫描经常被系统管理员和黑客用来发现在一些机器上开放的端口，帮助他们识别系统中的漏洞。
 
@@ -37,13 +41,14 @@ Banner是一个文本，Banner是一个你连接的服务发送给你的文本�
 
 netcat 命令会连接开放端口21并且打印运行在这个端口上服务的banner信息。
 
-## Chat Server(-l)
+## tcp Server(-l)
 netcat提供了这样一种方法，创建一个Chat服务器，一个预先确定好的端口，这样子别人就可以联系到你了。
 
 server: netcat 命令在1567端口启动了一个tcp 服务器，所有的标准输出和输入会输出到该端口。输出和输入都在此shell中展示:
 
   $ nc -l 1567
 
+### tcp client
 Client 访问1567:
 
   $ nc 127.0.0.1 1567
@@ -51,6 +56,18 @@ Client 访问1567:
   $ curl 127.0.0.1:1567/a/b/c/d
 
 不管你在机器B上键入什么都会出现在机器A上。
+
+## udp
+不要用localhost
+
+    echo -n "$1" | nc -4u -w1 $HOST $PORT
+    echo "hi" | nc -cu 127.0.0.1 8000
+        -c close (mac osx)
+        -u udp
+        -w wait timeout
+
+    echo -n "hello" >/dev/udp/remotehost/8000
+
 
 ## 文件传输
 有很多种方法，比如FTP,SCP,SMB等等，但是当你只是需要临时或者一次传输文件，真的值得浪费时间来安装配置一个软件到你的机器上嘛。

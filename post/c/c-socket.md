@@ -197,7 +197,7 @@ Example2: (p:点分ip, h: binary ip n:in_addr_t in_addr sockaddr_in):
 		perror(s);
 		exit(1);
 	}
-	void Bind(fd, const struct sockaddr *sa, socklen_t salen){
+	void Bind(int fd, const struct sockaddr *sa, socklen_t salen){
 		if(bind(fd, sa, salen)<0){
 			perr_exit("Bind error");
 		}

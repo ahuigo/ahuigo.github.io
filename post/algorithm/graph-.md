@@ -29,7 +29,5 @@ private:
         v2:{'v0':7}, 
     }
 
-
-
 # 参考
 - 图的定义：https://facert.gitbooks.io/python-data-structure-cn/7.%E5%9B%BE%E5%92%8C%E5%9B%BE%E7%9A%84%E7%AE%97%E6%B3%95/7.2.%E8%AF%8D%E6%B1%87%E5%92%8C%E5%AE%9A%E4%B9%89/

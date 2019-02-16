@@ -562,7 +562,7 @@ FirewallD 使用 XML 进行配置, 不要动他，用firewall-cmd 管理！
     sudo firewall-cmd --zone=public --add-service=http --permanent
     sudo firewall-cmd --zone=public --add-service=http
 
-将规则添加到持久规则集中并重新加载 FirewallD。 
+将规则添加到持久规则集中并重新加载 FirewallD。 permannent 需要reload！
 
     sudo firewall-cmd --zone=public --add-service=http --permanent
     sudo firewall-cmd --reload
