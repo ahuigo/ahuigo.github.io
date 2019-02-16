@@ -49,6 +49,16 @@ support https
 Comparison_of_proxifiers:
 https://en.wikipedia.org/wiki/Comparison_of_proxifiers
 
+### shell
+    curl -x socks5h://localhost:8001 baidu.com
+    env ALL_PROXY=socks5h://localhost:8001 PROGRAM [OPTION]...
+
+If you want to overwrite system proxy settings, you may also need to set two more variables:
+
+    # Note that http_proxy is lower case, the other two is upper case.
+    env http_proxy=socks5h://localhost:8001 HTTPS_PROXY=socks5h://localhost:8001 ALL_PROXY=socks5h://localhost:8001 PROGRAM [OPTION]...
+
+
 ### cow
 https://github.com/cyfdecyf/cow
 和graftcp 类似
