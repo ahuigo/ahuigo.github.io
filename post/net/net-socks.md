@@ -165,11 +165,14 @@ SOCKS是一种网络传输协议，主要用于客户端与外网服务器之间
 
 > 详细文档参考rfc1928
 
+# ss protocol
+https://loggerhead.me/posts/shadowsocks-yuan-ma-fen-xi-xie-yi-yu-jie-gou.html
+
 
 # References
 - [socks-note]
 - [socks-wiki]
+- 由浅入深写代理(10)-内网穿透: https://zhuanlan.zhihu.com/p/28820926
 
 [socks-wiki]: https://zh.wikipedia.org/wiki/SOCKS
-
 [socks-note]: http://www.mojidong.com/network/2015/03/07/socket5-1/

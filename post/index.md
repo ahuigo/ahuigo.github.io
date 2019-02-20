@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-02-17 [图的路径问题](/b/algorithm/graph-path) 
 - 2019-02-14 [python watch file](/b/py/py-file-watch) 
 - 2019-02-16 [Change ssh port](/b/net/net-ssh-port) 
 - 2018-09-26 [深度优先DFS和广度优先BFS](/b/algorithm/graph-dfs-bfs) 
@@ -38,4 +39,3 @@
 - 2018-10-07 [原生js 写的SlideUp、SlideDown 教程(收藏)](/b/ria/js-dom-event-slide) 
 - 2018-10-04 [关于抢票以及12306 的票仓的sku 设计](/b/news/ticketing-software) 
 - 2018-09-26 [查找两有序数组中第N 大的值](/b/algorithm/algorithm-find-the-nth-of-2-sorted-array) 
-- 2018-09-26 [coder试题:有几个bing?](/b/algorithm/game-countword) 

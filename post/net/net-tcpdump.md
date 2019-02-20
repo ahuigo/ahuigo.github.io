@@ -120,6 +120,10 @@ tcpdump可以分为三大部分内容，第一是“选项”，第二是“过�
 # Info detail
 tcpdump 也可以指定抓包过滤器，其过滤器语言叫做Berkeley包过滤，简称BPF语言。
 
+## -e show mac address
+
+    tcpdump -i INTERFACENAME -e
+
 ## -t 输出时不打印时间
 不打印开始的时间
 

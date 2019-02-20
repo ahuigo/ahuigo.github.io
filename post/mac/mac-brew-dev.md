@@ -27,5 +27,33 @@ brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Librar
 	  end
 	end
 
+## binary package
+
+    def install
+        # ENV.deparallelize  # if your formula fails when building in parallel
+
+        # system "tar -Jvxf otfcc-mac64-0.2.3.tgz"
+        bin.install "otfccbuild"
+        bin.install "otfccdump"
+    end
+
+## depends on
+
+    class Foo < Formula
+        depends_on "pkg-config"
+        depends_on "jpeg"
+        depends_on "readline" => :recommended
+        depends_on "gtk+" => :optional
+        depends_on "httpd" => [:build, :test]
+        depends_on :x11 => :optional
+        depends_on :xcode => "9.3"
+    end
+
+# install process
+
+    brew --repo
+    brew --cache
+        ~/Library/Caches/Homebrew/downloads
+
 # brew via ss
 export ALL_PROXY=socks5://127.0.0.1:1080

@@ -293,7 +293,7 @@ or via -e options placed after the URL:
 	wget ... -e use_proxy=yes -e http_proxy=127.0.0.1:8080 ...
 
 # 内网穿透
-都是通过公网做转接
+都是通过公网做转接: https://zhuanlan.zhihu.com/p/28820926
 
 - ngrok
 将处于内网的开发机服务暴露到公网上，就是类似 花生壳[ngrok](/p/net-proxy-ngrok)

@@ -369,6 +369,12 @@ port
     # iptables -R INPUT 2 -p tcp --dport 17500 -j REJECT --reject-with icmp-port-unreachable
 
 # example
+
+## default
+
+    iptables -A INPUT -i lo -j ACCEPT
+    iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
 ## ftp
 ftp 默认有两个端口，先用21端口做认证，再用20端口做文件传输
 
@@ -389,6 +395,11 @@ ftp 默认有两个端口，先用21端口做认证，再用20端口做文件传
     -A INPUT -p tcp -m tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
     # 上面的太啰嗦了，简化为如下
     -A INPUT -p tcp --dport 80 -j ACCEPT
+
+## icmp
+
+    iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 
 ## FORWARD 接口转发
 iptables forwarding between two interface [closed]
@@ -615,6 +626,10 @@ get all zone with config: 得到所有区域的配置： 
 
     sudo firewall-cmd --zone=public --add-port=1500/tcp --permanent
     sudo firewall-cmd --zone=public --remove-port=1500/tcp --permanent
+
+remove:
+
+    firewall-cmd --permanent --remove-port=443/tcp --default-zone
 
 ### 端口转发
 下面是在同一台服务器上将 80 端口的流量转发到 12345 端口。
