@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-02-20 [Copy List with Random Pointer](/b/algorithm/list-copy) 
 - 2019-02-20 [求两链表的交点](/b/algorithm/list-intersection) 
 - 2018-09-26 [单链表是否有环之Floyd算法](/b/algorithm/list-intersection-floyd) 
 - 2019-02-17 [图的路径问题](/b/algorithm/graph-path) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [计算球面两点的距离](/b/math/geo-distance) 
 - 2018-10-08 [搜索附近的地点](/b/math/geo-distance-geohash) 
 - 2018-10-08 [shell 环境变量](/b/c/shell-var-env) 
-- 2018-10-07 [原生js 写的SlideUp、SlideDown 教程(收藏)](/b/ria/js-dom-event-slide) 

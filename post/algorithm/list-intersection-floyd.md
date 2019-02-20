@@ -18,7 +18,7 @@ Floyd判圈算法(Floyd Cycle Detection Algorithm), 也叫龟兔算法(tortoise-
 ## 是否有环，及环的长度
 如果链表存在环，那么 龟 和 兔 从链表起点出发，每次龟走一步，走两步(step=2)，那么Tortoise 到达环的起点时，经过m步。龟比兔多跑：`S_tortorise - S_hare = -m`, 
 
-假设环长度`s`, 兔子要追上龟这`-m`，龟就要再跑：`k=-m mod s` 步
+假设环长度`s`, 兔子要追上龟这`-m`，龟就要再跑`s-m`步，准确的说是`k=-m mod s` 步
 
     s-m     //if s-m >=0
     2s-m    //elif 2s-m >=0
