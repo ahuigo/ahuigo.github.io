@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-02-20 [求两链表的交点](/b/algorithm/list-intersection) 
+- 2018-09-26 [单链表是否有环之Floyd算法](/b/algorithm/list-intersection-floyd) 
 - 2019-02-17 [图的路径问题](/b/algorithm/graph-path) 
 - 2019-02-14 [python watch file](/b/py/py-file-watch) 
 - 2019-02-16 [Change ssh port](/b/net/net-ssh-port) 
@@ -37,5 +39,3 @@
 - 2018-10-08 [搜索附近的地点](/b/math/geo-distance-geohash) 
 - 2018-10-08 [shell 环境变量](/b/c/shell-var-env) 
 - 2018-10-07 [原生js 写的SlideUp、SlideDown 教程(收藏)](/b/ria/js-dom-event-slide) 
-- 2018-10-04 [关于抢票以及12306 的票仓的sku 设计](/b/news/ticketing-software) 
-- 2018-09-26 [查找两有序数组中第N 大的值](/b/algorithm/algorithm-find-the-nth-of-2-sorted-array) 

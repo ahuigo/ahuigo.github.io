@@ -4,11 +4,47 @@ title:	rime 鼠须管输入法
 category: blog
 description:
 ---
-# Preface
-# todo
-diy 处方
+# Rime 中的數據文件分佈及作用
+除程序文件以外，Rime 還包括多種數據文件。 這些數據文件存在於以下位置：
 
-設定項速查手冊
+共享資料夾(不同的系统不一样ni h)
+
+    【中州韻】 /usr/share/rime-data/
+    【小狼毫】 "安裝目錄\data"
+    【鼠鬚管】 "/Library/Input Methods/Squirrel.app/Contents/SharedSupport/"
+
+用戶自定义
+
+    【中州韻】 ~/.config/ibus/rime/ （0.9.1 以下版本爲 ~/.ibus/rime/）
+    【小狼毫】 "%APPDATA%\Rime"
+    【鼠鬚管】 ~/Library/Rime/
+
+自定义，如：
+
+	〔全局設定〕 default.yaml (编译输入法时基于default.custom.yaml 产生)
+	〔發行版設定〕 weasel.yaml(不一定有)
+	〔預設輸入方案副本〕 <方案標識>.schema.yaml
+	※〔安裝信息〕 installation.yaml
+	※〔用戶狀態信息〕 user.yaml
+
+編譯輸入方案所產出的二進制文件：
+
+	〔Rime 棱鏡〕 <方案標識>.prism.bin
+	〔Rime 固態詞典〕 <詞典名>.table.bin
+	〔Rime 反查詞典〕 <詞典名>.reverse.bin
+
+記錄用戶寫作習慣的文件：
+
+	※〔用戶詞典〕 <詞典名>.userdb.kct
+	※〔用戶詞典快照〕 <詞典名>.userdb.txt、<詞典名>.userdb.kct.snapshot 見於同步文件夾
+
+以及用戶自己設定的(通过这些设定,我们可以定制出想要的功能)：
+
+	※〔用戶對全局設定的定製信息〕 default.custom.yaml
+	※〔用戶對預設輸入方案的定製信息〕 <方案標識>.custom.yaml
+	※〔用戶自製輸入方案〕(*.schema.yaml) 及配套的詞典源文件(*.dict.yaml)
+
+> 註：以上標有 ※ 號的文件，包含用戶資料，您在清理文件時要注意備份！
 
 # 输入方案定制说明
 所有的输入方案都是以`*.schema.yaml`命名的,比如: `wubi_pinyin.schema.yaml`
@@ -55,11 +91,6 @@ diy 处方
 # 快捷键
 按键定义 按鍵定義的格式爲`「修飾符甲+修飾符乙+…+按鍵名稱」`，加號爲分隔符，要寫出。
 
-Shift
-Control
-Alt	Windows上 Alt+字母 會被系統優先識別爲程序菜單項的快捷鍵，當然 Alt+Tab 也不可用
-Super 属于linux/unix 按键
-
 其他的按鍵名稱參考這裏 [X11/keysymdef.h](https://github.com/lotem/librime/blob/develop/thirdparty/include/X11/keysymdef.h) 的定義，去除代碼前綴 XK_ 即是。
 
 
@@ -78,10 +109,13 @@ Super 属于linux/unix 按键
 如果需要shift 上屏输入码和文字:
 可以写到全局设定中
 
-	patch:
-	  ascii_composer/switch_key:
-			Shift_L: commit_code
-			Shift_R: commit_text
+    patch:
+      schema_list:
+        - schema: wubi86
+      ascii_composer/switch_key:
+        Caps_Lock: commit_code
+        Enter: commit_text
+		Shift_R: noop
 
 可選的切換策略：
 
@@ -119,8 +153,6 @@ Super 属于linux/unix 按键
 		translator/enable_completion: false
 		translator/enable_sentence: false #关闭输入法连打 用于屏蔽倉頡、五筆中帶有太極圖章「☯」的連打詞句選項
 		abc_segmentor/extra_tags: {} #敲 ` 之後輸入拼音：
-
-
 
 # switches 模式转换
 rime的将:全角半角、中文西文、简繁体都列为 switches 了。
@@ -218,52 +250,6 @@ Rime 輸入法在使用中會在一定時間自動將用戶詞典備份爲快照
 
     translator:
       dictionary: my_pinyin
-
-# Rime 中的數據文件分佈及作用
-除程序文件以外，Rime 還包括多種數據文件。 這些數據文件存在於以下位置：
-
-共享資料夾(不同的系统不一样ni h)
-
-    【中州韻】 /usr/share/rime-data/
-    【小狼毫】 "安裝目錄\data"
-    【鼠鬚管】 "/Library/Input Methods/Squirrel.app/Contents/SharedSupport/"
-
-用戶資料夾
-
-    【中州韻】 ~/.config/ibus/rime/ （0.9.1 以下版本爲 ~/.ibus/rime/）
-    【小狼毫】 "%APPDATA%\Rime"
-    【鼠鬚管】 ~/Library/Rime/
-
-共享資料夾包含預設輸入方案的源文件。 這些文件屬於 Rime 所發行軟件的一部份，在訪問權限控制較嚴格的系統上對用戶是只讀的，因此謝絕軟件版本更新以外的任何修改—— 一旦用戶修改這裏的文件，很可能影響後續的軟件升級或在升級時丟失數據。
-
-在「部署 Rime」操作時，將用到這裏的輸入方案源文件、並結合用戶定製的內容來編譯預設輸入方案。
-
-用戶資料夾則包含爲用戶準備的內容，如：
-
-	〔全局設定〕 default.yaml (编译输入法时基于default.custom.yaml 产生)
-	〔發行版設定〕 weasel.yaml(不一定有)
-	〔預設輸入方案副本〕 <方案標識>.schema.yaml
-	※〔安裝信息〕 installation.yaml
-	※〔用戶狀態信息〕 user.yaml
-
-編譯輸入方案所產出的二進制文件：
-
-	〔Rime 棱鏡〕 <方案標識>.prism.bin
-	〔Rime 固態詞典〕 <詞典名>.table.bin
-	〔Rime 反查詞典〕 <詞典名>.reverse.bin
-
-記錄用戶寫作習慣的文件：
-
-	※〔用戶詞典〕 <詞典名>.userdb.kct
-	※〔用戶詞典快照〕 <詞典名>.userdb.txt、<詞典名>.userdb.kct.snapshot 見於同步文件夾
-
-以及用戶自己設定的(通过这些设定,我们可以定制出想要的功能)：
-
-	※〔用戶對全局設定的定製信息〕 default.custom.yaml
-	※〔用戶對預設輸入方案的定製信息〕 <方案標識>.custom.yaml
-	※〔用戶自製輸入方案〕(*.schema.yaml) 及配套的詞典源文件(*.dict.yaml)
-
-> 註：以上標有 ※ 號的文件，包含用戶資料，您在清理文件時要注意備份！
 
 # Reference
 
