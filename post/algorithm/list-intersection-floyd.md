@@ -37,3 +37,15 @@ Floyd判圈算法(Floyd Cycle Detection Algorithm), 也叫龟兔算法(tortoise-
 1. 让龟回到起点，兔留在原地
 2. 然后大家同时走，每次都走一步(step=1)。大家一定能在`环的起点`相遇。得到走过的步数就是`m`
 3. 此时乌龟继续走到上次龟兔相遇的点，会再走k步(`k=ns-m`). 
+
+# 步长与相遇的关系
+两人的步长相差Delta 同时从同一点出发绕圈s跑，相遇胡条件是：
+
+    ns mod Delta == 0
+
+两人的步长相差Delta, 相距s1, 同时绕圈s跑，相遇的条件是：
+
+    (ns+s1) mod Delta == 0
+
+对于tortoise-hare 之间的Delta=1, 满足条件。
+

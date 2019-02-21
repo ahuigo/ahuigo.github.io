@@ -10,7 +10,7 @@ title: 各种语言的fiddle
     http://jsbin.com 有点老了
     http://jsfiddle.com
     http://tinkerbin.com/# 实时运行
-    http://codepen.io/ 实时
+    http://codepen.io/ 实时, 支持embed 嵌入
     http://rendur.com/# 超级轻量级, 不支持分享
 
 2. go:
