@@ -3,7 +3,7 @@ title: Copy List with Random Pointer
 date: 2019-02-20
 ---
 # Copy List with Random Pointer
-复制带随机指针胡链表问题：
+复制带随机指针的链表问题：
 https://www.kancloud.cn/kancloud/data-structure-and-algorithm-notes/73016
 
 

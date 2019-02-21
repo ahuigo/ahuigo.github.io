@@ -1,7 +1,8 @@
 # AHUIGO 的笔记
+- 2018-09-28 [net-socks](/b/net/net-proxy-socks) 
 - 2019-02-20 [Copy List with Random Pointer](/b/algorithm/list-copy) 
 - 2019-02-20 [求两链表的交点](/b/algorithm/list-intersection) 
-- 2018-09-26 [单链表是否有环之Floyd算法](/b/algorithm/list-intersection-floyd) 
+- 2018-09-26 [单链表判圈之Floyd算法](/b/algorithm/list-intersection-floyd) 
 - 2019-02-17 [图的路径问题](/b/algorithm/graph-path) 
 - 2019-02-14 [python watch file](/b/py/py-file-watch) 
 - 2019-02-16 [Change ssh port](/b/net/net-ssh-port) 
@@ -38,4 +39,3 @@
 - 2019-02-09 [收集了下UI 动画特效](/b/ui/ui-animation) 
 - 2018-09-27 [计算球面两点的距离](/b/math/geo-distance) 
 - 2018-10-08 [搜索附近的地点](/b/math/geo-distance-geohash) 
-- 2018-10-08 [shell 环境变量](/b/c/shell-var-env) 

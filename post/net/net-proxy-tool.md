@@ -1,55 +1,19 @@
 ---
 layout: page
-title:	shell proxy
-category: blog
+title:	shell proxy tool
 description:
 ---
 # Android
 HowTo: Proxy Non-Proxy-Aware Android Applications through Burp
 http://blog.dornea.nu/2014/12/02/howto-proxy-non-proxy-aware-android-applications-through-burp/
 
-# Within shell
-
-## http proxy
-### http proxy env
-Set http_proxy shell variable on Linux/OS X/Unix bash shell
-
-Type the following command to set proxy server:
-
-	$ export http_proxy=http://server-ip:port/
-	export http_proxy=http://127.0.0.1:8888/
-
-If the proxy server requires a username and password then add these to the URL. For example, to include the username foo and the password bar:
-
-	$ export http_proxy=http://foo:bar@server-ip:port/
-	$ export http_proxy=http://foo:bar@127.0.0.1:3128/
-	$ export http_proxy=http://USERNAME:PASSWORD@proxy-server.mycorp.com:3128/
-
-> 另外，还有一个https_proxy
-
-### node-http-proxy
-support https
-
-    var http = require('http');
-    var httpProxy = require('http-proxy');
-    var proxy = httpProxy.createProxyServer({});
-
-    var server = http.createServer(function(req, res) {
-        console.log(req.url);
-        proxy.web(req, res, { target: 'http://127.0.0.1:7001' }); 
-    }).listen(3399, function(){
-        console.log("listen chrome request");
-    });
-
-### fiddle/charles
-
-## socks5
+# socks5
 参考: [在终端下间接使用Socks5代理的几种方法(privoxy,tsocks,proxychains) ][privoxy,tsocks,proxychains]
 
 Comparison_of_proxifiers:
 https://en.wikipedia.org/wiki/Comparison_of_proxifiers
 
-### shell
+## shell
     curl -x socks5h://localhost:8001 baidu.com
     env ALL_PROXY=socks5h://localhost:8001 PROGRAM [OPTION]...
 
@@ -59,18 +23,18 @@ If you want to overwrite system proxy settings, you may also need to set two mor
     env http_proxy=socks5h://localhost:8001 HTTPS_PROXY=socks5h://localhost:8001 ALL_PROXY=socks5h://localhost:8001 PROGRAM [OPTION]...
 
 
-### cow
+## cow
 https://github.com/cyfdecyf/cow
 和graftcp 类似
 
-### graftcp
+## graftcp
 graftcp 可以把任何指定程序（应用程序、脚本、shell 等）的 TCP 连接重定向到 SOCKS5 代理。
 https://www.v2ex.com/t/476594
 
 1. 对比 tsocks、proxychains 或 proxyChains-ng，graftcp 并不使用 LD_PRELOAD 技巧来劫持共享库的 connect()、getaddrinfo() 等系列函数达到重定向目的，这种方法只对使用动态链接编译的程序有效，对于静态链接编译出来的程序，例如默认选项编译的 Go 程序，proxychains-ng 就无效了。
 2. graftcp 使用 ptrace(2) 系统调用跟踪或修改任意指定程序的 connect 信息，对任何程序都有效。
 
-#### 工作原理
+### 工作原理
 要达到重定向一个 app 发起的的 TCP 连接到其他目标地址并且该 app 本身对此毫无感知（透明代理）的目的，大概需要这些条件：
 
 1. fork(2) 一个新进程，通过 execv(2) 启动该 app，并使用 ptrace(2) 进行跟踪，
@@ -99,7 +63,7 @@ https://www.v2ex.com/t/476594
     |  +---------+  |             |         |         |        |         |      |
     +---------------+             +---------+         +--------+         +------+
 
-#### 使用
+### 使用
 假设你正在运行默认地址 "localhost:1080" 的 SOCKS5 代理，首先启动 graftcp-local：
 
     ./graftcp-local/graftcp-local
@@ -112,7 +76,7 @@ https://www.v2ex.com/t/476594
 1. Linux 里 ptrace 可以跟踪一个没有血缘关系的运行时进程，但需要以 root 权限修改默认的 `/proc/sys/kernel/yama/ptrace_scope` 值为 0：
     1. `echo "0" > /proc/sys/kernel/yama/ptrace_scope`
 
-### proxychains
+## proxychains
 > https://github.com/shadowsocks/shadowsocks/wiki/Using-Shadowsocks-with-Command-Line-Tools
 
 proxychains 调用的好像是Privoxy, 在mac 需要:
@@ -150,12 +114,12 @@ Or just proxify bash:
 	curl https://www.twitter.com/
 	git push origin master
 
-### Proximac
+## Proximac
 Proximac is an command-line alternative to Proxifier.
 1. It can fowward `any App's` traffic to a certain Socks5 proxy
 2. Moreover, Proximac now can forward all network traffic in your system to a proxy which means you may not need a VPN to do this job.
 
-#### Usage
+### Usage
 If you plan to use Proximac on OSX 10.10+, please run
 
 	sudo nvram boot-args="debug=0x146 kext-dev-mode=1"
@@ -164,7 +128,7 @@ For 10.11, do Restart -> Press COMMAND + R -> Recovery Mode -> Terminal ->
 
 	csrutil enable --without kext --without debug.
 
-### tsocks
+## tsocks
 需要这样使用 比如使用curl  的使用 tsocks curl 这样启动软件才能走代理
 
 	sudo apt-get install tsocks
@@ -213,7 +177,7 @@ brew install tsocks: https://github.com/Anakros/homebrew-tsocks
 
 	$ tsocks wget ....
 
-### Privoxy
+## Privoxy
 1. 将http代理转发至 socks5/socks4 代理: 能支持http 代理的命令就可以用了
 2. 支持类似PAC 的自动代理
 
@@ -292,36 +256,40 @@ or via -e options placed after the URL:
 
 	wget ... -e use_proxy=yes -e http_proxy=127.0.0.1:8080 ...
 
-# 内网穿透
-都是通过公网做转接: https://zhuanlan.zhihu.com/p/28820926
 
-- ngrok
-将处于内网的开发机服务暴露到公网上，就是类似 花生壳[ngrok](/p/net-proxy-ngrok)
-./ngrok -config=ngrok.cfg -subdomain <domain> 80
-./ngrok -config=ngrok.cfg -hostname xxx.xxx.xxx 80
--frp
-frp 比较ngrok 是开源的
+# http proxy
+## http proxy env
+Set http_proxy shell variable on Linux/OS X/Unix bash shell
 
-- 用反向隧道的方式ssh
+Type the following command to set proxy server:
 
-- GO实现的：
-longXboy/lunnel  这个功能挺多的看介绍跟frp差不多了
-mirrors/dog-tunnel 这个看起来似乎更多使用
+	$ export http_proxy=http://server-ip:port/
+	export http_proxy=http://127.0.0.1:8888/
 
-javascript实现的：
-- localtunnel/localtunnel  这个就不上档次了，貌似只支持http协议的隧道；不过star数可不比上面两个差；
+If the proxy server requires a username and password then add these to the URL. For example, to include the username foo and the password bar:
 
-python实现：
-- hauntek/python-ngrokd  见名知义， python版本的ngrok；协议都是一样的
+	$ export http_proxy=http://foo:bar@server-ip:port/
+	$ export http_proxy=http://foo:bar@127.0.0.1:3128/
+	$ export http_proxy=http://USERNAME:PASSWORD@proxy-server.mycorp.com:3128/
 
-C语言版：
-- dosgo/ngrok-c
+> 另外，还有一个https_proxy
 
-php实现的；也是予墨白近期的一个作品；
-- slince/spike；基于reactphp的io多路复用模型，类似于nodejs的执行方式；简单测评并没有比go语言实现的差太多；
+## node-http-proxy
+support https
 
-作者：予墨白
-链接：https://www.zhihu.com/question/49629610/answer/190228044
+    var http = require('http');
+    var httpProxy = require('http-proxy');
+    var proxy = httpProxy.createProxyServer({});
+
+    var server = http.createServer(function(req, res) {
+        console.log(req.url);
+        proxy.web(req, res, { target: 'http://127.0.0.1:7001' }); 
+    }).listen(3399, function(){
+        console.log("listen chrome request");
+    });
+
+## fiddle/charles
+
 
 # PAC Proxy
 Proxies in network
@@ -359,13 +327,6 @@ Proxy Auto Configuration file(PAC)
 1. In the PAC File URL field, enter
 `http://wpad/wpad.dat`
 1. Click on Apply
-
-# vpn
-smart vpn
-http://huzi.name/2015/04/28/mac-smart-vpn/
-
-# UniFi
-https://help.ubnt.com/hc/en-us/articles/360002426234-UniFi-USG-VPN-How-to-Configure-Site-to-Site-VPN
 
 # Reference
 - [在终端下间接使用Socks5代理的几种方法(privoxy,tsocks,proxychains) ][privoxy,tsocks,proxychains]

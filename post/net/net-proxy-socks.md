@@ -5,9 +5,8 @@ category: blog
 description: 
 date: 2018-09-28
 ---
-# Preface
-
-SOCKS是一种网络传输协议，主要用于客户端与外网服务器之间通讯的中间传递。SOCKS是"SOCKetS"的缩写[1]。
+# socks 协议
+SOCKS是一种网络传输协议，主要用于客户端与外网服务器之间通讯的中间传递。SOCKS是"SOCKetS"的缩写
 
 1. 当防火墙后的客户端要访问外部的服务器时，就跟SOCKS代理服务器连接。这个代理服务器控制客户端访问外网的资格，允许的话，就将客户端的请求发往外部的服务器。
 2.  最新协议是版本5，与前一版本相比，增加支持UDP、验证，以及IPv6。
@@ -167,7 +166,6 @@ SOCKS是一种网络传输协议，主要用于客户端与外网服务器之间
 
 # ss protocol
 https://loggerhead.me/posts/shadowsocks-yuan-ma-fen-xi-xie-yi-yu-jie-gou.html
-
 
 # References
 - [socks-note]

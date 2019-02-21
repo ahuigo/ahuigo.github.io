@@ -1,5 +1,5 @@
 ---
-title: 单链表是否有环之Floyd算法
+title: 单链表判圈之Floyd算法
 date: 2018-09-26
 ---
 # 单链表是否有环之龟兔算法(tortoise-hare)
