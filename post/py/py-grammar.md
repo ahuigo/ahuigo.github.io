@@ -18,25 +18,6 @@ True
 	sys.exit()
 		SystemExit 异常，没有捕获这个异常，会直接退出；捕获这个异常可以做一些额外的清理工作。
 
-
-## try catch
-
-	try:
-		do sth.
-    except ZeroDivisionError as e:
-        print(e)
-	except ValueError:
-		raise
-		raise ValueError('sth error!')
-    except (RuntimeError, TypeError, NameError):
-        pass
-	else:
-		return None
-	finally:
-		do sth.
-
-else 仅当没有异常或者没有被捕获的异常时, 才生效. 当有未捕获的异常出现时，finally 也会执行, 然后才抛出异常中断执行
-
 ## switch
 
 	def zero():

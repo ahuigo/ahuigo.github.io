@@ -139,7 +139,6 @@ which will return the first match or raise a StopIteration if none is found. Alt
 	>>> zip(*l) # matrix转置
 	[(1, 3, 8), (2, 4, 9)]
 
-
 ## join and split
 
 	','.join([1,2])
@@ -240,8 +239,10 @@ repeat
 
 	.count(value) -> integer -- return number of occurrences of value
 	.reverse() -> reverse *IN PLACE*
-	.sort(key=None, reverse=False) -- stable sort *IN PLACE*;
+	.sort(key=None, reverse=False) -- stable sort *IN PLACE*; not support cmp=None
 	sorted(l, key=None, reverse=False) -- stable sort *Not IN PLACE*;
+
+## sort key
 
     >>> d=['a','C', 'A','z']; d.sort(key=str.lower))
     ['a', 'A', 'C', 'z']
@@ -252,16 +253,22 @@ repeat
     >>> sorted(a.items(), key=lambda x:x[1])
     [(4, 1), (1, 2), (3, 3), (2, 4)]
 
-利用python 的magic`__gt__,__eq__,...` 实现cmp:
+python3 没有cmp. 利用python 的magic`__gt__,__eq__,...` 实现cmp:
 
     key=functools.cmp_to_key(compare)
+
+    from functools import cmp_to_key
+
+    nums = [1, 3, 2, 4]
+    nums.sort(key=cmp_to_key(lambda a, b: a - b))
+    print(nums)  # [1, 2, 3, 4]
 
 remove and insert(in place)
 
 	.insert(index, object)
 	.remove(value) -- remove first occurrence of value.
 
-## sort list
+## sorted list
 
     colors = ['red', 'green', 'blue', 'yellow']
     sorted(colors):

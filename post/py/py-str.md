@@ -250,8 +250,8 @@ bytes对象b'\xa420'只是一堆比特位而已。define bytes
     97
 
 对于字符串操作，我们并不关心它们内部编码。除非需要字节包用于传输时
-1. str 是无关编码的unicode: utf8,gbk, 是纯字符串表示: python3 采用unicode
-1. bytes 是关编码: utf8,gbk, 是纯字符经过编码过后的二进制数据
+1. str 是关编码的unicode: utf8,gbk, 是纯字符串表示: python3 采用unicode
+1. bytes 是无关编码: utf8,gbk, 是纯字符经过编码过后的二进制数据
 
 #### string to bytes:
 ascii 不变, 其它则用16进制表示
@@ -345,7 +345,35 @@ replace with dict(不能出现干扰的边界字符`%{}`)
 
 ### translate
 
-    a_string.translate(str.maketrans({"a":  "A"})
+    str.maketrans('abc','ABC') 
+        # {97: 65, 98: 66, 99: 67}
+    >>> 'a2'.translate(str.maketrans('abc','ABC'))
+    'A2'
+    >>> 'a2'.translate(str.maketrans({'a':'A', 'b':'B'}))
+    'A2'
+    >>> 'a2'.translate(str.maketrans({97:65}))
+    'A2'
+
+python2:
+
+    string.maketrans('','')  // equal to python3: bytes(range(0, 0x100))
+
+    string.maketrans('a','B')  
+    // equal to python3: 
+    trans = str.maketrans('a','B')  
+    bytes(c if c not in trans else trans[c] for c in range(0, 0x100))
+
+### bytes translate
+python3 reverse translate for bytes:
+
+    b'abc'.translate(str.maketrans('abc','ABC'))
+    b'ABC'.translate(str.maketrans('ABC','abc'))
+
+python2 bytes translate reverse:
+
+    >>> enc = string.maketrans('\x00\x01\x02', '\x01\x02\x00')
+    >>> dec = string.maketrans(enc, string.maketrans('', ''))
+
 
 ### startwith
 

@@ -40,6 +40,24 @@ Python 代码调试技巧: \
      +-- Exception
           +-- StopIteration
 
+try catch
+
+	try:
+		do sth.
+    except ZeroDivisionError as e:
+        print(e)
+	except ValueError:
+		raise
+		raise ValueError('sth error!')
+    except (RuntimeError, TypeError, NameError):
+        pass
+	else:
+		return None
+	finally:
+		do sth.
+
+else 仅当没有异常或者没有被捕获的异常时, 才生效. 当有未捕获的异常出现时，finally 也会执行, 然后才抛出异常中断执行
+
 ### SystemExit
 exit(n), quit(n), sys.exit(n)都是一个东西: SystemExit(n); 
 不影响 不影响finnaly 或者 catch BaseException; 

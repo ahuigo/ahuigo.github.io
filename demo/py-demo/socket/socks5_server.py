@@ -1,4 +1,6 @@
-# Refer: https://zhuanlan.zhihu.com/p/28645864
+# Refer: 
+#   https://zhuanlan.zhihu.com/p/28645864
+#   https://github.com/facert/socket-example/blob/master/socks5_server.py
 import logging
 import socket
 import struct
@@ -80,6 +82,7 @@ def handle_con(sock, addr):
 
     # 拿到 remote address 的信息后，建立连接
     try:
+        print('remote_addr', (remote_addr, remote_addr_port[0]))
         remote = socket.create_connection((remote_addr, remote_addr_port[0]))
         logging.info('connecting %s:%d' % (remote_addr, remote_addr_port[0]))
     except socket.error as e:

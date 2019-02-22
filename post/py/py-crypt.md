@@ -5,6 +5,9 @@ date: 2018-09-28
 # python 加密实例
 [加密算法简介](/p/algorithm/algorithm-crypt)
 
+    pip install pycrypto
+
+
 # AES
 
 ## aes-256-cbc 算法实例
@@ -146,18 +149,26 @@ Warn:
 ecb 不需要iv
 
     from Crypto.Cipher import AES
-    def pad(text):
-        text = text.encode()
-        return text + b' ' * (16 - len(text) % 16)
+    def pad(data):
+        pad_len = (16 - len(data) % 16)
+        return data + bytes([pad_len]) * pad_len
 
-    key = 'password'
-    aes = AES.new(pad(key), AES.MODE_ECB)
+    def encrypt(key, data):
+        aes = AES.new(pad(key), AES.MODE_ECB)
+        enc = aes.encrypt(pad(data))
+        return enc
+
+    def decrypt(key, data):
+        aes = AES.new(pad(key), AES.MODE_ECB)
+        de = aes.decrypt(data)
+        return (de[:-de[-1]]) # remove padding
+
+    key = 'password'.encode()
     text = '数据'
-    enc = aes.encrypt(pad(text))
+    enc = encrypt(key, text.encode())
     print(enc)
-
-    de = aes.decrypt(enc).decode()
-    print(de[:len(text)]) # remove padding
+    dec = decrypt(key, enc).decode()
+    print(dec)
 
 # DES
 以DES ECB 为例(不需要enc = iv+enc)

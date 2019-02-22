@@ -12,8 +12,6 @@ SOCKS是一种网络传输协议，主要用于客户端与外网服务器之间
 2.  最新协议是版本5，与前一版本相比，增加支持UDP、验证，以及IPv6。
 3.  根据OSI模型，SOCKS是会话层的协议，位于表示层与传输层之间。
 
-# socks-note
-
 一般来说要建立起一个代理的连接要经过三个阶段。
 
 ## 阶段一: 验证
@@ -78,7 +76,7 @@ SOCKS是一种网络传输协议，主要用于客户端与外网服务器之间
 
 > 更多关于用户名／密码子协议信息请参看rfc1929
 
-# 阶段二：建立代理连接
+## 阶段二：建立代理连接
 完成了校验过程接下来就是让代理服务器建立代理连接。
 
 客户端发送要建立的的代理连接的地址及端口，地址可以是域名、IPv4、IPv6。
@@ -141,7 +139,7 @@ SOCKS是一种网络传输协议，主要用于客户端与外网服务器之间
 	第二次响应中是指代理服务器监听的scoket收来自目标机器连接时的ip和端口
 - UDP ASSOCIATE : 此时绑定地址指明了客户发送UDP消息至服务器的端口和地址
 
-# 阶段三：数据包转发
+## 阶段三：数据包转发
 到了这个阶段基本就是数据转发了,tcp就直接转发,udp还须要做点工作。
 
 客户端发送给代理服务器和代理服务器返回给客户端的数据都需要包装下
@@ -164,13 +162,22 @@ SOCKS是一种网络传输协议，主要用于客户端与外网服务器之间
 
 > 详细文档参考rfc1928
 
+## demo
+1. https://github.com/facert/socket-example/blob/master/socks5_server.py
+2. /py-demo/socket/socks5_server.py
+
+client0: https://github.com/Anorov/PySocks
+client1:
+
+    curl -x socks5h://localhost:8888 'https://api.myip.com'
+
 # ss protocol
 https://loggerhead.me/posts/shadowsocks-yuan-ma-fen-xi-xie-yi-yu-jie-gou.html
 
 # References
 - [socks-note]
 - [socks-wiki]
-- 由浅入深写代理(10)-内网穿透: https://zhuanlan.zhihu.com/p/28820926
+- 由浅入深写代理(3)-socks5: https://zhuanlan.zhihu.com/p/28645864
 
 [socks-wiki]: https://zh.wikipedia.org/wiki/SOCKS
 [socks-note]: http://www.mojidong.com/network/2015/03/07/socket5-1/
