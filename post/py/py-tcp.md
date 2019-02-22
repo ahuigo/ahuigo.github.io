@@ -79,8 +79,6 @@ The only difference is that:
 2. read/write are the *'universal'* file descriptor functions while recv/send are slightly more specialized (for instance, you can set a flag to ignore SIGPIPE, or to send out-of-band messages...).
 
 # 服务器
-和客户端编程相比，服务器编程就要复杂一些。
-
 服务器进程首先要绑定一个端口并监听来自其他客户端的连接。如果某个客户端连接过来了，服务器就与该客户端建立Socket连接，随后的通信就靠这个Socket连接了。
 
 所以，服务器会打开固定端口（比如80）监听，每来一个客户端连接，就创建该Socket连接。由于服务器会有大量来自客户端的连接，所以，服务器要能够区分一个Socket连接是和哪个客户端绑定的。一个Socket依赖4项：服务器地址、服务器端口、客户端地址、客户端端口来唯一确定一个Socket。
@@ -140,3 +138,27 @@ The only difference is that:
 	s.close()
 
 需要注意的是，客户端程序运行完毕就退出了，而服务器程序会永远运行下去，必须按Ctrl+C退出程序。
+
+## select
+select 会检查fdlist, 没有数据select/recv 就会被阻塞.
+
+    # client
+    import socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect(('0',8888))
+    sock.send(b'syn1')
+    sock.send(b'syn2')
+
+可以看到两个syn
+
+    # sudo tcpdump -i lo0  -nn -X -c 100 -e port 8888
+
+server 的sock.recv(1000) 可能直接读取到多个包
+
+    import socket
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(('0', 8888))
+    server.listen()
+    sock, addr = server.accept()
+    r = sock.recv(100)
+    print(r)

