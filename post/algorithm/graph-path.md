@@ -65,11 +65,13 @@ BFS：时间复杂度O(V+E) 用队列实现, 得到最优解. 省略
 路径带正权重的方案
 1. 如果采用广度优先(队列)，大家的权重增长并不能齐头并进$E^V$。
 2. 如果采用深度优先（栈），复杂度为$E^V$，。
-3. 权重优先的方法：尽量让权重小的优先增长(队列+插队)
+3. 权重优先的方法：尽量让权重小的优先增长(`队列+插队` 或 `PriorityQueue`)
     1. 如果遇到访问过的点（黑色）权重更小，就让这个黑色插队
 
-### 权重优先
-e.g. 
+
+### 权重优先(Dijkstra算法)
+如果采用priorityQueue, 插入删除需要`log(V)`，：组合运行时间为 O(`(V + E)log(V))O((V+E)log(V))`
+
 B-C
 ![](/img/algo/graph-path-weight.1.png)
 
@@ -82,6 +84,23 @@ B-D-E(`B:8 插队`)\
 D-E\
 ![](/img/algo/graph-path-weight.4.png)
 <iframe id="embed_dom" name="embed_dom" frameborder="0" style="display:block;width:525px; height:245px;" src="https://www.processon.com/embed/5a4d81b1e4b0849f9004d8a9"></iframe>
+
+#### 实现
+出自[dijkstra] 实现示例
+
+    def dijkstra(aGraph,start):
+        pq = PriorityQueue()
+        start.setDistance(0)
+        pq.buildHeap([(v.getDistance(),v) for v in aGraph])
+        while not pq.isEmpty():
+            currentVert = pq.delMin()
+            for nextVert in currentVert.getConnections():
+                newDist = currentVert.getDistance() \
+                        + currentVert.getWeight(nextVert)
+                if newDist < nextVert.getDistance():
+                    nextVert.setDistance( newDist )
+                    nextVert.setPred(currentVert)
+                    pq.decreaseKey(nextVert,newDist)
 
 ### 多分支DFS 方案
 伪代码：复杂度是$E^V$
@@ -199,3 +218,4 @@ SCC 算法步骤:
 
 # Refer
 [topological]: https://facert.gitbooks.io/python-data-structure-cn/7.%E5%9B%BE%E5%92%8C%E5%9B%BE%E7%9A%84%E7%AE%97%E6%B3%95/7.15.%E9%80%9A%E7%94%A8%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/
+[dijkstra]: https://facert.gitbooks.io/python-data-structure-cn/7.%E5%9B%BE%E5%92%8C%E5%9B%BE%E7%9A%84%E7%AE%97%E6%B3%95/7.20.Dijkstra%E7%AE%97%E6%B3%95/
