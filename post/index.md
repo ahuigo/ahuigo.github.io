@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-02-28 [字符串搜索算法KMP](/b/algorithm/algo-str-search) 
 - 2018-09-28 [net-socks](/b/net/net-proxy-socks) 
 - 2019-02-20 [Copy List with Random Pointer](/b/algorithm/list-copy) 
 - 2019-02-20 [求两链表的交点](/b/algorithm/list-intersection) 
@@ -38,4 +39,3 @@
 - 2018-11-4 [ADHD：分心者的自我认知训练](/b/life/adhd) 
 - 2019-02-09 [收集了下UI 动画特效](/b/ui/ui-animation) 
 - 2018-09-27 [计算球面两点的距离](/b/math/geo-distance) 
-- 2018-10-08 [搜索附近的地点](/b/math/geo-distance-geohash) 
