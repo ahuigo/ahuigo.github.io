@@ -91,6 +91,9 @@ Example:
 	选项与参数：
 	-p  ：后面可以接提示字符！
 	-t  ：后面可以接等待的『秒数！』这个比较有趣～不会一直等待使用者啦！
+    -r		do not allow backslashes to escape any characters
+    -s		do not echo input coming from a terminal
+        http://linuxcommand.org/lc3_man_pages/readh.html
 	variable
 		默认是REPLY
 
