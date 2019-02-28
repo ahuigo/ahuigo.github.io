@@ -19,6 +19,7 @@ same as js:
 ## ord/chr(unicode)
 
 	ord('A'); 65
+        'A'.encode()[0]
 	chr(65); 'A'
 
 ## multi line
@@ -275,6 +276,8 @@ detect bytes encoding:
 1. 第二行注释是为了告诉Python解释器，按照UTF-8编码读取源代码
 2. 编辑器要without BOM
 
+e.g
+
     #!/usr/bin/env python3
     # -*- coding: utf-8 -*-
 
@@ -482,6 +485,8 @@ with no space and new line:
 	>> sys.stdout.write('string')
 	string
 
+# list string
+
 ## string like list
 
 	print "abc"[-1]
@@ -500,3 +505,9 @@ with no space and new line:
 
     list(ChunkStr1(s,10))
 
+
+## random choice
+    import secrets
+    import string
+    alphabet = string.ascii_letters + string.digits
+    password = ''.join(secrets.choice(alphabet) for i in range(20))

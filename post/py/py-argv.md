@@ -45,7 +45,7 @@ click 之于argparse/argv, 相当于requests 之于urllib
 	from sys import argv
 	script, arg1, arg2 = argv
 
-# argsparse
+# argparse
 
     import argparse
     parser = argparse.ArgumentParser()
@@ -55,6 +55,14 @@ click 之于argparse/argv, 相当于requests 之于urllib
 
     parser = argparse.ArgumentParser(description="calculate X to the power of Y")
 
+## file
+
+    >>> parser = argparse.ArgumentParser()
+    >>> parser.add_argument('--raw', type=argparse.FileType('wb', 0))
+    >>> parser.add_argument('out', type=argparse.FileType('w', encoding='UTF-8'))
+    >>> parser.parse_args(['--raw', 'raw.dat', 'file.txt'])
+    Namespace(out=<_io.TextIOWrapper name='file.txt' mode='w' encoding='UTF-8'>, raw=<_io.FileIO name='raw.dat' mode='wb'>)
+
 ## positional args
 
     parser.add_argument("p1")
@@ -63,9 +71,17 @@ click 之于argparse/argv, 相当于requests 之于urllib
     // python3 a.py foo bar
     // args = {p1:foo, p2:bar}; args.p1
 
+multiple args:
+
+    # N [N ...]
+    # args = {'integers':...}
+    parser.add_argument('integers', metavar='N', type=int, nargs='+',)
+
+
 ## optional arg
 
     parser.add_argument("-n", "--name", default="ahui", help="your name")
+    parser.add_argument("-n", dest="name", default="ahui", help="your name")
     parser.add_argument("-p", type=int)
 
 ## bool arg
@@ -73,8 +89,8 @@ action="store_true" is bool
 
     parser.add_argument("-v", "--verbose", help="increase output verbosity",
                     action="store_true")
-
-## help and desc
+    parser.add_argument("-v", "--verbose", help="increase output verbosity",
+                    action="store_false")
 
 # click 
 ## help?

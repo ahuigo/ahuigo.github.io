@@ -8,6 +8,16 @@ date: 2018-09-28
 ## file property
 os
 
+### os home
+
+    os.getenv('HOME')
+
+    from os.path import expanduser
+    home = expanduser("~")
+
+    from pathlib import Path
+    home = str(Path.home())
+
 ### file exists: os
 
 	os.path.exists(file)
@@ -210,8 +220,6 @@ current file's dir:
 			'r+' read and write
 			'w+' empty old content and write
 			'a+' read and append
-		append a 'U' to the mode open a file for input with universal new line support('\r', '\n', '\r\n')
-			 'U' cannot be combined with 'w' or '+' mode.
 	fp.close()
 
 ### stdin file

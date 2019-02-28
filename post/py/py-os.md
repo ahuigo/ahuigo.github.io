@@ -150,3 +150,5 @@ If you need to know MEMORY USAGE of a given type, you can use the function sys.g
 	'default'
 
 	os.environ.get('HOME')
+	os.getenv('HOME')
+

@@ -303,7 +303,26 @@ diskutil是OS X磁盘工具应用的命令行版。既可以完成图形界面�
 
 # 流程图/脑图
 - processon flowchart + mind + UI(Wireframes) + UML
+
+## Flow Chart 流程图
 http://www.processon.com/diagrams/new
+
+### client app
+- yEd diagram app
+- omniGraffle 非常流行的流程图客户端
+	https://www.omnigroup.com/omniGraffle
+
+### web app
+- www.processon.com 速度快
+- draw
+https://www.draw.io/
+- gliffy
+https://www.gliffy.com
+- lucidchart 画连线特别方便
+https://www.lucidchart.com/invitations/accept/40084b0d-b124-433c-b63f-f938ce4f1bbf
+
+## 图床
+https://zhuanlan.zhihu.com/p/35270383
 
 ## logo
 https://thenounproject.com/
@@ -333,22 +352,6 @@ http://blog.2baxb.me/archives/906
 http://naotu.baidu.com/edit.html
 
 	SHIFT+TAB
-
-## Flow Chart 流程图
-
-### client app
-- yEd diagram app
-- omniGraffle 非常流行的流程图客户端
-	https://www.omnigroup.com/omniGraffle
-
-### web app
-- www.processon.com 速度快
-- draw
-https://www.draw.io/
-- gliffy
-https://www.gliffy.com
-- lucidchart 画连线特别方便
-https://www.lucidchart.com/invitations/accept/40084b0d-b124-433c-b63f-f938ce4f1bbf
 
 ## Wireframes 原型图
 - Axure RP
@@ -414,6 +417,11 @@ Graph::Easy
     http://36kr.com/p/216120.html
 
 ## GIF
+draw gif:
+ ms paint: http://gifpaint.com/
+ ppt
+
+
 ### Kap +KeyCastr
 Kap 开源+简洁, 替代recordit/LICEcap/Gifcam
 KeyCastr 显示按键

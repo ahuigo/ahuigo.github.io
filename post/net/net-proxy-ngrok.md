@@ -22,6 +22,10 @@ private:
 3. 在本地运行 python3 reverse_client_proxy.py
 3. 接下来我们直接在外网访问 vps 的地址: http://xx.xx.xx.xx:8000 就可以发现能够转发内网的数据了
 
+流程图：
+
+    vps:8000 --> vps:2333 -> server:xx-> server:8000
+
 内网穿透可以用于做内网渗透测试， 内网执行最基本的 python 反弹 shell 脚本：
 
     import socket,subprocess,os

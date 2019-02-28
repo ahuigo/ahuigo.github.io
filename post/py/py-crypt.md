@@ -7,7 +7,6 @@ date: 2018-09-28
 
     pip install pycrypto
 
-
 # AES
 
 ## aes-256-cbc 算法实例
@@ -149,25 +148,28 @@ Warn:
 ecb 不需要iv
 
     from Crypto.Cipher import AES
-    def pad(data):
-        pad_len = (16 - len(data) % 16)
-        return data + bytes([pad_len]) * pad_len
+    class AesEcb():
+        def __init__(self, key):
+            key = key if isinstance(key, bytes) else key.encode()
+            self.aes = AES.new(self.pad(key), AES.MODE_ECB)
 
-    def encrypt(key, data):
-        aes = AES.new(pad(key), AES.MODE_ECB)
-        enc = aes.encrypt(pad(data))
-        return enc
+        def pad(self, data):
+            pad_len = (16 - len(data) % 16)
+            return data + bytes([pad_len]) * pad_len
 
-    def decrypt(key, data):
-        aes = AES.new(pad(key), AES.MODE_ECB)
-        de = aes.decrypt(data)
-        return (de[:-de[-1]]) # remove padding
+        def encrypt(self, data):
+            enc = self.aes.encrypt(self.pad(data))
+            return enc
 
-    key = 'password'.encode()
+        def decrypt(self, data):
+            de = self.aes.decrypt(data)
+            return (de[:-de[-1]]) # remove padding
+
+    key = 'password'
     text = '数据'
-    enc = encrypt(key, text.encode())
+    enc = AesEcb(key).encrypt(text.encode())
     print(enc)
-    dec = decrypt(key, enc).decode()
+    dec = AesEcb(key).decrypt(enc).decode()
     print(dec)
 
 # DES

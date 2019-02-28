@@ -6,11 +6,34 @@ date: 2019-02-17
 主要包含这么几个问题
 1. 最短路径
 2. 一笔画问题
-    1. 奇顶点（连接的边数量为奇数的顶点）的数目等于0或者2
+    1. 一笔画的充要条件：奇顶点（连接的边数量为奇数的顶点）的数目等于0(任意起点)或者2(奇顶点为起点)
     2. 如果连通无向图 G 有2k 个奇顶点，那么它可以用k 笔画成，并且至少要用 k 笔画成
 
-# 遍历问题
-从一个起点一笔画成: not done 需要backtrack
+#　最短路径问题
+## 无权图最短路径：
+BFS：时间复杂度O(E*V) 顶点个数(顶点只遍历1次) 
+>下面的算法不是最优的，最优解需要一个节点被遍历多次：$单节点的边数^顶点数=E^V$
+
+    def getShortPath(graph, start, end):
+        start.color = black
+        if start == end:
+            return [], True
+
+        nodes = [V for V in start.getConnections() if V.color!='black']
+        for node in nodes:
+            path, status = getShortPath(graph, node, end)
+            if status:
+                return [start]+path
+        return [], False
+
+DFS：时间复杂度O(V) 用队列
+
+## 有权图最短路径
+(路径带权重)：
+![](/img/algo/graph-path-eg.1.png)
+
+# 一笔画问题
+从一个起点一笔画成: 如果路线走入死胡同（not done）就需要backtrack
 
     from pythonds.graphs import Graph, Vertex
     def knightTour(n,path,u,limit):

@@ -20,7 +20,7 @@
 - 2019-01-06 [lua module](/b/arch/lua-module) 
 - 2019-02-06 [Python 异步tcp](/b/py/py-asyncio-http) 
 - 2019-01-06 [设置系统的PATH](/b/c/ops-path) 
-- 2018-09-27 [数据库CAP 理论](/b/arch/arch-cap) 
+- 2018-09-27 [数据库CAP 理论 与事务](/b/arch/arch-cap) 
 - 2016-10-10 [网络扫描器nmap、zmap](/b/net/net-nmap-zmap) 
 - 2019-01-23 [go汇编示例](/b/go/go-asm) 
 - 2018-09-27 [学习 docker](/b/arch/arch-docker) 
