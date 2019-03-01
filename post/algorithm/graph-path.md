@@ -68,6 +68,7 @@ BFS：时间复杂度O(V+E) 用队列实现, 得到最优解. 省略
 3. 权重优先的方法：尽量让权重小的优先增长(`队列+插队` 或 `PriorityQueue`)
     1. 如果遇到访问过的点（黑色）权重更小，就让这个黑色插队
 
+带负权的图：所有边加上一个常数，变成一个正权图
 
 ### 权重优先(Dijkstra算法)
 如果采用priorityQueue, 插入删除需要`log(V)`，：组合运行时间为 O(`(V + E)log(V))O((V+E)log(V))`
@@ -95,11 +96,10 @@ D-E\
         while not pq.isEmpty():
             currentVert = pq.delMin()
             for nextVert in currentVert.getConnections():
-                newDist = currentVert.getDistance() \
-                        + currentVert.getWeight(nextVert)
+                newDist = currentVert.getDistance() + currentVert.getWeight(nextVert)
                 if newDist < nextVert.getDistance():
                     nextVert.setDistance( newDist )
-                    nextVert.setPred(currentVert)
+                    nextVert.setPred(currentVert)   # record
                     pq.decreaseKey(nextVert,newDist)
 
 ### 多分支DFS 方案
