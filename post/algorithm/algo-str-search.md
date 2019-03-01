@@ -53,19 +53,19 @@ a!=b 一定是n=0? 不一定哦
     len(S)=7  len(lx)=3
     S....Sx
          7
-         S....SX
+         S....SX+suffix
     SX...Sx     ? x!=X
          7?
-         SX...Sx   
+         SX...Sx + suffix
     # if S.endwith(Sx) => S=lx...l
     (lx...l)X...(lx...l)x
                       7 3
-                      (lx...l)X...(lx...l)x
+                      (lx...l)X...(lx...l)x + suffix
 
 Str 满足：
 
     SX...Sx
-    (lx...l)X...(lx...l)x
+    (lx...l)X...(lx...l)x+suffix
 
 e.g.
 
@@ -76,3 +76,33 @@ e.g.
     abx--abX.....abx--abx   x!=X 3  S[:6], S[:5], S[:4], S[:3]=abx
                  12345673
                       abx--abX...abx--abx
+
+
+code:
+
+    def gen_match_table(needle):
+        m=[0]
+        n=0
+        for i, c in enumerate(needle):
+            if i==0:
+                continue
+            if c==needle[n]:
+                n+=1
+                m.append(n)
+
+            # abx--abX.....abx--abx   x!=X 3  S[:6], S[:5], S[:4], S[:3]=abx
+            #              12345673
+            #              abx--abX...abx--abx
+            else:
+                lastn = n
+                partial_needle = needle[:i+1]
+                n = 0
+                for j in range(lastn, 0, -1):
+                    # S[:6] S[5]
+                    if needle[0:j] == partial_needle[-j:]:
+                        n = j
+                        break
+                m.append(n)
+        return m
+
+    print(gen_match_table('abx--abX.....abx--abx'))
