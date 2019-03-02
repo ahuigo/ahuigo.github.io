@@ -359,6 +359,12 @@ http://naotu.baidu.com/edit.html
 
 # File
 
+## convert file
+docx to txt
+
+    textutil -convert html from.docx
+    textutil -convert txt from.docx
+
 ## mdfind
 OS X有杀手级搜索工具Spotlight，命令行上就是mdfind命令了。
 Spotlight能做的查找，mdfind也能做。包括搜索文件的内容和元数据（metadata）。

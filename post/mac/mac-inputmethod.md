@@ -22,7 +22,8 @@ Download: [plist pro](http://pan.baidu.com/s/1dDEE0UH)
 
 Remove the input source or input sources you want to disable from the AppleEnabledInputSources dictionary. If there is an AppleDefaultAsciiInputSource key, remove it.
 
-   <key>AppleEnabledInputSources</key>
+```xml
+    <key>AppleEnabledInputSources</key>
     <array>
         <dict>
             <key>Bundle ID</key>
@@ -39,6 +40,7 @@ Remove the input source or input sources you want to disable from the AppleEnabl
             <string>Keyboard Input Method</string>
         </dict>
     </array>
+```
 
 # Reboot
 注销再登录就可以了

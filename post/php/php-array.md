@@ -42,6 +42,8 @@ date: 2018-10-04
 	$mode = prev($transport);    // $mode = 'bike';
 	$mode = end($transport);     // $mode = 'plane';
 
+foreach: reset($array)
+
 ## compact and extract
 
 ### compact

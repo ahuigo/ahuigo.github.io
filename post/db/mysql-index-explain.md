@@ -58,13 +58,15 @@ key_len 的计算规则如下:
 ## extra
 
     Using index
-        覆盖索引扫描, 表示查询在索引树中就可查找所需数据, 不用扫描表数据文件
+        覆盖索引扫描(covering index), 表示查询在索引树中就可查找所需数据, 不用扫描表数据文件
     Using filesort 
         额外的排序 order by name。建议用可以用index(name)优化
     Using temporary
         查询有使用临时表, 一般出现于排序, 分组和多表 join 的情况
     Using join buffer
         join 没有使用索引，可能需要优化
+    Using where：
+        表示优化器需要通过索引回表查询数据；explain select * from t1 join t3 on t1.a=t3.a  t1: using where
 
 ## type
 The join type
