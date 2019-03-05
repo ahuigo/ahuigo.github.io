@@ -32,6 +32,11 @@ curl 默认发送post数据是: application/x-www.form-urlencoded(不同于在fo
 
 > HTTP_RAW_POST_DATA is removed in php7, use php://input instead! 不是用stdin 哈
 
+## host
+modify host for https:
+
+    curl --resolve 'localhost:80:127.0.0.1' https://localhost/md.htm
+
 ## user agent
 
 	-U mozilla

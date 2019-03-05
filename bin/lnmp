@@ -17,7 +17,7 @@ sudo php-fpm -D
 
 echo "start nginx"
 nginx_dir=/usr/local/var/run/nginx/
-[[ -d $nginx_dir ]] || { mkdir -p $nginx_dir; sudo chmod a+rx $nginx_dir; }
+[[ -d $nginx_dir ]] || { sudo mkdir -p $nginx_dir; sudo chmod a+rx $nginx_dir; }
 sudo nginx 
 
 # mc

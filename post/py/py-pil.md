@@ -1,6 +1,6 @@
 ---
 layout: page
-title: py-pil
+title: python PIL(pillow)
 category: blog
 description: 
 date: 2018-10-04
@@ -15,7 +15,7 @@ PIL：Python Imaging Library，已经是Python平台事实上的图像处理标�
 
 	$ pip3 install pillow
 
-# hello world
+## hello world
 来看看最常见的图像缩放操作，只需三四行代码：
 
 	from PIL import Image
@@ -89,8 +89,40 @@ PIL的ImageDraw提供了一系列绘图方法，让我们可以直接绘图。�
 
 	'/Library/Fonts/Arial.ttf'
 
-# open show img
+## open show img
 
 	from PIL import ImageTk, Image
 	img = Image.open(path)
 	img.show()
+
+# image clipboard
+Refer to: https://www.devdungeon.com/content/grab-image-clipboard-python-pillow
+
+## clipboard to file
+
+    from PIL import ImageGrab
+
+    img = ImageGrab.grabclipboard()
+            
+    # Save the image to disk
+    img.save('paste.png', 'PNG')
+    img.save('paste.jpg', 'JPEG')
+
+## clipboard to bytes
+    from PIL import ImageGrab
+    import io
+
+    img = ImageGrab.grabclipboard()
+
+    # Store the bytes in a byte stream
+    img_bytes = io.BytesIO()
+    img.save(img_bytes, format='PNG')
+
+    print(img_bytes.getvalue())
+
+## bytes to base64
+
+    import codecs
+    base64_data = codecs.encode(img_bytes.getvalue(), 'base64')
+    base64_text = codecs.decode(base64_data, 'ascii')
+    html_img_tag = "<img src="data:image/png;base64, %s" />" % base64_text

@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+# upload image file
+import sys,os
+from PIL import ImageGrab
+import io
+
+if len(sys.argv)<=1:
+    img = ImageGrab.grabclipboard()
+    img_bytes = io.BytesIO()
+    img.save(img_bytes, format='PNG')
+    smfile = img_bytes.getvalue()
+else:
+    smfile = open(sys.argv[1], 'rb')
+
+import requests
+import json
+files={"smfile": smfile,}
+r = requests.post('https://sm.ms/api/upload') 
+#r = requests.post('https://httpbin.org/post', files=files)
+#r = json.dumps(r.text)
+print(r.json())

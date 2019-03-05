@@ -138,6 +138,11 @@ If you want, you can send strings to be received as files:
 	>>> files = {'file': ('report.csv', 'some,data,to,send\nanother,row,to,send\n')}
 	>>> r = requests.post(url, files=files)
 
+#### post file stream(bytes):
+
+    files = {'file': b'io.BytesIO().getvalue()'}
+    requests.post(url, data=post_params, files=files)
+
 ### post data
 
 	data=urllib.parse.parse_qs('a=1&b=1')
@@ -148,7 +153,7 @@ If you want, you can send strings to be received as files:
 
     proxies = {
       "http": "http://10.10.1.10:3128",
-      "https": "http://10.10.1.10:1080",
+      "https": "http://10.10.1.10:1080", //necessary
     }
 
     requests.get("http://example.org", proxies=proxies)

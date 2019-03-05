@@ -12,7 +12,7 @@ date: 2018-10-04
 		#listen 443 ssl;
 
 		ssl_certificate /Users/hilojack/test/ssl/my.crt;			#cert.pem cert.crt
-		ssl_certificate_key /Users/hilojack/test/ssl/my_nopass.key; #cert.key
+		ssl_certificate_key /Users/hilojack/test/ssl/my_nopass.key; #cert.key: private key with no password
 		# 若ssl_certificate_key使用my.key，则每次启动Nginx服务器都要求输入key的密码。
 
 		#ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;#defalut
@@ -24,7 +24,7 @@ date: 2018-10-04
 
 	}
 
-Refer to [](/p/aogorithm-ssl) and [nginx_https]
+Refer to [](/p/net/net-ssl) and [nginx_https]
 
 安全建议：( Refer: https://www.linux.cn/article-5374-1.html)
 
