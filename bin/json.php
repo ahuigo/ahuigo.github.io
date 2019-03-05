@@ -5,9 +5,9 @@ $a =json_decode(trim($json), true);
 #var_dump($a);
 if($a){
 	if(isset($argv[1])){
-		var_dump($a[$argv[1]]);
+		print_r($a[$argv[1]]);
 	}else
-		var_dump($a);
+		print_r($a);
 }else{
 	echo $json;
 }

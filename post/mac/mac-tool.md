@@ -365,7 +365,7 @@ docx to txt
     textutil -convert html from.docx
     textutil -convert txt from.docx
 
-## mdfind
+## mdfind file
 OS X有杀手级搜索工具Spotlight，命令行上就是mdfind命令了。
 Spotlight能做的查找，mdfind也能做。包括搜索文件的内容和元数据（metadata）。
 
@@ -378,6 +378,9 @@ mdfind的索引数据库在后台自动更新，不过你也可以使用mdutil�
 如果Spotlight的工作不正确，`mdutil -E`命令可以强制重建索引数据库。也可以用`mdutil -i`彻底关闭文件索引。
 
 > Refer to: http://segmentfault.com/a/1190000000509514
+
+# image upload
+https://sm.ms/
 
 # Screen/Video
 
