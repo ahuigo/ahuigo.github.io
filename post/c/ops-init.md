@@ -388,6 +388,14 @@ nohup 默认会将 1+2 pipe append to nohup.out， 所以不需要加
 
 	>> nohup.out 2>&1
 
+## redirect outputs of a running process
+
+    # -m option is just a shortcut to -o FILE -e FILE.
+    reredirect -m FILE PID
+    reredirect -o FILE1 -e FILE2 PID
+
+    reredirect -m /dev/null pid
+
 ## restart process
 如果进程能响应HUP
 kill -HUP `cat gunicorn.pid`

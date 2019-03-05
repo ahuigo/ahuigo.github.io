@@ -2,6 +2,25 @@
 title: 背单词
 date: 2018-09-27
 ---
+# my method
+## 单词
+1. 盲读
+2. 不会的单词划线
+3. 结合context 推断
+    4. 查词：音标 本文中含义
+4.记忆：
+   1. 音形义 :连读 弱读 强读 音变
+   2. 联想+图  词缀词根
+   3. 使用: After the accident, her thoughts began to turn inwards（内心深处） (= to her own interests or problems)
+   4. 复习：5min，30min，12h，1d，2d，4d，7d，15d
+
+## 听力
+语音：https://study.163.com/note/noteIndex.htm?id=1006387037&type=0
+
+新概念视频版
+每日英语听力APP
+可可英语APP（全部有中文翻译）
+
 # 背单词
 
 ## 词汇量
@@ -9,8 +28,6 @@ date: 2018-09-27
 http://testyourvocab.com/
 
 ### 选择词汇库
-#### 麦克米伦高阶英汉双解词典 
-##### 红色字体7500
 #### 美国当代英语语料库（Corpus of Contemporary American English, COCA)
 #### 欧路词典
 1. 用单词表生成一本没有释义的词典(生成mdx格式词典)，然后添加进欧路

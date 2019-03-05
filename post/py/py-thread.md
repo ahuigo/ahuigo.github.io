@@ -23,7 +23,6 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 1. 子线程的名字在创建时指定，我们用`LoopThread`命名子线程。
 1. 名字仅仅在打印时用来显示，完全没有其他意义，如果不起名字Python就自动给线程命名为`Thread-1，Thread-2……`
 
-
 ## threading.Thread
 启动一个线程就是把一个函数传入并创建Thread实例，然后调用start()开始执行：
 

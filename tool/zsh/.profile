@@ -44,6 +44,18 @@ alias ga.='git add .'
 function rmv(){
     mv $2 $1;
 }
+
+function v2ray(){
+    kill $(cat ~/log/v2ray.pid)
+    case "$1" in 
+        stop) ;;
+        restart | start | *) 
+            ~/Applications/v2ray/v2ray -config ~/conf/v2ray.config &
+            echo $! > ~/log/v2ray.pid ;;
+
+    esac
+}
+
 function gcap(){
 	git commit -am $1;
     if test $? != 0;then

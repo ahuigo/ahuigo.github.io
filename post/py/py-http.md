@@ -12,7 +12,7 @@ urllib2 is deprecated, use requests instead , except: `urllib.parse.urlsplit/url
 
 ## urllib.request.urlopen() file-like
 .status .reason getheaders() read()
-```
+```python
 from urllib import request
 with request.urlopen('https://api.douban.com/v2/book/2129650') as f:
     data = f.read()
@@ -20,7 +20,6 @@ with request.urlopen('https://api.douban.com/v2/book/2129650') as f:
     for k, v in f.getheaders():
         print('%s: %s' % (k, v))
     print('Data:', data.decode('utf-8'))
-
 ```
 
 ## .parse.urlparse

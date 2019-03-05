@@ -6,9 +6,13 @@ date: 2018-09-27
 https://www.bigan.net/reference/
 
 ## 查重
-http://www.paperyy.com/ 和
+https://www.paperyy.com/
 http://www.papertime.cc/s/7s1
 http://www.paperpass.com/
+http://www.gezida.com/（格子免费论文检测）
+https://zhuanlan.zhihu.com/p/35433721
+
+http://check.cnkia.com/cnki
 
 
 ## 论文下载
