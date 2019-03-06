@@ -1,9 +1,9 @@
 ---
-date: 20180817
+date: 2018-08-17
 title: 解决Vscode 中文输入法乱入的Backspace 字符
 ---
 # 解决Vscode 中文输入法乱入的Backspace 字符
-vscode 下的中文输入法老键入 backspace controller character(`\u0008`)
+vscode 下的中文输入法老键入 backspace controller character(`\u0008`, `\u0003`)
 
 如果你打开`view->toggle Control Character` 就会看到这些字符。
 
