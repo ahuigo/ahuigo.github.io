@@ -79,6 +79,13 @@ If you are concerned about the use of blocking IO, there are lots of projects ou
 	pip3 install requests
 	import requests
 
+## use ipv6
+
+    import socket
+    import requests.packages.urllib3.util.connection as urllib3_cn
+
+    urllib3_cn.allowed_gai_family = lambda: socket.AF_INET6
+
 ## request
 
 	>>> r = requests.request('GET', 'https://127.0.0.1:8000/a.php')
@@ -156,7 +163,7 @@ If you want, you can send strings to be received as files:
       "https": "http://10.10.1.10:1080", //necessary
     }
 
-    requests.get("http://example.org", proxies=proxies)
+    requests.get("http://example.org", proxies=proxies, verify=False)
 
 你也可以通过环境变量 HTTP_PROXY 和 HTTPS_PROXY 来配置代理。
 
@@ -173,6 +180,12 @@ If you want, you can send strings to be received as files:
 
     proxies = {'http://10.20.1.128': 'http://10.10.1.10:5323'}
     # 访问10.20.1.128时使用代理10.10.1.10:5323
+
+### HTTPS CA
+You can pass verify the path to a CA_BUNDLE file or directory with certificates of trusted CAs:
+
+
+    >>> requests.get('https://github.com', verify='/path/to/charles.pem')
 
 ### SOCKS
 除了基本的 HTTP 代理，Request 还支持 SOCKS 协议的代理。这是一个可选功能，若要使用， 你需要安装第三方库。

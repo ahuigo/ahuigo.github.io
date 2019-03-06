@@ -202,15 +202,19 @@ N 个节点，平均每个节点访问的边数K，复杂度就是$k^N$，效率
             startVertex.setFinish(self.time)
 
 # 强连通分量算法SCC
+> https://facert.gitbooks.io/python-data-structure-cn/7.%E5%9B%BE%E5%92%8C%E5%9B%BE%E7%9A%84%E7%AE%97%E6%B3%95/7.18.%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F/
+
 找到图中高度互连的顶点的集群C 的一种图算法被称为强连通分量算法（SCC）
 ![](/img/algo/graph-scc.0.png)
 
 
 SCC 算法步骤:
+
 1.调用 dfs 为图 G 计算每个顶点的完成时间。
 ![](/img/algo/graph-scc.1.png)
 
 2.计算 $G^T$
+
 3.为图 $G^T$ 调用 dfs，但在 DFS 的主循环中，以完成时间的递减顺序探查每个顶点。
 ![](/img/algo/graph-scc.2.png)
 

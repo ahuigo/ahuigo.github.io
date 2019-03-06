@@ -5,6 +5,16 @@ title: Chrome devtools 使用汇总
 # Chrome devtools 使用汇总
 chrome://chrome-urls/
 
+## Network dns
+- Dns Cache
+chrome://net-internals/#dns
+
+- spdy
+chrome://net-internals/#spdy
+
+## shortcuts
+建议使用vimium
+
 # devTool Source
 参考文章:
 - https://umaar.com/dev-tips/162-network-overrides/
@@ -152,16 +162,6 @@ http://taobaofed.org/blog/2015/11/20/webkit-remote-debug-test/
 
 	open -a Google\ Chrome.app --args -remote-debugging-port=9222
 
-# Network
-chrome://chrome-urls
-- Dns Cache
-chrome://net-internals/#dns
-
-- spdy
-chrome://net-internals/#spdy
-
-# shortcuts
-建议使用vimium
 
 # 保存你的更改
 在工具中即时编辑样式或JavaScript很爽。但当你高高兴兴地做了修改，然后又要在源代码中重新实现一遍就不那么爽了。

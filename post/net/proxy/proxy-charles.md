@@ -43,7 +43,10 @@ charles 需要在`Proxy`-`Proxy Settings - SSl` 中设置 `Enable SSL`, 且选�
 ### 给客户端装charles CA证书
 http://www.charlesproxy.com/documentation/using-charles/ssl-certificates/
 
-对于MAC OSX: "Help > SSL Proxying > Install Charles Root Certificate".
+对于MAC OSX: 
+1. "Help > SSL Proxying > Install Charles Root Certificate".
+2. export to `charles.pem` for python requests
+
 IOS: 	browse to http://www.charlesproxy.com/getssl.
 CHROME: "SSL Proxying > Save Charles Root Certificate"
 JAVA:
