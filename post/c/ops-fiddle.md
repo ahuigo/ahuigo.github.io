@@ -13,20 +13,23 @@ title: 各种语言的fiddle
     http://codepen.io/ 实时, 支持embed 嵌入
     http://rendur.com/# 超级轻量级, 不支持分享
 
-2. go:
+2. clang:
+   1. https://www.jdoodle.com/c-online-compiler
+
+3. go:
     https://play.golang.org/
 
-2. python:
+4. python:
     https://pyfiddle.io/
     http://pythonfiddle.com/
 
-2. httpbin
+5. httpbin
     requests.post('https://httpbin.org/post', headers={'Content-Type': 'application/json'}, data=json.dumps({'bar':'员'}, ensure_ascii=False).encode('utf-8')).text
 
-2. web project:
+6. web project:
     https://codesandbox.io/s/o29j95wx9
 
-2. css:
+7. css:
     chrome://devtool
     http://cssdesk.com/ 
     http://dabblet.com/

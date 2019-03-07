@@ -17,6 +17,10 @@ tcpdump可以分为三大部分内容，第一是“选项”，第二是“过�
 ## tcpdump 解析图
     /demo/py-demo/tcp/parse-tcp.txt
 
+## tshark
+tshark 介绍：https://www.zhihu.com/question/31188903
+tshark比较新是wireshark的命令行版。 它和tcpdump 都是基于libpcap的，也都是生成的cap格式文件。
+
 # tcpdump Example
 
 	sudo tcpdump -i lo0 -nn -X  -c 1 port 8000
@@ -210,6 +214,7 @@ tcp在收到第一条数据包之后，后续的数据包，是使用之前数�
 如果一开始不习惯这样，同时验证这个说法，我们可以使用tcpdump -i lo -S 来打印出绝对序列号
 
 # filter
+可以通过命令man pcap-filter来查得
 
 	'condition1 and condition2 or condtion3...'
 
@@ -239,6 +244,7 @@ packet filter syntax
 
 	$ tcpdump -i eth0 'dst 8.8.8.8'
 	$ tcpdump -i eth0 -c 3 'dst port 53 or dst port 80'
+    tcpdump -n "dst host 192.168.1.1 and (dst port 80 or dst port 443)"
 
 tcpdump还支持如下的类型：
 
@@ -252,6 +258,22 @@ tcpdump还支持如下的类型：
 		如果我们没有设置过滤类型，那么默认是host。
 
 ## port
+filter port
+
+    tcpdump port 22
+    tcpdump "port 22"
+    tcpdump "tcp port 22"
+    tcpdump tcp port 22
+
+port range
+
+    tcpdump portrange 1-1023
+    tcpdump -n udp dst portrange 1-1023
+
+filter pcap
+
+    tcpdump -Z root -r src.pcap "tcp port 22" -w dst.pcap
+
 我想获取使用ftp端口和ftp数据端口的网络包
 
 	tcpdump 'port ftp or ftp-data'
@@ -285,8 +307,7 @@ tcpdump还支持如下的类型：
 # filter protocol
 协议过滤必须单独提出来讲:
 
-	proto [offset:size]
-
+	proto[offset:size]
 
 proto就是protocol的缩写，表示这里要指定的是某种协议的名称，比如ip、tcp、ether。其实proto这个位置，总共可以指定的协议类型有15个之多，包括：
 
@@ -297,16 +318,7 @@ proto就是protocol的缩写，表示这里要指定的是某种协议的名称�
 	ppp – 链路层协议
 	slip – 链路层协议
 	link – 链路层协议
-	ip
-	arp
-	rarp
-	tcp
-	udp
-	icmp
-	ip6
-	radio
-
-offset用来指定数据报偏移量，表示从某个协议的数据报的第多少位开始提取内容，默认的起始位置是0；而size表示从偏移量的位置开始提取多少个字节，可以设置为1、2、4。
+	ip arp rarp tcp udp icmp ip6 radio
 
 如果只设置了offset，而没有设置size，则默认提取1个字节。比如`ip[2:2]`，就表示提取出第3、4个字节；而ip[0]则表示提取ip协议头的第一个字节。
 
@@ -323,38 +335,158 @@ offset用来指定数据报偏移量，表示从某个协议的数据报的第�
 
 	tcp-fin, tcp-syn, tcp-rst, tcp-push, tcp-ack, tcp-urg。
 
-# tip
-之前没有提到的“小秘籍”，让大家在追查网络问题、进行协议分析时，可以用得上。
-
-- 使用如下命令，则tcpdump会列出所有可以选择的抓包对象。
-
-	$ tcpdump -D
-	1.eth0
-	2.any (Pseudo-device that captures on all interfaces)
-	3.lo
-
-- 如果想查看哪些ICMP包中“目标不可达、主机不可达”的包，请使用这样的过滤表达式：
+## ICMP offset
+如果想查看哪些ICMP包中“目标不可达、主机不可达”的包，请使用这样的过滤表达式：
 
 	icmp[0:2]==0x0301
-	icmp[2:5] range from 2 to 4 bytes
+	icmp[10:4] range from 10 to 13 bytes
 
-- 要提取TCP协议的SYN、ACK、FIN标识字段，语法是：
+## tcp offset
+tcp 包本身有个偏移20(ip包头占用0x14=20字节）
+
+    tcp[0:2] 源端口2节字
+    tcp[2:2] 目标端口2节字
+    tcp[3] tcp[3:1]==80 80端口
+
+    # tcp[20:4]==0x47455420   "GET "
+    tcpdump -i en0 -nn -X -A  "tcp[20:4]==0x47455420"
+
+要提取TCP协议的SYN、ACK、FIN标识字段，语法是：
 
 	tcp[tcpflags] & tcp-syn
 	tcp[tcpflags] & tcp-ack
 	tcp[tcpflags] & tcp-fin
 
-- 要提取TCP协议里的SYN-ACK数据包，不但可以使用上面的方法，也可以直接使用最本质的方法：
+要提取TCP协议里的SYN-ACK数据包，不但可以使用上面的方法，也可以直接使用最本质的方法：
 
 	tcp[13]==18
 
-- 如果要抓取一个区间内的端口，可以使用portrange语法：
+fiter port 22 and FIN flag
 
-	tcpdump -i eth0 -nn 'portrange 52-55' -c 1  -XX
+    tcpdump -Z root -r src.pcap "tcp port 22 and (tcp[tcpflags] & tcp-fin != 0)" -w dst.pcap
 
-# unpack packet info
-http://roclinux.cn/?p=2820
+# tshark
+> Refer to: https://www.cnblogs.com/liun1994/p/6142505.html
 
+有些参数和tcpdump 一样的
+
+    -c 500
+
+## interface or cap
+
+    tshark -i eth0
+    tshark -p: 以非混合模式工作，即只关心和本机有关的流量。
+
+## output 
+
+### output file
+    tshark -r test.cap
+    w: -w <outfile.cap|->
+    -F: -F <output file type>,设置输出的文件格式，默认是.pcapng,使用tshark -F可列出所有支持的输出文件类型。
+
+### select protocol
+
+    O: -O <protocols>,只显示此选项指定的协议的详细信息。
+
+### output time
+　　-t: -t a|ad|d|dd|e|r|u|ud 设置解码结果的时间格式。“ad”表示带日期的绝对时间，“a”表示不带日期的绝对时间，“r”表示从第一个包到现在的相对时间，“d”表示两个相邻包之间的增量时间（delta）。
+　　-u: s|hms 格式化输出秒；
+
+### -l flush
+flush everty packet:
+
+　　-l: 在输出每个包之后flush标准输出
+
+### -n 禁止网络对象名称解析
+    -n :禁止网络对象名称解析
+
+### output fields
+打印http.host和http.request.uri
+
+    -T fields -e http.host -e http.request.uri 
+
+果-T fields选项指定，使用-E来设置一些属性， header=y意思是头部要打印;
+
+    -T fields -E header=y
+　　-E: -E <fieldsoption>=<value>如
+　　　　header=y|n
+　　　　separator=/t|/s|<char>
+　　　　occurrence=f|l|a
+　　　　aggregator=,|/s|<char>
+
+-z 输出数据
+
+    tshark -r vmx.cap -q -n -t ad -z follow,tcp,ascii
+　　　　-t ad: 输出格式化时间戳;
+
+#### output format(-T)
+　　-T: -T pdml|ps|text|fields|psml,设置解码结果输出的格式，包括text,ps,psml和pdml，默认为text
+
+    tshark -r temp.cap -R "ssl" -V -T text
+　　　　-T text: 格式化输出，默认就是text;
+　　　　-V: 增加包的输出;//-q 过滤tcp流13，获取data内容
+
+#### output port
+
+    -e "ip.src" -e tcp.srcport -e ip.dst -e tcp.dstport
+
+### output statistic
+
+    tshark -n -q -z http,stat, -z http,tree
+　　　注释:
+　　　　-q: 只在结束捕获时输出数据，针对于统计类的命令非常有用;
+　　　　-z: 各类统计选项，具体的参考文档，后面会介绍，可以使用tshark -z help命令来查看所有支持的字段;
+　　　　　　 http,stat: 计算HTTP统计信息，显示的值是HTTP状态代码和HTTP请求方法。
+　　　　　　 http,tree: 计算HTTP包分布。 显示的值是HTTP请求模式和HTTP状态代码。
+
+//抓取500个包提取访问的网址打印出来
+tshark -s 0 -i eth0 -n -f 'tcp dst port 80' -R 'http.host and http.request.uri' -T fields -e http.host -e http.request.uri -l -c 500
+　　　注释: 
+　　　　-f: 抓包前过滤；
+　　　　-R: 抓包后过滤；
+　　　　-l: 在打印结果之前清空缓存;
+　　　　-c: 在抓500个包之后结束;
+
+### output name interpret
+
+    -n: 禁止所有地址名字解析（默认为允许所有）
+    -N: 启用某一层的地址名字解析。“m”代表MAC层，“n”代表网络层，“t”代表传输层，“C”代表当前异步DNS查找。如果-n和-N参数同时存在，-n将被忽略。如果-n和-N参数都不写，则默认打开所有地址名字解析。
+
+### select proto
+
+    -d: 将指定的数据按有关协议解包输出,如要将tcp 8888端口的流量按http解包，应该写为“-d tcp.port==8888,http”;tshark -d. 可以列出所有支持的有效选择器。
+
+## filter
+### -f capture filer
+    -f 'tcp dst port 80' 
+
+### -R read filter
+
+    -R 'http.host and http.request.uri' 
+    -R: -R <read filter>,
+    -Y: -Y <display filter>
+
+
+## proto
+### http
+
+    tshark  -s 512 -i eth0 -n -f 'tcp dst port 80' -R 'http.host and http.request.uri' -T fields -e http.host -e http.request.uri -e frame.time -l 
+
+解释
+
+    -i eth0 :捕获eth0网卡 
+    -s  512 :只抓取前512个字节数据
+    -f 'tcp dst port 80' :只捕捉协议为tcp,目的端口为80的数据包
+    -R 'http.host and http.request.uri' :过滤出http.host和http.request.uri 过滤已经捕获的包（wireshark的ilter）
+    -T fields -e http.host -e http.request.uri :打印http.host和http.request.uri
+    -l ：输出到标准输出
+
+#### ssl 
+
+    tshark -n -t a -R ssl -T fields -e "ip.src" -e "ssl.app_data"
+
+### mysql
+    tshark -s 512 -i eth0 -n -f 'tcp dst port 3306' -R 'mysql.query' -T fields -e mysql.query
 
 # tcpdump with Wireshark
 > http://blogread.cn/it/article/7130?f=catemore
@@ -412,7 +544,6 @@ http://wiki.wireshark.org/Development/LibpcapFileFormat
 http://man.lupaworld.com/content/network/wireshark/c9.2.html
 
  官方:http://www.wireshark.org/docs/man-pages/wireshark.html
-
 
 
 # Reference
