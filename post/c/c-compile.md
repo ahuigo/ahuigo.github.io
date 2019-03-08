@@ -8,8 +8,14 @@ description:
 
 本文总结关于c 编译的基础用法: 宏，头文件
 
-# 头文件
-公共的东西(External 声明，定义)，可以放到头文件中：`*.h`
+# include 头文件
+公共的东西(External 声明，定义)，可以放到头文件中：`*.h`, 可以被多次引用（其实跟`.c`没啥区别）
+
+    #ifndef   _MY_H
+    #define  _MY_H
+    extern void my(void);
+    #endif
+
 角括号include ,gcc首先查找-I选项指定的目录,然后查找系统的头文件目录(通常 是/usr/include)
 
 	#include <stdio.h>
@@ -20,7 +26,8 @@ description:
 
 	gcc -I~/headers/
 
-> 如果需要查询一个函数的定义位置，比如strlen， 可以使用 man strlen, 可以发现函数头为`string.h`
+> 1.如果需要查询一个函数的定义位置，比如strlen， 可以使用 man strlen, 可以发现函数头为`string.h`
+> 2.下面的编译命令`gcc -E a.c` 会显示出实际的`.h` 文件路径
 
 # Macro
 
@@ -39,10 +46,13 @@ gcc 可通过指定 -E 得到预处理结果
 ## Function-like Macro
 	#define MAX(a,b) (a)>(b)?(a):(b)
 
+macro
 1. Func-like 宏比纯函数编译出的文件要大。 因为宏定义的MAX 函数会被预处理为 (a)>(b)?(a):(b), 而真正的函数只需要传参数 和 call 语句。
 2. Func-like 宏没有参数类型, 不作参数检查
 3. Func-like 宏要避免 Side Effect(即参数的值变化). 比如 MAX(++a, ++b), 对于a/b 来说会有多次side Effect
 4. Func-like 宏要避名直接就将 *函数 或 表达式*作为参数。因为没有形参保存*函数或表达式*的结果，参数本身有会重复运算问题。
+
+e.g.
 
 	/**
 	 * 求数组最大值。
@@ -54,7 +64,7 @@ gcc 可通过指定 -E 得到预处理结果
 		return n == 0 ? a[0] : MAX(a[n], max(n-1)); // 0? a[0] : (a[n] > max(n-1)) ? (a[n]) : max(n-1);
 	}
 
-4. Func-like 宏如果包含多条语句怎么办？
+Func-like 宏如果包含多条语句怎么办？转义换行符:
 
 	#define DEVICE_INIT(k,v) \
 	{	device_init1(k,v);\

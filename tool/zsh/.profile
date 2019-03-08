@@ -51,8 +51,7 @@ function v2ray(){
         stop) ;;
         restart | start | *) 
             ~/Applications/v2ray/v2ray -config ~/conf/v2ray.config &
-            echo $! > ~/log/v2ray.pid ;;
-
+            echo $! > ~/log/v2ray.pid && disown ;;
     esac
 }
 

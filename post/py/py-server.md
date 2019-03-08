@@ -4,18 +4,51 @@ date: 2018-10-04
 ---
 # Preface
 参考：https://zhuanlan.zhihu.com/p/30056870
-# CGI
+
+## CGI
 原始的CGI 程序只是单纯的多进程fork 模式[/demo/py/socket-cgi.py]
 这非常慢！！
 
-# FastCGI
-FastCGI则是预先启动多个cgi进程守候，不会重复fork, cgi处理完 等待下一个任务
-- 与FastCGI不同，apache 搞了一套mod_python, 使得cpython 可以内嵌进去
-- 后来PEP 333中定义了[WSGI](/p/py/py-server-framework.md)(Web Server Gateway Interface)，成为沿用至今的Python web开发的标准协议(server与app之间的约定)
-    1. 绝大部分app框架都遵守WSGI: 自带的wsgi, 以及flask/django
-    2. 以gunicorn 为例: 一个著名的wsgi http服务器，它采用pre-fork模型来处理和转发请求给worker, 支持基本的SyncWorker(多个request要排队), 以及同时处理多个request的: ThreadWorker/AsyncWorker/GeventWorker/TornadoWorker...
-    3. uwsgi/gunicorn 是两个比较著名的wsgi server. 还有玩具：wsgiref/Werkezug
+## FastCGI
+1. FastCGI则是预先启动多个cgi进程守候，不会重复fork, cgi处理完 等待下一个任务
+2. slave process 存在惊群问题：就是多个slave 同时listen 同一fd, 所以listen 要[加锁]`FCGI_LOCK(req->listen_socket);`
 
+## nginx 惊群
+> https://zhu327.github.io/2018/08/29/gunicorn%E4%B8%8Euwsgi%E4%B9%8B%E6%88%91%E8%A7%81/
+Linux 2.6内核更新以后多个进程accept只有一个进程会被唤醒, 但是如果使用epoll还是会产生惊群现象.
+
+Nginx为了解决epoll惊群问题, 使用进程间互斥锁, 只有拿到锁的进程才能把listen fd加入到epoll中, 在accept完成后再释放锁.
+
+但是在高并发情况下, 获取锁的开销也会影响性能, 一般会建议把锁配置关掉. 直到Nginx 1.9.1更新支持了socket的SO_REUSEPORT选项, 惊群问题才算解决, listen socket fd不再是在master进程中创建, 而是每个worker进程创建一个通过`SO_REUSEPORT` 选项来复用端口, 内核会`自行选择一个fd来唤醒`, 并且有负载均衡算法.
+
+## WSGI and uwsgi
+> 更多：https://zhu327.github.io/2018/08/29/gunicorn%E4%B8%8Euwsgi%E4%B9%8B%E6%88%91%E8%A7%81/
+
+后来PEP 333中定义了[WSGI](/p/py/py-server-framework.md)(Web Server Gateway Interface)，成为沿用至今的Python web开发的标准协议(server与app之间的约定)
+1. 绝大部分app框架都遵守WSGI: 自带的wsgi, 以及flask/django
+3. gunicorn: WSGI 协议，并发性不好，不支持http1.1. 还有玩具：wsgiref/Werkezug
+    1. 以gunicorn 它采用pre-fork模型来处理和转发请求给worker,
+    2. 支持基本的SyncWorker(多个request要排队), 以及同时处理多个request的: ThreadWorker/AsyncWorker/GeventWorker/TornadoWorker...
+2. uWSGI是一个Web服务器: Master+Worker 配合 gevent 携程支持高并发(uWSGI c语言写的)
+    1. 自创了uwsgi协议,每个packet 前4字节是传输信息类型：实现了WSGI协议、uwsgi协议、http协议等
+
+# python 架构演进
+作者谈到了4个阶段：https://zhu327.github.io/2018/07/19/python%E5%90%8E%E7%AB%AF%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B/
+1. 传统：
+   1. gunicorn+ uWSGI() 配合 gevent 携程支持高并)
+   2. Redis连接数过多 使用redis-py自带的连接池来实现连接复用
+    3. MySQL连接数过多 使用djorm-ext-pool连接池复用连接
+    4. RabbitMQ 将导步任务给Celery（配置gevent支持并发任务）
+2. 服务拆分：
+   1. 每一个服务都有一个完整的认证过程, 认证又依赖于用户中心的数据库, 修改认证时需要重新发布多个服务
+2. 微服务架构
+   1. 接入层: 引入了基于OpenResty的`Kong API Gateway`, 定制实现了认证, 限流等插件. 
+   2. 发布新的服务时: 发布脚本中调用`Kong admin api`注册服务地址到Kong, 并加载api需要使用插件
+   3. 相互调用问题: 维护了一个基于`gevent+msgpack`的RPC服务框架`doge`, 借助于`etcd做服务治理`
+3. 新：解耦数据层
+   1. 接入层Kong + 服务层Doge + 数据层etcd
+
+# 模型
 ## master-worker 模型
 master-worker 就是producer-consumer:
 1. 使用thread实现的话，如果修改公共变量, 还需要加threading.Lock().acquire/release

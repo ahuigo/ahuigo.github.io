@@ -15,9 +15,9 @@ asyncio是基于coroutine 的，包括了:
 1. curio： 比asyncio更轻量的协程网络库
 
 asyncio 的生态:
-1. sanic: 比aiohttp 轻量, sanic使用uvloop异步驱动，uvloop基于libuv使用Cython编写，性能比nodejs还要高
+1. uvloop: asyncio 的eventloop 扩展, uvloop基于libuv使用Cython编写，性能比nodejs还要高
+2. sanic: 比aiohttp 轻量, sanic使用uvloop异步驱动，
 2. aiohttp
-3. uvloop: asyncio 的eventloop 扩展
 
 ## asyncio protocol
 Aysncio protocol twisted-like:

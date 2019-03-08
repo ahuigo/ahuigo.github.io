@@ -265,9 +265,11 @@ v打头的函数表示的可变参数不是以*...* 传入，而是以*va_list* 
 ### scanf
 
 	#include <stdio.h>
-	int scanf(const char *format, ...);
-	int fscanf(FILE *stream, const char *format, ...);
-	int sscanf(const char *str, const char *format, ...);
+	int scanf(const char *format, ...); //from stdin
+	int fscanf(FILE *stream, const char *format, ...);  //from file
+	int sscanf(const char *str, const char *format, ...);   //from string
+
+    scanf("id=%d", &id)
 
 	#include <stdarg.h>
 	int vscanf(const char *format, va_list ap);
