@@ -22,7 +22,6 @@ js 是单线程的，通过eventloop 调度，所以回调函数是安全的。
     process.nextTick(r=>log('1.1 nextTick'));
     process.nextTick(r=>log('1.2 nextTick'));
 
-
 ## promise status
 执行态和完成态(undefied/rejected/resolved)
 
@@ -96,7 +95,7 @@ ajax函数将返回Promise对象:
 
 promise.then(f1).then(f2), 对于then/catch 而言： 
 1. 如果promise 中没有resolve, promise 正常执行，但是`.then(func)` 永远没有机会执行，
-2. f1(),f2() 可以是return promise(等resolve 传参数)，
+2. f1(),f2() 可以是return promise(就是resolve 返回的参数)，
 3. 可以是return value. (value 直接作为参数传递)
 4. 但是resolve 不能用于then, 它只能被Promise 包装！Promise 会抛弃return 值
 
@@ -186,7 +185,7 @@ Notice:
 1. 即使没有await, 程序也要等promise 执行完毕才能退出！
 2. `await p` 阻塞局部，但是`async` 不会阻塞整体, 所以两者要`成对存在`
 
-await async:
+await async: 输出2
 
     async function f(){return 1}
     (async ()=>console.log(
@@ -196,6 +195,8 @@ await async:
 ## asyncFunc() is promise
 1. As promoise support both: then/catch/await
 2. AsyncFunc's `return` is passed to sub promise's `resolve`
+
+e.g.:
 
     asyncFunc().then(v=>console.log(v));
     v = await asyncFunc().then(v=>(v));// 同步阻塞

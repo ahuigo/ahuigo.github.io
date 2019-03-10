@@ -52,6 +52,39 @@ upstream 每个设备的状态:
 	fail_timeout:max_fails 次失败后，暂停的时间。
 	backup： 其它所有的非backup机器down或者忙的时候，请求backup机器。所以这台机器压力会最轻。
 
+    1.轮询
+
+        upstream idc{
+            server 10.0.0.8;
+            server 10.0.0.9;
+        }
+    2、按权重
+    upstream idc{
+        server 10.0.0.8 weight 10;
+        server 10.0.0.9 weight 5;
+    }
+    3、fair 根据页面大小、加载时间长短智能的进行负载均衡
+    upstream idc{
+        server 10.0.0.8;
+        server 10.0.0.9;
+        fair;
+    }
+    4、ip_hash
+    upstream idc{
+        ip_hash;
+        server 10.0.0.8;
+        server 10.0.0.9;
+    }
+    5、url_hash
+    upstream idc{
+        server 10.0.0.8;
+        server 10.0.0.9;
+        hash $request_uri;
+        hash_method crc32;
+    }
+
+
+
 ## memcache upstream
 
 	upstream memcached_backend {
@@ -100,10 +133,9 @@ upstream 每个设备的状态:
 	}
 
 ## fastcgi_next_upstream
+Specifies in which cases a request should be passed to the next server(upstream)
 
 	Syntax:	fastcgi_next_upstream error | timeout | invalid_header | http_500 | http_503 | http_403 | http_404 | off ...;
 	Default:
 	fastcgi_next_upstream error timeout;
 	Context:	http, server, location
-
-Specifies in which cases a request should be passed to the next server(upstream)

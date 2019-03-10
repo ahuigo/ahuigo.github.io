@@ -32,6 +32,8 @@ Nginx为了解决epoll惊群问题, 使用进程间互斥锁, 只有拿到锁的
 2. uWSGI是一个Web服务器: Master+Worker 配合 gevent 携程支持高并发(uWSGI c语言写的)
     1. 自创了uwsgi协议,每个packet 前4字节是传输信息类型：实现了WSGI协议、uwsgi协议、http协议等
 
+bench: http://klen.github.io/py-frameworks-bench/
+
 # python 架构演进
 作者谈到了4个阶段：https://zhu327.github.io/2018/07/19/python%E5%90%8E%E7%AB%AF%E6%9E%B6%E6%9E%84%E6%BC%94%E8%BF%9B/
 1. 传统：
@@ -48,25 +50,11 @@ Nginx为了解决epoll惊群问题, 使用进程间互斥锁, 只有拿到锁的
 3. 新：解耦数据层
    1. 接入层Kong + 服务层Doge + 数据层etcd
 
-# 模型
-## master-worker 模型
-master-worker 就是producer-consumer:
-1. 使用thread实现的话，如果修改公共变量, 还需要加threading.Lock().acquire/release
-2. 使用concurrent.futures 提供更简单的ThreadPoolExecutor/ProcessPool API
-
-伪代码：
-
-    producer            consumer
-    msgs = Queue()
-    msgs.append(msg)
-    condition.notify()    
-    msgs.pop(0)
-    ...                 ...
-
+# 并发模型
 ### futures的多线程多进程
 see [/p/py/async-asyncio](/p/py/py-async-asyncio)
 
-### IO multiplexing
+### IO multiplexing(single cpu)
 多线程多进程占用资源有点大，为解决C10K问题，就需要IO multiplexing节省资源.
 同步与异步见[linux-process](/p/linux-process.md)
 
@@ -112,7 +100,6 @@ EventLoop处理事件触发时的回调比较麻烦: 有了协程(gevent/asyncio
         3. 还有mechanize这种自动控制多个浏览器做事的库，利用浏览器引擎等。
         4. LiveStyle：css双向绑定，在chrome改动css，代码自动更新；或者在代码改动css，chrome自动更新
     3. pip3 install gunicorn: gunicorn 本身就遵守wsgi的web server. 可搭配请求转给worker: flask/django，也可单独使用
-    gunicorn --reload -b 127.0.0.1:8800 -k aiohttp.worker.GunicornWebWorker -w 1 -t 60 --reload app:app
 
 ## watchdog
 用watchdog 提供的watchmedo
@@ -181,10 +168,29 @@ rocket.py:
 
 run:
 
-    $ gunicorn rocket:app -w 2 -p rocket.pid -b 0.0.0.0:8000 -D
+    $ gunicorn rocket:app -w 8 -p rocket.pid -b 0.0.0.0:8000 -D
     $ gunicorn --pythonpath . rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
     $ PYTHONPATH=. gunicorn rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
     $ kill -9 `cat rocket.pid`
+
+### -k,--worker-class
+指定异步模式
+
+    sync
+    eventlet 
+    gevent 
+    tornado
+    gthread
+    aiohttp.worker.GunicornWebWorker (asyncio)
+
+e.g.
+
+    gunicorn --reload -b 127.0.0.1:8800 -k aiohttp.worker.GunicornWebWorker -w 1 -t 60 --reload app:app
+    nohup gunicorn -k gevent dmonitor.wsgi:application -b 0.0.0.0:8009 -w 4 &
+
+worker 官方推荐(如果阻塞多，可以再增加)
+
+    worker_num = (2 x $num_cores) + 1
 
 ### log
 将启动时的python grammar error, exception 都记录到app.gun.log

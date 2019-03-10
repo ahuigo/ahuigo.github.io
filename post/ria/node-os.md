@@ -11,6 +11,11 @@ date: 2018-10-04
     const execSync = require('child_process').execSync;	
     execSync(`kill ${process.ppid}`)
 
+## stdio
+
+    process.stdin.on('data', data=>console.log);
+
+
 ## env
 
     process.env.NODE_ENV

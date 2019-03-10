@@ -254,7 +254,7 @@ wait 会自动将 coroutine 封装为task
 
 
 # Future executor(包装多线程进程future)
-非coroutine 不能并行，但是可以封装成thread/process.
+coroutine 本身不能并行（parallel cpu），但是可以封装成thread/process.
 
 就是手动封装task 太麻烦了，concurrent.futures 提供了方便的executor
 1. 标准库中有两个为Future的类：concurrent.futures.Future 和 asyncio.Future。这两个Future作用相同。
@@ -316,7 +316,7 @@ Future is Not thread safe!
 也可以不用async , 用multiprocessing.
 
     multiprocessing.Pool(4).apply_async(func, [url, 60]).get() # get是阻塞的
-    multiprocessing.Pool(4).map(math.exp,range(1,11))
+    multiprocessing.Pool(4).map(math.exp,range(1,11))           # map 也是阻塞的
 
     multiprocessing.pool.ThreadPool(4).apply_async(func, [url, 60]).get() # get是阻塞的
     multiprocessing.pool.ThreadPool(4).map(math.exp,range(1,11))

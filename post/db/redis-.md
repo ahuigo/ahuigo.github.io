@@ -117,6 +117,44 @@ Iterate hash:
 
 	HSCAN key cursor [MATCH pattern] [COUNT count]
 
+#### LinkedHashMap
+其实就是支持遍历的有序hash
+
+    map{
+        *head->node
+        length
+        *end->node
+    }
+    node{
+        key
+        value
+        *prev
+        *next
+    };
+
+hash table collision handling, if `hash(key1)==hash(key2)==5`
+
+        +------------------------------------------+
+        |                                          |
+    [index1, index2, index3, ....], [node1, node2,node3,.....]
+        +-----------------------------------+   +--+
+        |                                   |   |  |
+    [index1, index2, index3, ....], [node1, node2,node3,.....]
+
+    hash(key1)=5
+        index1 = index_table[5]
+        node3 = node_table[index1]
+        node3.key = key1
+
+    hash(key2)=5
+        index1 = index_table[5]
+        node3 = node_table[index1]
+        if node3.key != key2:
+            # find an empty node sush as: node2
+            node2.next = *node3
+            node2.key = key2
+            index_table[5] = *node2
+
 ## List
 - 队列结构: lpush rpush. 相当于数组
 - 存储结构：Redis list的实现为一个双向链表
@@ -222,7 +260,6 @@ zcount: log(N)
 
 	ZCOUNT myzset -inf +inf
 	ZCOUNT myzset (1 3; >1 <=3
-
 
 ### Rem
 sorted sets remove:

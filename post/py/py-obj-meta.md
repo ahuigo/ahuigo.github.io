@@ -5,6 +5,23 @@ date: 2018-10-04
 # metaclass
 通过元类，我们可以实例元类 创建类
 
+## issue
+python 解析class 时，会对参数(包括obj)做预处理。预处理的参数不再接受修改
+
+    i = 1
+    class A():
+        print(i)
+
+    i = 2
+    A()
+
+    l = [1]
+    class A():
+        print(l)
+
+    l.append(2)
+    A()
+
 ## 老式的类工厂创建类
 ```
 def class_with_method(func):
