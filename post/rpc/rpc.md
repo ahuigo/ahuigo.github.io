@@ -5,8 +5,10 @@ category: blog
 description: 
 date: 2018-10-04
 ---
-# Preface
+# RPC
 > http://www.cnblogs.com/fxjwind/archive/2013/05/16/3082219.html
+> 深入浅出RPC原理
+https://ketao1989.github.io/2016/12/10/rpc-theory-in-action/
 
 rpc 问题其实是不同语言之间的数据通信问题:
 
@@ -20,13 +22,14 @@ rpc 问题其实是不同语言之间的数据通信问题:
 - protobuf(pb), binary
 - thrift
 
-数据格式
+## 数据格式
 
 - xml XMPP就基于xml, 流量大
 - msgpack, binary
 - json, plain text
 
-# PB(Protocol Buffer)
+# 实现
+## PB(Protocol Buffer)
 protobuf 是二进制数据格式协议，微信的短链接就是采用的protobuf, 与JSON 不同的是:
 - binary
 - 它自带了一个编译器，protoc，只需要用它进行编译，可以编译成JAVA、python、C++代码，暂时只有这三个
@@ -35,23 +38,15 @@ Refer to:
 - http://www.searchtb.com/2012/09/protocol-buffers.html
 - http://www.ibm.com/developerworks/cn/linux/l-cn-gpb/
 
-# thrift
+## thrift
 [thrift](/p/thrift)
 
-# msgpack
+## msgpack
 msgpack 也是一个二进制的打包协议. 鸟哥的Yar http 框架默认作用该协议（也可以选择JSON)
 
-# rpc 实现
-
-    gRPC by google
+## grpc
+gRPC by google
 
 一个轻量级RPC的实现 
     文档： https://juejin.im/post/5a69e308518825733b0f151a 
     源码: https://github.com/TanLian/testrpc
-
-# weixin 使用的协议
-参考: http://blog.csdn.net/justinjing0612/article/details/38322353
-微信协议简单调研笔记
-http://www.blogjava.net/yongboy/archive/2014/03/05/410636.html
-
-为了保证稳定，微信用了长链接和短链接相结合，例如：

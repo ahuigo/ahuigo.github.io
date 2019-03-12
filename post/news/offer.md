@@ -93,3 +93,16 @@ aof落盘有什么策略？
     https://juejin.im/post/5b3eac6df265da0f8815e906#heading-3
 
 3、mysql建有哪些常识 a,b,c 组成的联合索引 以下哪几个查询可以用到索引 （a=7 and b=4, a!=7 and  = 4, a=7 and b>4 and c = 5）
+
+
+
+数组有n个元素，输出所有子集
+redis为什么这么快，讲讲事件模型
+redis4.0新特性（说的懒删除）
+php7.0新特性（数组，详细讲了下实现原理）
+php数组的一些函数，问知道不用过没
+epoll为什么比select，poll快
+mysql索引
+select count（*，1，id，name）的区别，为什么
+表锁行锁，举了几个例子问会锁什么
+讲了一会项目，然后说到了分布式事务（大概讲了讲两阶段协议）

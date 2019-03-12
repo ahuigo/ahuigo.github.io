@@ -180,15 +180,13 @@ https://stackoverflow.com/questions/1710839/custom-distutils-commands
     # Install the Q() object in sys.modules so that "import q" gives a callable q.
     sys.modules['q'] = Q()
 
-
-# egg-info
-    egg-info/
-        PKG-INFO setup config
-
-
 # Requirements
 pip freeze > requirements.txt
 pip install -r requirements.txt
+
+# install dev
+
+    pip install -e dir 
 
 # cli tool
 可以在setup.py 为script 加入口.

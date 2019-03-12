@@ -18,8 +18,10 @@ def Usage():
 
         FILE:
             file_path:column:delimiter
-            :column:delimiter   
-               If file is empty, use stdin instead
+            :column:delimiter
+               If file_path is empty, use stdin instead
+            file_path:column
+               The default delimiter is ","
 
         SET_OPERATOR
             +   Union set

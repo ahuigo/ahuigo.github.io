@@ -54,7 +54,11 @@ package.module.py
     ```
 
 # router and handler
-accepts a `Request` instance 
+router:
+
+    add_route(method, path, handler)
+
+a `Request` instance handler
 
     [async] def handler(request):
         return web.Response()
@@ -79,6 +83,7 @@ By default add_get() will accept HEAD requests, you can deny `HEAD` request:
 all URLs: via `{identifier:regex}`
 
     app.router.add_route('*', '/{tail:.*}', handle) 
+    app.router.add_route('GET', '/{tail:.*}', handle)
     request.match_info['tail'] //e.g.: /ahuigo/py-lib -> ahuigo/py-lib
 
 ### Route registering
@@ -271,3 +276,8 @@ output
     Middleware 2 finished
     Middleware 1 finished
     ```
+
+# gunicorn
+see: py-demo/aiohttp/server.py
+
+    gunicorn aiohttp-server:app --bind localhost:3000 --worker-class aiohttp.worker.GunicornWebWorker

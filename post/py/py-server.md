@@ -182,6 +182,7 @@ run:
     tornado
     gthread
     aiohttp.worker.GunicornWebWorker (asyncio)
+    meinheld.gmeinheld.MeinheldWorker
 
 e.g.
 

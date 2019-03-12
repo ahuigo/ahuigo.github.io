@@ -26,10 +26,13 @@ title: 各种语言的fiddle
 5. httpbin
     requests.post('https://httpbin.org/post', headers={'Content-Type': 'application/json'}, data=json.dumps({'bar':'员'}, ensure_ascii=False).encode('utf-8')).text
 
-6. web project:
+6. svg:
+    https://c.runoob.com/more/svgeditor/
+
+8. web project:
     https://codesandbox.io/s/o29j95wx9
 
-7. css:
+9. css:
     chrome://devtool
     http://cssdesk.com/ 
     http://dabblet.com/

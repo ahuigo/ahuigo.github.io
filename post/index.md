@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-03-11 [Django Notes](/b/py/django) 
 - 2019-03-08 [does-a-thread-waiting-on-io-also-block-a-core?](/b/py/py-async-cpu) 
 - 2019-03-02 [cache 穿透问题](/b/db/redis-cache) 
 - 2019-02-28 [字符串搜索算法KMP](/b/algorithm/algo-str-search) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
 - 2018-09-27 [人脑学习的本质](/b/course/1.study) 
 - 2018-09-27 [写论文要用到的网站](/b/em/em-paper) 
-- 2018-11-4 [ADHD：分心者的自我认知训练](/b/life/adhd) 

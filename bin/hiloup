@@ -15,7 +15,7 @@ else:
 import requests
 import json
 files={"smfile": smfile,}
-r = requests.post('https://sm.ms/api/upload') 
+r = requests.post('https://sm.ms/api/upload', files=files) 
 #r = requests.post('https://httpbin.org/post', files=files)
 #r = json.dumps(r.text)
 print(r.json())

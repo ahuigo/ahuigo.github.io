@@ -118,7 +118,7 @@ Iterate hash:
 	HSCAN key cursor [MATCH pattern] [COUNT count]
 
 #### LinkedHashMap
-其实就是支持遍历的有序hash
+其实就是支持遍历的有序hash, 每个节点有prev+next
 
     map{
         *head->node
@@ -141,10 +141,13 @@ hash table collision handling, if `hash(key1)==hash(key2)==5`
         |                                   |   |  |
     [index1, index2, index3, ....], [node1, node2,node3,.....]
 
+    map{head:null, length:0, end:null}
     hash(key1)=5
         index1 = index_table[5]
         node3 = node_table[index1]
         node3.key = key1
+        map.end = node3
+        map.length++
 
     hash(key2)=5
         index1 = index_table[5]
@@ -154,6 +157,9 @@ hash table collision handling, if `hash(key1)==hash(key2)==5`
             node2.next = *node3
             node2.key = key2
             index_table[5] = *node2
+
+        map.end = node2
+        map.length++
 
 ## List
 - 队列结构: lpush rpush. 相当于数组
