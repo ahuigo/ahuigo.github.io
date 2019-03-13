@@ -1,7 +1,6 @@
 ---
 title: GMT,UTC,DST,CST 各种时间标准
 date: 2012-07-08
-priority:
 ---
 # 各世界时间标准
 我们经常遇到这4种时间：GMT,UTC,DST,CST。google了一下，在此做个小结.
@@ -25,7 +24,12 @@ priority:
 
 > 对我们日常所使用的时间工具而言，UTC和GMT时间没有区别。
 
-## 夏时制DST
+## EDT VS EST
+参考：https://24timezones.com/shiqu/edt
+1. EDT 北美东部夏令时间是UTC-4。等价于：GMT-4
+2. EST 北美东部标准时间是UTC-5
+
+### 夏时制DST
 [夏时制]DST(Daylight Saving Time)，或称夏令时(Summer Time)是一种为节约能源而人为规定地方时间的制度。一般在天亮早的夏季人为将时间提前一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。
 
 > 全球有110个国家实行夏时制（不包括中国）。
@@ -83,7 +87,7 @@ CST是时区缩写，可以指下列的时区：
 	Read 1 MB sequentially from disk .... 20,000,000 ns  =  20 ms
 	Send packet CA->Netherlands->CA .... 150,000,000 ns  = 150 ms
 
-# linux date命令
+# Linux date命令
 man date可以发现其参数众多。看起来有些乱，归纳一下：
 
 ## 时间显示
