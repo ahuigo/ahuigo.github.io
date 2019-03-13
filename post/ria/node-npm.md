@@ -25,6 +25,7 @@ http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
         //hooks: build, install, start....
         "prebuild": "echo I run before the build script",
         "postbuild": "echo I run after the build script"
+    }
 
 
     npm run test:unit
@@ -35,6 +36,17 @@ http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
 
     # specs
     npm run test:specs
+
+### npx
+下面三种等价
+
+    "scripts": {
+        "build": "npx webpack"
+    },
+    $ node_modules/.bin/webpack
+    $ npx webpack
+    $ npm run build
+
 
 ## short cmd
 
@@ -58,6 +70,9 @@ http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
     npm i nrm -g
     nrm use npm
 
+# npm help
+    npm help install
+
 # npm install
 安装之前，会先检查，`node_modules`目录之中是否已经存在指定模块。 如果存在，就不再重新安装了，即使远程仓库已经有了一个新版本，也是如此。
 
@@ -74,6 +89,16 @@ Node模块的安装过程是这样的。
 3. 下载压缩包，存放在`~/.npm`目录
 4. 解压到`node_modules目录`. e.g. `/usr/local/lib/node_modules`
 5. 但是，运行npm install的时候，只会检查node_modules目录，而不会检查~/.npm目录。也就是说，如果一个模块在～/.npm下有压缩包，但是没有安装在node_modules目录中，npm 依然会从远程仓库下载一次新的压缩包。
+
+### package.json update
+wirte package dependency to devDep:
+
+    -D, --save-dev
+    npm install -D 
+
+wirte package dependency to dep:
+
+    -P, --save # This is default
 
 ## registry
 npm update命令怎么知道每个模块的最新版本呢？
@@ -117,3 +142,26 @@ npm install或npm update命令，从 registry 下载压缩包之后，都存放�
     $ rm -rf ~/.npm/*
     # 或者
     $ npm cache clean
+
+## version spec
+
+    ^1.1.0 匹配 >=1.1.0 且 <2.0.0
+    ^0.0.3 匹配 >=0.0.3 且 <0.0.4
+
+    latest 当前发布版本。
+    * 匹配 >=0.0.0
+    2.* 匹配 >=1.0.0 且 <2.0.0
+    1.2.* 匹配 >=1.2.0 且 <1.3.0
+
+    ~0.1.1 匹配 >=0.1.1 且 <0.2.0。
+    ~1 匹配 >=1.0.0 且 <2.0.0
+
+    1.30.2 - 2.30.2 匹配 >=1.30.2 且 <=2.30.2
+
+# npm require
+> https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders
+Node.js will search in the following locations by default:
+
+    1. NODE_PATH='path1:path2:' (global)
+    2. ./node_modules (local)
+    3. $HOME/.node_modules (global)
