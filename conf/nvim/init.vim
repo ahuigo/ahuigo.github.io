@@ -107,7 +107,7 @@ inoremap <M-A>s <C-o>:up<CR>
 nnoremap <M-A>a ggVG
 nnoremap \p "+p
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
     Plug 'vim-scripts/AutoComplPop'
 
     " snippet: for<C-\>
