@@ -17,8 +17,8 @@ Download: [plist pro](http://pan.baidu.com/s/1dDEE0UH)
 
 ## 编辑plist文件
 
-	$ plutil -convert xml1  ~/Library/Preferences/com.apple.HIToolbox.plist
-	$ vim  ~/Library/Preferences/com.apple.HIToolbox.plist
+	plutil -convert xml1  ~/Library/Preferences/com.apple.HIToolbox.plist
+	vim  ~/Library/Preferences/com.apple.HIToolbox.plist
 
 Remove the input source or input sources you want to disable from the AppleEnabledInputSources dictionary. If there is an AppleDefaultAsciiInputSource key, remove it.
 

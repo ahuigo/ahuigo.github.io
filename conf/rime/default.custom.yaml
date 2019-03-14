@@ -8,7 +8,7 @@ patch:
   ascii_composer/good_old_caps_lock: false
   ascii_composer/switch_key:
     Caps_Lock: commit_code
-    Enter: commit_text
+    #u    Enter: commit_text
     Shift_R: noop
   key_binder/bindings:
     - { accept: "Shift+space", toggle: half_shape, when: always} 

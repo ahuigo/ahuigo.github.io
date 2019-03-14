@@ -1,3 +1,13 @@
+############ iterm2 #######
+# key bindings
+#bindkey "\e[1~" beginning-of-line
+#bindkey "\e[4~" end-of-line
+# CTRL+q
+stty start undef
+stty stop undef
+bindkey \^U backward-kill-line
+
+###############
 #export
 export LC_ALL='en_US.UTF-8'
 export LANG='en_US.UTF-8'
