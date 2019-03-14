@@ -7,7 +7,8 @@ patch:
     - schema: pinyin_simp
   ascii_composer/good_old_caps_lock: false
   ascii_composer/switch_key:
-    Caps_Lock: commit_code
+    #Caps_Lock: commit_code
+    Control_L: commit_code
     Enter: commit_text
     Shift_R: noop
   key_binder/bindings:
