@@ -19,7 +19,6 @@ iterm2 默认的 Profile - Terminal: Report Terminal Type = xterm , 导致nvim �
 
 ## config
 
-    ln -s ~/.vim ~/.config/nvim
     ln -s ~/.vimrc ~/.config/nvim/init.vim
 
     nvim -u NORC ;#not load init.vim
