@@ -1,0 +1,147 @@
+if filereadable(expand('~/.vimrc.func'))
+	exec 'source '.fnameescape('~/.vimrc.func')
+endif
+
+"" DEV
+"mouse
+set mouse=a
+set wrap
+
+"encoding
+set fileencoding=utf-8
+set fileencodings=utf-8,gbk
+set ts=4 sw=4
+set expandtab
+
+"info
+set laststatus=2
+
+"close & write
+nnoremap <C-q> :qa<CR>
+
+" provide hjkl movements in Insert mode
+inoremap <C-b>  <Left>
+inoremap <C-f>  <Right>
+inoremap ∂ <C-d>
+inoremap <C-d> <DEL>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+
+" provide hjkl movements in ex mode
+cnoremap <C-a> <Home>
+cnoremap <C-b> <Left>
+cnoremap ƒ <C-f>
+cnoremap <C-f> <Right>
+nnoremap <D-a> a
+
+"Tab
+" for macvim
+if has("gui_running")
+
+	"colorscheme darkblue
+	"colorscheme wombat
+	"color solarized
+	colorscheme torte
+	"set background=dark
+
+	set go=aAce  " remove toolbar
+	"set guifont=Menlo\ Bold:h13
+	set guifont=Monaco:h13
+	set showtabline=2
+	set columns=200
+	set lines=80
+	noremap <D-M-Left> :tabprevious<cr>
+	noremap <D-M-Right> :tabnext<cr>
+	noremap <D-1> 1gt
+	noremap <D-2> 2gt
+	noremap <D-3> 3gt
+	noremap <D-4> 4gt
+	noremap <D-5> 5gt
+	noremap <D-6> 6gt
+	noremap <D-7> 7gt
+	noremap <D-8> 8gt
+	noremap <D-9> 9gt
+	noremap <D-0> :tablast<CR>
+else
+	" update & copy, <F13>是个变量
+	set <F13>=As
+	inoremap <F13> <C-o>:up<CR>
+	nnoremap <F13> :up<CR>
+	nnoremap Aa ggVG
+	vnoremap Ac "+y
+endif
+
+" select
+"nnoremap <space> vas
+nnoremap - ddp
+nnoremap _ ddkP
+
+" case
+"nnoremap U gUaw
+
+" input method
+set noimdisable
+autocmd! InsertLeave * set imdisable|set iminsert=0
+autocmd! InsertEnter * set noimdisable|set iminsert=0
+
+" Search
+"" search current word
+map ft :call Search_Word()<CR>:copen<CR>
+function Search_Word()
+	let w = expand("<cword>")
+	execute "vimgrep " . w . " *"
+endfunction
+
+" crontab with no backup
+autocmd filetype crontab setlocal nobackup nowritebackup
+
+" Blog
+noremap <F9> :execute "0r _posts/test.md"<CR>
+
+"vimdiff
+noremap <Leader>1 :diffget 1<CR>
+noremap <Leader>2 :diffget 2<CR>
+noremap <Leader>3 :diffget 3<CR>
+
+"file
+function! Move(src, dst)
+	exe '!mv' a:src a:dst
+endfunction
+"call Move(1,2)
+com! -complete=file -nargs=* Move call Move(<f-args>)
+
+"clipboard
+"inoremap <D-V> <ESC>:r!pasteImg.py '%:t:r'<CR>
+inoremap <D-V> <ESC>:r!pasteImg.py '%'<CR>
+if ! has("gui_running")
+	" use keymap mapping `<D-V>` to `<ESC>AV` on terminal(iTerm2)
+	"imap AV <D-V>
+	imap <ESC>AV <D-V>
+endif
+
+
+function! Strip(input_string)
+	return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
+endfunction
+
+function! Pipe2Shell(args)
+  let pos = stridx(a:args, '|')
+  let exCmd = strpart(a:args, 0, pos)
+  let shellCmd = Strip(strpart(a:args, pos+1))
+  redir => message
+  silent execute exCmd
+  redir END
+  if empty(message)
+	echoerr "no output"
+  else
+	new
+	setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+	silent put=message
+	exec '%!' shellCmd
+  endif
+endfunction
+command! -nargs=+ -complete=command Pipe2Shell call Pipe2Shell(<q-args>)
+
+" exvim
+nnoremap <unique> <silent> <F3> :EXProjectToggle<cr>
+

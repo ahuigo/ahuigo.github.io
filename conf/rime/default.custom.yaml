@@ -1,0 +1,15 @@
+# Rime default settings
+# encoding: utf-8
+
+patch:
+  schema_list:
+    - schema: wubi86
+    - schema: pinyin_simp
+  ascii_composer/good_old_caps_lock: false
+  ascii_composer/switch_key:
+    Caps_Lock: commit_code
+    Enter: commit_text
+    Shift_R: noop
+  key_binder/bindings:
+    - { accept: "Shift+space", toggle: half_shape, when: always} 
+      #- { accept: "Shift+space", toggle: noop, when: always} 

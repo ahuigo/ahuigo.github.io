@@ -1,0 +1,36 @@
+[user]
+	name = ahuigo
+	email = a132811@gmail.com
+[core]
+	editor = vi
+	filemode = false
+	quotepath = false
+	symlinks = true
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[alias]
+	co = checkout
+	st = status
+	ci = commit
+	di = icdiff
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	d = difftool
+[receive]
+	denyCurrentBranch = ignore
+[push]
+	default = simple
+[init]
+	templatedir = ~/.git
+[merge]
+	tool = vimdiff
+[mergetool]
+	keepBackup = false
+	prompt = false
+[mergetool "vimdiff"]
+    cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[difftool]
+    prompt = false
+[diff]
+    tool = vimdiff
