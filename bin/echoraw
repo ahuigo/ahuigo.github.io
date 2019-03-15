@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # cmd=ls;print -r -- $cmd:c
 import sys
-
-print('%r'%'\\')
 print(sys.argv)
+print("each one:")
 for v in sys.argv:
     print(v)
