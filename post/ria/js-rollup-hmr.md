@@ -14,3 +14,7 @@ Rollup 已经开始支持codesplit(要手动开启)，不过Rollup 本身至今�
 
 但是HMR 是未来啊，如果能支持HMR 的话，那么开发大型web 项目的module 时，将把开发效率提升到一个新的层次。
 也不用再忍受webpack 编译出来的臃肿的代码, 以及那些繁琐的配置了。
+
+将项目切到Rollup 会遇到的痛点：
+1. 没有HMR
+2. 没有source-map
