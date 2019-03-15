@@ -1,6 +1,5 @@
 #/usr/bin/env bash
 if [[ -x ~/Applications/v2ray/v2ctl ]];then
-    echo "$ v2ray [CONFIG]"
     kill $(cat ~/log/v2ray.pid)
 	case "$1" in
 		(stop)  ;;
@@ -18,6 +17,7 @@ if [[ -x ~/Applications/v2ray/v2ctl ]];then
 	esac
 else
     echo "Install v2ray ......"
+    echo "$ v2ray [CONFIG]"
     cd ~
     mkdir log
     mkdir Applications/v2ray
