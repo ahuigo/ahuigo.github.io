@@ -1,12 +1,20 @@
 #/usr/bin/env bash
-cd ~
 if [[ -x ~/Applications/v2ray/v2ctl ]];then
+    echo "$ v2ray [CONFIG]"
     kill $(cat ~/log/v2ray.pid)
 	case "$1" in
 		(stop)  ;;
-		(restart | start | *) ~/Applications/v2ray/v2ray -config ~/wk/conf/v2ray.config &
-        echo $! > ~/log/v2ray.pid ;;
-        #echo $! > ~/log/v2ray.pid && disown ;;
+		(restart | start | *) 
+            if [[ -f "$1" ]]; then
+                config="$1";
+				config="$(cd "$(dirname "$config")"; pwd)/$(basename "$config")"
+            else
+				config=~/wk/conf/v2ray.config
+            fi
+			cd ~
+            ~/Applications/v2ray/v2ray -config $config &
+            echo $! > ~/log/v2ray.pid ;;
+            #echo $! > ~/log/v2ray.pid && disown ;;
 	esac
 else
     echo "Install v2ray ......"
