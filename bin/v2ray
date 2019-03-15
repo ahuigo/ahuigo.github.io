@@ -1,0 +1,19 @@
+#/usr/bin/env bash
+cd ~
+if [[ -x ~/Applications/v2ray/v2ctl ]];then
+    kill $(cat ~/log/v2ray.pid)
+	case "$1" in
+		(stop)  ;;
+		(restart | start | *) ~/Applications/v2ray/v2ray -config ~/wk/conf/v2ray.config &
+        echo $! > ~/log/v2ray.pid ;;
+        #echo $! > ~/log/v2ray.pid && disown ;;
+	esac
+else
+    echo "Install v2ray ......"
+    cd ~
+    mkdir log
+    mkdir Applications/v2ray
+    wget https://github.com/v2ray/v2ray-core/releases/download/v4.18.0/v2ray-macos.zip -o v2ray.zip
+    unzip -x v2ray.zip -d Applications/v2ray
+    chmod u+x Applications/v2ray/{v2ctl,v2ray}
+fi
