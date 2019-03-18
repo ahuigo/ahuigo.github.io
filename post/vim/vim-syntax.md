@@ -167,6 +167,7 @@ Example:
 
 The .vim files are normally loaded with an autocommand(filetype name).  For example:
 
+	:autocmd Syntax c	    runtime! syntax/c.vim
 	:au Syntax c	    runtime! syntax/c.vim
 	:au Syntax cpp   runtime! syntax/cpp.vim
 
@@ -188,3 +189,6 @@ These commands are normally in the file $VIMRUNTIME/syntax/synload.vim.
 Now you can start using your syntax file manually:
 
 	:set syntax=mine
+
+# diff
+hi DiffAdd ctermbg=135  ctermfg=208  guibg=#262626 guifg=#87af87 cterm=reverse gui=reverse

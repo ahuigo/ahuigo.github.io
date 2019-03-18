@@ -89,6 +89,8 @@ noremap <F9> :execute "0r _posts/test.md"<CR>
 noremap <Leader>1 :diffget 1<CR>
 noremap <Leader>2 :diffget 2<CR>
 noremap <Leader>3 :diffget 3<CR>
+noremap <c-j> ]c
+noremap <c-k> [c
 
 "file
 function! Move(src, dst)
@@ -173,6 +175,16 @@ set ts=4 sw=4 softtabstop=4 nu autoindent
 set cuc cul
 set ignorecase smartcase
 set expandtab
+
+"https://github.com/romainl/Apprentice/blob/master/colors/apprentice.vim
+"autocmd ColorScheme *
+hi DiffAdd      gui=none    guifg=NONE          guibg=#cccccc
+hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac
+hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0
+hi DiffText     gui=none    guifg=NONE          guibg=#8cbee2
+"autocmd ColorScheme * hi DiffText     gui=none    guifg=NONE          guibg=#cccccc
+hi DiffAdd ctermbg=135  ctermfg=208  guibg=#262626 guifg=#87af87 cterm=reverse gui=reverse
+
 """"""""""""""""""""""""""""""""""""""""""""""""
 function! Strip(input_string)
     return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
