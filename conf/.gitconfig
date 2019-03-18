@@ -34,3 +34,5 @@
     prompt = false
 [diff]
     tool = vimdiff
+[icdiff]
+	options = --highlight --line-numbers

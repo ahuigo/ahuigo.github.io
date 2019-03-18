@@ -22,3 +22,6 @@ mkdir -p ~/.data/backup/
 brew install autojump
 # .gitconfig
 ln -s ~/conf/.gitconfig ~
+
+# lnmp
+brew install mariadb nginx php node

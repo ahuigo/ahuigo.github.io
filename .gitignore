@@ -1,6 +1,7 @@
 *.tmp
 *.log
 /a.go
+*.out
 tmp
 pri
 Gemfile.lock
