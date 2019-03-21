@@ -161,7 +161,7 @@ Or turn off history expandsion
 	echo !-4
 		The Last 4'th command
 	!4
-	echo !-4
+	echo !4
 		The First 4'th command
 	!cp
 	echo !cp
@@ -209,11 +209,6 @@ For Example:
 	!cp:3-4
 
 ### Save clipboard to file
-
-	alias save 'pbpaste > \!^ '
-
-And now if you select some text in a window, copy it, and want to save it into a file, type `save file` and there it is. The !^ is a bit of history substitution that means "take the first argument from the last command." In this case, the last command was save and the first argument was the file path entered after.
-
 Also, you can do as the following in case you input bad `save ` command.
 
 	pbpaste > file

@@ -5,7 +5,9 @@ category: blog
 description: 
 date: 2018-10-04
 ---
-# Preface
+# component vs createClass
+component 是es6 语法
+https://segmentfault.com/a/1190000005863630#articleHeader0
 
 # React-Native
 React-Native痛点解析之开发环境搭建及扩展

@@ -296,11 +296,6 @@ From remote to local
 http://www.cnblogs.com/weafer/archive/2011/06/10/2077852.html
 http://www.chinaunix.net/old_jh/4/343905.html
 
-### 利用sshpass
-
-	sshpass -p "passwd" ssh yourUserName@host
-	sshpass -p "passwd" ssh -l yourUserName host
-
 ### rsync
 rsync 是一个同步命令，它是通过ssh 来下的，如果同步时不想输入密码:
 
@@ -313,6 +308,9 @@ cat ssh_login.sh:
 
 	#!/usr/bin/env bash
 	sshpass -p password ssh "$@"
+	sshpass -p "passwd" ssh yourUserName@host
+	sshpass -p "passwd" ssh -l yourUserName host
+
 
 Then:
 

@@ -149,8 +149,9 @@ http://www.ruanyifeng.com/blog/2018/10/flexbox-form.html 参考
 
 ## flex center
 http://zh.learnlayout.com/flexbox.html
-控制本item在父容器中的位置
+控制父容器中item的位置
 
+    //parent
 	display:flex;
 	align-items: center;
 	justify-content: center;
@@ -158,8 +159,9 @@ http://zh.learnlayout.com/flexbox.html
 # align
 ## flex container align
 
+    //parent
 	justify-content: horizonal center
-	align-items: vertical center)
+	align-items: vertical center
 	align-content: justify-content属性类似。只不过这里元素是以多行生效。
 
 居中:

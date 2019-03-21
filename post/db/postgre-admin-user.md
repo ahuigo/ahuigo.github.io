@@ -39,8 +39,8 @@ Non interactive password:
 
 ## create
 两种
-1. $ createuser --interactive
-2. CREATE ROLE new_role_name;
+1.$ createuser --interactive
+2.psql: CREATE ROLE new_role_name;
 
     CREATE ROLE role_name WITH optional_permissions;
 
@@ -128,6 +128,8 @@ postgre 默认添加名为`postgres`的super user，到linux和postgre 帐户：
 1. GRANT permission_type ON table_name TO role_name|PUBLIC;
 1. GRANT permission_type ON DATABASE db_name TO role_name|PUBLIC;
 2. REVOKE permission_type ON table_name FROM user_name;
+
+hello：
 
     GRANT UPDATE ON demo TO demo_role;
     GRANT ALL ON demo TO demo_role;

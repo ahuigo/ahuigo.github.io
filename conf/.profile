@@ -34,7 +34,10 @@ export PYTHONPATH=.
 
 
 # go
-export GOPATH=~/gohome
+# goenv
+export GOROOT=/usr/local/Cellar/go@1.11/1.11.6/libexec
+export GO111MODULE=on 
+export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
 
 # brew
