@@ -2,6 +2,7 @@
 *.log
 .idea
 /a.go
+#godemo/?.go
 *.out
 tmp
 pri

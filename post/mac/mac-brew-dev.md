@@ -48,6 +48,19 @@ brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Librar
         depends_on :x11 => :optional
         depends_on :xcode => "9.3"
     end
+# Use
+> refer to : https://segmentfault.com/a/1190000012826983
+
+repo可以省略`homebrew-`
+
+    brew tap <user/repo>
+    brew untap <user/repo>
+
+    brew install vim  # installs from homebrew/core
+    brew install username/repo/vim  # installs from your custom repo
+
+## tap example
+https://github.com/v2ray/homebrew-v2ray/blob/master/Formula/v2ray-core.rb
 
 # install process
 
