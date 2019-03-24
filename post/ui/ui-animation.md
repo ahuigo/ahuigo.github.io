@@ -10,3 +10,7 @@ https://zhuanlan.zhihu.com/p/23232457
 
 # icon
 http://compute.vision/nouns/index.html
+https://www.flaticon.com/free-icon/weibo_408769#term=weibo&page=1&position=5
+
+# fonts
+http://www.ruanyifeng.com/blog/2008/06/typography_notes.html

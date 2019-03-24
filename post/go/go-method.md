@@ -85,16 +85,16 @@ anonymous field 的方法可以像字段成员那样访问
 • 不管嵌入 `T 或 *T`，`*S` ⽅方法集总是包含 `T + *T` ⽅方法。
 
     type User struct{}
-    func (*User) Test(){ 
+    func (*User) TestPointer(){ 
         println("test")
     } 
 
     func main() {
         // ok
-        (*User).Test(&User{})
+        (*User).TestPointer(&User{})
 
         // error: no *T
-        (User).Test(&User{})
+        (User).TestPointer(&User{})
 
     }
 
@@ -108,10 +108,10 @@ anonymous field 的方法可以像字段成员那样访问
 
     //---------- 下面两种 method value 也有方法集约束
     // ok
-    (struct{*User}{}).Test()
+    (struct{*User}{}).TestPointer()
 
     // error: 不含有`*T`
-    (struct{User}{}).Test()
+    (struct{User}{}).TestPointer()
 
 ## 表达式
 根据调⽤用者不同，⽅方法分为两种表现形式: 
