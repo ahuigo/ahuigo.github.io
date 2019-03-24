@@ -411,7 +411,7 @@ margin 控制的是相邻元素之间的border 外边界间距。float和普通�
         1. all child has float: child/parent's padding 内边界; parent/不影响
         2. any child not float: `first non-float child's margin-top传parent`; **parent/first non-float child 二者的margin绝对值最大者**(no border/padding/float)
 
-float的元素的margin 由于浮动起来了，不再影响父容器，但是child's margin 起点是parent's padding内边界开始
+当前元素或者(或者父元素)是float的元素,margin 由于浮动起来了，不再影响父容器，但是child's margin 起点是parent's padding内边界开始
 
     <div id="parent">
         <div style="width: 100%;height: 50px;background: yellow;float:left;"></div>

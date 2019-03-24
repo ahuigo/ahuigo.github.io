@@ -14,6 +14,9 @@ SEO
 非SEO, 运行时
 - docute/docsify 无需编译、快速生成 Vue 风格的文档网站: https://zhuanlan.zhihu.com/p/24540753
 
+# slide
+markdown to slide ppt: Marp
+
 # DOC Api
 - http://overapi.com/
 - http://devdocs.io/

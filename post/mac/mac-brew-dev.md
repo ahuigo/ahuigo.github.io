@@ -27,6 +27,10 @@ brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Librar
 	  end
 	end
 
+## sha256
+
+    $ shasum -a 256 test.tgz
+
 ## binary package
 
     def install
