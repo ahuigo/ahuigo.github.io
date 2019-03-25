@@ -113,7 +113,7 @@ anonymous field 的方法可以像字段成员那样访问
     // error: 不含有`*T`
     (struct{User}{}).TestPointer()
 
-## 表达式
+## 调用表达式
 根据调⽤用者不同，⽅方法分为两种表现形式: 
 
     instance.method(args...) ---> <type>.func(instance, args...)
@@ -159,8 +159,6 @@ anonymous field 的方法可以像字段成员那样访问
 在汇编层，method value 和闭包的实现⽅方式相同，实际返回 FuncVal 类型对象。 
 
     FuncVal { method_address, receiver_copy }
-
-
 
 
 # Reference
