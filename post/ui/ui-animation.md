@@ -8,6 +8,14 @@ https://medium.com/@ann.green/loading-indicators-e9d9ac9680b
 # Materia UI 
 https://zhuanlan.zhihu.com/p/23232457
 
+## tools
+### devices
+各种设备尺寸
+https://material.io/tools/devices/
+
+### resizer
+https://material.io/tools/resizer/
+
 # icon
 http://compute.vision/nouns/index.html
 https://www.flaticon.com/free-icon/weibo_408769#term=weibo&page=1&position=5

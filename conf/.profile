@@ -54,7 +54,7 @@ export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 # git command
 alias gitup='git submodule init && git submodule update'
 alias ga.='git add .'
-function rmv(){
+function lllllllllzrmv(){
     mv $2 $1;
 }
 
