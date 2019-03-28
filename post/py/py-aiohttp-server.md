@@ -220,6 +220,8 @@ e.g.
         return web.json_response(data)
 
 ## WebSockets
+> https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/0014727922914053479c966220f47da91991fa9c27ac3ea000
+> 
 aiohttp.web supports WebSockets out-of-the-box.
 
     async def websocket_handler(request):

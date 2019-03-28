@@ -430,8 +430,8 @@ Graph::Easy
 
 ## GIF
 draw gif:
- ms paint: http://gifpaint.com/
- ppt
+    ms paint: http://gifpaint.com/
+    ppt
 
 
 ### Kap +KeyCastr

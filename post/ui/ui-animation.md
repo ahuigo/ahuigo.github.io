@@ -6,15 +6,26 @@ date: 2019-02-09
 https://medium.com/@ann.green/loading-indicators-e9d9ac9680b
 
 # Materia UI 
-https://zhuanlan.zhihu.com/p/23232457
+https://materia.io
+https://www.mdui.org/design/material-design/environment.html#environment-3d-world
 
 ## tools
+### share design
+任何人都可以独立于web/ios/android 修改样式，样式修改不必重启APP，APP内引入的的UI  相关的变量
+https://github.com/material-foundation/material-remixer
+
 ### devices
 各种设备尺寸
 https://material.io/tools/devices/
 
 ### resizer
 https://material.io/tools/resizer/
+
+# color
+普通人的配色方案
+http://www.ruanyifeng.com/blog/2019/03/coloring-scheme.html
+Flat UI 方案
+http://designmodo.github.io/Flat-UI/
 
 # icon
 http://compute.vision/nouns/index.html

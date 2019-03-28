@@ -7,7 +7,7 @@ ws 和 wss 均为 WebSocket 协议的 schema，一个是非安全的，一个是
 Socket.IO 支持: ：WebSocket, Adobe Flash Socket, AJAX long polling, AJAX multipart streaming, Forever Iframe, JSONP Polling
 
 # websocket
-廖雪峰老师课程笔记
+廖雪峰老师课程笔记: https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/0014727922914053479c966220f47da91991fa9c27ac3ea000
 
 ## 协议原理
 websocket 利用了HTTP协议来建立连接。
@@ -184,7 +184,7 @@ ws/koa 可以用同一个端口, 比如3000。
     // 创建WebSocketServer:
     const WebSocketServer = require('ws').Server;
     let wss = new WebSocketServer({
-        server: server
+        server: server, //koa
     });
 
 WebSocketServer会首先判断请求是不是WS请求，如果是，它将处理该请求，如果不是，该请求仍由koa处理
