@@ -472,7 +472,7 @@ tag 相当于commit 的别名
 	git tag -v v1.4
 
 ## push tag
-tag 是绑定在commit上的，但是默认push不会将tag 推到远端.
+tag 是绑定在`当前`commit上的，但是默认push不会将tag 推到远端.
 
 ###  push a tag
 

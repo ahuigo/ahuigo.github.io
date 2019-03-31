@@ -211,10 +211,12 @@ or with collections.Counter:
 
 ### has_key
 
+    # for dict only
 	if key in dict:
 
     ## for obj only
 	if hasattr(obj, 'attribute'):
+	if hasattr(obj, 'func'):
 		# obj.attr_name exists.
 
 ### has_value

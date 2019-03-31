@@ -50,6 +50,7 @@ try catch
 		raise
 		raise ValueError('sth error!')
     except (RuntimeError, TypeError, NameError):
+        print("Unexpected error:", sys.exc_info()[0])
         pass
 	else:
 		return None

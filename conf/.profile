@@ -65,7 +65,7 @@ function gcap(){
     fi
 
     if git remote | grep '\w';then
-        if git remote | xargs -L1 git push; then
+        if git remote | xargs -L1 git push --tags; then
             cd $(git rev-parse --show-toplevel)
             subdirs=(b vue )
             oridir=$(pwd)

@@ -1,6 +1,7 @@
 ---
 title: py-math-np
 date: 2018-10-04
+private:
 ---
 # Preface
 numpy是SciPy、Pandas等数据处理或科学计算库最基本的函数功能库。
@@ -18,9 +19,18 @@ pip3 install numpy
 # pandas
 http://pandas.pydata.org/pandas-docs/stable/10min.html
 
+## print
+    pd.set_option('display.max_columns', None)  # or 1000
+    pd.set_option('display.max_rows', None)  # or 1000
+    pd.set_option('display.max_colwidth', -1)  # or 199
+
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+        print(df)
+
 ## DataFrame
 
     df=pd.DataFrame({'col1':{'index1':1,'k2':2}, 'b':{'index1':2, 'k2':4}})
+    df=pd.DataFrame([dict1,dict2])
     df.index
     df.columns
     df['col1']['index1']
@@ -32,23 +42,66 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
     df.loc[:,['col1','col2']]
     df.loc[:,'col1']
 
+### empty
+
+    Notice the index is empty:
+
+    >>> df_empty = pd.DataFrame({'A' : []})
+    Empty DataFrame
+    Columns: [A]
+    Index: []
+    >>> df_empty.empty
+    True
+
+### dict/series to dataFrame
+
+    rows_list = [series1,...]
+    rows_list = [dict1,...]
+    df = pd.DataFrame(rows_list)  
+
+    pd.DataFrame({'email':sf.index, 'list':sf.values})
+
+### sort df
+    df = df.sort_values(by=['col1', 'col2'], ascending=False)
+
 ### concat
 
     df1.append(df2)
     s1.append(s2)
 
 ### add row series
-    df = pd.concat([df, s.to_frame().T])
-    df[index]=s
+apped dict
+
+    df1 = pandas.DataFrame(numpy.random.randint(100, size=(5,5)), columns=['A', 'B', 'C', 'D', 'E'])
+    df1 = df1.append( dict( (a,numpy.random.randint(100)) for a in ['A','B','C','D','E']), ignore_index=True)
+    df.append(series,ignore_index=True)
+
+loc:
+
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> df = pd.DataFrame(columns=['lib', 'qty1', 'qty2'])
+    >>> for i in range(5):
+    >>>     df.loc[i] = [np.random.randint(-1,1) for n in range(3)]
+    >>>
+    >>> print(df)
+        lib  qty1  qty2
+    0    0     0    -1
+    1   -1    -1     1
+    2    1    -1     1
+    3    0     0     0
+    4    1    -1    -1
+    
 
 ### add col series
     DataFrame.add(s, axis=1)
+    DataFrame['col1']= s
 
 ### filter
 row: index
 
     df[df.apply(lambda x: x['col1'] > x['col2'], axis=1)]
-    df.loc['index']
+    df.loc['row_index'] # row_index
     df.iloc[0] # first row
     df[0:2]
     df.iloc[0:2, 1:5]
@@ -57,6 +110,9 @@ col series
 
     df['col1'].iloc[0] # first column value
     df.col1
+
+    df1=df[['col1','col2']]
+    df1=df.iloc[:,0:2]
 
 series item:
 
@@ -103,19 +159,65 @@ to_dict:
     e    1
 
 ### for
+    for colname, series in df.items():
     for index, row in df.iterrows():
         print row['c1'], row['c2']
 
 ## series
 
     s = pd.Series([1, 2, 3])
-    >>> s.update(pd.Series([4, 5, 6]))
+    s[['col1','col2']]
 
-    s.append(pd.Series({'c':3}), ignore_index=True) 
-    pd.concat([s1, s4], axis=1)
-    pd.concat([df1, df4], axis=1)
+### concat series 2 series
+    >>> s1 = pd.Series([1, 2, 3])
+    >>> s2 = pd.Series([4, 5, 6])
+    >>> s3 = pd.Series([4, 5, 6], index=[3,4,5])
+    >>> s1.append(s2)
+    0    1
+    1    2
+    2    3
+    0    4
+    1    5
+    2    6
+    dtype: int64
+    >>> s1.append(s2, ignore_index=True)
+    0    1
+    1    2
+    2    3
+    3    4
+    4    5
+    5    6
+    dtype: int64
 
-to_dict(), to_json, tolist():
+    # 只增加
+    s1= s.append(pd.Series({'c':3})) 
+
+### concat to dataFrame:
+
+    s1 = pd.concat([s1, s4])
+    df = pd.concat([s1, s4], axis=1)
+    df = pd.concat([df1, df4], axis=1)
+
+    In [1]: s1 = pd.Series([1, 2], index=['A', 'B'], name='s1')
+    In [2]: s2 = pd.Series([3, 4], index=['A', 'B'], name='s2')
+
+    In [3]: pd.concat([s1, s2], axis=1)
+    Out[3]:
+    s1  s2
+    A   1   3
+    B   2   4
+
+    In [4]: pd.concat([s1, s2], axis=1).reset_index()
+    Out[4]:
+    index  s1  s2
+    0     A   1   3
+    1     B   2   4
+
+### update
+    >>> s.update(pd.Series([4, 5, 6], index=[0,1,2]))
+    >>> s.update(pd.Series(['value'], index=['key']))
+
+### to_dict(), to_json, tolist():
 
     >>> s = pd.Series([1, 2, 3, 4])
     >>> s.to_dict()
@@ -123,6 +225,11 @@ to_dict(), to_json, tolist():
     >>> s.to_dict(defaultdict(list))
     s.tolist()
     json.loads(s.to_json())
+
+### dict to series
+
+    pd.Series({'a':1,'b':2})
+    pd.Series(d.values, list(dict.keys()))
 
 ## datetime
 

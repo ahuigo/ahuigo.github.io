@@ -69,14 +69,14 @@ click 之于argparse/argv, 相当于requests 之于urllib
     parser.add_argument("p2")
     args = parser.parse_args()
     // python3 a.py foo bar
-    // args = {p1:foo, p2:bar}; args.p1
+    // args = namespace{p1:foo, p2:bar}; 
+    args.p1
 
 multiple args:
 
     # N [N ...]
     # args = {'integers':...}
     parser.add_argument('integers', metavar='N', type=int, nargs='+',)
-
 
 ## optional arg
 

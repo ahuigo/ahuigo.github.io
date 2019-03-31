@@ -14,6 +14,12 @@ nnoremap  \w :%s/\s\+$//e<CR>
 "close & write
 nnoremap <C-q> :qa<CR>
 
+" provide hjkl movements when wrap
+noremap <silent> k gk
+noremap <silent> j gj
+noremap <silent> 0 g0
+noremap <silent> $ g$
+
 " provide hjkl movements in Insert mode
 inoremap <C-b>  <Left>
 inoremap <C-f>  <Right>
