@@ -429,14 +429,24 @@ Graph::Easy
     http://36kr.com/p/216120.html
 
 ## GIF
-draw gif:
+If you think a GIF of what is happening would be helpful, consider tools like 
+https://www.cockos.com/licecap/, 
+https://github.com/phw/peek 
+https://www.screentogif.com/ 
+
+### my app installed
+mac app(installed):
+1. GIPHY
+2. Kap
+
+### draw gif:
     ms paint: http://gifpaint.com/
     ppt
 
 
 ### Kap +KeyCastr
-Kap 开源+简洁, 替代recordit/LICEcap/Gifcam
-KeyCastr 显示按键
+1. Kap 开源+简洁, 替代recordit/LICEcap/Gifcam
+2. KeyCastr 显示按键
 
 ### recordit
 700k, 极简，直接保存图片到recordit 自己的服务器(需要代理), 返回一个url
@@ -452,16 +462,3 @@ LICEcap 非常轻量级，700KB。
 ## zapier
 zapier 不是mac 下的工具，它一款让你更方便的使用其它web app 的web app. 它就像是胶水，将其它app 粘合起来
 zapier.com
-
-
-# mac 10.10.4
-> http://osxdaily.com/2015/07/01/fix-frozen-app-store-updates-and-high-softwareupdated-cpu/
-
-mac 10.10.4 可能占用非常高的cpu memory. 解决的办法：
-
-	killall softwareupdated
-
-Next, you can install iTunes 12.2 update manually with the following command string:
-
-	softwareupdate -l
-	softwareupdate -i iTunesXPatch-12.2

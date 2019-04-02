@@ -45,13 +45,13 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
 ### empty
 
     Notice the index is empty:
-
     >>> df_empty = pd.DataFrame({'A' : []})
     Empty DataFrame
     Columns: [A]
     Index: []
     >>> df_empty.empty
     True
+
 
 ### dict/series to dataFrame
 
@@ -98,10 +98,23 @@ loc:
     DataFrame['col1']= s
 
 ### filter
+cut column:
+
+    df[['col1','col2']]
+    df.iloc[3][['dt_netprofit_yoy','profit_dedt']]
+
 row: index
 
+    # via column_value
+    df.loc[df['column_name'] == some_value]
+
+    # via lambda
     df[df.apply(lambda x: x['col1'] > x['col2'], axis=1)]
+
+    # via index name
     df.loc['row_index'] # row_index
+
+    # via index
     df.iloc[0] # first row
     df[0:2]
     df.iloc[0:2, 1:5]
@@ -167,6 +180,8 @@ to_dict:
 
     s = pd.Series([1, 2, 3])
     s[['col1','col2']]
+    s.col1
+    s['col1']
 
 ### concat series 2 series
     >>> s1 = pd.Series([1, 2, 3])
@@ -180,7 +195,7 @@ to_dict:
     1    5
     2    6
     dtype: int64
-    >>> s1.append(s2, ignore_index=True)
+    >>> s1.append(s2, ignore_index=True) # reset index
     0    1
     1    2
     2    3
@@ -189,8 +204,11 @@ to_dict:
     5    6
     dtype: int64
 
-    # 只增加
-    s1= s.append(pd.Series({'c':3})) 
+keep index:
+
+    s3 = pd.Series(s1.append(s2).to_dict())
+
+> Notice: pd.Series(d).name 是一个保留keyword, 请使用pd.Series(d)['name']
 
 ### concat to dataFrame:
 
@@ -214,8 +232,13 @@ to_dict:
     1     B   2   4
 
 ### update
-    >>> s.update(pd.Series([4, 5, 6], index=[0,1,2]))
-    >>> s.update(pd.Series(['value'], index=['key']))
+    >>> s = pd.Series([1, 2], index=[0,1]
+
+    # do not update index=2
+    >>> s.update(pd.Series([4, 5, 6], index=[0,1,2])) 
+
+    # update via dict
+    >>> s.update(pd.Series({'key':'value'}))
 
 ### to_dict(), to_json, tolist():
 

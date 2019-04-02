@@ -7,6 +7,10 @@ date: 2018-10-04
 
 subprocess模块可以让我们非常方便地启动一个子进程，然后控制其输入和输出。
 
+## enter shell
+    import code
+    code.interact(local=locals())
+
 ## exec python shell
 via shell args: 
 

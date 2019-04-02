@@ -4,6 +4,7 @@
 /a.go
 #godemo/?.go
 *.out
+go.mod
 tmp
 pri
 Gemfile.lock

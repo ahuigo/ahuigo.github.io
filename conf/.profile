@@ -26,6 +26,7 @@ alias vi='nvim'
 alias cp='cp -i'
 alias svnst='svn st'
 alias l='ls -lah'
+alias code='/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code'
 
 # python
 alias py='ipython3'

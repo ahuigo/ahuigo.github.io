@@ -24,7 +24,7 @@
 [init]
 	templatedir = ~/.git
 [merge]
-	tool = vimdiff
+	tool = code
 [mergetool]
 	keepBackup = false
 	prompt = false

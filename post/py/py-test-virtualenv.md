@@ -37,7 +37,7 @@ date: 2018-10-04
 ## start
 新建的Python环境被放到当前目录下的venv目录。有了venv这个Python环境，可以用source进入该环境：
 
-	Mac:myproject michael$ source venv/bin/activate
+	Mac:myproject michael$ source env/bin/activate
 	(venv)Mac:myproject michael$
 
 注意到命令提示符变了，有个(venv)前缀，表示当前环境是一个名为venv的Python环境。
