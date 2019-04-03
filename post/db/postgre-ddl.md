@@ -2,6 +2,29 @@
 title: FUNCTION
 date: 2018-09-27
 ---
+# shell
+    psql DBNAME USERNAME
+    psql -U user_name -d database_name -h 127.0.0.1 -W
+        \W prompt enter password
+
+Non interactive password:
+
+1. vim ~/.pgpass:
+    `hostname:port:database:username:password`
+2. PGPASSWORD=pass1234 psql -U MyUsername myDatabaseName
+3. URI: https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
+
+
+    psql postgresql://
+    psql postgresql://localhost
+    psql postgresql://localhost:5433
+    psql postgresql://localhost/mydb
+    psql postgresql://user@localhost
+    psql postgresql://user:secret@localhost
+    psql postgresql://other@localhost/otherdb?connect_timeout=10&application_name=myapp
+    psql postgresql://host1:123,host2:456/somedb?target_session_attrs=any&application_name=myapp
+
+
 # FUNCTION
 pg update /delete 都不支持limit, 建议用array 而不是IN:
 
@@ -51,6 +74,7 @@ pg update /delete 都不支持limit, 建议用array 而不是IN:
 describe table and sequence:
 
     \d
+    \dt # with table_squence
     \dt [<table>]
 
 ### drop

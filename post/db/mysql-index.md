@@ -28,7 +28,52 @@ description:
 ## 外键Foreign Key
 连接两表之间的关系属性或者属性集合，通常是主键属性。
 
-	在关系数据库中，关系用来表示表间关系：父数据表(Parent Entity)的Primary Key 会放在另一张表中, 两表通过PK 建立关系，这个PK 属性就是外键。
+    他们通过person_id 关联就是主键关联。
+    person_t: 
+        person_id 
+        persion_name 
+    address_t 
+        person_id 
+        address_name 
+
+    他们通过 address_id 关联是外键关联 
+    person_t: 
+        person_id 
+        address_id 
+
+    address_t 
+        address_id 
+        address_name 
+
+Foreignkey: Profile.UserRefer -> User.ID
+
+    type User struct {
+        gorm.Model
+        Name string
+    }
+
+    type Profile struct {
+        gorm.Model
+        Name      string
+        User      User `gorm:"foreignkey:UserRefer"` // use UserRefer as foreign key
+        UserRefer string
+    }
+
+Association ForeignKey:
+Profile.UserRefer->User.Refer
+
+    type User struct {
+      gorm.Model
+      Refer int
+      Name string
+    }
+    
+    type Profile struct {
+      gorm.Model
+      Name      string
+      User      User `gorm:"association_foreignkey:Refer"` // use Refer as association foreign key
+      UserRefer string
+    }
 
 用户量大，并发度高: 不要用外键，mysql IO消耗大
 

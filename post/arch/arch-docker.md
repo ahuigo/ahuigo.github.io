@@ -217,6 +217,8 @@ daemon:
 
 ### 伪终端
 
+    $ docker exec -ti <container-name> bash
+    $ docker exec -ti <container-name> sh
     $ docker run -i -t ubuntu:15.10 /bin/bash
     -t 启动伪终端
     -i 允许你对容器内的标准输入 (STDIN) 进行交互

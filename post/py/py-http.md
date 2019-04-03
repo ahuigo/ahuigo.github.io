@@ -68,7 +68,15 @@ dict + parse_qsl:
     >>> sc['key1'].value
 
 # Request
-http://docs.python-requests.org/en/latest/index.html
+
+## to_curl
+    import curlify
+    import requests
+
+    response = requests.get("http://google.ru")
+    print(curlify.to_curl(response.request))
+    print(curlify.to_curl(response.request), compressed=True)
+    # curl -X 'GET' -H 'Accept: */*' -H 'Accept-Encoding: gzip, deflate' -H 'Connection: keep-alive' -H 'User-Agent: python-requests/2.18.4' --compressed 'http://www.google.ru/'
 
 ## Non Block
 If you are concerned about the use of blocking IO, there are lots of projects out there that combine Requests with one of Python’s asynchronicity frameworks. Two excellent examples are grequests and requests-futures.

@@ -12,6 +12,23 @@ struct 是值类型，slice 是引用类型(指针), 不过以下方法是按引
     b = a
     fmt.Printf("%p,%p\n", &a,&b)  //not same
 
+## access
+
+	v := Vertex{1, 2}
+	v.X = 4
+	&v.X = 4
+	Vertex{1, 2}.X
+
+## pointer to structs
+struct pointer:
+
+    v := Vertex{1, 2}
+	p := &v
+	p.X = 1e9
+
+copy:
+
+    v_copy := v
 
 ## define:
 
@@ -21,6 +38,11 @@ struct 是值类型，slice 是引用类型(指针), 不过以下方法是按引
         data *byte
         next *Node
     }
+
+不要直接访问：
+
+    //非法
+    Node.id
 
 ### struct with tag
 可定义字段标签，⽤用反射读取。标签是类型的组成部分, 是不同的类型
@@ -33,6 +55,17 @@ struct 是值类型，slice 是引用类型(指针), 不过以下方法是按引
         var d D
         fmt.Printf("%#v\n", d)
     }
+
+再来个例子
+
+    type A struct {
+        Body struct {
+            Status string `Flag`
+        }
+    }
+    A{struct{Status string `Flag`}{}}.Body.Status
+    A{struct{Status string `Flag`}{"str"}}.Body.Status
+
 
 ### null struct
 null struct 不占用空间，用来实现set
@@ -47,7 +80,7 @@ null struct 不占用空间，用来实现set
         owner int
     }{2, 0755}
 
-### Anonymous field
+### Anonymous field(继承)
 匿名字段的类型就是 同名类型
 
     type User struct{ }
@@ -103,21 +136,3 @@ init 时必须包含全部字段
         next: &n1,
     }
     fmt.Println(n1,n2)
-
-## access
-
-	v := Vertex{1, 2}
-	v.X = 4
-	&v.X = 4
-	Vertex{1, 2}.X
-
-## pointer to structs
-struct pointer:
-
-    v := Vertex{1, 2}
-	p := &v
-	p.X = 1e9
-
-copy:
-
-    v_copy := v

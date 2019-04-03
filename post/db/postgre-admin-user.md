@@ -18,6 +18,7 @@ password method 使用独立的帐号，使用ROLE管理
 
 # User Role
 
+    psql DBNAME USERNAME
     psql -U user_name -d database_name -h 127.0.0.1 -W
         \W prompt enter password
 
@@ -27,6 +28,7 @@ Non interactive password:
     `hostname:port:database:username:password`
 2. PGPASSWORD=pass1234 psql -U MyUsername myDatabaseName
 3. URI: https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
+
 
     psql postgresql://
     psql postgresql://localhost

@@ -24,15 +24,17 @@
 [init]
 	templatedir = ~/.git
 [merge]
-	tool = code
+	tool = vimdiff
 [mergetool]
 	keepBackup = false
 	prompt = false
 [mergetool "vimdiff"]
     cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-[difftool]
-    prompt = false
 [diff]
     tool = vimdiff
+[difftool]
+    prompt = false
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [icdiff]
 	options = --highlight --line-numbers
