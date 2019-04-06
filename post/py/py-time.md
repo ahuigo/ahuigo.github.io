@@ -198,8 +198,11 @@ formater: https://docs.python.org/3/library/datetime.html
 
 ### by format
 
+    # with no format
     from dateutil.parser import parse as strptime
     strptime('2011-12-31')
+
+    # with format
 	d=datetime.strptime('2015-6-1 18:19:59', '%Y-%m-%d %H:%M:%S')
 
 ## timedelta: datetime加减

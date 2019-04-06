@@ -35,6 +35,16 @@ os
         return st.st_mode & stat.S_IRUSR != 0
     st_size
 
+### mtime,atime,ctime
+
+    # 1554420062.175679
+    os.path.getmtime(path)
+        os.stat('a.txt').st_mtime
+    os.path.getctime(path)
+        os.stat('a.txt').st_ctime
+    os.path.getatime(path)
+        os.stat('a.txt').st_atime
+
 ### access permision
 Use the real uid/gid to test for access to a path.
 

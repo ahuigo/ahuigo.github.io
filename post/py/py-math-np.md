@@ -52,6 +52,56 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
     >>> df_empty.empty
     True
 
+### setIndex
+let colume as index
+
+    df2 = df.set_index('name')
+    df.set_index('name', inplace=True)
+
+revert index to column
+
+    df['column1'] = df.index
+    df.reset_index(level=0, inplace=True)
+
+in index
+
+    'index' in df.index
+    'col' in df.values
+
+
+### filter
+#### select column field:
+
+    df0 = df[['col1','col2']]
+    df1 = df.iloc[:,0:2]
+    df.iloc[3][['dt_netprofit_yoy','profit_dedt']]
+
+sigle column
+
+    s1 = df['col1']
+    s1 = df.col1
+    s1.iloc[0]
+    value = s1.iloc[0]
+    value = s1.col1
+
+#### select row: via column value / row_index
+
+    # via column_value
+    df.loc[df['column_name'] == some_value]
+
+    # via lambda
+    df[df.apply(lambda x: x['col1'] > x['col2'], axis=1)]
+
+    # via index name
+    df.loc['row_index'] # row_index
+
+#### select row and column
+
+    # via index
+    df.iloc[0] # first row
+    df[0:2]
+    df.iloc[0:2, 1:5]
+
 
 ### dict/series to dataFrame
 
@@ -70,13 +120,13 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
     s1.append(s2)
 
 ### add row series
-apped dict
+apped dict(必须忽略加入的index)
 
     df1 = pandas.DataFrame(numpy.random.randint(100, size=(5,5)), columns=['A', 'B', 'C', 'D', 'E'])
     df1 = df1.append( dict( (a,numpy.random.randint(100)) for a in ['A','B','C','D','E']), ignore_index=True)
     df.append(series,ignore_index=True)
 
-loc:
+update row via loc:
 
     >>> import pandas as pd
     >>> import numpy as np
@@ -97,44 +147,7 @@ loc:
     DataFrame.add(s, axis=1)
     DataFrame['col1']= s
 
-### filter
-cut column:
-
-    df[['col1','col2']]
-    df.iloc[3][['dt_netprofit_yoy','profit_dedt']]
-
-row: index
-
-    # via column_value
-    df.loc[df['column_name'] == some_value]
-
-    # via lambda
-    df[df.apply(lambda x: x['col1'] > x['col2'], axis=1)]
-
-    # via index name
-    df.loc['row_index'] # row_index
-
-    # via index
-    df.iloc[0] # first row
-    df[0:2]
-    df.iloc[0:2, 1:5]
-
-col series
-
-    df['col1'].iloc[0] # first column value
-    df.col1
-
-    df1=df[['col1','col2']]
-    df1=df.iloc[:,0:2]
-
-series item:
-
-    df.loc['index'].col1
-    df.col1.index //series.name,series.dtype 会覆盖
-    df.col1['index'] //不会
-    df['col1']['index'] //不会
-
-to_dict:
+### to_dict:
 
     df.to_dict()
     df.to_json()
@@ -177,11 +190,24 @@ to_dict:
         print row['c1'], row['c2']
 
 ## series
+Notice: pd.Series(d).name 是一个保留keyword, 请使用pd.Series(d)['name']
 
     s = pd.Series([1, 2, 3])
     s[['col1','col2']]
     s.col1
     s['col1']
+
+### in series
+
+    'value' in s.values
+    'value' in s.unique()
+    'value' in set(s)
+
+in dataFrame
+
+    '07311954' in df.date.values
+    '07311954' in df['date'].values
+    'index' in df.index
 
 ### concat series 2 series
     >>> s1 = pd.Series([1, 2, 3])
@@ -208,8 +234,6 @@ keep index:
 
     s3 = pd.Series(s1.append(s2).to_dict())
 
-> Notice: pd.Series(d).name 是一个保留keyword, 请使用pd.Series(d)['name']
-
 ### concat to dataFrame:
 
     s1 = pd.concat([s1, s4])
@@ -232,13 +256,25 @@ keep index:
     1     B   2   4
 
 ### update
+s是df 的映射，df 随着s 的修改而修改
+
     >>> s = pd.Series([1, 2], index=[0,1]
 
-    # do not update index=2
+update via series
+
+    # will not update index=2
     >>> s.update(pd.Series([4, 5, 6], index=[0,1,2])) 
 
-    # update via dict
+update via dict
+
     >>> s.update(pd.Series({'key':'value'}))
+    # error
+    >>> s.update(({'key':'value'}))
+
+update via key
+
+    # ok
+    s['key'] = 'value'
 
 ### to_dict(), to_json, tolist():
 

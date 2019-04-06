@@ -58,6 +58,7 @@ cProfile 执行整个脚本:
 用dot 生成调用结构图(循环调用这种最麻烦了)
 
     pip install gprof2dot
+    brew install gprof2dot
     gprof2dot -f pstats out.pstats | dot -Tpng -o output.png
 
 ## line_profiler 逐行计时和分析执行的频率

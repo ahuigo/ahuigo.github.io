@@ -396,6 +396,7 @@ map()传入的第一个参数是f，即函数对象本身。由于结果r是一�
 	[(4, 5), (5, 6), (6, 7)]
 
 ## reduce
+至少要有一个元素
 If initial is present, it is placed before the items of the sequence in the calculation
 
     from functools import reduce
@@ -674,6 +675,35 @@ e.g.
 为了使得装饰器返回的对象属性跟原对象，此对象有些属性如`__name__`, 它能用于把被调用函数的`__module__，__name__，__qualname__，__doc__，__annotations__`赋值给装饰器返回的函数对象。
 
 	functools.wraps(func)(wrapper)
+
+## singleton
+适用于function, method
+
+    from functools import wraps
+    def singleton(cls):
+        _instance = {}
+        @wraps(cls)
+        def _singleton(*args, **kwargs):
+            if cls not in _instance:
+                _instance[cls] = cls(*args, **kwargs)
+            return _instance[cls]
+        return _singleton
+
+file_cache:
+
+    def file_cache(key, expire, verify_empty=True, options={}):
+        def decorator(cls):
+            @wraps(cls)
+            def wrapper(*args, **kwargs):
+                ok, value = file_db(key, expire=expire, **options)
+                if not ok:
+                    value = cls(*args, **kwargs)
+                    if not verify_empty or value:
+                        file_db(key, value, **options)
+                return value
+            return wrapper
+        return decorator
+
 
 ## multi decorator
 倒序

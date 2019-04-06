@@ -77,6 +77,10 @@ describe table and sequence:
     \dt # with table_squence
     \dt [<table>]
 
+show create table:
+
+    pg_dump -st tablename dbname
+
 ### drop
 
     drop TABLE [IF EXISTS ] xxx

@@ -8,11 +8,34 @@ priority:
     0o77
     0b11
 
+## random
+
+	import random
+	random.randint(3,8)
+
+	# 主要用于密码强随机
+	os.urandom(24)
+	'\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
+    # head -c 24 /dev/urandom
+
+## math operator
+
+	print x**2; # x^2
+
+## floor
+
+    import math
+    math.ceil(x)
+    math.floor(x) == x//1
+    round(x, 2) # 小数点后两位, 四舍五入
+		'%.2f'%x
+	'%.3e' % 53.3432 # 有效位数，四舍五入
+
 ## operator
 
     2**5	math.pow(2,5)
-    5//2	floor(5,2)
-    -(-5//2) ceil(5,2)
+    5//2	floor(5/2)
+    -(-5//2) ceil(5/2)
 
 ## number type
 
@@ -75,26 +98,3 @@ https://docs.python.org/3.2/library/math.html
     math.log10(x)¶
     math.sqrt(x)¶
 
-
-## random
-
-	import random
-	random.randint(3,8)
-
-	# 主要用于密码强随机
-	os.urandom(24)
-	'\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
-    # head -c 24 /dev/urandom
-
-## math operator
-
-	print x**2; # x^2
-
-## floor
-
-    import math
-    math.ceil(x)
-    math.floor(x) == x//1
-    round(x, 2) # 小数点后两位, 四舍五入
-		'%.2f'%x
-	'%.3e' % 53.3432 # 有效位数，四舍五入
