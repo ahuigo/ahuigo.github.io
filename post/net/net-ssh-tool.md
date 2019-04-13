@@ -193,7 +193,7 @@ From remote to local
 	$ scp hilo@remote-sys:document.txt .
 
 	# recursive download
-	$scp -r user@your.server.example.com:/path/to/dir /home/user/Desktop/
+	$ scp -r user@your.server.example.com:/path/to/dir /home/user/Desktop
 
 从本地到远端：
 

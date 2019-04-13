@@ -18,6 +18,7 @@ https://docs.python.org/3.4/howto/logging.html
     >>> sys.excepthook = foo
 
 ## log with exc_info
+
     try:
         result = json.loads(s, strict=False)
     except (TypeError, ValueError):

@@ -126,7 +126,7 @@ Note: 可以使用r.get() 获得返回(阻塞)
 
     p = Pool(4)
     rr = []
-    for i in range(2):
+    for i in range(5):
         r = p.apply_async(long_time_task, args=(i,)) # 加5个任务
         rr.append(r)
     for r in rr: print(r.get())
@@ -160,7 +160,7 @@ map 并行处理10 个任务
     import multiprocessing
     import math
     multiprocessing.Pool(processes=4).map(math.exp,range(1,11)) #type list
-    multiprocessing.Pool(4).map(math.exp,range(1,11), chunksize=2)
+    multiprocessing.Pool(4).map(math.exp,range(1,11), chunksize=2) 一组chunksize 传入一个进程
     [2.718281828459045, 7.38905609893065, 20.085536923187668, ...]
 
 ### chunksize

@@ -227,8 +227,14 @@ Example:
 
 	$   echo '123456' | tr  '12345' '[A-Z]'
 	[ABCD6
-	$   echo 'abc' | tr 'a-z' '[x*2]C'
+    $  echo '123456' | tr  '12345' 'AB' ; #(但是这里会有B补足)
+    ABBBB
+	$   echo 'abc' | tr 'a-z' '[x*]' ;# x* 匹配多个
+	xxx
+	$   echo 'abc' | tr 'a-z' '[x*]C' ;# x*2 最多匹配两个
 	xxC
+	$   echo 'abc' | tr 'a-z' '[x*2]' ;# x*2 匹配2个(但是这里会有补足)
+	xxx
 	$   echo 'abccccdddccc' | tr -s 'abc' 'ABC'
 	ABCdddC
 	$ echo 'abcxd' | tr -d 'xd'
@@ -236,7 +242,7 @@ Example:
 	$ echo '1' | tr '\x31' '\x32'
 	2
 	$ echo '1ahui2' | tr '[:digit:]' ' '
-	1    2
+	 ahui 
 
 posix:
 

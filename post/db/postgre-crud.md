@@ -41,6 +41,14 @@ INSERT INTO table (id, field, field2)
         DO UPDATE SET column_1 = EXCLUDED.value_1,v2, .. WHERE condition
 
 ## select 
+双引号 反引号。表示特殊的字段：
+
+    select "abc";
+    ERROR:  column "abc" does not exist
+
+字符应该用单引号
+
+    select 'abc'
 
 ## del
 SELECT '{"a":[null,{"b":[3.14]}]}' #- '{a,1,b,0}'

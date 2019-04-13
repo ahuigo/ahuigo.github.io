@@ -7,6 +7,15 @@ Some methods: https://stackoverflow.com/questions/182197/how-do-i-watch-a-file-f
 - watchdog
 - signal
 
+# inotifywait 
+
+    inotifywait -m /path -e create -e moved_to |
+    while read path action file; do
+        echo "The file '$file' appeared in directory '$path' via '$action'"
+        # do something with the file
+    done
+
+# signal
 signal method
 
     import time

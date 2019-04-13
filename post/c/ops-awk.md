@@ -88,6 +88,15 @@ escape delimiter:
 
 	-F '\\|\\|'
 
+### 忽略第一列
+will print all but very first column:
+
+    awk '{$1=""; print $0}' somefile
+
+will print all but two first columns:
+
+    awk '{$1=$2=""; print $0}' somefile
+
 # array
 
 	#awk 将 myarr["1"] 和 myarr[1] 指向同一元素, 这类似于索引php不区别引号

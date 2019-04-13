@@ -63,10 +63,12 @@ revert index to column
     df['column1'] = df.index
     df.reset_index(level=0, inplace=True)
 
-in index
+in index and colume and values
 
-    'index' in df.index
-    'col' in df.values
+    'index_name' in df.index
+    'col_name' in df
+    'col_value' in df.values
+
 
 
 ### filter

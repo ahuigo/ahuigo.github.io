@@ -685,25 +685,29 @@ e.g.
         @wraps(cls)
         def _singleton(*args, **kwargs):
             if cls not in _instance:
-                _instance[cls] = cls(*args, **kwargs)
-            return _instance[cls]
+                ck = str(cls)+str(args)+str(kwargs)
+                _instance[ck] = cls(*args, **kwargs)
+            return _instance[ck]
         return _singleton
 
-file_cache:
-
-    def file_cache(key, expire, verify_empty=True, options={}):
+    def file_cache(key, expire, verify_empty=True, options={}, nkey=0):
         def decorator(cls):
             @wraps(cls)
             def wrapper(*args, **kwargs):
-                ok, value = file_db(key, expire=expire, **options)
+                fkey = key
+                for k in args[1:1+nkey]:
+                    fkey += '.'+k
+                if Args.refresh:
+                    ok = False
+                else:
+                    ok, value = file_db(fkey, expire=expire, **options)
                 if not ok:
                     value = cls(*args, **kwargs)
                     if not verify_empty or value:
-                        file_db(key, value, **options)
+                        file_db(fkey, value, **options)
                 return value
             return wrapper
         return decorator
-
 
 ## multi decorator
 倒序

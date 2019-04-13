@@ -24,6 +24,27 @@ def debug_info():
         'caller':sys._getframe(1).f_code.co_name,
     }
 ```
+或者：
+
+    import sys
+    def foo(exctype, value, tb):
+        print('My Error Information')
+        print('Type:', exctype)
+        print('Value:', value)
+        print('Traceback:', tb)
+        print('tb_frame', tb.tb_frame)
+        import code
+        code.interact(local=locals())
+
+    sys.excepthook = foo
+
+## 异常调用栈
+    try:
+        a=1/0
+    except Exception as e:
+        print(e)
+        import traceback
+        tb = traceback.format_exc()
 
 ## For More
 Python 代码调试技巧: \

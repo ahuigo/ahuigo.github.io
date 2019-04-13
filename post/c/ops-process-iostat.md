@@ -21,6 +21,11 @@ date: 2018-09-27
 	-x 显示详细信息
 	-V 显示版本信息
 
+    $ iostat -x -m 10 
+    Device:         rrqm/s   wrqm/s     r/s     w/s    rMB/s    wMB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+    vda               0.00     2.40    0.00    0.50     0.00     0.01    46.40     0.00    0.40    0.00    0.40   0.40   0.02
+    vdb               0.00     1.60    0.00   21.10     0.00     6.20   601.40     2.84  134.53    0.00  134.53   2.11   4.45
+
 # cpu属性值说明：
 
 	%user：CPU处在用户模式下的时间百分比。

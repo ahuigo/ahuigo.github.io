@@ -23,6 +23,9 @@ Docker 带来的方便之处：
     systemctl start docker.service
 
 # Docker 的组成
+- image
+- container 镜像的实例化
+- 
 
 ## Image 镜像
 Image是 特殊的文件系统，提供容器运行时所需的程序、库、资源、配置等文件。运行时不会被改变。
@@ -62,11 +65,15 @@ Mac OSX Image 不可以修改路径：
 #### Dockerfile 创建image
 参考： http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html
 
+    $ git clone https://github.com/ruanyf/koa-demos.git
+    $ cd koa-demos
+
     $ cat .dockerignore
     .git
     node_modules
 
-    $ cat ./Dockerfile 
+    $ touch ./Dockerfile 
+    $ vi ./Dockerfile 
     FROM node:8.4
     # 将当前目录下的所有文件（除了.dockerignore排除的路径），都拷贝进入 image 文件的/app目录。
     COPY . /app
@@ -86,7 +93,7 @@ Mac OSX Image 不可以修改路径：
     VOLUME /data
     WORKDIR /data
 
-    # copy
+    # copy 到image 的/usr/local/bin
     COPY docker-entrypoint.sh /usr/local/bin/
 
     # 配置容器启动时运行的命令
@@ -106,15 +113,18 @@ RUN 两种格式
 
 开始build
 
-    $ docker build -t $ docker image build -t koa-demo .
+    # 创建imageName=koa-demo
+    $ docker image build -t koa-demo .
     # 或者
-    $ docker image build -t koa-demo:0.0.1 
-        new image id: 860c2
+    $ docker image build -t koa-demo:0.0.1 .
+    # 或者
+    $ docker build -t koa-demo .
+        new image id: 860c2(860c2、koa-demo:0.0.1都是镜像名)
 
-为镜像打标签
+为镜像imageName 打标签image:tag
 
-    $ docker tag 860c2 ahuigo/koademo:dev
     $ docker image tag [imageName] [username]/[repository]:[tag]
+    $ docker tag 860c2 ahuigo/koademo:dev
 
 docker php 还提供为php 安装扩展的命令
 
@@ -139,7 +149,7 @@ Library latest 都是默认的,所以简化为
 
     $ docker login
 
-为本地的 image 标注用户名和版本。再发布c
+为本地的 image 标注用户名和版本。再发布
 
     $ docker image tag koa-demos:0.0.1 ruanyf/koa-demos:0.0.1
     $ docker image push [username]/[repository]:[tag]
@@ -185,6 +195,22 @@ daemon:
     systemctl start docker
     systemctl stop docker
 
+## Docker: 限制容器可用的 CPU
+https://www.cnblogs.com/sparkdev/p/8052522.html
+
+指定cpus 使用的百分比: 2倍单核cpu 资源，均匀分配
+
+    docker run -it --rm --cpus=2 u-stress:latest /bin/bash
+
+指定cpuset 的编号
+
+    $ docker run -it --rm --cpuset-cpus="1,3" u-stress:latest /bin/bash
+
+设定窗口战胜的权重：下列两个container 的权重比为512:1024=1:3
+
+    $ docker run -it --rm --cpuset-cpus="0" --cpu-shares=512 u-stress:latest /bin/bash
+    $ docker run -it --rm --cpuset-cpus="0" --cpu-shares=1024 u-stress:latest /bin/bash
+
 ### 查看容器列表
 
     # 列出本机正在运行的容器
@@ -199,19 +225,27 @@ daemon:
     docker ps -l 
 
     # 检查底层信息
-    docker inspect <name>
+    docker inspect <container-name>
 
-### 容器状态
+### 容器状态(cpu/mem)
 
     docker stats -a
-    docker top <name>
+    docker top <container-name>
+    docker stats <container-name>
+
+聊聊docker监控那点事儿:
+http://www.opscoder.info/docker_monitor.html
 
 ### 容器配置
+查看配置
 
     docker inspect 0545bfe74ae2
+    $ CONTAINER_PID=`docker inspect -f '{{ .State.Pid }}' $CONTAINER_ID`
+    $ cat /proc/$CONTAINER_PID/net/dev 
+
 
 # 容器运行(run)
-如果没有回自动创建容器
+如果没有容器先自动创建容器
 
     docker run
 
@@ -236,14 +270,22 @@ daemon:
 
     $ docker logs 2b1b7a428627
 
+#### 进入容器
+相当于shell 的fg, 用于进入已经启动的容器
+
+    $ docker container exec -it <containerID> /bin/bash
+    $ docker exec -it <containerID> /bin/bash
+
+
 ### 指定容器name
 
     docker run -d -P --name runoob training/webapp python app.py
 
-### 目录映射：
+### 目录映射(volume)：
 
     # -v 用于映射将宿主机目录映射到容器的目录
     $ docker run -p 80:80 --name mynginx -v $HOME/www:/www -v $HOME/conf/nginx.conf:/etc/nginx/nginx.conf -d nginx  
+    $ docker inspect dockerid
 
 ### 端口映射
 `-P` 容器端口映射到宿主机
@@ -271,11 +313,6 @@ daemon:
         5000/tcp -> 0.0.0.0:5000
     $ docker port adoring_stonebraker 5000
         127.0.0.1:5001
-
-### 进入容器
-相当于shell 的fg
-
-    $ docker container exec -it [containerID] /bin/bash
 
 ### 容器scp
 将容器里面的文件拷贝到本机.
