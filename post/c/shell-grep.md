@@ -6,6 +6,9 @@ date: 2018-09-27
 # ag
 ag 比ack/grep 还快
 
+    brew install the_silver_searcher
+
+
 ## 自动忽略`.gitinore` 中的文件
 
     # ignore /bar/.gitignore
@@ -14,7 +17,19 @@ ag 比ack/grep 还快
     # ignore case
     ag -i foo /bar/ ;
 
+    # word match
+    ag -w foo /bar/ ;
+
+    # invert match
+    ag -v foo /bar/
+
+其它的，类似grep
+
+    # filename only -l
+    ag foo /bar/ -l
+
 ## ag regex
+
     echo abc1234 |ag 'abc\d{3}$'
 
 ## ag AB
