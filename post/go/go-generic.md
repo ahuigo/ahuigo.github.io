@@ -4,6 +4,7 @@ date: 2019-04-11
 private:
 ---
 # Go Generic
+http://coyee.com/article/10700-dealing-with-the-lack-of-generics-in-go
 2.  Interface （with method）
     1.  好处 无需三方库，代码干净而且通用。
     2.  缺点 需要一些额外的代码量，以及也许没那么夸张的运行时开销。 

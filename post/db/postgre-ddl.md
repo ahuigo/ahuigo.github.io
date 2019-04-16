@@ -45,6 +45,32 @@ pg update /delete 都不支持limit, 建议用array 而不是IN:
     end ;
     $$ LANGUAGE plpgsql;
 
+# import export
+
+    $ pg_dump -U username dbname > dbexport.pgsql
+    $ psql -U username dbname < dbexport.pgsql
+
+table:
+
+    \copy my_table to 'my_table.csv' csv;
+    \copy my_table FROM 'my_table.csv' DELIMITER ',' CSV;
+
+table with bash:
+
+    $ pg_dump \
+    -h localhost \
+    -p 5432 \
+    -U user -W \
+    --table="table-name" --data-only --column-inserts database-name > table.sql
+
+    $ psql \
+    -h localhost \
+    -p 5432 \
+    -U user \
+    database-name \
+    -f table.sql
+
+
 # crud
 ## database
 

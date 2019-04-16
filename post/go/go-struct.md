@@ -117,8 +117,70 @@ Note: 相同层次的同名字段也会让编译器⽆无所适从, 应该用显
         title string 
     }
 
+### 继承与赋值
+    package main
+    import  "fmt"
+
+    type Pet struct {
+        age int
+    }
+    type PetX struct {
+        Pet
+        name string
+    }
+
+    func modify(pxp *PetX){
+        pxp.name = "name"
+        pxp.age = 123
+        pxp.Pet = Pet{200}
+    }
+
+    func main() {
+        px:= PetX{}
+        modify(&px)
+
+        fmt.Printf("%#v\n", px)  
+        fmt.Printf("%#v\n", px.Pet)  
+    }
+    <!-- main.PetX{Pet:main.Pet{age:200}, name:"name"}
+    main.Pet{age:200} -->
+
+
 ## 面向对象
 go struct 仅支持封装，没有继承、多态
+
+- Anonymous 可以实现继承
+- Interface 可以实现多态
+
+### Struct method
+struct method 是一个值：
+
+    package main
+    import  "fmt"
+
+    type Pet struct {
+        speaker func() string
+        name    string
+    }
+
+    func (p *Pet) Speak() string {
+        return "Speak"
+    }
+
+    func NewPet(name string) *Pet {
+        p := &Pet{
+            name: name,
+        }
+        p.speaker = p.Speak
+        return p
+    }
+
+    func main() {
+        d := NewPet("spot")
+        fmt.Println(d.speaker()) //Speak
+        fmt.Println(d.Speak())  //Speak
+    }
+
 
 ## init 
 init 时必须包含全部字段

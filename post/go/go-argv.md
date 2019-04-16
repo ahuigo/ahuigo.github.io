@@ -9,6 +9,7 @@ date: 2019-03-25
     filepath.Abs(exec.LookPath(os.Args[0]))。
 
 # Golang flag
+必须放在parse 后
 
     package main
     import "flag"
@@ -20,11 +21,11 @@ date: 2019-03-25
         var svar string
         flag.StringVar(&svar, "svar", "bar", "a string var")
 
+        flag.Parse()
         fmt.Println("word:", *wordPtr)
         fmt.Println("numb:", *numbPtr)
         fmt.Println("fork:", *boolPtr)
         fmt.Println("svar:", svar)
 
-        flag.Parse()
         fmt.Println("tail:", flag.Args())
     }

@@ -724,9 +724,10 @@ Vim's operation:
 
 在其它分支切换回来后，想恢复这个暂存的变更. 当然，你也可以在其它分支应用这个暂存变更(如果变更无法应用git 会给出归并冲突的提示)
 
+	//
 	git stash apply stash@{0}
-	//或者
 	git stash apply
+
 	//应用变更时清空暂存
 	git stash pop stash@{0}
 	git stash pop
