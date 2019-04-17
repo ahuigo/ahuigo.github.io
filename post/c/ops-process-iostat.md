@@ -10,7 +10,7 @@ date: 2018-09-27
 
 	iostat[参数][时间][次数]
 
-	-C 显示CPU使用情况
+	-c 显示CPU使用情况
 	-d 显示磁盘使用情况
 	-k 以 KB 为单位显示
 	-m 以 M 为单位显示
@@ -25,6 +25,11 @@ date: 2018-09-27
     Device:         rrqm/s   wrqm/s     r/s     w/s    rMB/s    wMB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
     vda               0.00     2.40    0.00    0.50     0.00     0.01    46.40     0.00    0.40    0.00    0.40   0.40   0.02
     vdb               0.00     1.60    0.00   21.10     0.00     6.20   601.40     2.84  134.53    0.00  134.53   2.11   4.45
+
+example :
+
+    # 2秒刷新显示，且显示3次
+    iostat -C 2 3
 
 # cpu属性值说明：
 
