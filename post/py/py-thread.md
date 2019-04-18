@@ -176,7 +176,7 @@ thread.start() 后为true
 
 
 ## communicate via pool.apply_async().get()
-对比下ThreadPool vs Thread
+对比下 ThreadPool vs Thread
 
     t = threading.Thread(target=loop, name='LoopThread')
         #t.start() t.join()

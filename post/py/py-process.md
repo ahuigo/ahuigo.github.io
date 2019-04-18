@@ -53,7 +53,7 @@ async_result = multiprocessing.pool.ThreadPool(processes=1).apply_async(foo, ('w
 fork 与子程序func 是分离的, 父进程同步子进程比较麻烦
 multiprocessing.Process(func) 则可以直接传func:
 
-1. child = multiprocessing.Process(func)
+1. child = multiprocessing.Process(target=func, args=())
 2. child.start()
 2. child.join() 等待子进程结束后再继续往下运行，通常用于进程间的同步
 4. child.terminate() 或者直接结束
@@ -81,13 +81,57 @@ multiprocessing.Process(func) 则可以直接传func:
 	Run child process test (929)...
 	Process end.
 
-# Pool()
+## daemon
+
+    import time
+    import multiprocessing
+    def f():
+        time.sleep(1)
+        print('sleep end')
+    p = multiprocessing.Process(target=f)
+    p.daemon=True
+    p.start()
+    print('Daemon will not wait children, in case of p.join()...')
+
+daemonic processes are not allowed to have children!
+
+    import time
+    import multiprocessing
+    def f():
+        p = multiprocessing.Process(target=lambda:1)
+        p.start()
+        time.sleep(1)
+    p = multiprocessing.Process(target=f)
+    # daemon (no wait)
+    p.daemon=True
+    p.start()
+    print('start...')
+    p.join()
+
+# Pool
+
+##  NoDaemon
+    import multiprocessing
+    import multiprocessing.pool
+    class NoDaemonProcess(multiprocessing.Process):
+        def _get_daemon(self):
+            return False
+        def _set_daemon(self, value):
+            pass
+        daemon = property(_get_daemon, _set_daemon)
+
+    # We sub-class multiprocessing.pool.Pool instead of multiprocessing.Pool
+    # because the latter is only a wrapper function, not a proper class.
+    class MyPool(multiprocessing.pool.Pool):
+        Process = NoDaemonProcess
 
 ## Pool().apply_async()
 如果要启动大量的子进程，可以用进程池的方式批量创建子进程：
-multiprocessing.Pool(4) 比fork 简单
+1. multiprocessing.Pool(4) 比fork 简单
+2. multiprocessing.pool.ThreadPool(2) 也是
 
-1. p = multiprocessing.Poll(4)
+e.g.
+1. p = multiprocessing.Pool(4)
 2. for i in range(5): res = p.apply_async(func, args=(i,))
 2. p.join() 等待子进程结束后再继续往下运行，通常用于进程间的同步
 3. 或者用res.get() 阻塞获取返回值

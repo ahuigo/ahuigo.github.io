@@ -186,7 +186,8 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 		border:0;
 	}
 
-## box-shadow
+## boder
+### box-shadow
 box-shadow: h-shadow v-shadow blur spread color inset;
 
 	h-v: 位置
@@ -195,7 +196,6 @@ box-shadow: h-shadow v-shadow blur spread color inset;
 	color:颜色
 	inset: 内部显示
 
-## boder
 
 	border-radius: 10px;//圆角半径
 	box-shadow: 2px 4px 6px 8px #ccc;
