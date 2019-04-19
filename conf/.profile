@@ -136,3 +136,4 @@ alias npm="npm --registry=https://registry.npm.taobao.org \
 #eval "$(lua ~/conf/z.lua --init zsh)"
 
 [ -f ~/.private ] && source ~/.private
+[ -f ~/.wk ] && source ~/.wk

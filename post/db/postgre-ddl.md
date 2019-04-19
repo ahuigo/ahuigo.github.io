@@ -5,7 +5,8 @@ date: 2018-09-27
 # shell
     psql DBNAME USERNAME
     psql -U user_name -d database_name -h 127.0.0.1 -W
-        \W prompt enter password
+    psql -U user_name database_name -h 127.0.0.1 -W
+        \W prompt enter password(可省略)
 
 Non interactive password:
 
@@ -23,6 +24,24 @@ Non interactive password:
     psql postgresql://user:secret@localhost
     psql postgresql://other@localhost/otherdb?connect_timeout=10&application_name=myapp
     psql postgresql://host1:123,host2:456/somedb?target_session_attrs=any&application_name=myapp
+
+.pgpass config(recommend):
+
+    1) Create .pgpass file with content
+        host:5432:somedb:someuser:somepass
+
+    2) set the permissions using command
+        sudo chmod 600 .pgpass
+
+    3) Set the file owner as the same user using which you logged in(实际不需要) :
+        sudo chown login_username:login_username .pgpass
+
+    4) Set PGPASSFILE environment variable :
+        export PGPASSFILE='/home/user/.pgpass'
+
+    Now check by connecting to database :
+        psql -h host -U someuser somedb
+
 
 
 # FUNCTION
