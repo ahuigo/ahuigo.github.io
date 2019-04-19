@@ -47,6 +47,8 @@ pg update /delete 都不支持limit, 建议用array 而不是IN:
 
 # import export
 
+## export sql
+
     $ pg_dump -U username dbname > dbexport.pgsql
     $ psql -U username dbname < dbexport.pgsql
 
@@ -70,6 +72,16 @@ table with bash:
     database-name \
     -f table.sql
 
+## export csv
+
+    \COPY products_273 TO '/tmp/products_199.csv' WITH (FORMAT CSV, HEADER);
+
+    COPY persons TO 'C:\tmp\persons_db.csv' DELIMITER ',' CSV HEADER;
+
+    COPY persons(first_name,last_name,email) TO 'C:\tmp\persons_partial_db.csv' DELIMITER ',' CSV HEADER;
+
+    \copy (Select * From foo) To '/tmp/test.csv' With CSV
+    \copy (select * from my_table limit 10) TO '~/Downloads/export.csv' CSV HEADER
 
 # crud
 ## database

@@ -92,6 +92,9 @@ title: git submodule
     git submodule foreach 'git commit -am "new"'
     git submodule foreach 'git push'
 
+## update
+    git submodule foreach git pull
+
 ## log
 提交之后，你也可以运行 git log -p 查看这个信息。
 

@@ -9,7 +9,7 @@ bindkey \^U backward-kill-line
 
 ###############
 #export
-export DEVELOPMENT=true
+export ENV_MODE=dev
 export LC_ALL='en_US.UTF-8'
 export LANG='en_US.UTF-8'
 export CLICOLOR="xterm-color"
