@@ -118,7 +118,6 @@ use:
     1. use your existing login,
     2. register as a new user,
     3. have the server generate a new password for you (and email it to you), or
-    4. quit
     Your selection [default 1]:
 
 Once this is done, `~/.pypirc` file will store the login name and the password. 
@@ -138,7 +137,8 @@ use:
 
     pip install --index-url https://test.pypi.org/simple/ example_pkg
 
-# subcommand
+# Config
+## subcommand
 https://stackoverflow.com/questions/1710839/custom-distutils-commands
 有两种`distutils.commmands`,`cmdclass`
 
@@ -148,7 +148,7 @@ https://stackoverflow.com/questions/1710839/custom-distutils-commands
         ],
     },
 
-## cmdclass
+### cmdclass
 我们添加一个测试命令为例子吧：
 
     from setuptools.command.test import test as TestCommand
@@ -175,20 +175,7 @@ https://stackoverflow.com/questions/1710839/custom-distutils-commands
         def test_main(self):
             assert "Lucy" in sh('echo "Lucy,Artist,16" | xcut -f 1 -t index --no-title')
 
-# import obj
-
-    # Install the Q() object in sys.modules so that "import q" gives a callable q.
-    sys.modules['q'] = Q()
-
-# Requirements
-pip freeze > requirements.txt
-pip install -r requirements.txt
-
-# install dev
-
-    pip install -e dir 
-
-# cli tool
+## cli tool
 可以在setup.py 为script 加入口.
 
 1. 第一种scripts：
@@ -207,3 +194,16 @@ pip install -r requirements.txt
     '''
 
 注意，安装`pip install -e .` 之后的再`uninstall` 不会删除/usr/bin 目录下的fileset
+
+# import obj
+
+    # Install the Q() object in sys.modules so that "import q" gives a callable q.
+    sys.modules['q'] = Q()
+
+# Requirements
+    pip freeze > requirements.txt
+    pip install -r requirements.txt
+
+# install dev
+
+    pip install -e dir 

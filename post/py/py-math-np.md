@@ -42,7 +42,7 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
     df.loc[:,['col1','col2']]
     df.loc[:,'col1']
 
-### empty
+### index empty
 
     Notice the index is empty:
     >>> df_empty = pd.DataFrame({'A' : []})
@@ -55,8 +55,19 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
 ### setIndex
 let colume as index
 
-    df2 = df.set_index('name')
     df.set_index('name', inplace=True)
+    In [84]: d.set_index('b')
+    Out[84]:
+       a  c
+    b
+    2  2  3
+    3  3  2
+    In [88]: d.index=df['b']
+    Out[89]:
+       a  b  c
+    b
+    2  2  2  3
+    3  3  3  2
 
 revert index to column
 
@@ -69,7 +80,8 @@ in index and colume and values
     'col_name' in df
     'col_value' in df.values
 
-
+### set all column value
+    df['时间'] = self.yesterday
 
 ### filter
 #### select column field:
@@ -116,8 +128,22 @@ sigle column
 ### sort df
     df = df.sort_values(by=['col1', 'col2'], ascending=False)
 
-### concat
+### concat merge
+with same index
 
+    In [48]: pd.concat([df,df2],axis=1)
+    Out[48]:
+        a  b  a  c
+        2  2  2  3
+        3  3  3  2
+
+    # drop duplicate columns
+    df = df.loc[:,~df.columns.duplicated()]
+
+
+append df
+
+    pandas.concat([df1, df2])
     df1.append(df2)
     s1.append(s2)
 
@@ -150,6 +176,7 @@ update row via loc:
     DataFrame['col1']= s
 
 ### to_dict:
+    print(df.set_index('device_id').T.to_dict())
 
     df.to_dict()
     df.to_json()
@@ -262,9 +289,14 @@ s是df 的映射，df 随着s 的修改而修改
 
     >>> s = pd.Series([1, 2], index=[0,1]
 
+update via key
+
+    # ok
+    s['key'] = 'value'
+
 update via series
 
-    # will not update index=2
+    # will not update index=2(not exists)
     >>> s.update(pd.Series([4, 5, 6], index=[0,1,2])) 
 
 update via dict
@@ -273,10 +305,6 @@ update via dict
     # error
     >>> s.update(({'key':'value'}))
 
-update via key
-
-    # ok
-    s['key'] = 'value'
 
 ### to_dict(), to_json, tolist():
 

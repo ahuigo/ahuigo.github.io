@@ -53,7 +53,7 @@ modify host for https:
 # upload
 
 	curl 'http://localhost:8000/up.php'  -F 'pic=@img/a.png'
-	curl 'http://localhost:8000/up.php'  -F 'pic=@img/a.png' -F 'var=value'
+	curl 'http://localhost:8000/up.php'  -F 'pic=@img/a.png' -F 'var=value' -F 'k2=v2'
 	curl -F "file=@localfile;filename=nameinpost" url.com
 	curl -F "file=@localfile;filename=nameinpost;type=text/html" url.com
 	curl 'http://localhost:8000/up.php' -H 'Content-Type: multipart/form-data; boundary=W' -d $'--W\r\nContent-Disposition: form-data; name="pic"; filename="a.png"\r\nContent-Type: image/png\r\n\r\ndata\r\n--W\r\nContent-Disposition: form-data; name="var"\r\n\r\nvalue\r\n--W--\r\n'

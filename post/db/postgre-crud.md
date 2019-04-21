@@ -89,11 +89,17 @@ json_typeof(var)
     COALESCE(counters->>'bar','0')::int
 
 ## string
-1. 字符串，只能用`'` 为边界，又引号是用于关键字的(e.g. table_name)
-2. postgre 不支持\ 转义, 只支持双单引号转义
+1. 字符串，只能用`'` 为边界，双引号是用于关键字的(e.g. table_name)
 
-    '\\'
-    'a''b' # 不支持 ’a\'b' 
+postgre 不支持\ 转义 
+
+    select '\\'; #按字面输出
+    select '\''; #error 
+
+插入单引号
+
+    select 'ahui''s blog'; 
+    select 'a''b' # 不支持 ’a\'b' 
 
 ### concat
     select 'a:'||'b'||1.2 as bb;

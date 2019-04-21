@@ -9,6 +9,7 @@ description:
 	import re
     re.compile(pattern, [,modifier]).match(str)
     re.match(pattern, str[, modifier])
+    re.sub(r'test', 'xxx', 'Testing', flags=re.IGNORECASE)
 
 ## ignore string Escape
 

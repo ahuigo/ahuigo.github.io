@@ -175,6 +175,14 @@ formater: https://docs.python.org/3/library/datetime.html
     Microsecond
         %f  000000,...,999999
 
+### today
+开始和结束
+
+    >>> datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+    datetime.datetime(2015, 1, 12, 0, 0)
+    >>> datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+    datetime.datetime(2015, 1, 12, 23, 59, 59, 999999)
+
 ## set time
 ### by datetime：
 

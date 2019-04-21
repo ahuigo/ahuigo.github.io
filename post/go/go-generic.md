@@ -19,3 +19,31 @@ http://coyee.com/article/10700-dealing-with-the-lack-of-generics-in-go
    缺点 构建需要第三方工具，如果一个模板为不同的目标类型多次实例化，编译后二进制文件较大。
 
 作者：达 链接：https://www.zhihu.com/question/62991191/answer/342121627
+
+
+## interface poly
+接口范型的实现主要示例为: go-lib/go-poly (工厂)
+interface 实现工厂多态
+
+## type assertion generic
+    type Container []interface{}
+    func (c *Container) Put(elem interface{}) {
+        *c = append(*c, elem)
+    }
+    func (c *Container) Get() interface{} {
+        elem := (*c)[0]
+        *c = (*c)[1:]
+        return elem
+    }
+
+    // The calling code does the type assertion when retrieving an element.
+    func assertExample() {
+        intContainer := &Container{}
+        intContainer.Put(7)
+        intContainer.Put(42)
+        elem, ok := intContainer.Get().(int) // assert that the actual type is int
+        if !ok {
+            fmt.Println("Unable to read an int from intContainer")
+        }
+        fmt.Printf("assertExample: %d (%T)\n", elem, elem)
+    }

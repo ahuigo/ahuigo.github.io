@@ -5,15 +5,17 @@ category: blog
 description: 
 date: 2018-09-28
 ---
-# Preface
+# Python mail
 1. yagmail 高效简单的email工具
 2. 邮件收发过程
 
 ## yagmail
 ```
 import yagmail
-yag = yagmail.SMTP(user='test@qq.com', password='password', host='smtp.163.com', port='25')
-yag.send(user, subject = "I now can send an attachment", attachments=['a.txt', 'b.jpg'])
+yag = yagmail.SMTP(user='test@163.com', password='password', host='smtp.163.com', port=25)
+yag = yagmail.SMTP('test@163.com', host='smtp.163.com', port=587, smtp_starttls=True, smtp_ssl=False)
+yag = yagmail.SMTP('mygmailusername')
+yag.send(['to@someone.com'], 'subject', content, attachments=['a.txt', 'b.jpg'])
 ```
 
 # 邮件收发过程

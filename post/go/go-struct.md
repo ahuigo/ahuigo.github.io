@@ -12,6 +12,13 @@ struct 是值类型，slice 是引用类型(指针), 不过以下方法是按引
     b = a
     fmt.Printf("%p,%p\n", &a,&b)  //not same
 
+## 特殊定义
+    type A struct { int }
+    var a=A{}
+    a.int = 1
+    fmt.Println(a)
+
+
 ## access
 
 	v := Vertex{1, 2}
