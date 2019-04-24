@@ -189,6 +189,21 @@ e.g.
     app.router.add_get('/greet/{name}', Handler().handle_greeting)
     name = request.match_info.get('name', "Anonymous")
 
+
+## files
+    data = yield from request.post()
+
+    # filename contains the name of the file in string format.
+    filename = data['mp3'].filename
+
+    # input_file contains the actual file data which needs to be
+    # stored somewhere.
+
+    input_file = data['mp3'].file
+
+    content = input_file.read()
+
+
 # Response
 ## response type
     1. text: 
