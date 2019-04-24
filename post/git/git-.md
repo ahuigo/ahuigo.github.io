@@ -274,7 +274,7 @@ You want to nuke commit C and never see it again.
 ### git reset hard(commit/index/working)
 `--hard` You do this:
 
-	git reset --hard;	# same: git reset HEAD . --hard
+	git reset --hard B;	# same: git reset HEAD . --hard
 	git reset --hard HEAD~1 (revert commit/index/working)
 		clean unstaged/staged files
 

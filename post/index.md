@@ -1,5 +1,4 @@
 # AHUIGO 的笔记
-- 2019-03-11 [Django Notes](/b/py/django) 
 - 2019-03-08 [does-a-thread-waiting-on-io-also-block-a-core?](/b/py/py-async-cpu) 
 - 2019-03-02 [cache 穿透问题](/b/db/redis-cache) 
 - 2019-02-28 [字符串搜索算法KMP](/b/algorithm/algo-str-search) 

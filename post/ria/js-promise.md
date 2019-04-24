@@ -62,6 +62,11 @@ ajax函数将返回Promise对象:
         log.innerText = 'ERROR: ' + status;
     });
 
+## catch
+catch 会捕获exception
+
+    (new Promise(()=>{throw new Exception('aaaaa');})).catch(r=>console.log({r:r}))
+
 ## 串行
 
     // 5秒后返回input*input的计算结果:

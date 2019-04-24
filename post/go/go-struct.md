@@ -37,6 +37,40 @@ copy:
 
     v_copy := v
 
+partial copy struct
+
+    package main
+    import "fmt"
+    import "github.com/jinzhu/copier"
+
+    type RegistrationRequest struct {
+        Email    *string
+        Email2   *string
+        Username *string
+        Password *string
+        Name     string
+    }
+
+    type User struct {
+        Email    *string
+        Username *string
+        Password *string
+        Name     string
+    }
+
+    func main() {
+        user := User{}
+        req := RegistrationRequest{}
+        user.Email, user.Password, user.Username = new(string), new(string), new(string)
+        user.Name = "John Doe"
+        *user.Email = "a@b.com"
+        *user.Password = "1234"
+        *user.Username = "johndoe"
+        fmt.Println("User :",user.Name, *user.Email, *user.Username, *user.Password)
+        copier.Copy(&req, &user)
+        fmt.Println("RegistrationRequest :",req.Name, *req.Email, *req.Username, *req.Password)
+    }
+
 ## define:
 
     type Node struct {
@@ -188,6 +222,23 @@ struct method 是一个值：
         fmt.Println(d.Speak())  //Speak
     }
 
+注意指针类型匹配，
+
+    type A interface{
+        Say()
+    }
+    func Test(o A){
+    }
+
+    func (d Dog) Say() { }
+    Test(&Dog{}) //ok
+    Test(Dog{}) //ok
+
+not work
+
+    func (d *Dog) Say() { }
+    Test(&Dog{}) //ok
+    Test(Dog{}) //not ok
 
 ## init 
 init 时必须包含全部字段

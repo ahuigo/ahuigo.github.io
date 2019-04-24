@@ -26,16 +26,23 @@ title:	js dom file
 1. 可以通过第三个可选参数设置发送请求的头 `Content-Disposition` 指定文件名。
 2. 如果不指定文件名将使用名字“`blob`”
 
-## fromnode
+## formnode
 Via FormData and formnode:
 
     formobj = document.getElementById('form1')
     fd = formobj.getFormData()
 	fd = new FormData(formobj);
 
+### loop form
+
     for (var pair of formData.entries()) {
         console.log(pair[0]+ ', ' + pair[1]); 
     }
+
+    fd.append('a',1)
+    fd.append('a',2)
+    fd.get('a') // 只能得到一个a, 实际有多个, new FormData(formnode)其实也是多个
+    fd.get('files[]') // 只能得到一个file
 
 ## file
 Via FormData and file:

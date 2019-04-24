@@ -37,7 +37,6 @@ INSERT INTO table (id, field, field2)
         ON CONSTRAINT constraint_name
         WHERE predicate
     action:
-        DO NOTHING
         DO UPDATE SET column_1 = EXCLUDED.value_1,v2, .. WHERE condition
 
 ## select 

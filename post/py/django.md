@@ -1,6 +1,7 @@
 ---
 title: Django Notes
 date: 2019-03-11
+private:
 ---
 # Models
 ## raw sql

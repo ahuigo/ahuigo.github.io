@@ -42,6 +42,10 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
     df.loc[:,['col1','col2']]
     df.loc[:,'col1']
 
+### rename column
+
+    df=df.rename(index=str, columns={ "date": "时间"})
+
 ### index empty
 
     Notice the index is empty:
@@ -116,7 +120,6 @@ sigle column
     df[0:2]
     df.iloc[0:2, 1:5]
 
-
 ### dict/series to dataFrame
 
     rows_list = [series1,...]
@@ -127,6 +130,36 @@ sigle column
 
 ### sort df
     df = df.sort_values(by=['col1', 'col2'], ascending=False)
+
+### merge
+Consider this behavior with a MultiIndex:
+
+    mi = pd.MultiIndex.from_tuples([(1,10),(2,20),(3,30),(4,40)], names=['a','b'])
+    df1 = pd.DataFrame({'c': [100,200,300,400]}, index=mi)
+    df2 = pd.DataFrame({'a' : [1,3], 'b' : [10, 30], 'e' : [1000, 3000]})
+    print("df1\n", df1)
+    print("df2\n", df2)
+    print("merge\n", pd.merge(df1, df2, how='left', left_index=True, right_on=['a','b']))
+
+This yields:
+
+    df1
+            c
+    a b      
+    1 10  100
+    2 20  200
+    3 30  300
+    4 40  400
+    df2
+        a   b     e
+    0  1  10  1000
+    1  3  30  3000
+    merge
+        c    a     b       e
+    0  100  1.0  10.0  1000.0
+    1  200  2.0  20.0     NaN
+    1  300  3.0  30.0  3000.0
+    1  400  4.0  40.0     NaN
 
 ### concat merge
 with same index
@@ -179,6 +212,7 @@ update row via loc:
     print(df.set_index('device_id').T.to_dict())
 
     df.to_dict()
+    df.to_dict('record') # 按行
     df.to_json()
     series.to_dict()
     series.to_json()
@@ -213,15 +247,20 @@ update row via loc:
     d    1
     e    1
 
-### for
+### for loop
     for colname, series in df.items():
+        print col['index1']
     for index, row in df.iterrows():
+        row['col'] = v              # not work, iterrows are copies
+        df.loc[index,'col'] = v     # work, 但是会扩展col
+        df['col'][index] = v     # work
         print row['c1'], row['c2']
 
 ## series
 Notice: pd.Series(d).name 是一个保留keyword, 请使用pd.Series(d)['name']
 
     s = pd.Series([1, 2, 3])
+    s = pd.Series({'col1':1})
     s[['col1','col2']]
     s.col1
     s['col1']
