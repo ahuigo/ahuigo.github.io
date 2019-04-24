@@ -160,6 +160,14 @@ await reject:
     //pending
     await new Promise(r=>{})
 
+## await catch data
+
+    f=async ()=>{
+        p=await (new Promise(()=>{throw new Exception('aaaaa');}).catch(r=>100)); 
+        //100
+        console.log(p)
+    }
+
 ## try catch 
 catch err+data
 

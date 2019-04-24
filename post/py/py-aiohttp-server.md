@@ -205,6 +205,11 @@ e.g.
 
 
 # Response
+
+    def handler(request):
+        data = {'some': 'data'}
+        return web.json_response(data)
+
 ## response type
     1. text: 
         return web.Response(text="Hello, world", status=404)

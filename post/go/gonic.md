@@ -9,6 +9,13 @@ time.Time accept format
     2002-10-02T15:00:00Z
     2002-10-02T15:00:00.05Z
 
+# debug
+Required 限制了，不能传0，"" 空字符等等！！！
+
+    struct{
+        PackageType int    `form:"package_type" binding:"required"`
+    }
+
 # gonic bind
 
 ## bind: query
@@ -86,6 +93,7 @@ Test it with:
 
     $ curl -v --form user=user --form password=password http://localhost:8080/login
 
+### query('name') + PostForm('name')
 or:
 
     id := c.Query("id") // shortcut for c.Request.URL.Query().Get("id")
@@ -143,3 +151,6 @@ single FromFile
     // single file
     file, _ := c.FormFile("file")
     log.Println(file.Filename)
+
+# Response
+    c.JSON(http.StatusOK, gin.H{"user": user, "value": value})

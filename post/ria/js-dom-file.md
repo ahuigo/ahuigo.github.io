@@ -67,12 +67,10 @@ Via FormData and file:
 
     fileInput.value; //可以判断是束有文件( 假路径)
 	file = document.getElementById('fileToUpload').files[0];
-	file.size
-		bytes
-	file.name
-		filename
-	ifle.type
-		image/png ....
+	file.size bytes 数
+	file.webkitRelativePath: 文件路径
+	file.name: filename
+	ifle.type: image/png ....
 
 ## blob
 
