@@ -329,6 +329,7 @@ shell 支持一些调试参数：
 1. 在脚本的头部 `#/bin/sh -x`
 1. 在脚本中用set 设置 `set -x` 或者 `set -o xtrace`, 用于在命令执行前打印命令
 
+Output:
 
 	set -x			# activate debugging from here
 	w

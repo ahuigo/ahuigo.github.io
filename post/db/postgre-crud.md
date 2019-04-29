@@ -49,6 +49,16 @@ INSERT INTO table (id, field, field2)
 
     select 'abc'
 
+### group by 
+`wmname` must appear in the GROUP BY clause or be used in an aggregate function
+
+    SELECT cname, wmname, MAX(avg)  FROM makerar GROUP BY cname;
+
+use distinct:
+
+    SELECT DISTINCT ON (cname) cname , wmname, MAX(avg)  FROM makerar GROUP BY cname;
+
+
 ## del
 SELECT '{"a":[null,{"b":[3.14]}]}' #- '{a,1,b,0}'
 
@@ -87,6 +97,14 @@ json_typeof(var)
     COALESCE(variable,0)
     COALESCE(counters->>'bar','0')::int
 
+## timestamp
+
+   select date '2001-09-28' + integer '7'
+   select created_at + interval '1' day * day_field as deadline
+   select created_at + interval '1' hour * hour_field as deadline
+
+   select created_at + hour_field as deadline //not work
+
 ## string
 1. 字符串，只能用`'` 为边界，双引号是用于关键字的(e.g. table_name)
 
@@ -105,11 +123,31 @@ postgre 不支持\ 转义
     select concat('a:','b', 1.2)
     select concat(key1,key2)
 
+join:
+
+    CONCAT_WS(separator,str_1,str_2,...);
+
+join group:
+
+    string_agg(actor, ', ') AS actor_list
+    SELECT movie, string_agg(actor, ', ' ORDER BY actor) AS actor_list FROM   tbl GROUP  BY 1;
+
+
+### string length
+
+### string to array
+
+    (CHAR_LENGTH(name) - CHAR_LENGTH(REPLACE(name, 'substring', ''))) / CHAR_LENGTH('substring')
+
 ## array
 
     select array[1,2];
     select array['a','b'];
     select array['a',1]; # error
+
+### array length
+
+    select array_length(string_to_array(name, 'o'), 1) - 1
 
 ## jsonb
 https://www.postgresql.org/docs/current/static/functions-json.html

@@ -13,7 +13,7 @@ imap, online 在线编辑，读取后服务器端不会删除。
 Exchange主要是微软公司的一套电子邮件服务组件
 
 
-# 网易企业邮箱
+## 网易企业邮箱
 http://qiye.163.com/mail/help-client.htm#contentTab=client
 
 imap:
@@ -29,7 +29,11 @@ pop:
 	pop.qiye.163.com
 		110 or 995+SSL
 
+## exchange
+smtp.partner.outlook.cn
+
 ## qq server:
+> qq 邮件可以将特殊的邮件，转发到自己的备用邮箱中去： 设置-收信规则
 接收邮件服务器：imap.qq.com
 发送邮件服务器：smtp.qq.com
 账户名：您的QQ邮箱账户名（如果您是VIP邮箱，账户名需要填写完整的邮件地址）
@@ -44,14 +48,15 @@ pop:
 密码：您的QQ邮箱密码
 电子邮件地址：您的QQ邮箱的完整邮件地址
 
-# mutt
+# Send mail
+## mutt
 mutt 支持强大的交互，功能完备。
 
 On Mac OS X:
 
 	brew  intall mutt
 
-## Conf
+### Conf
 参考[mutt faq](http://dev.mutt.org/trac/wiki/MuttFaq/Header)
 
 	vim ~/.muttrc
@@ -66,19 +71,19 @@ On Mac OS X:
 		set smtp_pass = "password"
 		set smtp_url = "smtp://username@smtp.gmail.com:587/"
 
-## Usage:
+### Usage:
 
 	 mutt -s "Test mail" -a /tmp/file.tar.gz 'a132811@gmail.com,ahuigo@qq.com' < /tmp/mailmessage.txt
 	 echo 'msg' |  mutt -s "Test mail" -a /tmp/file.tar.gz 'a132811@gmail.com'
 
-# mail
+## mail command
 Usage:
 
 	mail [-EiInv] [-s subject] [-c cc-addr] [-b bcc-addr] [-F] to-addr ... [-sendmail-option ...]
 	$msg = escapeshellarg($msg);
 	echo 'body'|  mail -s 'subject msg' 'a132811@gmail.com,xuehui1@staff.com'
 
-## config
+### config
 
 	$ cat ~/.msmtprc
 	defaults
@@ -94,11 +99,11 @@ Usage:
 	password your_password
 	account default : hilo
 
-> for `php.ini` sendmail_path = "/usr/bin/msmtp -C /path/to/msmtprc -t"
+> In `php.ini` sendmail_path = "/usr/bin/msmtp -C /path/to/msmtprc -t"
 
     $ vim /etc/mail.rc
 
-## Send file
+### Send file
 
 	uuencode -m /path/to/a.txt a.txt |  mail -s 'subject msg' 'a132811@gmail.com,xuehui1@stff.com' #附件通过uuencode base64编码
 	uuencode /path/to/a.txt a.txt |  mail -s 'subject msg' 'a132811@gmail.com,xuehui1@stff.com' #附件通过uuencode编码
@@ -107,7 +112,7 @@ Usage:
 
 > uuencode infile remotefile
 
-## mail交互
+### mail交互
 在mac中, 你收到的邮件内容默认会放置在/var/mail/UserName下, 比如我的 /var/mail/hilojack
 输入mail就可以查看来信了. 退出后, 未读消息会放置到$HOME/mbox
 
@@ -135,32 +140,7 @@ Usage:
 	h				print out active message headers
 	!				shell escape
 
-# mail postfix
-postfix是Wietse Venema在IBM的GPL协议之下开发的MTA（邮件传输代理）软件。下面一段话摘自postfix的官方站点（http://www.postfix.org）：“postfix是Wietse Venema想要为使用最广泛的sendmail提供替代品的一个尝试。Postfix试图更快、更容易管理、更安全，同时还与sendmail保持足够的兼容性。”
-
-	configuration /etc/postfix
-
-# mail log
-mac 下, 所有的mail tool的mail log默认是在:
-
-	cat /var/log/mail.log
-
-可以看到postfix/master pickup cleanup qmgr smtp qmgr 等相关日志
-
-	May  5 14:37:23 hilojack.local postfix/master[74700]: daemon started -- version 2.9.4, configuration /etc/postfix
-	May  5 14:37:23 hilojack.local postfix/pickup[74701]: 7AA3415BCBD6: uid=501 from=<hilojack>
-	May  5 14:37:23 hilojack.local postfix/cleanup[74703]: 7AA3415BCBD6: message-id=<20140505063723.7AA3415BCBD6@hilojack.local>
-	May  5 14:37:23 hilojack.local postfix/qmgr[74702]: 7AA3415BCBD6: from=<hilojack@hilojack.local>, size=1158, nrcpt=2 (queue active)
-	May  5 14:37:23 hilojack.local postfix/smtp[74706]: 7AA3415BCBD6: to=<xuehui1@staff.sina.com.cn>, relay=staffmx1.staff.sina.com.cn[10.210.101.78]:25, delay=1.1, delays=0.69/0.01/0.04/0.4, dsn=2.0.0, status=sent (250 2.0.0 s456bLjM011011-s456bLjN011011 Message accepted for delivery)
-	May  5 14:37:26 hilojack.local postfix/smtp[74705]: 7AA3415BCBD6: to=<a132811@gmail.com>, relay=gmail-smtp-in.l.google.com[74.125.129.27]:25, delay=3.3, delays=0.69/0.01/1.1/1.5, dsn=2.0.0, status=sent (250 2.0.0 OK 1399271845 yb4si7426842pab.21 - gsmtp)
-	May  5 14:37:26 hilojack.local postfix/qmgr[74702]: 7AA3415BCBD6: removed
-
-## 550
-如果发现`log`中有550 log, 可能是[群发垃圾拒绝](http://service.mail.qq.com/cgi-bin/help?subtype=1&&id=20022&&no=1000726):
-
-	550 Mail content denied "对于具有群发性质的邮件，如果出现用户普遍表示反感或集中投诉的情况，腾讯邮箱将禁止类似此邮件内容继续发送。
-
-# perl mail
+## perl mail
 
 	#!/usr/bin/perl
 	use MIME::Entity;
@@ -182,15 +162,15 @@ mac 下, 所有的mail tool的mail log默认是在:
 	$message->print(\*MAIL);
 	close MAIL;
 
-# Mac Mail
+## Mac Mail config
 Mac mail 有个地址薄, 查看方法为：`Select Window | Previous Recipients `from the menu in Mac OS X Mail.
 
 如果你不想要某个`Recipients`, 你也可以在地址栏选择`Recipients`, 然后删除它
 
-# php mail
+## php mail
 > http://stackoverflow.com/questions/12301358/send-attachments-with-php-mail
 
-## mail()
+### write php mail
 
 	$file = './a.txt';
 	$from_name = 'hilojack';
@@ -229,7 +209,7 @@ Mac mail 有个地址薄, 查看方法为：`Select Window | Previous Recipients
 		return "mail_error";
 	}
 
-## PHPMailer
+### PHPMailer
 https://github.com/PHPMailer/PHPMailer
 
     require 'PHPMailerAutoload.php';
@@ -271,7 +251,7 @@ https://github.com/PHPMailer/PHPMailer
         echo 'Message has been sent';
     }
 
-### local mail
+#### local mail
 
     require 'PHPMailerAutoload.php';
 
@@ -301,5 +281,129 @@ https://github.com/PHPMailer/PHPMailer
         echo 'Message has been sent';
     }
 
-# qq mail
-qq 邮件可以将特殊的邮件，转发到自己的备用邮箱中去： 设置-收信规则
+
+
+# mail postfix(MTA)
+postfix是Wietse Venema在IBM的GPL协议之下开发的MTA（邮件传输代理）软件。下面一段话摘自postfix的官方站点（http://www.postfix.org）：“postfix是Wietse Venema想要为使用最广泛的sendmail提供替代品的一个尝试。Postfix试图更快、更容易管理、更安全，同时还与sendmail保持足够的兼容性。”
+
+	configuration /etc/postfix
+
+## mail log
+mac 下, 所有的mail tool的mail log默认是在:
+
+	cat /var/log/mail.log
+
+可以看到postfix/master pickup cleanup qmgr smtp qmgr 等相关日志
+
+	May  5 14:37:23 hilojack.local postfix/master[74700]: daemon started -- version 2.9.4, configuration /etc/postfix
+	May  5 14:37:23 hilojack.local postfix/pickup[74701]: 7AA3415BCBD6: uid=501 from=<hilojack>
+	May  5 14:37:23 hilojack.local postfix/cleanup[74703]: 7AA3415BCBD6: message-id=<20140505063723.7AA3415BCBD6@hilojack.local>
+	May  5 14:37:23 hilojack.local postfix/qmgr[74702]: 7AA3415BCBD6: from=<hilojack@hilojack.local>, size=1158, nrcpt=2 (queue active)
+	May  5 14:37:23 hilojack.local postfix/smtp[74706]: 7AA3415BCBD6: to=<xuehui1@staff.sina.com.cn>, relay=staffmx1.staff.sina.com.cn[10.210.101.78]:25, delay=1.1, delays=0.69/0.01/0.04/0.4, dsn=2.0.0, status=sent (250 2.0.0 s456bLjM011011-s456bLjN011011 Message accepted for delivery)
+	May  5 14:37:26 hilojack.local postfix/smtp[74705]: 7AA3415BCBD6: to=<a132811@gmail.com>, relay=gmail-smtp-in.l.google.com[74.125.129.27]:25, delay=3.3, delays=0.69/0.01/1.1/1.5, dsn=2.0.0, status=sent (250 2.0.0 OK 1399271845 yb4si7426842pab.21 - gsmtp)
+	May  5 14:37:26 hilojack.local postfix/qmgr[74702]: 7AA3415BCBD6: removed
+
+### 550
+如果发现`log`中有550 log, 可能是[群发垃圾拒绝](http://service.mail.qq.com/cgi-bin/help?subtype=1&&id=20022&&no=1000726):
+
+	550 Mail content denied "对于具有群发性质的邮件，如果出现用户普遍表示反感或集中投诉的情况，腾讯邮箱将禁止类似此邮件内容继续发送。
+
+
+## postfix with qq smtp mta
+本节来源于依云的文章: 配置 Postfix 通过外部 SMTP 服务器发邮件
+https://blog.lilydjwg.me/2016/5/29/send-mail-with-postfix-via-external-smtp-server.201522.html
+
+Postfix 可以用作普通的 SMTP 服务器。也可以是腾讯邮箱的MTA, 这个MTA 配置如下
+
+    # main.cf 里写上：
+    relayhost = [smtp.exmail.qq.com]:587
+    
+    smtp_sasl_auth_enable = yes
+    smtp_sasl_security_options = noanonymous
+    smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+    smtp_use_tls = yes
+    smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+    smtp_sender_dependent_authentication = yes
+    smtp_generic_maps = hash:/etc/postfix/generic
+
+/etc/postfix/sasl_passwd 里边写用户名和密码
+
+    [smtp.exmail.qq.com]:587 user@example.com:password
+
+/etc/postfix/generic 里配置信封上的发件人（MAIL FROM 命令）的地址重写，不然腾讯不收：
+
+    # hostname 就是 Postfix 里那个 myhostname，默认是机器的主机名。这句配置的意思是，本来发件人地址是这个主机名的，全部改写成 user@example.com 这个。
+    @hostname user@example.com
+
+然后生存 hash 数据库，并更改权限（更好的做法当然是创建的时候就弄好权限）：
+
+    postmap /etc/postfix/sasl_passwd
+    postmap /etc/postfix/generic
+    chmod 600 /etc/postfix/sasl_passwd*
+
+就绪，启动或者重新加载 Postfix 就可以了：
+
+    systemctl reload postfix
+
+## postfix Sending mail without authentication
+https://wiki.centos.org/zh/HowTos/postfix
+
+配置完了后 qqmail 支持：Allow Anonymous Relay on a Receive Connector
+
+    echo 'body' | mail -s 'subjcect' ahui123@ahui.com
+
+mac osx 查看postfix 日志： https://apple.stackexchange.com/questions/276322/where-is-the-postfix-log-on-sierra
+
+    $ log stream --predicate  '(process == "smtpd") || (process == "smtp")' --info
+
+
+# send without authentication
+先查找可用的smtp server:
+
+    $ dig mx gmail.com +short
+    5 gmail-smtp-in.l.google.com.
+    40 alt4.gmail-smtp-in.l.google.com.
+
+The following python script sends email to a gmail account without authentication.
+
+    import smtplib
+
+    fromaddr = 'sending@example.com'
+    toaddrs  = ['receiving@gmail.com']
+    msg = '''
+        From: {fromaddr}
+        To: {toaddr}
+        Subject: testin'     
+        This is a test 
+        .
+    '''
+
+    msg = msg.format(fromaddr =fromaddr, toaddr = toaddrs[0])
+    # The actual mail send
+    server = smtplib.SMTP('gmail-smtp-in.l.google.com:25')
+    server.starttls()
+    server.ehlo("example.com")
+    server.mail(fromaddr)
+    server.rcpt(toaddrs[0])
+    server.data(msg)
+    server.quit()  
+
+Or try the following Telnet snippet
+
+    telnet gmail-smtp-in.l.google.com 25
+
+    HELO sendingdomain.com
+
+    MAIL FROM:<user@sending.com>
+
+    RCPT TO:<playingwithtelnet@gmail.com>
+
+    DATA
+    From: <user@sending.com>
+    To: <playingwithtelnet@gmail.com>
+    Subject: Just a test email
+
+    The body of the mail goes here.          
+    .
+
+    QUIT

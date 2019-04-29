@@ -76,7 +76,7 @@ or
     router.GET("/user/:name", func(c *gin.Context) {
 		name := c.Param("name")
 
-## Multipart/Urlencoded
+## Multipart/Urlencoded + form-data
 curl  "https://httpbin.org/post"  -d 'file=go&bucket=bucketpath&a=1
 
     type LoginForm struct {
@@ -84,16 +84,14 @@ curl  "https://httpbin.org/post"  -d 'file=go&bucket=bucketpath&a=1
         Password string `form:"password" binding:"required"`
     }
 
-    // c.ShouldBindWith(&form, binding.Form)
-    // or you can simply use autobinding with ShouldBind method:
-    var form LoginForm
-    if c.ShouldBind(&form) == nil {
+    if c.ShouldBindWith(&form, binding.Form)
+    if c.ShouldBind(&form) == nil 
 
 Test it with:
 
     $ curl -v --form user=user --form password=password http://localhost:8080/login
 
-### query('name') + PostForm('name')
+## query('name') + PostForm('name')
 or:
 
     id := c.Query("id") // shortcut for c.Request.URL.Query().Get("id")
@@ -101,10 +99,9 @@ or:
     name := c.PostForm("name")
     nick := c.DefaultPostForm("nick", "anonymous")
 
-## Multipart/form-data
+## Multipart/file(form-data)
     // 'Content-Type: multipart/form-data; boundary=---xxx'
     curl  "https://httpbin.org/post"  -F 'file=@a.txt' -F 'key=value'
-
 
 via bind
 
@@ -151,6 +148,39 @@ single FromFile
     // single file
     file, _ := c.FormFile("file")
     log.Println(file.Filename)
+
+### open file
+fileHeader
+
+    // getFileHeader
+    fileHeader := c.FormFile("upload")
+    fileHeader *FileHeader
+        content, Filename
+        *multipart.FileHeader
+
+    //fp = fileHeader.Open()
+    func (fh *FileHeader) Open() (File, error) {
+        if b := fh.content; b != nil {
+            r := io.NewSectionReader(bytes.NewReader(b), 0, int64(len(b)))
+            return sectionReadCloser{r}, nil
+        }
+        return os.Open(fh.tmpfile)
+    }
+
+file:
+
+    file File
+    file, header , err := c.Request.FormFile("upload")
+    out, err := os.Create("./tmp/"+header.Filename+".png")
+    defer out.Close()
+    _, err = io.Copy(out, file)
+
+
+## Body Stream
+https://github.com/gin-gonic/gin/pull/857/files
+
+    func (c *Context) GetRawData() ([]byte, error) {
+        return ioutil.ReadAll(c.Request.Body)
 
 # Response
     c.JSON(http.StatusOK, gin.H{"user": user, "value": value})

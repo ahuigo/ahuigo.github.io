@@ -253,7 +253,7 @@ example:
         });
         console.log('reject:', await p.then(e=>e+1).catch(e=>e+3).catch(e=>e+30)); //reject 3
         console.log('reject:', await p.then(e=>e+1).catch(e=>e+3).then(e=>e+30)); //reject 33(from memory)
-        console.log('resolve:', await Promise.resolve(0).then(e=>e+1).catch(e=>e+3).then(e=>e+30)); //reject 33(from memory)
+        console.log('resolve:', await Promise.resolve(0).then(e=>e+1).catch(e=>e+3).then(e=>e+30)); //reject 31(from memory)
     })()
 
 result:

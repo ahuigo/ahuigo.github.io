@@ -131,7 +131,6 @@ for list:
         .sort((a,b)=>a.innerText>b.innerText?1:-1)
         .map(node=>list.appendChild(node))
 
-
 ## splice 
 操作方法:
 
@@ -217,8 +216,14 @@ e.g.
     for(var i of [1,2,3]){console.log(i)}
 
 
+## chunk
+
+    for(i=0;i<arr.length; i=i+size){
+        arr.slice(i,i+size)
+    }
+
 ## .forEach
-string  没有此属性
+string  没有此属性. array/set/map 等都有
 3. .forEach: value、key、self(`arr + map-set-generator`本身)
 
     var m = new Map([[1, 'x'], [2, 'y'], [3, 'z']]);
@@ -309,9 +314,10 @@ Set crud:
 	归并方法:
 
 		.reduce(func);//从第1,2项开始; 不可以为空！单个按原值返回
-		.reduceRight(func);//从最后1,2项开始
+		.reduceRight(func);//倒序
+        //index 指向的是cur
 		arr.reduce(function(pre,cur,index,array_self){return pre+cur;})
 		[1,2,3].reduce(function(pre,cur,index,array_self){return pre+cur;})
-			array_self 作为数组是按引用传值的(数组元素length>=2)
+			array_self 作为数组是按引用传值的(数组元素length>=1)
 			prev = prev+ curr = 1+2 = 3;
 			prev = prev+ curr = 3+3 = 6;
