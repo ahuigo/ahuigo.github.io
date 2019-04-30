@@ -16,6 +16,7 @@ yag = yagmail.SMTP(user='test@163.com', password='password', host='smtp.163.com'
 yag = yagmail.SMTP('test@163.com', host='smtp.163.com', port=587, smtp_starttls=True, smtp_ssl=False)
 yag = yagmail.SMTP('mygmailusername')
 yag.send(['to@someone.com'], 'subject', content, attachments=['a.txt', 'b.jpg'])
+contents = ["comtent1", "contents2"]
 ```
 
 # 邮件收发过程

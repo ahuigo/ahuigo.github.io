@@ -83,6 +83,18 @@ Mac OSX Image 不可以修改路径：
     FROM    centos:6.7
     MAINTAINER      Fisher "fisher@sudops.com"
 
+##### ARG ENV
+docker `--build-arg <varname>=<value>`
+
+    ARG <name>[=<default value>]
+    ARG package_path=/mvp/
+    WORKDIR $package_path
+    ENV ENV_MODE=staging \
+        TEST=debug
+
+Note: ENV 同名变量会覆盖 ARG
+
+
 其他：
 
     # ENV
@@ -117,7 +129,7 @@ RUN 两种格式
     $ docker image build -t koa-demo .
     # 或者
     $ docker image build -t koa-demo:0.0.1 .
-    # 或者
+    # 或者省略image
     $ docker build -t koa-demo .
         new image id: 860c2(860c2、koa-demo:0.0.1都是镜像名)
 
@@ -150,6 +162,9 @@ Library latest 都是默认的,所以简化为
     $ docker login
 
 为本地的 image 标注用户名和版本。再发布
+
+    docker tag SOURCE_IMAGE[:TAG] registry.hub.works/username/IMAGE[:TAG]
+    docker push registry.hub.works/username/IMAGE[:TAG]
 
     $ docker image tag koa-demos:0.0.1 ruanyf/koa-demos:0.0.1
     $ docker image push [username]/[repository]:[tag]
@@ -249,11 +264,26 @@ http://www.opscoder.info/docker_monitor.html
 
     docker run
 
+## rm container
+Stop all running containers: 
+
+    docker stop $(docker ps -a -q)
+
+removes/deletes all stopped containers
+
+    docker rm $(docker ps -a -q) 
+
+remove all images
+
+    docker rmi $(docker images -q)
+
+
 ### 伪终端
 
     $ docker exec -ti <container-name> bash
     $ docker exec -ti <container-name> sh
-    $ docker run -i -t ubuntu:15.10 /bin/bash
+    $ docker run -it ubuntu:15.10 /bin/bash
+    -it 必须放在前面
     -t 启动伪终端
     -i 允许你对容器内的标准输入 (STDIN) 进行交互
 

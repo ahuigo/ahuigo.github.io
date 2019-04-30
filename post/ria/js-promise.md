@@ -130,8 +130,27 @@ Promise.all()实现如下：
     });
     // 同时执行p1和p2，并在它们都完成后执行then:
     Promise.all([p1, p2]).then(function (results) {
-        console.log(results); // 获得一个Array: ['P1', 'P2']
+        // 获得一个Array: ['P1', 'P2']
+        console.log('results：',results); 
     });
+
+如果有多个错误，all.catch 只能捕获一个错误: 
+
+    var p1 = async ()=> {
+        console.log('p11111')
+        return 'p1'; //same as resolve('p1')
+    };
+    var error1= async () =>{
+        return Promise.reject('Error1')
+    };
+    var error2= async () =>{
+        throw 'Error2 Value with no trace'
+        throw new Error('Error2 Exception')
+    };
+    Promise.all([p1(), error1(),error2()]).then(function (results) {
+        console.log('results：',results); 
+    }).catch(e=>console.log({'error':e}));
+
 
 同时向两个URL读取用户的个人信息，只需要获得先返回的结果即可。这种情况下，用Promise.race()实现：
 
@@ -149,17 +168,6 @@ Promise.all()实现如下：
 1. then: async
 2. await: sync
 
-await reject:
-
-    //UnhandledPromiseRejectionWarning
-    await Promise.reject(1)
-
-    //2
-    await Promise.reject(1).catch(r=>r+1)
-
-    //pending
-    await new Promise(r=>{})
-
 ## await catch data
 
     f=async ()=>{
@@ -167,6 +175,30 @@ await reject:
         //100
         console.log(p)
     }
+
+await reject:
+
+    f = async ()=>{
+        //UnhandledPromiseRejectionWarning
+        await Promise.reject(1)
+
+        //2
+        await Promise.reject(1).catch(r=>r+1)
+
+        //pending
+        await new Promise(r=>{})
+    }
+    f()
+
+## throw vs catch
+    new Promise(function() {
+        setTimeout(function() {
+            throw 'or nah';
+            //return Promise.reject('or nah'); //also won't work
+        }, 1000);
+    }).catch(function(e) {
+        console.log([e]); // doesn't happen
+    });
 
 ## try catch 
 catch err+data
@@ -201,9 +233,9 @@ Notice:
 await async: 输出2
 
     async function f(){return 1}
-    (async ()=>console.log(
-        1+await f()
-    ))()
+    (
+        async ()=>console.log(1+await f())
+    )()
 
 ## asyncFunc() is promise
 1. As promoise support both: then/catch/await

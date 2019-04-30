@@ -607,6 +607,8 @@ Ignore HostKey
 		User git
 		StrictHostKeyChecking no
 
+    $ ssh github.com-ahuigo
+
 ## del remote branch
 
 	git push origin :test

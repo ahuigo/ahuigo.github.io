@@ -216,6 +216,9 @@ web worker 是运行在后台的 JavaScript，不会影响页面的性能。
 >由于 web worker 位于外部文件中，它们无法访问下例 JavaScript 对象：
 `window/document/parent`.
 
+##  Channel Messaging API 
+ Channel Messaging API allows two separate scripts running in different browsing contexts attached to the same document (e.g., two IFrames, or the main document and an IFrame,
+
 # server-sent event 服务器发送事件
 Server-Sent 事件指的是网页自动获取来自服务器的更新。
 以前也可能做到这一点，前提是网页不得不询问是否有可用的更新。通过服务器发送事件，更新能够自动到达。

@@ -175,6 +175,8 @@ Refer http://blog.lizhigang.net/archives/249
 
 in ~/.ssh/config:
 
+    # Host alias_host
+    # Host m56
 	Host *
 	Protocol 2
 	TCPKeepAlive yes

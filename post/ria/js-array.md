@@ -17,12 +17,12 @@ empty item 不会被for in 遍历, 但是会被 for of 遍历
 ## create array
 ### range 序列:
 
-    [...Array(5).keys()];
+    [...Array(5).keys()]; //[[undefined, ....].keys]
     Array.from({length: 5}, (v,i) => i);
         [...Array(5)].map((v,i) => i);
     _.range(5)
 
-    for(let id in Array(5))
+    for(let _ in Array(5))
 
 undefined 数组:
 
