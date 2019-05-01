@@ -295,7 +295,9 @@ new func() 相当于:
         constructor(name){
             this.name = name
         }
-        method1(){}
+        method1(){
+            console.log(this.name)
+        }
     }
     class Cat extends Animal{
         constructor(name){
