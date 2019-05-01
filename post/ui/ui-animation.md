@@ -34,5 +34,9 @@ http://designmodo.github.io/Flat-UI/
 http://compute.vision/nouns/index.html
 https://www.flaticon.com/free-icon/weibo_408769#term=weibo&page=1&position=5
 
+# pic
+一个收集无版权插图的网站，提供 SVG / PNG 格式下载，并且允许更改颜色
+https://gallery.manypixels.co/
+
 # fonts
 http://www.ruanyifeng.com/blog/2008/06/typography_notes.html
