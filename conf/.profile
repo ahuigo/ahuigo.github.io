@@ -34,6 +34,8 @@ alias py='ipython3'
 alias p='python'
 export PYTHONPATH=.
 
+# docker
+alias drmi='docker rmi $( docker images --filter "dangling=true" -q --no-trunc)'
 
 # go
 # goenv

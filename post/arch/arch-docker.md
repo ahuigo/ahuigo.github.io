@@ -17,23 +17,35 @@ Docker 带来的方便之处：
 3. 弹性伸缩与扩展
 4. 持续集成
 
-安装启动：
+## 安装启动：
 
     yum install docker-ce docker-compose
     systemctl start docker.service
 
+daemon:
+
+    systemctl enable docker
+    systemctl start docker
+    systemctl stop docker
+
 # Docker 的组成
 - image
 - container 镜像的实例化
-- 
 
-## Image 镜像
+## Container 容器性质
+容器是镜像运行实体进程
+1. 每个容器进程是隔离的
+2. 容器停止运行时，里面的数据消失：
+   1. 不要像容器存储层写数据
+   2. 所有写入应该向数据卷Volume、宿主目录
+
+# Image 镜像
 Image是 特殊的文件系统，提供容器运行时所需的程序、库、资源、配置等文件。运行时不会被改变。
 
 它利用了 基于 Union FS的技术的**分层存储的架构**：
 1. 每一层的只修改自己的东西。比如某层删除了一个文件，运行时没有这个文件，但是上一层这个文件还是会跟随镜像
 
-### Image Path
+## Image Path
 Image 的linux 中可以设置保存的路径， centos修改/etc/sysconfig/docker 设置image path:
 
     other_args="-g /var/lib/imagedir"
@@ -42,19 +54,24 @@ Mac OSX Image 不可以修改路径：
 
     ~/Library/Containers/com.docker.docker/...
 
-### list images
+## list images
 
     docker images -a
     docker search httpd
     docker run httpd
 
-### rm image
+## rm image
 
     $ docker image rm [imageName]
+    $ docker rmi [imageName]
 
-### create image
+You should try to remove unnecessary images before removing the image:
 
-#### 通过容器副本创建image
+    docker rmi $(sudo docker images --filter "dangling=true" -q --no-trunc)
+
+## create image
+
+### 通过容器副本创建image
 
     $ docker commit -m="has update" -a="runoob" e218edb10161 ahuigo/ubuntu:v2
     -m:提交的描述信息
@@ -62,7 +79,7 @@ Mac OSX Image 不可以修改路径：
     e218edb10161：容器ID
     ahuigo/ubuntu:v2:指定要创建的目标镜像名
 
-#### Dockerfile 创建image
+### Dockerfile 创建image
 参考： http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html
 
     $ git clone https://github.com/ruanyf/koa-demos.git
@@ -74,6 +91,7 @@ Mac OSX Image 不可以修改路径：
 
     $ touch ./Dockerfile 
     $ vi ./Dockerfile 
+    FROM python:3.7
     FROM node:8.4
     # 将当前目录下的所有文件（除了.dockerignore排除的路径），都拷贝进入 image 文件的/app目录。
     COPY . /app
@@ -83,7 +101,7 @@ Mac OSX Image 不可以修改路径：
     FROM    centos:6.7
     MAINTAINER      Fisher "fisher@sudops.com"
 
-##### ARG ENV
+#### ARG ENV
 docker `--build-arg <varname>=<value>`
 
     ARG <name>[=<default value>]
@@ -145,17 +163,7 @@ docker php 还提供为php 安装扩展的命令
     CMD apache2-foreground
 
 
-### pull image
-image: `Repo:Tag`
-
-    # 拉取 image
-    docker image pull library/hello-world:latest
-
-Library latest 都是默认的,所以简化为
-
-    docker pull hello-world
-
-### push image
+## push image
 首先，去 hub.docker.com 或 cloud.docker.com 注册一个账户。然后，用下面的命令登录。
 
 
@@ -166,17 +174,22 @@ Library latest 都是默认的,所以简化为
     docker tag SOURCE_IMAGE[:TAG] registry.hub.works/username/IMAGE[:TAG]
     docker push registry.hub.works/username/IMAGE[:TAG]
 
+    $ docker image build -t koa-demos:0.0.1 .
     $ docker image tag koa-demos:0.0.1 ruanyf/koa-demos:0.0.1
-    $ docker image push [username]/[repository]:[tag]
+    $ docker image push ruanyf/koa-demos:0.0.1
 
  发布成功后就可以去 hub.docker.com 找了
 
-## Container 容器
-容器是镜像运行实体进程
-1. 每个容器进程是隔离的
-2. 容器停止运行时，里面的数据消失：
-   1. 不要像容器存储层写数据
-   2. 所有写入应该向数据卷Volume、宿主目录
+## pull image
+image: `Repo:Tag`
+
+    # 拉取 image
+    docker image pull library/hello-world:latest
+
+Library latest 都是默认的,所以简化为
+
+    docker pull hello-world
+
 
 ## Repository 仓库
 Docker Repository 是用于管理存储、分发镜像的服务，docker 可以多个repository, 一个repository 包含多个tag(不同tag 是不同IMAGE版本)。
@@ -190,81 +203,23 @@ Docker Registry 分公开服务和私有服务。
 
     DOCKER_OPTS="--registry-mirror=https://registry.docker-cn.com"
 
-# 管理容器
-可以是container-name, 也可以是container-id
+# 管理container
 
-    # 创建运行和删除容器
-    docker run <id>
-    docker rm <id>
+## 运行删除 container
+
+    # 通过image 新建一个container 
+    docker run --rm <image>
+    docker rm <container>
 
     # 停止 & 启动
     ##  向容器的主进程发出 SIGKILL 信号
     docker container kill [containID]
+
     ## 发出 SIGTERM 信号（程序自行收尾），如果超时再发出 SIGKILL 信号
     docker stop <name>
     docker start <name>
 
-daemon:
-
-    systemctl enable docker
-    systemctl start docker
-    systemctl stop docker
-
-## Docker: 限制容器可用的 CPU
-https://www.cnblogs.com/sparkdev/p/8052522.html
-
-指定cpus 使用的百分比: 2倍单核cpu 资源，均匀分配
-
-    docker run -it --rm --cpus=2 u-stress:latest /bin/bash
-
-指定cpuset 的编号
-
-    $ docker run -it --rm --cpuset-cpus="1,3" u-stress:latest /bin/bash
-
-设定窗口战胜的权重：下列两个container 的权重比为512:1024=1:3
-
-    $ docker run -it --rm --cpuset-cpus="0" --cpu-shares=512 u-stress:latest /bin/bash
-    $ docker run -it --rm --cpuset-cpus="0" --cpu-shares=1024 u-stress:latest /bin/bash
-
-### 查看容器列表
-
-    # 列出本机正在运行的容器
-    $ docker container ls
-    $ docker ps
-
-    # 列出本机所有容器，包括终止运行的容器
-    $ docker container ls --all
-    $ docker ps -a
-
-    # 最后一次创建的容器
-    docker ps -l 
-
-    # 检查底层信息
-    docker inspect <container-name>
-
-### 容器状态(cpu/mem)
-
-    docker stats -a
-    docker top <container-name>
-    docker stats <container-name>
-
-聊聊docker监控那点事儿:
-http://www.opscoder.info/docker_monitor.html
-
-### 容器配置
-查看配置
-
-    docker inspect 0545bfe74ae2
-    $ CONTAINER_PID=`docker inspect -f '{{ .State.Pid }}' $CONTAINER_ID`
-    $ cat /proc/$CONTAINER_PID/net/dev 
-
-
-# 容器运行(run)
-如果没有容器先自动创建容器
-
-    docker run
-
-## rm container
+### rm container
 Stop all running containers: 
 
     docker stop $(docker ps -a -q)
@@ -277,6 +232,11 @@ remove all images
 
     docker rmi $(docker images -q)
 
+## 进入容器
+相当于shell 的fg, 用于进入已经启动的容器
+
+    $ docker container exec -it <containerID> /bin/bash
+    $ docker exec -it <containerID> /bin/bash
 
 ### 伪终端
 
@@ -295,18 +255,13 @@ remove all images
 
     $ docker run -d ubuntu:15.10 /bin/sh -c "while true; do echo hello world; sleep 1; done"
     2b1b7a428627c51ab8810d541d759f072b4fc75487eed05812646b8534a2fe63
+    -d 后台模式
 
 查看标准输出：
 
     $ docker logs 2b1b7a428627
 
-#### 进入容器
-相当于shell 的fg, 用于进入已经启动的容器
-
-    $ docker container exec -it <containerID> /bin/bash
-    $ docker exec -it <containerID> /bin/bash
-
-
+## 启动容器选项
 ### 指定容器name
 
     docker run -d -P --name runoob training/webapp python app.py
@@ -354,6 +309,57 @@ remove all images
 查看标准输出的日志：like `tail -f`
 
     docker logs -f bf08b7f2cd89
+
+
+### Docker: 限制容器可用的 CPU
+https://www.cnblogs.com/sparkdev/p/8052522.html
+
+指定cpus 使用的百分比: 2倍单核cpu 资源，均匀分配
+
+    docker run -it --rm --cpus=2 u-stress:latest /bin/bash
+
+指定cpuset 的编号
+
+    $ docker run -it --rm --cpuset-cpus="1,3" u-stress:latest /bin/bash
+
+设定窗口战胜的权重：下列两个container 的权重比为512:1024=1:3
+
+    $ docker run -it --rm --cpuset-cpus="0" --cpu-shares=512 u-stress:latest /bin/bash
+    $ docker run -it --rm --cpuset-cpus="0" --cpu-shares=1024 u-stress:latest /bin/bash
+
+## 查看容器
+### 查看容器列表
+
+    # 列出本机正在运行的容器
+    $ docker container ls
+    $ docker ps
+
+    # 列出本机所有容器，包括终止运行的容器
+    $ docker container ls --all
+    $ docker ps -a
+
+    # 最后一次创建的容器
+    docker ps -l 
+
+    # 检查底层信息
+    docker inspect <container-name>
+
+### 容器状态(cpu/mem)
+
+    docker stats -a
+    docker stats <container-name>
+    docker top <container-name>
+
+聊聊docker监控那点事儿:
+http://www.opscoder.info/docker_monitor.html
+
+### 容器配置
+查看配置
+
+    docker inspect 0545bfe74ae2
+    $ CONTAINER_PID=`docker inspect -f '{{ .State.Pid }}' $CONTAINER_ID`
+    $ cat /proc/$CONTAINER_PID/net/dev 
+
 
 # Docker Compose
 如果想将两个容器连接到一起：比如myweb 连接 wordpressdb:mysql(mysql是容器别名)
