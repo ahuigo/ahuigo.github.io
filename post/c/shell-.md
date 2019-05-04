@@ -202,7 +202,7 @@ shell arguments:
 	➜ > py git:(gh-pages) ✗cat < ( echo abc )
 	zsh: unknown file attribute:
 
-再来一个例子
+再来一个例子(zsh 不行, bash only)
 
 	while read attr links owner group size date time filename; do
 		cat <<- EOF
@@ -215,6 +215,12 @@ shell arguments:
 			Attributes:   $attr
 		EOF
 	done < <(ls -l | tail -n +2)
+
+or :
+
+    for entry in "$search_dir"/*; do
+        echo "$entry"; # $search_dir/$entry
+    done
 
 > 注意# tail -n +2, 用的+ 号哦
 

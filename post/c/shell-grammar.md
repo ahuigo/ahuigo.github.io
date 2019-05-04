@@ -17,11 +17,21 @@ priority:
 	for ((i=0;i<10;i++)); do echo $i; done;
 
 ## while
+for / while:
 
-	while expr;
-	do
-		.. expr;
+    for i in something; do
+        [ condition ] && continue
+        cmd1
+        cmd2
+    done
+
+	while expr; do
+        [ condition ] && continue
+        cmd1
 	done;
+
+until
+
 	declare -i i=0; until (($i>=3)); do  echo $i;let i++; done #output: 0 1 2
 
 ## break
