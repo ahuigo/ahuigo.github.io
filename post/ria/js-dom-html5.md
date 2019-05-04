@@ -194,6 +194,9 @@ SVG 意为可缩放矢量图形（Scalable Vector Graphics）
 
 # Web Workers
 web worker 是运行在后台的 JavaScript，不会影响页面的性能。
+>双出了 navigator.serviceWorker.register('/sw-test.js');
+> worker 里面是self 不是window: https://www.zhangxinxu.com/wordpress/2017/07/js-window-self/
+https://www.zhangxinxu.com/wordpress/2017/07/service-worker-cachestorage-offline-develop/
 
 ##创建web worker文件
 

@@ -5,6 +5,8 @@ date: 2019-04-30
 # Js Promise dialog
 参考：https://jsbin.com/fucofu/edit?html,js,output
 
+give it a id
+
     <script>
     function promptPromise(message) {
       var dialog       = document.getElementById('dialog');

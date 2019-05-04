@@ -7,6 +7,13 @@ IndexedDb API 封装的很难用，[IndexedDB使用与出坑指南](https://juej
 
 对比了各大lib, 发现Dexie 这个封装最好。
 
+    import Dexie from 'dexie';
+
+    const db = new Dexie('ReactSampleDB');
+    db.version(1).stores({ todos: '++id' });
+
+    export default db;
+
 # DDL
 ## Create Database+Table
 
@@ -95,7 +102,6 @@ out of line: '' empty key
     db.version(1).stores({
         simple: ''
     });
-    db.simple.add('one', 1); // insert
     db.simple.add({name:'ahui'}, 2); // insert
     db.simple.put('three', 3); // insert    
 

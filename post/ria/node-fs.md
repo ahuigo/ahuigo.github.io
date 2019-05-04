@@ -250,3 +250,12 @@ mkdtemp specify:
 
     fs.mkdtempSync('tmp/aa.txt')
         tmp/aa.txt7FxN
+
+# stdin,stdout,stderr
+    stdin=process.stdin
+
+    // console.log() == stdout.write()
+    stdout=process.stdout
+
+    // console.err() == stderr.write()
+    stderr=process.stderr

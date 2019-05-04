@@ -62,28 +62,37 @@ length/slice/substr/都是基于字符的
 ### buffer
 see py-str-struct: like bytes
 
-string:
+string vs buffer (node only):
 
     // Buffer -> String: text = buf+''
     var text = buf.toString('utf-8');  
+    var text = buf.toString();  
+
     // String -> Buffer
     var buf = Buffer.from(text, 'utf-8');
+    var buf = Buffer.from(text);
 
-base64
+str vs base64 buffer
 
-    Buffer.from('a')
-    Buffer.from('YQ==', 'base64')
-    Buffer.from('a').toString('base64')
+    >     Buffer.from('a')
+    <Buffer 61>
+    >     Buffer.from('YQ==', 'base64')
+    <Buffer 61>
 
-    ### base64(chrome)
+str vs base64 string
+
+    >     Buffer.from('a').toString('base64')
+    'YQ=='
+    ### base64(chrome only)
 	btoa(str)
 	atob(str)
 
-hex:
+str vs hex string:
 
     > Buffer.from('ab').toString('hex')
     '6162'
-    > Buffer.from('6162', 'hex')
+    > Buffer.from('6162', 'hex').toString()
+    'ab'
 
 array:
 
@@ -93,6 +102,7 @@ array:
     > Buffer.from(Array(5))
     <Buffer 00 00 00 00 00>
     > Buffer.from([...Array(5).keys()])
+    <Buffer 00 01 02 03 04>
 
 repeat(alloc)
 

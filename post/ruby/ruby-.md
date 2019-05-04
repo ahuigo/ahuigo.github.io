@@ -13,6 +13,53 @@ private:
     "a\nb"
     "#{prefix}"
 
+## concat
+
+    dir = Dir.home+"/www"
+    dir = "#{Dir.home}/www"
+
+
+
+# shell
+
+## 跳脱符
+支持`*`
+
+    # 输出代码字符串
+    p `ls -la`
+
+    # escapes newline chars
+    printf `ls -la`
+
+exec with variable
+
+    cmd = "ls #{ENV['HOME']}/www"
+    `echo #{cmd}`
+
+## system
+只支持参数, 没有返回数据
+
+    # 只返回true/false(like python: os.system)
+    system "ls", "-la"
+
+    # wrong *
+    system "ls", "*"
+    # ok
+    printf `ls -la *`
+
+
+## env
+HOME:
+
+    print "#{ENV['HOME']}"
+    print Dir.home
+
+ENV 可以被改变
+
+    system("echo $PATH")
+    ENV['PATH'] = '/nothing/here'
+    system("echo $PATH")
+
 # Array
     arr = 'a\nb',"a\nb"
 

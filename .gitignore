@@ -1,6 +1,7 @@
 *.tmp
 *.log
 .idea
+todo
 /a.go
 #godemo/?.go
 *.out

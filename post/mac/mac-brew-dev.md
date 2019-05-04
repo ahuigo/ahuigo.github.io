@@ -32,6 +32,9 @@ brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Librar
     $ shasum -a 256 test.tgz
 
 ## binary package
+https://github.com/v2ray/homebrew-v2ray/blob/master/Formula/v2ray-core.rb
+
+利用bin.install, etc.install copy
 
     def install
         # ENV.deparallelize  # if your formula fails when building in parallel
@@ -39,7 +42,12 @@ brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Librar
         # system "tar -Jvxf otfcc-mac64-0.2.3.tgz"
         bin.install "otfccbuild"
         bin.install "otfccdump"
+
+        (etc/"v2ray").mkpath
+        etc.install "config.json" => "v2ray/config.json"
     end
+
+
 
 ## depends on
 
@@ -52,7 +60,8 @@ brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Librar
         depends_on :x11 => :optional
         depends_on :xcode => "9.3"
     end
-# Use
+
+# Use Formula
 > refer to : https://segmentfault.com/a/1190000012826983
 
 repo可以省略`homebrew-`
@@ -66,9 +75,23 @@ repo可以省略`homebrew-`
 ## tap example
 https://github.com/v2ray/homebrew-v2ray/blob/master/Formula/v2ray-core.rb
 
-# install process
+    brew tap v2ray/v2ray
+    brew install v2ray-core
+
+or
+
+    brew install v2ray/v2ray/v2ray-core
+
+https://github.com/ahuigo/homebrew-ahui/blob/master/langdao-dict.rb
+
+     brew install ahuigo/ahui/langdao-dict
+     brew install --verbose --debug ahuigo/ahui/langdao-dict
+
+# install dir
+dir:
 
     brew --repo
+        /usr/local/Homebrew
     brew --cache
         ~/Library/Caches/Homebrew/downloads
 

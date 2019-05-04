@@ -334,6 +334,44 @@ foreach elements
 	src	设置或返回应载入 iframe 中的文档的 URL。
 	width	设置或返回 iframe 的宽度。
 
+### wrtie iframe
+via iframe.srcdoc (chrome extension Content Security Policy 限制)：
+
+		document.getElementById('frameId').srcdoc = 'hello world <script>alert(1)</script>'
+
+via idocument.appendChild: 麻烦
+
+    var el = idocument.createElement('script');
+    el.text = 'alert(1)'
+    idocument.body.appendChild(el);
+
+via idocument.body.innerHTML 不能注入script
+
+    idocument.body.innerHTML = html;
+
+via idocument.write: srcdoc 同样的CSP 限制
+
+    idocument.open();
+    idocument.write(('outerHTML'));
+    idocument.close();
+
+via data src： 通用，参考我的fiddle.html
+
+    var html = '<script>alert(1)</script>';
+    var html_src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+    iframe.src = html_src;
+
+CSP Level 2 可为内联脚本提供向后兼容性，即允许您使用一个加密随机数（数字仅使用一次）或一个哈希值将特定内联脚本列入白名单。尽管这可能很麻烦，但它在紧急情况下很有用。
+要使用随机数，请为您的 script 标记提供一个随机数属性。该值必须与信任的来源列表中的某个值匹配。 例如：
+
+    <script nonce=EDNnf03nceIOfn39fn3e9h3sdfa>
+    //Some inline code I cant remove yet, but need to asap.
+    </script>
+
+现在，将随机数添加到已追加到 nonce- 关键字的 script-src 指令。
+
+    Content-Security-Policy: script-src 'nonce-EDNnf03nceIOfn39fn3e9h3sdfa'
+
 ### iframe 间的referer
 A -> B -> C ,C的refer 是B
 
