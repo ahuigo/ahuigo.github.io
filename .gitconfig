@@ -1,0 +1,44 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/ahuigo/a
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[submodule "post/fileset"]
+	url = https://github.com/ahuigo/fileset
+[submodule "demo/php-lib"]
+	url = https://github.com/ahuigo/php-lib
+[submodule "demo/js-lib"]
+	url = https://github.com/ahuigo/js-lib
+[submodule "demo/java-lib"]
+	url = https://github.com/ahuigo/java-lib
+[submodule "demo/excel-tutorial"]
+	url = https://github.com/ahuigo/python3-excel-tutorial
+[submodule "demo/php-websockets"]
+	url = https://github.com/ahuigo/php-websockets
+[submodule "demo/c-lib"]
+	url = https://github.com/ahuigo/c-lib
+[submodule "demo/go-lib"]
+	url = https://github.com/ahuigo/go-lib
+[submodule "demo/pyhttp"]
+	url = https://github.com/ahuigo/pyhttp-server
+[submodule "demo/upload"]
+	url = https://github.com/ahuigo/upload-chunk
+[submodule "demo/xlscsv"]
+	url = https://github.com/ahuigo/xlscsv
+[submodule "demo/xcut"]
+	url = https://github.com/ahuigo/xcut
+[submodule "demo/blog"]
+	url = https://github.com/ahuigo/note-blog
+[remote "gitee"]
+	url = https://gitee.com/ahuigo/all.git
+	fetch = +refs/heads/*:refs/remotes/gitee/*
+[submodule "demo/fiddle"]
+	url = https://github.com/ahuigo/local-jsfiddle.git
