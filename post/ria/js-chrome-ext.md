@@ -8,15 +8,11 @@ description:
 Reference:
 https://developer.chrome.com/extensions/examples/tutorials/getstarted/icon.png
 
-# todo
-http://blog.jobbole.com/46608/
-http://www.cnblogs.com/guogangj/p/3235703.html#t1
-
 # ext list
 http://weibo.com/p/1001603917441372715024 link to  http://get.ftqq.com/8215.get
 
 
-# manifest.json
+# 1. manifest.json
 It contains extension's name, description, version_number. 
 declare to chrome what the extension is going to do, and what permissions it requires in order.[manifest](https://developer.chrome.com/extensions/manifest)
 

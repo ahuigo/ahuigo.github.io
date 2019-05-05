@@ -259,3 +259,16 @@ mkdtemp specify:
 
     // console.err() == stderr.write()
     stderr=process.stderr
+
+## stdin
+
+    // 异步读取用户输入
+    stdin=process.stdin
+    stdin.setEncoding('utf8');
+    stdin.resume()
+    console.log("Input sth.:")
+    stdin.on('data', function(chunk) {
+        console.log('start!', Buffer.from(chunk));
+        # stop listen input
+        process.stdin.pause();
+    });
