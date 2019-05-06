@@ -1,3 +1,5 @@
+# blog b
+b/
 *.tmp
 *.log
 .idea
@@ -27,7 +29,6 @@ node_modules
 post/p/
 no-commit
 blog2
-b
 a.py
 
 #conf
