@@ -125,7 +125,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
     b===2
 
 ### 解构命名参数
-无效，除非python:
+无效(除非python):
 
     > function f(a, b=1){console.log(a,b)}
     > f(b=23, a=3)
@@ -152,7 +152,7 @@ rest 当参数不足时为`[]`
     }
 
     foo(1, 2, 3, 4, 5);
-    foo(...[1, 2, 3, 4, 5]);
+    foo(...[1, 2, 3, 4, 5]) === foo(1,2,...[ 3, 4, 5])
     // a = 1
     // b = 2
     // Array [ 3, 4, 5 ]

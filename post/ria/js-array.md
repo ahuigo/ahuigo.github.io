@@ -232,6 +232,8 @@ string  没有此属性. array/set/map 等都有
     });
 
 ## entries: python enumerate
+dict:
+
     for(let [key, value] of Object.entries(myObject)) {
         console.log(key, value); // "first", "one"
     }

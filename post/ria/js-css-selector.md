@@ -35,6 +35,15 @@ checked, checkbox
 	$(':checkbox')
 	$('input:checked')
 
+## table even row
+
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    #customers tr:hover {background-color: #ddd;}
+    #customers td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
 ## find
 
 ## find sub node

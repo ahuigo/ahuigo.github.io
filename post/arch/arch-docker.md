@@ -101,6 +101,13 @@ You should try to remove unnecessary images before removing the image:
     FROM    centos:6.7
     MAINTAINER      Fisher "fisher@sudops.com"
 
+#### RUN ENV
+    sudo docker run -d -t -i -e REDIS_NAMESPACE='staging' \ 
+    -e POSTGRES_ENV_POSTGRES_PASSWORD='foo' \
+    -p 80:80 \
+    --link redis:redis \  
+    --name container_name dockerhub_id/image_name
+
 #### ARG ENV
 docker `--build-arg <varname>=<value>`
 

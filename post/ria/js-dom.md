@@ -334,6 +334,14 @@ foreach elements
 	src	设置或返回应载入 iframe 中的文档的 URL。
 	width	设置或返回 iframe 的宽度。
 
+### iframe error
+codepen 好像是这么做的：
+
+    document.getElementById("myiframe").contentWindow.onerror=function() {
+        alert('error!!');
+        return false;
+    }
+
 ### wrtie iframe
 via iframe.srcdoc (chrome extension Content Security Policy 限制)：
 
