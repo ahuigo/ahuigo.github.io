@@ -41,7 +41,8 @@ http://www.pypi-mirrors.org/
 
 使用时路径要包含 simple
 
-    pip  install -i https://pypi.mirrors.ustc.edu.cn/simple/ pandas 
+    pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ pandas 
+    pip install -i https://mirrors.ustc.edu.cn/pypi/web/simple -r requirement.txt
 
 在~/.pip/pip.conf配置文件中写入：
 

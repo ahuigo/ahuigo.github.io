@@ -169,6 +169,7 @@ Promise.all()实现如下：
 2. await: sync
 
 ## await catch data
+await 可以得到catch 的值
 
     f=async ()=>{
         p=await (new Promise(()=>{throw new Exception('aaaaa');}).catch(r=>100)); 
@@ -189,6 +190,16 @@ await reject:
         await new Promise(r=>{})
     }
     f()
+
+## try await exception
+只有用await 才能catch 到exception
+
+    try{
+        await f()
+    } catch(e){
+        console.log(e)
+    }
+
 
 ## throw vs catch
     new Promise(function() {

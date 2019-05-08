@@ -10,9 +10,9 @@ date: 2018-10-04
 Socket是网络编程的一个抽象概念。通常我们用一个Socket表示“打开了一个网络链接”，而打开一个Socket需要知道目标计算机的IP地址和端口号，再指定协议类型即可。
 
 # connect multiple times
- 同一个socket 只能 connect 一次:
+一个端口可以连接多个server, 同一个socket 只能 connect 一次:
 
-    # code by 依云
+    # code by 依云: https://blog.lilydjwg.me/2015/8/19/tcp-fun.180084.html
     >>> import socket
     >>> s = socket.socket()
     # since Linux 3.9, 见 man 7 socket
@@ -24,6 +24,19 @@ Socket是网络编程的一个抽象概念。通常我们用一个Socket表示�
 
     >>> s.connect(('127.0.0.1', 8081))
     >>> s2.connect(('127.0.0.1', 8082)
+
+即使只有一个 socket，也可以自己连接到自己的：
+
+    >>> import socket                                                               
+    >>> s = socket.socket()
+    >>> s.bind(('127.0.0.1', 1314))
+    >>> s.connect(('127.0.0.1', 1314))
+    >>> s.send(b'I love you.')
+    11
+    >>> s.recv(1024)
+    b'I love you.'
+    $ netstat -npt | grep 1314
+    tcp        0      0 127.0.0.1:1314          127.0.0.1:1314          ESTABLISHED 8050/python  
 
 # 客户端
 大多数连接都是可靠的TCP连接。创建TCP连接时，主动发起连接的叫客户端，被动响应连接的叫服务器。

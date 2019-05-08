@@ -54,7 +54,7 @@ length/slice/substr/都是基于字符的
         console.log(c);
     }
 
-### 模板字符
+### 模板字符(multiline)
 
 	name='ahui'
 	`Hello, ${name}`
