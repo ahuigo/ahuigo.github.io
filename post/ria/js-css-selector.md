@@ -53,22 +53,24 @@ checked, checkbox
 
 ### find node via relation
 祖先:
-	父
-		.parent();//父节点
-	祖父\曾神父\曾曾祖父...
-		.prents(); .parents('div')//所有父节点; 所有的父div
-		.parents('ul'); //所有标签为ul的父节点
-		$('span').parentsUntil('div'); //父节点以div为止, 不含div
-		$('span').parentsUntil('div').parent(); //父节点以div为止, 含div
 
-		$('span').closest('div') = $('span').parentsUntil('div').parent();
+    父
+        .parent();//父节点
+    祖父\曾神父\曾曾祖父...
+        .prents(); .parents('div')//所有父节点; 所有的父div
+        .parents('ul'); //所有标签为ul的父节点
+        $('span').parentsUntil('div'); //父节点以div为止, 不含div
+        $('span').parentsUntil('div').parent(); //父节点以div为止, 含div
+
+        $('span').closest('div') = $('span').parentsUntil('div').parent();
             document.querySelector('span').closest('div.cls1')
 
 后代:
-	子、
-		$('div').children(); //所有div之下的所有子节点
-		$("div").children("p.1"); //筛选出所有类名为.1的p标签节点
-		$('parent > child'); //儿子
+
+    子、
+        $('div').children(); //所有div之下的所有子节点
+        $("div").children("p.1"); //筛选出所有类名为.1的p标签节点
+        $('parent > child'); //儿子
             # 第二个儿子
             $("#holder > div:nth-child(2)").before("<div>foobar</div>");
             $("#holder > div:eq(2)").before("<div>foobar</div>");
@@ -79,10 +81,10 @@ checked, checkbox
             :nth-of-type(n)	p:nth-of-type(2)	选择属于其父元素第二个 <p> 元素的每个 <p> 元素。	3
             :nth-last-of-type(n)	p:nth-last-of-type(2)	同上，但是从最后一个子元素开始计数。	3
             :last-child	p:last-child	选择属于其父元素最后一个子元素每个 <p> 元素。
-	孙、曾孙...
-		$('parent grandchild'); //孙子
-		$("div").find("span"); //所有孙子中的span节点
-		$("div").find("*"); //所有孙子节点
+    孙、曾孙...
+        $('parent grandchild'); //孙子
+        $("div").find("span"); //所有孙子中的span节点
+        $("div").find("*"); //所有孙子节点
 
 同胞:
 

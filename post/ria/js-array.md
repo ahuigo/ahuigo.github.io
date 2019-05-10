@@ -44,7 +44,7 @@ python vs js
     arr[1:-3] arr.slice(1,-3)
     arr[:-3] arr.slice(0,-3)
 
-## concat
+## concat merge array
 	var arr = ['A', 'B', 'C'];
 	var added = arr.concat([1, 2, 3]);
 	added; // ['A', 'B', 'C', 1, 2, 3]
@@ -232,7 +232,7 @@ string  没有此属性. array/set/map 等都有
     });
 
 ## entries: python enumerate
-dict:
+dict and array:
 
     for(let [key, value] of Object.entries(myObject)) {
         console.log(key, value); // "first", "one"
@@ -316,6 +316,7 @@ Set crud:
 	归并方法:
 
 		.reduce(func);//从第1,2项开始; 不可以为空！单个按原值返回
+		.reduce(func, init_value);//从第1项开始; 可以为空！
 		.reduceRight(func);//倒序
         //index 指向的是cur
 		arr.reduce(function(pre,cur,index,array_self){return pre+cur;})

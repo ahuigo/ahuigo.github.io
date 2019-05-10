@@ -21,6 +21,10 @@ description:
         [ city + 'population' ]: 350000
     };
 
+### clone
+    const newobj = {...original, prop: newOne}
+    const newarr = oldarr.slice(0,5)
+
 ### loop: entries(use keys())
 like python's .items()
 

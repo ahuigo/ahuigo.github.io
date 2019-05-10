@@ -77,6 +77,7 @@ d. 回调方法内: window, (除非改arrow lexical this)
     xiaoming.age(); 
 
 ## Lexical this 是闭包this
+Lexical 闭包是定义处是this
 
     var xiaoming = {
         name: '小明',
