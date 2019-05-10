@@ -27,11 +27,11 @@ Socket是网络编程的一个抽象概念。通常我们用一个Socket表示�
 
 即使只有一个 socket，也可以自己连接到自己的：
 
-    >>> import socket                                                               
-    >>> s = socket.socket()
-    >>> s.bind(('127.0.0.1', 1314))
-    >>> s.connect(('127.0.0.1', 1314))
-    >>> s.send(b'I love you.')
+import socket                                                               
+s = socket.socket()
+s.bind(('127.0.0.1', 1314))
+s.connect(('127.0.0.1', 1314))
+s.send(b'I love you.')
     11
     >>> s.recv(1024)
     b'I love you.'
