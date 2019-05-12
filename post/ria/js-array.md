@@ -307,6 +307,10 @@ Set crud:
 
         func = function (element, index, self)
 
+对于object:
+
+    > Object.entries({a:101}).every(([k,v])=>v>100)
+
 去重复:
 
     r = arr.filter(function (element, index, self) {

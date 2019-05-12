@@ -157,6 +157,18 @@ rest 当参数不足时为`[]`
     // b = 2
     // Array [ 3, 4, 5 ]
 
+receive unpack:
+
+    function foo ([a,b]){
+        console.log(a,b)
+    }
+    foo([1,2])
+
+    function foo({a,b}){
+        console.log(a,b)
+    }
+    foo({b:1,a:2})
+
 # bind params
 http://stackoverflow.com/questions/256754/how-to-pass-arguments-to-addeventlistener-listener-function/36786630#36786630
 

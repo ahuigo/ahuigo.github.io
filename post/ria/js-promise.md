@@ -5,7 +5,7 @@ date: 2018-10-04
 # JS Promise
 实现异步串行写法
 1. generator
-1. Promise: resove-then, reject-catch
+1. Promise: resolve-then, reject-catch
 2. async-await: 
     1. sync: `result = await promise` 
     2. async: `promise.then(r=>{result=r})`+block
@@ -66,6 +66,13 @@ ajax函数将返回Promise对象:
 catch 会捕获exception
 
     (new Promise(()=>{throw new Exception('aaaaa');})).catch(r=>console.log({r:r}))
+
+then+catch:
+
+    Promise.reject(1).then(
+        v=>console.log([v]), 
+        e=>console.log(e)
+    )
 
 ## 串行
 
