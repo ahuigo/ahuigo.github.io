@@ -120,6 +120,7 @@ table with bash:
 
 ### create
 
+    $ psql -f init.sql
     CREATE TABLE playground (
         id serial PRIMARY KEY,
         uid int UNIQUE,

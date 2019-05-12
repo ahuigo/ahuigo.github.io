@@ -58,10 +58,20 @@ use distinct:
 
     SELECT DISTINCT ON (cname) cname , wmname, MAX(avg)  FROM makerar GROUP BY cname;
 
+select first 2 row(order by peg) with group by industry
+
+    SELECT
+    * 
+    FROM (
+    SELECT
+        ROW_NUMBER() OVER (PARTITION BY industry ORDER BY peg) AS r, stock.*
+    FROM
+        stock) x
+    WHERE x.r <= 2;
 
 ## del
-SELECT '{"a":[null,{"b":[3.14]}]}' #- '{a,1,b,0}'
 
+    SELECT '{"a":[null,{"b":[3.14]}]}' #- '{a,1,b,0}'
 
 ## update
 

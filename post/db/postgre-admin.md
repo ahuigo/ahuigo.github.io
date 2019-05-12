@@ -22,6 +22,12 @@ vim /var/lib/pgsql/data/pg_hba.conf
         #sudo systemctl start postgresql
         #sudo systemctl enable postgresql
     elif osx:
+        # To have launchd start postgresql now and restart at login:
+        brew services start postgresql
+        # ps aux
+        pg_ctl -D /usr/local/var/postgres start
+
+        # 
         ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
 
         cat <<MM >> ~/.zshrc

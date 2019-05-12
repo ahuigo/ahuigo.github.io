@@ -176,6 +176,13 @@ eval is a shell builtin command, not a standalone executable. Thus, xargs can't 
 
 	sort -k 2| sort -s -k 1
 
+多字段排序
+
+    sort -k2 -k1 <people.txt
+    sort -k2,2 -k1,1 <people.txt
+    sort -k2b,2 -k1,1 <people.txt
+    sort -k2n,2 -k1,1 <people.txt
+
 # uniq
 
 	uniq [-ic]

@@ -130,6 +130,7 @@ sigle column
 
 ### sort df
     df = df.sort_values(by=['col1', 'col2'], ascending=False)
+    df.sort_values(['job','count'],ascending=False).groupby('job').head(3)
 
 ### merge
 Consider this behavior with a MultiIndex:

@@ -6,6 +6,8 @@ yum install postgresql10-server postgresql10 -y
 
 systemctl start postgresql-10.service
 systemctl enable postgresql-10.service
+brew services start postgresql
+brew postgresql-upgrade-database
 
 ## user
 sudo -u postgres psql -c 'create user yd'
