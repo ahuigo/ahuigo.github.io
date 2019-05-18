@@ -7,6 +7,10 @@ date: 2018-09-27
     CREATE TABLE users (id INT, counters JSONB NOT NULL DEFAULT '{}');
     INSERT INTO users (id, counters) VALUES (1, '{"bar": 10}');
 
+语法
+
+    INSERT INTO "table1" ("created_at","status") VALUES ('2019-05-13 15:34:51','1') RETURNING "table1"."id";
+
 ### last insert id
 3 ways,all are concurrent safe:
 

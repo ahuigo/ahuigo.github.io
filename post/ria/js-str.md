@@ -283,7 +283,7 @@ Create RegExp：test, exec
     my pre1-word
 
 ### $,^
-不会成功
+$ 放前面就不会成功
 
     /($end)/
     /(head^)/

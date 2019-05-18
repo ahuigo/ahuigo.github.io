@@ -19,6 +19,11 @@ Python has a more primitive serialization module called *marshal*(support Python
 
 # joblib
 
+# base64
+
+    a = base64.b64encode(b'a')
+    base64.b64decode(a)
+
 # pickle
 我们把变量从内存中变成可存储或传输的过程称之为序列化，在Python中叫pickling，在其他语言中也被称之为serialization，marshalling，flattening等等，都是一个意思。
 反之叫unpickling

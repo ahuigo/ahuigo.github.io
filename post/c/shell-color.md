@@ -6,6 +6,21 @@ date: 2018-09-27
 https://en.wikipedia.org/wiki/ANSI_escape_code
 http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
 
+## python
+
+    class bcolors:
+        ENDC = '\033[0m'
+        HEADER = '\033[95m'
+        OKBLUE = '\033[94m'
+        RED = '\033[41m'
+        OKGREEN = '\033[92m'
+        WARNING = '\033[93m'
+        FAIL = '\033[91m'
+        BOLD = '\033[1m'
+        UNDERLINE = '\033[4m'
+
+    print(bcolors.WARNING + "Warning: xxxx" + bcolors.ENDC)
+
 ## color codes
 
     "\033"+color_code
@@ -32,8 +47,16 @@ while 40-47 selected the background.
 
 ## color code list
 
+    $ sh
+    $ RED='\033[0;31m'
+    $ NC='\033[0m' # No Color
+    $ printf "I ${RED}love${NC} Stack Overflow\n"
+
+zsh color list
+
     "COLOR_SEQ%sRESET_SEQ"
     "BOLD_SEQ%sRESET_SEQ"
+
 
     Code: Client: Meaning:
     [0m     -- reset; clears all colors and styles (to white on black)

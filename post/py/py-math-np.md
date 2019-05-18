@@ -42,6 +42,15 @@ http://pandas.pydata.org/pandas-docs/stable/10min.html
     df.loc[:,['col1','col2']]
     df.loc[:,'col1']
 
+### num
+repalce NaN to 0:
+
+    newdf = df.replace([np.inf, np.NINF,np.nan], 0)
+
+### operator
+
+    newdf = df['col1']/2
+
 ### rename column
 
     df=df.rename(index=str, columns={ "date": "时间"})
@@ -83,6 +92,24 @@ in index and colume and values
     'index_name' in df.index
     'col_name' in df
     'col_value' in df.values
+
+### drop
+Drop columns
+
+    >>> df.drop(['B', 'C'], axis=1)
+    A   D
+    0  0   3
+    1  4   7
+    2  8  11
+    >>> df.drop(columns=['B', 'C'])
+    A   D
+    0  0   3
+    1  4   7
+    2  8  11
+
+Drop a row by index
+
+    >>> df.drop([0,1])
 
 ### set all column value
     df['时间'] = self.yesterday
@@ -132,52 +159,80 @@ sigle column
     df = df.sort_values(by=['col1', 'col2'], ascending=False)
     df.sort_values(['job','count'],ascending=False).groupby('job').head(3)
 
-### merge
-Consider this behavior with a MultiIndex:
+### concat column
+init:
 
-    mi = pd.MultiIndex.from_tuples([(1,10),(2,20),(3,30),(4,40)], names=['a','b'])
-    df1 = pd.DataFrame({'c': [100,200,300,400]}, index=mi)
-    df2 = pd.DataFrame({'a' : [1,3], 'b' : [10, 30], 'e' : [1000, 3000]})
-    print("df1\n", df1)
-    print("df2\n", df2)
-    print("merge\n", pd.merge(df1, df2, how='left', left_index=True, right_on=['a','b']))
+    >>> df1=pd.DataFrame([{'a':1,'b':1}, {'a':2,'b':2}])
+    Out[3]:
+       a  b
+    0  1  1
+    1  2  2
+    >>> df2=pd.DataFrame([{'a':2,'c':32}, {'a':1,'c':31}])
+    Out[4]:
+       a   c
+    0  2  32
+    1  1  31
 
-This yields:
+concat column(with no index)
 
-    df1
-            c
-    a b      
-    1 10  100
-    2 20  200
-    3 30  300
-    4 40  400
-    df2
-        a   b     e
-    0  1  10  1000
-    1  3  30  3000
-    merge
-        c    a     b       e
-    0  100  1.0  10.0  1000.0
-    1  200  2.0  20.0     NaN
-    1  300  3.0  30.0  3000.0
-    1  400  4.0  40.0     NaN
+    //dumplicated column
+    In [5]: pd.concat([df1,df2], axis=1)
+    Out[5]:
+       a  b  a   c
+    0  1  1  2  32
+    1  2  2  1  31
 
-### concat merge
-with same index
+    //dumplicated index
+    In [16]: pd.concat([df1,df2])
+       a    b     c
+    0  1  1.0   NaN
+    1  2  2.0   NaN
+    0  2  NaN  32.0
+    1  1  NaN  31.0
 
-    In [48]: pd.concat([df,df2],axis=1)
-    Out[48]:
-        a  b  a  c
-        2  2  2  3
-        3  3  3  2
+with index(concat)
 
-    # drop duplicate columns
+    In [8]: pd.concat([df1.set_index('a'),df2.set_index('a')], axis=1)
+    Out[8]:
+       b   c
+    a
+    1  1  31
+    2  2  32
+
+    In [9]: pd.concat([df1.set_index('a'),df2.set_index('a')], axis=1).reset_index()
+    Out[9]:
+       a  b   c
+    0  1  1  31
+    1  2  2  32
+
+via merge
+
+    In [23]: pd.merge(df1, df2, how='left', left_on=['a'], right_on=['a'])
+    In [23]: pd.merge(df1, df2, left_on=['a'], right_on=['a'])
+    Out[23]:
+       a  b   c
+    0  1  1  31
+    1  2  2  32
+
+via index + column(merge)
+
+    In [31]: pd.merge(df1, df2.set_index('a'),  right_index=True, left_on=['a'])
+    Out[31]:
+       a  b   c
+    0  1  1  31
+    1  2  2  32
+
+合并归则可以是多列：
+
+    left_on=['col1','col2']
+    right_on=['col1','col2']
+
+### drop duplicate columns
     df = df.loc[:,~df.columns.duplicated()]
 
+### append df
 
-append df
-
-    pandas.concat([df1, df2])
+    pandas.concat([df1, df2]) # 也就是axis=0
     df1.append(df2)
     s1.append(s2)
 
@@ -203,7 +258,6 @@ update row via loc:
     2    1    -1     1
     3    0     0     0
     4    1    -1    -1
-    
 
 ### add col series
     DataFrame.add(s, axis=1)
@@ -314,13 +368,13 @@ keep index:
 
     In [3]: pd.concat([s1, s2], axis=1)
     Out[3]:
-    s1  s2
+        s1  s2
     A   1   3
     B   2   4
 
     In [4]: pd.concat([s1, s2], axis=1).reset_index()
     Out[4]:
-    index  s1  s2
+        index  s1  s2
     0     A   1   3
     1     B   2   4
 

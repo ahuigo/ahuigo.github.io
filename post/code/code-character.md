@@ -28,6 +28,7 @@ priority:
 我们平时所说的UTF-8,UTF-16都处于字符编码表(CEF)的层面.
 
 > Tips: 在vim中可以通过快捷键`g8`查询到“刘”这个字的utf8编码（码值）为：0xe58898
+> Tips: 在vim中可以通过快捷键`ga`查询到“刘”这个字的unicode编码（码值）
 
 ## 字符编码方案(CES:Caracter Encodeing Scheme)
 定义如何将码值对应到8位组的串行,以便网络传输和文件存储.
@@ -36,7 +37,7 @@ priority:
 1. 对于多字节的UTF-16来说,windows是先读高字节再读低字节,而MAC则相反.为了标识字节顺序,就选择了一个字节序列标记(BOM:Byte Order Mark)来指定大端序(UTF-16 BE)和小端序(UTF-16).见[UTF-16]的编码模式
 2. 有些复杂的编码需要特别的方案:如ISO/IEC 2022需要使用转义串行,如SCSU、BOCU和Punycode需要压缩
 
->在vim中,:%xxd 可查看相关字符的编码 :set fileencoding=**可对字符进行编码转换
+> 在vim中,:%!xxd 可查看相关字符的编码 :set fileencoding=utf8可对字符进行编码转换
 
 # unicode编码体系
 [unicode]又名统一码、万国码、单一码、标准万国码
@@ -214,6 +215,11 @@ Base64不是字符编码方案,而是一种基于64个可打印字符来表示�
 <table class="wikitable"> <tbody><tr> <th scope="row">文本</th> <td colspan="8" align="center"><b>M</b></td> <td colspan="8" align="center"><b>a</b></td> <td colspan="8" align="center"><b>n</b></td> </tr> <tr> <th scope="row">ASCII编码</th> <td colspan="8" align="center">77</td> <td colspan="8" align="center">97</td> <td colspan="8" align="center">110</td> </tr> <tr> <th scope="row">二进制位</th> <td>0</td> <td>1</td> <td>0</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>1</td> <td>0</td> </tr> <tr> <th scope="row">索引</th> <td colspan="6" align="center">19</td> <td colspan="6" align="center">22</td> <td colspan="6" align="center">5</td> <td colspan="6" align="center">46</td> </tr> <tr> <th scope="row">Base64编码</th> <td colspan="6" align="center"><b>T</b></td> <td colspan="6" align="center"><b>W</b></td> <td colspan="6" align="center"><b>F</b></td> <td colspan="6" align="center"><b>u</b></td> </tr> </tbody></table> 
 
 最后,如果剩下两个字节，在编码结果后加1个“=”；如果最后剩下一个字节，编码结果后加2个“=”；如果没有剩下任何数据，就什么都不要加，这样才可以保证资料还原的正确性。
+
+    # 00 的base64 就是A
+    # 63 的base64 就是/
+    base64.b64encode(b'\x00\x00\x3f')
+    AAA/
 
 ## Quoted-printable
 可打印字符引用编码(Quoted-printable，或QP encoding).

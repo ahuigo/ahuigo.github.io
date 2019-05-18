@@ -140,6 +140,10 @@ If you need to know MEMORY USAGE of a given type, you can use the function sys.g
 # environ, 环境变量
 在操作系统中定义的环境变量，全部保存在os.environ这个变量中，可以直接查看：
 
+    os.getenv('DEBUG', 'default')
+    os.environ["DEBUSSY"] = "1"
+
+
 	>>> os.environ
 	environ({'VERSIONER_PYTHON_PREFER_32_BIT': 'no', 'TERM_PROGRAM_VERSION': '326', 'LOGNAME': 'michael', 'USER': 'michael', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/mysql/bin', ...})
 	要获取某个环境变量的值，可以调用os.environ.get('key')：

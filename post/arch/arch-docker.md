@@ -60,6 +60,13 @@ Mac OSX Image 不可以修改路径：
     docker search httpd
     docker run httpd
 
+### list image layer
+    $ docker history python:3.7
+    IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+    954987809e63        3 weeks ago         /bin/sh -c #(nop)  CMD ["python3"]              0B
+    <missing>           7 weeks ago         /bin/sh -c set -ex;  apt-get update;  apt-ge…   562MB
+    <missing>           7 weeks ago         /bin/sh -c #(nop) ADD file:843b8a2a9df1a0730…   101M
+
 ## rm image
 
     $ docker image rm [imageName]
@@ -108,11 +115,21 @@ You should try to remove unnecessary images before removing the image:
     --link redis:redis \  
     --name container_name dockerhub_id/image_name
 
+dockerfile CMD, 不会解析环境变量
+
+    CMD ["sh", "test.sh", "$REDIS_NAMESPACE"]
+
+得用
+
+    CMD ["sh", "-c", "echo $PROJECTNAME"]
+    或
+    CMD echo $PROJECTNAME
+
 #### ARG ENV
 docker `--build-arg <varname>=<value>`
 
     ARG <name>[=<default value>]
-    ARG package_path=/mvp/
+    ARG package_path=/pkg/
     WORKDIR $package_path
     ENV ENV_MODE=staging \
         TEST=debug
@@ -139,6 +156,12 @@ Note: ENV 同名变量会覆盖 ARG
     # 启动时默认的命令
     CMD ["php-fpm", "-D"]
     CMD     /usr/sbin/sshd -D
+
+覆盖CMD:
+
+    docker exec -it $CONTAINER_ID /bin/bash
+    或
+    docker run -it --entrypoint=/bin/bash $IMAGE -i
 
 RUN 两种格式
 
@@ -169,10 +192,8 @@ docker php 还提供为php 安装扩展的命令
     RUN docker-php-ext-install mysqli
     CMD apache2-foreground
 
-
 ## push image
 首先，去 hub.docker.com 或 cloud.docker.com 注册一个账户。然后，用下面的命令登录。
-
 
     $ docker login
 
@@ -196,7 +217,6 @@ image: `Repo:Tag`
 Library latest 都是默认的,所以简化为
 
     docker pull hello-world
-
 
 ## Repository 仓库
 Docker Repository 是用于管理存储、分发镜像的服务，docker 可以多个repository, 一个repository 包含多个tag(不同tag 是不同IMAGE版本)。

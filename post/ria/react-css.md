@@ -30,7 +30,7 @@ var withStyles:
         color:'grey'
     },
     '& label':{
-    fontSize:'15px'
+        fontSize:'15px'
     }
 
 so you have to find which element you want to style first and then give style to parent's class.

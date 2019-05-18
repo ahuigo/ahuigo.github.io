@@ -41,7 +41,7 @@ Python的logging模块是线程安全的，
 https://zhuanlan.zhihu.com/p/36310626?group_id=974774296987615232
 
 # logging
-logging，和assert比，logging不会抛出错误，而且可以输出到文件：
+logging，和assert比，logging不会抛出错误，而是可以输出到文件：
 
 ## log level
 1. `debug，info，warning，error, fatal/critical`等几个级别重要性依次增加，

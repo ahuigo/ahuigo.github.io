@@ -443,10 +443,9 @@ mac app(installed):
 1. GIPHY
 2. Kap
 
-### draw gif:
+### draw gif
     ms paint: http://gifpaint.com/
     ppt
-
 
 ### Kap +KeyCastr
 1. Kap 开源+简洁, 替代recordit/LICEcap/Gifcam
