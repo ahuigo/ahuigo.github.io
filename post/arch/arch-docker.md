@@ -299,6 +299,21 @@ remove all images
     $ docker run -p 80:80 --name mynginx -v $HOME/www:/www -v $HOME/conf/nginx.conf:/etc/nginx/nginx.conf -d nginx  
     $ docker inspect dockerid
 
+如果创建一个匿名的映射
+
+    -v /www
+        可能遇到到host 机上的 "Mountpoint": "/var/lib/docker/volumes/www/_data",
+
+
+在dockerfile 里面默认
+
+    VOLUME /www
+
+查看：
+
+    $ docker volume inspect www
+    "Mountpoint": "/var/lib/docker/volumes/www/_data",
+
 ### 端口映射
 `-P` 容器端口映射到宿主机
 
