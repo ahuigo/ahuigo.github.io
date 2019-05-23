@@ -159,6 +159,14 @@ sigle column
     df = df.sort_values(by=['col1', 'col2'], ascending=False)
     df.sort_values(['job','count'],ascending=False).groupby('job').head(3)
 
+## add column + row
+
+### add col series
+
+    DataFrame.add(s, axis=1)
+    df['col1']= s
+    df['col1']= df.col2/df.col3
+
 ### concat column
 init:
 
@@ -230,7 +238,7 @@ via index + column(merge)
 ### drop duplicate columns
     df = df.loc[:,~df.columns.duplicated()]
 
-### append df
+### append df(row)
 
     pandas.concat([df1, df2]) # 也就是axis=0
     df1.append(df2)
@@ -258,10 +266,6 @@ update row via loc:
     2    1    -1     1
     3    0     0     0
     4    1    -1    -1
-
-### add col series
-    DataFrame.add(s, axis=1)
-    DataFrame['col1']= s
 
 ### to_dict:
     print(df.set_index('device_id').T.to_dict())

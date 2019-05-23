@@ -4,6 +4,7 @@ date: 2019-05-12
 ---
 # How to set up React, webpack, and Babel
 > 本文参考的是：How to set up React, webpack, and Babel 7 from scrath
+https://www.valentinog.com/blog/babel/
 
 # install
 ## install webpack
@@ -59,15 +60,23 @@ Create a file named `webpack.config.js` and fill it like the following:
 
 # write jsx
 ## write compoent with prop types
+index.js 
 
     $ vi src/index.js
     import FormContainer from "./js/components/container/FormContainer.jsx";
-
-    $ vi "./js/components/container/FormContainer.jsx"
-    .....
     const wrapper = document.getElementById("create-article-form");
     wrapper ? ReactDOM.render(<FormContainer />, wrapper) : false;
+
+FormContainer.jsx
+
+    $ vi "./js/components/container/FormContainer.jsx"
+    import React, { Component } from "react";
+    import ReactDOM from "react-dom";
+    import Input from "../presentational/Input.jsx";
+    .....
     export default FormContainer;
+
+Input.jsx
 
     $ cat src/js/components/presentational/Input.jsx
     import React from "react";
@@ -134,7 +143,7 @@ edit webpack.config.conf
           filename: "./index.html"
         })
       ]
-    };
+
 
 With webpack html-loader,
  there’s no need to include your Javascript inside the HTML file: the bundle will be automatically injected into the page.

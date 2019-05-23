@@ -18,6 +18,13 @@ Required 限制了，不能传0，"" 空字符等等！！！
 
 # gonic bind
 
+## query('name') + PostForm('name')
+
+    id := c.Query("id") // shortcut for c.Request.URL.Query().Get("id")
+    page := c.DefaultQuery("page", "0")
+    name := c.PostForm("name")
+    nick := c.DefaultPostForm("nick", "anonymous")
+
 ## bind: query
 
     type StructA struct {
@@ -90,14 +97,6 @@ curl  "https://httpbin.org/post"  -d 'file=go&bucket=bucketpath&a=1
 Test it with:
 
     $ curl -v --form user=user --form password=password http://localhost:8080/login
-
-## query('name') + PostForm('name')
-or:
-
-    id := c.Query("id") // shortcut for c.Request.URL.Query().Get("id")
-    page := c.DefaultQuery("page", "0")
-    name := c.PostForm("name")
-    nick := c.DefaultPostForm("nick", "anonymous")
 
 ## Multipart/file(form-data)
     // 'Content-Type: multipart/form-data; boundary=---xxx'

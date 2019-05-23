@@ -21,12 +21,16 @@ If you change the space to a T, you'll be in spec:
 
 # moment
 https://github.com/you-dont-need/You-Dont-Need-Momentjs#string--format--locale
+moment 一般，date-fns 更好
 
 	moment('20180101').valueOf(); // getTime():
 	moment().format('MMMM Do YYYY, HH:mm:ss a'); // January 1st 2018, 10:36:01 pm
+	moment().format('YYYY-MM-DD HH:MM:SS');
 
 	moment("20111031", "YYYYMMDD").fromNow(); // 6 years ago
 	moment().subtract(10, 'days').calendar(); // 12/22/2017
+
+# date-fns
 
 # timer
 You need to give JavaScript a reference to the interval:

@@ -10,6 +10,13 @@ yum install postgresql10-server postgresql10 -y
 /usr/pgsql-10/bin/postgresql-10-setup initdb
 ```
 
+## output formate
+
+    # \x
+    Expanded display is on.
+    # \x
+    Expanded display is off.
+
 ## auth
 see db-user.md
 vim /var/lib/pgsql/data/pg_hba.conf

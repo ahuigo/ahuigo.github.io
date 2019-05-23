@@ -79,7 +79,29 @@ Via FormData and file:
 	var blob = new Blob([content], { type: "text/xml"});
 	formData.append("webmasterfile", blob);
 
-## blob=file.slice
+### blob as url
+
+    var blob = new Blob(['content'], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement("a");
+    var url = URL.createObjectURL(blob);
+    if (link.download !== undefined) { // feature detection
+        link.setAttribute("href", url);
+        link.setAttribute("download", 'filename.csv');
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+vs:
+
+    link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+
+    var blob = new Blob(['content'], { type: 'text/csv;charset=utf-8;' });
+    link.setAttribute("href", URL.createObjectURL(blob));
+
+
+### blob=file.slice
 
 	if(navigator.appVersion.match('Chrome/'))
 		blob = file.slice(start, length);

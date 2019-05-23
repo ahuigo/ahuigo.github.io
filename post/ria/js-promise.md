@@ -34,6 +34,9 @@ create instantiated promise
     var promise = Promise.resolve(100);
     var promise = new Promise(r=>r(100));
 
+    new Promise(resolve => setTimeout(resolve, ms));
+
+
 ## ajax
 ajax函数将返回Promise对象:
 

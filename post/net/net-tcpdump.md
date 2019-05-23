@@ -15,7 +15,7 @@ tcpdump可以分为三大部分内容，第一是“选项”，第二是“过�
 > 要用tcpdump抓包，一定要切换到root账户下，因为只有root才有权限将网卡变更为“混杂模式”。
 
 ## tcpdump 解析图
-    /demo/py-demo/tcp/parse-tcp.txt
+    https://github.com/ahuigo/py-lib/blob/master/socket/tcpdump-parse.txt
 
 ## tshark
 tshark 介绍：https://www.zhihu.com/question/31188903

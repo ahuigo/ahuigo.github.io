@@ -26,6 +26,7 @@ Non interactive password:
 
 1. vim ~/.pgpass:
     `hostname:port:database:username:password`
+    支持通配符`hostname:port:*:username:password`
 2. PGPASSWORD=pass1234 psql -U MyUsername myDatabaseName
 3. URI: https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
 

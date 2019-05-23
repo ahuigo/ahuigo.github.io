@@ -71,6 +71,7 @@ profile.js
 
     // 写法三
     var n = 1;
+    export {n};
     export {n as m};
 
 变量foo，值为bar，500 毫秒之后变成baz。
@@ -79,6 +80,34 @@ profile.js
     setTimeout(() => foo = 'baz', 500);
 
 这一点与 CommonJS 规范完全不同。CommonJS 模块输出的是值的缓存，不存在动态更新
+
+### export default 命令
+因为export default命令的本质是将后面的值，赋给default变量，所以它后面不能跟变量声明语句
+
+    // 正确
+    var a = 1;
+    export default a; //default = a
+    export default 42; //default = 42
+    export {a as default}
+
+    // 错误
+    export default var a = 1; // default = var a=1
+    export default a = 1;      // default = a = 1 // a is not defined(strict)
+
+default 与其他变量混用
+
+    import AnyDefaultName, { each, each as forEach } from 'lodash';
+
+### export *
+    // lib/mathplusplus.js
+    export * from "lib/math";
+    export var e = 2.71828182846;
+    export default function(x) {
+        return Math.exp(x);
+    }
+    // app.js
+    import exp, {pi, e} from "lib/mathplusplus";
+    console.log("e^π = " + exp(pi));
 
 ## import 
 1. import vs node require: https://cnodejs.org/topic/5a0f2da5f9de6bb0542f090b
@@ -110,33 +139,6 @@ main.js(babel)
 
 注意，`export *` 命令会忽略模块的default方法
 
-## export default 命令
-因为export default命令的本质是将后面的值，赋给default变量，所以它后面不能跟变量声明语句
-
-    // 正确
-    var a = 1;
-    export default a; //default = a
-    export default 42; //default = 42
-    export {a as default}
-
-    // 错误
-    export default var a = 1; // default = var a=1
-    export default a = 1;      // default = a = 1 // a is not defined(strict)
-
-default 与其他变量混用
-
-    import AnyDefaultName, { each, each as forEach } from 'lodash';
-
-## export *
-    // lib/mathplusplus.js
-    export * from "lib/math";
-    export var e = 2.71828182846;
-    export default function(x) {
-        return Math.exp(x);
-    }
-    // app.js
-    import exp, {pi, e} from "lib/mathplusplus";
-    console.log("e^π = " + exp(pi));
 
 ## export 与 import 的复合写法 
 

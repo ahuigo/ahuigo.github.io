@@ -6,6 +6,13 @@ description:
 ---
 # Object
 
+## isEempty
+    ECMA 7+:
+    Object.entries(obj).length === 0 && obj.constructor === Object
+    ECMA 5+:
+    Object.keys(obj).length === 0 && obj.constructor === Object
+    arr.length === 0
+
 ## define
 
     {toStr(){}, a:1}
@@ -99,6 +106,13 @@ items:
     obj.propertyIsEnumerable('attr')
         判断给定的属性是否可以用 for...in 语句进行枚举。
     obj.__proto__
+
+in 可以判断ownProp 以及继承的props
+
+    > oo={}
+    > oo.__proto__= {a:1}
+    > 'a' in oo
+    true
 
 ## value
 

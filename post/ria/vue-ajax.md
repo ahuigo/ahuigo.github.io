@@ -1,6 +1,7 @@
 ---
 title: 新一代ajax api--fetch、axios
 date: 2018-
+private:
 ---
 # 新一代ajax api--fetch、axios
 - fetch: 底层，相当于xhr 升级版, 原生

@@ -32,3 +32,11 @@ https://juejin.im/post/5aa26c106fb9a028d936c357
     npm install -g generator-z-react-cli
     yo z-react-cli
 
+# library
+react 的import 的libray
+
+    $ cat .env
+    NODE_PATH=src
+    REACT_APP_MODE=dev
+
+

@@ -6,6 +6,60 @@ private:
 # css react
 https://codeburst.io/4-four-ways-to-style-react-components-ac6f323da822
 
+# CSS Stylesheet
+css stylesheet:
+
+    .DottedBox {
+      margin: 40px;
+      border: 5px dotted pink;
+    }
+
+    .DottedBox_content {
+      font-size: 15px;
+      text-align: center;
+    }
+
+e.g.
+
+    import './DottedBox.css';
+
+    const DottedBox = () => (
+    <div className="DottedBox">
+        <p className="DottedBox_content">Get started with CSS styling</p>
+    </div>
+    );
+
+因为react 内置了css-loader
+
+    npm install css-loader --save-dev
+    And add it to loaders in your webpack configs:
+
+    module.exports = {
+      module: {
+        loaders: [
+          { test: /\.css$/, loader: "style-loader!css-loader" },
+          // ...
+        ]
+      }
+    };
+
+# inline styling object
+
+    const divStyle = {
+      margin: '40px',
+      border: '5px solid pink'
+    };
+    const pStyle = {
+      fontSize: '15px',
+      textAlign: 'center'
+    };
+    
+    const Box = () => (
+      <div style={divStyle}>
+        <p style={pStyle}>Get started with inline style</p>
+      </div>
+    );
+
 # className
 var withStyles:
 

@@ -8,6 +8,9 @@ description:
 
 移动范围
 
+    2dd 删除两行
+    2>> 移动两行
+
 # insert
 
 	gI		Insert in column 1
