@@ -6,6 +6,15 @@ date: 2019-05-12
 > 本文参考的是：How to set up React, webpack, and Babel 7 from scrath
 https://www.valentinog.com/blog/babel/
 
+## Create react app
+create-react-app 内置了webpack. 可以查看到：
+
+     vi node_modules/react-scripts/config/webpack.config.js
+
+如果想回退到原生的webpack :
+
+    npm run reject
+
 # install
 ## install webpack
 Let’s install it by running:

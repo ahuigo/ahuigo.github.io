@@ -6,6 +6,7 @@ date: 2018-10-04
 从最早的Less、SASS，到后来的 PostCSS，再到最近的 CSS in JS，都是为了解决这个问题。
 
 less vs sass/scss
+sass 更成熟, 有Compass, Foundation 之类的
 
 # less
 http://lesscss.org/

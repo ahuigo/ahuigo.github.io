@@ -185,7 +185,7 @@ if 'all' in sys.argv:
 elif len(sys.argv)>1:
     modified_linelist = [f'A\t{path}' for path in sys.argv[1:]]
 else:
-    cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vP "\spost/(index|p/.+).md$" '
+    cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vE "\spost/(index|p/.+).md$" '
     modified_linelist = getoutput(cmd).strip().split('\n')
     modified_linelist = (filter(lambda x:x, modified_linelist))
 

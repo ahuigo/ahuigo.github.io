@@ -5,8 +5,17 @@ private:
 ---
 # css react
 https://codeburst.io/4-four-ways-to-style-react-components-ac6f323da822
+https://blog.bitsrc.io/5-ways-to-style-react-components-in-2019-30f1ccc2b5b
 
-# CSS Stylesheet
+根据node_modules/react-scripts/config/webpack.config.js 显示， React 内置webpack 提供了对css/module.css/scss 的支持：
+
+    // style files regexes
+    const cssRegex = /\.css$/;
+    const cssModuleRegex = /\.module\.css$/;
+    const sassRegex = /\.(scss|sass)$/;
+    const sassModuleRegex = /\.module\.(scss|sass)$/;
+
+# 1. CSS Stylesheet
 css stylesheet:
 
     .DottedBox {
@@ -43,7 +52,7 @@ e.g.
       }
     };
 
-# inline styling object
+# 2. inline styling object
 
     const divStyle = {
       margin: '40px',
@@ -60,23 +69,101 @@ e.g.
       </div>
     );
 
-# className
-var withStyles:
+# 3. CSS modules
+> https://medium.com/@pioul/modular-css-with-react-61638ae9ea3e
 
-    import { withStyles } from 'material-ui/styles';
+react 内置webpack 支持了css module
 
-    const styles = {
-        root: { backgroundColor: 'red', },
+    /* Thumbnail.css */
+    .image {
+        border-radius: 3px;
+    }
+
+    /* Thumbnail.jsx */
+    import styles from './Thumbnail.css';
+    render() { return (<img className={styles.image}/>) }
+
+composes:
+
+    /* Colors.css */
+    .primaryColor {
+      color: #333;
+    }
+
+    /* Profile.css */
+    .description {
+      composes: primaryColor from './Colors.css';
+    }
+
+global:
+
+    /* Constants.css – imported in app entry point */
+    :global(:root) {
+      --primary-color: #333;
+    }
+
+    /* Profile.css */
+    .description {
+      color: var(--primary-color);
+    }
+
+local:
+
+    :local(.container) {
+       margin: 40px;
+       border: 5px dashed pink;
+     }
+     :local(.content) {
+       font-size: 15px;
+       text-align: center;
+     }
+
+     //webpack.config.js file:
+    {
+        test: /\.css$/,
+        loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' 
+    }
+
+伪类支持
+
+    /* Button.jsx */
+    var styles = {
+      button: {
+        backgroundColor: 'black',
+
+        ':hover': {
+          backgroundColor: 'grey'
+        }
+      }
     };
 
-    class MyComponent extends React.Component {
-        render () {
-            return <div className={this.props.classes.root} />;
-        }
-    }
+# 4. jss （css in js）
+> https://segmentfault.com/q/1010000012687223
+
+Material-UI 中默认支持的jss
+
+    import { withStyles } from 'material-ui/styles';
+    const styles = { root: { width: '100%' } };
     export default withStyles(styles)(MyComponent);
 
-# element inside
+-> CSS :
+
+    ComponentName-root_0 { width: 100%; };
+
+-> classes
+
+    const classes = { root: 'ComponentName-root_0' };
+
+withStyles(stypes) 步骤的完整代码是：withStyles(stypes)(Component) ：
+
+    return (Component) => (props) => (<Component {...props} classes={classes} />);
+    <div classNames={`this.props.classes.root`}>
+
+
+## element inside
+Rerfer to:
+https://stackoverflow.com/questions/50368417/styling-element-inside-class-material-ui
+
     shopForm: {
         textAlign : 'center',
     '& input' :{
@@ -92,7 +179,7 @@ so you have to find which element you want to style first and then give style to
     <Grid item lg={4} className={classes.shopForm} >
         <Field name="name" type="text" label="name">
 
-# hover css
+## hover css
 
     const style = {
         color: '#000000'
@@ -150,3 +237,29 @@ card.jsx
     }
 
     export default Card;
+
+# styled components(第三方：不推荐)
+
+    import React from 'react';
+    import styled from 'styled-components';
+
+    const Div = styled.div`
+      margin: 40px;
+      border: 5px outset pink;
+      &:hover {
+       background-color: yellow;
+     }
+    `;
+
+    const Paragraph = styled.p`
+      font-size: 15px;
+      text-align: center;
+    `;
+
+    const OutsetBox = () => (
+      <Div>
+        <Paragraph>Get started with styled-components 💅</Paragraph>
+      </Div>
+    );
+
+    export default OutsetBox;

@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2019-05-12 [How to set up React, webpack, and Babel 7 from scratch](/b/ria/react-webpack-babel) 
+- 2019-05-23 [react framework](/b/ria/react-framework) 
+- 2018-10-04 [js-css-less](/b/ria/js-css-less) 
 - 2019-03-08 [does-a-thread-waiting-on-io-also-block-a-core?](/b/py/py-async-cpu) 
 - 2019-03-02 [cache 穿透问题](/b/db/redis-cache) 
 - 2019-02-28 [字符串搜索算法KMP](/b/algorithm/algo-str-search) 
@@ -36,6 +39,3 @@
 - 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
 - 2018-12-29 [mysql explain 的使用](/b/db/mysql-index-explain) 
 - 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
-- 2018-09-27 [人脑学习的本质](/b/course/1.study) 
-- 2018-09-27 [写论文要用到的网站](/b/em/em-paper) 
-- 2018-11-4 [ADHD：分心者的自我认知训练](/b/life/adhd) 
