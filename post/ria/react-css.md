@@ -78,10 +78,21 @@ react 内置webpack 支持了css module
     .image {
         border-radius: 3px;
     }
+    #menu .image {
+        border-radius: 3px;
+    }
 
     /* Thumbnail.jsx */
     import styles from './Thumbnail.css';
-    render() { return (<img className={styles.image}/>) }
+    console.debug(styles)
+    render() { return (<img id={styles.menu} className={styles.image}/>) }
+
+subclass 正确用法是
+
+    //error
+    .menu a:.active { background-color: #3887be; color: #ffffff; }
+    //success
+    .menu a:global(.active) { background-color: #3887be; color: #ffffff; }
 
 composes:
 
@@ -124,18 +135,6 @@ local:
         loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' 
     }
 
-伪类支持
-
-    /* Button.jsx */
-    var styles = {
-      button: {
-        backgroundColor: 'black',
-
-        ':hover': {
-          backgroundColor: 'grey'
-        }
-      }
-    };
 
 # 4. jss （css in js）
 > https://segmentfault.com/q/1010000012687223
@@ -179,16 +178,22 @@ so you have to find which element you want to style first and then give style to
     <Grid item lg={4} className={classes.shopForm} >
         <Field name="name" type="text" label="name">
 
-## hover css
+## 伪类支持
 
-    const style = {
-        color: '#000000'
+    /* Button.jsx */
+    var styles = {
+      button: {
+        backgroundColor: 'black',
+
         ':hover': {
-            color: '#ffffff'
+          backgroundColor: 'grey'
         }
+      }
     };
 
 # .scss
+https://facebook.github.io/create-react-app/docs/adding-a-sass-stylesheet
+
 webpack:
 
     module: {

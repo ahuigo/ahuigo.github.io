@@ -8,10 +8,10 @@ KMP 则是O(N) 复杂度
 
 搜索`ahuigo` 时，当匹配到`,`, 我们可以跳过`ahui`
 
-    ahui, let's go! ahuigo
+    ahui, let's go! ahuigo  n=4, ","!="ahuigo"[4]
     ahui__
 
-    ahui, let's go! ahuigo
+    ahui, let's go! ahuigo  n=0, ","!="ahuigo"[0]
         ahui__
 
 search `ahuigo` 的伪代码如下 
@@ -30,7 +30,16 @@ search `ahuigo` 的伪代码如下
 1. n 很关键，代表已经匹配的字符数
 2. 没有匹配成功n 归0，再重新匹配
 
-如果搜索`ababc`, n就不能直接归0了, 我们需要提前计算
+如果搜索`ababc`, 当遇到不匹配的`c`, n就不能直接归0了
+
+    abababc         n=5, "a"!="ababc"[4]
+    abab_
+
+    abababc         n=2, "a"=="ababc"[2]
+      aba__
+        |
+
+搜索`ababc`时, 如果我们需要遇到不匹配的字符，n 应该设置的值可以提前计算
 
     ababc       n(a,ababc)=0
     0a

@@ -69,7 +69,7 @@ function gcap(){
     fi
 
     if git remote | grep '\w';then
-        if git remote ; then
+        if git remote | xargs -L1 -J% git push --follow-tags % HEAD; then
             cd $(git rev-parse --show-toplevel)
             subdirs=(b vue )
             oridir=$(pwd)
@@ -79,9 +79,9 @@ function gcap(){
                 test -d $subdir && cd $subdir;
                 if test $? = 0;then
                     echo git push $subdir;
-                    #git add .
-                    #git commit -am "msg:$1"
-                    #git remote | xargs -L1 git push
+                    git add .
+                    git commit -am "msg:$1"
+                    git remote | xargs -L1 git push
                     cd $oridir
                 fi
             done
