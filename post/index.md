@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-10-04 [ajax cors](/b/ria/js-ajax-cors) 
+- 2019-05-27 [curl manual](/b/c/ops-curl) 
 - 2018-10-04 [JS Promise](/b/ria/js-promise) 
 - 2019-05-27 [js notes](/b/ria/js-obj) 
 - 2018-10-04 [try-catch](/b/ria/js-debug-exception) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [golang 的协程调度](/b/go/18.go-routines-inner) 
 - 2019-01-22 [关于人工标注的思考](/b/code/code-manual-annotation) 
 - 2018-09-26 [如何避免深度递归](/b/algorithm/3.algo-self-call) 
-- 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
-- 2018-09-28 [英语中的否定语句](/b/eng/s/1.not) 

@@ -15,7 +15,7 @@ date: 2018-10-04
         Content-Language
         Last-Event-ID
         Content-Type：
-            只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain
+            只限于三个值application/x-www-form-urlencoded、multipart/form-data 、text/plain
 
 凡是不同时满足上面两个条件，就属于非简单请求。
 

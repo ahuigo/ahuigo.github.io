@@ -57,8 +57,8 @@ Detect Ajax(php 为例)：
 
 body: 不能是 object, 只能是: (是`body` 不是`data`)
 
-    formData, // 默认 multipart/form-data
-    input.files[0], // 默认 multipart/form-data
+    formData, // 默认multipart/form-data 不要自己算boundary
+    input.files[0], // 默认multipart/form-data 不要自己算boundary
 
     JSON.stringify(data); //默认： text/plain
 
