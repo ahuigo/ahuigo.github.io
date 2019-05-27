@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-05-27 [vim-motion](/b/vim/vim-motion) 
+- 2018-09-28 [help](/b/py/py-db-postgre) 
 - 2018-10-04 [ajax cors](/b/ria/js-ajax-cors) 
 - 2019-05-27 [curl manual](/b/c/ops-curl) 
 - 2018-10-04 [JS Promise](/b/ria/js-promise) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [学习 docker](/b/arch/arch-docker) 
 - 2019-01-29 [AI 入门路线](/b/ai/ai-book) 
 - 2018-09-27 [golang 的协程调度](/b/go/18.go-routines-inner) 
-- 2019-01-22 [关于人工标注的思考](/b/code/code-manual-annotation) 
-- 2018-09-26 [如何避免深度递归](/b/algorithm/3.algo-self-call) 

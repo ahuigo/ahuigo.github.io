@@ -4,8 +4,7 @@ title:	vim-motion
 category: blog
 description:
 ---
-# Preface
-
+# motion,moving
 移动范围
 
     2dd 删除两行

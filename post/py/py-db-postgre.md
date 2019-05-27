@@ -31,6 +31,7 @@ cursor.execute, conn.commit,close 查询fetch 如果没有修改数据，不需�
 #### bind params
 1. 关键字用：sql.Identifier
 2. 普通数据先自己用%s 拼好，再bind_param
+
 execute 支持变量绑定
 
     >>> SQL = "INSERT INTO authors (name) VALUES (%s);" # Note: no quotes
