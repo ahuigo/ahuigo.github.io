@@ -71,8 +71,8 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
-      body: Object.keys(params).map((key) => {
-                return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+      body: Object.entries(params).map((key, value) => {
+                return encodeURIComponent(key) + '=' + encodeURIComponent(value);
             }).join('&'),
     })
 
@@ -102,7 +102,7 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
         async r=>await r.text()
     ).then(txt=>console.log(txt))
 
-e.g. 
+async function with in `then`:
 
     .then(async r => await r.json())
     .then(data=>console.log(data))

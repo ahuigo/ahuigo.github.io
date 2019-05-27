@@ -179,13 +179,16 @@ Promise.all()实现如下：
 2. await: sync
 
 ## await catch data
-await 可以得到catch 的值
+await 不能捕获exceptio/reject
+
+但是 await 可以通过catch 得到exception/reject 的值
 
     f=async ()=>{
         p=await (new Promise(()=>{throw new Exception('aaaaa');}).catch(r=>100)); 
         //100
         console.log(p)
     }
+    f()
 
 await reject:
 
@@ -201,8 +204,8 @@ await reject:
     }
     f()
 
-## try await exception
-只有用await 才能catch 到exception
+## catch async exception
+只有用await 才能catch 到async 发出的 exception
 
     try{
         await f()
@@ -290,6 +293,9 @@ e.g.:
                                                 //但是没有timer runing, 不会阻塞程序的退出
     });
 
+## async in then:
+
+    fetch(url).then(async response=>await response.json())
 
 ## combine await/then/catch
 1. catch 不会向后面的 catch 传导, 但是会向后面的then 传值

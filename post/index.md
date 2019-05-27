@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2018-10-04 [JS Promise](/b/ria/js-promise) 
+- 2019-05-27 [js notes](/b/ria/js-obj) 
+- 2018-10-04 [try-catch](/b/ria/js-debug-exception) 
 - 2019-05-12 [How to set up React, webpack, and Babel 7 from scratch](/b/ria/react-webpack-babel) 
 - 2019-05-23 [react framework](/b/ria/react-framework) 
 - 2018-10-04 [js-css-less](/b/ria/js-css-less) 
@@ -36,6 +39,3 @@
 - 2018-09-26 [如何避免深度递归](/b/algorithm/3.algo-self-call) 
 - 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
 - 2018-09-28 [英语中的否定语句](/b/eng/s/1.not) 
-- 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
-- 2018-12-29 [mysql explain 的使用](/b/db/mysql-index-explain) 
-- 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 

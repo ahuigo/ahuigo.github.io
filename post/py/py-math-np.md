@@ -11,13 +11,16 @@ numpy是SciPy、Pandas等数据处理或科学计算库最基本的函数功能�
 3. 整合C/C++/Fortran代码的工具
 4. 提供了线性代数、傅里叶变换、随机数生成的相关功能
 
-Refer to : segmentfault.com/a/1190000011372128
+Refer to :
+
 
 ## install
 pip3 install numpy
 
 # pandas
 http://pandas.pydata.org/pandas-docs/stable/10min.html
+df教程：
+https://www.joinquant.com/research?target=research&url=/user/281387418609/notebooks/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B%E2%80%94Pandas%E5%BA%93%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B.ipynb
 
 ## print
     pd.set_option('display.max_columns', None)  # or 1000
@@ -116,6 +119,13 @@ Drop a row by index
 
 ### filter
 #### select column field:
+filter row
+
+    df[0:3]
+    df'row0':'row3']
+
+
+filter column
 
     df0 = df[['col1','col2']]
     df1 = df.iloc[:,0:2]
@@ -141,10 +151,14 @@ sigle column
     df.loc['row_index'] # row_index
 
 #### select row and column
+select row
 
     # via index
     df.iloc[0] # first row
     df[0:2]
+
+select row and column
+
     df.iloc[0:2, 1:5]
 
 ### dict/series to dataFrame
@@ -155,9 +169,27 @@ sigle column
 
     pd.DataFrame({'email':sf.index, 'list':sf.values})
 
+df to list
+
+    df.values
+        array([[-1.29015182, -1.28471056,  0.30586477,  0.25301148],
+       [ 0.19073027, -0.01615997, -1.40120364, -0.76394756],
+
 ### sort df
     df = df.sort_values(by=['col1', 'col2'], ascending=False)
     df.sort_values(['job','count'],ascending=False).groupby('job').head(3)
+
+### grupby
+
+    df.groupby('col').sum()
+    df.groupby('col').head(3)
+    df.groupby(['A','B']).sum()
+
+### update df
+    df2[df2 > 0] = -df2
+    df['col'] = 'value'
+    df['col'] = series
+    df1.loc[dates[0]:dates[1],'col'] = 1
 
 ## add column + row
 
@@ -181,7 +213,7 @@ init:
     0  2  32
     1  1  31
 
-concat column(with no index)
+concat column(with no index): 重复的column/index
 
     //dumplicated column
     In [5]: pd.concat([df1,df2], axis=1)
@@ -190,7 +222,7 @@ concat column(with no index)
     0  1  1  2  32
     1  2  2  1  31
 
-    //dumplicated index
+    //dumplicated index: axis=0
     In [16]: pd.concat([df1,df2])
        a    b     c
     0  1  1.0   NaN
@@ -198,7 +230,7 @@ concat column(with no index)
     0  2  NaN  32.0
     1  1  NaN  31.0
 
-with index(concat)
+with index(concat): 不重复的index
 
     In [8]: pd.concat([df1.set_index('a'),df2.set_index('a')], axis=1)
     Out[8]:
@@ -209,14 +241,15 @@ with index(concat)
 
     In [9]: pd.concat([df1.set_index('a'),df2.set_index('a')], axis=1).reset_index()
     Out[9]:
-       a  b   c
+   
     0  1  1  31
     1  2  2  32
 
-via merge
+via merge: 重复的column 会自动加col_x, col_y
 
     In [23]: pd.merge(df1, df2, how='left', left_on=['a'], right_on=['a'])
     In [23]: pd.merge(df1, df2, left_on=['a'], right_on=['a'])
+    In [23]: pd.merge(df1, df2, on='a')
     Out[23]:
        a  b   c
     0  1  1  31
@@ -239,10 +272,19 @@ via index + column(merge)
     df = df.loc[:,~df.columns.duplicated()]
 
 ### append df(row)
+相同
 
     pandas.concat([df1, df2]) # 也就是axis=0
     df1.append(df2)
+
+series 也可以的：
+
     s1.append(s2)
+
+### append series(row)
+
+    s = df.iloc[3]
+    df.append(s, ignore_index=True)
 
 ### add row series
 apped dict(必须忽略加入的index)
@@ -335,6 +377,8 @@ in dataFrame
     '07311954' in df.date.values
     '07311954' in df['date'].values
     'index' in df.index
+    'col' in df.columns
+    df.values is 二维
 
 ### concat series 2 series
     >>> s1 = pd.Series([1, 2, 3])

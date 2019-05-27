@@ -310,6 +310,7 @@ new func() 相当于:
 所有的方法都定义在prototype 上
 
     class Animal{
+        name = 'dog'
         constructor(name){
             this.name = name
         }
@@ -356,6 +357,7 @@ class 定义的方法是不可keys 枚举定义值（除了assign值）, 不过�
 
     //instance
     class Foo { 
+        name = 'bar' 
         constructor(){
             this.bar = 1; 
         }
@@ -431,10 +433,30 @@ private 用闭包:
         }
     }
 
+es7 private:
+
+    class Something {
+        #property;
+        public_prop = 'public'
+        static static_prop = 'static'
+
+        constructor(){
+            this.#property = "test";
+        }
+    }
+
+    console.log(new Something().property); //=> undefined
+    console.log(Something.static_prop); //=> static
+
 ### static
 static 不可以被实例继承(因为不是prototype), static属于类自己(相当于proto)
 
     Foo.prototype.bar=2 // prototype 才被继承
+    class Foo{
+        #property;
+        public_prop = 'public'
+        static static_prop = 'static'
+    }
 
 #### static method
 1. 不可以用于实例

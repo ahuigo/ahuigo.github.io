@@ -50,14 +50,6 @@ Store 收到 Action 以后，必须给出一个新的 State，这样 View 才会
 
 Reducer 是一个函数(相当于array.reduce)，它接受 Action 和当前 State 作为参数，返回一个新的 State。
 
-
-    const reducer = function (state, action) {
-        // ...
-        return new_state;
-    };
-
-eg. 执行reducer
-
     const defaultState = 0;
     const reducer = (state = defaultState, action) => {
       switch (action.type) {
@@ -183,7 +175,7 @@ Reducer 函数负责生成 State。由于整个应用只有一个 State 对象�
     CHANGE_STATUS：statusMessage属性
     CHANGE_USERNAME：userName属性
 
-这三个属性之间没有联系，这提示我们可以把 Reducer 函数拆分。不同的函数负责处理不同属性，最终把它们合并成一个大的 Reducer 即可。
+下面代码中，Reducer 函数被拆成了三个小函数，每一个负责生成对应的属性。一个 React 根组件由很多子组件构成, 子组件与子 Reducer 完全可以对应。
 
     const chatReducer = (state = defaultState, action = {}) => {
       return {
@@ -193,94 +185,276 @@ Reducer 函数负责生成 State。由于整个应用只有一个 State 对象�
       }
     };
 
-上面代码中，Reducer 函数被拆成了三个小函数，每一个负责生成对应的属性。
 
-这样一拆，Reducer 就易读易写多了。而且，这种拆分与 React 应用的结构相吻合：一个 React 根组件由很多子组件构成。这就是说，子组件与子 Reducer 完全可以对应。
+Redux 提供了一个combineReducers方法，用于 Reducer 的合并。
 
-Redux 提供了一个combineReducers方法，用于 Reducer 的拆分。你只要定义各个子 Reducer 函数，然后用这个方法，将它们合成一个大的 Reducer。
+    import { combineReducers } from 'redux';
+    const chatReducer = combineReducers({
+        chatLog,
+        statusMessage,
+        userName
+    })
+    export default todoApp;
 
-
-import { combineReducers } from 'redux';
-
-const chatReducer = combineReducers({
-  chatLog,
-  statusMessage,
-  userName
-})
-
-export default todoApp;
-上面的代码通过combineReducers方法将三个子 Reducer 合并成一个大的函数。
-
-这种写法有一个前提，就是 State 的属性名必须与子 Reducer 同名。如果不同名，就要采用下面的写法。
-
-
-const reducer = combineReducers({
-  a: doSomethingWithA,
-  b: processB,
-  c: c
-})
-
-// 等同于
-function reducer(state = {}, action) {
-  return {
-    a: doSomethingWithA(state.a, action),
-    b: processB(state.b, action),
-    c: c(state.c, action)
-  }
-}
-总之，combineReducers()做的就是产生一个整体的 Reducer 函数。该函数根据 State 的 key 去执行相应的子 Reducer，并将返回结果合并成一个大的 State 对象。
-
-下面是combineReducer的简单实现。
-
-
-const combineReducers = reducers => {
-  return (state = {}, action) => {
-    return Object.keys(reducers).reduce(
-      (nextState, key) => {
-        nextState[key] = reducers[key](state[key], action);
-        return nextState;
-      },
-      {} 
-    );
-  };
-};
 你可以把所有子 Reducer 放在一个文件里面，然后统一引入。
 
+    import { combineReducers } from 'redux'
+    import * as reducers from './reducers'
+    const reducer = combineReducers(reducers)
 
-import { combineReducers } from 'redux'
-import * as reducers from './reducers'
+## redux 工作流
 
-const reducer = combineReducers(reducers)
+    // 设置监听函数
+    // State 一旦有变化，Store 就会调用监听函数。
+    store.subscribe(listener);
+    store.dispatch(action);
+        let nextState = todoApp(previousState, action);
+        listeners.forEach(listener => listener());
 
 
-## 例子
-npm install redux -S // 安装
+listener可以通过store.getState()得到当前状态。如果使用的是 React，这时可以触发重新渲染 View。
 
-    import { createStore } from 'redux' // 引入
-
-    const reducer = (state = {count: 0}, action) => {
-        switch (action.type){
-            case 'INCREASE': return {count: state.count + 1};
-            case 'DECREASE': return {count: state.count - 1};
-            default: return state;
-        }
+    function listerner() {
+        let newState = store.getState();
+        component.setState(newState);   
     }
 
-    const actions = {
-        increase: () => ({type: 'INCREASE'}),
-        decrease: () => ({type: 'DECREASE'})
+## 计数器示例
+    import React from 'react'
+    import ReactDOM from 'react-dom'
+    import { createStore } from 'redux'
+    import Counter from './components/Counter'
+    import counter from './reducers'
+
+    const store = createStore(counter)
+    const rootEl = document.getElementById('root')
+
+    const render = () => ReactDOM.render(
+      <Counter
+        value={store.getState()}
+        onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
+        onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
+      />,
+      rootEl
+    )
+
+    render()
+    store.subscribe(render)
+
+# MiddleWare & Async
+middleware 原型：
+
+    let next = store.dispatch;
+    store.dispatch = function dispatchAndLog(action) {
+        console.log('dispatching', action);
+        next(action);
+        console.log('next state', store.getState());
     }
 
-    const store = createStore(reducer); //---------->⑶
+React 如果执行了Async Reducer, 需要middleware 实现异步
 
-    store.subscribe(() =>
-        console.log(store.getState())
+## middleware 用法
+
+    import { applyMiddleware, createStore } from 'redux';
+    import createLogger from 'redux-logger';
+    const logger = createLogger();
+
+    const store = createStore(
+        reducer,
+        applyMiddleware(logger)
     );
 
-    store.dispatch(actions.increase()) // {count: 1}
-    store.dispatch(actions.increase()) // {count: 2}
-    store.dispatch(actions.increase()) // {count: 3}
-    store.dispatch({ type: 'DECREASE' });
+也可以支持init_state, 以及多个middleware, （logger 放最后，wrap 前面两个中间件)
+
+    const store = createStore(
+        reducer,
+        init_state,
+        applyMiddleware(thunk, promise, logger)
+    );
+
+### middleware 实现
+它是 Redux 的原生方法，作用是将所有中间件组成一个数组，依次执行。下面是它的源码。
+
+    export default function applyMiddleware(...middlewares) {
+      return (createStore) => (reducer, preloadedState, enhancer) => {
+        var store = createStore(reducer, preloadedState, enhancer);
+        var dispatch = store.dispatch;
+        var chain = [];
+
+        var middlewareAPI = {
+          getState: store.getState,
+          dispatch: (action) => dispatch(action)
+        };
+        chain = middlewares.map(middleware => middleware(middlewareAPI));
+        dispatch = compose(...chain)(store.dispatch);
+
+        return {...store, dispatch}
+      }
+    }
+
+## 异步
+同步操作只要发出一种 Action 即可，异步操作的差别是它要发出三种 Action。
+
+    操作发起时的 Action
+    操作成功时的 Action
+    操作失败时的 Action
+
+以向服务器取出数据为例，三种 Action 可以有两种不同的写法。
+
+    // 写法一：名称相同，参数不同
+    { type: 'FETCH_POSTS' }
+    { type: 'FETCH_POSTS', status: 'error', error: 'Oops' }
+    { type: 'FETCH_POSTS', status: 'success', response: { ... } }
+
+    // 写法二：名称不同
+    { type: 'FETCH_POSTS_REQUEST' }
+    { type: 'FETCH_POSTS_FAILURE', error: 'Oops' }
+    { type: 'FETCH_POSTS_SUCCESS', response: { ... } }
+
+除了 Action 种类不同，异步操作的 State 也要进行改造，反映不同的操作状态。下面是 State 的一个例子。
+
+    let state = {
+        // ... 
+        isFetching: true,
+        didInvalidate: true,
+        lastUpdated: 'xxxxxxx'
+    };
+
+上面代码中，State 的属性isFetching表示是否在抓取数据。didInvalidate表示数据是否过时，lastUpdated表示上一次更新时间。
+
+现在，整个异步操作的思路就很清楚了。
+
+    操作开始时，送出一个 Action，触发 State 更新为"正在操作"状态，View 重新渲染
+    操作结束后，再送出一个 Action，触发 State 更新为"操作结束"状态，View 再一次重新渲染
+
+## redux-thunk 中间件
+异步操作至少要送出两个 Action：用户触发第一个 Action，这个跟同步操作一样，没有问题；如何才能在操作结束时，系统自动送出第二个 Action 呢？
+
+奥妙就在 Action Creator 之中。
+
+    class AsyncApp extends Component {
+      componentDidMount() {
+        const { dispatch, selectedPost } = this.props
+        dispatch(fetchPosts(selectedPost))
+      }
+
+上面代码是一个异步组件的例子。加载成功后（componentDidMount方法），它送出了（dispatch方法）一个 Action，向服务器要求数据 fetchPosts(selectedSubreddit)。这里的fetchPosts就是 Action Creator。
+
+下面就是fetchPosts的代码，关键之处就在里面。
+
+    const fetchPosts = postTitle => (dispatch, getState) => {
+      dispatch(requestPosts(postTitle));
+      return fetch(`/some/API/${postTitle}.json`)
+        .then(response => response.json())
+        .then(json => dispatch(receivePosts(postTitle, json)));
+      };
+    };
+
+    // 使用方法一
+    store.dispatch(fetchPosts('reactjs'));
+    // 使用方法二
+    store.dispatch(fetchPosts('reactjs')).then(() =>
+      console.log(store.getState())
+    );
+
+上面代码中，有几个地方需要注意。
+
+    （1）fetchPosts返回了一个函数，而普通的 Action Creator 默认返回一个对象。
+
+    （2）函数的参数是dispatch和getState这两个 Redux 方法，普通的 Action Creator 的参数是 Action 的内容。
+
+    （3）在返回的函数之中，先发出一个 Action（requestPosts(postTitle)），表示操作开始。
+
+    （4）异步操作结束之后，再发出一个 Action（receivePosts(postTitle, json)），表示操作结束。
+
+这样的处理，就解决了自动发送第二个 Action 的问题。但是，又带来了一个新的问题，Action 是由store.dispatch方法发送的。而store.dispatch方法正常情况下，参数只能是对象，不能是函数。
+
+这时，就要使用中间件redux-thunk。
+
+    import { createStore, applyMiddleware } from 'redux';
+    import thunk from 'redux-thunk';
+    import reducer from './reducers';
+
+    // Note: this API requires redux@>=3.1.0
+    const store = createStore(
+        reducer,
+        applyMiddleware(thunk)
+    );
+
+上面代码使用redux-thunk中间件，改造store.dispatch，使得后者可以接受函数作为参数。
+
+因此，异步操作的第一种解决方案就是，写出一个返回函数的 Action Creator，然后使用redux-thunk中间件改造store.dispatch。
+
+## redux-promise 中间件
+既然 Action Creator 可以返回函数，当然也可以返回其他值。另一种异步操作的解决方案，就是让 Action Creator 返回一个 Promise 对象。
+
+这就需要使用redux-promise中间件。
+
+    import { createStore, applyMiddleware } from 'redux';
+    import promiseMiddleware from 'redux-promise';
+    import reducer from './reducers';
+
+    const store = createStore(
+      reducer,
+      applyMiddleware(promiseMiddleware)
+    ); 
+
+这个中间件使得store.dispatch方法可以接受 Promise 对象作为参数。这时，Action Creator 有两种写法。
+
+    //写法一，返回值是一个 Promise 对象。
+    const fetchPosts = 
+      (dispatch, postTitle) => new Promise(function (resolve, reject) {
+         dispatch(requestPosts(postTitle));
+         return fetch(`/some/API/${postTitle}.json`)
+           .then(response => {
+             type: 'FETCH_POSTS',
+             payload: response.json()
+           });
+    });
+
+写法二，Action 对象的payload属性是一个 Promise 对象。这需要从redux-actions模块引入createAction方法，并且写法也要变成下面这样。
+
+    import { createAction } from 'redux-actions';
+
+    class AsyncApp extends Component {
+      componentDidMount() {
+        const { dispatch, selectedPost } = this.props
+        // 发出同步 Action
+        dispatch(requestPosts(selectedPost));
+        // 发出异步 Action
+        dispatch(createAction(
+          'FETCH_POSTS', 
+          fetch(`/some/API/${postTitle}.json`)
+            .then(response => response.json())
+        ));
+      }
+
+上面代码中，第二个dispatch方法发出的是异步 Action，只有等到操作结束，这个 Action 才会实际发出。注意，createAction的第二个参数必须是一个 Promise 对象。
+
+看一下redux-promise的源码，就会明白它内部是怎么操作的。
+
+    export default function promiseMiddleware({ dispatch }) {
+      return next => action => {
+        if (!isFSA(action)) {
+          return isPromise(action)
+            ? action.then(dispatch)
+            : next(action);
+        }
+
+        return isPromise(action.payload)
+          ? action.payload.then(
+              result => dispatch({ ...action, payload: result }),
+              error => {
+                dispatch({ ...action, payload: error, error: true });
+                return Promise.reject(error);
+              }
+            )
+          : next(action);
+      };
+    }
+
+    从上面代码可以看出，如果 Action 本身是一个 Promise，它 resolve 以后的值应该是一个 Action 对象，会被dispatch方法送出（action.then(dispatch)），但 reject 以后不会有任何动作；如果 Action 对象的payload属性是一个 Promise 对象，那么无论 resolve 和 reject，dispatch方法都会发出 Action。
+
 
 # react redux
 react 把store直接集成到React应用的顶层props里面. 顶层组件叫Provider
