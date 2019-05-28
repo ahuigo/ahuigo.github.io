@@ -16,6 +16,11 @@ Movement 移动光标、字符，Vim 最核心的功能操作
     #在insert mode下光标左移后退一个大单词
     Ctrl+o B sfsadfadfs在
 
+## 常用的(motion)
+motion 指移动光标、字符
+
+    hjklwbeWBE
+
 ### 按字符移动光标hjkl
 
     几乎所有的移动都可以在前面加数字——实现重复的动作
@@ -109,12 +114,6 @@ ps:如果要实现跨行移动,需要指定相应键：
 
 ### object motion - 按括号对()[]{}移动光标
 
-### 按标记移动光标(marks)
-[vim-motion](/p/vim/vim-motion)
-
-### 按changelist移动光标
-[vim-motion](/p/vim/vim-motion)
-
 ## 字符移动(charactor move)
 
 ### 左右缩进(indent)
@@ -127,7 +126,7 @@ ps:如果要实现跨行移动,需要指定相应键：
 
     :set autoindent :set ai
 
-### 移动(move)
+### 移动字符(move)
 
     :[range]m {address} "address是目的地址
 
@@ -137,13 +136,6 @@ global 与move 结合会收到强大的效果，比如：
     :'t+1,.g/^/m 't #结果是把t+1移动到't之下，再把't+2行移到到't行之下，直到.
     :h :m "寻求帮助
 
-# 范围
-绝大部分操作都有一个范围，比如as(a sentance)，比如<C-V>选区
-
-## 常用的(motion)
-motion是用于移动光标的命令
-
-    hjklwbeWBE
 
 ## 行范围(range)
 
