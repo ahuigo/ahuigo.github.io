@@ -116,6 +116,7 @@ Drop a row by index
 
 ### set all column value
     df['时间'] = self.yesterday
+    df['col2'] = round(df['col2']/3600,2)
 
 ### filter
 #### select column field:

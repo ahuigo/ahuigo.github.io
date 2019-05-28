@@ -1,5 +1,6 @@
 # AHUIGO 的笔记
-- 2019-05-27 [vim-motion](/b/vim/vim-motion) 
+- 2019-05-28 [vim 笔记](/b/vim/vim-notes) 
+- 2019-05-28 [vim-motion](/b/vim/vim-motion) 
 - 2018-09-28 [help](/b/py/py-db-postgre) 
 - 2018-10-04 [ajax cors](/b/ria/js-ajax-cors) 
 - 2019-05-27 [curl manual](/b/c/ops-curl) 
@@ -38,4 +39,3 @@
 - 2019-01-23 [go汇编示例](/b/go/go-asm) 
 - 2018-09-27 [学习 docker](/b/arch/arch-docker) 
 - 2019-01-29 [AI 入门路线](/b/ai/ai-book) 
-- 2018-09-27 [golang 的协程调度](/b/go/18.go-routines-inner) 
