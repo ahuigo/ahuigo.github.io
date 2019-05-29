@@ -112,7 +112,19 @@ ps:如果要实现跨行移动,需要在`.vimrc`指定相应键：
     z<height><CR> 设置屏幕的高度
     ps:以上均可跟用数字控制(仅M忽略数字)
 
-### object motion - 按括号对()[]{}移动光标
+### easymotion
+easymothtion：需要插件支持, vscode 也可以开启easymotion
+
+        跳char
+            <leader><leader>f
+            <leader><leader>s
+        跳word
+            <leader><leader>w
+            <leader><leader>b
+        跳line
+            <leader><leader>j
+            <leader><leader>k
+
 
 ## 字符移动(charactor move)
 

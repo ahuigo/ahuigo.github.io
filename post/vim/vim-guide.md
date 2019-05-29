@@ -41,6 +41,19 @@ Normal mode 移动
         尾行: G
     匹配移动：
         %
+        f{char}
+            fx  跳到下一个字符x
+            ;   向前跳
+            ,   向后跳
+        F{char}
+            Fx  跳到上一个字符x
+    easymothtion：需要插件支持, vscode 也可以开启easymotion
+        跳char
+            <leader><leader>f
+            <leader><leader>s
+        跳word
+            <leader><leader>w
+            <leader><leader>b
 
 Insert/Command mode 移动​, 只需要加前缀`<C-o>`
 
@@ -87,14 +100,23 @@ TextObject 与Motion 的区别
     1. 比如 `Delete` + `a block`: `da{`
     1. 比如 `Copy` + `a block`: `ya{`
 
-常用的TextObject
+常用的TextObject (i: 不含空白或边界, a: 包含空白或边界)
 
-    词: iw aw iW aW (i: 不含空白或边界)
+    词: iw aw iW aW 
     句: is as
     块: 
-        i( a( 
-        i[ a[
-        i{ a{
+        括号块：
+            i( a(  别名: ib ab
+            i[ a[
+            i{ a{  别名: iB aB
+            i< a<  
+        Tag 块：
+            it at   用于xml/html 这样的标签
+
+更多：
+
+    :help ib
+    :help motion.txt
 
 ## Action+TextObject
 掌握语法
@@ -116,10 +138,17 @@ Example3:
     3dw
 
 
-重复的Action 默认当前行为TextObject
+重复的Action 默认为操作当前的行
 
     dd
-    gugu
+    gugu guu
+    yy
+
+大写的 Action 变化比较多，没有统一的定义，可能默认为操作`$`
+
+    D  alias d$
+    C  alias c$
+    Y  alias yy
 
 # Open and Close, 打开关闭文件
 ## 打开:
@@ -144,14 +173,13 @@ Example3:
 
 ## count+Action重复
 
-
     100l 右移100次
     3dw
     3dd
     3<<
 
 ## . 操作重复
-重复的. 操作
+`.` 用于重复上次的操作
 
     .....
 
@@ -165,3 +193,6 @@ Example3:
 	要说明的是这个register：
 	1．　这个register与yank(复制)是共用的，能相互影响
 	2．　大写的register，会往register中追加数据，如qC、"Cy会旆c寄存器中追加数据．
+
+# 编辑
+[编辑操作](/p/vim/vim-edit)

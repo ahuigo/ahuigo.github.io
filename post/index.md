@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-05-29 [Vim Edit](/b/vim/vim-edit) 
 - 2019-05-29 [Vim visual](/b/vim/vim-visual) 
 - 2018-10-04 [vim-help](/b/vim/vim-help) 
 - 2019-05-29 [Vim Guide](/b/vim/vim-guide) 
@@ -38,4 +39,3 @@
 - 2019-01-06 [lua module](/b/arch/lua-module) 
 - 2019-02-06 [Python 异步tcp](/b/py/py-asyncio-http) 
 - 2019-01-06 [设置系统的PATH](/b/c/ops-path) 
-- 2018-09-27 [数据库CAP 理论 与事务](/b/arch/arch-cap) 
