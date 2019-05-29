@@ -3,7 +3,7 @@ title: Vim visual
 date: 2019-05-29
 ---
 # Vim visual
-3种:
+可视选择模式一共有 3种 状态:
 
 	v 普通visual
 	V 行选visual
