@@ -46,14 +46,6 @@ vim中的很多命令都可以结合使用，比如强大的`:g`, 我们先help 
 
 Press `Ctrl-d` to list all mathed pattern. Then press `Tab` to select
 
-## help links
-
-	Enter :h to open the main help page.
-	Type /quick to search for "quick" (should find the quickref link).
-	Press `Ctrl-]` to follow the link (jump to the quickref topic).
-	After browsing the quickref topic, press `Ctrl-T` to go back to the previous topic.
-	You can also press `Ctrl-O` to jump to *older locations*, or `Ctrl-I` to jump to newer locations.
-
 ## context
 Each help topic has a context:
 
@@ -66,6 +58,18 @@ Each help topic has a context:
 	/	:h /\r	search pattern (in this case, :h \r also works)
 	'	:h 'ro'	option
 	-	:h -r	Vim argument (starting Vim)
+
+    gO 
+        see Toc of help
+
+### help links
+
+	Enter :h to open the main help page.
+	Type /quick to search for "quick" (should find the quickref link).
+	Press `Ctrl-]` to follow the link (jump to the quickref topic).
+	After browsing the quickref topic, press `Ctrl-T` to go back to the previous topic.
+	You can also press `Ctrl-O` to jump to *older locations*, or `Ctrl-I` to jump to newer locations.
+
 
 ## helpgrep
 Search all the help files with the :helpgrep command, for example:

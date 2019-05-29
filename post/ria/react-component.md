@@ -86,6 +86,24 @@ props 属性在react 必须是只读的
       document.body
     );
 
+## pass component via props
+as component(with out instantiate)
+
+    const Label = props => <span>{props.children}</span>
+    const Button = props => {
+        const Inner = props.inner; // Note: variable name _must_ start with a capital letter 
+        return <button><Inner>Foo</Inner></button>
+    }
+    const Page = () => <Button inner={Label}/>
+
+as react dom:
+
+    const Label = props => <span>{props.content}</span>
+    const Tab = props => <div>{props.content}</div>
+    const Page = () => <Tab content={<Label content='Foo' />} />
+
+https://stackoverflow.com/questions/39652686/pass-react-component-as-props
+
 ## Container Components(js in jsx)
 
     const CommentList = props =>

@@ -13,42 +13,6 @@ priority:
 
 [vim-help](/p/vim/vim-help)
 
-## visual模式
-
-### base visual
-
-	#v模式下，可按o（other end）到另一头
-	v
-	V 行选
-	ctrl+v 矩形块选 #对于矩形选而言，o是垂直切向，O是水平切向
-
-	gv #回到上次的选择
-
-### range
-
-	V<line_number>G
-	V<line_number>j
-	v/<pattern>/e
-	vas
-	vap
-	V2aB
-
-### 高级用法
-
-	ctrl+v 块选后，对单行的操作会反映到所有行，比如IA行操作
-	#选中了文本后，可以改变大小写
-	~ 大小写转换
-	U  转大写
-	u 转小写
-	#选中了文本后，以一个字符填充
-	rx #这样就把所有字符变成了x了
-
-### 位置
-处于visual时，还可以控制选择范围的方向
-
-	o 到另一端
-	O 左右切换
-
 # 复制/删除/粘贴(copy/del/paste)
 
 ## del 删除（del）
@@ -374,21 +338,24 @@ Refer to : `:h viminfo` and `:h :set`
 	:loadview #恢复
 	:loadview 1 #从1中恢复
 
+# Repeat, 重复
+## count, Action重复
+    3dw
 
-# macro 宏
+## . 操作重复
+
+    .
+
+## C+v, 列重复
+
+## macro, 宏重复
 
 	q{register}命令是启动宏录制的
+        q 是结束宏录制的
 	@{register}是使用宏的
 	要说明的是这个register：
 	1．　这个register与yank(复制)是共用的，能相互影响
 	2．　大写的register，会往register中追加数据，如qC、"Cy会旆c寄存器中追加数据．
-
-## 重复
-很多工作都可以用数字来重复，比如你在normal状太中输入以下键会发生什么？
-
-	10oThis sentence will be repeated for 10 times!<ESC>
-
-还比如.操作，还比如<C+V>,还比如更强大的宏。
 
 # Statistic & Math
 

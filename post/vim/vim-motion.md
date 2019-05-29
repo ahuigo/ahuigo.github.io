@@ -35,7 +35,7 @@ motion 指移动光标、字符
     cnoremap <C-a> <Home>
     cnoremap <C-e> <End>
 
-ps:如果要实现跨行移动,需要指定相应键：
+ps:如果要实现跨行移动,需要在`.vimrc`指定相应键：
 
     set whichwrap=b,s,<,>,[,]
 
@@ -188,6 +188,7 @@ argdo 表示在内存中执行 Vim 的命令，
 %s/apache/eclipse/ge 表示在内存中执行字符串替换，g 表示全局替换，e 表示如果文件中没有可替换字符串不报错继续执行,
 `|` 是管道标识符，update 表示替换完之后更新并写入文件。
 
+
 # motion,movement
 移动范围
 
@@ -287,104 +288,12 @@ ps: <C-O> 或者 <C-I>/<TAB> 前面都可加数字(jumpid),比如
     g, "跳到新的修改
     `. "跳到上次修改
 
-# Various motions
-
-## bracket motion
-matched
-
-    % 			括号对(可通过:set matchpairs?查询支持哪些括号对)
-
-parent
-
-    [( ])		like %, previous / next *unmatched* parent "()"
-    [{ ]}		like %, previous / next *unmatched* parent "{}"
-
-hilight bracket:
-
-    :showmatch
-
-    " This comes from the pi_paren plugin
-    :DoMatchParen
-    :hi MatchParen cterm=reverse ctermbg=6 guibg=DarkCyan
-
-## section motion
-> http://learnvimscriptthehardway.stevelosh.com/chapters/50.html
-
-    (	)		前/后一句首
-    {	}		前/后一段首
-    ?{	/}		前/后一个{ }
-
-`:h section , :h 'sections'` to see section defines
-
-Put the following into a buffer:
-
-    Test           A B
-    Test
-
-    .SH Hello      A B
-
-    Test
-
-    {              A
-    Test
-    }                B
-
-    Test
-
-    .H World       A B
-
-    Test
-    Test           A B
-
-Now run :set filetype=basic to tell Vim that this is a BASIC file, and try the section movement comments.
-
-    The [[ and ]] commands will move between the lines marked A, while [] and ][ move between the lines marked B.
-
-A section start at the nroff macros ".SH", ".NH", ".H", ".HU", ".nh" and ".sh".
-
-    [[	]]	"{" opening braces,
-            1. backward/forward secions(A)
-            2. backward/forward to "{" (B)
-
-    []	][	"}" closing braces
-            1. backward/forward secion	(A)
-            2. backward/forward to "}" (B)
-
-custom section:
-
-    noremap <script> <buffer> <silent> ]] :call <SID>NextSection(1, 0)<cr>
-    noremap <script> <buffer> <silent> [[ :call <SID>NextSection(1, 1)<cr>
-    noremap <script> <buffer> <silent> ][ :call <SID>NextSection(2, 0)<cr>
-    noremap <script> <buffer> <silent> [] :call <SID>NextSection(2, 1)<cr>
-
-    function! s:NextSection(type, backwards)
-        if a:type == 1
-            let pattern = '\v(\n\n^\S|%^)'
-            let flags = 'e'
-        elseif a:type == 2
-            let pattern = '\v^\S.*\=.*:$'
-            let flags = ''
-        endif
-
-        if a:backwards
-            let dir = '?'
-        else
-            let dir = '/'
-        endif
-
-        execute 'silent normal! ' . dir . pattern . dir . flags . "\r"
-    endfunction
-
-## method motion
-
-    [m ]m		go to previous/next start of method
-    [M ]M		go to previous/next end of method
-
-## comment motion
-
-    [/ ]/		go to previous/next end of comment
-
 # text object, 文本对象
+text object 分两种：
+1. 移动光标的: hjklwbeWBE
+2. 不能移动光标的：iw,aw,a{,i{
+
+本节包含的是不能移动光标的：
 
     aw iw "a word & a inner word后者不包含空白
     aW iW "a word 大写的字符表示特殊字符是单词的一部分

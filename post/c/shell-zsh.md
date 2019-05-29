@@ -106,7 +106,6 @@ Comment your command
 	CTRL-G #退出历史搜索
 	CTRL-C #退出历史搜索 并清空当前命令
 
-
 ### 控制命令
 
 	CTRL-L #清屏
