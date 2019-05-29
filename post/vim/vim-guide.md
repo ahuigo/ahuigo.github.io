@@ -11,9 +11,9 @@ date: 2019-05-29
 3. 反复总结、熟悉。本文件就是对VIM 的总结
 
 # Motion/Movement，光标移动
-基本移动​
+Normal mode 移动
 
-    基本 hjkl​
+    基本 hjkl
     单词 
         小单词wbe
             w: word forward
@@ -31,8 +31,7 @@ date: 2019-05-29
     块
         [( ])  ​
         [{ ]}​
-​
-    页​
+    页
         页内移动： H:Home M:middle L:Last 
                 扩展知识： J:Concat Line K:Manual​
         半页<C-u> <C-d>​
@@ -40,9 +39,21 @@ date: 2019-05-29
     全文：
         首行: gg
         尾行: G
-
     匹配移动：
         %
+
+Insert/Command mode 移动​, 只需要加前缀`<C-o>`
+
+    <C-o> + hjkl
+    <C-o> + wbeWBE
+
+一般`<C-o>` 是要结合map 做成方便的快捷键的, 比如在`~/.vimrc` 加入
+
+    " Go to head of line
+    imap <C-a> <C-o>0
+
+    " Go to end of line
+    imap <C-e> <C-o>$
 
 # TextObject, 操作对象
 掌握
@@ -131,7 +142,10 @@ Example3:
 
 # Repeat, 重复
 
-## count, Action重复
+## count+Action重复
+
+
+    100l 右移100次
     3dw
     3dd
     3<<
