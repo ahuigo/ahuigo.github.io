@@ -254,6 +254,14 @@ eg:
 		return '<a href="'+url+'">'+card+'</a>';
 	})
 
+#### str2unicode
+    function str2unicode(s='中'){
+        return s.replace(/[^\u0000-\u00FF]/g, function ($0) { 
+            return escape($0)
+            //return escape($0).replace(/(%u)(\w{4})/gi, "&#x$2;")
+        });
+    }
+
 ## RegExp
 Create RegExp：test, exec
 
@@ -315,7 +323,7 @@ like python findall/finditer(返回分组)
 	}
 
 ## html转码:
-URI:
+URI(utf8):
 
 	encodeURI()	把字符串编码为 URI。
 		encodeURI("http://a.cn/b?='1'#\"|看"); //转码所有非URI字符转码: '|" Ò' 等等

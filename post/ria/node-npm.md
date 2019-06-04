@@ -55,6 +55,11 @@ http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
     npm test是npm run test的简写
     npm restart是npm run stop && npm run restart && npm run start的简写
 
+# config file
+
+    npm config edit
+    ~/.cnpmrc
+
 # repo
 
     # temp

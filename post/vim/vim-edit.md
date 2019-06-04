@@ -28,6 +28,13 @@ date: 2019-05-29
 	:[range]d [x] "x是一个register
 	:2d q "删除第二行，并保存到寄存器。
 
+### dt,df,ct,cf
+
+    To delete forward up to character 'X' type dtX
+    To delete forward through character 'X' type dfX
+    To delete backward up to character 'X' type dTX
+    To delete backward through character 'X' type dFX
+
 ## copy & paste
 
 ### Copy
@@ -50,7 +57,7 @@ date: 2019-05-29
 ### paste
 
 	p 在光标后粘贴
-	P 在光标前粘贴
+	P 大写在光标前粘贴
 	"+p 调用系统剪切板粘贴
 
 ### registers 复制寄存器

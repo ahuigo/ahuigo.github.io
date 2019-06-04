@@ -17,8 +17,6 @@ Geminates:
 Okey, See you in an hour.
 Okey, See you wi nan hour
 
-
-
 # 感情
 
 ## 生气

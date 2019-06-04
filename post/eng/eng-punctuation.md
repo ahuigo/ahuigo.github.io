@@ -10,7 +10,7 @@ https://zh.wikipedia.org/wiki/%E8%84%B1%E5%AD%97%E7%AC%A6
 
 	punctuation mark	name	example
     *   asterisk/star
-	^	caret
+	^	caret 脱字符
 	~	tilde
 	`	grave accent, backquote 重音符或抑音符,反引号
 	.	full stop or period

@@ -53,6 +53,10 @@ INSERT INTO table (id, field, field2)
 
     select 'abc'
 
+### between
+
+    hourt between 0 and 23
+
 ### group by 
 `wmname` must appear in the GROUP BY clause or be used in an aggregate function
 

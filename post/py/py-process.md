@@ -82,6 +82,12 @@ multiprocessing.Process(func) 则可以直接传func:
 	Process end.
 
 ## daemon
+daemon vs nodaemon(default)
+1. When a daemon process exits, it attempts to terminate all of its daemonic child processes.
+    2. You could call `os._exit` to let children process live
+1. When a nodaemon process exits, children process live
+
+默认是非daemon 的
 
     import time
     import multiprocessing
@@ -124,6 +130,13 @@ daemonic processes are not allowed to have children!
     # because the latter is only a wrapper function, not a proper class.
     class MyPool(multiprocessing.pool.Pool):
         Process = NoDaemonProcess
+    
+    p = MyPool(4)
+    for i in range(4):
+        p.apply_async(lambda:1) 
+
+    p.close()
+    p.join()
 
 ## Pool().apply_async()
 如果要启动大量的子进程，可以用进程池的方式批量创建子进程：

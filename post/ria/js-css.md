@@ -19,6 +19,10 @@ http://caniuse.com/
 	div > ul {} #ul 是div 的children
 	tr,td{} #并列
 
+## width
+
+    width: calc(100% - 240px)
+
 # ide
 css snippets plugin
 http://docs.emmet.io/
@@ -190,16 +194,23 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 ### box-shadow
 box-shadow: h-shadow v-shadow blur spread color inset;
 
-	h-v: 位置
-	blur: 模糊化
-	spread: 阴影尺寸
-	color:颜色
-	inset: 内部显示
 
+    /* x偏移量 | y偏移量 | 阴影颜色 */
+    box-shadow: 60px -16px teal;
+
+    /* x偏移量 | y偏移量 | 阴影模糊半径 | 阴影颜色 */
+    box-shadow: 10px 5px 5px black;
+
+    /* x偏移量 | y偏移量 | 阴影模糊半径 | 阴影扩散半径 | 阴影颜色 */
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+    /* 插页(阴影向内) | x偏移量 | y偏移量 | 阴影颜色 */
+    box-shadow: inset 5em 1em gold;
+
+    /* 任意数量的阴影，以逗号分隔 */
+    box-shadow: 3px 3px red, -1em 0 0.4em olive;
 
 	border-radius: 10px;//圆角半径
-	box-shadow: 2px 4px 6px 8px #ccc;
-	box-shadow: x  y 模糊值 延伸值 #ccc;//模糊值不能为负
 
 ### border 合并间隔
 	border-collapse: collapse
@@ -349,6 +360,12 @@ cursor: pointer
 			matrix(1, 0, 0, 1, e, f) -> (1*x+0*y+e, 0*x+1*y+f) -> (x+e, y+f) -> translate(epx, fpx)
 			matrix(cosθ,sinθ,-sinθ,cosθ,0,0) -> (x*cosθ-y*sinθ, x*sinθ+y*cosθ) -> rotate(θ);
 			matrix(1,tan(θy),tan(θx),1,0,0) -> (x+y*tan(θx), x*tan(θy)+y) -> skew(θxdeg, θydeg);
+
+mutiple:
+
+    transform: rotate(15deg) translate(-20px,0px);
+    transform: rotate(15deg) translate(-20,0);
+
 
 # transition
 CSS3 过渡是元素从一种样式逐渐改变为另一种的效果。

@@ -38,7 +38,8 @@ Detect Ajax(php 为例)：
 
     fetch(url, {
         credentials: "same-origin"
-        credentials: "include", // crosee-origin
+        credentials: "include", // send cookie
+        mode: 'cors',
     }).then(...).then(..).catch(...);
     fetch(url).then(async r=> console.log(await r.text()))
 

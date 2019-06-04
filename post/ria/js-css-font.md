@@ -21,3 +21,17 @@ like bootstrap
     }
 
     <span class="glyphicon glyphicon-user"></span>
+
+## select font
+字体选择
+
+    标题: STKaiti
+        h1: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif
+        blog: 
+            "Russo One", "Arial Black", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        google:
+            font-family: "Google Sans Display", Arial, Helvetica, sans-serif;
+
+    正文：
+        p:"Google Sans Display","lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif
+

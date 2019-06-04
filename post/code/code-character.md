@@ -70,6 +70,10 @@ priority:
 
 <table class="wikitable"> <tbody><tr> <th>平面</th> <th>始末字符值</th> <th>中文名称</th> <th>英文名称</th> </tr> <tr> <td>0号平面</td> <td>U+0000 - U+FFFF</td> <td><b>基本多文种平面</b></td> <td>Basic Multilingual Plane, 简称 <b>BMP</b></td> </tr> <tr> <td>1号平面</td> <td>U+10000 - U+1FFFF</td> <td><b>多文种补充平面</b></td> <td>Supplementary Multilingual Plane, 简称 <b>SMP</b></td> </tr> <tr> <td>2号平面</td> <td>U+20000 - U+2FFFF</td> <td><b>表意文字补充平面</b></td> <td>Supplementary Ideographic Plane, 简称 <b>SIP</b></td> </tr> <tr> <td>3号平面</td> <td>U+30000 - U+3FFFF</td> <td><b>表意文字第三平面</b>（未正式使用<sup id="cite_ref-1" class="reference"><a href="#cite_note-1">[1]</a></sup>）</td> <td>Tertiary Ideographic Plane, 简称 <b>TIP</b></td> </tr> <tr> <td>4号平面<br> 至<br> 13号平面</td> <td>U+40000 - U+DFFFF</td> <td>（尚未使用）</td> <td></td> </tr> <tr> <td>14号平面</td> <td>U+E0000 - U+EFFFF</td> <td><b>特别用途补充平面</b></td> <td>Supplementary Special-purpose Plane, 简称 <b>SSP</b></td> </tr> <tr> <td>15号平面</td> <td>U+F0000 - U+FFFFF</td> <td>保留作为<b>私人使用区（A区）</b><sup id="cite_ref-PUA_2-0" class="reference"><a href="#cite_note-PUA-2">[2]</a></sup></td> <td>Private Use Area-A, 简称 <b>PUA-A</b></td> </tr> <tr> <td>16号平面</td> <td>U+100000 - U+10FFFF</td> <td>保留作为<b>私人使用区（B区）</b><sup id="cite_ref-PUA_2-1" class="reference"><a href="#cite_note-PUA-2">[2]</a></sup></td> <td>Private Use Area-B, 简称 <b>PUA-B</b></td> </tr> </tbody></table> 
 
+查看unicode
+1. 通过js encode: `escape('中')`
+2. 也可以通过vim `ga` 查到`中`的unicode `4E2D`
+
 ### 实现方式(CEF/CES ...)
 在unicode编码体系中unicode码位转为实际存储的编码(码值)可以有不同实现方式.比如UTF8/UTF-16/UTF-32
 >在unicode体系中码位是唯一的,所以字符编码转换程序 在转码时 一般把码值转为unicode再转为其它的编码.
@@ -117,6 +121,10 @@ utf8以8位为单元对[UCS]进行编码,编码会占用1~4字节.与utf16所编
 ## UTF-8 字符编码表CEF
 <table class="wikitable"> <tbody><tr> <th style="width: auto;">代码范围<br> <a href="/wiki/%E5%8D%81%E5%85%AD%E9%80%B2%E5%88%B6" title="十六进制" class="mw-redirect">十六进制</a></th> <th style="width: auto;">标量值（scalar value）<br> <a href="/wiki/%E4%BA%8C%E9%80%B2%E5%88%B6" title="二进制" class="mw-redirect">二进制</a></th> <th style="width: auto;">UTF-8<br> <a href="/wiki/%E4%BA%8C%E9%80%B2%E5%88%B6" title="二进制" class="mw-redirect">二进制</a>／<a href="/wiki/%E5%8D%81%E5%85%AD%E9%80%B2%E5%88%B6" title="十六进制" class="mw-redirect">十六进制</a></th> <th style="width: 25%;">注释</th> </tr> <tr> <td rowspan="2">000000 - 00007F<br> <small>128个代码</small></td> <td>00000000 00000000 0zzzzzzz</td> <td>0zzzzzzz(00-7F)</td> <td rowspan="2">ASCII字符范围，字节由零开始</td> </tr> <tr> <td><small>七个z</small></td> <td><small>七个z</small></td> </tr> <tr> <td rowspan="2">000080 - 0007FF<br> <small>1920个代码</small></td> <td>00000000 00000yyy yyzzzzzz</td> <td style="text-align: left;">110yyyyy(C0-DF) 10zzzzzz(80-BF)</td> <td rowspan="2" align="top">第一个字节由110开始，接着的字节由10开始</td> </tr> <tr> <td><small>三个y；二个y；六个z</small></td> <td><small>五个y；六个z</small></td> </tr> <tr> <td rowspan="2">000800 - 00D7FF<br> 00E000 - 00FFFF<br> <small>61440个代码 <sup class="reference" id="ref_D800Note_1"><a href="#endnote_D800Note_1">[Note 1]</a></sup></small></td> <td>00000000 xxxxyyyy yyzzzzzz</td> <td style="text-align: left;">1110xxxx(E0-EF) 10yyyyyy 10zzzzzz</td> <td rowspan="2" align="top">第一个字节由1110开始，接着的字节由10开始</td> </tr> <tr> <td><small>四个x；四个y；二个y；六个z</small></td> <td><small>四个x；六个y；六个z</small></td> </tr> <tr> <td rowspan="2">010000 - 10FFFF<br> <small>1048576个代码</small></td> <td>000wwwxx xxxxyyyy yyzzzzzz</td> <td style="text-align: left;">11110www(F0-F7) 10xxxxxx 10yyyyyy 10zzzzzz</td> <td rowspan="2">将由11110开始，接着的字节由10开始</td> </tr> <tr> <td><small>三个w；二个x；四个x；四个y；二个y；六个z</small></td> <td><small>三个w；六个x；六个y；六个z</small></td> </tr> </tbody></table> 
 
+## 查看utf8
+1. js: `encodeURIComponent("中")`
+1. vim: `g8`
+
 ## UTF-8优缺点
 *优点*
 
@@ -151,25 +159,24 @@ utf8以8位为单元对[UCS]进行编码,编码会占用1~4字节.与utf16所编
 
 There are at least two important differences:
 
-- *Accuracy of sorting*
+a. *Accuracy of sorting*
 
 	utf8_unicode_ci is based on the Unicode standard for sorting, and sorts accurately in a very wide range of languages.
 
 	utf8_general_ci comes close to correct Unicode sorting in many common languages, but has a number of limitations: in some languages, it won't sort correctly at all. In others, it will merely have some quirks.
 
-- *Performance*
+b. *Performance*
 
 	utf8_general_ci is faster at comparisons and sorting, because it takes a bunch of performance-related shortcuts.
-
 	utf8_unicode_ci uses a much more complex comparison algorithm which aims for correct sorting according in a very wide range of languages. This makes it slower to sort and compare large numbers of fields.
 
 Unicode defines complex sets of rules for how characters should be sorted. These rules need to take into account language-specific conventions; not everybody sorts their characters in what we would call 'alphabetical order'.
 
-- As far as Latin (ie "European") languages go, there is not much difference between the Unicode sorting and the simplified utf8_general_ci sorting in MySQL, but there are still a few differences:
+a. As far as Latin (ie "European") languages go, there is not much difference between the Unicode sorting and the simplified utf8_general_ci sorting in MySQL, but there are still a few differences:
 
 	For examples, the Unicode collation sorts "ß" like "ss", and "Œ" like "OE" as people using those characters would normally want, whereas utf8_general_ci sorts them as single characters (presumably like "s" and "e" respectively).
 
-- In non-latin languages, such as Asian languages or languages with different alphabets, there may be a lot more differences between Unicode sorting and the simplified utf8_general_ci sorting. The suitability of utf8_general_ci will depend heavily on the language used. For some languages, it'll be quite inadequate.
+b. In non-latin languages, such as Asian languages or languages with different alphabets, there may be a lot more differences between Unicode sorting and the simplified utf8_general_ci sorting. The suitability of utf8_general_ci will depend heavily on the language used. For some languages, it'll be quite inadequate.
 
 Some Unicode characters are defined as ignorable, which means they shouldn't count toward the sort order and the comparison should move on to the next character instead. utf8_unicode_ci handles these properly.
 

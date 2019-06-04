@@ -31,7 +31,7 @@ py+php+mysql: round(3.55,2)
 	Math.round('1.5'); //2
 	Math.round(1.4); //1
 	Math.floor(1.5); //1
-	Math.floor(Math.random());
+	Math.floor(Math.random()*20);
 	Math.ceil(1.5);	//2
 
 

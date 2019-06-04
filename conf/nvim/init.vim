@@ -7,9 +7,29 @@ set laststatus=2
 	 \ |   exe "normal! g`\""
 	 \ | endif
 
+""""
+" change like vscode: vwS'
+"""""""""""""""
+vnoremap " di"<esc>pa"<esc>
+vnoremap ' di'<esc>pa'<esc>
+vnoremap ( di(<esc>pa)<esc>
+vnoremap [ di[<esc>pa]<esc>
+vnoremap { di{<esc>pa}<esc>
+""""""""""""""""""""""""""""
+
+
 "search
 nnoremap <F1> :let @/ = ""<CR>
 nnoremap  \w :%s/\s\+$//e<CR>
+
+
+nnoremap <leader>g :set operatorfunc=GrepOperator<cr>g@<cr>
+vnoremap <leader>g :<c-u>call GrepOperator(visualmode())<cr>
+
+function! GrepOperator(type)
+	echom a:type
+endfunction
+
 
 "close & write
 nnoremap <C-q> :qa<CR>

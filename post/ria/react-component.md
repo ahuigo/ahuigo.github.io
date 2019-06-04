@@ -34,6 +34,17 @@ class component
 
 添加组件属性，有一个地方需要注意，就是 class 属性需要写成 className ，for 属性需要写成 htmlFor ，这是因为 class 和 for 是 JavaScript 的保留字。
 
+## function component
+
+    const Sidebar = ({ ...props }) => {
+        return (<div/>)
+    }
+
+single props 默认为true
+
+    <Sidebar newprops/>
+    <Sidebar newprops="true"/>
+
 
 ## props type
 props 属性在react 必须是只读的

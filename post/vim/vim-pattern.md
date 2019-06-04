@@ -105,6 +105,30 @@ word boundary:
 
 	<Up><Down><Left><Right>
 
+#### origin atom
+          magic   nomagic	matches ~
+
+    |/\%^|	\%^	\%^	beginning of file |/zero-width|		*E71*
+    |/^|	^	^	start-of-line (at start of pattern) |/zero-width|
+    |/\^|	\^	\^	literal '^'
+    |/\_^|	\_^	\_^	start-of-line (used anywhere) |/zero-width|
+    |/$|	$	$	end-of-line (at end of pattern) |/zero-width|
+    |/\$|	\$	\$	literal '$'
+    |/\_$|	\_$	\_$	end-of-line (used anywhere) |/zero-width|
+    |/.|	.	\.	any single character (not an end-of-line)
+    |/\_.|	\_.	\_.	any single character or end-of-line
+    |/\<|	\<	\<	beginning of a word |/zero-width|
+    |/\>|	\>	\>	end of a word |/zero-width|
+    |/\zs|	\zs	\zs	anything, sets start of match
+    |/\ze|	\ze	\ze	anything, sets end of match
+    |/\%$|	\%$	\%$	end of file |/zero-width|
+    |/\%V|	\%V	\%V	inside Visual area |/zero-width|
+    |/\%#|	\%#	\%#	cursor position |/zero-width|
+    |/\%'m|	\%'m	\%'m	mark m position |/zero-width|
+    |/\%l|	\%23l	\%23l	in line 23 |/zero-width|
+    |/\%c|	\%23c	\%23c	in column 23 |/zero-width|
+    |/\%v|	\%23v	\%23v	in virtual column 23 |/zero-width|
+
 ### in replace
 一般情况下`\r\n`分别代表回车与换行，但是在`:%s/pattern/replace` 中的replace
 
@@ -116,7 +140,7 @@ replace 比较特别：
     ^M  在replace中居然表示\n
         不表示<c-v><c-m>, <c-v>013
 
-The full table of character search patterns includes some additional options:
+The full table of character search patterns includes some additional options: 'sssssssss 1'
 
     \%u20ac
     \%d match specified decimal character (eg \%d123)
@@ -152,9 +176,17 @@ default nomagic, need `\\` backslash
 ## very magic
 like perl and php:
 
-	+*?(){} is very magic
+	+*?(){}| is very magic
 	<> is very magic
+	& is very magic
+        /\v<(word|word2)>
 	:execute 'normal! gg/\vfor .+ in .+:' . "\<cr>"
+
+      magic   nomagic	matches ~
+    |/\m|	\m	\m	'magic' on for the following chars in the pattern
+    |/\M|	\M	\M	'magic' off for the following chars in the pattern
+    |/\v|	\v	\v	the following chars in the pattern are "very magic"
+    |/\V|	\V	\V	the following chars in the pattern are "very nomagic" 
 
 ## zeor-width assert
 

@@ -11,7 +11,7 @@ width属性和height属性，指定了 SVG 图像在 HTML 元素中所占据的�
     <circle id="mycircle" cx="50" cy="50" r="50" />
     </svg>
 
-如果只想展示 SVG 图像的一部分，就要指定viewBox属性。
+如果只想展示 SVG 图像的一部分，就要指定viewBox属性(截取并放缩填满整个窗口)。
 属性的值有四个数字，分别是左上角的横坐标和纵坐标、视口的宽度和高度。上面代码中，SVG 图像是100像素宽 x 100像素高，viewBox属性指定视口从(50, 50)这个点开始。所以，实际看到的是右下角的四分之一圆。 放大了四倍。
 
     <svg width="100" height="100" viewBox="50 50 50 50">
@@ -23,12 +23,15 @@ width属性和height属性，指定了 SVG 图像在 HTML 元素中所占据的�
 ## circle标签
 <circle>标签代表圆形。cx/cy 是偏移
 
-
     <svg width="300" height="180">
     <circle cx="30"  cy="50" r="25" />
     <circle cx="90"  cy="50" r="25" class="red" />
     <circle cx="150" cy="50" r="25" class="fancy" />
     </svg>
+
+线宽度：
+
+    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"  fill-opacity='0.5'/>
 
 class属性用来指定对应的 CSS 类。
 
@@ -109,8 +112,17 @@ points属性指定了每个端点的坐标，横坐标与纵坐标之间与逗�
 
     M：移动到（moveto）
     L：画直线到（lineto）
-    A: 
     Z：闭合路径
+
+### M 直线
+L：Line to
+
+    d="M10 0 L 10 20 L 20 20 "
+
+H/V 是L的简写，用来水平线/垂直线
+
+    d="M10 0 L 10 20 L 20 20 "
+
 
 ## text标签
 
@@ -304,6 +316,38 @@ var svgEmbed = document.getElementById('embed').getSVGDocument();
         ctx.drawImage(img, 0, 0);
     };
 
+# tool
+## svg editor
+https://c.runoob.com/more/svgeditor/
+
+## download svg
+    function download() {
+        img = new Image(),
+            serializer = new XMLSerializer(),
+            svgStr = serializer.serializeToString(document.getElementById('svg'));
+
+        img.src = 'data:image/svg+xml;base64,'+window.btoa(svgStr);
+
+        // You could also use the actual string without base64 encoding it:
+        //img.src = "data:image/svg+xml;utf8," + svgStr;
+        var canvas = document.createElement("canvas");
+        var w=800;
+        var h=400;
+
+        canvas.width = w;
+        canvas.height = h;
+        canvas.getContext("2d").drawImage(img,0,0,w,h);
+        var imgURL = canvas.toDataURL("image/png");
+
+    var dlLink = document.createElement('a');
+        dlLink.download = "image";
+        dlLink.href = imgURL;
+        dlLink.dataset.downloadurl = ["image/png", dlLink.download, dlLink.href].join(':');
+
+        document.body.appendChild(dlLink);
+        dlLink.click();
+        document.body.removeChild(dlLink);
+    }
 
 
 # 参考

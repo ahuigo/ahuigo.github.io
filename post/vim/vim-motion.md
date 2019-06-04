@@ -7,19 +7,59 @@ description:
 # Motion, Movement
 Movement 移动光标、字符，Vim 最核心的功能操作
 
-## move cursor光标移动
-以下归纳的是按光标移动(Normal/Visual模式下). 如果需要在insert mode下移动光标, 需要加一个前缀键: Ctrl+o
+    基本 hjkl
+    单词 
+        小单词wbe
+            w: word forward
+            b: word backward
+            e: end of word
+        大单词WBE​
+    行
+        行头: 
+            0
+            ^
+        行尾: $
+        跳行：
+            100G
+            :100
+    块
+        句 (    )
+        段 {    }    
+        节或"{"
+             [[   ]]
+        节或"{"
+            [] ][
+        不匹配()
+            [(	])
+            	go to [count] previous unmatched '()'.
+        不匹配{}
+            [{	]}
+                go to [count] next unmatched '{}}'.
 
-    #在insert mode下光标左移一个字符
-    Ctrl+o h  "相当于按<Left>
-    Ctrl+o A	"移动到开头
-    #在insert mode下光标左移后退一个大单词
-    Ctrl+o B sfsadfadfs在
+    页
+        页内移动： H:Home M:middle L:Last 
+                扩展知识： J:Concat Line K:Manual​
+        半页<C-u> <C-d>​
+        全页<C-f> <C-b>​ (这两个键 已经被我用Readline 占用了)
+    全文：
+        首行: gg
+        尾行: G
+    匹配移动：
+        % * #
+        f{char}
+            fx  跳到下一个字符x
+            ;   向前跳
+            ,   向后跳
+        F{char}
+            Fx  跳到上一个字符x
+    easymothtion：需要插件支持, vscode 也可以开启easymotion
+        跳char
+            <leader><leader>f
+            <leader><leader>s
+        跳word
+            <leader><leader>w
+            <leader><leader>b
 
-## 常用的(motion)
-motion 指移动光标、字符
-
-    hjklwbeWBE
 
 ### 按字符移动光标hjkl
 
@@ -57,7 +97,6 @@ ps:如果要实现跨行移动,需要在`.vimrc`指定相应键：
     * "移动到下一个单词，这个单词与光标下的单词是一样的
     # "移动到上一个单词，这个单词与光标下的单词是一样的
 
-#### insert mode
 如果需要在insert mode 下做单词移动, 可以这样子
 
     "linux
@@ -83,11 +122,11 @@ ps:如果要实现跨行移动,需要在`.vimrc`指定相应键：
     :line_num 移动到指定行号
     <line_num>G 移动到指定行号
 
-#### insert mode
+插入模式下切行
 
     :inoremap <C-j> <down>
 
-### move cursor by fold
+### move fold 
 [vim-fold](/p/vim-fold)
 
     zj/zk "move to next/previous fold
@@ -112,42 +151,28 @@ ps:如果要实现跨行移动,需要在`.vimrc`指定相应键：
     z<height><CR> 设置屏幕的高度
     ps:以上均可跟用数字控制(仅M忽略数字)
 
+### t/T/f/T
+    tx
+    fx
+
 ### easymotion
 easymothtion：需要插件支持, vscode 也可以开启easymotion
 
-        跳char
-            <leader><leader>f
-            <leader><leader>s
-        跳word
-            <leader><leader>w
-            <leader><leader>b
-        跳line
-            <leader><leader>j
-            <leader><leader>k
+    跳char
+        <leader><leader>f
+        <leader><leader>s
+    跳word
+        <leader><leader>w
+        <leader><leader>b
+    跳line
+        <leader><leader>j
+        <leader><leader>k
 
+## line
 
-## 字符移动(charactor move)
-
-### 左右缩进(indent)
-
-    >> << 左右缩进 你可以用sw(shiftwidth)控制缩进长度
-    ctrl-t,ctrl-d 左右缩进(insert mode)
-
-### 自动缩进（autoindent）
-实现开始新行时，实施上一行缩进
-
-    :set autoindent :set ai
-
-### 移动字符(move)
-
-    :[range]m {address} "address是目的地址
-
-global 与move 结合会收到强大的效果，比如：
-
-    :g/^/m 0 #执行过程是，/^/会匹配所有的行，包括空行。然后把每一行放到第一行之上（即0行）这样就完成了全文件倒序
-    :'t+1,.g/^/m 't #结果是把t+1移动到't之下，再把't+2行移到到't行之下，直到.
-    :h :m "寻求帮助
-
+    . current line
+    + next line
+    +4 next 4'th line
 
 ## 行范围(range)
 
@@ -200,31 +225,14 @@ argdo 表示在内存中执行 Vim 的命令，
 %s/apache/eclipse/ge 表示在内存中执行字符串替换，g 表示全局替换，e 表示如果文件中没有可替换字符串不报错继续执行,
 `|` 是管道标识符，update 表示替换完之后更新并写入文件。
 
-
-# motion,movement
-移动范围
-
-    2dd 删除两行
-    2>> 移动两行
-
-# insert
-
-    gI		Insert in column 1
-
-# line
-
-    . current line
-    + next line
-    +4 next 4'th line
-
-# marks
+## marks
 marks 不是保存在register 中的，这个注意一下
 
     m{mark}
     :marks				list all marks
     :delm[arks]	{mark}	  safd del mark
 
-## mark list
+### mark list
 
     '{A-Z0-9}  	全局标记
     '{a-z}  	buffer marks
@@ -251,11 +259,11 @@ sentence
     '( ')		To the start/end of current sentence
     '{ '}		To the start/end of current paragraph
 
-## make marks
+### make marks
 
     m{mark}
 
-## jump mark
+### jump mark
 
     `{mark}		jump to pos defined by mark
     '{mark}		jump to the line head of pos defined by mark
@@ -272,7 +280,7 @@ sentence
                 Jump to the {mark}, but don't change the jumplist when
                 jumping within the current buffer.
 
-# jumplist, jumps
+## jumplist, jumps
 A "jump" is one of the following commands:
 
     "'", "`", "G", "/", "?", "n", "N", "%", "(", ")", "[[", "]]", "{", "}", ":s", ":tag", "L", "M", "H"
@@ -291,7 +299,7 @@ ps: <C-O> 或者 <C-I>/<TAB> 前面都可加数字(jumpid),比如
     3<C-O>
     5<C-I> or 5<TAB>
 
-# change list
+## change list
 
     :help changelist
     :changes 	print all change list
@@ -300,10 +308,33 @@ ps: <C-O> 或者 <C-I>/<TAB> 前面都可加数字(jumpid),比如
     g, "跳到新的修改
     `. "跳到上次修改
 
-# text object, 文本对象
-text object 分两种：
+## 插入模式光标移动
+以下归纳的是按光标移动(Normal/Visual模式下). 如果需要在insert mode下移动光标, 需要加一个前缀键: Ctrl+o
+
+    <C-o> + hjkl
+    <C-o> + wbeWBE
+
+一般`<C-o>` 是要结合map 做成方便的快捷键的, 比如在`~/.vimrc` 加入
+
+    " Go to head of line
+    imap <C-a> <C-o>0
+
+    " Go to end of line
+    imap <C-e> <C-o>$
+
+Insert/Command mode 移动​, 只需要加前缀`<C-o>`
+
+    #在insert mode下光标左移一个字符
+    Ctrl+o h  "相当于按<Left>
+    Ctrl+o A	"移动到开头
+    #在insert mode下光标左移后退一个大单词
+    Ctrl+o B sfsadfadfs在
+
+
+# Text object, 文本对象
+motion 分两种：
 1. 移动光标的: hjklwbeWBE
-2. 不能移动光标的：iw,aw,a{,i{
+2. 不能移动光标的textObject：iw,aw,a{,i{
 
 本节包含的是不能移动光标的：
 
@@ -316,10 +347,10 @@ text object 分两种：
 
     "当光标在( ), [ ],< >, { }, " ", '' 内时
     "括号内
-    i( or i)
+    i( or i) ib 
     "中括号内
     i[ or i]
-    i{ or i}
+    i{ or i} iB
     "引号内
     i" i'
 
@@ -355,3 +386,65 @@ Block Motion
 
     :set iskeyword=@,48-57,192-255,-,_ "@代表英文字母
     :set iskeyword-=_ #从单词key中删除下划线
+
+# Action, 动作 
+Action 分：
+1. Delete: `d`
+2. Copy: `y`
+3. Paste: `p`
+4. Change(等价于Delete+Insert): `c` 
+4. Visual: `v`
+4. lowercase/upercase: 
+    4. gU(改大写): `gu`
+    4. gu(改小写): `gU`
+    4. g~(改写): `g~`
+
+## TextObject 与Motion 的区别
+1. motion 可以不用Action, 指 **指光标移动所经过的字符** （我觉得motion 是一种不需要action 的textObject）
+    1. hjkl
+    2. wbe WBE
+    3. .....
+2. TextObject(必须要Action)
+    1. 比如 `Delete` + `inner word`: `diw`
+    1. 比如 `Delete` + `a block`: `da{`
+    1. 比如 `Copy` + `a block`: `ya{`
+
+常用的TextObject (i: 不含空白或边界, a: 包含空白或边界)
+
+    词: iw aw iW aW 
+    句: is as
+    块: 
+        括号块：
+            i( a(  别名: ib ab
+            i[ a[
+            i{ a{  别名: iB aB
+            i< a<  
+        Tag 块：
+            it at   用于xml/html 这样的标签
+
+更多：
+
+    :help ib
+    :help motion.txt
+
+# Change 修改
+
+### 左右缩进(indent)
+
+    >> << 左右缩进 你可以用sw(shiftwidth)控制缩进长度
+    ctrl-t,ctrl-d 左右缩进(insert mode)
+
+### 自动缩进（autoindent）
+实现开始新行时，实施上一行缩进
+
+    :set autoindent :set ai
+
+### 移动字符(move)
+
+    :[range]m {address} "address是目的地址
+
+global 与move 结合会收到强大的效果，比如：
+
+    :g/^/m 0 #执行过程是，/^/会匹配所有的行，包括空行。然后把每一行放到第一行之上（即0行）这样就完成了全文件倒序
+    :'t+1,.g/^/m 't #结果是把t+1移动到't之下，再把't+2行移到到't行之下，直到.
+    :h :m "寻求帮助

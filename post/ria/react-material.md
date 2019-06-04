@@ -15,3 +15,33 @@ vi node_modules/@material-ui/core/styles/createBreakpoints.js
     } : _breakpoints$values,
 
 
+
+# Drawer
+    const sidebarStyle = theme => ({
+        drawerPaper: {
+            width: drawerWidth,
+            [theme.breakpoints.up('lg')]: {
+                width: drawerWidth,
+                position: 'fixed',
+                height: '100%'
+            },
+
+    <Drawer
+        anchor="left"
+        <!-- variant="temporary" -->
+        variant="permanent"
+        open={props.open}
+        classes={{
+            paper:classes.drawerPaper
+        }}
+    >
+
+# Hidden
+https://material-ui.com/zh/components/hidden/
+
+    innerWidth  |xs      sm       md       lg       xl
+                |--------|--------|--------|--------|-------->
+    width       |   xs   |   sm   |   md   |   lg   |   xl
+
+    smUp        |   show | hide
+    mdDown      |                     hide | show

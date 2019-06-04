@@ -97,8 +97,8 @@ function gcap(){
 unset GREP_OPTIONS
 alias grep='grep --color=auto --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn'
 mcd(){ mkdir -p $@; cd $1}
-alias rgrep='grep -rn -F'
-rgrep.(){ grep -rn $@ .}
+alias grepr='grep -rn -F'
+grepr.(){ grep -rn $@ .}
 
 # gbk
 function iconvgbk(){
@@ -129,7 +129,7 @@ function mda (){
 }
 
 #alias for cnpm
-alias npm="npm --registry=https://registry.npm.taobao.org \
+alias cnpm="npm --registry=https://registry.npm.taobao.org \
   --cache=$HOME/.npm/.cache/cnpm \
   --disturl=https://npm.taobao.org/dist \
   --userconfig=$HOME/.cnpmrc"

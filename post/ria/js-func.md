@@ -99,6 +99,13 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
         console.log([params, arguments, 'ahui'])
     }(1,2,3)
 
+## default arg
+
+    function a(arg1=1, arg2=2){
+        console.log(arg1,arg2)
+    }
+    a(undefined,3); //1,3
+
 ## Destructuring, unpacking
 ### 解构赋值(不要求数量一致`_`)
 析构array

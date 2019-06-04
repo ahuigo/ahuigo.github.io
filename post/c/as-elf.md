@@ -118,7 +118,7 @@ Section headers 起始于224 bytes(0xE0), 共8个，每个64 bytes, 终止于224
 	`.text`		保存代码
 	`.shstrtab` 保存着各Section 的名字
 	`.strtab`	保存着程序各符号的名字
-	`.bss`		存放未初始化的变量，不占用程序空间
+	`.bss`		存放未初始化的变量，不占用程序空间(运行时分配？)
 	`.data`		保存一段初始值
 	`.rel.text`	告诉链接器哪些地方需要做重定位
 	`.symtab`	符号表

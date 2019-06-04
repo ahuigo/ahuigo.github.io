@@ -87,7 +87,7 @@ react 内置webpack 支持了css module
     console.debug(styles)
     render() { return (<img id={styles.menu} className={styles.image}/>) }
 
-subclass 正确用法是
+subclass 正确用法是 global
 
     //error
     .menu a:.active { background-color: #3887be; color: #ffffff; }

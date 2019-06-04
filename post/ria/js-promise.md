@@ -294,6 +294,7 @@ e.g.:
     });
 
 ## async in then:
+## promise in then:
 
     fetch(url).then(async response=>await response.json())
 

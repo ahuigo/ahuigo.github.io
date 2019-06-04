@@ -99,6 +99,22 @@ remove:
     Array.prototype.slice.call(arr)
     [...arr]
 
+slice, merge, Object.assign 都是浅copy.
+
+Array fill 问题
+
+    const squares = Array(3).fill(Array(3).fill(null))
+    squares[0][0] = 1
+    console.log(squares) // [[1,null,null],[1,null,null],[1,null,null]]
+
+也可以像下面这样写
+
+    const squares = Array.from({length:3},() => Array(3).fill(null))
+    squares[0][0] = 1
+    console.log(squares) // [[1,null,null],[null,null,null],[null,null,null]]
+
+
+
 ## .sort .reverse inplace(python)+return
 重排方法(改变arr本身, 并返回arr):
 
