@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2016-01-23 [Js dom 笔记](/b/ria/js-dom) 
+- 2018-10-04 [Event](/b/ria/js-dom-event) 
+- 2018-03-03 [css 布局](/b/ria/js-css-layout) 
 - 2018-10-04 [vim-pattern](/b/vim/vim-pattern) 
 - 2019-06-04 [vim 之 map命令](/b/vim/vim-map) 
 - 2018-10-04 [vim-change](/b/vim/vim-change) 
@@ -36,6 +39,3 @@
 - 2018-10-04 [js-css-less](/b/ria/js-css-less) 
 - 2019-03-08 [does-a-thread-waiting-on-io-also-block-a-core?](/b/py/py-async-cpu) 
 - 2019-03-02 [cache 穿透问题](/b/db/redis-cache) 
-- 2019-02-28 [字符串搜索算法KMP](/b/algorithm/algo-str-search) 
-- 2018-09-28 [net-socks](/b/net/net-proxy-socks) 
-- 2019-02-20 [Copy List with Random Pointer](/b/algorithm/list-copy) 

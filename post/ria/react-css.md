@@ -135,6 +135,13 @@ local:
         loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' 
     }
 
+## make style
+    classes = makeStyles(theme => ({
+    details: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    }))();
 
 # 4. jss （css in js）
 > https://segmentfault.com/q/1010000012687223

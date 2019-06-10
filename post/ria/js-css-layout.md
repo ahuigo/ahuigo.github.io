@@ -129,6 +129,8 @@ align-items 用来定义`伸缩项目`在`侧轴`的对齐方式
 1. 与 justify-content属性类似。只不过这里元素是以一行为单位。
 3. 请注意本属性在只有一行的伸缩容器上没有效果。当使用flex-wrap:wrap时候多行效果就出来了。
 
+eg.
+
         align-content: flex-start || flex-end || center || space-between || space-around || stretch;
 
 ## flex项目items
@@ -137,14 +139,25 @@ http://www.ruanyifeng.com/blog/2018/10/flexbox-form.html 参考
     order
         order控制伸缩项目在伸缩容器中的显示顺序，伸缩容器中伸缩项目从序号最小的开始布局，默认值是0。 优先级
     flex:
-        flex属性可以用来指定可伸缩长度的部件，是
-        flex-grow:（宽度扩展比例）,
+        flex属性可以用来指定可伸缩长度的部件，是以下属性组合
+        flex-grow:（宽度扩展比例）, 0 不扩展 
         flow-shrink: （收缩比例）,
         flex-basis（伸缩基准值）这个三个属性的缩写写
-    [align-self] （高度对齐）用来在单独的伸缩项目上覆写默认的对齐方式，这个属性是用来覆盖伸缩容器属性align-items对每一行的对齐方式。
+    [align-self] （高度对齐）用来在单独的伸缩项目上覆写默认的对齐方式，这个属性是用来覆盖伸缩容器属性
         align-self: auto | flex-start | flex-end | center | baseline | stretch
 
+如果项目很多，一个个地设置align-self属性就很麻烦。这时，可以在容器元素（本例为表单）设置align-items属性，它的值被所有子项目的align-self属性继承。
+
+    form {
+        display: flex;
+        align-items: center;
+    }
+
 > flex container 会限制item: max-width
+
+### flex-grow
+如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。
+如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。
 
 
 ## flex center
@@ -156,6 +169,16 @@ http://zh.learnlayout.com/flexbox.html
 	align-items: center;
 	justify-content: center;
 
+## case
+为了防止main 被撑大覆盖head，可以使用overflow:auto
+
+    <div style="display:flex;height:431px">
+        <div class="head" style="min-height:31px"></div>
+        <div className="main" style="flex:1; overflow:auto">
+            <div style="min-height:1000px"></div>
+        </div>
+    </div>
+
 # align
 ## flex container align
 
@@ -166,7 +189,7 @@ http://zh.learnlayout.com/flexbox.html
 
 居中:
 
-    <div style=" display: flex;
+    <div style="display: flex;
         width: 100%;
         justify-content: center;
         align-items: center; //height
@@ -436,18 +459,20 @@ margin 控制的是相邻元素之间的border 外边界间距。float和普通�
 
 
 ### relative/static + height percent
-When you set a percentage height on an element who's parent elements(包括static/relative) don't have valid heights set:
-
-    height: 0%; //is auto normal height;
+When you set a percentage height on an element who's parent elements(包括static/relative).
+严重依赖parent height
 
 Summary
 1. absolute 么有这个毛病: 严格依赖 parent positioned 一定有height
-2. body: height:100% not work 是因为 html is static
+2. static/relative: 依赖parent, `html,body{height:100%}`
 
-解决方案：
+解决有几种方案：
 1. 自己变absolute
-2. parent: valid height(not auto height)
-3. html: height: 100% valid(即使是static/relative)
+2. set a 100% height on all your parent elements
+
+更好的方案可能是：
+
+    body{height:100vh}
 
 ## media
 “响应式设计（Responsive Design”) 要借助媒体查询

@@ -212,6 +212,9 @@ box-shadow: h-shadow v-shadow blur spread color inset;
 
 	border-radius: 10px;//圆角半径
 
+    card:
+        box-shadow: 0 1px 1px 0 rgba(60,64,67,.08), 0 1px 3px 1px rgba(60,64,67,.16);
+
 ### border 合并间隔
 	border-collapse: collapse
 

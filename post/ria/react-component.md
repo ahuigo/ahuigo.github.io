@@ -45,7 +45,6 @@ single props 默认为true
     <Sidebar newprops/>
     <Sidebar newprops="true"/>
 
-
 ## props type
 props 属性在react 必须是只读的
 
@@ -60,7 +59,6 @@ props 属性在react 必须是只读的
     });
 
 此外，getDefaultProps 方法可以用来设置组件属性的默认值。
-
 
     var MyTitle = React.createClass({
       getDefaultProps : function () {
@@ -98,6 +96,9 @@ props 属性在react 必须是只读的
     );
 
 ## pass component via props
+
+    <Com key=value {...obj} />
+
 as component(with out instantiate)
 
     const Label = props => <span>{props.children}</span>
@@ -105,7 +106,7 @@ as component(with out instantiate)
         const Inner = props.inner; // Note: variable name _must_ start with a capital letter 
         return <button><Inner>Foo</Inner></button>
     }
-    const Page = () => <Button inner={Label}/>
+    const Page = () => <Button inner={Label} {...obj}/>
 
 as react dom:
 
@@ -238,7 +239,7 @@ ref Allow you to ref a component or dom node
 1. 需要： `this.handleClick.bind(this)` :jsx 中的this.handclick() 是没有unbunded this ,  
 2. `this.refs[refName]` 需要在didComponentMount 之后
 
-# baseComponent
+# BaseComponent
 
     export default (ComposedComponent) => {
       class MyComponent extends React.Component {

@@ -259,10 +259,13 @@ Here two example are equal
 # search 搜索
 高亮/搜索时定位/循环搜索时的配置
 
-    :set ignorecase smartcase
+    " 大小写不敏感匹配
+    :set ignorecase 
+    " 当搜索的字母只有小写时, 就大小写敏感. 否则,就大小写不敏感
+    :set smartcase
 
 	#高亮搜索关键字
-	:set hls or :set hlsearch
+	:set hls 或 :set hlsearch
 	:nohlsearch "限本次搜索不高亮
     #真正的撤消搜索 clearmatch clear search: 有这几种
     :noremap <F3> :let @/ = ""<CR>
@@ -271,12 +274,15 @@ Here two example are equal
     :noh
 
 	#还未完全键入字串时就能找到目标
-	:set is(:set incsearch)
+	:set is
+    :set incsearch
 
 	#默认是到达文件尾后回到文件头
-	:set ws(wrapscan)
+	:set ws 
+    :set wrapscan
 	#到达文件尾就停止搜索
-	:set nows(nowrapscan)
+	:set nows
+    :set nowrapscan
 
 ## 普通搜索(common search）
 1. /pattern :/pattern/offset 正向搜索 （可以用n N正向反向重复)

@@ -260,6 +260,13 @@ addEvent submit handler: 只能用e.preventDefault()
         });
     document.forms[0].dispatchEvent(event);
 
+trigger resize:
+
+    window.onresize=handler
+    window.dispatchEvent(new Event('resize'));
+
+
+
 ## history event
 trigger:
 

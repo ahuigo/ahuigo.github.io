@@ -55,7 +55,11 @@ device-width(jquery)
 ### 页面/Element(width height)
 ![dom-offset](/img/ria-dom-offset.gif)
 
-页面的长度不受屏幕窗口限制，如果超出窗口宽高，只能通过下拉查看整个页面\
+div 的长宽度: 
+
+    padding + border + width
+    如果加 box-sizing: border-box; width 就相当于scrollWidth, 包括border+padding
+
 
 不含border, and margin.(clientWidth)
 
