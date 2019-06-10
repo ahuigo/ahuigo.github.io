@@ -40,12 +40,22 @@ set 命令的语法
 	:help matchtime.
 
 # ts & sw 区别
-与缩进有关的是ts/sw 选项，我的配置一般默认：
+与缩进有关的常用配置：
 
-    :set ts=4 sw=4
+    " << >> 缩进命令的列数
+    set ts=4 
 
-ts & sw 的区别是:
-1. sw(shiftwidth) 是控制缩进步长的, 会影响到`<<` 和`>>` 这两个是缩进命令
+    " tab 字符占用的列数
+    set sw=4
+
+    " 自动缩进
+    set autoindent
+
+    " 智能缩进（判断语言的{ if else）等
+    set smartindent
+
+ts & sw 的具体区别是:
+1. sw(shiftwidth) 是控制缩进步长的, 会影响到`<<` 和`>>` 这两个缩进命令
 1. ts(tabstop) 是指`tab`符的占用的字符长度, 比如`set ts=16`
    1. 在vim 中
       1. 如果开启了`expandtab`, 那么`tab` 会被替换成`ts=16` 个`空格符`, 
