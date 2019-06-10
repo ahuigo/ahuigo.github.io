@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-10-04 [vim-options](/b/vim/vim-options) 
 - 2016-01-23 [Js dom 笔记](/b/ria/js-dom) 
 - 2018-10-04 [Event](/b/ria/js-dom-event) 
 - 2018-03-03 [css 布局](/b/ria/js-css-layout) 
@@ -38,4 +39,3 @@
 - 2019-05-23 [react framework](/b/ria/react-framework) 
 - 2018-10-04 [js-css-less](/b/ria/js-css-less) 
 - 2019-03-08 [does-a-thread-waiting-on-io-also-block-a-core?](/b/py/py-async-cpu) 
-- 2019-03-02 [cache 穿透问题](/b/db/redis-cache) 

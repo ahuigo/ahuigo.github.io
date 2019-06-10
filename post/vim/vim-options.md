@@ -5,19 +5,18 @@ category: blog
 description: 
 date: 2018-10-04
 ---
-# Preface
-
-# set options 
+# Set options 
+set 命令的语法
 
 	:set {option}
 	:se no{option} 
-	:se {option}! toggle option
+	:se {option}! "toggle option
 	:set {option}& "在后面加&时会重置option的默认值
 	:se {option}? "show option
 	:se "show all option
 	:se viminfo-=s100
 
-临时:
+临时set 命令（当前文件下生效）:
 
 	:setlocal nowrap
 
@@ -33,7 +32,6 @@ date: 2018-10-04
 
 ## help options
 
-
 	:help 'number' (notice the quotes).
 	:help relativenumber.
 	:help numberwidth.
@@ -41,11 +39,24 @@ date: 2018-10-04
 	:help shiftround.
 	:help matchtime.
 
+# ts & sw 区别
+与缩进有关的是ts/sw 选项，我的配置一般默认：
+
+    :set ts=4 sw=4
+
+ts & sw 的区别是:
+1. sw(shiftwidth) 是控制缩进步长的, 也就是作用于`<<` 和`>>` 这两个是缩进命令
+1. ts(tabstop) 是指`tab`符的占用的字符长度, 比如`set ts=16`
+   1. 在vim 中
+      1. 如果开启了`expandtab`, 那么`tab` 会被替换成16 个`空白符`, 
+      1. 如果没开启`expandtab`, 那么`tab`符本身就占用16 个字符的宽度
+   2. 在neovim 中有点复杂：
+      1. 如果在`非空白符`后输入`tab`, 那么每次移位是`4`个字符长度
+      1. 否则，输入`tab`, 那么每次移位是`sw(shiftwidth)`个字符长度
 
 # statusline
 
 	:set statusline=%f\ -\ FileType:\ %y
-
 	:set statusline=%f         " Path to the file
 	:set statusline+=\ -\      " Separator
 	:set statusline+=FileType: " Label
