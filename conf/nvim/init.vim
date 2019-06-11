@@ -142,13 +142,17 @@ noremap <c-h> :bp<cr>
 noremap <c-l> :bn<cr>
 "noremap <F9> :execute "0r _posts/test.md"<CR>
 "inoremap <D-V> <ESC>:r!pasteImg.py '%:t:r'<CR>
-inoremap <D-V> <ESC>:r!pasteImg.py '%'<CR>
+"inoremap <D-V> <ESC>:r!pasteImg.py '%'<CR>
 "clipboard
 " config iTerm2 keys: Esc+Ac, Esc+As, Esc+Aa
+" Copy
 vnoremap <M-A>c "+y
+" Save
 nnoremap <M-A>s :up<CR>
 inoremap <M-A>s <C-o>:up<CR>
+" Select whole content
 nnoremap <M-A>a ggVG
+" Paste
 nnoremap \p "+p
 
 """"""""""""""""""""""

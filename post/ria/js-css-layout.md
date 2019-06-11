@@ -179,6 +179,60 @@ http://zh.learnlayout.com/flexbox.html
         </div>
     </div>
 
+## flex vs height percent
+flex 能有效传递height percent
+
+    <div class="a">
+    <div class="header">header</div>
+    <div id="b">
+    <div class="b1"></div>
+
+    <div class="b2">
+    <div class="c">
+    <div class="d"></div>
+    </div>
+    </div>
+    </div>
+
+    </div>
+    <style>
+    .a{background:lightblue;height:300px;display:flex;flex-direction:column}
+    body,html{height:100%;margin:0}
+    .header{height:20px;background:red}
+
+    #b{background:lightgreen;flex:1;display:flex;flex-direction:row}
+    .b1{background:cyan;width:50px;}
+    .b2{background:orange;flex:1}
+    .c{background:purple;height:50%}
+    .d{background:green;height:50%}
+    </style>
+
+但是height不含margin, 为了防止超出空间：margin 不要设置`height:100%`:
+
+    <div class="a">
+    <div class="header">header</div>
+    <div id="b">
+    <div class="b1"></div>
+
+    <div class="b2">
+    <div class="c">
+    <div class="d"></div>
+    </div>
+    </div>
+    </div>
+
+    </div><style>.a{background:lightblue;height:300px;display:flex;flex-direction:column}
+    body,html{height:100%;margin:0}
+    .header{height:50px;background:red}
+
+    #b{background:lightgreen;flex:1;display:flex;flex-direction:row}
+    .b1{background:cyan;width:50px;}
+    .b2{background:orange;flex:1;display:flex;}
+    .c{background:purple;flex:1;display:flex;}
+    .d{background:green;height:100%;margin:10px;width:30px;}
+    div{box-sizing: border-box;}
+    </style>
+
 # align
 ## flex container align
 
