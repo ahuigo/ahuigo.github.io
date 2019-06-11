@@ -18,6 +18,9 @@ export GNUTERM=qt
 export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'$'\n$ '
 #export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
 export PIP_FORMAT=columns
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
 
 ulimit -n 1000
 

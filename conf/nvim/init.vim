@@ -57,17 +57,23 @@ endfunction
 nnoremap <F1> :let @/ = ""<CR>
 nnoremap  \w :%s/\s\+$//e<CR>
 
-"close & write
+""""""""""""""""""
+" close & write
+"""""""""""""""""""""
 nnoremap <C-q> :qa<CR>
 
+"""""""""""""""""""""""""""""""""""
 " provide hjkl movements when wrap
+"""""""""""""""""""""""""""""""""""
 noremap <silent> k gk
 noremap <silent> j gj
 noremap <silent> 0 g0
 "noremap <silent> $ g$
 
+"""""""""""""""""""""""""""""""""""""""""
 " provide hjkl movements in Insert mode
 " provide hjkl movements in ex mode
+"""""""""""""""""""""""""""""""""""
 noremap! <C-a> <Home>
 inoremap <C-e> <End>
 noremap! <C-f>  <Right>
@@ -77,11 +83,12 @@ noremap! <C-b>  <Left>
 inoremap <C-d> <DEL>
 inoremap <C-k>  <C-o>D
 nnoremap <C-k>  D
-
 "nnoremap <D-a> a
 
+"""""""""""""""""""""""""""""""""""
 " select
 "nnoremap <space> vas
+"""""""""""""""""""""""""""""""""""
 nnoremap - ddp
 nnoremap _ ddkP
 
@@ -116,38 +123,24 @@ elseif &filetype == 'mkd'
 endif
 endfunc
 
-" Search
-"" search current word
+""""""""""""""""""""""
+" search current word
+""""""""""""""""""""""
 map ft :call Search_Word()<CR>:copen<CR>
 function Search_Word()
 	let w = expand("<cword>")
 	execute "vimgrep " . w . " *"
 endfunction
 
+""""""""""""""""""""""
+" File management
+""""""""""""""""""""""
 " crontab with no backup
 autocmd filetype crontab setlocal nobackup nowritebackup
-
 " window
 noremap <c-h> :bp<cr>
 noremap <c-l> :bn<cr>
-
-" Blog
-noremap <F9> :execute "0r _posts/test.md"<CR>
-
-"vimdiff
-noremap <Leader>1 :diffget 1<CR>
-noremap <Leader>2 :diffget 2<CR>
-noremap <Leader>3 :diffget 3<CR>
-noremap <c-j> ]c
-noremap <c-k> [c
-
-"file
-function! Move(src, dst)
-	exe '!mv' a:src a:dst
-endfunction
-"call Move('a.txt','b.txt')
-com! -complete=file -nargs=* Move call Move(<f-args>)
-
+"noremap <F9> :execute "0r _posts/test.md"<CR>
 "inoremap <D-V> <ESC>:r!pasteImg.py '%:t:r'<CR>
 inoremap <D-V> <ESC>:r!pasteImg.py '%'<CR>
 "clipboard
@@ -158,6 +151,52 @@ inoremap <M-A>s <C-o>:up<CR>
 nnoremap <M-A>a ggVG
 nnoremap \p "+p
 
+""""""""""""""""""""""
+"vimdiff
+""""""""""""""""""""""
+noremap <Leader>1 :diffget 1<CR>
+noremap <Leader>2 :diffget 2<CR>
+noremap <Leader>3 :diffget 3<CR>
+noremap <c-j> ]c
+noremap <c-k> [c
+
+""""""""""""""
+" File Format
+"""""""""""""
+colorscheme desert
+set mouse=a
+set wrap
+" xterm
+set t_Co=8
+set fileencoding=utf-8
+set fileencodings=utf-8,gbk
+set ts=4 sw=4 softtabstop=4 nu autoindent
+set cuc cul
+set ignorecase smartcase
+set expandtab
+"https://github.com/romainl/Apprentice/blob/master/colors/apprentice.vim
+"autocmd ColorScheme *
+hi DiffAdd      gui=none    guifg=NONE          guibg=#cccccc
+hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac
+hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0
+hi DiffText     gui=none    guifg=NONE          guibg=#8cbee2
+"autocmd ColorScheme * hi DiffText     gui=none    guifg=NONE          guibg=#cccccc
+hi DiffAdd ctermbg=135  ctermfg=208  guibg=#262626 guifg=#87af87 cterm=reverse gui=reverse
+
+
+""""""""""""""""""""""
+" useless
+""""""""""""""""""""""
+function! Move(src, dst)
+	exe '!mv' a:src a:dst
+endfunction
+"call Move('a.txt','b.txt')
+com! -complete=file -nargs=* Move call Move(<f-args>)
+
+
+""""""""""""""""""""""
+" Plugin: plug
+""""""""""""""""""""""
 call plug#begin('~/.local/share/nvim/plugged')
     Plug 'vim-scripts/AutoComplPop'
 
@@ -210,31 +249,9 @@ nnoremap <C-p> :Denite buffer file/rec<CR>
 """""""""""""
 let g:python3_host_prog = '/usr/local/bin/python3'
 
-""""""""""""""
-" DEV
-"""""""""""""
-colorscheme desert
-set mouse=a
-set wrap
-" xterm
-set t_Co=8
-set fileencoding=utf-8
-set fileencodings=utf-8,gbk
-set ts=4 sw=4 softtabstop=4 nu autoindent
-set cuc cul
-set ignorecase smartcase
-set expandtab
-
-"https://github.com/romainl/Apprentice/blob/master/colors/apprentice.vim
-"autocmd ColorScheme *
-hi DiffAdd      gui=none    guifg=NONE          guibg=#cccccc
-hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac
-hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0
-hi DiffText     gui=none    guifg=NONE          guibg=#8cbee2
-"autocmd ColorScheme * hi DiffText     gui=none    guifg=NONE          guibg=#cccccc
-hi DiffAdd ctermbg=135  ctermfg=208  guibg=#262626 guifg=#87af87 cterm=reverse gui=reverse
-
-""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""
+" Vim common function
+"""""""""""""""""""""""""""""
 function! Strip(input_string)
     return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
 endfunction
