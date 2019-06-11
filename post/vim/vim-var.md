@@ -16,6 +16,8 @@ http://learnvimscriptthehardway.onefloweroneworld.com/ (英文)
 
 ## inner var
 	:echo $VIMRUNTIME
+	:echo $HOME
+	:echo $PATH
 	:vsplit $MYVIMRC
 	:echo &shell
 	:echo &t_Co
@@ -45,8 +47,10 @@ set 非option var
     :set t_Co? error!
 
 ### local options
+加`l:`
 
 	:let &l:number = 1
+	:let &l:nu = 1
 
 ## Registers as Variables
 
@@ -60,7 +64,10 @@ set 非option var
 
 
 # Variable Scoping
->See :help internal-variables
+
+    :help internal-variables
+    :help a:
+    :help b:
 
 It lists the following types:
 
@@ -73,6 +80,28 @@ It lists the following types:
     script-variable    s:     Local to a :source'ed Vim script.
     function-argument  a:     Function argument (only inside a function).
     vim-variable       v:     Global, predefined by Vim.
+
+## a: function arg
+
+    nmap <silent> <F4> :set opfunc=CountSpaces<CR>g@
+	function CountSpaces(type, ...)
+        a:type
+            line char block
+
+e.g.
+
+	:function Allargs(command)
+        echo a:type
+	:   let i = 0
+	:   while i < argc()
+	:	  if filereadable(argv(i))
+	:	     execute "e " . argv(i)
+	:	     execute a:command
+	:      endif
+	:      let i = i + 1
+	:   endwhile
+	:endfunction
+	:call Allargs(<q-args>)
 
 ## buffer var
 
@@ -314,6 +343,12 @@ Note that double quotes are used.
 
 	"view msg
 	:mes
+
+等价
+
+    :echo 3 - 5 * 5 "end"
+    :echo 3-5*5 "end"
+    :echo 3-5*5"end"
 
 规则：
 

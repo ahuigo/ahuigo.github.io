@@ -352,7 +352,7 @@ This splits the command arguments at `spaces and tabs`, quotes each argument ind
 
 See the Mycmd example below.
 
-	command		   <f-args> ~
+	XXcommand       <f-args> ~
 	XX ab		   'ab'
 	XX a\b		   'a\b'
 	XX a\ b		   'a b'

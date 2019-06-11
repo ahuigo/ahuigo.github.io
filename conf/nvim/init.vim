@@ -7,22 +7,18 @@ set laststatus=2
 	 \ |   exe "normal! g`\""
 	 \ | endif
 
-""""
-" change like vscode: vwS'
-"""""""""""""""
+"""""""""""""""""""""""""""""""""""
+" Same as vscode's function: vwS'
+"""""""""""""""""""""""""""""""""""
 vnoremap " di"<esc>pa"<esc>
 vnoremap ' di'<esc>pa'<esc>
 vnoremap ( di(<esc>pa)<esc>
 vnoremap [ di[<esc>pa]<esc>
 vnoremap { di{<esc>pa}<esc>
+
 """"""""""""""""""""""""""""
-
-
-"search
-nnoremap <F1> :let @/ = ""<CR>
-nnoremap  \w :%s/\s\+$//e<CR>
-
-
+" operatorfunc
+""""""""""""""""""""""""""""""""
 nnoremap <leader>g :set operatorfunc=GrepOperator<cr>g@<cr>
 vnoremap <leader>g :<c-u>call GrepOperator(visualmode())<cr>
 
@@ -30,6 +26,36 @@ function! GrepOperator(type)
 	echom a:type
 endfunction
 
+nmap <silent> <F4> :set opfunc=CountSpaces<CR>g@
+vmap <silent> <F4> :<C-U>call CountSpaces(visualmode(), 1)<CR>
+
+function! CountSpaces(type, ...)
+	let sel_save = &selection
+	let &selection = "inclusive"
+	let reg_save = @@
+
+	if a:0  " Invoked from Visual mode, use gv command.
+		silent exe "normal! gvy"
+	elseif a:type == 'line'
+		silent exe "normal! '[V']y"
+	else
+		silent exe "normal! `[v`]y"
+	endif
+
+	echomsg strlen(substitute(@@, '[^ ]', '', 'g'))
+	echomsg @@
+	echomsg a:type
+	echomsg a:0
+
+	let &selection = sel_save
+	let @@ = reg_save
+endfunction
+
+"""""""""""""""""""""""
+" search
+"""""""""""""""""""""""""""""""""
+nnoremap <F1> :let @/ = ""<CR>
+nnoremap  \w :%s/\s\+$//e<CR>
 
 "close & write
 nnoremap <C-q> :qa<CR>
@@ -41,20 +67,17 @@ noremap <silent> 0 g0
 "noremap <silent> $ g$
 
 " provide hjkl movements in Insert mode
-inoremap <C-b>  <Left>
-inoremap <C-f>  <Right>
-inoremap ∂ <C-d>
-inoremap <C-d> <DEL>
-inoremap <C-a> <Home>
+" provide hjkl movements in ex mode
+noremap! <C-a> <Home>
 inoremap <C-e> <End>
+noremap! <C-f>  <Right>
+"cnoremap <A-f> <C-f>
+cnoremap ƒ <C-f>
+noremap! <C-b>  <Left>
+inoremap <C-d> <DEL>
 inoremap <C-k>  <C-o>D
 nnoremap <C-k>  D
 
-" provide hjkl movements in ex mode
-cnoremap <C-a> <Home>
-cnoremap <C-b> <Left>
-cnoremap ƒ <C-f>
-cnoremap <C-f> <Right>
 "nnoremap <D-a> a
 
 " select
@@ -122,7 +145,7 @@ noremap <c-k> [c
 function! Move(src, dst)
 	exe '!mv' a:src a:dst
 endfunction
-"call Move(1,2)
+"call Move('a.txt','b.txt')
 com! -complete=file -nargs=* Move call Move(<f-args>)
 
 "inoremap <D-V> <ESC>:r!pasteImg.py '%:t:r'<CR>

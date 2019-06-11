@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-06-11 [vim 使用之变量](/b/vim/vim-var) 
+- 2018-10-04 [vim-cmd](/b/vim/vim-cmd) 
 - 2018-10-04 [vim-options](/b/vim/vim-options) 
 - 2016-01-23 [Js dom 笔记](/b/ria/js-dom) 
 - 2018-10-04 [Event](/b/ria/js-dom-event) 
@@ -28,7 +30,7 @@
 - 2019-05-29 [Vim Guide](/b/vim/vim-guide) 
 - 2019-05-29 [shell 终端使用技巧](/b/c/shell-zsh) 
 - 2019-06-04 [vim 笔记](/b/vim/vim-notes) 
-- 2019-06-04 [vim-motion](/b/vim/vim-motion) 
+- 2019-06-11 [vim-motion](/b/vim/vim-motion) 
 - 2018-09-28 [help](/b/py/py-db-postgre) 
 - 2018-10-04 [ajax cors](/b/ria/js-ajax-cors) 
 - 2019-05-27 [curl manual](/b/c/ops-curl) 
@@ -37,5 +39,3 @@
 - 2018-10-04 [try-catch](/b/ria/js-debug-exception) 
 - 2019-05-12 [How to set up React, webpack, and Babel 7 from scratch](/b/ria/react-webpack-babel) 
 - 2019-05-23 [react framework](/b/ria/react-framework) 
-- 2018-10-04 [js-css-less](/b/ria/js-css-less) 
-- 2019-03-08 [does-a-thread-waiting-on-io-also-block-a-core?](/b/py/py-async-cpu) 

@@ -240,7 +240,7 @@ marks 不是保存在register 中的，这个注意一下
 Last jump
 
     '' `` `'	上一标记(latest jump, toggle)
-    '" 			To the position when last existing the current buffer(需要开启对.viminfo信息支持)
+    '" `"       To the position when last existing the current buffer(需要开启对.viminfo信息支持)
 
 modified && insert stop && changed
 
@@ -248,6 +248,7 @@ modified && insert stop && changed
     '^  `^		To the position where the cursor was the last time when Insert mode was stopped.
                 This is used by the |gi| command.
     `[  `]		To the first/last character of the previously changed or yanked text.
+                常用于g@
 
 Visual mode
 
