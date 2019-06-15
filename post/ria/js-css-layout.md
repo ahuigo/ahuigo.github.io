@@ -169,6 +169,17 @@ http://zh.learnlayout.com/flexbox.html
 	align-items: center;
 	justify-content: center;
 
+## flex 被子div 放大
+
+    .container{
+        flex: 1 1;
+        display: flex;
+        flex-direction: column;
+    }
+    <div class='container'>
+        <div>
+    </div>
+
 ## case
 为了防止main 被撑大覆盖head，可以使用overflow:auto
 
@@ -180,45 +191,17 @@ http://zh.learnlayout.com/flexbox.html
     </div>
 
 ## flex vs height percent
-flex 能有效传递height percent
+flex 能有效传递height percent(需要`flex:1`填满)
 
     <div class="a">
     <div class="header">header</div>
     <div id="b">
-    <div class="b1"></div>
-
-    <div class="b2">
-    <div class="c">
-    <div class="d"></div>
-    </div>
-    </div>
-    </div>
-
-    </div>
-    <style>
-    .a{background:lightblue;height:300px;display:flex;flex-direction:column}
-    body,html{height:100%;margin:0}
-    .header{height:20px;background:red}
-
-    #b{background:lightgreen;flex:1;display:flex;flex-direction:row}
-    .b1{background:cyan;width:50px;}
-    .b2{background:orange;flex:1}
-    .c{background:purple;height:50%}
-    .d{background:green;height:50%}
-    </style>
-
-但是height不含margin, 为了防止超出空间：margin 不要设置`height:100%`:
-
-    <div class="a">
-    <div class="header">header</div>
-    <div id="b">
-    <div class="b1"></div>
-
-    <div class="b2">
-    <div class="c">
-    <div class="d"></div>
-    </div>
-    </div>
+        <div class="b1"></div>
+        <div class="b2">
+            <div class="c">
+                <div class="d"></div>
+            </div>
+        </div>
     </div>
 
     </div><style>.a{background:lightblue;height:300px;display:flex;flex-direction:column}
@@ -226,12 +209,22 @@ flex 能有效传递height percent
     .header{height:50px;background:red}
 
     #b{background:lightgreen;flex:1;display:flex;flex-direction:row}
-    .b1{background:cyan;width:50px;}
-    .b2{background:orange;flex:1;display:flex;}
-    .c{background:purple;flex:1;display:flex;}
-    .d{background:green;height:100%;margin:10px;width:30px;}
+        .b1{background:cyan;width:50px;}
+        .b2{background:orange;flex:1;display:flex;}
+            .c{background:purple;flex:1;}
+                .d{background:green;height:100%;margin:10px;width:30px;}
     div{box-sizing: border-box;}
     </style>
+
+非flex容器，内部的card 的height不含margin, 为了防止`.d`超出空间：margin 不要设置`height:100%`或者设置更少的height
+
+    .d{background:green;height:80%;margin:10px;}
+
+或者利用display:flex填
+
+    .c{background:purple;flex:1;display:flex;}
+    .d{background:green;flex:1;margin:10px;}    better
+    .d{background:green;height:100%;margin:10px;}    better
 
 # align
 ## flex container align

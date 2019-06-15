@@ -118,6 +118,8 @@ table with bash:
 
 ## table
 
+### show table
+
 ### create
 
     $ psql -f init.sql

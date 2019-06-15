@@ -386,6 +386,11 @@ https://www.cnblogs.com/sparkdev/p/8052522.html
     # 检查底层信息
     docker inspect <container-name>
 
+### container cmd
+
+    docker ps -a --no-trunc 
+        will display the full command along with 
+
 ### 容器状态(cpu/mem)
 
     docker stats -a

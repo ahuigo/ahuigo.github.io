@@ -22,13 +22,13 @@ id：用户/组身份信息
 	echo '123456' | passwd www --stdin
 	-M no Home Directory
 
-# usermod
+# usermod(group)
 User Modifier
 
+    usermod -aG docker,mysql ahui # add group
 	usermod -l new-name old-name
 	usermod -u new-uid loginname
 	usermod -d /home/new-home name
-    usermod -G staff,staff2 name # add group
     usermod -l newuser1 user #rename
     usermod -s /bin/zsh user
 

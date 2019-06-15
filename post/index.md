@@ -1,4 +1,8 @@
 # AHUIGO 的笔记
+- 2018-10-04 [vim-complete](/b/vim/vim-complete) 
+- 2018-09-27 [FUNCTION](/b/db/postgre-ddl) 
+- 2018-09-27 [tool](/b/c/ops-user) 
+- 2018-09-27 [学习 docker](/b/arch/arch-docker) 
 - 2019-06-11 [vim 使用之变量](/b/vim/vim-var) 
 - 2018-10-04 [vim-cmd](/b/vim/vim-cmd) 
 - 2018-10-04 [vim-options](/b/vim/vim-options) 
@@ -35,7 +39,3 @@
 - 2018-10-04 [ajax cors](/b/ria/js-ajax-cors) 
 - 2019-05-27 [curl manual](/b/c/ops-curl) 
 - 2018-10-04 [JS Promise](/b/ria/js-promise) 
-- 2019-05-27 [js notes](/b/ria/js-obj) 
-- 2018-10-04 [try-catch](/b/ria/js-debug-exception) 
-- 2019-05-12 [How to set up React, webpack, and Babel 7 from scratch](/b/ria/react-webpack-babel) 
-- 2019-05-23 [react framework](/b/ria/react-framework) 
