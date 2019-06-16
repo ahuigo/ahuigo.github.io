@@ -242,17 +242,17 @@ Process之间肯定是需要通信的，操作系统提供了很多机制来实�
 	time.sleep(random.random())
 
 ### queue example 0
-```
-from multiprocessing import Process, Queue
-def multiply(a,b,que): que.put(a*b)
+    ```
+    from multiprocessing import Process, Queue
+    def multiply(a,b,que): que.put(a*b)
 
-queue1 = Queue() #create a queue object
-p = Process(target= multiply, args= (5,4,queue1)) #we're setting 3rd argument to queue1
-p.start()
-print(queue1.get()) #and we're getting return value: 20
-p.join()
-print("ok.")
-```
+    queue1 = Queue() #create a queue object
+    p = Process(target= multiply, args= (5,4,queue1)) #we're setting 3rd argument to queue1
+    p.start()
+    print(queue1.get()) #and we're getting return value: 20
+    p.join()
+    print("ok.")
+    ```
 ### queue example
 我们以Queue为例，在父进程中创建两个子进程，一个往Queue里写数据，一个从Queue里读数据：
 

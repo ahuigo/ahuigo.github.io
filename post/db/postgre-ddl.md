@@ -102,6 +102,10 @@ table with bash:
     \copy (Select * From foo) To '/tmp/test.csv' With CSV
     \copy (select * from my_table limit 10) TO '~/Downloads/export.csv' CSV HEADER
 
+relative path 
+
+    \copy (select * from my_table limit 10) TO './a.csv' CSV HEADER
+
 # crud
 ## database
 

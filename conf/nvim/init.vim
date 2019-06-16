@@ -124,7 +124,7 @@ endif
 endfunc
 
 """"""""""""""""""""""
-" search current word
+" Search current word
 """"""""""""""""""""""
 map ft :call Search_Word()<CR>:copen<CR>
 function Search_Word()
@@ -156,7 +156,7 @@ nnoremap <M-A>a ggVG
 nnoremap \p "+p
 
 """"""""""""""""""""""
-"vimdiff
+" Vimdiff
 """"""""""""""""""""""
 noremap <Leader>1 :diffget 1<CR>
 noremap <Leader>2 :diffget 2<CR>

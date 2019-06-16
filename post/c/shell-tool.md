@@ -276,6 +276,7 @@ and in the Vim text editor, one can ROT13 a selection with the command: `g?`
 	echo -e "a\tb" |col -x # -x 转换tab为空白
 	man col |col -b # 过滤控制字符
 	man col |cat -A # 显示控制字符
+    tr '\r' '\n'
 
 ## expand
 将tab替换成空格(-t 指定空格数, 默认是8个)

@@ -172,12 +172,10 @@ https://stackoverflow.com/questions/50368417/styling-element-inside-class-materi
 
     shopForm: {
         textAlign : 'center',
-    '& input' :{
-        width: '60%',
-        color:'grey'
-    },
-    '& label':{
-        fontSize:'15px'
+        '& input' :{
+            width: '60%',
+            color:'grey'
+        },
     }
 
 so you have to find which element you want to style first and then give style to parent's class.

@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2018-01-03 [vscode 笔记](/b/vsc/vsc-) 
+- 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
+- 2019-06-15 [linux os](/b/c/linux-os) 
 - 2018-10-04 [vim-complete](/b/vim/vim-complete) 
 - 2018-09-27 [FUNCTION](/b/db/postgre-ddl) 
 - 2018-09-27 [tool](/b/c/ops-user) 
@@ -36,6 +39,3 @@
 - 2019-06-04 [vim 笔记](/b/vim/vim-notes) 
 - 2019-06-11 [vim-motion](/b/vim/vim-motion) 
 - 2018-09-28 [help](/b/py/py-db-postgre) 
-- 2018-10-04 [ajax cors](/b/ria/js-ajax-cors) 
-- 2019-05-27 [curl manual](/b/c/ops-curl) 
-- 2018-10-04 [JS Promise](/b/ria/js-promise) 

@@ -23,6 +23,54 @@ cmd+p
         "editor.tabSize": 2
     }
 
+# Edit
+
+## search replace
+
+    cmd+f   search in file
+    cmd+shift+f replae in project
+    cmd+g/ cmd+shift+g  next/previous matched
+
+
+## copy paste
+
+    ⌘X Cut line (empty selection)
+    ⌘C Copy line (empty selection)
+    ⌥↓ / ⌥↑ Move line down/up
+    ⇧⌥↓ / ⇧⌥↑ Copy line down/up
+
+comment
+
+    ```yaml
+    ⌘/ Toggle line comment
+    ⇧⌥A Toggle block comment
+    ⌥Z Toggle word wrap
+
+    ⌘K ⌘C Add line comment
+    ⌘K ⌘U Remove line comment
+    ```
+
+### Insert tab character manually
+    ```json
+    { "key": "ctrl+v tab", "command": "type", "args": { "text": "\t" }, "when": "editorTextFocus" }
+    ```
+
+
+### Multi-cursor and selection
+```yaml
+⌥ + click Insert cursor
+⌥⌘↑ Insert cursor above
+⌥⌘↓ Insert cursor below
+⌘U Undo last cursor operation
+⇧⌥I Insert cursor at end of each line selected
+⌘I Select current line
+⇧⌘L Select all occurrences of current selection
+⌘F2 Select all occurrences of current word
+⌃⇧⌘→ / ← Expand / shrink selection
+⇧⌥ + drag mouse Column (box) selection
+```
+
+
 # Emmet
 div.test>h3.title+ul>li*3>span.text
 
@@ -61,49 +109,6 @@ cmd+k cmd+s: keybindings.json
     ⇧⌘O Go to Symbol...
     ⇧⌘M Show Problems panel
     F8 / ⇧F8 Go to next/previous error or warning
-
-# File 
-## Edit
-
-    ⌘X Cut line (empty selection)
-    ⌘C Copy line (empty selection)
-    ⌥↓ / ⌥↑ Move line down/up
-    ⇧⌥↓ / ⇧⌥↑ Copy line down/up
-
-comment
-
-    ```yaml
-    ⌘/ Toggle line comment
-    ⇧⌥A Toggle block comment
-    ⌥Z Toggle word wrap
-
-    ⌘K ⌘C Add line comment
-    ⌘K ⌘U Remove line comment
-    ```
-
-### Insert tab character manually
-    ```json
-    { "key": "ctrl+v tab", "command": "type", "args": { "text": "\t" }, "when": "editorTextFocus" }
-    ```
-
-## search
-cmd+f   search in file
-cmd+shift+f search in project
-cmd+g/ cmd+shift+g  next/previous matched
-
-## Multi-cursor and selection
-```yaml
-⌥ + click Insert cursor
-⌥⌘↑ Insert cursor above
-⌥⌘↓ Insert cursor below
-⌘U Undo last cursor operation
-⇧⌥I Insert cursor at end of each line selected
-⌘I Select current line
-⇧⌘L Select all occurrences of current selection
-⌘F2 Select all occurrences of current word
-⌃⇧⌘→ / ← Expand / shrink selection
-⇧⌥ + drag mouse Column (box) selection
-```
 
 # Display
 cmd+K Z Zen Mode (Esc Esc to exit)

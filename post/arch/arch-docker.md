@@ -61,11 +61,17 @@ Mac OSX Image 不可以修改路径：
     docker run httpd
 
 ### list image layer
+
     $ docker history python:3.7
     IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
     954987809e63        3 weeks ago         /bin/sh -c #(nop)  CMD ["python3"]              0B
     <missing>           7 weeks ago         /bin/sh -c set -ex;  apt-get update;  apt-ge…   562MB
     <missing>           7 weeks ago         /bin/sh -c #(nop) ADD file:843b8a2a9df1a0730…   101M
+
+### dockerfile of image
+
+    docker history --no-truc image_id
+
 
 ## rm image
 

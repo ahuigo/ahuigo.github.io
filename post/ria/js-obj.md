@@ -479,6 +479,19 @@ e.g.
 
     Foo.bar() // hello
 
+##### instance call static method
+https://stackoverflow.com/questions/28627908/call-static-methods-from-regular-es6-class-methods
+
+    static instance_method(){
+        this.constructor.static_method()
+    }
+    static static_method(){
+        //等价
+        A.static_method2()
+        this.static_method2()
+    }
+
+
 #### static prop
 static const/variable, via get/set
 

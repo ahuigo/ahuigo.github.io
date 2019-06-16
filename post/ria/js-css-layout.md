@@ -155,10 +155,12 @@ http://www.ruanyifeng.com/blog/2018/10/flexbox-form.html 参考
 
 > flex container 会限制item: max-width
 
-### flex-grow
-如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。
-如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。
+### flex: grow shrink basis
+https://codepen.io/ahuigo/pen/VJedwm
 
+如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。
+如果所有项目的flex-shrink属性默认为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，项目不收缩。
+flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。
 
 ## flex center
 http://zh.learnlayout.com/flexbox.html
@@ -471,6 +473,14 @@ margin 控制的是相邻元素之间的border 外边界间距。float和普通�
 
 1. 两相邻div的margin值, 同为正/负, 取绝对值最大的, 否则相加
 2. 如果当前元素是float-right, 那么以margin-right为准, 而非margin-left.
+
+### margin in flex container
+flex 内部，s1 与 s2 之间距不是max(s1,s2) 而是s1+s2
+
+    <div style="display:flex">
+        <div class="s1" style="margin:5px"></div>
+        <div class="s2" style="margin:5px"></div>
+    </div>
 
 ### margin 的原点坐标
 1. 两个div 之间：border 外沿
