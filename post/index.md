@@ -1,4 +1,8 @@
 # AHUIGO 的笔记
+- 2018-10-04 [js-time](/b/ria/js-time) 
+- 2018-04-02 [python 时间函数的用法笔记](/b/py/py-time) 
+- 2019-06-17 [Git 命令大全](/b/git/git-) 
+- 2019-06-17 [awk 简介](/b/c/ops-awk) 
 - 2018-01-03 [vscode 笔记](/b/vsc/vsc-) 
 - 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
 - 2019-06-15 [linux os](/b/c/linux-os) 
@@ -35,7 +39,3 @@
 - 2019-05-29 [Vim visual](/b/vim/vim-visual) 
 - 2018-10-04 [vim-help](/b/vim/vim-help) 
 - 2019-05-29 [Vim Guide](/b/vim/vim-guide) 
-- 2019-05-29 [shell 终端使用技巧](/b/c/shell-zsh) 
-- 2019-06-04 [vim 笔记](/b/vim/vim-notes) 
-- 2019-06-11 [vim-motion](/b/vim/vim-motion) 
-- 2018-09-28 [help](/b/py/py-db-postgre) 

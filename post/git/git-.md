@@ -561,6 +561,8 @@ Create an archive of files from a named tree.
     	# ...
 		client_max_body_size 1G;
 
+还有可能是没有加`repository.git`
+
 ## push branch
 push 时，remote 必须存在相应的branch, 比如master. 否则会报: No refs in common and none specified; doing nothing.
 

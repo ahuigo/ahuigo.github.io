@@ -11,12 +11,6 @@ private:
     kubectl get pod -n dev-namespace
     kubectl logs -f node-name -n dev-namespace
 
-# start
-    # docker-compose -f docker-compose.yml up -d
-    $ cat docker-compose.yml
-    service:
-        compose:
-
 #查看资源状态
 
     # 使用 kubectl get <resource> 查看集群资源的状态信息

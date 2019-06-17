@@ -483,6 +483,7 @@ e.g.
 https://stackoverflow.com/questions/28627908/call-static-methods-from-regular-es6-class-methods
 
     static instance_method(){
+        super()
         this.constructor.static_method()
     }
     static static_method(){

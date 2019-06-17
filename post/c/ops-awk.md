@@ -49,7 +49,7 @@ actions 由awk 语句组成, 可以用`next` 忽略后面的actions
 
 ## condtion
 
-	start_condition,end_condition {action}
+    start_condition,end_condition {action}
 
 Example
 
@@ -84,7 +84,7 @@ multiple delimiter:
 
 	cat file | awk -F'[/=]' '{print $3 "\t" $5 "\t" $8}'
 
-escape delimiter:
+escape delimiter, FS is an Extended Regular Expression where "|" is special:
 
 	-F '\\|\\|'
 

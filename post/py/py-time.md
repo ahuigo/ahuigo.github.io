@@ -142,7 +142,8 @@ pd.date_range():
 	>>> datetime.now().replace(microsecond=0).isoformat()
     '2018-08-16T15:16:47'
 
-formater: https://docs.python.org/3/library/datetime.html
+formater: 
+https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
 
     zone:
         %Z  (empty),UTC,EST,CST (time zone name)
@@ -150,11 +151,11 @@ formater: https://docs.python.org/3/library/datetime.html
     weekday:
         %a Sun, Mon, ..., Sat (en_US);
         %A Sunday, Monday, ..., Saturday (en_US);
-        %w 0,1,...,6(Saturday)
+        %w 0,1,...,6(0 is Sunday)
         %U	00,01,....,53 (Sunday as the first day)
         %W	00,01,....,53 (Monday as the first day)
     year:
-        %y  00,01,...09
+        %y  00,01,...09,10,11
         %Y  0001,0002,....,2016,...
     month:
         %b Jan, Feb, ..., Dec (en_US);
@@ -167,7 +168,6 @@ formater: https://docs.python.org/3/library/datetime.html
         %H  00,....,23
         %I  01,02,...,12(12 hour)
         %p  AM,PM
-
     Minute:
         %M  00,...,59
     Second:

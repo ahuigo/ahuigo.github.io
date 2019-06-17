@@ -25,14 +25,14 @@ Movement 移动光标、字符，Vim 最核心的功能操作
     块
         句 (    )
         段 {    }    
-        节或"{"
+        章节section 或{"
              [[   ]]
-        节或"{"
+        章节section 或}"
             [] ][
-        不匹配()
+        匹配()
             [(	])
             	go to [count] previous unmatched '()'.
-        不匹配{}
+        匹配{}
             [{	]}
                 go to [count] next unmatched '{}}'.
 
@@ -239,8 +239,8 @@ marks 不是保存在register 中的，这个注意一下
 
 Last jump
 
-    '' `` `'	上一标记(latest jump, toggle)
-    '" `"       To the position when last existing the current buffer(需要开启对.viminfo信息支持)
+    '' `` `'	上一跳转的位置(latest jump, toggle)
+    '" `"       上次离开的位置(last existing the current buffer(需要开启对.viminfo信息支持))
 
 modified && insert stop && changed
 

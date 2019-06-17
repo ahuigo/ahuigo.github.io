@@ -135,12 +135,38 @@ short:
 
 	//add time
 	d.setSeconds(d.getSeconds() + 10);
-	Date.prototype.add= function(seconds){
-		this.setTime(this.getTime() + (seconds * 1000));
+
+    /**
+    years	y
+    quarters	Q
+    months	M
+    weeks	w
+    days	d
+    hours	h
+    minutes	m
+    seconds	s
+    milliseconds	ms
+    */
+	Date.prototype.unitWeight = {
+        ms:1,
+        s:1000,
+        m:60000,
+        h:3600000,
+        d:86400*1000,
+        M:30*86400*1000,
+        y:365*86400*1000,
+    }
+	Date.prototype.add = function(n, unit='s'){
+        let weight = this.unitWeight[unit]
+		this.setTime(this.getTime() + (n* weight));
 		return this;
 	}
+	Date.prototype.diff = function(d, unit='s'){
+        let weight = this.unitWeight[unit]
+		return (this.getTime() - d.getTime())/weight;
+	}
 
-	//Time
+	// unix timestamp
 	.setTime(millisec)	以毫秒设置 Date 对象。d.setTime(77771564221)
 	new Date(millisec)	以毫秒设置 Date 对象. new Date(77771564221)
 
@@ -149,8 +175,7 @@ str to time
 	new Date("October 13, 1975 11:13:00");
 	new Date("2016-01-01 11:13:00");
 	new Date("2016-01-01 11:13:00");
-	new Date("2016-06-03");
-	new Date(2016, 05,03);//05+1 需要加1
+	new Date("2016-06-03") === new Date(2016, 05,04,00,00,00);
 
 	(new Date("2016-1-1")).getDay();
 

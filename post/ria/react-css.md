@@ -30,6 +30,7 @@ css stylesheet:
 
 e.g.
 
+    import 'mapbox-gl/dist/mapbox-gl.css'
     import './DottedBox.css';
 
     const DottedBox = () => (

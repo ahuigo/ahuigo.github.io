@@ -426,24 +426,30 @@ http://www.opscoder.info/docker_monitor.html
     $ docker-compose stop
     $ docker-compose rm
 
+    # docker-compose -f docker-compose.yml up -d
+    $ cat docker-compose.yml
+
+
 当前目录下配置docker-compose.yml 配置
 
-    mysql:
-        image: mysql:5.7
-        environment:
-        - MYSQL_ROOT_PASSWORD=123456
-        - MYSQL_DATABASE=wordpress
-    web:
-        image: wordpress
-        links:
-        - mysql
-        environment:
-        - WORDPRESS_DB_PASSWORD=123456
-        ports:
-        - "127.0.0.3:8080:80"
-        working_dir: /var/www/html
-        volumes:
-        - wordpress:/var/www/html
+    version: '1.1'
+    service:
+        mysql:
+            image: mysql:5.7
+            environment:
+            - MYSQL_ROOT_PASSWORD=123456
+            - MYSQL_DATABASE=wordpress
+        web:
+            image: wordpress
+            links:
+            - mysql
+            environment:
+            - WORDPRESS_DB_PASSWORD=123456
+            ports:
+            - "127.0.0.3:8080:80"
+            working_dir: /var/www/html
+            volumes:
+            - wordpress:/var/www/html
 
     
 # help
