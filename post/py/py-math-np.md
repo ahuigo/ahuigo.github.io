@@ -23,9 +23,11 @@ df教程：
 https://www.joinquant.com/research?target=research&url=/user/281387418609/notebooks/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B%E2%80%94Pandas%E5%BA%93%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B.ipynb
 
 ## print
+
     pd.set_option('display.max_columns', None)  # or 1000
     pd.set_option('display.max_rows', None)  # or 1000
     pd.set_option('display.max_colwidth', -1)  # or 199
+    pd.options.display.width = None
 
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):
         print(df)
@@ -49,6 +51,26 @@ https://www.joinquant.com/research?target=research&url=/user/281387418609/notebo
 repalce NaN to 0:
 
     newdf = df.replace([np.inf, np.NINF,np.nan], 0)
+    math.isnan(x)
+
+#### isnull
+https://chartio.com/resources/tutorials/how-to-check-if-any-value-is-nan-in-a-pandas-dataframe/
+
+    In [3]: s.isnull()
+    Out[3]:
+    0    False
+    1    False
+    2     True
+    3    False
+    4    False
+    dtype: bool
+
+    In [4]: s.isnull().values.any()
+    Out[4]: True
+
+    In [5]: s.isnull().sum()
+    Out[5]: 1
+
 
 ### operator
 
@@ -56,6 +78,7 @@ repalce NaN to 0:
 
 ### rename column
 
+    df=df.rename(index=str, columns={ "date": "时间"})
     df=df.rename(index=str, columns={ "date": "时间"})
 
 ### index empty
@@ -99,13 +122,14 @@ in index and colume and values
 ### drop
 Drop columns
 
+    # 等价
     >>> df.drop(['B', 'C'], axis=1)
-    A   D
+        A   D
     0  0   3
     1  4   7
     2  8  11
     >>> df.drop(columns=['B', 'C'])
-    A   D
+        A   D
     0  0   3
     1  4   7
     2  8  11
@@ -357,6 +381,7 @@ update row via loc:
         df.loc[index,'col'] = v     # work, 但是会扩展col
         df['col'][index] = v     # work
         print row['c1'], row['c2']
+    for column_name in df:
 
 ## series
 Notice: pd.Series(d).name 是一个保留keyword, 请使用pd.Series(d)['name']

@@ -87,6 +87,7 @@ You should try to remove unnecessary images before removing the image:
 ### 通过容器副本创建image
 
     $ docker commit -m="has update" -a="runoob" e218edb10161 ahuigo/ubuntu:v2
+    $ docker commit e218edb10161 ahuigo/ubuntu:v2
     -m:提交的描述信息
     -a:指定镜像作者
     e218edb10161：容器ID

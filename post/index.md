@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2018-09-28 [Python 文件处理](/b/py/py-file) 
+- 2018-10-04 [nginx proxy](/b/nginx/nginx-proxy) 
+- 2018-09-27 [不要用mongodb](/b/db/mongo-) 
 - 2018-10-04 [js-time](/b/ria/js-time) 
 - 2018-04-02 [python 时间函数的用法笔记](/b/py/py-time) 
 - 2019-06-17 [Git 命令大全](/b/git/git-) 
@@ -36,6 +39,3 @@
 - 2019-06-04 [linux 之进程](/b/c/ops-process) 
 - 2015-07-13 [ELF 文件格式](/b/c/as-elf) 
 - 2019-05-29 [Vim Edit](/b/vim/vim-edit) 
-- 2019-05-29 [Vim visual](/b/vim/vim-visual) 
-- 2018-10-04 [vim-help](/b/vim/vim-help) 
-- 2019-05-29 [Vim Guide](/b/vim/vim-guide) 

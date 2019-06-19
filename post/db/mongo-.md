@@ -33,6 +33,18 @@ mongod 即可以启动daemon, 也可以查看连接状态
     2015-09-25T17:22:27.350+0800 I NETWORK  [initandlisten] waiting for connections on port 27017
     2015-09-25T17:22:36.012+0800 I NETWORK  [initandlisten] connection accepted from 127.0.0.1:37310 #1 (1 connection now open)  # 该行表明一个来自本机的连接
 
+connect mongon via shell
+
+    $ mongo mongodb://localhost:22342,localhost2:23423
+    SECONDARY> rs.slaveOk()
+    SECONDARY> show dbs
+
+https://docs.mongodb.com/manual/reference/mongo-shell/
+
+    > show dbs;
+    > use <db>
+    > db.<collection>.findOne()
+
 ## php connect
 连接本地数据库服务器，端口是默认的。
 
@@ -60,6 +72,14 @@ mongod 即可以启动daemon, 也可以查看连接状态
 all connect:
 
     $allConnects = $mongo->getConnections();
+
+## py connect
+
+    >>> import pymongo
+    >>> dbc=pymongo.MongoClient('mongodb://127.0.0.1:2223,127.0.0.1:2224/?replicaSet=rs0',serverSelectionTimeoutMS=3)
+    >>> dbc['dbName'].collection_names()
+    posts = dbc['dbName'].posts
+    posts.find_one()
 
 # db help
 

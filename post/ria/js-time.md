@@ -137,15 +137,6 @@ short:
 	d.setSeconds(d.getSeconds() + 10);
 
     /**
-    years	y
-    quarters	Q
-    months	M
-    weeks	w
-    days	d
-    hours	h
-    minutes	m
-    seconds	s
-    milliseconds	ms
     */
 	Date.prototype.unitWeight = {
         ms:1,
@@ -154,6 +145,7 @@ short:
         h:3600000,
         d:86400*1000,
         M:30*86400*1000,
+        Q:4*30*86400*1000,
         y:365*86400*1000,
     }
 	Date.prototype.add = function(n, unit='s'){

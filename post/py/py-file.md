@@ -173,6 +173,7 @@ change current workspace:  support abspath only
 
 	path = Path('/etc')
 	os.chdir(path)
+    print(os.path.dirname(os.path.abspath(__file__)))
 
 	os.getcwd()
 	os.path.abspath('.')

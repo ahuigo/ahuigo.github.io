@@ -24,7 +24,7 @@ A request URI is passed to the server as follows:
 - If the proxy_pass is with a URI, the part of a *normalized request URI*(literal location only) matching the location is replaced by a URI specified in the directive:
 
 	location /name/ {
-		proxy_pass http://127.0.0.1/remote/;//access "http://host/name/act" will be replaced with "http://host/remote/act"
+		proxy_pass http://127.0.0.1/remote/;    #access "http://host/name/act" will be replaced with "http://host/remote/act"
 	}
 
 - If proxy_pass is specified without a URI,
