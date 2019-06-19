@@ -229,12 +229,10 @@ Launchd脚本存储在以下位置：
 	   . /etc/profile.d/*.sh;
 
 
-
 .zshrc 与 .bashrc 在创建用户时，拷贝自/etc/skel
 
 	 /etc/skel/.bashrc
 	 /etc/skel/.zshrc
-
 
 ## *ctl
 许多*ctl 实际是对一些服务的单独封装. 比如: apachectl 就是对httpd的独立封装

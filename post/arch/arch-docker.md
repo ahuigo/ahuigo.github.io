@@ -82,7 +82,16 @@ You should try to remove unnecessary images before removing the image:
 
     docker rmi $(sudo docker images --filter "dangling=true" -q --no-trunc)
 
+Delete all images
+
+    docker rmi $(docker images -q)
+
 ## create image
+
+### rename image
+
+    docker tag server:latest myname/server:latest
+    docker tag 7813412341 myname/server:latest
 
 ### 通过容器副本创建image
 
@@ -92,6 +101,12 @@ You should try to remove unnecessary images before removing the image:
     -a:指定镜像作者
     e218edb10161：容器ID
     ahuigo/ubuntu:v2:指定要创建的目标镜像名
+
+### 通过容器导出tar
+
+    docker export <container> -o nginx.tar
+    docker load < nginx.tar
+    docker load --input fedora.tar
 
 ### Dockerfile 创建image
 参考： http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html
@@ -178,7 +193,7 @@ RUN 两种格式
     # $HOME 不会被shell 替换
     RUN ["echo", "$HOME"]
 
-开始build
+#### 开始build
 
     # 创建imageName=koa-demo
     $ docker image build -t koa-demo .
@@ -252,6 +267,9 @@ Docker Registry 分公开服务和私有服务。
     ## 发出 SIGTERM 信号（程序自行收尾），如果超时再发出 SIGKILL 信号
     docker stop <name>
     docker start <name>
+
+### dockert start exit container
+    docker start <container>
 
 ### rm container
 Stop all running containers: 
@@ -333,6 +351,7 @@ remove all images
 
 -p 指定端口映射、
 
+    # 5000 是容器端口(expose)，映射到本机端口5001(本机访问5001)
     docker run -d -p 5001:5000 training/webapp python app.py
 
     # 绑定的网络地址

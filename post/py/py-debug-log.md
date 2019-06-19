@@ -69,7 +69,7 @@ logger.setLevel()
     import logging
     logging.basicConfig(filename='example.log',level=logging.DEBUG)
     logging.debug('This message should go to the log file')
-    logging.info('So should this')
+    logging.info('So should this{}', 'arg1')
     logging.warning('And this, too')
 
     $ cat example.log
@@ -86,9 +86,8 @@ logging file path(default by current path):
 
 ## format message
 
-    logging.basicConfig(format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s', 
-        filename='a.log',
-        level=logging.DEBUG)
+    logging.basicConfig(format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s',  level=logging.DEBUG)
+    logging.basicConfig(format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s', filename='a.log', level=logging.DEBUG)
     INFO:a.py:1:So should this
 
 [For more logrecord-attributes ](https://docs.python.org/3.4/library/logging.html#logrecord-attributes):
@@ -105,8 +104,6 @@ logging file path(default by current path):
     %(pathname)s
     %(module)s
 
-'''))
-
 ### format date
 The default format for date/time display (shown above) is ISO8601.
 
@@ -117,7 +114,9 @@ define datefmt(see shell date):
     logging.basicConfig(format='%(asctime)s', datefmt='%Y/%m/%d %I:%M:%S %p')
     2010/12/12 11:46:36 PM
 
-```
+### level msg
+    logger.error("Error while finding A from DB. a : {} and b : {}", a,b);
+
 	logging.basicConfig(level=logging.INFO)
     logging.log(level, msg, *args, **kwargs)
     logging.fatal(msg, *args, **kwargs) CRITICAL
@@ -126,7 +125,6 @@ define datefmt(see shell date):
     logging.info(msg, *args, **kwargs)
     logging.debug(msg, *args, **kwargs)
     logger.info/debug/...
-```
 
 # Advanced logging
 ## loggging components:

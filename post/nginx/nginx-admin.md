@@ -162,8 +162,12 @@ You are almost done. The last step is to set all of the newly installed programs
 # reboot all service
 	cat rebootLemp.sh
 	sudo /etc/init.d/mysqld restart
-	sudo /etc/init.d/nginx restart #sudo service nginx restart
+	sudo /etc/init.d/nginx restart; #sudo service nginx restart
 	sudo service php-fpm restart
+
+## nginx -h
+
+    nginx -s  stop|quit|reopen|reload
 
 # install php
  brew install php54 --with-fpm  --with-homebrew-openssl --with-homebrew-curl

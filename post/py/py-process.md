@@ -116,7 +116,48 @@ daemonic processes are not allowed to have children!
 
 # Pool
 
+## close sleep child
+aemonProcess 可以通过pool.close/join清理sleeping children
+noDaemonProcess 不可以通过pool.close/join清理sleeping children
+
+    from multiprocessing import Pool
+    import multiprocessing
+    import multiprocessing.pool
+    import time
+
+    class NoDaemonProcess(multiprocessing.Process):
+        def _get_daemon(self):
+            return False
+        def _set_daemon(self, value):
+            pass
+        daemon = property(_get_daemon, _set_daemon)
+
+    class MyPool(multiprocessing.pool.Pool):
+        Process = NoDaemonProcess
+
+
+    def worker(i):
+        time.sleep(1)
+        print('child: sleep '+str(i))
+
+    def main():
+        p = Pool(4)
+        p.map(worker, [1,2,3,4,5,6])
+        #p.close(); p.join()
+        print('main: sleep 20 seconds')
+        time.sleep(20)
+
+
+    p = MyPool(5)
+    for _ in range(1):
+        p.apply_async(main)
+
+    p.close()
+    p.join()
+
 ##  NoDaemon
+pool 默认是Deamon 而不是Process默认的 noDaemon
+
     import multiprocessing
     import multiprocessing.pool
     class NoDaemonProcess(multiprocessing.Process):

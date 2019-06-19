@@ -23,10 +23,8 @@ private:
 # 查看集群节点信息
 kubectl get node
  
- 
 # 查看命名空间信息
 kubectl get namespace
- 
  
 # 查看副本信息
 kubectl get pod

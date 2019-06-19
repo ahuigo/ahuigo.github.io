@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2018-09-28 [py-debug-log](/b/py/py-debug-log) 
+- 2019-06-19 [lemp环境搭建](/b/nginx/nginx-admin) 
+- 2018-09-27 [ops-init](/b/c/ops-init) 
 - 2018-09-28 [Python 文件处理](/b/py/py-file) 
 - 2018-10-04 [nginx proxy](/b/nginx/nginx-proxy) 
 - 2018-09-27 [不要用mongodb](/b/db/mongo-) 
@@ -36,6 +39,3 @@
 - 2018-09-27 [english punctuation](/b/eng/eng-punctuation) 
 - 2018-09-27 [Postgre CRUD](/b/db/postgre-crud) 
 - 2014-05-10 [字符编码简介](/b/code/code-character) 
-- 2019-06-04 [linux 之进程](/b/c/ops-process) 
-- 2015-07-13 [ELF 文件格式](/b/c/as-elf) 
-- 2019-05-29 [Vim Edit](/b/vim/vim-edit) 
