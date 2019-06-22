@@ -4,10 +4,18 @@ date: 2018-09-28
 ---
 # Preface
 http://nvie.com/posts/iterators-vs-generators/
-## Iterable
-
 
 ## Iterable, 迭代器,
+
+### has(next)
+    >>> a = iter('hi')
+    >>> print next(a, None)
+    h
+    >>> print next(a, None)
+    i
+    >>> print next(a, None)
+    None
+
 ### iterable vs iterator
 区别:
 1. Iterable(能用for的都是): type(obj)->__iter__(), iter(obj)是否真的返回 Iterator, isinstance 其实判断不出来(按协议是应该考虑的).
@@ -133,15 +141,14 @@ Some produce finite sequences from infinite sequences:
 	red
 
 iterator support for-next: e.g. permutations
-```
->>> horses = [1, 2, 3, 4]
->>> races = itertools.permutations(horses)
->>> print(races)
->>> print(list(itertools.permutations(horses)))
-<itertools.permutations object at 0xb754f1dc>
-[(1, 2, 3, 4),
- (1, 2, 4, 3),.......
- ```
+
+    >>> horses = [1, 2, 3, 4]
+    >>> races = itertools.permutations(horses)
+    >>> print(races)
+    >>> print(list(itertools.permutations(horses)))
+    <itertools.permutations object at 0xb754f1dc>
+    [(1, 2, 3, 4),
+    (1, 2, 4, 3),.......
 
 ## generator, 生成器
  A generator is a special kind of iterator—the elegant kind: 使用yield 代替了复杂的iter(), next()

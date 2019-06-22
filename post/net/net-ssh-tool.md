@@ -220,6 +220,7 @@ From remote to local
 
 		ssh -i ~/.ssh/deploy-key -T git@github.com
 		ssh -i ~/.ssh/id_rsa  -T git@github.com
+		ssh -i ~/.ssh/id_rsa.pem  -T git@github.com
 
 ### port
 

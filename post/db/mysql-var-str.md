@@ -30,7 +30,7 @@ date: 2018-09-27
     SELECT CONCAT(14.3);
         -> '14.3'
     SELECT CONCAT(14.3, column1, ...);
-    SELECT CONCAT_WS(",", a, b,...);
+    SELECT CONCAT_WS(",", a, b,...);
         -> 'a,b,c'
 
 ## implode

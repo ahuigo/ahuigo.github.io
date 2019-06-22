@@ -156,13 +156,12 @@ Cache-Control: no-store, no-cache, must-revalidate
 Pragma: no-cache
 
 ## 5xx
-501
+### 501
 NGX_HTTP_NOT_IMPLEMENTED
 
 nginx的transfer-encoding现在只支持chunked,如果客户端随意设置这个值,会报501
  
 curl localhost:8070  -H 'Transfer-Encoding:1'
-
 
 <html>
 <head><title>501 Not Implemented</title></head>
@@ -171,7 +170,8 @@ curl localhost:8070  -H 'Transfer-Encoding:1'
 <hr><center>nginx/1.14.0</center>
 </body>
 </html>
-502
+
+### 502
 NGX_HTTP_BAD_GATEWAY
 
 修改nginx配置为
@@ -188,13 +188,14 @@ Content-Type: text/html
 Content-Length: 537
 Connection: keep-alive
 ETag: "5ad6113c-219"
-503
-NGX_HTTP_SERVICE_UNAVAILABLE
 
+
+### 503
+NGX_HTTP_SERVICE_UNAVAILABLE
 修改nginx配置,限速为每分钟10个请求
  
-limit_req_zone $binary_remote_addr zone=one:10m rate=10r/m;
-limit_req zone=one;
+    limit_req_zone $binary_remote_addr zone=one:10m rate=10r/m;
+    limit_req zone=one;
 连续发送两个请求，第二请求会报503
 curl localhost:8070/index.php -I
 

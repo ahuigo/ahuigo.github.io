@@ -128,6 +128,30 @@ Exception:
 
 ### 记录异常错误
 
+#### exception as string
+print(traceback.format_exc())
+
+    import traceback
+    from functools import wraps
+    def retry(howmany=2):
+        def tryIt(func):
+            @wraps(func)
+            def f(*args,**kw):
+                attempts = 0
+                while attempts < howmany:
+                    try:
+                        return func(*args, **kw)
+                    except:
+                        print(traceback.format_exc())
+                        attempts += 1
+            return f
+        return tryIt
+
+    @retry(5)
+    def download(i,j): 1/0
+
+#### logging exception
+
 	import logging
 
     try:

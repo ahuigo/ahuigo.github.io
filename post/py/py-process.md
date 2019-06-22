@@ -82,9 +82,9 @@ multiprocessing.Process(func) 则可以直接传func:
 	Process end.
 
 ## daemon
-daemon vs nodaemon(default)
+daemon vs nodaemon:(process 默认是noDaemon(children process), pool 默认是daemon)
 1. When a daemon process exits, it attempts to terminate all of its daemonic child processes.
-    2. You could call `os._exit` to let children process live
+    2. You could call `os._exit` to let children process live, `quit()`也会live (是sleep状态)
 1. When a nodaemon process exits, children process live
 
 默认是非daemon 的
@@ -111,49 +111,30 @@ daemonic processes are not allowed to have children!
     # daemon (no wait)
     p.daemon=True
     p.start()
-    print('start...')
+    print('start join...')
     p.join()
 
 # Pool
 
 ## close sleep child
-aemonProcess 可以通过pool.close/join清理sleeping children
-noDaemonProcess 不可以通过pool.close/join清理sleeping children
+daemonPool/noDaemonPool 都可以通过pool.close清理sleeping children
 
     from multiprocessing import Pool
-    import multiprocessing
-    import multiprocessing.pool
     import time
 
-    class NoDaemonProcess(multiprocessing.Process):
-        def _get_daemon(self):
-            return False
-        def _set_daemon(self, value):
-            pass
-        daemon = property(_get_daemon, _set_daemon)
-
-    class MyPool(multiprocessing.pool.Pool):
-        Process = NoDaemonProcess
-
-
-    def worker(i):
-        time.sleep(1)
-        print('child: sleep '+str(i))
+    def work(x):
+        print('quit1')
 
     def main():
         p = Pool(4)
-        p.map(worker, [1,2,3,4,5,6])
-        #p.close(); p.join()
+        p.map(work, [1,2,3,4,5,6])
+        #p.close(); #p.join()
         print('main: sleep 20 seconds')
         time.sleep(20)
 
+    main()
 
-    p = MyPool(5)
-    for _ in range(1):
-        p.apply_async(main)
 
-    p.close()
-    p.join()
 
 ##  NoDaemon
 pool 默认是Deamon 而不是Process默认的 noDaemon

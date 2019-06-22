@@ -9,6 +9,8 @@ private:
 ## execute sql file
 
     $ psql db -f sql.sql >/dev/null
+    $ psql db < sql.sql 
+    $ cat sql.sql | psql db 
 
 # pager
 vi ~/.psqlrc(pg shell)

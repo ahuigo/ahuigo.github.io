@@ -86,7 +86,7 @@ With solid literal strings
 	# matches only the "^/literal$" query, "^$" is literal char.
 	location = "^/literal$" { }
 
-With temporary literal strings(`^~` 可忽略)
+With temporary literal strings(`^~` 可忽略), 会继续匹配
 
 	# Note: it will continue search next localtion with and this match will be valid only if it there is *no other more characters matches*
 	# matches any query that start with "/literal$", note "$" is a literal char.

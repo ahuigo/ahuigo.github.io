@@ -3,6 +3,10 @@ title: Postgre CRUD
 date: 2018-09-27
 ---
 # Postgre CRUD
+## string or keyword
+    select 'string';
+    select "count"(1) from "table_name"
+
 ## insert 
     CREATE TABLE users (id INT, counters JSONB NOT NULL DEFAULT '{}');
     INSERT INTO users (id, counters) VALUES (1, '{"bar": 10}');
@@ -153,9 +157,8 @@ join group:
 
 ### string length
 
-### string to array
-
-    (CHAR_LENGTH(name) - CHAR_LENGTH(REPLACE(name, 'substring', ''))) / CHAR_LENGTH('substring')
+    CHAR_LENGTH(name)
+    REPLACE(name, 'substring', '')
 
 ## array
 

@@ -12,6 +12,7 @@ curl 转换器: https://curl.trillworks.com/
 
 	-F,--form
 	-D- Dump the header to the file listed, or stdout when - is passed, like this.
+        -i,--include  Include the HTTP-header in the output
 	-L --location
 	-o /dev/null Send the body to the file listed. Here, we discard the body so we only see the headers.
         -f, --fail

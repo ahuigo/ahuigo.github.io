@@ -69,7 +69,7 @@ table name 这些则不支持，应该使用:
 #### fetchall as dataframe
     DataFrame(cur.fetchall(), columns=['instrument', 'price', 'date'])
 
-## other:
+#### fetchone,fetchmany:
 
     cursor.fetchone()
     cursor.fetchmany([size=cursor.arraysize])

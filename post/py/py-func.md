@@ -32,6 +32,15 @@ var 默认:
 - outside-exist (global)
 - non-exists (local)
 
+nonlocal(python3):
+
+    def f1():
+        x = 5
+        def f2():
+                nonlocal x
+                x+=1
+        return f2
+
 强制global:
 
 	def func(s1,s2=None):

@@ -259,17 +259,16 @@ Docker Registry 分公开服务和私有服务。
     # 通过image 新建一个container 
     docker run --rm <image>
     docker rm <container>
+    docker rmi <image>
 
-    # 停止 & 启动
+
+### 停止 & 启动 container
+发出 SIGTERM 信号（程序自行收尾），如果超时再发出 SIGKILL 信号
+
+    docker start <container>
+    docker stop <container>
     ##  向容器的主进程发出 SIGKILL 信号
     docker container kill [containID]
-
-    ## 发出 SIGTERM 信号（程序自行收尾），如果超时再发出 SIGKILL 信号
-    docker stop <name>
-    docker start <name>
-
-### dockert start exit container
-    docker start <container>
 
 ### rm container
 Stop all running containers: 
@@ -442,9 +441,35 @@ http://www.opscoder.info/docker_monitor.html
     
 但是大量的容器连接, 就需要用 compose 一键启动\停止\rm 容器:
 
-    $ docker-compose up
-    $ docker-compose stop
-    $ docker-compose rm
+    $ docker-compose -h
+
+    # exec
+    exec               Execute a command in a running container
+
+    # config check
+    config             Validate and view the Compose file
+    images             List images
+    top                Display the running processes
+
+    # create container
+    up                  Create and start containers 
+    down                Stop and remove containers, networks, images, and volumes
+    kill               Kill containers
+    rm                 Remove stopped containers
+    ps                 List containers
+    logs               View output from containers
+        
+    # start services
+    start              Start services
+    stop               Stop services
+    restart            Restart services
+    scale              Set number of containers for a service
+
+    # create services
+    create             Create services
+    build              Build or rebuild services
+
+example
 
     # docker-compose -f docker-compose.yml up -d
     $ cat docker-compose.yml
