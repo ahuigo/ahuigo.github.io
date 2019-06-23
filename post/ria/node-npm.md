@@ -8,6 +8,14 @@ date: 2018-10-04
     npm list; # local
     npm dedupe -g; # Reduce duplication
 
+## repostitory
+
+    $ npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+或者改写`~/.npmrc`: https://docs.npmjs.com/files/npmrc
+
+    $ npm config set registry https://registry.npm.taobao.org
+
 ## run
 http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
 

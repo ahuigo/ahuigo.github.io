@@ -40,6 +40,8 @@ too many values to unpack:
     a,*args = 1,2,3,4
     a,_ = 1,2,3,4 # for go language
 
+### unpack dict
+
 ## list unique
 use set if the item is hash-able
 

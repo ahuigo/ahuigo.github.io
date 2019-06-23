@@ -1,4 +1,9 @@
 # AHUIGO 的笔记
+- 2019-06-23 [React Start](/b/ria/react-start) 
+- 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
+- 2019-06-23 [at happens when the listen backlog is full?](/b/net/net-tcp-backlog) 
+- 2019-06-23 [SSH SERVER](/b/net/net-ssh-server) 
+- 2018-09-28 [ssh proxy](/b/net/net-ssh-proxy) 
 - 2018-09-28 [py-func](/b/py/py-func) 
 - 2018-09-28 [py-debug](/b/py/py-debug) 
 - 2018-09-28 [py-async-iter](/b/py/py-async-iter) 
@@ -34,8 +39,3 @@
 - 2018-10-04 [Event](/b/ria/js-dom-event) 
 - 2018-03-03 [css 布局](/b/ria/js-css-layout) 
 - 2018-10-04 [vim-pattern](/b/vim/vim-pattern) 
-- 2019-06-04 [vim 之 map命令](/b/vim/vim-map) 
-- 2018-10-04 [vim-change](/b/vim/vim-change) 
-- 2019-02-09 [收集了下UI 动画特效](/b/ui/ui-animation) 
-- 2018-10-04 [command](/b/ria/node-npm) 
-- 2019-05-20 [SVG 语法](/b/ria/js-svg) 
