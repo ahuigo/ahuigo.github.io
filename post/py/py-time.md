@@ -87,6 +87,11 @@ Should you want pass arguments to the timeout function, you can give them in the
 
 	from datetime import datetime, timedelta
 
+## datetime to date
+
+    datetime.datetime.now().date()
+    datetime.date.today()
+
 ## range time
 
 	base = datetime.datetime.today()

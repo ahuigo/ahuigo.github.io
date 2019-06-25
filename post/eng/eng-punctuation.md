@@ -9,6 +9,11 @@ date: 2018-09-27
 https://zh.wikipedia.org/wiki/%E8%84%B1%E5%AD%97%E7%AC%A6
 
 	punctuation mark	name	example
+    {{  }} Mustache 胡子括号
+    { } Braces 或 curly brackets 大括号
+    [ ] square brackets 或 brackets 方括号
+    < > angled brackets 尖括号
+    ( ) parentheses 圆括号 ​​​​
     *   asterisk/star
 	^	caret 脱字符
 	~	tilde
@@ -29,8 +34,4 @@ https://zh.wikipedia.org/wiki/%E8%84%B1%E5%AD%97%E7%AC%A6
 	'	apostrophe
 	^	caret 脱字符
 	_	underscore
-	()	parenthesis or round brackets
-	[]	square brackets or brackets
-	{}	braces or curly brackets
-	<>	chevrons or angle brackets
 	...	ellipsis	ellipsis mark	One happy customer wrote: "This is the best program...that I have ever seen."

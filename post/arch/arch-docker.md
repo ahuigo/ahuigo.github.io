@@ -103,10 +103,33 @@ Delete all images
     ahuigo/ubuntu:v2:指定要创建的目标镜像名
 
 ### 通过容器导出tar
+image to image.tar
 
-    docker export <container> -o nginx.tar
+    docker save [OPTIONS] IMAGE [IMAGE...] -o image.tar
+        Save one or more images to a tar archive (streamed to STDOUT by default)
+        如果指的不是IMAGE 而是container, 那打包的是container 背后的image 
+
+image.tar to image
+
     docker load < nginx.tar
-    docker load --input fedora.tar
+    docker load -i fedora.tar
+        # Load an image from a tar archive or STDIN
+
+container to tar
+
+    docker export <container> -o container.tar
+        Export a container's filesystem as a tar archive
+
+containter.tar to image: Import the contents from a tarball to create a filesystem image
+
+    docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]
+        docker import container.tar 
+        docker import container.tar reop:v0.0.1
+
+import 类似 commit:
+docker import理解为将外部文件复制进来形成只有一层文件系统的镜像，而docker commit则是将当前的改动提交为一层文件系统，然后叠加到原有镜像之上。
+
+    $ docker commit e218edb10161 ahuigo/ubuntu:v2
 
 ### Dockerfile 创建image
 参考： http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html

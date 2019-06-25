@@ -134,8 +134,6 @@ daemonPool/noDaemonPool 都可以通过pool.close清理sleeping children
 
     main()
 
-
-
 ##  NoDaemon
 pool 默认是Deamon 而不是Process默认的 noDaemon
 
@@ -233,14 +231,20 @@ Note: 可以使用r.get() 获得返回(阻塞)
 
 由于Pool的默认大小是CPU的核数，如果你不幸拥有8核CPU，你要提交至少9个子进程才能看到上面的等待效果。
 
-## map
-map 并行处理10 个任务
+## map(阻塞)
+1. map 阻塞, apply_async 不阻塞
+2. map 不支持lambda
+3. map 直接返回所有的结果
+
+example
 
     import multiprocessing
     import math
     multiprocessing.Pool(processes=4).map(math.exp,range(1,11)) #type list
     multiprocessing.Pool(4).map(math.exp,range(1,11), chunksize=2) 一组chunksize 传入一个进程
     [2.718281828459045, 7.38905609893065, 20.085536923187668, ...]
+
+    results = Pool(4).map(math.exp, range(10))
 
 ### chunksize
 

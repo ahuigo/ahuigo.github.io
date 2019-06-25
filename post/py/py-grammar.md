@@ -8,7 +8,19 @@ date: 2018-03-01
 True
 ```
 
+
 # Condition & Loop
+
+## try finnaly
+
+    try:
+        1/0
+    except Exception as e:
+        print('first:',e)
+        raise e
+    finally:
+        print('second: finally')
+
 
 ## control
 

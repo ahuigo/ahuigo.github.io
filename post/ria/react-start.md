@@ -6,7 +6,7 @@ date: 2019-06-23
 React 运行时，需要引入运行时
 
 ## CDN runtime
-阮一峰的demo 中的例子
+阮一峰的demo 中的例子: React + ReactDom + babel
 
     <head>
         <meta charset="UTF-8" />
@@ -23,3 +23,16 @@ React 运行时，需要引入运行时
         );
         </script>
     </body>
+
+## create-react-app
+$ cnpm install -g create-react-app
+$ create-react-app my-app
+$ cd my-app/
+$ npm start
+
+可以看到创建的public/index.html 会调用`src/index.js`:
+
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    ReactDOM.render(<App />, document.getElementById('root'));
+

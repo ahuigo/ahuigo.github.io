@@ -223,7 +223,14 @@ or with collections.Counter:
 
     'one' in d.values()
 
-## dict to object
+## dict2object
+method1:
+
+    class Struct:
+        def __init__(self, **entries):
+            self.__dict__.update(entries)
+
+method2:
 
 	class Dict2Obj(object):
 		def __init__(self, initial_data):

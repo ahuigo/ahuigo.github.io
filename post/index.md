@@ -1,4 +1,9 @@
 # AHUIGO 的笔记
+- 2019-06-25 [python 字典](/b/py/py-var-dict) 
+- 2018-03-01 [Python 语法](/b/py/py-grammar) 
+- 2018-09-28 [py-async-iteratortools](/b/py/py-async-iteratortools) 
+- 2016-09-27 [golang-pkg](/b/go/2.go-pkg) 
+- 2019-06-24 [Postgre Geo](/b/db/postgre-geo) 
 - 2019-06-23 [React Start](/b/ria/react-start) 
 - 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
 - 2019-06-23 [at happens when the listen backlog is full?](/b/net/net-tcp-backlog) 
@@ -34,8 +39,3 @@
 - 2018-09-27 [学习 docker](/b/arch/arch-docker) 
 - 2019-06-11 [vim 使用之变量](/b/vim/vim-var) 
 - 2018-10-04 [vim-cmd](/b/vim/vim-cmd) 
-- 2018-10-04 [vim-options](/b/vim/vim-options) 
-- 2016-01-23 [Js dom 笔记](/b/ria/js-dom) 
-- 2018-10-04 [Event](/b/ria/js-dom-event) 
-- 2018-03-03 [css 布局](/b/ria/js-css-layout) 
-- 2018-10-04 [vim-pattern](/b/vim/vim-pattern) 

@@ -85,6 +85,15 @@ Return r length subsequences of elements from the input iterable.
 
 因为count()会创建一个无限的迭代器，所以上述代码会打印出自然数序列，根本停不下来，只能按Ctrl+C退出。
 
+## chunk
+
+    def iterchunk(it, n):
+        while True:
+            chunk = tuple(itertools.islice(it, n))
+            if not chunk:
+                return
+            yield chunk
+
 ## cycle
 cycle()会把传入的一个序列无限重复下去：
 

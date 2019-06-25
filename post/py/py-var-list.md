@@ -40,7 +40,43 @@ too many values to unpack:
     a,*args = 1,2,3,4
     a,_ = 1,2,3,4 # for go language
 
-### unpack dict
+## chunk
+
+    for i in range(0, len(arr), 3):
+        return arr[i:i+3]
+
+### iter chunk
+chunk to sub list
+
+    def grouper(n, iterable):
+        it = iter(iterable)
+        while True:
+            chunk = tuple(itertools.islice(it, n))
+            if not chunk:
+                return
+            yield chunk
+
+chunk to sub iter
+
+    def grouper_it(n, iterable):
+        it = iter(iterable)
+        while True:
+            chunk_it = itertools.islice(it, n)
+            try:
+                first_el = next(chunk_it)
+            except StopIteration:
+                return
+            yield itertools.chain((first_el,), chunk_it)
+
+注意不正常的用法为:
+
+    >>> g=grouper_it(3, [1,2,3,4,5])
+    >>> a=next(g)
+    >>> b=next(g)
+    >>> list(b)
+    [2, 3, 4]
+    >>> list(a)
+    [1, 5]
 
 ## list unique
 use set if the item is hash-able

@@ -34,7 +34,7 @@ Tunnelling an ssh connection through an ssh connection:
 then(本机的密码):
 
     me% ssh user2@localhost -p 2201
-    fact% ssh user2@192.168.25.100 -p 22
+    实际访问% ssh user2@192.168.25.100 -p 22
 
 #### http over ssh
 
