@@ -139,3 +139,7 @@ pdb，让程序以单步方式运行，可以随时查看运行状态。
 	pdb.set_trace() # 运行到这里会自动暂停，并启动pdb
 
 如果要比较爽地设置断点、单步执行，就需要一个支持调试功能的IDE。目前比较好的Python IDE有PyCharm.
+
+breakponint on frame:
+
+    pdb.Pdb().set_trace(frame)

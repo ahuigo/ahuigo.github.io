@@ -202,6 +202,16 @@ Note: ENV 同名变量会覆盖 ARG
     CMD ["php-fpm", "-D"]
     CMD     /usr/sbin/sshd -D
 
+实际启动的命令为ENTRYPOINT + CMD
+
+    CMD ["test.py"]
+    ENTRYPOINT ["python3"]
+
+覆盖ENTRY
+
+    --entrypoint="sh"
+    docker run --rm -it --entrypoint=sh image:0.0.2
+
 覆盖CMD:
 
     docker exec -it $CONTAINER_ID /bin/bash

@@ -36,6 +36,7 @@ alias code1='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/c
 # python
 alias py='ipython3'
 alias p='python'
+alias p2='python2'
 export PYTHONPATH=.
 
 # docker

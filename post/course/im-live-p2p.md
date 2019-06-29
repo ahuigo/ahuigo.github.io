@@ -15,7 +15,7 @@ title: 关于直播的P2P架构
 
 ## 树形P2P 分级架构
 架构简化图 来自于[h5p2p]：
-![](https://upload-images.jianshu.io/upload_images/80097-2dd8f9bdcc156f5d.png)
+![](/img/course/im-live-p2p-framework.png)
 
 这种架构的缺点是:
 1. 当播放人数变多，直播的节点层级也变得很大，导致它的延时非常大
@@ -24,7 +24,7 @@ title: 关于直播的P2P架构
 
 ## 网状P2P 架构
 这种架构解决了节点不稳定问题: 数据流一到播放节点，直接就开始在节点之间互相传输。(题图[h5p2p])
-![](https://upload-images.jianshu.io/upload_images/80097-de5aae8e44ce9a18.png)
+![](/img/im/live-p2p-framework-net.png)
 
 用 WebRTC 来做 P2P 的 Peer5 采用的是网状 P2P 网络。Streamroot 的解决方案也是网状结构。
 - 但是多层级延迟问题还是没有解决
@@ -37,7 +37,7 @@ title: 关于直播的P2P架构
 
 有人考虑到P2P+CDN 结合为PCDN. 参考又拍云的架构
 
-![](https://upload-images.jianshu.io/upload_images/80097-68c2a3e271a1867d.png)
+![](/img/im/live-p2p-pcdn.png)
 
 PCDN 的优化: 
 1. 增加大量的第三方设备数量: 提高上行带宽供应量，降低CDN节点压力，从而提高节点分享比例. 不存在P2P “只有播放者，才是供应者”的局限。

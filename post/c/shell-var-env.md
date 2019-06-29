@@ -12,6 +12,12 @@ date: 2018-10-08
 
 	((num++))
 
+## unset export
+    unset FOO
+        -f refer to shell functions
+        -n remove the export property from each NAME
+        -p display a list of all exported variables and functions
+
 ## readonly
 
 	x=6

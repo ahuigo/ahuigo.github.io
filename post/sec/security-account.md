@@ -88,14 +88,15 @@ Advantages are many -- e.g., the user could pass the token, once they've obtaine
 
 ## access token 有效期设计
 oAuth2 rfc 或许有讨论。
-初步想法是：用redis/mc 实现access token 过期
+初步想法两种：
+1. 用redis/mc 实现access token 过期
+1. token 自带时间戳+二次st(token) 验证(st key 泄露风险比较大)
 
 ## uid+st
 以前微博wap曾采用这种方式防止csrf：uid 是从cookie中取的真实的，st=hash(uid)是需要保密的(位于url中), 通过校验st防止CSRF
 
 ## gsid 
 weibo 身份认证，主要存储于cookie. 他不同于token, 它不仅用验证用户身份，还可解析用户数据
-
 
 # Authorization
 对于中小企业而言，构建自己的帐户系统成本可能过大：主要是安全问题, 存储成本.

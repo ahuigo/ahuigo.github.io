@@ -479,6 +479,18 @@ e.g.
 
     Foo.bar() // hello
 
+##### get all static method
+
+    class Foo{
+        static one() {}
+        two() {}
+        three() {}
+        static four() {}
+    }
+    const all = Object.getOwnPropertyNames(Foo)
+        .filter(prop => typeof Foo[prop] === "function");
+    console.log(all); // ["one", "four"]
+
 ##### instance call static method
 https://stackoverflow.com/questions/28627908/call-static-methods-from-regular-es6-class-methods
 

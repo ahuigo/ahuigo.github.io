@@ -8,19 +8,27 @@ Socket.IO 支持: ：WebSocket, Adobe Flash Socket, AJAX long polling, AJAX mult
 
 # websocket
 廖雪峰老师课程笔记: https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/0014727922914053479c966220f47da91991fa9c27ac3ea000
+代码: 
+1. js-lib/net/websoket.server.js client
+2. php: https://github.com/ahuigo/php-websockets
+
+## 性能优化实战：百万级WebSockets和Go语言
+https://segmentfault.com/a/1190000011162605
 
 ## 协议原理
 websocket 利用了HTTP协议来建立连接。
+HTML5 的WebSocket 真正的实现了双向全双工(bi-directional, full-duplex)通信，它是基于tcp 的socket 套接字. 它所使用的是WebSocket protocol.
 
 首先，WebSocket连接必须由浏览器发起，因为请求协议是一个标准的HTTP请求，格式如下：
 
-    GET ws://localhost:3000/ws/chat HTTP/1.1
+    GET ws://localhost:3000/chat HTTP/1.1
     Host: localhost
     Upgrade: websocket
     Connection: Upgrade
-    Origin: http://localhost:3000
-    Sec-WebSocket-Key: client-random-string
+	Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==
+	Sec-WebSocket-Protocol: chat, superchat
     Sec-WebSocket-Version: 13
+    Origin: http://localhost:3000
 
 该请求和普通的HTTP请求有几点不同：
 
@@ -39,8 +47,8 @@ websocket 利用了HTTP协议来建立连接。
 1. 该响应代码101表示本次连接的HTTP协议即将被更改，
 2. 更改后的协议就是`Upgrade: websocket`指定的WebSocket协议。
 
-
 ## server
+js-lib/net/websocket.server.js
 
     // 导入WebSocket模块:
     const WebSocket = require('ws');
@@ -52,12 +60,13 @@ websocket 利用了HTTP协议来建立连接。
     });
 
     //响应
-    wss.on('connection', function (ws, wsinfo) {
+    wss.on('connection', function (ws, upgradeReq) {
+        ws.upgradeReq = upgradeReq
         console.log(`[SERVER] connection()`);
-        console.log(wsinfo.url);
+        console.log(upgradeReq.url);
         url.parse(ws.upgradeReq.url, true);
-        for(let k in wsinfo){
-            //console.log(k,wsinfo[k])
+        for(let k in upgradeReq){
+            //console.log(k,upgradeReq[k])
         }
         ws.on('message', function (message) {
             console.log(`[SERVER] Received: ${message}`);
@@ -91,8 +100,9 @@ http 有session或者cookie，但是，在响应WebSocket请求时，如何识�
 
 WS请求也是标准的HTTP请求，所以，服务器也会把Cookie发送过来，这样，我们在用WebSocketServer处理WS请求时，就可以根据Cookie识别用户身份。
 
-    wss.on('connection', function (ws) {
+    wss.on('connection', function (ws, upgradeReq) {
         // ws.upgradeReq是一个request对象:
+        ws.upgradeReq = upgradeReq
         let user = parseUser(ws.upgradeReq);
         if (!user) {
             // Cookie不存在或无效，直接关闭WebSocket:
@@ -161,8 +171,8 @@ WS请求也是标准的HTTP请求，所以，服务器也会把Cookie发送过�
     //client
     var ws = new WebSocket('ws://localhost:3000/test/ahuigo?ahui=1');
     //server
-    wss.on('connection', function (ws, wsinfo) {
-        console.log(wsinfo['url']);
+    wss.on('connection', function (ws, upgradeReq) {
+        console.log(upgradeReq['url']);
 
 # ws+koa
                         |----N-->Koa

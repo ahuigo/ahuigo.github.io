@@ -5,32 +5,48 @@ private:
 ---
 # Js Module for vscocde
 
-jsconfig 用于go to dfition
+jsconfig 用于go to defnition
 
     $ cat jsconfig.json
     {
         "compilerOptions": {
-            "target": "es6"
+            "target": "es6",
+            // Relative to "baseUrl"
+            "paths": {
+                "@/*": ["./src/*"],
+                "@deck.gl/*": ["./node_modules/@deck.gl/*"],
+            }
         },
         "include": [
             "src/**/*"
         ]
     }
-        "exclude": [
-            "node_modules"
-        ],
+
+alias:
+
+// Relative to "baseUrl"
+    "paths": {
+      "@/*": ["./src/*"],
+    }
+
+可忽略
+
+    "exclude": [
+        "node_modules"
+    ],
 
 要使IntelliSense使用webpack别名，您需要使用glob模式指定paths键。
 例如，对于别名'ClientApp'(或@)：
 
     {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-        "ClientApp/*": ["./ClientApp/*"]
+        "compilerOptions": {
+            "baseUrl": ".",
+            "paths": {
+                "ClientApp/*": ["./ClientApp/*"]
+            }
         }
     }
-    }
+
     然后使用别名
 
     import Something from 'ClientApp/foo'

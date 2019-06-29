@@ -318,48 +318,6 @@ SSEs 是可以跨域的，server 端应该判断响应的Origin:
 	  ...
 	}, false);
 
-# WebSocket
-HTML5 的WebSocket 真正的实现了双向全双工(bi-directional, full-duplex)通信，它是基于tcp 的socket 套接字. 它所使用的是WebSocket protocol.
-
-WebSockets are a bi-directional, full-duplex, persistent connection from a web browser to a server. Once a WebSocket connection is established the connection stays open until the client or server decides to close this connection. With this open connection, the client or server can send a message at any given time to the other. This makes web programming entirely event driven, not (just) user initiated. It is stateful. As well, at this time, a single running server application is aware of all connections, allowing you to communicate with any number of open connections at any given time.
-
-
-## Use WebSocket
-1. run WebSocket server
-2. Once the server is running, your client can connect to it to push messages. The client establishes a WebSocket connection through a process known as the WebSocket handshake.
-This process starts with the client sending a regular HTTP request to the server.
-
-An Upgrade header is included in this request that informs the server that the client wishes to establish a WebSocket connection.
-
-	GET /chat HTTP/1.1
-	Host: server.example.com
-	Upgrade: websocket
-	Connection: Upgrade
-	Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==
-	Sec-WebSocket-Protocol: chat, superchat
-	Sec-WebSocket-Version: 13
-	Origin: http://example.com
-
-可以通过origin 判断 合法的请求, Response:
-
-	HTTP/1.1 101 Switching Protocols
-	Upgrade: websocket
-	Connection: Upgrade
-	Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=
-	Sec-WebSocket-Protocol: chat
-
-Refer to:
-http://www.phpbuilder.com/articles/application-architecture/optimization/creating-real-time-applications-with-php-and-websockets.html
-
-## WebSocket Demo
-websocket demo for php:
-
-https://github.com/ahuigo/php-websockets
-
-## WebSocket Server Library
-服务端Php/Python/Ruby 等有丰富的WebSocket 库：
-	http://nginx.com/blog/realtime-applications-nginx/
-
 # copy & paste
 
 ## copy

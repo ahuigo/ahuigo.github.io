@@ -42,6 +42,7 @@ connect mongon via shell
 https://docs.mongodb.com/manual/reference/mongo-shell/
 
     > show dbs;
+    > show collections;
     > use <db>
     > db.<collection>.findOne()
 
@@ -80,6 +81,12 @@ all connect:
     >>> dbc['dbName'].collection_names()
     posts = dbc['dbName'].posts
     posts.find_one()
+    posts.find(skip=100,limit=10)
+
+https://api.mongodb.com/python/current/api/pymongo/collection.html
+
+    db[db_name].create_collection(table_name);
+    db[db_name][table_name].findOne();
 
 # db help
 

@@ -6,6 +6,23 @@ date: 2018-09-28
 - logging
 https://docs.python.org/3.4/howto/logging.html
 
+## example
+
+    import logging
+    import sys
+    formatmsg='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s'
+    logging.basicConfig(format=formatmsg, filename='mvp.log', level=logging.DEBUG)
+
+    # logger and stramHanler
+    logger = logging.getLogger('mvp')
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.DEBUG)
+    ch.setFormatter(logging.Formatter(formatmsg))
+    logger.addHandler(ch)
+
+    logger.debug('error message')
+
+
 ## autolog: excepthook
 
     import sys
@@ -47,7 +64,7 @@ logging，和assert比，logging不会抛出错误，而是可以输出到文件
 1. `debug，info，warning，error, fatal/critical`等几个级别重要性依次增加，
 1. default level: *WARNING*
 
-除了根logging.root, 不同的应用/子应用可以设定自己的logger, 进而分别设定不同filename
+除了根logging.root, 不同的应用/子应用可以设定自己的logger, 进而分别设定不同filename
 
     >>> logging.root
     <RootLogger root (WARNING)>
@@ -87,7 +104,7 @@ logging file path(default by current path):
 ## format message
 
     logging.basicConfig(format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s',  level=logging.DEBUG)
-    logging.basicConfig(format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s', filename='a.log', level=logging.DEBUG)
+    logging.basicConfig(format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s', filename='mvp.log', level=logging.DEBUG)
     INFO:a.py:1:So should this
 
 [For more logrecord-attributes ](https://docs.python.org/3.4/library/logging.html#logrecord-attributes):
