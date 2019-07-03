@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2018-10-10 [mac 工具集](/b/mac/mac-tool) 
+- 2018-09-27 [Postgre 安装\配置\管理](/b/db/postgre-admin) 
+- 2018-09-27 [Postgre User and Authentication](/b/db/postgre-admin-user) 
 - 2019-06-29 [安全的帐号设计](/b/sec/security-account) 
 - 2019-06-25 [Node argv](/b/ria/node-argv) 
 - 2018-10-04 [Socket.io](/b/ria/js-websocket) 
@@ -6,7 +9,7 @@
 - 2018-09-28 [py-debug-pdb](/b/py/py-debug-pdb) 
 - 2018-08-23 [关于直播的P2P架构](/b/course/im-live-p2p) 
 - 2018-10-08 [shell 环境变量](/b/c/shell-var-env) 
-- 2019-06-25 [python 字典](/b/py/py-var-dict) 
+- 2019-07-03 [python 字典](/b/py/py-var-dict) 
 - 2018-03-01 [Python 语法](/b/py/py-grammar) 
 - 2018-09-28 [py-async-iteratortools](/b/py/py-async-iteratortools) 
 - 2016-09-27 [golang-pkg](/b/go/2.go-pkg) 
@@ -36,6 +39,3 @@
 - 2018-10-04 [js-time](/b/ria/js-time) 
 - 2018-04-02 [python 时间函数的用法笔记](/b/py/py-time) 
 - 2019-06-17 [Git 命令大全](/b/git/git-) 
-- 2019-06-17 [awk 简介](/b/c/ops-awk) 
-- 2018-01-03 [vscode 笔记](/b/vsc/vsc-) 
-- 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 

@@ -240,6 +240,16 @@ flex 能有效传递height percent(需要`flex:1`填满)
     .d{background:green;height:100%;margin:10px;}    better
 
 # align
+## circle center
+    div{
+        background: red;
+        width:200px;
+        height:200px;
+        text-align:center;
+        line-height: 200px;
+        border-radius:50%
+    }
+
 ## flex container align
 
     //parent

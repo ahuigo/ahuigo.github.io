@@ -140,7 +140,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
 
 ### 解构传值dict
 
-    function buildDate({year, month, day, hour=0, minute=0, second=0}) {
+    function buildDate({year, month, day, hour=0, minute=0, second=0}={}) {
         return new Date(year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second);
     }
     buildDate({ year: 2017, month: 1, day: 1 });

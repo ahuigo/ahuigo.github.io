@@ -3,6 +3,10 @@ title: React Redux
 date: 2019-05-21
 private:
 ---
+# 导读
+React 组件间通讯
+http://taobaofed.org/blog/2016/11/17/react-components-communication/
+
 # 父子组件通信
 react 本身是单向数据流，不过
 子组件可以通过this.props.parentHandle 反向改变父组件 state

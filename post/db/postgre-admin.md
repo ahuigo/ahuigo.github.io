@@ -3,12 +3,10 @@ title: Postgre 安装\配置\管理
 date: 2018-09-27
 ---
 # Postgre 安装\配置\管理
-```bash
-rpm -Uvh https://yum.postgresql.org/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm
-yum install postgresql10-server postgresql10 -y
-# Create a new PostgreSQL database cluster:
-/usr/pgsql-10/bin/postgresql-10-setup initdb
-```
+    rpm -Uvh https://yum.postgresql.org/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm
+    yum install postgresql10-server postgresql10 -y
+    # Create a new PostgreSQL database cluster:
+    /usr/pgsql-10/bin/postgresql-10-setup initdb
 
 ## output formate
 
@@ -51,6 +49,10 @@ vim /var/lib/pgsql/data/pg_hba.conf
     `listen_addresses='localhost'`
     'localhost,192.168.1.66'
     'port=5432'
+
+show config 
+
+    psql -U postgres -c 'SHOW config_file'
 
 #### via args
 /lib/systemd/system/postgresql.service

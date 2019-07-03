@@ -223,6 +223,19 @@ or with collections.Counter:
 
     'one' in d.values()
 
+## dict+object 
+    class AttrDict(dict):
+        def __init__(self, *args, **kwargs):
+            super(AttrDict, self).__init__(*args, **kwargs)
+            self.__dict__ = self
+    obj = AttrDict(**{'a':1,'b':2}) 
+
+或者
+
+    class AttributeDict(dict): 
+        __getattr__ = dict.__getitem__
+        __setattr__ = dict.__setitem__
+
 ## dict2object
 method1:
 

@@ -12,6 +12,7 @@ auth method:
 1. Peer : use kernel os system user name, only supported on local connections.
 2. indent:  client's operating system user name, only supported on TCP/IP connections,  *for a local (non-TCP/IP) connection, peer is used instead*
 3. password: 独立的帐号密码
+3. trust:
 
 ## password method(md5)
 password method 使用独立的帐号，使用ROLE管理
@@ -30,6 +31,7 @@ Non interactive password:
 2. PGPASSWORD=pass1234 psql -U MyUsername myDatabaseName
 3. URI: https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
 
+pg:
 
     psql postgresql://
     psql postgresql://localhost
@@ -72,6 +74,8 @@ non interactive:
     CREATE ROLE temporary_users;
     GRANT temporary_users TO demo_role;
     GRANT temporary_users TO test_user;
+    > \z myTable
+    > \du
 
        Role name    |                   Attributes                   |     Member of 
     ----------------------------------------------------------------------------------
@@ -99,7 +103,6 @@ Let a user the "inherit" group property with no need "set role" command:
 
     ALTER TABLE hello OWNER TO demo_role;
 
-
 ## delete
 DROP ROLE role_name;
 DROP ROLE IF EXISTS role_name;
@@ -112,6 +115,8 @@ DROP ROLE IF EXISTS role_name;
 ## query roles
 
     \du
+    \z myTable
+    \l
 
 ### default user
 如果使用test1 帐号登录，psql 会默认以test1 连接数据库test1

@@ -18,7 +18,7 @@ http://nvie.com/posts/iterators-vs-generators/
 
 ### iterable vs iterator
 区别:
-1. Iterable(能用for的都是): type(obj)->__iter__(), iter(obj)是否真的返回 Iterator, isinstance 其实判断不出来(按协议是应该考虑的).
+1. Iterable(能用for的都是): type(obj)->__iter__(), iter(obj)是否真的返回 Iterator, isinstance 其实判断不出来(按协议是应该考虑的). 比如range(3)
 2. Iterator(能用next的都是): type(obj)->__iter__(), type(obj)->__next__() 同时定义,
 
 An *iterable* is any object, not necessarily a data structure, that can *return an iterator via iter*:
@@ -49,7 +49,7 @@ when you use a for loop, the following is happened in background.
 ```
 
 ### Iterable 有哪些
-1. str-dict 都是Iterable(同时有__iter__)
+1. str/dict/range 都是Iterable(因为有__iter__) 
 2. Iterable 可以生成Iterator: Iterator = iter(Iterable)
 
 > *Often*, for pragmatic reasons, iterable classes will implement both `__iter__() and __next__()` in the same class, and have `__iter__()` return self, which makes the class both *an iterable and its own iterator*. It is perfectly fine to return a different object as the iterator, though. While `dict, str...`  only has `__iter__()`
