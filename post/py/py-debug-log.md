@@ -21,6 +21,7 @@ https://docs.python.org/3.4/howto/logging.html
     logger.addHandler(ch)
 
     logger.debug('error message')
+    logger.debug({'err':'error message'})
 
 
 ## autolog: excepthook

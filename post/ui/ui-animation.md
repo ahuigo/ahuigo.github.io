@@ -32,9 +32,10 @@ http://designmodo.github.io/Flat-UI/
 
 # icon
 http://compute.vision/nouns/index.html
-https://www.flaticon.com/free-icon/weibo_408769#term=weibo&page=1&position=5
 svg icon
 https://icons8.com/icons/set/check
+推荐一个icon 资源站点:
+https://www.flaticon.com/free-icon/weibo_408769#term=weibo&page=1&position=5
 
 # pic
 一个收集无版权插图的网站，提供 SVG / PNG 格式下载，并且允许更改颜色

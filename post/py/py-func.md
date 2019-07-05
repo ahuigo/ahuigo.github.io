@@ -173,6 +173,11 @@ would result in an `__annotations__` mapping of
 	import functools
 	nday = functools.partial(func,param1, params2...)
 
+    from functools import partial 
+    from collection import defaultdict
+    arr = defaultdict(partial(defaultdict, int))
+    arr['i']['j']
+
 ## static var
 
 	def foo():

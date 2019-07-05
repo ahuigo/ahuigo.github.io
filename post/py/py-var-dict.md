@@ -179,6 +179,13 @@ OrderedDict可以实现一个FIFO（先进先出）的dict，当容量超出限�
     KeyError: 'k'
     >>> defaultdict(lambda:1)['k']
 
+### 二维
+
+    from functools import partial 
+    from collection import defaultdict
+    arr = defaultdict(partial(defaultdict, int))
+    arr['i']['j']
+
 ### Counting with defaultdict
 
     d = defaultdict(int)

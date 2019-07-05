@@ -189,7 +189,7 @@ File 基于blob
 
     file = new File(['str'],'a.png', {type : 'image/png'});
     file = new File(['str'], 'a.txt' );
-    var file = new File([myBlob], "name");
+    file = new File([myBlob], "name");
 
 
 ## FileReader
@@ -197,6 +197,8 @@ File 基于blob
     reader = new FileReader()
     reader.onload = function(evt) {
         xhr.send(evt.target.result);
+        console.log(reader.result) //readerAsText
+        console.log(new Uint8Array(reader.result)); // readAsArrayBuffer
     };
 
     reader.readAsBinaryString(file);
