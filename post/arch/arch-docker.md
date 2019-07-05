@@ -176,6 +176,7 @@ docker `--build-arg <varname>=<value>`
     ARG <name>[=<default value>]
     ARG package_path=/pkg/
     WORKDIR $package_path
+    COPY ./nginx.conf ${package_path}/nginx.conf
     ENV ENV_MODE=staging \
         TEST=debug
 
@@ -294,6 +295,10 @@ Docker Registry 分公开服务和私有服务。
     docker rm <container>
     docker rmi <image>
 
+### exited?
+docker 一运行nginx 就退出。因为nginx 是运行的`nginx -g "daemon on;"`， 应该用 `nginx -g "daemon off;"` 或者
+
+    docker run -d slim-nginx
 
 ### 停止 & 启动 container
 发出 SIGTERM 信号（程序自行收尾），如果超时再发出 SIGKILL 信号
@@ -352,7 +357,7 @@ remove all images
 
 ### 目录映射(volume)：
 
-    # -v 用于映射将宿主机目录映射到容器的目录
+    # -v 用于映射将宿主机目录映射到容器的目录或文件
     $ docker run -p 80:80 --name mynginx -v $HOME/www:/www -v $HOME/conf/nginx.conf:/etc/nginx/nginx.conf -d nginx  
     $ docker inspect dockerid
 
