@@ -85,6 +85,13 @@ or:
     "unset proxy
     git config [--global] unset https.proxy
 
+socks5 socks5h proxy
+
+    git config --global http.proxy socks5h://127.0.0.1:1080
+    git config --global http.proxy socks5://127.0.0.1:1080
+    ALL_PROXY=socks5://127.0.0.1:8888 git clone https://github.com/some/one.git
+
+
 ### 多用户下的SSH
 参阅：[Multiple SSH Keys](https://gist.github.com/jexchan/2351996)
 1. https://developer.github.com/guides/using-ssh-agent-forwarding/#your-key-must-be-available-to-ssh-agent
@@ -197,6 +204,7 @@ If you want to also remove *directories*, run
 ## modify messages
 
 	git commit --amend -m 'new messages'
+	git commit --amend -m 'new messages' --author 'ahuigo'
 
 ## git revert
 恢复到HEAD 之前的提交:

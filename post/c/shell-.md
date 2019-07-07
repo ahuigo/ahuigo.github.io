@@ -350,14 +350,16 @@ Output:
 
 1. /etc/profile
 2. ~/.bash_profile、~/.bash_login和~/.profile三个文件中的一个
-3. 退出登录时会执行~/.bash_logout脚本
+3. 一般~/.bash_profile 会包含 ~/.bashrc
+4. 退出登录时会执行~/.bash_logout脚本
 
 ## 以交互非登录Shell启动
 图形界面下开一个终端窗口，或者在登录Shell提示符下再输入bash命令
 
 1. ~/.bashrc
+2. /etc/bashrc
 
-一般~/.bash_profile 会包含 ~/.bashrc
+zshrc 也类似,见ops-init.md
 
 ## 非交互Shell
 为执行脚本而fork出来的子Shell是非交互Shell

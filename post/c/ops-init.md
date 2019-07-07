@@ -212,7 +212,7 @@ Launchd脚本存储在以下位置：
 	~/.bash_login
 	~/.profile
 
-# .bashrc .zshrc
+# non-login(.bashrc .zshrc)
 这两个文件是non-login 就会读：
 
 	/etc/zshrc ~/.zshrc

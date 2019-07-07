@@ -3,10 +3,15 @@ title: FUNCTION
 date: 2018-09-27
 ---
 # shell
+
+## connect shell
+默认同时支持 unix domain socket + ip/port net socket
+
     psql DBNAME USERNAME
     psql -U user_name -d database_name -h 127.0.0.1 -W
     psql -U user_name database_name -h 127.0.0.1 -W
         \W prompt enter password(可省略)
+    psql postgresql://t1:1@47.96.1.162:6379/template1
 
 Non interactive password:
 
@@ -15,6 +20,7 @@ Non interactive password:
 2. PGPASSWORD=pass1234 psql -U MyUsername myDatabaseName
 3. URI: https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
 
+e.g.
 
     psql postgresql://
     psql postgresql://localhost
@@ -42,20 +48,54 @@ Non interactive password:
     Now check by connecting to database :
         psql -h host -U someuser somedb
 
+## exec sql
+
+    $ psql -h 127.0.0.1 -p 5930 -c "select 1"
+    $ psql -h 127.0.0.1 -p 5930 -f a.sql
+
+### exec sql file
+    psql -f exec.sql
+    pg_dump dbname > outfile
+
+    psql [dbname] < exec.sql
+    cat exec.sql | psql [dbname] 
+
 
 # import export
+## pg_dump
+### backup
 
-## export sql
+    # only schema
+    pg_dump -U [db_username] -s  -f [filename.sql] [db_name]
+    # data+schema
+    pg_dump                      -f [filename.sql] [db_name]
+
+    -F format
+        -Fc custom, Output a custom-format archive suitable for input
+        -Fp plain 默认
+
+### restore
+custom-format archive:
+
+    # schema
+    pg_restore -s -d [db_name] [filename.sql]
+    # data
+    pg_restore -a -d [db_name] [filename.sql]
+    # schema and data
+    pg_restore -d [db_name] [filename.sql]
+
+## copy db/table/result
+### export db
 
     $ pg_dump -U username dbname > dbexport.pgsql
     $ psql -U username dbname < dbexport.pgsql
 
-table:
+### export table:
 
     \copy my_table to 'my_table.csv' csv;
     \copy my_table FROM 'my_table.csv' DELIMITER ',' CSV;
 
-table with bash:
+### export table with bash:
 
     $ pg_dump \
     -h localhost \
@@ -70,7 +110,7 @@ table with bash:
     database-name \
     -f table.sql
 
-## export csv
+### export csv
 
     \COPY products_273 TO '/tmp/products_199.csv' WITH (FORMAT CSV, HEADER);
 
@@ -85,10 +125,15 @@ relative path
 
     \copy (select * from my_table limit 10) TO './a.csv' CSV HEADER
 
+# help
+`\h CREATE ROLE`
+`\? \l`
+
 # crud
 ## database
 
     $ createdb test1
+    > CREATE DATABASE ahuigo;
     > CREATE DATABASE yuzhi100 OWNER myuser;
     > drop database yunzhi100
 
@@ -102,6 +147,15 @@ relative path
 ## table
 
 ### show table
+describe table and sequence:
+
+    \d
+    \dt # with table_squence
+    \dt [<table>]
+
+show create table:
+
+    pg_dump -st tablename dbname
 
 ### create
 
@@ -113,16 +167,6 @@ relative path
         location varchar(25) check (location in ('north', 'south', 'west', 'east',  'northwest')),
         install_date date
     );
-
-describe table and sequence:
-
-    \d
-    \dt # with table_squence
-    \dt [<table>]
-
-show create table:
-
-    pg_dump -st tablename dbname
 
 ### drop
 
