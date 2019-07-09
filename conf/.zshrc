@@ -77,6 +77,8 @@ alias pg-stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.
 
 # private
 [ -f ~/.profile ] && source ~/.profile
+[ -d /usr/local/Cellar/go/1.11.4 ] && export GOROOT=/usr/local/Cellar/go/1.11.4/libexec
+
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
