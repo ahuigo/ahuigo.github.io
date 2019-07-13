@@ -119,7 +119,7 @@ repeat(alloc)
 ## pad+repeat
 
     ('0'+6).slice(-2)
-    '6'.padStart(3)             //'006'
+    '6'.padStart(3,'0')             //'006'
     'Vue'.padStart(10)          //'       Vue'
     'Vue'.padStart(10, '_*')    //'_*_*_*_Vue'
     'Vue'.padEnd(10, '_*')      //'Vue_*_*_*_'
