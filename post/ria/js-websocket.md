@@ -1,9 +1,9 @@
 ---
-title: Socket.io
+title: js 的websocket 笔记
 date: 2018-10-04
 ---
-# Socket.io
-ws 和 wss 均为 WebSocket 协议的 schema，一个是非安全的，一个是安全的tcp + ws as ws，tcp + tls + ws as wss 
+# ws/wss与Socket.io
+ws 和 wss 均为 WebSocket 协议的 schema，一个是非安全的tcp + ws as ws， 一个是安全的tcp + tls + ws as wss 
 Socket.IO 支持: ：WebSocket, Adobe Flash Socket, AJAX long polling, AJAX multipart streaming, Forever Iframe, JSONP Polling
 
 # websocket
