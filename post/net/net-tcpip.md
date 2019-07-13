@@ -644,6 +644,11 @@ the sender blocks or gets `EAGAIN/EWOULDBLOCK`(non-block), depending on blocking
 This is just regular [TCP congestion control](https://en.wikipedia.org/wiki/TCP_congestion_control).
 https://stackoverflow.com/questions/12931528/c-socket-programming-max-size-of-tcp-ip-socket-buffer
 
+Note:
+一个socket有两个滑动窗口(一个sendbuf、一个recvbuf)，两个窗口的大小是通过setsockopt函数设置
+1. 发送方的滑动窗口维持着当前发送的帧序号，已发出去帧的计时器，接收方当前的窗口大小(由接收方ACK通知)
+2. 接收方滑动窗口保存的有已接收的帧信息、期待的下一帧的帧号等
+ 
 # TCP/IP 的状态转移图
 第一幅图是根据W.Richard Stevens的《TCP/IP详解》一书的TCP状态转换图，第二幅图是@neo 所注的注解，出处[coolshell](http://coolshell.cn/articles/1484.html)
 

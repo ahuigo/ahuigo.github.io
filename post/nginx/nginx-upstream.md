@@ -1,8 +1,8 @@
 ---
-title: nginx upstream, 负载均衡
+title: nginx 负载均衡
 date: 2018-10-04
 ---
-# nginx upstream, 负载均衡
+# nginx upstream
 定义一组服务器， UNIX/TCP 可以 混合使用
 
 	语法:	upstream name { ... }
