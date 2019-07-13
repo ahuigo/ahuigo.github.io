@@ -42,7 +42,7 @@ def debug_info():
     try:
         a=1/0
     except Exception as e:
-        print(e)
+        print(e) # only e.__str__
         import traceback
         tb = traceback.format_exc()
 

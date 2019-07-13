@@ -91,6 +91,8 @@ Then you can clear it like so:
 	.valueOf()
 	.getTime()	返回 1970 年 1 月 1 日至今的毫秒数。
 	Date.parse("Jul 8, 2005 0:0:32"); //返回指定时间的毫秒数
+        Date.parse('1970-01-01 08:01:00') === 60*1000
+        Date.parse("1970"); //返回指定时间的毫秒数
 	.UTC()	根据世界时返回 1970 年 1 月 1 日 到指定日期的毫秒数。
 
 	//unixstimestamp in seconds
@@ -99,45 +101,31 @@ Then you can clear it like so:
 
 short:
 
-	Date.prototype.formatMMDDYYYY = function(){
-		return (this.getMonth() + 1) +
-				"/" +  this.getDate() +
-				"/" +  this.getFullYear();
-	}
-	Date.prototype.format = function(d){
-		var d = this;
-        let month = (d.getMonth()+1+'').padStart(2, '0')
-        let date = ('0'+d.getDate()).slice(-2)
-		return d.getFullYear()+'-' + month+'-' + d.getDate()+' ' + d.getHours()+':' + d.getMinutes()+':' + d.getSeconds()+''
+	Date.prototype.format = function(format){
+		let d = this;
+        let pairs = {
+            '%Y': d.getFullYear(),
+            '%m': (d.getMonth()+1+'').padStart(2, '0'),
+            '%d': ('0'+d.getDate()).slice(-2),
+            '%H': d.getHours(),
+            '%I': d.getMinutes(),
+            '%S': d.getSeconds(),
+            '%s': d.getTime() / 1000 | 0,
+        }
+        if(!format){
+            format = '%Y-%m-%d %H:%I:%S';
+        }
+        return format.replace(/%\w/g, (key)=>{
+            return pairs[key]?pairs[key]:key
+        })
 	}
     (new Date()).format()
 
-## compare
+
+## compare  delta
 
 	d1 > d2
 
-## set
-
-	//day
-	.setDate()	设置 Date 对象中月的某一天 (1 ~ 31)。
-
-	//Month
-	.setMonth()	设置 Date 对象中月份 (0 ~ 11)。
-
-	//Year
-	.setFullYear()	设置 Date 对象中的年份（四位数字）。 setYear()	使用 setFullYear() 方法代替。
-
-	//Hours & Minutes & Seconds
-	.setHours()	设置 Date 对象中的小时 (0 ~ 23)。
-	.setMinutes()	设置 Date 对象中的分钟 (0 ~ 59)。
-	.setSeconds()	设置 Date 对象中的秒钟 (0 ~ 59)。
-	.setMilliseconds()	设置 Date 对象中的毫秒 (0 ~ 999)。
-
-	//add time
-	d.setSeconds(d.getSeconds() + 10);
-
-    /**
-    */
 	Date.prototype.unitWeight = {
         ms:1,
         s:1000,
@@ -158,19 +146,76 @@ short:
 		return (this.getTime() - d.getTime())/weight;
 	}
 
+
+## set date time
+
+    //date & datetime(不建议) 
+     new Date(2011,10); // 实际是本地2011-11-01 
+     new Date(2011,10,1); // 实际是2011-11-01 
+     new Date(2011,10,0); // 实际是2011-10-31 
+     new Date(2011,10,30, 13,10,11);
+
+	//day
+	.setDate()	设置 Date 对象中月的某一天 (1 ~ 31)。
+
+	//Month
+	.setMonth()	设置 Date 对象中月份 (0 ~ 11)。
+
+	//Year
+	.setFullYear()	设置 Date 对象中的年份（四位数字）。 setYear()	使用 setFullYear() 方法代替。
+
+	//Hours & Minutes & Seconds
+	.setHours()	设置 Date 对象中的小时 (0 ~ 23)。
+	.setMinutes()	设置 Date 对象中的分钟 (0 ~ 59)。
+	.setSeconds()	设置 Date 对象中的秒钟 (0 ~ 59)。
+	.setMilliseconds()	设置 Date 对象中的毫秒 (0 ~ 999)。
+
+	//add time
+	d.setSeconds(d.getSeconds() + 10);
+
 	// unix timestamp
 	.setTime(millisec)	以毫秒设置 Date 对象。d.setTime(77771564221)
 	new Date(millisec)	以毫秒设置 Date 对象. new Date(77771564221)
 
-str to time
+    //zone offset
+    new Date().getTimezoneOffset() == -480
 
+## str to time
+[ISO8601](https://en.wikipedia.org/wiki/ISO_8601):
+
+    new Date("2016-01-01 11:13:00Z");      +0区
+    new Date("2016-01-01T11:13:00Z");      +0区
+	new Date("2016-01-01 11:13:00+08");     +8区
+	new Date("2016-01-01 11:13:00+0800"); +8区
+	new Date("2016-01-01T11:13:00+08:00"); +8区
+	new Date("2016-01-01T11:13:00.333+08:00"); +8区
+
+	new Date("2016-01-01");                 +0区(默认)
+	new Date("2016-01-01 11:13:00");        +8区(默认)
 	new Date("October 13, 1975 11:13:00");
-	new Date("2016-01-01 11:13:00");
-	new Date("2016-01-01 11:13:00");
-	new Date("2016-06-03") === new Date(2016, 05,04,00,00,00);
 
-	(new Date("2016-1-1")).getDay();
+	new Date("2016-06-03") === new Date(2016, 05,04,00,00,00);
 
 UTC to miliseconds
 
 	Date.UTC(1970, 9, 21)
+
+### parse time
+
+    Date.parseTime = function (str, format='%Y-%m-%d') {
+        let index=0;
+        let d = new Date()
+        for(let s of format.match(/%\w|./g)){
+            switch(s){
+                case '%Y': d.setYear(str.slice(index,index+4)); index+=4; break;
+                case '%m': d.setMonth(str.slice(index,index+2)-1); index+=2; break;
+                case '%d': d.setDate(str.slice(index,index+2)); index+=2; break;
+                case '%H': d.setHours(str.slice(index,index+2)); index+=2; break;
+                case '%I': d.setMinutes(str.slice(index,index+2)); index+=2; break;
+                case '%S': d.setSeconds(str.slice(index,index+2)); index+=2; break;
+                default: index+=1
+            }
+        }
+        return d
+    }
+    Date.parseTime('2017-10-31')

@@ -13,6 +13,22 @@ description:
     Object.keys(obj).length === 0 && obj.constructor === Object
     arr.length === 0
 
+## removeUndefined
+不要用箭头函数，否则this 指向的就是当前的scope的this
+
+    Object.prototype.removeUndefined = function(){
+        Object.keys(this).forEach(key => this[key] === undefined && delete this[key])
+        return this
+    }
+
+Array:
+
+    var filtered = array.filter(Boolean)
+    var filtered = array.filter(function (el) {
+        return el != null;
+    });
+
+
 ## define
 
     {toStr(){}, a:1}

@@ -159,6 +159,9 @@ docker import理解为将外部文件复制进来形成只有一层文件系统�
     -p 80:80 \
     --link redis:redis \  
     --name container_name dockerhub_id/image_name
+    --dns=192.168.1.1
+        --dns=[dns1,dns2]
+        https://superuser.com/questions/1302921/tell-docker-to-use-the-dns-server-in-the-host-system
 
 dockerfile CMD, 不会解析环境变量
 

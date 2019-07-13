@@ -3,21 +3,21 @@ title: Golang Notes: struct
 date: 2019-03-24
 ---
 # Golang Notes: struct
-struct 是值类型，slice 是引用类型(指针), 不过以下方法是按引用传值的
+struct 是值类型，slice 是引用类型(指针), 以下赋值方法是按值的
 
     type A struct{x int}
     a:=A{}
     b:=A{}
     fmt.Printf("%p,%p\n", &a,&b)  //not same
-    b = a
+    b = a                           //按值传递
     fmt.Printf("%p,%p\n", &a,&b)  //not same
 
 ## 特殊定义
+
     type A struct { int }
     var a=A{}
     a.int = 1
     fmt.Println(a)
-
 
 ## access
 

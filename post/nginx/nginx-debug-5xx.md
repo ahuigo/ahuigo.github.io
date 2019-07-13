@@ -47,7 +47,7 @@ private:
     }
 
 ## 4xx系列
-400
+### 400
 NGX_HTTP_BAD_REQUEST
 
     Host头不合法
@@ -75,7 +75,7 @@ NGX_HTTP_BAD_REQUEST
     </body>
     </html>
 
-401
+### 401
 NGX_HTTP_UNAUTHORIZED
 
 参考如上nginx配置,访问abc.html需要认证
@@ -132,8 +132,9 @@ Date: Tue, 18 Sep 2018 10:02:22 GMT
 Content-Type: text/html
 Content-Length: 173
 Connection: keep-alive
-5xx系列
-500
+
+## 5xx系列
+### 500
 NGX_HTTP_INTERNAL_SERVER_ERROR
 
 修改index.php为
@@ -155,7 +156,6 @@ Expires: Thu, 19 Nov 1981 08:52:00 GMT
 Cache-Control: no-store, no-cache, must-revalidate
 Pragma: no-cache
 
-## 5xx
 ### 501
 NGX_HTTP_NOT_IMPLEMENTED
 

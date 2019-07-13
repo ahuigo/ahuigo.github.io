@@ -163,7 +163,9 @@ WS请求也是标准的HTTP请求，所以，服务器也会把Cookie发送过�
 
 ## 同源策略
 1. WebSocket协议本身不要求同源策略（Same-origin Policy）。
-2. 但是`ws://b.com`连接基于http，浏览器会发送Origin的HTTP头给服务器，服务器可以根据Origin拒绝这个WebSocket请求。
+2. 但是`ws://b.com`连接基于http，浏览器会发送Origin的HTTP头(`同源Cookie`)给服务器，服务器可以根据Origin拒绝这个WebSocket请求(手动拒绝)。
+
+根据同源策略，cookie是区分端口的，但是浏览器实现来说，“cookie区分域，而不区分端口，也就是说，同一个ip下的多个端口下的cookie是共享的！“
 
 ## 路由
 客户端打开ws://localhost:3000/any/path可以写任意的路径。

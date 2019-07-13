@@ -7,14 +7,15 @@ if not os.path.exists(fp):
     if fp == '':
         quit(fp+'not exists')
 for i in range(100):
-    print(fp)
     if os.path.islink(fp):
+        print(fp, file=sys.stderr)
         fp_old = fp
         fp = os.readlink(fp)
         if fp[0] != '/':
             fp = os.path.join(os.path.dirname(fp_old), fp)
         fp = os.path.abspath(fp)
     else:
+        print(fp)
         break
 
 if '-e' in sys.argv:

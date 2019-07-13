@@ -8,6 +8,13 @@ private:
 
 # component
 
+## forceUpdate
+
+    this.forceUpdate();
+    //or
+    this.setState({state:this.state})
+
+
 ## defeine
 组件类的第一个字母必须大写，否则会报错. 有两种
 

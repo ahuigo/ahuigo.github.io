@@ -58,6 +58,7 @@ upstream 每个设备的状态:
             server 10.0.0.8;
             server 10.0.0.9;
         }
+
     2、按权重
     upstream idc{
         server 10.0.0.8 weight 10;
@@ -82,8 +83,6 @@ upstream 每个设备的状态:
         hash $request_uri;
         hash_method crc32;
     }
-
-
 
 ## memcache upstream
 

@@ -137,12 +137,11 @@ local:
     }
 
 ## make style
-    classes = makeStyles(theme => ({
-    details: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    }))();
+    const classes = makeStyles({
+        root: {
+            width: 500,
+        },
+    });
 
 # 4. jss （css in js）
 > https://segmentfault.com/q/1010000012687223
