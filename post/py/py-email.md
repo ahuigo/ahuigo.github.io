@@ -1,6 +1,6 @@
 ---
 layout: page
-title: py-email
+title: Python email处理
 category: blog
 description: 
 date: 2018-09-28

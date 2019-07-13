@@ -1,5 +1,5 @@
 ---
-title: Golang Notes: struct
+title: Golang 的结构体
 date: 2019-03-24
 ---
 # Golang Notes: struct

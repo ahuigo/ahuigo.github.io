@@ -1,5 +1,5 @@
 ---
-title: Postgre Index
+title: Postgre 的索引
 date: 2018-09-27
 ---
 # Postgre Index
