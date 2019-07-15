@@ -351,6 +351,14 @@ htmlentities:
 		div.innerText=div.innerHTML
 		entities=div.innerHTML
 
+## eval
+
+    try{
+        eval('alert(1)')
+    }catch(e){
+
+    }
+
 ## math
 
     '11'*'33' //363

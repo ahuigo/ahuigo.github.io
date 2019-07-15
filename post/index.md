@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-10-04 [js fuck](/b/ria/js-expr) 
 - 2019-06-23 [SSH SERVER 的配置](/b/net/net-ssh-server) 
 - 2018-10-04 [nginx 负载均衡](/b/nginx/nginx-upstream) 
 - 2018-03-01 [Python 语法](/b/py/py-expr) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [ops-init](/b/c/ops-init) 
 - 2018-09-28 [Python 文件处理](/b/py/py-file) 
 - 2018-10-04 [nginx proxy](/b/nginx/nginx-proxy) 
-- 2018-09-27 [不要用mongodb](/b/db/mongo-) 

@@ -490,6 +490,8 @@ via range:
     var fragment =range.createContextualFragment(innerHTML_JS);
 
 ### .append .appendChild
+div.append 支持同时传入多个节点或字符串, 无返回
+div.appendChild 支持1个节点，返回该node
 
     div.append('text'or node)
     $("#holder > div:nth-child(2)").after("<div>foobar</div>");
@@ -509,6 +511,19 @@ Example 浮层: js-demo/alert-float.js
 	node.parentNode.insertBefore(child, parent.childNodes[0]);
     $("#holder > div:nth-child(2)").before("<div>foobar</div>");
     $("#holder > div:eq(2)").before("<div>foobar</div>");
+
+insertAfter:
+
+    function insertAfter(newEl, targetEl) {
+        var parentEl = targetEl.parentNode;
+                
+        if(parentEl.lastChild == targetEl) {
+            parentEl.appendChild(newEl);
+        }else
+        {
+            parentEl.insertBefore(newEl,targetEl.nextSibling);
+        }            
+    }
 
 ### .remove, .removeChild 
 	child.parentNode.removeChild(child);
