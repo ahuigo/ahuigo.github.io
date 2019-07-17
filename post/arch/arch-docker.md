@@ -301,7 +301,11 @@ Docker Registry 分公开服务和私有服务。
 ### exited?
 docker 一运行nginx 就退出。因为nginx 是运行的`nginx -g "daemon on;"`， 应该用 `nginx -g "daemon off;"` 或者
 
-    docker run -d slim-nginx
+    docker run -t -d slim-nginx
+
+`docker run -t -d alpine/git` does not keep the process up. Had to do: 
+
+    docker run --entrypoint "/bin/sh" -it alpine/git
 
 ### 停止 & 启动 container
 发出 SIGTERM 信号（程序自行收尾），如果超时再发出 SIGKILL 信号
@@ -323,6 +327,11 @@ removes/deletes all stopped containers
 remove all images
 
     docker rmi $(docker images -q)
+
+## net
+    $ docker network create hostnet
+    557079c79ddf6be7d6def935fa0c1c3c8290a0db4649c4679b84f6363e3dd9a0
+    $ docker run --rm --net hostnet slim-image
 
 ## 进入容器
 相当于shell 的fg, 用于进入已经启动的容器

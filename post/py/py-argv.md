@@ -99,6 +99,10 @@ multiple args:
     parser.add_argument("-n", dest="name", default="ahui", help="your name")
     parser.add_argument("-p", type=int)
 
+## required arg
+
+    parser.add_argument("-p", required=True)
+
 ## bool arg
 action="store_true" is bool
 

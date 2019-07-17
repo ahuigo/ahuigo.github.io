@@ -6,8 +6,28 @@ description:
 date: 2018-10-04
 ---
 # Preface
-
 Socket是网络编程的一个抽象概念。通常我们用一个Socket表示“打开了一个网络链接”，而打开一个Socket需要知道目标计算机的IP地址和端口号，再指定协议类型即可。
+
+# socket 
+
+## socket bufer
+socket 可以控制window size: `socket.SO_RCVBUF` `SO_SNDBUF`
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    bufsize = sock.getsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 4096000)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 4096000)
+    sock.setsockopt(socket.SOL_TCP, socket.TCP_NODELAY, 1)
+
+e.g.
+
+    def client(ip, port, message):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.setsockopt(socket.SOL_SOCKET,socket.SO_RCVBUF, 100000)
+        sock.connect((ip, port))
+        sock.sendall(bytes(message, 'ascii'))
+        response = str(sock.recv(1024), 'ascii')
+        print("Received: {}".format(response))
 
 # connect multiple times
 一个端口可以连接多个server, 同一个socket 只能 connect 一次:
@@ -27,16 +47,17 @@ Socket是网络编程的一个抽象概念。通常我们用一个Socket表示�
 
 即使只有一个 socket，也可以自己连接到自己的：
 
-import socket                                                               
-s = socket.socket()
-s.bind(('127.0.0.1', 1314))
-s.connect(('127.0.0.1', 1314))
-s.send(b'I love you.')
-    11
+    import socket                                                               
+    s = socket.socket()
+    s.bind(('127.0.0.1', 1314))
+    s.connect(('127.0.0.1', 1314))
+    s.send(b'I love you.')
+        11
     >>> s.recv(1024)
     b'I love you.'
     $ netstat -npt | grep 1314
     tcp        0      0 127.0.0.1:1314          127.0.0.1:1314          ESTABLISHED 8050/python  
+
 
 # 客户端
 大多数连接都是可靠的TCP连接。创建TCP连接时，主动发起连接的叫客户端，被动响应连接的叫服务器。
