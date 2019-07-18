@@ -2,8 +2,14 @@
 title: Postgre User and Authentication
 date: 2018-09-27
 ---
+# help
+    \h alter
+    ALTER ROLE name RENAME TO new_name
+
 # Postgre User and Authentication
-vim /var/lib/pgsql/10/data/pg_hba.conf
+    psql -U postgres -c 'SHOW all' |grep hba_file
+    psql -U postgres -c 'SHOW hba_file'
+    /usr/local/var/postgres/pg_hba.conf        | Sets the server's "hba" configuration file.
 
     host    all             all             127.0.0.1/32            md5
     host    all             all             0.0.0.0/0               md5
@@ -42,7 +48,7 @@ pg:
     psql postgresql://other@localhost/otherdb?connect_timeout=10&application_name=myapp
     psql postgresql://host1:123,host2:456/somedb?target_session_attrs=any&application_name=myapp
 
-## create
+## create role/user
 两种
 1.$ createuser --interactive
 2.psql: CREATE ROLE new_role_name;
@@ -103,14 +109,12 @@ Let a user the "inherit" group property with no need "set role" command:
 
     ALTER TABLE hello OWNER TO demo_role;
 
-## delete
-DROP ROLE role_name;
-DROP ROLE IF EXISTS role_name;
+## delete role
+    DROP ROLE role_name;
+    DROP ROLE IF EXISTS role_name;
 
-## alter
-
-    ALTER ROLE role_name WITH attribute_options;
-    ALTER ROLE demo_role WITH NOLOGIN;
+### rename role
+ALTER ROLE name RENAME TO new_name
 
 ## query roles
 
@@ -132,10 +136,24 @@ postgre 默认添加名为`postgres`的super user，到linux和postgre 帐户：
     sudo postgresql-setup initdb
     sudo su - postgres
 
-# Grant Permissions
+# Role Attributes
+list  role attr
+
+    \du
+
+## alter role attr
+
+    \h ALTER ROLE
+    ALTER ROLE role_name WITH attribute_options;
+    ALTER ROLE demo_role WITH NOLOGIN;
+    ALTER ROLE role1 WITH SUPERUSER;
+
+# Permissions
+## Grant Permissions
+Grammar:
 1. GRANT permission_type ON table_name TO role_name|PUBLIC;
 1. GRANT permission_type ON DATABASE db_name TO role_name|PUBLIC;
-2. REVOKE permission_type ON table_name FROM user_name;
+2. GRANT role_name TO role_name [, ...] [ WITH ADMIN OPTION ]
 
 hello：
 
@@ -147,3 +165,6 @@ hello：
 To view the grant table
 
     \z
+
+## remove permission
+1. REVOKE permission_type ON table_name FROM user_name;

@@ -10,7 +10,7 @@
 - 2018-12-20 [安全的帐号设计](/b/sec/security-account) 
 - 2019-06-25 [Node argv](/b/ria/node-argv) 
 - 2018-10-04 [Socket.io](/b/ria/js-websocket) 
-- 2018-10-06 [html5](/b/ria/js-dom-html5) 
+- 2019-07-19 [html5](/b/ria/js-dom-html5) 
 - 2018-09-28 [py-debug-pdb](/b/py/py-debug-pdb) 
 - 2018-08-23 [关于直播的P2P架构](/b/course/im-live-p2p) 
 - 2018-10-08 [shell 环境变量](/b/c/shell-var-env) 

@@ -17,7 +17,10 @@ date: 2018-09-27
 
 ## auth
 see db-user.md
-vim /var/lib/pgsql/data/pg_hba.conf
+
+    psql -U postgres -c 'SHOW all' |grep hba_file
+    psql -U postgres -c 'SHOW hba_file'
+    /usr/local/var/postgres/pg_hba.conf        | Sets the server's "hba" configuration file.
 
 ## run
 
@@ -53,6 +56,7 @@ vim /var/lib/pgsql/data/pg_hba.conf
 show config 
 
     psql -U postgres -c 'SHOW config_file'
+     /usr/local/var/postgres/postgresql.conf
 
 #### via args
 /lib/systemd/system/postgresql.service

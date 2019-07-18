@@ -131,18 +131,34 @@ relative path
 
 # crud
 ## database
+help:
+
+    \h alter DATABASE
+
+create:
 
     $ createdb test1
     > CREATE DATABASE ahuigo;
     > CREATE DATABASE yuzhi100 OWNER myuser;
+
+drop db:
+
     > drop database yunzhi100
+
+rename db:
+
+    ALTER DATABASE name RENAME TO new_name
+
+list db:
 
     \l
         list all databases
+
+connect db:
+
     \c database_name
         \connect database_name
     SELECT current_database();
-
 
 ## table
 
