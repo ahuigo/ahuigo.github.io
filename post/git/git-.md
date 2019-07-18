@@ -662,10 +662,11 @@ to keep the remote or local file, :
 
 ## merge option
 
-    git pull -X
-        git pull -X ours
-	git merge -X theirs branchB #use theirs, not take everything from branch B as is, but when Conflicts!
-		-s       ours ignore all theirs changes
+    git pull -s ours      
+        ours ignore all theirs changes
+    git pull -X ours
+        use ours if conflict
+	git merge -X <options>
         -Xours   keep ours if conflict
         -Xtheirs
 
