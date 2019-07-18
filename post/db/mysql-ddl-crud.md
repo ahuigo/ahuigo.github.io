@@ -4,6 +4,16 @@ title:	mysql 查询
 category: blog
 description:
 ---
+# Result
+
+    | id | status |
+    +----+--------+
+    |  1 | A      |
+    update test5 set status = 'A' where id = 1 and status != 'B'
+
+返回affected row number 是[clientFoundRows]决定 matched还是changed?
+
+
 # database/table/column ddl crud
 
 ## database
@@ -726,3 +736,6 @@ Order by 需要放到group by 的后面做最后处理
     MariaDB [test]> select * from (
         select id, num,if(@n=t.num,@count:=@count+1, @count:=1) as cnt,@n:=t.num from t
     ) m where cnt >=3;
+
+# REF
+[clientFoundRows]: https://blog.wolfogre.com/posts/sql-tips/#%E6%8B%AC%E5%8F%B7%E9%87%8C%E7%9A%84%E6%95%B0%E5%AD%97-%E5%90%84%E7%A7%8D%E5%90%84%E6%A0%B7%E7%9A%84%E6%84%8F%E6%80%9D

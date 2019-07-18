@@ -71,6 +71,7 @@ What does the number in parenthesis mean?
 
 > int(2) will generate an INT with minimum display width of 2. It's up to mysql client.
 In most clients, if a colume specified with `INT(2) ZEROFILL`, the number 6 will be displayed as '06'.
+> `DECIMAL(M,D)、FLOAT(M,D)、DOUBLE(M,D)` M是显示长度，D是可存的小数位数
 
 ### function
 
