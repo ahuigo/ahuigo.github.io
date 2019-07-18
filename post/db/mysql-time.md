@@ -5,7 +5,10 @@ category: blog
 description: 
 date: 2018-09-27
 ---
-# Preface
+# Time Type
+精确到微秒
+
+    TIME(6), DATETIME(6), TIMESTAMP(6)
 
 # Format Convert Time
 
@@ -13,6 +16,8 @@ date: 2018-09-27
 - `Current_date()`  will only give you the date.
 - `now()` give you the datetime when the statement,procedure etc... started.
 - `sysdate()` give you the current datetime.
+
+sleep test
 
 	select now(),sysdate(),current_date(),sleep(5),now(),sysdate();
 	+---------------------+---------------------+----------------+----------+---------------------+---------------------+

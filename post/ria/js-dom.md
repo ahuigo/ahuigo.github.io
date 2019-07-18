@@ -5,13 +5,72 @@ date: 2016-01-23
 # Js dom 笔记
     document.documentElement ;//html
     document.body;  //html
-
-# Navigator
+# Device
+## Navigator
 navigator.appName：浏览器名称；
 navigator.appVersion：浏览器版本；
 navigator.language：浏览器设置的语言；
 navigator.platform：操作系统类型；
 navigator.userAgent：浏览器设定的User-Agent字符串。
+
+## mouse
+mousemove, mouseout
+
+### mouse 相对窗口的位置ClientX(而非页面 pageX)
+
+    //elem.addEventListener('mousemove', onMousemove, false);
+    document.onmousemove =function(e){
+        var e = e||window.event;
+        // eqaual
+        console.log([e.clientX, e.clientY])
+        console.log([e.x, e.y])
+    }
+
+relative:
+
+    function relativeCoords ( event ) {
+        var bounds = event.target.getBoundingClientRect();
+        var x = event.clientX - bounds.left;
+        var y = event.clientY - bounds.top;
+        return {x: x, y: y};
+    }
+
+## location
+
+	location.href
+	location.host
+	location.hash
+	location.origin
+	location.port
+	location.pathname
+
+	document.URL
+
+redirect:
+
+	location.replace(url);//simulate 302(It will delete current href in history)
+	location.href;//simulate click
+
+## history
+
+	history.back() //history.go(-1)
+	history.forward() // history.go(1)
+
+## cookie
+
+	document.cookie='DEBUG=;expires=Mon, 05 Jul 2000 00:00:00 GMT'
+	document.cookie = 'a=1;expires='+d.toGMTString()
+	function getCookie(k){
+		c=document.cookie;
+		start = c.indexOf(k+'=');
+		v = '';
+		if(start>-1){
+			end = c.indexOf(';', start);
+			if(end <0) end = c.length;
+			v = c.substr(start, end)
+		}
+		return v;
+	}
 
 # Window
 
@@ -136,13 +195,28 @@ left:
 	 touchOriginY = touch.pageY;
 
 #### 查找元素在窗口的位置
+goto:
 
+    element.scrollIntoView();
+
+不用： getComputedStyle(ele).left 是auto (相当于offsetLeft)
+
+    window.getComputedStyle($0).left;//可能是auto; 还是相对的偏移
+
+用 `ele.getClientRects()[0]`, 这个left/top/bottom 不是offsetLeft, 受滚动影响（它是相对于窗口的, 而不是页面）
+
+    rect.x = react.left 
+    rect.y = react.left 
+    rect.right
+    react.bottom
 	function visible(ele){
 		rect = ele.getClientRects()[0]
 		return (rect.left<0 || rect.top <0) ? false : true;
 	}
 
-或者:
+
+#### 查找元素在页面的位置
+或者累加offsetLeft:
 
 	function GetObjPos(ATarget) {
 		var target = ATarget;
@@ -164,42 +238,6 @@ left:
 	document.elementFromPoint(500,10)
     document.elementFromPoint(x, y).click();
 
-## location
-
-	location.href
-	location.host
-	location.hash
-	location.origin
-	location.port
-	location.pathname
-
-	document.URL
-
-redirect:
-
-	location.replace(url);//simulate 302(It will delete current href in history)
-	location.href;//simulate click
-
-## history
-
-	history.back() //history.go(-1)
-	history.forward() // history.go(1)
-
-## cookie
-
-	document.cookie='DEBUG=;expires=Mon, 05 Jul 2000 00:00:00 GMT'
-	document.cookie = 'a=1;expires='+d.toGMTString()
-	function getCookie(k){
-		c=document.cookie;
-		start = c.indexOf(k+'=');
-		v = '';
-		if(start>-1){
-			end = c.indexOf(';', start);
-			if(end <0) end = c.length;
-			v = c.substr(start, end)
-		}
-		return v;
-	}
 
 # Dom type
 
@@ -490,6 +528,8 @@ via range:
     var fragment =range.createContextualFragment(innerHTML_JS);
 
 ### .append .appendChild
+div.append 支持同时传入多个节点或字符串, 无返回
+div.appendChild 支持1个节点，返回该node
 
     div.append('text'or node)
     $("#holder > div:nth-child(2)").after("<div>foobar</div>");
@@ -509,6 +549,19 @@ Example 浮层: js-demo/alert-float.js
 	node.parentNode.insertBefore(child, parent.childNodes[0]);
     $("#holder > div:nth-child(2)").before("<div>foobar</div>");
     $("#holder > div:eq(2)").before("<div>foobar</div>");
+
+insertAfter:
+
+    function insertAfter(newEl, targetEl) {
+        var parentEl = targetEl.parentNode;
+                
+        if(parentEl.lastChild == targetEl) {
+            parentEl.appendChild(newEl);
+        }else
+        {
+            parentEl.insertBefore(newEl,targetEl.nextSibling);
+        }            
+    }
 
 ### .remove, .removeChild 
 	child.parentNode.removeChild(child);
@@ -574,6 +627,7 @@ node.value 与node.getAttribute('value') 不同: 前者是真正的值，后者�
 
 ### Set
 
+    //自动去重
 　　 element.style.cssText += 'color:red';
     //or
     element.style.color = 'red';
@@ -584,14 +638,14 @@ node.value 与node.getAttribute('value') 不同: 前者是真正的值，后者�
 
 	//查看隐式的
 	style = window.getComputedStyle(element),
-    	style.top;
+    	style.top/left; # 50px,auto ....
 		style.getPropertyValue('top');
     	style.marginTop;
 
 	//显式的
 		node.style.backgroundColor
 		node.style.background
-		node.style.top
-	//显式所有的
+		node.style.top ; 50%,50px
+	//显式所有的style
 　　element.style.cssText
 

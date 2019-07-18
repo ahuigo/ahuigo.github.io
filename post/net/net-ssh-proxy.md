@@ -1,6 +1,7 @@
 ---
 title: ssh proxy
 date: 2018-09-28
+private:
 ---
 # ssh proxy
 

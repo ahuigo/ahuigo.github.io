@@ -7,6 +7,59 @@ date: 2018-09-28
 ---
 # Preface
 
+# flush buffer
+开启buffer 后，默认是换行才flush, print 调用的就是sys.stdout
+
+    PYTHONUNBUFFERED=0 python3 <<<'import sys,time; sys.stdout.write("sys");time.sleep(10)'
+    PYTHONUNBUFFERED=0 python3 <<<'import sys,time; sys.stdout.write("sys\n");time.sleep(10)'
+    PYTHONUNBUFFERED=0 python3 <<<'import sys,time; print("print",end="");time.sleep(10)'
+    python3 -u <<<'import sys,time; sys.stdout.write("sys");time.sleep(10)'
+
+也可以定向到别的地方：
+
+    sys.stdout = open(‘file.txt’, ‘a’,0)
+
+其实包括换行，有三种mode:
+
+    1. _IOLBF，line buffer
+    2. _IOFBF, full buffer
+    3. _IONBF，no buffer
+
+C语言 关闭buffer
+
+    int setvbuf(FILE *stream, char *buffer, int mode, size_t size)
+    setvbuf(stdout, 0, _INNBF, 0);
+
+python [完全关闭buffer](http://jaseywang.me/2015/04/01/stdio-%E7%9A%84-buffer-%E9%97%AE%E9%A2%98/)
+
+1. sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
+2. 直接定向到stderr 
+3. 直接脚本的时候加上 -u 参数。但是需要注意下，xreadlines(), readlines() 包含一个内部 buffer，不受 -u 影响，因此如果通过 stdin 来遍历会出现问题
+4. 将其 stream 关联到 pseudo terminal(pty) 上，script 可以做这事情的: `script -q -c "command1" /dev/null | command2`
+或者通过 socat 这个工具实现，
+
+
+## pipe buffer
+再来看个跟 pipe 相关的问题， 这个命令常常回车之后没有反应:
+
+    $ tail -f logfile | grep "foo" | awk {print $1}
+
+解释
+1. tail 的 stdout buffer 默认会做 full buffer，由于加上了 -f，表示会调用 fflush() 对输出流进行 flush，所以 tail -f 这部分没什么问题。
+2. 关键在 grep 的 stdout buffer，因此它存在一个 8KB stdout buffer，要等该 buffer 满了之后 awk 才会接收到数据。
+3. awk 的 stdout buffer 跟终端相关联，所有默认是 line buffer。怎么解决这个问题了，
+
+其实 grep 提供了 –line-buffered 这个选项来做 line buffer，这会比 full buffer 快的多:
+
+    tail -f logfile | grep –line-buffered  "foo" | awk {print $1}
+
+除了 grep，sed 有对应的 -u(–unbuffered)，awk(我们默认的是 mawk) 有 -W 选项，tcpdump 有 -l 选项来将 full buffer 变成 line 或者 no buffer。
+
+### stdbuf
+上面修改参数的不具有普遍原理。其实 coreutils 已经给我们提供了一个叫 stdbuf 的工具。expect 还提供了一个叫 unbuffer 的工具:
+
+    tail -f logfile | stdbuf -oL grep "foo" | awk {print $1}
+
 # mmap
 1. 文件操作需要从磁盘到页缓存再到用户主存的两次数据拷贝。
 2. 而 mmap 操控文件，只需要从磁盘到用户主存的一次数据拷贝过程. 但是大文件： major page fault 多

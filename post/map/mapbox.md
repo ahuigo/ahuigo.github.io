@@ -4,10 +4,11 @@ date: 2019-05-06
 private:
 ---
 # Mapbox 笔记
-
 https://docs.mapbox.com/mapbox-gl-js/example/multiple-geometries/
 https://codepen.io/ahuigo/pen/ZNEZYo?editors=1000
 
+## init
+    map.resize()
 
 ## event
 
@@ -21,6 +22,14 @@ https://codepen.io/ahuigo/pen/ZNEZYo?editors=1000
             [e.point.x + 1, e.point.y + 1]
         ];
         var features = map.queryRenderedFeatures(bbox, { layers: ['skeleton'] });
+
+## filter
+
+    [
+        "all",
+        [">=", "number", 1],
+        ["<", "number", 10]
+    ]
 
 ## curd: soureces and layers
 

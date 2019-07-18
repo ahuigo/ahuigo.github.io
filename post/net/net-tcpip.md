@@ -602,6 +602,48 @@ UDP 中如果发送方的速度快于接收方，会导致接收方因来不及�
 1. 当对方的接收win 满了，就停止发送数据段
 2. 发送方需要以不超过最大段尺寸的长度(本例是1k )发送数据， 而接收方则可以以任意长度读取数据. 因为应用程序会把数据看作一个整体，或说是一个流stream; 在底层数据会被拆分成多个包，这对应用程序是不可见的。因此TCP 协议是面向流stream 的，而UDP 协议是只能以消息为单位，而不是一次提供任意字节的数据。
 
+### 缓冲区
+发送缓冲区、接收缓冲区设置
+
+    int setsockopt(SOCKET s,int level,int optname,const char* optval,int optlen);
+
+    SOCKET socket = ...
+    int nRcvBufferLen = 64*1024;
+    int nSndBufferLen = 4*1024*1024;
+    int nLen          = sizeof(int);
+
+    setsockopt(socket, SOL_SOCKET, SO_SNDBUF, (char*)&nSndBufferLen, nLen);
+    setsockopt(socket, SOL_SOCKET, SO_RCVBUF, (char*)&nRcvBufferLen, nLen);
+
+查看linux tcp(read/write) buffer size 的min/defaut/max ：
+
+    [root@node2 ~]# cat /proc/sys/net/ipv4/tcp_rmem
+    4096 87380 4194304
+    [root@node2 ~]# cat /proc/sys/net/ipv4/tcp_wmem
+    4096 16384 4194304
+
+解释：
+
+    http://www.man7.org/linux/man-pages/man7/tcp.7.html
+       tcp_rmem (since Linux 2.4)
+              This is a vector of 3 integers: [min, default, max].  These
+              parameters are used by TCP to regulate receive buffer sizes.
+              TCP dynamically adjusts the size of the receive buffer from
+              the defaults listed below, in the range of these values,
+              depending on memory available in the system.
+
+       tcp_wmem (since Linux 2.4)
+              This is a vector of 3 integers: [min, default, max].  These
+              parameters are used by TCP to regulate send buffer sizes.  TCP
+              dynamically adjusts the size of the send buffer from the
+              default values listed below, in the range of these values,
+              depending on memory available.
+
+If the receive buffer is full and the other end of the TCP connection tries to send additional data, the kernel will refuse to ACK the packets. 
+the sender blocks or gets `EAGAIN/EWOULDBLOCK`(non-block), depending on blocking/non-blocking mode.
+This is just regular [TCP congestion control](https://en.wikipedia.org/wiki/TCP_congestion_control).
+https://stackoverflow.com/questions/12931528/c-socket-programming-max-size-of-tcp-ip-socket-buffer
+
 Note:
 一个socket有两个滑动窗口(一个sendbuf、一个recvbuf)，两个窗口的大小是通过setsockopt函数设置
 1. 发送方的滑动窗口维持着当前发送的帧序号，已发出去帧的计时器，接收方当前的窗口大小(由接收方ACK通知)

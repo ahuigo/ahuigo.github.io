@@ -8,6 +8,7 @@ description:
 Expect 是Tcl/Tk 语言最有名的扩展，可通过[tcl/tk](/p/linux-tcl) 了解tcl/tk 的用法
 
 > 注意：spawn 结束后，一定要加上`interact` 或者`eof`, 否则进程未结束却随着expect 退出而终止
+> python 版本 pexpect：http://pexpect.sourceforge.net/doc/
 
 # Cmd，命令
 Expect中最关键的四个命令是send,expect,spawn,interact。

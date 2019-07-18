@@ -1,6 +1,7 @@
 ---
 title: React Start
 date: 2019-06-23
+private:
 ---
 # React Runtime
 React 运行时，需要引入运行时

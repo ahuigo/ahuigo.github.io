@@ -1,5 +1,5 @@
 ---
-title: SSH SERVER
+title: SSH SERVER 的配置
 date: 2019-06-23
 ---
 # SSH SERVER

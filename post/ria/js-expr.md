@@ -2,10 +2,76 @@
 title: js fuck
 date: 2018-10-04
 ---
+# eval
+
+    i=5
+    f=i=>i
+    eval("f(i)")===5
+
+liaoxuefeng 老师利用eval 写的js课程：
+
+	var code = _mdGetCode(tid);
+	(function () {
+		// prepare console.log
+		var
+			buffer = '',
+			_log = function (s) {
+				console.log(s);
+				buffer = buffer + s + '\n';
+			},
+			_warn = function (s) {
+				console.warn(s);
+				buffer = buffer + s + '\n';
+			},
+			_error = function (s) {
+				console.error(s);
+				buffer = buffer + s + '\n';
+			},
+			_console = {
+				trace: _log,
+				debug: _log,
+				log: _log,
+				info: _log,
+				warn: _warn,
+				error: _error
+			};
+		try {
+			eval('(function() {\n var console = _console; \n' + code + '\n})();');
+			if (!buffer) {
+				buffer = '(no output)';
+			}
+			_mdShowCodeResult(btn, buffer);
+		}
+		catch (e) {
+			buffer = buffer + String(e);
+			_mdShowCodeError(btn, buffer);
+		}
+	})();
+    function _mdSetCodeResult(btn, result, isHtml, isError) {
+        var $r = $(btn).next('div.x-code-result');
+        if ($r.get(0) === undefined) {
+            $(btn).after('<div class="x-code-result x-code uk-alert"></div>');
+            $r = $(btn).next('div.x-code-result');
+        }
+        $r.removeClass('uk-alert-danger');
+        if (isError) {
+            $r.addClass('uk-alert-danger');
+        }
+        if (isHtml) {
+            $r.html(result);
+        } else {
+            var ss = result.split('\n');
+            var htm = _.map(ss, function (s) {
+                return encodeHtml(s).replace(/ /g, '&nbsp;');
+            }).join('<br>');
+            $r.html(htm);
+        }
+    }
+
+
+
 # js fuck
 https://www.qqwenda.com/wenda/22114.html
-
-
 
     f=rate=>'★★★★★☆☆☆☆☆'.slice(5-rate,10-rate)
 
@@ -33,8 +99,12 @@ or 优先级更高(不要写这种)
 
 ## Condition 
 
-	switch(n) { case 1: 'code block' ;break;}
 	带类型匹配, 1 与'1'不同
+    
+	switch(n) { 
+        case 1+3: 'code block' ;break;
+        case sum(1,3): 'code block' ;break;
+    }
 
 ## break label
 

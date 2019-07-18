@@ -1,9 +1,10 @@
 ---
-title:	Shell Programming
+title:	Shell 编程
 date: 2014-03-05
 priority:
 ---
 # Shell Programming
+Shell 编程笔记
 
 # Signal, 信号(trap)
 Refer to:

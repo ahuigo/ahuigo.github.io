@@ -1,6 +1,7 @@
 ---
 title: Node argv
 date: 2019-06-25
+private:
 ---
 # Node argv
 

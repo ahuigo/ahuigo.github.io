@@ -3,6 +3,19 @@ title: try-catch
 date: 2018-10-04
 ---
 # try-catch
+custom exception
+
+    function UserException(message) {
+        this.message = message;
+        this.name = "UserException";
+    }
+
+ReferenceError:
+
+    undefined_func()
+
+exception: Error
+
     try {
         r1 = s.length; // 此处应产生错误
         r2 = 100; // 该语句不会执行

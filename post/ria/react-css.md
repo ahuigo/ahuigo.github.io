@@ -15,7 +15,39 @@ https://blog.bitsrc.io/5-ways-to-style-react-components-in-2019-30f1ccc2b5b
     const sassRegex = /\.(scss|sass)$/;
     const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-# 1. CSS Stylesheet
+# 0. CSSComponent
+todo: https://medium.com/@jviereck/modularise-css-the-react-way-1e817b317b04
+
+    class MyNotification extends React.CSSComponent {
+      render() {
+        var styleMap = this.mountStyles`
+          @media (min-width: 600px) {
+            .notification {
+              padding: 15px;
+            }
+          }
+          .notification {
+            border: 10px solid ${this.props.color};
+            padding: 10px;
+            color: #333;
+          }
+          /* ".notification span" is rejected by ModularCSS as it
+           * contains a nested CSS selectors. Therefore, need to
+           * use a new class name instead. */  
+          .notification-hint {
+            font-style: italic;
+          }`;
+        return (
+          <div className={styleMap.notification}>
+            {this.props.prompt}
+            <span className={styleMap.notificationHint}>
+              {this.props.hint}
+            </span>
+          </div>);
+      }
+    }
+
+# 1. CSS Stylesheet(global)
 css stylesheet:
 
     .DottedBox {
@@ -136,13 +168,13 @@ local:
         loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' 
     }
 
-## make style
-    classes = makeStyles(theme => ({
-    details: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    }))();
+# make style(material.io)
+    const classes = makeStyles({
+        root: {
+            width: 500,
+            '&:hover':{background:'red'}
+        },
+    });
 
 # 4. jss （css in js）
 > https://segmentfault.com/q/1010000012687223

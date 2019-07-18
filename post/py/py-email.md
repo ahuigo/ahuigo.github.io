@@ -1,6 +1,6 @@
 ---
 layout: page
-title: py-email
+title: Python email处理
 category: blog
 description: 
 date: 2018-09-28
@@ -17,6 +17,8 @@ yag = yagmail.SMTP('test@163.com', host='smtp.163.com', port=587, smtp_starttls=
 yag = yagmail.SMTP('mygmailusername')
 yag.send(['to@someone.com'], 'subject', content, attachments=['a.txt', 'b.jpg'])
 contents = ["comtent1", "contents2"]
+yag.send(to = to, subject = subject, contents = [body, '<div>...</div>', '/local/to/a.png'])
+
 ```
 
 # 邮件收发过程
@@ -83,6 +85,13 @@ Python对SMTP支持有smtplib和email两个模块，`email`负责构造邮件，
 2. login()方法用来登录SMTP服务器，
 2. sendmail()方法就是发邮件，由于可以一次发给多个人，所以传入一个list，邮件正文是一个str，as_string()把MIMEText对象变成str。
 
+如果想设定timeout(seconds):
+
+    smtplib.SMTP([host[, port[, local_hostname[, timeout]]]])
+    # 或者全局
+    import socket
+    socket.setdefaulttimeout(120)
+
 仔细观察，发现如下问题：
 
 1. 邮件没有主题；
@@ -90,7 +99,7 @@ Python对SMTP支持有smtplib和email两个模块，`email`负责构造邮件，
 3. 明明收到了邮件，却提示不在收件人中。
 
 这是因为邮件主题、如何显示发件人、收件人等信息并不是通过SMTP协议发给MTA，而是包含在发给MTA的文本中的，所以，我们必须把From、To和Subject添加到MIMEText中，才是一封完整的邮件：
-```
+
 	from email import encoders
 	from email.header import Header
 	from email.mime.text import MIMEText
@@ -117,12 +126,16 @@ Python对SMTP支持有smtplib和email两个模块，`email`负责构造邮件，
 	server.login(from_addr, password)
 	server.sendmail(from_addr, [to_addr], msg.as_string())
 	server.quit()
-```
 
 我们编写了一个函数_format_addr()来格式化一个邮件地址。
 
 1. 注意不能简单地传入`name <addr@example.com>`，因为如果包含中文，需要通过Header对象进行编码。
 2. msg['To'] 接收的是字符串而不是list，如果有多个邮件地址，用,分隔即可。
+
+outlook:
+
+    host='smtp.partner.outlook.cn'
+    port=587
 
 ### 原文
 如果我们查看Email的原始内容，可以看到如下经过编码的邮件头：

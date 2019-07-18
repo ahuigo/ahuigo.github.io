@@ -3,6 +3,7 @@ layout: page
 title:	linux ssh tool
 category: blog
 date: 2016-09-09
+private:
 description:
 ---
 # SSH Client

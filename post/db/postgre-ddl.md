@@ -110,7 +110,14 @@ custom-format archive:
     database-name \
     -f table.sql
 
-### export csv
+### export sql 
+relative path 
+
+    \copy (select * from my_table limit 10) TO './a.csv'
+    \copy (select * from my_table limit 10) TO './a.csv' CSV 
+    \copy (select * from my_table limit 10) TO './a.csv' CSV HEADER
+
+full path
 
     \COPY products_273 TO '/tmp/products_199.csv' WITH (FORMAT CSV, HEADER);
 
@@ -121,9 +128,6 @@ custom-format archive:
     \copy (Select * From foo) To '/tmp/test.csv' With CSV
     \copy (select * from my_table limit 10) TO '~/Downloads/export.csv' CSV HEADER
 
-relative path 
-
-    \copy (select * from my_table limit 10) TO './a.csv' CSV HEADER
 
 # help
 `\h CREATE ROLE`

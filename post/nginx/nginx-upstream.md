@@ -1,8 +1,8 @@
 ---
-title: nginx upstream, 负载均衡
+title: nginx 负载均衡
 date: 2018-10-04
 ---
-# nginx upstream, 负载均衡
+# nginx upstream
 定义一组服务器， UNIX/TCP 可以 混合使用
 
 	语法:	upstream name { ... }
@@ -58,6 +58,7 @@ upstream 每个设备的状态:
             server 10.0.0.8;
             server 10.0.0.9;
         }
+
     2、按权重
     upstream idc{
         server 10.0.0.8 weight 10;
@@ -82,8 +83,6 @@ upstream 每个设备的状态:
         hash $request_uri;
         hash_method crc32;
     }
-
-
 
 ## memcache upstream
 

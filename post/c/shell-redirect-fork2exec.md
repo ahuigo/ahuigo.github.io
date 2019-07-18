@@ -122,7 +122,6 @@ exec命令示例
     关闭fd3
 
 ## exec的重定向
-
 先上我们进如/dev/fd/目录下看一下：
 
     root@localhost:~/test#cd /dev/fd
@@ -202,6 +201,10 @@ kill -15 默认向进程发送GIGTERM 信号
 	SEGV	11	segmentfault
 
 # redirect output of an already running process
+
+    tail -f /proc/$PID/fd/1
+    cat /proc/$PID/fd/1
+
 Firstly I run the command `cat > foo1` in one session and test that data from stdin is copied to the file.
 Then in another session I redirect the output.
 
@@ -275,6 +278,10 @@ http://www.isi.edu/~yuri/dupx/
 
 ## strace
 http://superuser.com/questions/473240/redirect-stdout-while-a-process-is-running-what-is-that-process-sending-to-d/535938#535938
+
+## pexpect
+https://eli.thegreenplace.net/2017/interacting-with-a-long-running-child-process-in-python/
+
 
 
 # Rerference

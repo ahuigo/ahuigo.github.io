@@ -151,7 +151,6 @@ gevent 是基于greenlet， greenlet封装了libevent+yield 的事件循环高�
 比起uWSGI来说，Gunicorn对于“协程”也就是Gevent的支持会更好更完美。
 
     --log-level "debug" 
-    PYTHONUNBUFFERED=TRUE
     -R, --enable-stdio-inheritance
 
 rocket.py:
