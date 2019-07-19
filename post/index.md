@@ -1,5 +1,5 @@
 # AHUIGO 的笔记
-- 2019-07-19 [sed 简记](/b/c/ops-sed) 
+- 2019-07-19 [Sed 简记](/b/c/ops-sed) 
 - 2018-09-27 [ops-process-lsof](/b/c/ops-process-lsof) 
 - 2018-09-28 [py-http](/b/py/py-http) 
 - 2019-04-22 [gonic](/b/go/gonic) 
@@ -15,7 +15,7 @@
 - 2018-09-28 [py-argv](/b/py/py-argv) 
 - 2019-07-19 [linux 下的Fork 与 Exec](/b/c/shell-redirect-fork2exec) 
 - 2019-07-19 [expect 键盘模拟](/b/c/ops-expect) 
-- 2018-10-04 [js fuck](/b/ria/js-expr) 
+- 2018-10-04 [Js 的表达式](/b/ria/js-expr) 
 - 2019-06-23 [SSH SERVER 的配置](/b/net/net-ssh-server) 
 - 2018-10-04 [nginx 负载均衡](/b/nginx/nginx-upstream) 
 - 2018-03-01 [Python 语法](/b/py/py-expr) 

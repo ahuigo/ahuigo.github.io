@@ -1,10 +1,10 @@
 ---
 layout: page
-title:	sed 简记
+title:	Sed 简记
 category: blog
 description:
 ---
-#
+# Sed Intro
 grep 与sed 同样是以按行匹配，不过sed 不仅能按行匹配，还能替换字符
 
 >ps: mac 下的sed与linux下的gnu sed有很大的不同，建议安装gsed（如果你熟悉gnu-sed）: brew install gnu-sed
