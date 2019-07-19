@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-07-19 [sed 简记](/b/c/ops-sed) 
+- 2018-09-27 [ops-process-lsof](/b/c/ops-process-lsof) 
 - 2018-09-28 [py-http](/b/py/py-http) 
 - 2019-04-22 [gonic](/b/go/gonic) 
 - 2019-04-29 [Golang Singleton](/b/go/go-design-single) 
@@ -37,5 +39,3 @@
 - 2019-07-19 [html5 笔记](/b/ria/js-dom-html5) 
 - 2018-09-28 [py-debug-pdb](/b/py/py-debug-pdb) 
 - 2018-08-23 [关于直播的P2P架构](/b/course/im-live-p2p) 
-- 2018-10-08 [shell 环境变量](/b/c/shell-var-env) 
-- 2019-07-05 [python 字典](/b/py/py-var-dict) 

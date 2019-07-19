@@ -639,6 +639,16 @@ merge old, keeping "our" (master's) content
 
     git merge -s ours old-master
 
+## merge abort
+git merge --abort is equivalent to git reset --merge when MERGE_HEAD is present.
+
+    git merge --abort
+    git reset --merge
+
+or:
+
+    git reset --hard HEAD
+
 ## merge other remote
 Step 1. Fetch other code
 
@@ -664,6 +674,8 @@ to keep the remote or local file, :
 
     git pull -s ours      
         ours ignore all theirs changes
+        --strategy=theirs
+        --strategy=ours
     git pull -X ours
         use ours if conflict
 	git merge -X <options>

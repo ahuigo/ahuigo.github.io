@@ -68,6 +68,7 @@ example
 ## via process
 查询init进程当前打开的文件
 
+	$lsof -c <进程名>
 	$lsof -c init
 
 查询指定的进程ID(23295)打开的文件：

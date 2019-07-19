@@ -25,13 +25,19 @@ sed 命令行基本格式为:
 	sed option 'script' file1 file2 ...
 	sed option -f scriptfile file1 file2 ...
 
-基本语法为:
+基本line语法为:
 
 	/pattern/action
 	range{/pattern/action}
 
 # action, 操作码
-s替换d删除i插入a追加 q退出
+
+    s 替换
+    c change line
+    d 删除line
+    i 插入line
+    a 追加line
+    q 退出 
 
 pattern:
 

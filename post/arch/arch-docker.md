@@ -482,6 +482,10 @@ http://www.opscoder.info/docker_monitor.html
     $ CONTAINER_PID=`docker inspect -f '{{ .State.Pid }}' $CONTAINER_ID`
     $ cat /proc/$CONTAINER_PID/net/dev 
 
+#### container ip
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id
+
+
 
 # Docker Compose
 如果想将两个容器连接到一起：比如myweb 连接 wordpressdb:mysql(mysql是容器别名)

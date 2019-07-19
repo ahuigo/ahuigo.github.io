@@ -89,6 +89,7 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
     })
 
 ### response
+#### data:
 
     response.json().then
     response.text().then(function (text) {
@@ -107,6 +108,12 @@ async function with in `then`:
 
     .then(async r => await r.json())
     .then(data=>console.log(data))
+
+### status code
+
+    r.status===200 
+    r.ok //true if staus range 200-299
+    then(r=>if(r.ok) ..)
 
 ## axios
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
