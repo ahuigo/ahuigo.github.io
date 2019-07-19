@@ -181,5 +181,12 @@ https://github.com/gin-gonic/gin/pull/857/files
     func (c *Context) GetRawData() ([]byte, error) {
         return ioutil.ReadAll(c.Request.Body)
 
+## cookie
+    cookie, err := c.Cookie("gin_cookie")
+    if err != nil {
+        cookie = "NotSet"
+        c.SetCookie("gin_cookie", "test", 3600, "/", "localhost", false, true)
+    }
+
 # Response
     c.JSON(http.StatusOK, gin.H{"user": user, "value": value})

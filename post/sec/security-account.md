@@ -113,6 +113,15 @@ weibo 身份认证，主要存储于cookie. 他不同于token, 它不仅用验�
 1. [理解oAuth2.0-阮一峰](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)
 2. [oAuth2.0-rfc](http://www.rfcreader.com/#rfc6749)
 
+其中名词：
+1. user: Resource Owner
+1. User Agent: Brower
+2. Client: 3rd app
+2. HTTP Serive: google/weibo/weixin/qq
+2. Resource server: google/weibo/weixin/qq
+2. Authorization server: google/weibo/weixin/qq
+2. Resource server: google/weibo/weixin/qq
+
 ## Protocol Flow
 oAuth2.0 认证流程
 
@@ -209,6 +218,12 @@ E步骤中，认证服务器发送的HTTP回复，包含以下参数：
 	expires_in：表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。
 	refresh_token：表示更新令牌，用来获取下一次的访问令牌，可选项。
 	scope：表示权限范围，如果与客户端申请的范围一致，此项可省略。
+
+为什么不直接返回accessToken 呢？
+确认用户授权，但是至于用户确认授权的是不是真正clientId代表的app还不确定？
+因为clientId那玩意公开的，用户都知道，所以如果我知道了clientId，我可以说我是你。
+所以不安全，要做第二次验证。 第二次验证的就是在客户端后台完成的了，它得把clientId连同clientCredentail（secrectKey或者说密码）再加上获得的AuthorizationCode发给服务器做验证。
+这才能获取最终使用的accessToken。
 
 ### implicit grant type, 简化模式
 与授权码模式相比，implicit grant type 跳过了Authorization code, 直接返回access token.

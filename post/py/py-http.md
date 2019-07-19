@@ -316,7 +316,7 @@ You can tell Requests to stop waiting for a response after a given number of sec
 	  File "<stdin>", line 1, in <module>
 	requests.exceptions.Timeout: HTTPConnectionPool(host='github.com', port=80): Request timed out. (timeout=0.001)
 
-### Cookie
+## Cookie
 If a response contains some Cookies(instance of RequestsCookieJar), you can quickly access them:
 
 	>>> r.cookies['example_cookie_name']
@@ -331,7 +331,7 @@ To send your own cookies to the server, you can use the cookies parameter:
     pickle.dumps(r1.cookies)
 	>>> r2 = requests.post('http://www.yourapp.com/somepage',cookies=r1.cookies)
 
-#### requests.cookies.RequestsCookieJar() usage:
+### requests.cookies.RequestsCookieJar() usage:
 RequestsCookieJar
 
 	>>> cookies.get(key)
@@ -346,7 +346,7 @@ RequestsCookieJar
     for cookie in cookies:
         print(cookie.domain, cookie.path, cookie.expires)
 
-#### cookie, http.cookiejar.Cookie
+### cookie, http.cookiejar.Cookie
 
     cookies.set('key', 123)
     cookie = http.cookiejar.Cookie( version=0, name='a', value='b1', port=None, port_specified=False, domain='', domain_specified=False, domain_initial_dot=False, path='/', path_specified=True, secure=False, expires=1507376934, discard=True, comment=None, comment_url=None, rest={'HttpOnly': None}, rfc2109=False)
