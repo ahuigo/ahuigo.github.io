@@ -67,6 +67,7 @@ partial copy struct
         *user.Password = "1234"
         *user.Username = "johndoe"
         fmt.Println("User :",user.Name, *user.Email, *user.Username, *user.Password)
+        //不复制 Email2
         copier.Copy(&req, &user)
         fmt.Println("RegistrationRequest :",req.Name, *req.Email, *req.Username, *req.Password)
     }
