@@ -1,5 +1,5 @@
 # AHUIGO 的笔记
-- 2019-07-19 [Sed 简记](/b/c/ops-sed) 
+- 2018-10-06 [sed 简记](/b/c/ops-sed) 
 - 2018-09-27 [ops-process-lsof](/b/c/ops-process-lsof) 
 - 2018-09-28 [py-http](/b/py/py-http) 
 - 2019-04-22 [gonic](/b/go/gonic) 

@@ -139,12 +139,14 @@ SERIAL 是自增
         FOREIGN KEY (uid,name) REFERENCES users(id,name), -- 组合级约束
     )
 
+#### Delete strict
 如果不允许users 删除任何被其它表blogs 引用的记录, 直到所有引用行被删除, 可以使用 DELETE RESTRICT：
 
     create blogs(
         uid int4 REFERENCES users(id) ON DELETE RESTRICT,
     )
 
+#### Delete cascade
 如果要让 users 在删除某条记录的同时，将所有引用该条记录的关联记录也一起删除，我们可以使用 DELETE CASCADE：
 
 > 提示，这些 DELETE 的行为同样适用于 UPDATE， 也就是说，有 `ON UPDATE RESTRICT, ON UPDATE CASCADE 和 ON UPDATE NO ACTION` 等行为。
@@ -176,7 +178,6 @@ create table 语句不支持
     CREATE UNIQUE INDEX name ON table (column [, ...]);
     id int   UNIQUE,
     UNIQUE (c2, c3)
-
 
 ### 表达式索引
 
