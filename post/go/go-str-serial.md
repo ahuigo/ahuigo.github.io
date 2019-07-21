@@ -2,13 +2,38 @@
 title: go str
 date: 2019-05-06
 ---
-# go str json
+# go json
 
-    package main
+## encode marshal bytes
 
-    import (
-        "encoding/json"
-        "fmt"
-        "log"
-        "strings"
-    )
+    import "encoding/json"
+    type response2 struct {
+        Page   int      `json:"page"` //json 是可选的, 用于转名字
+        Fruits []string `json:"fruits"`
+    }
+    //等价
+    bytes1 := json.Marshal(response2{})
+    bytes1 := json.Marshal(&response2{})
+
+### encode stdout
+    enc := json.NewEncoder(os.Stdout)
+    d := map[string]int{"apple": 5, "lettuce": 7}
+    enc.Encode(d)
+
+## Unmarshal
+
+### to map
+由于nil map 其实不能被赋值，所以go 利用reflect 动态生成的新map
+
+    byt := []byte(`{"num":6.13,"strs":["a","b"]}`)
+    var dat map[string]interface{}
+    if err := json.Unmarshal(byt, &dat); err != nil { }
+    fmt.Println(dat)    
+        //map[num:6.13 strs:[a b]]
+    strs := dat["strs"].([]interface{})
+        // ["a","b"]
+
+## to struct
+    res := response2{}
+    json.Unmarshal([]byte(str), &res)
+

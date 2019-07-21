@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-05-06 [go str](/b/go/go-str-serial) 
+- 2018-09-27 [map](/b/go/7.go-var-map) 
 - 2018-09-27 [Golang func](/b/go/16.go-func) 
 - 2019-04-17 [Aliyun oss](/b/arch/arch-oss) 
 - 2018-09-27 [Golang fmt](/b/go/6.go-fmt) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [Postgre 安装\配置\管理](/b/db/postgre-ddl-install) 
 - 2014-03-05 [Shell 编程](/b/c/shell-) 
 - 2018-10-06 [js dom file](/b/ria/js-dom-file) 
-- 2018-10-10 [mac 工具集](/b/mac/mac-tool) 
-- 2019-07-19 [安全的帐号设计](/b/sec/security-account) 
