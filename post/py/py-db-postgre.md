@@ -14,6 +14,8 @@ http://initd.org/psycopg/docs/cursor.html
     conn.set_session(readonly=True, autocommit=True)
     # cursor = conn.cursor()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        row = cursor.fetchone()
+        row[0],row['id'] 都可以
 
 ## cursor
 postgre 是用cusor 去执行+缓存数据

@@ -49,6 +49,7 @@ create table constraint:
     );
 
 ### add index/constraint
+二者实质没啥区别
 add constraint 
 
     alter table t add CONSTRAINT uesrs_pkey PRIMARY KEY(id)
@@ -138,6 +139,12 @@ SERIAL 是自增
         FOREIGN KEY (uid) REFERENCES users(id), -- 方法2表级约束
         FOREIGN KEY (uid,name) REFERENCES users(id,name), -- 组合级约束
     )
+
+然后`\d users` 就会有：
+
+    > \d users
+    Referenced by:
+        TABLE "blogs" CONSTRAINT "blogs_uid_fkey" FOREIGN KEY (uid) REFERENCES users(id)
 
 #### Delete strict
 如果不允许users 删除任何被其它表blogs 引用的记录, 直到所有引用行被删除, 可以使用 DELETE RESTRICT：
