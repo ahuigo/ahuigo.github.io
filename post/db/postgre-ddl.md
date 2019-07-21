@@ -191,6 +191,7 @@ show create table:
 ### drop
 
     drop TABLE [IF EXISTS ] xxx
+    drop TABLE [IF EXISTS ] xxx1,xx2
 
 ## Alter
 ALTER TABLE table_name `<action>`:
