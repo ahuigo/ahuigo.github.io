@@ -35,11 +35,12 @@ Detect Ajax(php 为例)：
     }
 
 ### fetch with cookie
+credential 发送include 时，allow-origin 不能是`*`
 
     fetch(url, {
         credentials: "same-origin"
         credentials: "include", // send cookie
-        mode: 'cors',
+        mode: 'cors', //"same-origin"
     }).then(...).then(..).catch(...);
     fetch(url).then(async r=> console.log(await r.text()))
 
