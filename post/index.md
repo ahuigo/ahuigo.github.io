@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-09-27 [Golang func](/b/go/16.go-func) 
+- 2019-04-17 [Aliyun oss](/b/arch/arch-oss) 
 - 2018-09-27 [Golang fmt](/b/go/6.go-fmt) 
 - 2018-09-27 [Golang：Array and slice](/b/go/10.go-slice-array) 
 - 2018-09-27 [Postgre User and Authentication](/b/db/postgre-ddl-user) 
@@ -37,5 +39,3 @@
 - 2018-10-06 [js dom file](/b/ria/js-dom-file) 
 - 2018-10-10 [mac 工具集](/b/mac/mac-tool) 
 - 2019-07-19 [安全的帐号设计](/b/sec/security-account) 
-- 2018-10-04 [js 的websocket 笔记](/b/ria/js-websocket) 
-- 2019-07-19 [html5 笔记](/b/ria/js-dom-html5) 
