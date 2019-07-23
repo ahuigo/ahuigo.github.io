@@ -412,6 +412,11 @@ Specify Joins conditions
     // Raw SQL
     db.Raw("SELECT name, age FROM users WHERE name = ?", 3).Scan(&result)
 
+	s.Exec("DELETE FROM users")
+
+### Specify table
+    s.Table("tableName").find(&users)
+
 ## Result
 
 ### rows()

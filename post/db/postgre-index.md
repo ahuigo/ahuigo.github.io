@@ -134,7 +134,7 @@ SERIAL 是自增
 ### foreign key
 为了保证 blogs 中的uid 一定存在于users中
 
-    create blogs(
+    create table blogs(
         uid INT references users(id),           -- 方法1
         FOREIGN KEY (uid) REFERENCES users(id), -- 方法2表级约束
         FOREIGN KEY (uid,name) REFERENCES users(id,name), -- 组合级约束
