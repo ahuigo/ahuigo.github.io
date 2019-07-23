@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2016-09-27 [golang pkg的使用](/b/go/2.go-pkg) 
 - 2019-05-06 [go str](/b/go/go-str-serial) 
 - 2018-09-27 [map](/b/go/7.go-var-map) 
 - 2018-09-27 [Golang func](/b/go/16.go-func) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [Postgre 的索引](/b/db/postgre-index) 
 - 2018-09-27 [Postgre 安装\配置\管理](/b/db/postgre-ddl-install) 
 - 2014-03-05 [Shell 编程](/b/c/shell-) 
-- 2018-10-06 [js dom file](/b/ria/js-dom-file) 
