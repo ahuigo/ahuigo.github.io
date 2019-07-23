@@ -72,6 +72,23 @@ partial copy struct
         fmt.Println("RegistrationRequest :",req.Name, *req.Email, *req.Username, *req.Password)
     }
 
+## init 
+init 时必须包含全部字段
+
+     n0 := Node{0,1,nil,nil}
+     n0 := Node{0,1,nil,nil,}
+     n0 := Node{0,1} //error: too few args
+
+否则用key:value 形式就不用包含全部字段了
+
+     n1 := Node{}       //default: id:0,data:nil,next:nil
+     n2 := Node{
+        id:   2,
+        data: nil,
+        next: &n1,
+    }
+    fmt.Println(n1,n2)
+
 ## define:
 
     type Node struct {
@@ -168,10 +185,10 @@ Note: 相同层次的同名字段也会让编译器⽆无所适从, 应该用显
     user:=User{Model:gorm.Model{ID:1}}
     pf("%#v,%#v\n", user, user.ID==user.Model.ID)
 
-example
+    user.ID=1
+    user.Model.ID=1
 
-    package main
-    import  "fmt"
+example2
 
     type Pet struct {
         age int
@@ -181,21 +198,21 @@ example
         name string
     }
 
-    func modify(pxp *PetX){
-        pxp.name = "name"
-        pxp.age = 123
-        pxp.Pet = Pet{200}
+    <!-- main.PetX{Pet:main.Pet{age:200}, name:"name"}
+
+#### init
+    type A struct{
+        a int
+    }
+    type B struct{
+        A
+        b int
     }
 
     func main() {
-        px:= PetX{}
-        modify(&px)
-
-        fmt.Printf("%#v\n", px)  
-        fmt.Printf("%#v\n", px.Pet)  
-    }
-    <!-- main.PetX{Pet:main.Pet{age:200}, name:"name"}
-    main.Pet{age:200} -->
+        b:=B{A:A{a:1}}
+            //error: b:=B{a:A{a:1}}
+        fmt.Println(b)
 
 
 ## 面向对象
@@ -233,7 +250,7 @@ struct method 是一个值：
         fmt.Println(d.Speak())  //Speak
     }
 
-注意指针类型匹配，
+非指针类型：随意(反正不会改值)
 
     type A interface{
         Say()
@@ -245,25 +262,8 @@ struct method 是一个值：
     Test(&Dog{}) //ok
     Test(Dog{}) //ok
 
-not work
+注意指针类型匹配，严格 
 
     func (d *Dog) Say() { }
     Test(&Dog{}) //ok
     Test(Dog{}) //not ok
-
-## init 
-init 时必须包含全部字段
-
-     n0 := Node{0,1,nil,nil}
-     n0 := Node{0,1,nil,nil,}
-     n0 := Node{0,1} //error: too few args
-
-否则用key:value 形式就不用包含全部字段了
-
-     n1 := Node{}       //default: id:0,data:nil,next:nil
-     n2 := Node{
-        id:   2,
-        data: nil,
-        next: &n1,
-    }
-    fmt.Println(n1,n2)
