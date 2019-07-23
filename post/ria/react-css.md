@@ -168,7 +168,7 @@ local:
         loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' 
     }
 
-# make style(material.io)
+## make style(material.io)
     const classes = makeStyles({
         root: {
             width: 500,

@@ -30,7 +30,7 @@ private:
     db.DropTable(&User{})
 
     // 删除表`users`
-    db.DropTable("users")
+    db.DropTable("users", "profiles")
 
     // 删除模型`User`的表和表`products`
     db.DropTableIfExists(&User{}, "products")

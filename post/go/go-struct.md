@@ -159,7 +159,17 @@ Note: 相同层次的同名字段也会让编译器⽆无所适从, 应该用显
         title string 
     }
 
-### 继承与赋值
+### 继承get/set 值
+
+    type User struct {
+        gorm.Model
+        title string 
+    }
+    user:=User{Model:gorm.Model{ID:1}}
+    pf("%#v,%#v\n", user, user.ID==user.Model.ID)
+
+example
+
     package main
     import  "fmt"
 

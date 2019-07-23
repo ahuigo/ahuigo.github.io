@@ -5,6 +5,8 @@ private:
 ---
 # Create 创建记录
 
+## newRecord
+
     p := Product{Code: "L1217", Price: 17}
     fmt.Printf("%#v\n", db.NewRecord(p))    // => 主键为空返回`true`
     fmt.Printf("%#v\n", p.ID)
@@ -60,25 +62,6 @@ If you want to update a field’s value in BeforeCreate hook, you can use scope.
 
 # Read 
 ## 查询
-    //通过主键查询第一条记录
-    db.First(&user)
-    //// SELECT * FROM users ORDER BY id LIMIT 1;
-
-    // 随机取一条记录
-    db.Take(&user)
-    //// SELECT * FROM users LIMIT 1;
-
-    // 通过主键查询最后一条记录
-    db.Last(&user)
-    //// SELECT * FROM users ORDER BY id DESC LIMIT 1;
-
-    // 拿到所有的记录
-    db.Find(&users)
-    //// SELECT * FROM users;
-
-    // 查询指定的某条记录(只可在主键为整数型时使用)
-    db.First(&user, 10)
-    //// SELECT * FROM users WHERE id = 10;
 
 insert-update: FirstOrCreate
 
@@ -413,9 +396,35 @@ Specify Joins conditions
     db.Raw("SELECT name, age FROM users WHERE name = ?", 3).Scan(&result)
 
 ## Result
+### First Take Last
 
-### rows()
-### Scan(&rows)
+    //通过主键查询第一条记录
+    db.First(&user)
+    //// SELECT * FROM users ORDER BY id LIMIT 1;
+
+    // 查询指定的某条记录(只可在主键为整数型时使用)
+    db.First(&user, 10)
+    //// SELECT * FROM users WHERE id = 10;
+
+    // 随机取一条记录
+    db.Take(&user)
+    //// SELECT * FROM users LIMIT 1;
+
+    // 通过主键查询最后一条记录
+    db.Last(&user)
+    //// SELECT * FROM users ORDER BY id DESC LIMIT 1;
+
+### Find(&rows) 可以带where
+    // 拿到所有的记录
+    db.Find(&users)
+    //// SELECT * FROM users;
+
+    // Cancel limit condition with -1
+    db.Limit(10).Find(&users1).Limit(-1).Find(&users2)
+    //// SELECT * FROM users LIMIT 10; (users1)
+    //// SELECT * FROM users; (users2)
+
+### Scan(&row)
 Scan results into another struct.
 
     type Result struct {
@@ -426,6 +435,20 @@ Scan results into another struct.
     var result Result
     db.Table("users").Select("name, age").Where("name = ?", 3).Scan(&result)
 
+好像`&rows` 也可以
+
+### Row
+    func (s *DB) Row() *sql.Row
+
+### Rows()
+    rows, err := db.Table("orders").Select("date(created_at) as date, sum(amount) as total").Group("date(created_at)").Rows()
+    for rows.Next() {
+        var name string
+        if err := rows.Scan(&name); err != nil {
+            log.Fatal(err)
+        }
+        names = append(names, name)
+    }
 
 ### Pluck
 Query single column from a model as a map, if you want to query multiple columns, you should use Scan instead
@@ -585,3 +608,8 @@ If a model has a `DeletedAt` field, it will get a soft delete ability automatica
     // Delete record permanently with Unscoped
     db.Unscoped().Delete(&order)
     //// DELETE FROM orders WHERE id=10;
+
+# session
+	db := db1.Begin()
+    db.Rollback()
+    db.Commit()

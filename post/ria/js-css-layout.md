@@ -43,6 +43,19 @@ img 会超出div范围, 可以用max-width 限制
 
     <img style='max-height: 100%; max-width: 100%; '/> 
 
+# table
+https://css-tricks.com/almanac/properties/t/table-layout/
+
+    table-layout: fixed; //等宽效果: 
+
+## row
+    .topics tr { line-height: 14px; }
+## td
+    td{    
+        height: 14px; white-space: nowrap; 
+        width="pixels|%"
+    }
+
 # 自适应
 ## 下拉菜单列表
 http://imweb.io/topic/559f902a3d7bb8096b69cfdd
