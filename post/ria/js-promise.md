@@ -2,6 +2,36 @@
 title: JS Promise
 date: 2018-10-04
 ---
+# 递归promise
+Promise 是递归的，Reject 不是
+
+    const onResolved = e => console.log('resolve , ', e );
+    const onRejected = e => console.log('reject , ', e );
+
+    new Promise( ( resolve , reject ) => {
+        resolve( new Promise( ( resolve , reject ) => {
+            resolve(42);
+        } ) );
+    } ).then( onResolved , onRejected );
+
+    new Promise( ( resolve , reject ) => {
+        resolve( new Promise( ( resolve , reject ) => {
+            reject(42);
+        } ) );
+    } ).then( onResolved , onRejected );
+
+    new Promise( ( resolve , reject ) => {
+        reject( new Promise( ( resolve , reject ) => {
+            resolve(42);
+        } ) );
+    } ).then( onResolved , onRejected );
+
+    new Promise( ( resolve , reject ) => {
+        reject( new Promise( ( resolve , reject ) => {
+            reject(42);
+        } ) );
+    } ).then( onResolved , onRejected );
+
 # JS Promise
 实现异步串行写法
 1. generator
@@ -178,6 +208,13 @@ Promise.all()实现如下：
 1. then: async
 2. await: sync
 
+##
+    fetch(this.url, this.options).then(async (response) => {
+            throw (res)
+    }).catch(e => {
+        this.error(e.message || e, e);
+    })
+
 ## await catch data
 await 不能捕获exceptio/reject
 
@@ -300,7 +337,7 @@ e.g.:
 
 ## combine await/then/catch
 1. catch 不会向后面的 catch 传导, 但是会向后面的then 传值
-2. reject(r)、resolve(r) 不会终止函数，但是第一个r 会被promise 传给 catch/then
+2. reject(r)、resolve(r) 不会终止函数，但是第一个r 会被promise 传给 catch/then
 
 example:
 
