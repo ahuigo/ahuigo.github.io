@@ -38,6 +38,14 @@ date: 2012-07-08
 	new Date("2016-01-01 11:13:00");        +8区(默认)
 	new Date("October 13, 1975 11:13:00");
 
+### ISOString
+    now.toISOString()
+    "2019-07-23T11:40:06.284Z"
+
+html5 的datetime-local 会省略`Z`
+
+    input.value = now.toISOString().slice(0,19)
+
 ## EDT VS EST
 参考：https://24timezones.com/shiqu/edt
 1. EDT 北美东部夏令时间是UTC-4。生活中可等价于：GMT-4

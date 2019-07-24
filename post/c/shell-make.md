@@ -4,6 +4,10 @@ date: 2019-05-06
 private:
 ---
 # Shell make
+## Specify Makefile
+    -f makefile2
+
+## argv
     $ make test FLAG=debug
 
 然后
