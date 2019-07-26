@@ -208,11 +208,11 @@ Promise.all()实现如下：
 1. then: async
 2. await: sync
 
-##
-    fetch(this.url, this.options).then(async (response) => {
-            throw (res)
+## then 包含了await
+    fetch('/abc').then(async (response) => {
+        throw 'error'
     }).catch(e => {
-        this.error(e.message || e, e);
+        console.log([e, e]);
     })
 
 ## await catch data

@@ -36,7 +36,7 @@ date: 2012-07-08
 
 	new Date("2016-01-01");                 +0区(默认)
 	new Date("2016-01-01 11:13:00");        +8区(默认)
-	new Date("October 13, 1975 11:13:00");
+	new Date("October 13, 1975 11:13:00");  +8区(默认)
 
 ### ISOString
     now.toISOString()

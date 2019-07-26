@@ -110,6 +110,20 @@ Refer to : http://segmentfault.com/blog/jslite/1190000002465197
 	target.addEventListener('click', listener, false);
 	target.removeEventListener('click', listener, false);
 
+### remove all listener:
+
+    var el = document.getElementById('el-id'),
+        elClone = el.cloneNode(true);
+
+    el.parentNode.replaceChild(elClone, el);
+
+or:
+
+    window.addEventListener(type, function (event) {
+        event.stopPropagation();
+    }, true);
+
+
 ### add listener
 
 	//监听顺序FIFO

@@ -186,7 +186,7 @@ for string
     'hello world'.includes('')      //true
 
 ## index in arr/obj
-不要用：`index in arr`, 他不是`value in arr`(这与python 不同)
+是用：`index in arr`, 不是`value in arr`(这与python 不同)
 
 	Array.prototype.inArray = function(needle) {
         var length = this.length;

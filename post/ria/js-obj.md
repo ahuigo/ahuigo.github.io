@@ -116,14 +116,16 @@ items:
     { a: 3 }
 
 ## Property 属性
+property  list
 
     obj.constructor
-    obj.hasOwnProperty('attr') # 不是继承proto的
     obj.propertyIsEnumerable('attr')
         判断给定的属性是否可以用 for...in 语句进行枚举。
     obj.__proto__
 
-in 可以判断ownProp 以及继承的props
+obj.hasOwnProperty('attr') # 不是继承proto的
+
+in, `for in` 可以判断ownProp 以及继承的props
 
     > oo={}
     > oo.__proto__= {a:1}

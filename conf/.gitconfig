@@ -38,3 +38,5 @@
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [icdiff]
 	options = --highlight --line-numbers
+[branch]
+	autoSetupMerge = always
