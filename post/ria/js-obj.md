@@ -98,7 +98,7 @@ e.g.
 	delete variable
 	delete obj.name
 
-## values
+## values(不含inherits)
 values:
 
     Object.values({ one: 1, two: 2 })            //[1, 2]

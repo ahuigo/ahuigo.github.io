@@ -24,6 +24,7 @@ https://codepen.io/ahuigo/pen/ZNEZYo?editors=1000
         var features = map.queryRenderedFeatures(bbox, { layers: ['skeleton'] });
 
 ## filter
+### all:
 
     [
         "all",
@@ -31,8 +32,10 @@ https://codepen.io/ahuigo/pen/ZNEZYo?editors=1000
         ["<", "number", 10]
     ]
 
-## curd: soureces and layers
+### boolean
+https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/
 
+## curd: soureces and layers
 
 ### get
 
