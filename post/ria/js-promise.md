@@ -2,6 +2,36 @@
 title: JS Promise
 date: 2018-10-04
 ---
+# 递归promise
+Promise 是递归的，Reject 不是
+
+    const onResolved = e => console.log('resolve , ', e );
+    const onRejected = e => console.log('reject , ', e );
+
+    new Promise( ( resolve , reject ) => {
+        resolve( new Promise( ( resolve , reject ) => {
+            resolve(42);
+        } ) );
+    } ).then( onResolved , onRejected );
+
+    new Promise( ( resolve , reject ) => {
+        resolve( new Promise( ( resolve , reject ) => {
+            reject(42);
+        } ) );
+    } ).then( onResolved , onRejected );
+
+    new Promise( ( resolve , reject ) => {
+        reject( new Promise( ( resolve , reject ) => {
+            resolve(42);
+        } ) );
+    } ).then( onResolved , onRejected );
+
+    new Promise( ( resolve , reject ) => {
+        reject( new Promise( ( resolve , reject ) => {
+            reject(42);
+        } ) );
+    } ).then( onResolved , onRejected );
+
 # JS Promise
 实现异步串行写法
 1. generator
@@ -180,16 +210,26 @@ async function 本质就是promise:
 1. return 是resolve
 1. exception 是reject
 
-## 普通try catch(via await)
-只有用await 才能catch 到async 发出的 exception. 
-没有await 则是： UnhandledPromiseRejectionWarning
+
+## then 包含了await
+    fetch('/abc').then(async (response) => {
+        throw 'error'
+    }).catch(e => {
+        console.log([e, e]);
+    })
+
+## await exception
+1. 只有 await 可以通过catch 得到exception/reject 的值
+2. 没有await 则是： UnhandledPromiseRejectionWarning
+
+await exception
 
     f2=async ()=>{throw 'error'}
     f=async ()=>{
         try{
             await f2()
         }catch(e){
-        console.log([e])
+            console.log([e])
         }
     }
     f()
@@ -306,7 +346,7 @@ e.g.:
 
 ## combine await/then/catch
 1. catch 不会向后面的 catch 传导, 但是会向后面的then 传值
-2. reject(r)、resolve(r) 不会终止函数，但是第一个r 会被promise 传给 catch/then
+2. reject(r)、resolve(r) 不会终止函数，但是第一个r 会被promise 传给 catch/then
 
 example:
 

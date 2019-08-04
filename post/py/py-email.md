@@ -10,16 +10,14 @@ date: 2018-09-28
 2. 邮件收发过程
 
 ## yagmail
-```
-import yagmail
-yag = yagmail.SMTP(user='test@163.com', password='password', host='smtp.163.com', port=25)
-yag = yagmail.SMTP('test@163.com', host='smtp.163.com', port=587, smtp_starttls=True, smtp_ssl=False)
-yag = yagmail.SMTP('mygmailusername')
-yag.send(['to@someone.com'], 'subject', content, attachments=['a.txt', 'b.jpg'])
-contents = ["comtent1", "contents2"]
-yag.send(to = to, subject = subject, contents = [body, '<div>...</div>', '/local/to/a.png'])
 
-```
+    import yagmail
+    yag = yagmail.SMTP(user='test@163.com', password='password', host='smtp.163.com', port=25)
+    yag = yagmail.SMTP('test@163.com', host='smtp.163.com', port=587, smtp_starttls=True, smtp_ssl=False)
+    yag = yagmail.SMTP('mygmailusername')
+    yag.send(['to@someone.com'], 'subject', content, attachments=['a.txt', 'b.jpg'])
+    contents = ["comtent1", "contents2"]
+    yag.send(to = to, subject = subject, contents = [body, '<div>...</div>', '/local/to/a.png'])
 
 # 邮件收发过程
 我们回到电子邮件，假设我们自己的电子邮件地址是`me@163.com`，对方的电子邮件地址是`friend@sina.com`:
@@ -123,7 +121,7 @@ Python对SMTP支持有smtplib和email两个模块，`email`负责构造邮件，
 
 	server = smtplib.SMTP(smtp_server, 25)
 	server.set_debuglevel(1)
-	server.login(from_addr, password)
+   	server.login(from_addr, password)
 	server.sendmail(from_addr, [to_addr], msg.as_string())
 	server.quit()
 

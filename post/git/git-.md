@@ -702,6 +702,8 @@ Set default pull branch
 You can do this with a single command:
 
 	git branch --track master origin/master
+    // or auto setup
+    git config --global branch.autoSetupMerge always
 
 ### Solove Conflicts
 Use vimdiff(Default)
@@ -787,9 +789,9 @@ If u want to restart rebasing and do not want any current file patch
 		Restart the rebasing process by skipping the current patch.
 
 # cherry-pick
-强制合并指定的分支
+git cherry-pick命令"复制"一个提交节点并在当前分支做一次完全一样的新提交。
 
-	git cherry-pick <commit1><commit2> <commit3> ...  //apply specified <commit> on current branch
+    $ git cherry-pick 2c33a
 
 # git hub
 hub is a command-line wrapper for git that makes you better at GitHub.

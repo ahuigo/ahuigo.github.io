@@ -16,6 +16,6 @@ https://code.visualstudio.com/docs/python/python-tutorial
 2. 本地的包，应该创建touch __init__.py
 
 ## Navigation
-F12 Go to definition
-⌃- / ⌃⇧- Go back/forward
-cmd+j toggle panel (cmd+`)
+    F12 Go to definition
+    ⌃- / ⌃⇧- Go back/forward
+    cmd+j toggle panel (cmd+`)

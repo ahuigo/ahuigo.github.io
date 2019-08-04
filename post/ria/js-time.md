@@ -196,9 +196,15 @@ short:
 
 	new Date("2016-06-03") === new Date(2016, 05,04,00,00,00);
 
+JSON 用的是：
+
+    JSON.stringify(new Date)
+        ""2019-07-26T04:41:12.524Z""
+
 UTC to miliseconds
 
-	Date.UTC(1970, 9, 21)
+	Date.UTC(1970, 9, 21) -> unixtimestamp
+
 
 ### parse time
 

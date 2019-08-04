@@ -10,6 +10,10 @@ Socket是网络编程的一个抽象概念。通常我们用一个Socket表示�
 
 # socket 
 
+## socket timeout
+    import socket
+    socket.setdefaulttimeout(120)
+
 ## socket bufer
 socket 可以控制window size: `socket.SO_RCVBUF` `SO_SNDBUF`
 
