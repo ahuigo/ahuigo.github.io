@@ -175,21 +175,37 @@ Promise.all()实现如下：
     });
 
 # async-await
-1. then: async
-2. await: sync
+## async function is promise
+async function 本质就是promise:
+1. return 是resolve
+1. exception 是reject
 
-## await catch data
-await 不能捕获exceptio/reject
+## 普通try catch(via await)
+只有用await 才能catch 到async 发出的 exception. 
+没有await 则是： UnhandledPromiseRejectionWarning
 
-但是 await 可以通过catch 得到exception/reject 的值
-
+    f2=async ()=>{throw 'error'}
     f=async ()=>{
-        p=await (new Promise(()=>{throw new Exception('aaaaa');}).catch(r=>100)); 
-        //100
-        console.log(p)
+        try{
+            await f2()
+        }catch(e){
+        console.log([e])
+        }
     }
     f()
 
+## Promise: 默认try catch
+promise 中的exception 会被reject
+
+    new Promise(()=>{throw new Exception('aaaaa');}).catch(r=>r).then(r=>console.log([r]))
+
+
+Promise， 内`async(r)` 是一个内promise, 这个内promise没有catch, 报`UnhandledPromiseRejectionWarning`
+
+    new Promise(async()=>{throw new Exception('aaaaa');}).catch(r=>r).then(r=>console.log([r]))
+
+
+## example
 await reject:
 
     f = async ()=>{
@@ -203,16 +219,6 @@ await reject:
         await new Promise(r=>{})
     }
     f()
-
-## catch async exception
-只有用await 才能catch 到async 发出的 exception
-
-    try{
-        await f()
-    } catch(e){
-        console.log(e)
-    }
-
 
 ## throw vs catch
     new Promise(function() {

@@ -21,8 +21,11 @@ date: 2019-05-06
     enc.Encode(d)
 
 ## Unmarshal
+### str to struct
+    res := response2{}
+    json.Unmarshal([]byte(str), &res)
 
-### to map
+### str to map 
 由于nil map 其实不能被赋值，所以go 利用reflect 动态生成的新map
 
     byt := []byte(`{"num":6.13,"strs":["a","b"]}`)
@@ -33,7 +36,9 @@ date: 2019-05-06
     strs := dat["strs"].([]interface{})
         // ["a","b"]
 
-## to struct
-    res := response2{}
-    json.Unmarshal([]byte(str), &res)
+### map to struct
+    //import "github.com/mitchellh/mapstructure"
+	err := mapstructure.Decode(mapinput, &result)
+	err := mapstructure.Decode(&mapinput, &result)
 
+其实是利用反射：[go-lib/str/map2struct.go]

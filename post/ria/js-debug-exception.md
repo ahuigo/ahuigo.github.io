@@ -3,14 +3,22 @@ title: try-catch
 date: 2018-10-04
 ---
 # try-catch
-custom exception
+## throw any type
+    throw "string"
+    throw {message:"msg"}
+    e = Error('msg')
+        e.message
+        e.stack
+    e = ReferenceError('undefined')
+
+## custom exception
 
     function UserException(message) {
         this.message = message;
         this.name = "UserException";
     }
 
-ReferenceError:
+## ReferenceError:
 
     undefined_func()
 
@@ -21,8 +29,9 @@ exception: Error
         r2 = 100; // 该语句不会执行
          throw new Error('输入错误');
     } catch (e) {
-         if (e instanceof TypeError) 
+        console.log(e instanceof ReferenceError) 
         console.log('出错了：' + e);
+        console.log('出错了：' + e.message);
     } finally {
         console.log('finally');
     }
@@ -44,3 +53,14 @@ exception: Error
 
 ## 异步错误处理
 异步处理(即使js这种单线程异步), 异常不会抛出到主代码。内部需要自己try-catch
+
+    async function f(){
+        throw "f error"
+    }
+    try{
+        f()
+    }catch(e){
+        console.log("error:", e)
+    }
+
+报：UnhandledPromiseRejectionWarning: f error

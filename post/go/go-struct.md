@@ -5,7 +5,7 @@ date: 2019-03-24
 # Golang Notes: struct
 struct 是值类型，slice 是引用类型(指针), 以下赋值方法是按值的
 
-    type A struct{x int}
+    type A struct{x int; b string}
     a:=A{}
     b:=A{}
     fmt.Printf("%p,%p\n", &a,&b)  //not same
