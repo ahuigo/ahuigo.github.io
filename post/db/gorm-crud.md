@@ -413,6 +413,7 @@ Specify Joins conditions
 
     // 查询指定的某条记录(只可在主键为整数型时使用)
     db.First(&user, 10)
+    db.Firse(&User{ID:10})
     //// SELECT * FROM users WHERE id = 10;
 
     // 随机取一条记录
@@ -530,7 +531,7 @@ if you don’t want to call them, you could use `UpdateColumn, UpdateColumns`
     //// UPDATE users SET name='hello', age=18 WHERE id = 111;
 
 ## Batch Updates
-Hooks won’t run when do batch updates
+Note: Hooks won’t run when do batch updates
 
     db.Table("users").Where("id IN (?)", []int{10, 11}).Updates(map[string]interface{}{"name": "hello", "age": 18})
     //// UPDATE users SET name='hello', age=18 WHERE id IN (10, 11);

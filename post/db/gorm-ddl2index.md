@@ -3,6 +3,11 @@ title: Gorm ddl 操作
 date: 2019-07-07
 private:
 ---
+# connect
+    db.DB().SetMaxIdleConns(30)
+    db.DB().SetMaxOpenConns(60)
+    defer db.Close()
+
 # Gorm Migrate
 自动迁移仅仅会创建表，缺少列和索引，并且不会改变现有列的类型或删除未使用的列以保护数据。
 
@@ -57,7 +62,7 @@ private:
 
 
 # 索引
-idx
+## idx
 
     // 为`name`列添加索引`idx_user_name`
     db.Model(&User{}).AddIndex("idx_user_name", "name")
@@ -65,7 +70,7 @@ idx
     // 为`name`, `age`列添加索引`idx_user_name_age`
     db.Model(&User{}).AddIndex("idx_user_name_age", "name", "age")
 
-UniqueIndex
+## UniqueIndex
 
     // 添加唯一索引
     db.Model(&User{}).AddUniqueIndex("idx_user_name", "name")
@@ -73,7 +78,7 @@ UniqueIndex
     // 为多列添加唯一索引
     db.Model(&User{}).AddUniqueIndex("idx_user_name_age", "name", "age")
 
-RemoveIndex
+## RemoveIndex
 
     // 删除索引
     db.Model(&User{}).RemoveIndex("idx_user_name")

@@ -50,8 +50,16 @@ create table constraint:
 
 ### add index/constraint
 二者实质没啥区别
+add index
+
+    CREATE [ UNIQUE | FULLTEXT | SPATIAL ] INDEX index_name
+        ON table_name (col_name [length],…) [ASC | DESC]
+
 add constraint 
 
+    \h alter table
+    alter table users add UNIQUE(name,id);
+    alter table users add CONSTRAINT uesrs_pkey  UNIQUE(name,id);
     alter table t add CONSTRAINT uesrs_pkey PRIMARY KEY(id)
     alter table t add CONSTRAINT uesrs_pkey UNIQUE (id)
     column_constraint:
@@ -62,23 +70,20 @@ add constraint
         UNIQUE index_parameters |
         PRIMARY KEY index_parameters |...
 
-create index
-
-    CREATE [ UNIQUE | FULLTEXT | SPATIAL ] INDEX index_name
-        ON table_name (col_name [length],…) [ASC | DESC]
-
 add constraint via index(unique): 
 https://pg.sjk66.com/postgresql/unique-constraint.html
 https://stackoverflow.com/questions/23542794/postgres-unique-constraint-vs-index
 
     alter table t add CONSTRAINT uesrs_pkey UNIQUE USING INDEX index_name;
 
-### Rename/drop constraint
-rename constraint:
+### Rename index/constraint
+rename index/constraint:
 
+    \h alter index
+    ALTER INDEX [ IF EXISTS ] name RENAME TO new_name
     ALTER TABLE name RENAME CONSTRAINT constraint_name TO new_constraint_name;
 
-Drop index/constraint:
+### Drop index/constraint:
 
     ALTER TABLE table DROP CONSTRAINT products_pkey;
     DROP INDEX index_name;
@@ -136,9 +141,12 @@ SERIAL 是自增
 
     create table blogs(
         uid INT references users(id),           -- 方法1
+        uid INT,
+        name Text,
         FOREIGN KEY (uid) REFERENCES users(id), -- 方法2表级约束
-        FOREIGN KEY (uid,name) REFERENCES users(id,name), -- 组合级约束
+        FOREIGN KEY (uid,name) REFERENCES users(id,name), -- 组合级约束(column一一对应)
     )
+    Alter table "blogs" add FOREIGN KEY (uid,name) REFERENCES users(id,name)
 
 然后`\d users` 就会有：
 
