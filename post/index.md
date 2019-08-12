@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [语法总原则](/b/eng/eng-sentence) 
 - 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
 - 2016-09-27 [golang pkg的使用](/b/go/2.go-pkg) 
 - 2019-05-06 [go str](/b/go/go-str-serial) 
@@ -38,4 +39,3 @@
 - 2012-07-08 [GMT,UTC,DST,CST 各种时间标准](/b/c/shell-time) 
 - 2019-07-19 [shell 表达式](/b/c/shell-expr) 
 - 2018-09-27 [Postgre 的索引](/b/db/postgre-index) 
-- 2018-09-27 [Postgre 安装\配置\管理](/b/db/postgre-ddl-install) 

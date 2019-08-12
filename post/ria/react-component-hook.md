@@ -377,7 +377,7 @@ without key: 会报错
         }
         updateRepos = (id) => {
           this.setState({ loading: true })
-
+    
           fetchRepos(id)
             .then((repos) => this.setState({
               repos,
@@ -394,64 +394,6 @@ without key: 会报错
         }
       }
     }
-
-# Hook
-https://juejin.im/post/5d478b2d518825673a6ae1b9
-我们不再需要调用super(props)，不再需要考虑bind方法或this关键字，也不再需要使用类字段。，我们之前讨论的所有“小”问题都会消失。
-
-## 状态hook
-useState只接受一个参数，即状态的初始值。它返回的是一个数组，其中第一项是状态块，第二项是更新该状态的函数。
-
-    const [ loading, setLoading ] = React.useState(true) // 👌
-    const [ values, setValue] = React.useState({k1:1}) // 👌
-    setValue({...values, k1:2})
-
-## 生命周期方法 useEffect
-useEffect使我们能在function组件中执行副作用操作。它有两个参数，一个函数和一个可选数组。函数定义要运行的副作用，(可选的)数组定义何时“重新同步”(或重新运行)effect。
-
-    React.useEffect(() => {
-        document.title = `Hello, ${username}`
-    }, [username])
-
-上面的代码中，传递给useEffect的函数将在用户名发生更改时运行 同步。
-现在，我们如何使用代码中的useEffect Hook来同步repos和fetchRepos API请求?
-
-    function ReposGrid ({ id }) {
-      const [ repos, setRepos ] = React.useState([])
-      const [ loading, setLoading ] = React.useState(true)
-    
-      React.useEffect(() => {
-        setLoading(true)
-    
-        fetchRepos(id)
-          .then((repos) => {
-            setRepos(repos)
-            setLoading(false)
-          })
-      }, [id])
-    
-      if (loading === true) {
-        return <Loading />
-      }
-    
-      return (
-        <ul>
-          {repos.map(({ name, handle, stars, url }) => (
-            <li key={name}>
-              <ul>
-                <li><a href={url}>{name}</a></li>
-                <li>@{handle}</li>
-                <li>{stars} stars</li>
-              </ul>
-            </li>
-          ))}
-        </ul>
-      )
-    }
-
-
-
-
 
 
 

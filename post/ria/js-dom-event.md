@@ -219,13 +219,19 @@ addEvent submit handler: 只能用e.preventDefault()
     e.keyCode == e.which == e.button+1:
          16-Shift, 17-Ctrl, 18-Alt
          1-click 3-right-click
-    e.ctrlKey, e.altKey
+    e.ctrlKey, e.altKey,e.metaKey(true/false)
 
     //body.onkeydown = handler
     document.addEventListener('keydown', function(e){
         isShiftKey = window.event ? window.event.shiftKey : e.shiftKey
         console.log(e.which,e.keyCode,e.ctrlKey, isShiftKey)
      })
+
+shift click:
+
+    function onclick(e) {
+        console.log(e.button, e.shiftKey )
+    }
 
 ### keyEvent with textarea
 

@@ -199,12 +199,11 @@ short:
 JSON 用的是：
 
     JSON.stringify(new Date)
-        ""2019-07-26T04:41:12.524Z""
+    "2016-01-01T00:00:00.000Z"
 
 UTC to miliseconds
 
 	Date.UTC(1970, 9, 21) -> unixtimestamp
-
 
 ### parse time
 

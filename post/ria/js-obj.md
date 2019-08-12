@@ -123,6 +123,7 @@ property  list
         判断给定的属性是否可以用 for...in 语句进行枚举。
     obj.__proto__
 
+### for in prop
 obj.hasOwnProperty('attr') # 不是继承proto的
 
 in, `for in` 可以判断ownProp 以及继承的props
@@ -131,6 +132,16 @@ in, `for in` 可以判断ownProp 以及继承的props
     > oo.__proto__= {a:1}
     > 'a' in oo
     true
+
+ Object.keys(obj)  ownprop
+
+     static ObjectFlip(obj) {
+        const ret = {};
+        Object.keys(obj).forEach((key) => {
+            ret[obj[key]] = key;
+        });
+        return ret;
+    }
 
 ## value
 
