@@ -37,6 +37,13 @@ width 也会受单词的影响，所以你还需要加上
 	word-break: break-all;
 
 # color
+## color tool
+mac:
+1. digital color meter
+1. ColorSync Utility
+2. chrome color picker
+
+在计算机中经常使用rgb 三原色来表示所有的颜色。在做艺术设计时，经常使用另一种更多允观的HSL或者HSV 来表示。对于HSL 来说，
 
     hsl(359, 100%, 50%)
     hsla(239, 100%, 50%, 0.36)
