@@ -34,6 +34,8 @@ sed 命令行基本格式为:
 
     s 替换
     c change line
+        $ gsed -i '/^import skele/c ahui' b.txt
+        $ gsed -i '/^import skele/c\ahui' b.txt
     d 删除line
     i 插入line
     a 追加line

@@ -22,6 +22,8 @@ empty item 不会被for in 遍历, 但是会被 for of 遍历
         [...Array(5)].map((v,i) => i);
     _.range(5)
 
+以下有问题，可能引入prototype
+
     for(let _ in Array(5))
 
 undefined 数组:

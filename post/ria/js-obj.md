@@ -6,7 +6,7 @@ description:
 ---
 # Object
 
-## isEempty
+## isEmpty
     ECMA 7+:
     Object.entries(obj).length === 0 && obj.constructor === Object
     ECMA 5+:
@@ -223,6 +223,7 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 # observe
 
 ## proxy 
+see js-obj-proxies.md
 
     let validator = {
         set: function(obj, prop, value) {
@@ -284,6 +285,12 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
     };
 
 ## 对象实例的原型
+    > new A().constructor===A
+        true
+    > new A().__proto__===A.prototype
+        true
+
+So:
 1. prototype是原型独有的属性,也就是有constructor可以实例化对象的方法才有;
 2. `__proto__` 是对象才有的属性, 指向原型属性，实现原型继承.
 

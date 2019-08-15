@@ -156,10 +156,30 @@ NS记录是域名服务器记录，用来指定域名由哪台服务器来进行
   $ dig +trace math.stackexchange.com
   上面命令的第一段列出根域名.的所有NS记录，即所有根域名服务器。
 
+
+# resolve.conf
+cat /etc/resolv.conf
+
+    nameserver 10.233.0.3
+    search default.svc.cluster.local svc.cluster.local cluster.local
+
+Kubernetes 中，域名的全称，必须是 service-name.namespace.svc.cluster.local 这种模式
+`curl b` 会查找：b.default.svc.cluster.local -> b.svc.cluster.local -> b.cluster.local ，直到找到为止
+
+    // curl b，可以一次性找到（b +default.svc.cluster.local）
+    b.default.svc.cluster.local
+
+    // curl b.default，第一次找不到（ b.default + default.svc.cluster.local）
+    b.default.default.svc.cluster.local
+    // 第二次查找（ b.default + svc.cluster.local），可以找到
+    b.default.svc.cluster.local
+
 # DNS Utility:
-1. host <domain> - DNS lookup Utility
-1. dig [@dns_server] <domain> - DNS lookup Utility
-1. nslookup ahuigo.github.io
+1. `host <domain>` - DNS lookup Utility
+1. `dig [@dns_server] <domain>` - DNS lookup Utility
+1. `nslookup ahuigo.github.io [8.8.8.8]`
+
+e.g.
 
 	host baidu.com [dns_server]
 	dig baidu.com

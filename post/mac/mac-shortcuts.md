@@ -257,7 +257,7 @@ http://sspai.com/27094
 ## Toolbar
 	⌥ +⌘ +T	Show/Hide Toolbar
 
-## Capture
+## Capture Screen
 
 	Shift+⌘ +3 Capture the screen to a file
 	Ctrl-Shift+⌘ +3 Capture the screen to a Clipboard

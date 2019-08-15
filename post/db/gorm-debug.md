@@ -17,5 +17,3 @@ TableName 是根据ModelName 自动生成的, 并且通过下列代码将表名�
     db.LogMode(true)
     // Debug a single operation, show detailed log for this operation
     db.Debug().Where("name = ?", "jinzhu").First(&User{})
-
-
