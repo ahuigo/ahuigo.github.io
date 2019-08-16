@@ -291,7 +291,7 @@ trigger resize:
 trigger:
 
     $('#container').on('click', 'a', function(e) {
-　　　　window.history.pushState(null, null, $(this).attr('href'));
+　　　　window.history.pushState(null, "title", $(this).attr('href'));
 　　　　// ajax fetch & render
 　　　　e.preventDefault();
 　　});

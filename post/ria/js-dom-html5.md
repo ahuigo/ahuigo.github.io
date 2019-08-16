@@ -272,9 +272,15 @@ Example:
 
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, title="page 2", "bar2.html");
-	//title 可能不生效
 
-## event
+参数：
+
+    stateObj
+        当离开此页时，popstate 会收到e.stateObj
+	title
+        可能不生效
+
+## popstate
 
 	window.onpopstate = function(event) {
 		alert("location: " + document.location + ", state: " + JSON.stringify(event.state));

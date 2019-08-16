@@ -2,8 +2,7 @@
 title: net-dns
 date: 2018-09-28
 ---
-# Preface
-
+# DNS 简介
 主机名.次级域名.顶级域名.根域名
 
   host.sld.tld.root
@@ -170,6 +169,7 @@ Kubernetes 中，域名的全称，必须是 service-name.namespace.svc.cluster.
     b.default.svc.cluster.local
 
     // curl b.default，第一次找不到（ b.default + default.svc.cluster.local）
+
     b.default.default.svc.cluster.local
     // 第二次查找（ b.default + svc.cluster.local），可以找到
     b.default.svc.cluster.local

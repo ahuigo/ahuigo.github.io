@@ -38,7 +38,6 @@ Kubernetes 是不依赖于 Docker 的，完全可以使用其他的容器引擎�
         ports:
             - containerPort: 80
 
-
 # 运行pod
     $ kubectl create -f pod.yml
     pod "k8s-demo" created

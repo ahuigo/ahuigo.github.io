@@ -213,9 +213,12 @@ async function 本质就是promise:
 
 ## then 包含了await
     fetch('/abc').then(async (response) => {
+        if(1){return 'result'}
         throw 'error'
+    }).then(r => {
+        console.log({r});
     }).catch(e => {
-        console.log([e, e]);
+        console.log({error:e});
     })
 
 ## await exception
