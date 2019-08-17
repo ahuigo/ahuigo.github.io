@@ -8,6 +8,11 @@ private:
     db.DB().SetMaxOpenConns(60)
     defer db.Close()
 
+## ping
+
+    // Ping
+    db.DB().Ping()
+
 # Gorm Migrate
 自动迁移仅仅会创建表，缺少列和索引，并且不会改变现有列的类型或删除未使用的列以保护数据。
 
