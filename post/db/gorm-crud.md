@@ -65,19 +65,6 @@ If you want to update a field’s value in BeforeCreate hook, you can use scope.
     Save update value in database, if the value doesn't have primary key, will insert it
 
 # Read 
-## 查询
-
-insert-update: FirstOrCreate
-
-    // Unfound
-    db.FirstOrCreate(&user, User{Name: "non_existing"})
-    //// INSERT INTO "users" (name) VALUES ("non_existing");
-    //// user -> User{Id: 112, Name: "non_existing"}
-
-    // Found
-    db.Where(User{Name: "Jinzhu"}).FirstOrCreate(&user)
-    //// user -> User{Id: 111, Name: "Jinzhu"}
-
 ## Where
 Plain SQL
 
@@ -619,7 +606,61 @@ If a model has a `DeletedAt` field, it will get a soft delete ability automatica
     db.Unscoped().Delete(&order)
     //// DELETE FROM orders WHERE id=10;
 
-# session
+# 原生SQL
+## Exec & Raw
+Run Raw SQL, which is not chainable with other methods
+
+    db.Exec("DROP TABLE users;")
+    db.Exec("UPDATE orders SET shipped_at=? WHERE id IN (?)", time.Now(), []int64{11,22,33})
+
+    // Scan
+    type Result struct {
+        Name string
+        Age  int
+    }
+
+    var result Result
+    db.Raw("SELECT name, age FROM users WHERE name = ?", 3).Scan(&result)
+
+## sql.Row & sql.Rows
+Get query result as `*sql.Row or *sql.Rows`
+
+### sql.Row
+
+    row := db.Table("users").Where("name = ?", "jinzhu").Select("name, age").Row() // (*sql.Row)
+    row.Scan(&name, &age)
+
+### sql.Rows
+    rows, err := db.Model(&User{}).Where("name = ?", "jinzhu").Select("name, age, email").Rows() // (*sql.Rows, error)
+    defer rows.Close()
+    for rows.Next() {
+        ...
+        rows.Scan(&name, &age, &email)
+        ...
+    }
+
+    // Raw SQL
+    rows, err := db.Raw("select name, age, email from users where name = ?", "jinzhu").Rows() // (*sql.Rows, error)
+    defer rows.Close()
+    for rows.Next() {
+        ...
+        rows.Scan(&name, &age, &email)
+        ...
+    }
+
+### Scan sql.Rows into model
+    rows, err := db.Model(&User{}).Where("name = ?", "jinzhu").Select("name, age, email").Rows() // (*sql.Rows, error)
+    defer rows.Close()
+
+    for rows.Next() {
+        var user User
+        // ScanRows scan a row into user
+        db.ScanRows(rows, &user)
+
+        // do something
+    }
+
+# Transaction
 	db := db1.Begin()
     db.Rollback()
     db.Commit()

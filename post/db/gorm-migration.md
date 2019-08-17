@@ -51,18 +51,10 @@ private:
     // 删除模型`User`的description列
     db.Model(&User{}).DropColumn("description")
 
-### 1.2.7. 添加外键
-    // 添加主键
-    // 1st param : 外键字段
-    // 2nd param : 外键表(字段)
-    // 3rd param : ONDELETE
-    // 4th param : ONUPDATE
-    db.Model(&User{}).AddForeignKey("city_id", "cities(id)", "RESTRICT", "RESTRICT")
-
-
 
 # 索引
-## idx
+
+## AddIndex
 
     // 为`name`列添加索引`idx_user_name`
     db.Model(&User{}).AddIndex("idx_user_name", "name")
@@ -70,7 +62,7 @@ private:
     // 为`name`, `age`列添加索引`idx_user_name_age`
     db.Model(&User{}).AddIndex("idx_user_name_age", "name", "age")
 
-## UniqueIndex
+## AddUniqueIndex
 
     // 添加唯一索引
     db.Model(&User{}).AddUniqueIndex("idx_user_name", "name")
@@ -83,4 +75,13 @@ private:
     // 删除索引
     db.Model(&User{}).RemoveIndex("idx_user_name")
 
-# Ref
+## 外键
+### 添加外键
+    // 添加主键
+    // 1st param : 外键字段
+    // 2nd param : 外键表(字段)
+    // 3rd param : ONDELETE
+    // 4th param : ONUPDATE
+    db.Model(&User{}).AddForeignKey("city_id", "cities(id)", "RESTRICT", "RESTRICT")
+### Remove ForeignKey
+    db.Model(&User{}).RemoveForeignKey("city_id", "cities(id)")
