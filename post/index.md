@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-08-16 [React Redirect](/b/ria/react-redirect) 
 - 2019-08-14 [JS worker](/b/ria/js-worker) 
 - 2018-09-28 [net-route](/b/net/net-route) 
 - 2019-08-15 [防火墙](/b/net/net-iptables) 
@@ -38,4 +39,3 @@
 - 2018-09-28 [Python 的Context Managers](/b/py/py-expr-context) 
 - 2018-09-28 [Python email处理](/b/py/py-email) 
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 
-- 2019-03-24 [Golang 的结构体](/b/go/go-struct) 
