@@ -1,4 +1,8 @@
 # AHUIGO 的笔记
+- 2019-08-18 [React Build](/b/ria/react-build) 
+- 2019-08-18 [JS comporess](/b/ria/js-compress) 
+- 2018-10-10 [mac 工具集](/b/mac/mac-tool) 
+- 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
 - 2019-08-18 [js ajax legacy](/b/ria/js-ajax-legacy) 
 - 2019-08-16 [React Redirect](/b/ria/react-redirect) 
 - 2019-08-14 [JS worker](/b/ria/js-worker) 
@@ -35,7 +39,3 @@
 - 2018-10-04 [nginx 负载均衡](/b/nginx/nginx-upstream) 
 - 2018-03-01 [Python 语法](/b/py/py-expr) 
 - 2018-09-28 [Python 的Context Managers](/b/py/py-expr-context) 
-- 2018-09-27 [Postgre 安装\配置\管理](/b/db/postgre-ddl-install) 
-- 2014-03-05 [Shell 编程](/b/c/shell-) 
-- 2018-10-06 [js dom file](/b/ria/js-dom-file) 
-- 2019-06-20 [Posgtre Var](/b/db/postgre-var) 

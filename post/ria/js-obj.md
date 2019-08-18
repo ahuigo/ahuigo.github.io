@@ -389,6 +389,74 @@ class 定义的方法是不可keys 枚举定义值（除了assign值）, 不过�
 
      [methodName]() { }
 
+### super
+https://es6.ruanyifeng.com/#docs/class-extends#super-%E5%85%B3%E9%94%AE%E5%AD%97
+1. 普通方法中, 指向父类A.prototype, this 指向子类实例
+1. 静态方法中, 指向父类A, this 指向子类本身
+
+第一种，super() 作方法用, 代表父类的构造函数, 且只能用在子类的构造函数之中
+这里相当于A.prototype.constructor.call(this)。
+
+    class A {
+      constructor() {
+        console.log(new.target.name);
+      }
+    }
+    class B extends A {
+      constructor() {
+        super();
+      }
+    }
+    new A() // A
+    new B() // B
+
+第二种情况，`super`作为对象时，在普通方法中，指向父类的原型对象`A.prototype`；在静态方法中，指向父类`A`。
+
+    class A {
+      p() {
+        return 2;
+      }
+    }
+
+    class B extends A {
+      constructor() {
+        super();
+        console.log(super.p()); // 2
+      }
+    }
+
+    let b = new B();
+
+ES6 规定，在子类普通方法中通过super调用父类的方法时，方法内部的this指向当前的子类实例。
+`super.func(args)`，指向父类的原型对象`A.prototype.func.call(this, args)`
+
+    class A {
+      constructor() {
+        this.x = 1;
+      }
+      print() {
+        console.log(this.x);
+      }
+    }
+
+    class B extends A {
+      constructor() {
+        super();
+        this.x = 2;
+      }
+      m() {
+        super.print();
+      }
+    }
+
+    let b = new B();
+    b.m() // 2
+
+`super.prop` ：
+
+    super.x =3              //相当于this.x =3
+    console.log(super.x)    //相当于读取A.prototype.x 是undefined
+
 ### property
 
     //instance
