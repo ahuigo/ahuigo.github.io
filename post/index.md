@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-08-18 [js ajax legacy](/b/ria/js-ajax-legacy) 
 - 2019-08-16 [React Redirect](/b/ria/react-redirect) 
 - 2019-08-14 [JS worker](/b/ria/js-worker) 
 - 2019-08-18 [html5 笔记](/b/ria/js-dom-html5) 
@@ -38,4 +39,3 @@
 - 2014-03-05 [Shell 编程](/b/c/shell-) 
 - 2018-10-06 [js dom file](/b/ria/js-dom-file) 
 - 2019-06-20 [Posgtre Var](/b/db/postgre-var) 
-- 2019-06-20 [PG help](/b/db/postgre-help) 
