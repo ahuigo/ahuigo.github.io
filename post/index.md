@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-08-17 [Gorm plugin](/b/db/gorm-plugin) 
+- 2019-08-17 [Gorm dialect](/b/db/gorm-dialect) 
 - 2019-08-16 [React Redirect](/b/ria/react-redirect) 
 - 2019-08-14 [JS worker](/b/ria/js-worker) 
 - 2018-09-28 [net-route](/b/net/net-route) 
@@ -37,5 +39,3 @@
 - 2018-10-04 [nginx 负载均衡](/b/nginx/nginx-upstream) 
 - 2018-03-01 [Python 语法](/b/py/py-expr) 
 - 2018-09-28 [Python 的Context Managers](/b/py/py-expr-context) 
-- 2018-09-28 [Python email处理](/b/py/py-email) 
-- 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 

@@ -304,6 +304,7 @@ SubQuery with *gorm.expr
 ### Select
 Specify fields that you want to retrieve from database, by default, will select all fields
 
+    db.Select("*").Find(&users)
     db.Select("name, age").Find(&users)
     //// SELECT name, age FROM users;
 

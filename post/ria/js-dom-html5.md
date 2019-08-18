@@ -72,15 +72,31 @@ Datalist-Option:
 
 ##　video
 
-	node.play();
-	node.pause();
-	node.load();
 
 	  <video id="video1" width="420" style="margin-top:15px;">
 		<source src="/example/html5/mov_bbb.mp4" type="video/mp4" />
 		<source src="/example/html5/mov_bbb.ogg" type="video/ogg" />
 		Your browser does not support HTML5 video.
 	  </video>
+
+### play control
+
+    node = $('#video1')
+    node.src = $('#src').value
+    //or
+    node.children[0].src = $('#src').value
+	node.load();
+	node.play();
+	node.pause();
+
+speed:
+
+    /* play video twice as fast */
+    document.querySelector('video').defaultPlaybackRate = 2.0;
+    document.querySelector('video').play();
+
+    /* now play three times as fast just for the heck of it */
+    document.querySelector('video').playbackRate = 3.0;
 
 ## radio
 
