@@ -672,15 +672,21 @@ to keep the remote or local file, :
 
 ## merge option
 
-    git pull -s ours      
-        ours ignore all theirs changes
-        --strategy=theirs
-        --strategy=ours
-    git pull -X ours
-        use ours if conflict
-	git merge -X <options>
-        -Xours   keep ours if conflict
-        -Xtheirs
+    -s, --strategy
+        resolve     This resolves cases with only two heads,
+        octopus     This resolves cases with more than two heads,
+        recursive   This can only resolve two heads using a 3-way merge algorithm
+            -X <options>     this strategy can take merge-options:
+            ours
+            theirs
+            patience
+            ignore-space-change
+        ours        This resolves any number of heads
+
+e.g.
+
+        git pull -X ours
+        git pull -s recursive -Xours  
 
 ### option
 
