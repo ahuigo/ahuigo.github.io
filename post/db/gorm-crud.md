@@ -5,14 +5,19 @@ private:
 ---
 # Create 创建记录
 
-## newRecord
+## Creat/newRecord
+
+Creat: 创建真正的record
+NewRecord: check if value's primary key is blank(没啥用，可直接 check v.ID)
 
     p := Product{Code: "L1217", Price: 17}
     fmt.Printf("%#v\n", db.NewRecord(p))    // => 主键为空返回`true`
-    fmt.Printf("%#v\n", p.ID)
-    db.Create(&p)                           // 返回 DB
-    fmt.Printf("%#v\n", db.NewRecord(p))    //// => 创建后返回`false`
-    fmt.Printf("%#v\n", p.ID)
+    if db.NewRecord(p){
+        fmt.Printf("%#v\n", p.ID)
+        db.Create(&p)                           // 返回 DB
+        fmt.Printf("%#v\n", p.ID)               //ID
+        fmt.Printf("%#v\n", db.NewRecord(p))    //// => 创建后返回`false`
+    } 
 
 ## 默认值
 
@@ -22,7 +27,8 @@ private:
         Age  int64
     }
 
-`empty column` NOTE: all fields having a zero value, like 0, '', false or other zero values, won’t be saved into the database but will use its default value. 
+### `empty column` 
+NOTE: all fields having a zero value, like 0, '', false or other zero values, won’t be saved into the database but will use its default value. 
 
     var animal = Animal{Age: 99, Name: ""}
     db.Create(&animal)
@@ -30,7 +36,7 @@ private:
     // SELECT name from animals WHERE ID=111; // 返回主键为 111
     // animal.Name => 'galeone'
 
-If you want to avoid this, consider using a pointer type or scanner/valuer, e.g:
+avoid this: consider using a `pointer type` or scanner/valuer, e.g:
 
     // Use pointer value
     type User struct {
@@ -40,10 +46,11 @@ If you want to avoid this, consider using a pointer type or scanner/valuer, e.g:
     }
 
     // Use scanner/valuer
+    import "database/sql"
     type User struct {
         gorm.Model
         Name string
-        Age  sql.NullInt64 `gorm:"default:18"`
+        Age  sql.NullInt64 `gorm:"default:18"`  //sql.NullInt64{Int64:18, Valid:true}}
     }
 
 ## 在Hooks中设置字段值
@@ -432,7 +439,11 @@ Scan results into another struct.
     var result Result
     db.Table("users").Select("name, age").Where("name = ?", 3).Scan(&result)
 
-好像`&rows` 也可以
+这样也可以的
+
+    Scan(&field)
+    Scan(&user)
+    Scan(&users)
 
 ### Row
     func (s *DB) Row() *sql.Row

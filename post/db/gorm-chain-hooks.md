@@ -36,6 +36,14 @@ Here is an immediate methods example based on above chain:
     //Generates
     SELECT * FROM users where name = 'jinzhu' AND age = 30 AND active = 1;
 
+## Multiple Immediate Methods
+When using multiple immediate methods with GORM, later immediate method will reuse before immediate methods’s query conditions (excluding inline conditions)
+
+    db.Where("name LIKE ?", "jinzhu%").Find(&users, "id IN (?)", []int{1, 2, 3}).Count(&count)
+        //1. SELECT * FROM users WHERE name LIKE 'jinzhu%' AND id IN (1, 2, 3)
+        //2. SELECT count(*) FROM users WHERE name LIKE 'jinzhu%'
+
+
 ## Scopes
 Scope is build based on the method chaining theory.
 With it, you could extract some generic logics, to write more reusable libraries.
@@ -67,14 +75,19 @@ With it, you could extract some generic logics, to write more reusable libraries
     db.Scopes(AmountGreaterThan1000, OrderStatus([]string{"paid", "shipped"})).Find(&orders)
     // Find all paid, shipped orders that amount greater than 1000
 
-## Multiple Immediate Methods
-When using multiple immediate methods with GORM, later immediate method will reuse before immediate methods’s query conditions (excluding inline conditions)
+# Model
+    func (s *DB) Model(value interface{}) *DB
 
-    db.Where("name LIKE ?", "jinzhu%").Find(&users, "id IN (?)", []int{1, 2, 3}).Count(&count)
-        //1. SELECT * FROM users WHERE name LIKE 'jinzhu%' AND id IN (1, 2, 3)
-        //2. SELECT count(*) FROM users WHERE name LIKE 'jinzhu%'
+Model specify the model you would like to run db operations
+
+    // update all users's name to `hello`
+    db.Model(&User{}).Update("name", "hello")
+    // if user's primary key is non-blank, will use it as condition, then will only update the user's name to `hello`
+    db.Model(&user).Update("name", "hello")
 
 # Hooks
+hooks 绑定了(User/Product..)等model, 而plugin 是全局的
+
 ## Creating an object
 Available hooks for creating
 
