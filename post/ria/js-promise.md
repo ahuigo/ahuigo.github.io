@@ -213,9 +213,12 @@ async function 本质就是promise:
 
 ## then 包含了await
     fetch('/abc').then(async (response) => {
+        if(1){return 'result'}
         throw 'error'
+    }).then(r => {
+        console.log({r});
     }).catch(e => {
-        console.log([e, e]);
+        console.log({error:e});
     })
 
 ## await exception
@@ -234,18 +237,18 @@ await exception
     }
     f()
 
-## Promise: 默认try catch
-promise 中的exception 会被reject
+## Promise: 捕获try catch
+
+### exception within `new Promise`
+promise 中的exception 会被捕获为reject(exception)
 
     new Promise(()=>{throw new Exception('aaaaa');}).catch(r=>r).then(r=>console.log([r]))
 
-
-Promise， 内`async(r)` 是一个内promise, 这个内promise没有catch, 报`UnhandledPromiseRejectionWarning`
+`new Promise()`比较特别，没有用await 模式， `async(r)` 是一个内promise, 这个内promise没有catch, 报`UnhandledPromiseRejectionWarning`
 
     new Promise(async()=>{throw new Exception('aaaaa');}).catch(r=>r).then(r=>console.log([r]))
 
-
-## example
+### promise within non-await async
 await reject:
 
     f = async ()=>{
@@ -260,17 +263,7 @@ await reject:
     }
     f()
 
-## throw vs catch
-    new Promise(function() {
-        setTimeout(function() {
-            throw 'or nah';
-            //return Promise.reject('or nah'); //also won't work
-        }, 1000);
-    }).catch(function(e) {
-        console.log([e]); // doesn't happen
-    });
-
-## try catch 
+## try catch with await
 catch err+data
 
     export function catchEm(promise) {
@@ -339,8 +332,24 @@ e.g.:
                                                 //但是没有timer runing, 不会阻塞程序的退出
     });
 
-## async in then:
+# async in then:
+## resolve(promise)
+resolve 会返回await promise
+
+    new Promise(resolve=>{
+        resolve(Promise.resolve(111))
+    }).then(console.log)
+    //得到111 而不是promise
+
+或这样
+
+    Promise.resolve(3).then(res=>{
+        return Promise.resolve(111)
+       }).then(res=>console.log([res]))
+       //得到是111
+
 ## promise in then:
+会传promise
 
     fetch(url).then(async response=>await response.json())
 

@@ -577,7 +577,7 @@ insertAfter:
 ### .repalceChild
     toc.replaceChild(createToc(this.$el), children[0])
 
-## node 属性
+## node type
 
 	node.nodeName; //
 		TEXTAREA
@@ -609,7 +609,7 @@ node.value 与node.getAttribute('value') 不同: 前者是真正的值，后者�
 	array node.classList
 	string node.className +=' class'
 	node.classList.add(className);
-	node.classList.remove(className);
+	node.classList.remove(className);   //Array.prototype.remove 增加这个功能
 	node.classList.contains(className);
 	node.classList.toggle(className);
 

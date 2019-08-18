@@ -10,11 +10,9 @@ date: 2018-09-28
         1. ifconfig |grep gateway ;#linux only
         2. route get default | grep gateway ; # mac only
 
-
-
 # route
 
- route -- manually manipulate the routing tables
+    route -- manually manipulate the routing tables
 
 ## check route
 check route tables

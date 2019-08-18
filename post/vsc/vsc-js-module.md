@@ -3,8 +3,36 @@ title: Js Module for vscocde
 date: 2019-05-22
 private:
 ---
-# Js Module for vscocde
+# module
+## React config
+### auto import
+.env
 
+    NODE_PATH=src/
+
+./jsconfig.json config baseurl
+
+    {
+        "compilerOptions": {
+            //"module": "commonjs",
+            "baseUrl": "./src"
+            "target": "es2016",
+            "jsx": "preserve",
+            "checkJs": true,
+        },
+        "exclude": ["node_modules", "**/node_modules/*"]
+    }
+
+Configuring VSCode Auto Import: .vscode/settings.json
+
+    {
+        "javascript.updateImportsOnFileMove.enabled": "always",
+        "javascript.preferences.importModuleSpecifier": "non-relative"
+    }
+
+
+
+## Js Module for vscocde
 jsconfig 用于go to defnition
 
     $ cat jsconfig.json
@@ -24,10 +52,10 @@ jsconfig 用于go to defnition
 
 alias:
 
-// Relative to "baseUrl"
-    "paths": {
-      "@/*": ["./src/*"],
-    }
+    // Relative to "baseUrl"
+        "paths": {
+        "@/*": ["./src/*"],
+        }
 
 可忽略
 
@@ -42,18 +70,20 @@ alias:
         "compilerOptions": {
             "baseUrl": ".",
             "paths": {
-                "ClientApp/*": ["./ClientApp/*"]
+                "ClientApp/*": ["./ClientApp/*"],
+                //"*": [ "*", "src/*", "assets/*" ], //最强大的别名
+
             }
         }
     }
 
-    然后使用别名
+然后使用别名
 
     import Something from 'ClientApp/foo'
     // 或 import Something from '@/foo'
 
 
-# 这里路径前面的“@”符号表示什么意思？
+## 这里路径前面的“@”符号表示什么意思？
 用vuejs的webpack模板生成的项目中，router/index.js里面有一句： 这里路径前面的“@”符号表示什么意思？
 
     import Hello from '@/components/Hello'
@@ -72,3 +102,13 @@ build\webpack.base.conf.js
             'vue$': 'vue/dist/vue.common.js'
         }
     }
+
+#
+Is see that `JSDoc style type annotations` work in VSCode:
+
+    import * as Foo from "Foo"
+    /** @type {FOO.bar} */
+    var boo = Foo.bar
+
+    /** @type {WebGLRenderingContext} */
+    var gl = context1.getContext("webgl");    

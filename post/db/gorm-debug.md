@@ -18,10 +18,15 @@ TableName 是根据ModelName 自动生成的, 并且通过下列代码将表名�
     // Debug a single operation, show detailed log for this operation
     db.Debug().Where("name = ?", "jinzhu").First(&User{})
 
-## logger
 
-    db.logger:gorm.Logger{LogWriter:(*log.Logger)(0xc00010bd10)}
+## 自定义 Logger
+参考GORM的默认记录器如何自定义它 https://github.com/jinzhu/gorm/blob/master/logger.go
 
+    //例如，使用Revel的Logger作为GORM的输出
+    db.SetLogger(gorm.Logger{revel.TRACE})
+
+    //使用 os.Stdout 作为输出
+    db.SetLogger(log.New(os.Stdout, "\r\n", 0))
 
 # error
 

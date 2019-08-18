@@ -103,6 +103,7 @@ Delete all images
     ahuigo/ubuntu:v2:指定要创建的目标镜像名
 
 ### 通过容器导出tar
+#### image: save to load
 image to image.tar
 
     docker save [OPTIONS] IMAGE [IMAGE...] -o image.tar
@@ -115,6 +116,8 @@ image.tar to image
     docker load -i fedora.tar
         # Load an image from a tar archive or STDIN
 
+#### container to image: export to import
+container(可以是exited statush)
 container to tar
 
     docker export <container> -o container.tar
@@ -125,11 +128,12 @@ containter.tar to image: Import the contents from a tarball to create a filesyst
     docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]
         docker import container.tar 
         docker import container.tar reop:v0.0.1
+        cat ubuntu_export.tar | sudo docker import - ubuntu:18.04
 
 import 类似 commit:
 docker import理解为将外部文件复制进来形成只有一层文件系统的镜像，而docker commit则是将当前的改动提交为一层文件系统，然后叠加到原有镜像之上。
 
-    $ docker commit e218edb10161 ahuigo/ubuntu:v2
+    $ docker commit <container> ahuigo/ubuntu:v2
 
 ### Dockerfile 创建image
 参考： http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html
@@ -173,7 +177,7 @@ dockerfile CMD, 不会解析环境变量
     或
     CMD echo $PROJECTNAME
 
-#### ARG ENV
+#### ARG and ENV
 docker `--build-arg <varname>=<value>`
 
     ARG <name>[=<default value>]
@@ -363,6 +367,11 @@ remove all images
     $ docker logs 2b1b7a428627
 
 ## 启动容器选项
+### limit shm memory 
+限制写文件大小：
+
+    docker run -it --shm-size=256m oracle11g /bin/bash
+
 ### 指定容器name
 
     docker run -d -P --name runoob training/webapp python app.py

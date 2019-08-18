@@ -31,6 +31,7 @@ Flat UI 方案
 http://designmodo.github.io/Flat-UI/
 
 # icon
+阿里icon: https://www.iconfont.cn/search/index?q=line
 http://compute.vision/nouns/index.html
 svg icon
 https://icons8.com/icons/set/check

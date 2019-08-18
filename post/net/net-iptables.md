@@ -454,22 +454,23 @@ I would like for clients connected to wlan1 to be able to access the internet on
 
 ### 异机端口转发
 要实现的是所有访问 192.168.10.100:81 的请求，转发到 172.29.88.56:80 上，在 192.168.10.100 是哪个添加规则:
-```s
- # 如果你用tcpdump 在192.168.10.100 上监听，81或者8081 都通抓取到:tcpdump -s 0 -i eth1 -nn -X   port 8081/80, 
- # 可以发现只有client 到 172的syn 包，没有ack 包; 因为172的ack 包会直接发回了client的port(但是mac地址对不上), 并没有返回192代理点
- #      192.168.10.95.55751 > 192.168.100.81
- #      192.168.10.95.55751 > 172.29.88.56.8081
- # netstat -an |grep 55121
-iptables -t nat -A PREROUTING -i eth0 -p tcp -d 192.168.10.100 --dport 81 -j DNAT --to-destination 172.29.88.56:8081
- # 我们需要将syn中的source变成代理ip（当包返回时，代理ip会根据NAT表将包转发到原来的client)
-iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to-source 192.168.10.100
- # 也可以精确到-p tcp --to-source 192.168.10.100:81, iptables nat 表项会自己维护tcp 端口关系, 或者ip nat映射
-```
+
+    ```s
+    # 如果你用tcpdump 在192.168.10.100 上监听，81或者8081 都通抓取到:tcpdump -s 0 -i eth1 -nn -X   port 8081/80, 
+    # 可以发现只有client 到 172的syn 包，没有ack 包; 因为172的ack 包会直接发回了client的port(但是mac地址对不上), 并没有返回192代理点
+    #      192.168.10.95.55751 > 192.168.100.81
+    #      192.168.10.95.55751 > 172.29.88.56.8081
+    # netstat -an |grep 55121
+    iptables -t nat -A PREROUTING -i eth0 -p tcp -d 192.168.10.100 --dport 81 -j DNAT --to-destination 172.29.88.56:8081
+    # 我们需要将syn中的source变成代理ip（当包返回时，代理ip会根据NAT表将包转发到原来的client)
+    iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to-source 192.168.10.100
+    # 也可以精确到-p tcp --to-source 192.168.10.100:81, iptables nat 表项会自己维护tcp 端口关系, 或者ip nat映射
+    ```
 
 或者匹配到tcp：
 
-iptables -t nat -A PREROUTING -d 192.168.10.100 -p tcp --dport 81 -j DNAT --to 172.29.88.56:8081
-iptables -t nat -A POSTROUTING -d 172.29.88.56 -p tcp --dport 80 -j SNAT --to-source 192.168.10.100
+    iptables -t nat -A PREROUTING -d 192.168.10.100 -p tcp --dport 81 -j DNAT --to 172.29.88.56:8081
+    iptables -t nat -A POSTROUTING -d 172.29.88.56 -p tcp --dport 80 -j SNAT --to-source 192.168.10.100
 
 为什么加`SNAT`：
 1. 在进入路由层面的route之前，重新 *改写源地址*，目标地址不变，并在本机建立NAT表项，

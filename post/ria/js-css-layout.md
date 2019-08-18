@@ -263,6 +263,18 @@ flex 能有效传递height percent(需要`flex:1`填满)
         border-radius:50%
     }
 
+## button center
+button 自带center
+
+    static centerMsg(msg) {
+        let div = document.createElement('button')
+        div.style = `font-size:1em; position: absolute; top: 30%; left: 50%; width: 300px; height: 70px; margin: auto; border-width: 3px 3px 3px 4px; border-style: solid; border-color: transparent; border-image: initial; background-color: rgba(33, 150, 243, 0.2); color: white; border-radius: 6px;
+        `;
+        div.innerText = msg
+        document.body.appendChild(div)
+        setTimeout(() => { div.remove() }, 2000)
+    }
+
 ## flex container align
 
     //parent

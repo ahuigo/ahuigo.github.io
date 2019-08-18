@@ -23,16 +23,11 @@ Detect Ajax(php 为例)：
 	$_SERVER['HTTP_X_REQUESTED_WITH']
 	$_SERVER['HTTP_ACCEPT'] === 'application/json';
 
-## fetch
-
-    data:{
-        products:[]
-    },
-    created(){
+# fetch
+## request
         fetch('http://localhost:5001').then(response=>response.json()).then(json=>{
             vm.products=json.products
         })
-    }
 
 ### fetch with cookie
 credential 发送include 时，allow-origin 不能是`*`
@@ -64,6 +59,7 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
 
     JSON.stringify(data); //默认： text/plain
 
+### headers
 #### x-www-urlencode
 如果想发送  application/x-www-form-urlencoded
 可以用手动拼body
@@ -89,8 +85,43 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
         body: searchParams
     })
 
-### response
-#### data:
+### cancel
+    const controller = new AbortController()
+    const signal = controller.signal
+
+    /*
+    // Register a listenr.
+    signal.addEventListener("abort", () => {
+        console.log("aborted!")
+    })
+    */
+
+
+    function beginFetching() {
+        console.log('Now fetching');
+        var urlToFetch = "https://httpbin.org/delay/3";
+
+        fetch(urlToFetch, {
+                method: 'get',
+                signal: signal,
+            })
+            .then(function(response) {
+                console.log(`Fetch complete. (Not aborted)`);
+            }).catch(function(err) {
+                console.error(` Err: ${err}`);
+            });
+    }
+
+
+    function abortFetching() {
+        console.log('Now aborting');
+        // Abort.
+        controller.abort()
+    }
+
+
+## response
+### data:
 
     response.json().then
     response.text().then(function (text) {
@@ -116,7 +147,7 @@ async function with in `then`:
     r.ok //true if staus range 200-299
     then(r=>if(r.ok) ..)
 
-## axios
+# axios
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
     axios.defaults.withCredentials=true;//让ajax携带cookie
 
@@ -129,7 +160,7 @@ async function with in `then`:
             vm.answer = '错误！API 无法处理。' + error.response.data 
           })
 
-## vue-resource
+# vue-resource
 get:
 
     <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>

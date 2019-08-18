@@ -7,6 +7,8 @@ date: 2018-09-27
 https://www.zhihu.com/question/24485886/answer/54300952
 你有什么相见恨晚的英语学习方法
 https://www.zhihu.com/question/26677313/answer/104942176
+语法分析：
+https://www.zhihu.com/question/30030877/answer/770673948
 
 # 句子结构
 按结构分：
@@ -19,9 +21,9 @@ S:subject 主语 V:verb. 动词 O:object 宾语 C:Complement 补语(adj./noun.) 
 
 1. 主谓：S+V 主+谓(不及物) Birds fly.
 2. 主谓宾：S+V+O 主+谓(及物)+宾 He plays the piano.
+4. S+V+O+O 主+谓+间宾+直宾 I give you a hat
+5. S+V+O+C 主+谓+宾+补  You make me happy
 3. 主谓补: SVC(包括动词补语，和主系表SVP) He looks happy, We are students.
-4. S+V+O+O 主+谓+间宾+直宾
-5. S+V+O+C 主+谓+宾+补
 
 ### 主谓补SVC
 常见的SVC 有动词补语、主系表SVP(主语补语)
@@ -128,10 +130,18 @@ a girl that is beautiful...
 6. 介宾作后置定语
 The transition *on a mountain slope* is often ....
 
-### 介词
-介词+名词=P.O.介宾短语
+### A of B 作主语
+A 为名词： zone of transition 
+A 为数量：a lot of ，a great number of
 
-#### 状语，adverial 
+## 介宾(状、补)
+介词+名词=P.O.介宾短语 (做状语、补语)
+
+    主+谓+宾+补
+    状从+主从(定从)+谓+宾从(定从)+补从
+    状从+主从(定从)+谓(补从)
+
+## 状语，adverial 
 状语（adverbial）是用来修饰(modifier)、限制谓语（动词或形容词）的语言单位，
 以表明*谓语*（动词或形容词）的*状态、方式、时间、处所或程度*等。
 *可省略状语*,不会句子语义不会有重大变化,只是广义副词而已
@@ -140,10 +150,10 @@ The transition *on a mountain slope* is often ....
     *At the upper timberline* the trees begin to become twisted and deformed.(扭曲和变形)
     He sleeps *on the bed*.
 
-#### 补语Complement
+## 补语Complement
 补语Complement 的作用对象是*主语和宾语*. 主补=表语(Predication)
 
-##### 表语, Predication modifier
+### 表语, Predication modifier
 表语其实一种主语的补语，描述*主语的状态*属性
 
     The cat is *on the table*.
@@ -151,17 +161,13 @@ The transition *on a mountain slope* is often ....
     He is happy.
     系动词后的成分叫主语补足语，语法上称表语
     
-##### 动词补语(谓补)
+### 动词补语(谓补)
 参考句子结构
 SVi+P+O = S Vi C
 My father looked *after me*
 
-##### 形容词补语
+### 形容词补语
 I am happy *for you*.
-
-### A of B 作主语
-A 为名词： zone of transition 
-A 为数量：a lot of ，a great number of
 
 ## 四、谓语
 ### 谓语构成
@@ -289,8 +295,57 @@ I guessed that Helen *would have told* her something.
 祈使语气：祈使句
 虚拟语气:表达愿望、建议或与事实或预期相反的假设
 
+
+## 定语
+### 定语从句：
+New York is the place *that he would like to visit*. 纽约是他想去游览的地方。
+
+### 介词短语定语：
+The girl **in red** is my sister. 穿红色那个女孩是我的妹妹。
+
+### 非谓语动词定语：
+1. the girl **standing** there=the girl who is standing there. 站在那的女孩
+1. the building **completed** yesterday=the building that was completed yesterday.
+
+## 状语
+> 作者：英语老师Monica https://www.zhihu.com/question/30030877/answer/768501967
+
+### 名词状:  
+come **this way**.
+
+### 副词状: 
+speak **politely**.
+
+### 介词短语状：
+Can you say it `in English`.
+
+### 状语从句
+：I enjoyed myself `when I visited my friends in Shanghai last year`.
+
+### 非谓语动词状语
+非谓动词包括：to do, doing, done
+
+非谓作状语e.g.
+1. `Having finished the homework`, I went home.
+2. `Given more time`, I could write the essay better.
+3. `To give the teacher a good impression`, I decided  to help her.
+
+### 状语复杂化
+此句是错误的，因为一个句子只能有一个动词，这里面有两个动词:
+
+    There are many lovers become the strangers finally
+
+那该如何改有三种改法。
+1. There are many lovers `and` they become the strangers finally(并列连词）
+2. There are many lovers `who become the strangers finally`(从句）
+3. There are many lovers `becoming the strangers finally`(非谓语动词）
+
+e.g:
+During the past generation, the American middle-class family that once could count on hard work and fair play to keep itself financially secure has been transformed by economic risk and new realities.
+过去靠辛勤劳动和公平竞争可以保证收入安全的中产，已经被金融危机和现实所改变
+
 # 五、非谓语(独立主格)
-非谓语：没有不定式、也没有分词等形式
+非谓语：没有不定式、也没有分词等形式. 可用作定语、状语
 逻辑主语与主句的*主语相同*，省略主谓:
 (S + V1) +(S + V2) = S + V1 and V2
 (S + V1) +(S + be + X) = S + V1, X
@@ -396,9 +451,7 @@ The old man, *with thick glasses on his nose*, is a pianist.
 
 https://www.zhihu.com/question/31730389/answer/53104347?group_id=602183152467374080
 
-# 杂项及长难句分析
-
-# 结论
+## 杂项及长难句分析
 
     学外语是要学语法的
     英语语法是有体系的
@@ -421,8 +474,6 @@ https://www.zhihu.com/question/31730389/answer/53104347?group_id=602183152467374
     带从句的句子=主句+从句=简单句1+引导词+简单句2
     非谓语动词：(S + V1) +(S + be + X) = S + V1, X
     独立主格：(S1 + V1) + (S2 + be + X) = S1 + V1, S2 + X
-
-
 
 # 句子种类
 ## 按使用目的分

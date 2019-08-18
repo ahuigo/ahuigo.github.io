@@ -22,6 +22,8 @@ empty item 不会被for in 遍历, 但是会被 for of 遍历
         [...Array(5)].map((v,i) => i);
     _.range(5)
 
+以下有问题，可能引入prototype
+
     for(let _ in Array(5))
 
 undefined 数组:
@@ -152,8 +154,13 @@ for list:
 
 		[0,1].concat(2,[3,4]);//返回数组[0,1,2,3,4];
 		arr.slice(start,[end]);//范围不含end本身,end可为负数,
+
+有副作用
+
 		arr.splice(start,[howmany]);//返回删除范围
 		arr.splice(start,howmany,val1,val2,....);//返回删除范围,并插入数据
+        // remove key
+        arr.splice(index,1)
 
 
 # find
@@ -226,7 +233,7 @@ e.g.
         console.log(it)
     }
 
-    for(var it of (new Map([[1,2],[3,4]))){
+    for(var it of (new Map([[1,2],[3,4]]))){
         console.log(it[0], it[1])
     }
     for(var i of [1,2,3]){console.log(i)}
@@ -277,13 +284,13 @@ map crud:
     m.delete('Adam'); // 删除key 'Adam'
     m.get('Adam'); // undefined
 
-map to array
+map to array, 类似Object.entries()
 
     const newArr1  = [ ...map  ]; 
     const newArr2 = Array.from( map );
 
 ### WeakMap
-key 只能对象，wm不可遍历
+key 只能为对象，WeakMap 不可遍历
 
     var obj = {};
     var wm = new WeakMap();
