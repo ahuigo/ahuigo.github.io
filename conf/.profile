@@ -86,7 +86,8 @@ function gcap(){
                 if test $? = 0;then
                     echo git push $subdir;
                     subFullPath="$top_dir/$subdir"
-                    if [[ ${subFullPath%a/b} = $subFullPath ]];then
+                    echo $subFullPath
+                    if [[ ${subFullPath%a/b} != $subFullPath ]];then
                         echo git pull
                         git pull -Xtheirs
                     fi
