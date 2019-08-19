@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
 - 2019-08-18 [React Build](/b/ria/react-build) 
 - 2019-08-18 [JS comporess](/b/ria/js-compress) 
 - 2018-10-10 [mac 工具集](/b/mac/mac-tool) 
@@ -38,4 +39,3 @@
 - 2019-06-23 [SSH SERVER 的配置](/b/net/net-ssh-server) 
 - 2018-10-04 [nginx 负载均衡](/b/nginx/nginx-upstream) 
 - 2018-03-01 [Python 语法](/b/py/py-expr) 
-- 2018-09-28 [Python 的Context Managers](/b/py/py-expr-context) 

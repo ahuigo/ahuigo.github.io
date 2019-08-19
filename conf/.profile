@@ -77,7 +77,7 @@ function gcap(){
     if git remote | grep '\w';then
         if git remote | xargs -L1 -J% git push --follow-tags % HEAD; then
             cd $(git rev-parse --show-toplevel)
-            subdirs=(b vue )
+            subdirs=(b )
             top_dir=$(pwd)
             echo "check top_dir $top_dir"
             for subdir in "${subdirs[@]}"; do
@@ -85,6 +85,11 @@ function gcap(){
                 test -d $subdir && cd $subdir;
                 if test $? = 0;then
                     echo git push $subdir;
+                    subFullPath="$top_dir/$subdir"
+                    if [[ ${subFullPath%a/b} = $subFullPath ]];then
+                        echo git pull
+                        git pull -Xtheirs
+                    fi
                     git add .
                     git commit -am "msg:$1"
                     git remote | xargs -L1 git push
