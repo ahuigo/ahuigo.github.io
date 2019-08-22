@@ -28,7 +28,27 @@ postgre 是用cusor 去执行+缓存数据
     cur.query # return sql query string
 
 ### execute
-cursor.execute, conn.commit,close 查询fetch 如果没有修改数据，不需要commit
+cursor.execute, conn.commit,close 查询fetch 
+如果没有修改数据，不需要commit
+
+#### batch execute
+executemany:
+
+    tup = [(1,'x'), (2,'y')]
+    cur.executemany("INSERT INTO table VALUES(%s,%s,)", tup)
+
+method2:
+
+    args_str = ','.join(cur.mogrify("(%s,%s,)", x) for x in tup)
+    cur.execute("INSERT INTO table VALUES " + args_str) 
+
+method3:
+
+    data = [(1,'x'), (2,'y')]
+    insert_query = 'insert into t (a, b) values %s'
+    psycopg2.extras.execute_values (
+        cursor, insert_query, data, template=None, page_size=100
+    )
 
 #### bind params
 1. 关键字用：sql.Identifier
