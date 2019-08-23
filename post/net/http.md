@@ -220,6 +220,19 @@ PHP 通过设置配置文件中 zlib.output_compression=1  或者在代码中使
 # Cache
 以下cache 策略在ajax 中同样有效
 
+优先级从高到低: https://stackoverflow.com/questions/14496694/whats-default-value-of-cache-control
+
+    "Cache-control: max-age=N" // 如果存在, fresh 就是N秒
+    Expires header exists //如果存在, fresh就是expire - now
+    Last-Modified header. //如果存在, fresh是无限()
+
+强刷:
+
+    Last-Modified header. //强刷  服务端判断（304）
+    Etag                    //304
+                          
+    
+
 ## Cache-Control & Expires
 通常在不关闭浏览器的情况下 一般常用的cache有两种:
 Cache-Control 或者 Expires (会影响 F5 与 Cmd+R) 在cache 有效期内请求时会得到 200 OK (from cache)
@@ -239,7 +252,14 @@ Cache-Control 或者 Expires (会影响 F5 与 Cmd+R) 在cache 有效期内请�
         M: months (30 days)
         y: years (365 days)
 
-## Last-Modified 304
+或者Last-modified 无限缓存时间
+
+    <?php
+    header('Last-Modified: Tue, 20 Aug 0088 07:23:37 GMT');
+    echo date('H:i:s');
+    // fetch('/a.php').then(async r=>console.log(await r.text()))
+
+## Last-Modified 与 304
  304 + Last-Modified(不会受刷新的影响) 关闭浏览器后缓存也是生效的
 
 	$rtime = $_SERVER['REQUEST_TIME'];
@@ -265,12 +285,18 @@ HTTP协议规格说明定义ETag为“被请求变量的实体标记”。简单
 
 如果ETag没改变，则server返回状态304。
 
-## 后退是表单cache
+## cached-control: public;
+    cached-control: public,max-age=3600
+
 http://php.net/manual/en/function.session-cache-limiter.php
 
 	session_cache_limiter('public'); //不清空表单，如同没使用session一般
 	session_cache_limiter('private'); //不清空表单，只在session生效期间
 	session_cache_limiter('nocache');// 清空表单
+
+1. public: UA\代理都可缓存, public,`s-age=3600`代理缓存时间1h
+1. private: 仅UA-browser 缓存
+1. no-store/no-cache: 不缓存(默认值好像)
 
 # Keep-Alive
 HTTP持久连接（HTTP persistent connection，也称作HTTP keep-alive或HTTP connection reuse）是使用同一个TCP连接来发送和接收多个HTTP请求/应答，而不是为每一个新的请求/应答打开新的连接的方法。
