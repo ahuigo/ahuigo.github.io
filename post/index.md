@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2016-09-27 [go 的变量](/b/go/7.go-var) 
 - 2018-10-04 [Js 中的this scope](/b/ria/js-func-scope) 
 - 2019-08-22 [About Http](/b/net/http) 
 - 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
@@ -38,4 +39,3 @@
 - 2019-07-19 [linux 下的Fork 与 Exec](/b/c/shell-redirect-fork2exec) 
 - 2019-07-19 [expect 键盘模拟](/b/c/ops-expect) 
 - 2018-10-04 [Js 的表达式](/b/ria/js-expr) 
-- 2019-06-23 [SSH SERVER 的配置](/b/net/net-ssh-server) 

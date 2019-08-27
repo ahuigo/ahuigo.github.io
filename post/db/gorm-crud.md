@@ -3,6 +3,37 @@ title: Gorm CRUD
 date: 2019-07-19
 private:
 ---
+# TableName
+    type User struct {} // 默认表名是`users`
+
+    // 设置User的表名为`profiles`
+    func (User) TableName() string {
+        return "profiles"
+    }
+
+    func (u User) TableName() string {
+        if u.Role == "admin" {
+            return "admin_users"
+        } else {
+            return "users"
+        }
+    }
+
+
+设置表名：
+
+    db.Table(name string) *DB
+
+## 全局禁用表名复数
+    // 全局禁用表名复数
+    db.SingularTable(true) // 如果设置为true,`User`的默认表名为`user`,使用`TableName`设置的表名不受影响
+
+## 更改默认表名
+您可以通过定义DefaultTableNameHandler对默认表名应用任何规则。
+
+    gorm.DefaultTableNameHandler = func (db *gorm.DB, defaultTableName string) string  {
+        return "prefix_" + defaultTableName;
+    }
 # Create 创建记录
 
 ## Creat/newRecord
@@ -348,14 +379,14 @@ Specify the number of records to skip before starting to return the records
 ### Count
 Get how many records for a model
 
-    db.Where("name = ?", "jinzhu").Or("name = ?", "jinzhu 2").Find(&users).Count(&count)
+    err := db.Where("name = ?", "jinzhu").Or("name = ?", "jinzhu 2").Find(&users).Count(&count)
     //// SELECT * from USERS WHERE name = 'jinzhu' OR name = 'jinzhu 2'; (users)
     //// SELECT count(*) FROM users WHERE name = 'jinzhu' OR name = 'jinzhu 2'; (count)
 
-    db.Model(&User{}).Where("name = ?", "jinzhu").Count(&count)
+    err := db.Model(&User{}).Where("name = ?", "jinzhu").Count(&count)
     //// SELECT count(*) FROM users WHERE name = 'jinzhu'; (count)
 
-    db.Table("deleted_users").Count(&count)
+    err := db.Table("deleted_users").Count(&count)
     //// SELECT count(*) FROM deleted_users;
 
 NOTE When use Count in a query chain, it has to be the last one, as it will overwrite SELECT columns
@@ -429,7 +460,7 @@ Specify Joins conditions
     //// SELECT * FROM users LIMIT 10; (users1)
     //// SELECT * FROM users; (users2)
 
-### Scan(&row)
+### Scan(&rows row var)
 Scan results into another struct.
 
     type Result struct {
