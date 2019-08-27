@@ -141,6 +141,7 @@ div 的长宽度:
 整个页面偏移: body.style=width:3009px; 不是window的偏移，而是其内页面偏
 
 	window.scrollX/scrollY
+	window.scrollLeft/scrollTop
 
 	window.scrollTo(left,top);
 	window.scrollBy(offsetX,offsetY)
@@ -148,6 +149,7 @@ div 的长宽度:
 		window.scrollBy(0, -100) 归位
 
 归位:
+
 		window.scrollTo(0, 0) 
 		window.scrollBy(x, y) 
 
@@ -179,12 +181,17 @@ example:[js-postion](/demo/js-demo/dom-position.html)
 
 #### 相对偏移
 offsetLeft,offsetTop 相对上一个offsetParent(not static)左上角的偏移:
+
 left:
+
 	static: 当前块border的外边，与父层(offsetParent) border 的内边的距离
 	relative/absolute: 当前块border的外边，与上层postion: not static 内边的距离
 
+e.g.:
 1. offsetLeft = left + margin(left)
 2. clientLeft = the width of left border
+
+e.g.:
 
 	ele.offsetLeft, ele.offsetTop; //ele.style.left, ele.style.top 也是相对偏移，不过带有字符串"px"(必须显式指定)
 	$(this).offset().left; $(this).offset().top;

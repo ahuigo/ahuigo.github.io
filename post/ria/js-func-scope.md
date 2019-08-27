@@ -11,8 +11,7 @@ date: 2018-10-04
     A.prototype.say=()=>console.log(this.name)
     (new A).say()
 
-1. 方法调用: this向当前的 object
-
+方法调用: this向当前的 object
 
     function getAge() {
         return this.birth;

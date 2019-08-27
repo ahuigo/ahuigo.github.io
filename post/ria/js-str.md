@@ -83,9 +83,11 @@ str vs base64 string
 
     >     Buffer.from('a').toString('base64')
     'YQ=='
-    ### base64(chrome only)
-	btoa(str)
-	atob(str)
+    >     Buffer.from('YQ==', 'base64').toString()
+    'a'
+    ### base64(chrome only) 没有buffer 概念
+	b64str = btoa(str)  //encode
+	atob(b64str)        //decode
 
 str vs hex string:
 

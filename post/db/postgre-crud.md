@@ -64,22 +64,74 @@ INSERT INTO table (id, field, field2)
 ### group by 
 `wmname` must appear in the GROUP BY clause or be used in an aggregate function
 
-    SELECT cname, wmname, MAX(avg)  FROM makerar GROUP BY cname;
+    SELECT cname, MAX(avg)  FROM makerar GROUP BY cname;
 
 use distinct:
 
     SELECT DISTINCT ON (cname) cname , wmname, MAX(avg)  FROM makerar GROUP BY cname;
 
-select first 2 row(order by peg) with group by industry
+#### group by with top N
+https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group
 
-    SELECT
-    * 
-    FROM (
-    SELECT
-        ROW_NUMBER() OVER (PARTITION BY industry ORDER BY peg) AS r, stock.*
-    FROM
-        stock) x
-    WHERE x.r <= 2;
+    # SELECT FIRST(id), customer, FIRST(total) FROM  purchases GROUP BY customer ORDER BY total DESC;
+
+Supported by any database:
+
+    SELECT MIN(x.id),  -- change to MAX if you want the highest
+         x.customer, 
+         x.total
+    FROM PURCHASES x
+    JOIN (SELECT p.customer,
+            MAX(total) AS max_total
+            FROM PURCHASES p
+            GROUP BY p.customer) y 
+    ON y.customer = x.customer AND y.max_total = x.total
+    GROUP BY x.customer, x.total
+
+#### partition
+partition:
+
+    # SELECT FIRST(id), customer, FIRST(total) FROM  purchases GROUP BY customer ORDER BY total DESC;
+    WITH summary AS (
+        SELECT p.id, 
+            p.customer, 
+            p.total, 
+            ROW_NUMBER() OVER(PARTITION BY p.customer 
+                                    ORDER BY p.total DESC) AS rk
+        FROM PURCHASES p)
+    SELECT s.*
+    FROM summary s
+    WHERE s.rk = 1
+
+delete and keep top 2 row(order by peg) with group by industry
+
+    DELETE FROM stock where id in 
+        (select id  FROM (
+            SELECT
+                ROW_NUMBER() OVER (PARTITION BY industry ORDER BY peg) AS r, stock.*
+            FROM
+            stock) x WHERE x.r > 2
+        )
+
+#### DISTINCT
+In PostgreSQL this is typically simpler and faster (more performance optimization below):
+
+    SELECT DISTINCT ON (customer)
+        id, customer, total
+    FROM   purchases
+    ORDER  BY customer, total DESC, id;
+
+Or shorter (if not as clear) with ordinal numbers of output columns:
+
+    # 2:customer 1:id 3:total
+    SELECT DISTINCT ON (2)
+        id, customer, total
+    FROM   purchases
+    ORDER  BY 2, 3 DESC, 1;
+
+If total can be NULL (won't hurt either way, but you'll want to match existing indexes):
+
+    ORDER  BY customer, total DESC NULLS LAST, id; //null 排序时放在最后
 
 ## del
 
