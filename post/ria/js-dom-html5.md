@@ -88,6 +88,7 @@ Datalist-Option:
 	node.load();
 	node.play();
 	node.pause();
+	node.paused;
 
 speed:
 

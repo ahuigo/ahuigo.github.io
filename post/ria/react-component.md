@@ -61,7 +61,7 @@ single props 默认为true
     <Sidebar newprops/>
     <Sidebar newprops="true"/>
 
-## props type
+## props type 只读
 props 属性在react 必须是只读的
 
     var MyTitle = React.createClass({
@@ -265,11 +265,9 @@ ref Allow you to ref a component or dom node
             val: ''
           };
         }
-                    value: this.state[name],
-            requestChange: (value) => {
-                this.setState({[name]: value})
-            }
-          };
+
+        handleState(){
+            this.setState({[name]: value})
         }
 
         render() {

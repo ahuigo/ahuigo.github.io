@@ -5,3 +5,18 @@ private:
 ---
 # React state
 https://medium.com/@wereHamster/beware-react-setstate-is-asynchronous-ce87ef1a9cf3
+
+## setState 是异步的
+此代码可能会无法更新计数器：
+
+    // Wrong
+    this.setState({
+        counter: this.state.counter + this.props.increment,
+    });
+
+要解决这个问题，可以让 setState() 接收一个函数而不是一个对象。
+
+    // Correct
+    this.setState((state, props) => ({
+      counter: state.counter + props.increment
+    }));
