@@ -8,13 +8,6 @@ private:
 
 # component
 
-## forceUpdate
-
-    this.forceUpdate();
-    //or
-    this.setState({state:this.state})
-
-
 ## defeine
 组件类的第一个字母必须大写，否则会报错. 有两种
 
@@ -50,18 +43,8 @@ class component
     </>
     );
 
-## function component
-
-    const Sidebar = ({ ...props }) => {
-        return (<div/>)
-    }
-
-single props 默认为true
-
-    <Sidebar newprops/>
-    <Sidebar newprops="true"/>
-
-## props type 只读
+## props
+### props type 只读
 props 属性在react 必须是只读的
 
     var MyTitle = React.createClass({
@@ -74,6 +57,12 @@ props 属性在react 必须是只读的
        }
     });
 
+### single props 默认为true
+
+    <Sidebar newprops/>
+    <Sidebar newprops="true"/>
+
+### getDefaultProps
 此外，getDefaultProps 方法可以用来设置组件属性的默认值。
 
     var MyTitle = React.createClass({
@@ -88,9 +77,8 @@ props 属性在react 必须是只读的
        }
     });
 
-## props children
-    var NotesList = React.createClass({
-      render: function() {
+### props children
+    var NotesList = function(props) {
         return (
           <ol>
           {
@@ -100,8 +88,7 @@ props 属性在react 必须是只读的
           }
           </ol>
         );
-      }
-    });
+    }
 
     ReactDOM.render(
       <NotesList>
@@ -111,7 +98,7 @@ props 属性在react 必须是只读的
       document.body
     );
 
-## pass component via props
+### pass component via props
 
     <Com key=value {...obj} />
 
@@ -146,6 +133,18 @@ https://stackoverflow.com/questions/39652686/pass-react-component-as-props
         //return React.createElement(CommentList, { comments: this.state.comments })
     }
 
+## 非受控组件
+如果在constructor 中没有明确写`this.state ={value:1}` 那下面的组件是非爱控组件
+(`setState`or `this.state.name=value+thisforceUpdate`能让它转为受控)
+
+    <input type="text" name={this.state.name} onChange={this.handleChange} />
+
+否则就是受控组件, value 作为input 的唯一数据源
+
+# com example
+## slect multiple
+
+    <select multiple={true} value={['B', 'C']}>
 
 # event
     <button onClick={increment}>ADD</button>
@@ -370,27 +369,6 @@ without key: 会报错
 ## wrap logic
     function withRepos (Component) {
       return class WithRepos extends React.Component {
-        state = {
-          repos: [],
-          loading: true
-        }
-        componentDidMount () {
-          this.updateRepos(this.props.id)
-        }
-        componentDidUpdate (prevProps) {
-          if (prevProps.id !== this.props.id) {
-            this.updateRepos(this.props.id)
-          }
-        }
-        updateRepos = (id) => {
-          this.setState({ loading: true })
-
-          fetchRepos(id)
-            .then((repos) => this.setState({
-              repos,
-              loading: false
-            }))
-        }
         render () {
           return (
             <Component
@@ -456,10 +434,12 @@ useEffect使我们能在function组件中执行副作用操作。它有两个参
       )
     }
 
+# Error
 
+## double construct
+当发生异常时，如果不捕获，就会double construct
 
-
-
+    this.undefined.foo
 
 
 # 参考

@@ -150,7 +150,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
     buildDate({ more: 'hahah', year: 2017, month: 1, day: 1 });
 
 ### 解构传值 ...rest array
-rest 当参数不足时为`[]`
+unpack func args: rest 当参数不足时为`[]`
 
     function foo(a, b, ...rest) {
         console.log('a = ' + a);
@@ -164,15 +164,17 @@ rest 当参数不足时为`[]`
     // b = 2
     // Array [ 3, 4, 5 ]
 
-receive unpack:
+unpack array:
 
     function foo ([a,b]){
         console.log(a,b)
     }
     foo([1,2])
 
-    function foo({a,b}){
-        console.log(a,b)
+unpack dictionary:
+
+    function foo({a,b, ...rest}){
+        console.log(a,b, rest)
     }
     foo({b:1,a:2})
 

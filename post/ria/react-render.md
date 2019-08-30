@@ -79,3 +79,14 @@ React Ele元素是不可变对象。一旦被创建不可更改。除非用rende
     type: "h1"
 
 如果在chrome 直接修改element style或者删除props.children的`"t:"` ，重新render 更新时这些修改都被保留
+
+# List and Key
+React 是按需更新，所以 必须要用到key
+1. 如果不指定显式的 key 值，那么 React 将默认使用索引用作为列表项目的 key 值。
+2. key 会传递信息给 React ，但不会传递给你的组件
+
+e.g.
+
+   <li key={index}>
+     {todo.text}
+   </li>
