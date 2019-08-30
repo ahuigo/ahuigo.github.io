@@ -142,11 +142,18 @@ null struct 不占用空间，用来实现set
 ### Anonymous field(继承)
 匿名字段的类型就是 同名类型
 
-    type User struct{ }
+    type User struct{
+        age int
+     }
     type Class struct{
         User
         id int
     }
+
+    c := Class{User:User{age:0}, id:0}
+    c := Class{User{age:0}, 0}
+    //如果是用 struct{User User} 那么c.age 就非法
+    c.age == c.User.age  //true
 
 编译器从外向内逐级查找所有层次的匿名字段
 

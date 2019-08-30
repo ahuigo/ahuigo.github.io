@@ -268,6 +268,21 @@ dict and array:
         console.log('%d: %s', i, myArray[(i+1)%len]);
     }
 
+## inter, diff, union 交差并
+intersection:
+
+    let intersection = arrA.filter(x => arrB.includes(x));
+
+diff:
+
+    let difference = arrA.filter(x => !arrB.includes(x));
+
+union
+
+    arrA.concat(arrB)
+    let union = [...arrA, ...arrB];
+    let union = [...new Set([...arrA, ...arrB)];
+
 # Map/Set
 python 早就提供了
 

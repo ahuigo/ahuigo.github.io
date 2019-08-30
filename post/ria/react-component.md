@@ -336,7 +336,7 @@ And then you define your component where you need some common features
 列表render 需要给每个item 一个key 区分（key 不会作为prop传给组件）
 
     const listItems = numbers.map((number, index) => {
-        <li key={index}>{number}</li>
+        return <li key={index}>{number}</li>
     });
 
     return (
@@ -458,7 +458,10 @@ useEffect使我们能在function组件中执行副作用操作。它有两个参
       )
     }
 
+# Error
+任何异常会导致 重复的初始化 constructor(除非捕获)
 
+    this.undefined.foo.bar
 
 
 
