@@ -1,7 +1,7 @@
 # AHUIGO 的笔记
 - 2016-09-27 [go 的变量](/b/go/7.go-var) 
 - 2018-10-04 [Js 中的this scope](/b/ria/js-func-scope) 
-- 2019-08-22 [About Http](/b/net/http) 
+- 2018-10-06 [About Http](/b/net/http) 
 - 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
 - 2019-08-18 [React Build](/b/ria/react-build) 
 - 2019-08-18 [JS comporess](/b/ria/js-compress) 
@@ -10,7 +10,7 @@
 - 2019-08-18 [js ajax legacy](/b/ria/js-ajax-legacy) 
 - 2019-08-16 [React Redirect](/b/ria/react-redirect) 
 - 2019-08-14 [JS worker](/b/ria/js-worker) 
-- 2019-08-18 [html5 笔记](/b/ria/js-dom-html5) 
+- 2019-08-30 [html5 笔记](/b/ria/js-dom-html5) 
 - 2019-08-17 [Gorm dialect](/b/db/gorm-dialect) 
 - 2019-08-15 [Docker exec nsenter](/b/arch/docker-exec) 
 - 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
