@@ -21,7 +21,7 @@ https://medium.com/@wereHamster/beware-react-setstate-is-asynchronous-ce87ef1a9c
       counter: state.counter + props.increment
     }));
 
-## 合并更新
+### 异步example
     componentDidMount() {
         let me = this;
         me.setState({
@@ -46,6 +46,18 @@ https://medium.com/@wereHamster/beware-react-setstate-is-asynchronous-ce87ef1a9c
             console.log(me.state.count);   // 打印出3
         }, 0);
     }
+
+## state 合并render
+
+    this.state.a=10;
+    // 相当于this.setState({a:12}, ...)  state = {...state, ...{a:12}}
+    this.setState({a:this.state.a+2}, e=>{console.log(this.state)})
+    // 相当于this.setState({a:11}, ...)  state = {...state, ...{a:12}, ...{a:11}}
+    this.setState({a:this.state.a+1}, e=>{console.log(this.state)})
+
+尽量用`setState({})` 合并render, 少用forceUpdate 
+
+    this.setState({})
 
 ## state vs props 选择
 通过问自己以下三个问题:

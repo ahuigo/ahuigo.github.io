@@ -226,6 +226,7 @@ Note: ENV 同名变量会覆盖 ARG
     或
     docker run -it --entrypoint=/bin/bash $IMAGE -i
 
+#### RUN
 RUN 两种格式
 
     Shell 格式：RUN
@@ -233,6 +234,19 @@ RUN 两种格式
 
     # $HOME 不会被shell 替换
     RUN ["echo", "$HOME"]
+
+A dockerfile is nothing more but a wrapper on docker run + docker commit.
+
+    FROM ubuntu:12.10
+    RUN mkdir tmp123
+    RUN cd tmp123
+    RUN pwd
+
+Is the same thing as doing:
+
+    CID=$(docker run ubuntu:12.10 mkdir tmp123); ID=$(docker commit $CID)
+    CID=$(docker run $ID cd tmp123); ID=$(docker commit $CID)
+    CID=$(docker run $ID pwd); ID=$(docker commit $CID)
 
 #### 开始build
 

@@ -333,7 +333,7 @@ And then you define your component where you need some common features
 列表render 需要给每个item 一个key 区分（key 不会作为prop传给组件）
 
     const listItems = numbers.map((number, index) => {
-        <li key={index}>{number}</li>
+        return <li key={index}>{number}</li>
     });
 
     return (
@@ -440,7 +440,6 @@ useEffect使我们能在function组件中执行副作用操作。它有两个参
 当发生异常时，如果不捕获，就会double construct
 
     this.undefined.foo
-
 
 # 参考
 - React精髓！一篇全概括(急速) 张不怂 https://juejin.im/post/5cd9752f6fb9a03247157b6d

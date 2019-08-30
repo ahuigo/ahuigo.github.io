@@ -32,6 +32,11 @@ React.createElement() 创建了一个这样的对象：
       }
     };
 
+## return null
+下列字符不可显示
+
+    {undefined||null||false||true}
+
 # Render 
 append ele to root
 
@@ -80,8 +85,8 @@ React Ele元素是不可变对象。一旦被创建不可更改。除非用rende
 
 如果在chrome 直接修改element style或者删除props.children的`"t:"` ，重新render 更新时这些修改都被保留
 
-# List and Key
-React 是按需更新，所以 必须要用到key
+## List and Key(按需更新)
+React 是根据key 按需更新的
 1. 如果不指定显式的 key 值，那么 React 将默认使用索引用作为列表项目的 key 值。
 2. key 会传递信息给 React ，但不会传递给你的组件
 

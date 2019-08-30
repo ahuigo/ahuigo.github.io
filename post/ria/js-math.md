@@ -21,6 +21,11 @@ date: 2018-10-04
     > isNaN(undefined)
     true
 
+## mod
+    5%10 === 5
+    -1%10 === -1
+    -11%10 === -1
+
 ## round/floor/ceil+(toFixed)
 py+php+mysql: round(3.55,2)
 

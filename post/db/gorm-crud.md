@@ -450,7 +450,7 @@ Specify Joins conditions
     db.Last(&user)
     //// SELECT * FROM users ORDER BY id DESC LIMIT 1;
 
-### Find(&rows) 可以带where
+### Find(&rows) Find(&row) 可以带where
     // 拿到所有的记录
     db.Find(&users)
     //// SELECT * FROM users;
