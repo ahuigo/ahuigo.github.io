@@ -85,12 +85,20 @@ or:
     "unset proxy
     git config [--global] unset https.proxy
 
-socks5 socks5h proxy
+socks5、 socks5h(host 解析) proxy
 
     git config --global http.proxy socks5h://127.0.0.1:1080
     git config --global http.proxy socks5://127.0.0.1:1080
-    ALL_PROXY=socks5://127.0.0.1:8888 git clone https://github.com/some/one.git
+    ALL_PROXY=socks5://127.0.0.1:1080 git clone https://github.com/some/one.git
 
+specify domain:
+
+    git config --global https."https://golang.org".proxy socks5://127.0.0.1:1080
+    git config --global https.proxy socks5://127.0.0.1:1080
+
+with go get （git config 有点问题）:
+
+    HTTP_PROXY=socks5://127.0.0.1:1080 go get  github.com/gin-gonic/gin
 
 ### 多用户下的SSH
 参阅：[Multiple SSH Keys](https://gist.github.com/jexchan/2351996)

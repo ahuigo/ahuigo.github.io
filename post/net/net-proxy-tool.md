@@ -34,6 +34,9 @@ https://www.v2ex.com/t/476594
 1. 对比 tsocks、proxychains 或 proxyChains-ng，graftcp 并不使用 LD_PRELOAD 技巧来劫持共享库的 connect()、getaddrinfo() 等系列函数达到重定向目的，这种方法只对使用动态链接编译的程序有效，对于静态链接编译出来的程序，例如默认选项编译的 Go 程序，proxychains-ng 就无效了。
 2. graftcp 使用 ptrace(2) 系统调用跟踪或修改任意指定程序的 connect 信息，对任何程序都有效。
 
+### for macosx issue
+https://github.com/hmgle/graftcp/issues/12
+
 ### 工作原理
 要达到重定向一个 app 发起的的 TCP 连接到其他目标地址并且该 app 本身对此毫无感知（透明代理）的目的，大概需要这些条件：
 

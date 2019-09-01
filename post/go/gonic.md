@@ -1,31 +1,50 @@
 ---
 title: gonic
 date: 2019-04-22
+private:
 ---
-# gonic time
-time.Time accept format
-
-    2002-10-02T10:00:00-05:00
-    2002-10-02T15:00:00Z
-    2002-10-02T15:00:00.05Z
-
-# debug
-Required 限制了，不能传0，"" 空字符等等！！！
+# Request bind
+## required
+Required 限制了，不能传`0`，`""` 空字符等等！！！
 
     struct{
         PackageType int    `form:"package_type" binding:"required"`
     }
 
-# gonic bind
+## Uri args
+### one uri param
+	r.GET("/user/:name", func(c *gin.Context) {
+    name := c.Param("name")
+    name := c.Params.ByName("name")
 
-## query('name') + PostForm('name')
+
+## ShoudBindUri
+
+    type Person struct {
+        ID string `uri:"id" binding:"required,uuid"`
+        Name string `uri:"name" binding:"required"`
+    }
+    route.GET("/:name/:id", func(c *gin.Context) {
+		var person Person
+		if err := c.ShouldBindUri(&person);
+
+
+## One key param(get/post)
+### get one key
+query('id') 
 
     id := c.Query("id") // shortcut for c.Request.URL.Query().Get("id")
     page := c.DefaultQuery("page", "0")
-    name := c.PostForm("name")
+
+### post one key
+PostForm('name')
+
+    name := c.PostForm("name")  //默认是空
     nick := c.DefaultPostForm("nick", "anonymous")
 
-## bind: query
+## bind struct: (get+post)
+> Note: 注意bind 成员需要大写！
+同时包含post+get(post优先)
 
     type StructA struct {
         FieldA string `form:"field_a"`
@@ -40,16 +59,31 @@ Required 限制了，不能传0，"" 空字符等等！！！
     $ curl "http://localhost:8080/getb?field_a=hello&field_b=world"
     {"a":{"FieldA":"hello"},"b":"world"}
 
-shoudBind query:
+### get+post：shoudBind(post优先)
+
+#### ShouldBind
 
     type myForm struct {
         querya string `form:"a"`
     }
-    c.ShouldBind(&fakeForm)
-    c.ShouldBindQuery(&fakeForm) 
+    err := c.ShouldBind(&fakeForm)
     $ curl -X GET "localhost:8085/testing?a=1
 
-### QueryMap and PostFormMap
+#### ShouldBindWith
+    "github.com/gin-gonic/gin/binding"
+    type LoginForm struct {
+        User     string `form:"user" binding:"required"`
+        Password string `form:"password" binding:"required"`
+    }
+
+    if c.ShouldBindWith(&form, gonic.binding.Query)
+    if c.ShouldBind(&form) == nil 
+
+### get only: showBindQuery
+    c.ShouldBindQuery(&fakeForm) 
+
+## map
+### get map:QueryMap 
     POST /post?ids[a]=1234&ids[b]=hello HTTP/1.1
     Content-Type: application/x-www-form-urlencoded
 
@@ -67,42 +101,23 @@ shoudBind query:
         })
         router.Run(":8080")
     }
+### post map:PostFormMap
+    names := c.PostFormMap("names")
 
-## ShoudBindUri
-
-    type Person struct {
-        ID string `uri:"id" binding:"required,uuid"`
-        Name string `uri:"name" binding:"required"`
-    }
-    route.GET("/:name/:id", func(c *gin.Context) {
-		var person Person
-		if err := c.ShouldBindUri(&person);
-
-or 
-
-    router.GET("/user/:name", func(c *gin.Context) {
-		name := c.Param("name")
-
-## Multipart/Urlencoded + form-data
-curl  "https://httpbin.org/post"  -d 'file=go&bucket=bucketpath&a=1
-
-    type LoginForm struct {
-        User     string `form:"user" binding:"required"`
-        Password string `form:"password" binding:"required"`
-    }
-
-    if c.ShouldBindWith(&form, binding.Form)
-    if c.ShouldBind(&form) == nil 
+## Multipart(post)
+### Multipart/Urlencoded
+这是默认的post `curl  "https://httpbin.org/post"  -d 'file=go&bucket=bucketpath&a=1`
 
 Test it with:
 
     $ curl -v --form user=user --form password=password http://localhost:8080/login
+    $ curl -v -d 'user=user&password=password' http://localhost:8080/login
 
-## Multipart/file(form-data)
+### Multipart/file(form-data)
     // 'Content-Type: multipart/form-data; boundary=---xxx'
     curl  "https://httpbin.org/post"  -F 'file=@a.txt' -F 'key=value'
 
-via bind
+#### via bind
 
     //https://github.com/gin-gonic/examples/blob/master/file-binding/main.go
     type BindFile struct {
@@ -127,7 +142,7 @@ via bind
     }
 
 
-via multiparForm()
+#### via multiparForm()
 
     form, _ := c.MultipartForm()
     fmt.Printf("Value: %#v\n", form.Value["bucket"])
@@ -142,19 +157,20 @@ via multiparForm()
         -F "upload[]=@/Users/appleboy/test2.zip" \
     -H "Content-Type: multipart/form-data"
 
-single FromFile
+#### single FromFile
 
     // single file
     file, _ := c.FormFile("file")
     log.Println(file.Filename)
 
-### open file
+#### open file
 fileHeader
 
     // getFileHeader
     fileHeader := c.FormFile("upload")
     fileHeader *FileHeader
-        content, Filename
+        .content, 
+        .Filename
         *multipart.FileHeader
 
     //fp = fileHeader.Open()
@@ -174,8 +190,7 @@ file:
     defer out.Close()
     _, err = io.Copy(out, file)
 
-
-## Body Stream
+### Body Stream
 https://github.com/gin-gonic/gin/pull/857/files
 
     func (c *Context) GetRawData() ([]byte, error) {
@@ -189,4 +204,7 @@ https://github.com/gin-gonic/gin/pull/857/files
     }
 
 # Response
+## JSON
     c.JSON(http.StatusOK, gin.H{"user": user, "value": value})
+## string
+    c.String(http.StatusOK, name)
