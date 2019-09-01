@@ -233,6 +233,10 @@ shift click:
         console.log(e.button, e.shiftKey )
     }
 
+### key repeat: true
+
+    e.repeat: true
+
 ### keyEvent with textarea
 
     document.addEventListener('keydown', e=>{
