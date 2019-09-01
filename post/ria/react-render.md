@@ -32,6 +32,18 @@ React.createElement() 创建了一个这样的对象：
       }
     };
 
+## Input select 支持value
+不用`<option selected>`:
+
+    <select value="C">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+    </select>
+
+defaultValue defaultChecked
+
+    <input type="text" defaultValue="Hello" ref={input => this.input = input} />
 ## return null
 下列字符不可显示
 

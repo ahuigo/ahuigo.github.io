@@ -6,14 +6,6 @@ private:
 # React Component
 > 参考ruanyifeng: http://www.ruanyifeng.com/blog/2015/03/react.html
 
-# component
-
-## forceUpdate
-
-    this.forceUpdate();
-    //or
-    this.setState({state:this.state})
-
 ## defeine
 组件类的第一个字母必须大写，否则会报错. 有两种
 
@@ -137,35 +129,6 @@ https://stackoverflow.com/questions/39652686/pass-react-component-as-props
     }
 
 
-# event
-    <button onClick={increment}>ADD</button>
-
-    function handleClick (e) {
-        e.preventDefault();
-        alert('Hello, world!');
-    }
-     handleInputChange (event) {
-        const target = event.target;
-        const value = target.type==='checkbox' ? target.checked : target.value;
-        const name = target.name;
-        this.setState({
-            [name]: value
-        });
-    }
-
-# form
-## react select 支持value
-不用`<option selected>`:
-
-    <select value="C">
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-    </select>
-
-defaultValue defaultChecked
-
-    <input type="text" defaultValue="Hello" ref={input => this.input = input} />
 
 # 生命周期
 React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用，三种状态共计五种处理函数。
