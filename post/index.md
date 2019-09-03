@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [filepath](/b/go/12.go-file) 
 - 2019-03-24 [Golang 的结构体](/b/go/go-struct) 
 - 2016-09-27 [go 的变量](/b/go/7.go-var) 
 - 2018-10-04 [Js 中的this scope](/b/ria/js-func-scope) 
@@ -38,4 +39,3 @@
 - 2018-09-28 [py-file-io](/b/py/py-file-io) 
 - 2018-09-28 [py-argv](/b/py/py-argv) 
 - 2019-07-19 [linux 下的Fork 与 Exec](/b/c/shell-redirect-fork2exec) 
-- 2019-07-19 [expect 键盘模拟](/b/c/ops-expect) 
