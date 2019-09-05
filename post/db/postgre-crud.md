@@ -66,9 +66,21 @@ INSERT INTO table (id, field, field2)
 
     SELECT cname, MAX(avg)  FROM makerar GROUP BY cname;
 
-use distinct:
+#### group by expression
+group by hour
 
-    SELECT DISTINCT ON (cname) cname , wmname, MAX(avg)  FROM makerar GROUP BY cname;
+    group by date_trunc('hour', ctime)
+    group by date_trunc('day', ctime)
+    group by date_trunc('week', ctime)
+
+不等价:
+
+    select hour/2 as hour2 from users group by hour2;
+    select hour/2 as hour from users group by hour;
+
+with order by:
+
+    select hour/2 as hour2 from users group by hour2 order by hour2;
 
 #### group by with top N
 https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group
@@ -113,9 +125,15 @@ delete and keep top 2 row(order by peg) with group by industry
             stock) x WHERE x.r > 2
         )
 
-#### DISTINCT
+### DISTINCT
+> https://stackoverflow.com/questions/18539223/select-random-row-for-each-group-in-a-postgres-table
+> SELECT DISTINCT ON expressions must match initial ORDER BY expressions
+
+Select random one for each group of customer
+
 In PostgreSQL this is typically simpler and faster (more performance optimization below):
 
+    # customer 必须出现在: order by
     SELECT DISTINCT ON (customer)
         id, customer, total
     FROM   purchases
