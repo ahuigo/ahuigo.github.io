@@ -196,24 +196,27 @@ NGX_HTTP_SERVICE_UNAVAILABLE
  
     limit_req_zone $binary_remote_addr zone=one:10m rate=10r/m;
     limit_req zone=one;
+
 连续发送两个请求，第二请求会报503
 curl localhost:8070/index.php -I
 
-HTTP/1.1 503 Service Temporarily Unavailable
-Server: nginx/1.14.0
-Date: Tue, 18 Sep 2018 11:31:43 GMT
-Content-Type: text/html
-Content-Length: 537
-Connection: keep-alive
-ETag: "5ad6113c-219"
-504
+    HTTP/1.1 503 Service Temporarily Unavailable
+    Server: nginx/1.14.0
+    Date: Tue, 18 Sep 2018 11:31:43 GMT
+    Content-Type: text/html
+    Content-Length: 537
+    Connection: keep-alive
+    ETag: "5ad6113c-219"
+
+### 504
 NGX_HTTP_GATEWAY_TIME_OUT
 
 修改index.php为
 
-<?php
-echo "124";
-sleep(5);
+    <?php
+    echo "124";
+    sleep(5);
+
 休息5秒钟
  
 修改nginx配置为

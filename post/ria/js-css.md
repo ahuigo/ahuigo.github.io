@@ -12,12 +12,16 @@ http://caniuse.com/
     后者css优先覆盖前者
     .cls1.cls2 大于 .cls1 .cls2
     li a.active 优先 a.active
+    先定义优先于后定义:
+        class="oldDefined newDefined"
 
 ## 层次
 
 	div ul {} # ul 可以是孙子 孙孙子
 	div > ul {} #ul 是div 的children
 	tr,td{} #并列
+	.class1.claas2{} #and
+	.class1 .claas2{} #or
 
 ## width
 

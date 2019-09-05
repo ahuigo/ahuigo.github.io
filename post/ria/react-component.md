@@ -44,6 +44,10 @@ class component
     );
 
 ## props
+### props 与render
+1. props 的更新, 会导致子组件render, 子组件重新生成 新的Dom . `dom`修改会丢失
+1. state 的更新, 会导致本组件render, 本组件只会更新Dom . `dom`修改不会丢失
+
 ### props type 只读
 props 属性在react 必须是只读的
 

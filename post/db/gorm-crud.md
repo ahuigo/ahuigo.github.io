@@ -3,6 +3,10 @@ title: Gorm CRUD
 date: 2019-07-19
 private:
 ---
+# Column Name
+
+    `gorm:"column:beast_id"`
+
 # TableName
     type User struct {} // 默认表名是`users`
 

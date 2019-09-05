@@ -258,13 +258,13 @@ flex 能有效传递height percent(需要`flex:1`填满)
         background: red;
         width:200px;
         height:200px;
-        text-align:center;
-        line-height: 200px;
+        text-align:center; //左右
+        line-height: 200px; // 上下，依赖于lineHeight: 默认vertical-align:center; 
         border-radius:50%
     }
 
 ## button center
-button 自带center
+button 自带`text-align:center`, `lineHeight:100%`+`vertical-align:center`
 
     static centerMsg(msg) {
         let div = document.createElement('button')
