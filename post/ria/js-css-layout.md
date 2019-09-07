@@ -567,7 +567,9 @@ When you set a percentage height on an element who's parent elements(包括stati
 
 Summary
 1. absolute 么有这个毛病: 严格依赖 parent positioned 一定有height
-2. static/relative: 依赖parent, `html,body{height:100%}`
+2. static/relative: 依赖parent, 以下两种parent 的height 都有效
+   1. 依赖parent 的height：`html,body{height:100%}`
+   1. 依赖parent 的`flex:1`
 
 解决有几种方案：
 1. 自己变absolute

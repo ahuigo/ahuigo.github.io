@@ -100,6 +100,7 @@ Supported by any database:
     ON y.customer = x.customer AND y.max_total = x.total
     GROUP BY x.customer, x.total
 
+
 #### partition
 partition:
 
@@ -115,6 +116,7 @@ partition:
     FROM summary s
     WHERE s.rk = 1
 
+##### delete duplicated row
 delete and keep top 2 row(order by peg) with group by industry
 
     DELETE FROM stock where id in 
@@ -124,6 +126,10 @@ delete and keep top 2 row(order by peg) with group by industry
             FROM
             stock) x WHERE x.r > 2
         )
+
+多维支持
+
+    PARTITION BY company, department
 
 ### DISTINCT
 > https://stackoverflow.com/questions/18539223/select-random-row-for-each-group-in-a-postgres-table
