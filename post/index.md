@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-09-28 [创业者社保](/b/proj/shebao) 
+- 2018-09-27 [install java](/b/java/java-install) 
 - 2018-09-27 [go routines](/b/go/18.go-routines) 
 - 2018-09-27 [Golang Interfaces](/b/go/16.go-interface) 
 - 2018-09-27 [filepath](/b/go/12.go-file) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [mysql-time](/b/db/mysql-time) 
 - 2019-07-19 [mysql 查询](/b/db/mysql-ddl-crud) 
 - 2018-10-04 [py-tcp](/b/py/py-tcp) 
-- 2018-10-04 [py-server](/b/py/py-server) 
-- 2018-09-28 [py-file-io](/b/py/py-file-io) 

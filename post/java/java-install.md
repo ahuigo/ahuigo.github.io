@@ -3,6 +3,15 @@ title: install java
 date: 2018-09-27
 ---
 # install java
+    JRE： Java Runtime Environment
+    JDK：Java Development Kit 
+    JDK = JRE(JVM)+javatool(javac+java+jar+javap+javadoc+...)
+
+版本：
+
+    java se 标准版
+    java ee 企业版
+    java ME 微型版：嵌入式、移动设备
 
 ## jdk
 jdk include jre(java run-time environment)
@@ -16,6 +25,8 @@ jdk include jre(java run-time environment)
   export CLASSPATH=.:$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar
   export PATH=$JAVA_HOME/bin:$PATH
   MM
+
+Mac jdk
 
 ### javac
 

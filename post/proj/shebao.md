@@ -2,6 +2,14 @@
 title: 创业者社保
 date: 2018-09-28
 ---
+# 15年
+已到退休年龄，但社保没有缴够15年怎么办？
+https://zhuanlan.zhihu.com/p/52324711
+在北京社保缴满15年，是否就可以在京领取养老待遇？
+https://zhuanlan.zhihu.com/p/31019449
+25岁参加工作，退休后各个城市能领多少养老金？
+https://zhuanlan.zhihu.com/p/36055067
+
 # 创业者
 社保 
 http://www.bjrbj.gov.cn/mtgz/mtgz_1714/201604/t20160429_57666.html
