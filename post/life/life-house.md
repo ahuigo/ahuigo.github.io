@@ -3,6 +3,7 @@ layout: page
 private: 
 category: blog
 title: 租房
+private:
 date: 2018-09-27
 ---
 # 租房
@@ -18,7 +19,7 @@ date: 2018-09-27
 6. 周围环境 空气 噪音
 7. 交通距离
 
-### 要问的
+### 明确
 1. 可以看房本原件吗?
 2. 跟房东本人签?
 2. 押一付三?
@@ -95,6 +96,8 @@ http://weibo.com/5991771342/EkSqVaOci
 
 
 # 各种房
+https://www.zhihu.com/question/338228497/answer/781741539
+2019～2020这个时间段适合买房吗？
 
 ## 经济适用房
 http://sqjt.beijing.cn/zf/jjsyf/

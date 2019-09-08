@@ -96,26 +96,24 @@ remove:
     };
 
 ## copy list
+slice, merge, Object.assign, Array.from,  都是浅copy.
 
     arr.slice(0)
     Array.prototype.slice.call(arr)
     [...arr]
+    Array.from(arr)
 
-slice, merge, Object.assign 都是浅copy.
-
-Array fill 问题
+Array fill 的引用问题
 
     const squares = Array(3).fill(Array(3).fill(null))
     squares[0][0] = 1
     console.log(squares) // [[1,null,null],[1,null,null],[1,null,null]]
 
-也可以像下面这样写
+用临时函数生成避免引用
 
     const squares = Array.from({length:3},() => Array(3).fill(null))
     squares[0][0] = 1
     console.log(squares) // [[1,null,null],[null,null,null],[null,null,null]]
-
-
 
 ## .sort .reverse inplace(python)+return
 重排方法(改变arr本身, 并返回arr):

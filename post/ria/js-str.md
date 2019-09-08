@@ -11,11 +11,13 @@ title: Js 字符串大全
 	'好' === '\u597D' // true
 	'好' === '\u{597D}' // true (js only)
 
-Note: '\x87' 并不是单字节字符！它其实表示的是双位uicode(所以是合法的)
+Note: '\x87' 并不是单字节字符！它不是合法utf8, 会被转成合法的utf8 `\xc2\x87`
 
-    '\u0087' == b'\xc2\x87'.decode()
-        '\x87' == bytes([0xc2,0x87]).decode() == chr(0x87)
-        '\x87' === Buffer.from([0xc2,0x87]).toString() === String.fromCharCode(0x87)
+    //python
+    '\x87' == bytes([0xc2,0x87]).decode() == chr(0x87)
+    '\x87' == '\u0087' == b'\xc2\x87'.decode()
+    //js
+    '\x87' === Buffer.from([0xc2,0x87]).toString() === String.fromCharCode(0x87)
 
 ## es6 string
 支持backquote 多行(es6):
@@ -32,19 +34,22 @@ length/slice/substr/都是基于字符的
 	'中'.charAt(0) str[pos=0]
         '中'
 	'中'.charCodeAt(pos) //返回unicode 十进制表示
-        30475
+        20013
 	String.fromCharCode(97,98)
 
-但是js 对四字节utf8 的unicode 支持不好
+js 对四字节utf8 的unicode 支持不好
 
     // same as ES5.1
-    "𠮷".length == 2
+    "𠮷".length == 2    //true
+	'中'.length == 1    //true
 
     // new RegExp behaviour, opt-in ‘u’
     "𠮷".match(/./u)[0].length == 2
 
     // new form
     "\u{20BB7}" == "𠮷" == "\uD842\uDFB7"
+
+新es6 很好的支持了codePoint
 
     // new String ops
     "𠮷".codePointAt(0) == 0x20BB7

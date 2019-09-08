@@ -258,13 +258,13 @@ flex 能有效传递height percent(需要`flex:1`填满)
         background: red;
         width:200px;
         height:200px;
-        text-align:center;
-        line-height: 200px;
+        text-align:center; //左右
+        line-height: 200px; // 上下，依赖于lineHeight: 默认vertical-align:center; 
         border-radius:50%
     }
 
 ## button center
-button 自带center
+button 自带`text-align:center`, `lineHeight:100%`+`vertical-align:center`
 
     static centerMsg(msg) {
         let div = document.createElement('button')
@@ -567,7 +567,9 @@ When you set a percentage height on an element who's parent elements(包括stati
 
 Summary
 1. absolute 么有这个毛病: 严格依赖 parent positioned 一定有height
-2. static/relative: 依赖parent, `html,body{height:100%}`
+2. static/relative: 依赖parent, 以下两种parent 的height 都有效
+   1. 依赖parent 的height：`html,body{height:100%}`
+   1. 依赖parent 的`flex:1`
 
 解决有几种方案：
 1. 自己变absolute

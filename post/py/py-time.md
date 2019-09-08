@@ -239,8 +239,14 @@ https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
 	>>> now + timedelta(days=2, hours=12)
 	datetime.datetime(2015, 5, 21, 4, 57, 3, 540997)
 
+### diff
+
     (datetime.now()-d).total_seconds()
     (datetime.now()-d).seconds
+
+### begin of hour
+
+    print(datetime.now().replace(microsecond=0,second=0,minute=0))
 
 ### CST
 使用东8区显示：

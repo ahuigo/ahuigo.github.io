@@ -104,8 +104,9 @@ e.g.
 
 # 3. CSS modules
 > https://medium.com/@pioul/modular-css-with-react-61638ae9ea3e
+https://juejin.im/post/5c3c3df451882525153c2352
 
-react 内置webpack 支持了css module
+react 内置webpack 支持了css module. create-react-app 默认需要`App.module.css`
 
     /* Thumbnail.css */
     .image {
@@ -127,11 +128,19 @@ subclass 正确用法是 global
     //success
     .menu a:global(.active) { background-color: #3887be; color: #ffffff; }
 
-composes:
+composes: 对于样式复用，CSS Modules 只提供了唯一的方式来处理：composes 组合
 
-    /* Colors.css */
-    .primaryColor {
-      color: #333;
+    /* components/Button.css */
+    .base { /* 所有通用的样式 */ }
+
+    .normal {
+      composes: base;
+      /* normal 其它样式 */
+    }
+
+    .disabled {
+      composes: base;
+      /* disabled 其它样式 */
     }
 
     /* Profile.css */

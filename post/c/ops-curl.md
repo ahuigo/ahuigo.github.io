@@ -22,6 +22,15 @@ curl 转换器: https://curl.trillworks.com/
     -m seconds
         timeout
 
+# debug
+-v参数输出 握手过程
+
+    $ curl -v https://www.example.com
+
+`--trace` 输出原始的二进制数据。
+
+    $ curl --trace - https://www.example.com
+
 # header
 curl 默认发送post数据是: application/x-www.form-urlencoded(不同于在form 表单中设置: enctype="multipart/form-data"), 如果是`text/plain`, post 数据就被存放于 HTTP_RAW_POST_DATA.
 

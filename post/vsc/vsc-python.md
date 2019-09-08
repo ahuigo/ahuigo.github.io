@@ -5,6 +5,10 @@ date: 2018-10-04
 # Vsc for python
 https://code.visualstudio.com/docs/python/python-tutorial
 
+## todo
+python in vscode 调试方法
+https://www.zhihu.com/question/339718367
+
 ## go to denifition
 1. 安装python extension (go to definition)
     2. `shift+cmd+p` using the `Python: Select Interpreter` command on the `Command Palette (⇧⌘P)`, 

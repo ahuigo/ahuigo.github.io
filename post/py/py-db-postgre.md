@@ -74,7 +74,7 @@ table name 这些则不支持，应该使用:
 
 #### cur.query
     >>> cur.execute("INSERT INTO test (num, data) VALUES (%s, %s)", (42, 'bar'))
-    >>> cur.query
+    >>> print(cur.query)
     "INSERT INTO test (num, data) VALUES (42, E'bar')"
 
 #### fetch iter
