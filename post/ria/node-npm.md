@@ -106,7 +106,7 @@ Node模块的安装过程是这样的。
 1. 发出npm install命令
 2. npm 向 registry 查询模块压缩包的网址
 3. 下载压缩包，存放在`~/.npm`目录
-4. 解压到`node_modules目录`. e.g. `/usr/local/lib/node_modules`
+4. 解压到`node_modules目录`. e.g. `/usr/local/lib/node_modules` `npm -g get prefix`
 5. 但是，运行npm install的时候，只会检查node_modules目录，而不会检查~/.npm目录。也就是说，如果一个模块在～/.npm下有压缩包，但是没有安装在node_modules目录中，npm 依然会从远程仓库下载一次新的压缩包。
 
 ### package.json update

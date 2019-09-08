@@ -1,6 +1,7 @@
 ---
-title: React Redirect
+title: React router
 date: 2019-08-16
+private:
 ---
 # React Redirect
 https://stackoverflow.com/questions/45089386/what-is-the-best-way-to-redirect-a-page-using-react-router

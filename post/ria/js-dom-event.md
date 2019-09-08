@@ -161,6 +161,36 @@ or:
     //event.returnValue = false;
 	event.stopPropagation() stops the event from bubbling up/capturing the event chain.
 
+如果事件发生在当前层, 那下列无效，listener(捕获与冒泡没有先后) 全部按FIFO 运行：
+
+    e.preventDefault()  //无效
+    e.stopPropagation() //无效
+
+如果事件发生在内层, 那下列无效，
+
+    e.preventDefault()  //无效
+    e.stopPropagation() //有效
+
+除非
+
+    //停止后续所有listner 的执行（所有的捕获+冒泡）
+    e.stopImmediatePropagation()
+
+example:
+
+    const h=m=>{
+        return (e)=>{
+            console.log(m)
+            e.stopImmediatePropagation()
+            //e.preventDefault()
+            //e.stopPropagation()
+        }
+    }
+    div.addEventListener('click', h(1), true)
+    div.addEventListener('click', h(2), false)
+    div.addEventListener('click', h(3), true)
+
+
 ### method target
 both jquery and dom support e.target...
 

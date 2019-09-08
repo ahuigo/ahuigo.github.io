@@ -47,6 +47,13 @@ https://medium.com/@wereHamster/beware-react-setstate-is-asynchronous-ce87ef1a9c
         }, 0);
     }
 
+### state 函数控制异步顺序
+由于this.props和this.state可能是异步更新的，所以不应该依靠它们的值来计算下一个状态。这种情况下，可以给setState传入一个函数，如：
+
+    this.setState((prevState, props) => ({
+        counter: prevState.counter + props.increment
+    }));
+
 ## state 合并render
 
     this.state.a=10;
