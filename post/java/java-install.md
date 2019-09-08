@@ -63,11 +63,13 @@ You may need to set JAVA_HOME, JRE_HOME, PATH:
   lrwxr-xr-x  1 root  wheel    74B Dec 11  2015 /usr/bin/java ->
   /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java
 
-# set classpath
+# compile
+## set classpath
+编译
 
     java -cp "Test.jar:lib/*" my.package.MainClass
 
-# compile
+## compile example
 
 	# wget https://raw.githubusercontent.com/stevenholder/PHP-Java-AES-Encrypt/master/security.java -O Security.java
     $ wget http://www.java2s.com/Code/JarDownload/commons-codec/commons-codec-1.7.jar.zip
@@ -89,6 +91,7 @@ note:
 2. 必须有main 入口
 
 ## import
+对于这样的代码
 
     import org.apache.commons.codec.binary.Base64;
     import org.apache.commons.codec.binary.*;

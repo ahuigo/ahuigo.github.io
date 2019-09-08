@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-10-04 [Vsc for python](/b/vsc/vsc-python) 
+- 2019-09-08 [Postgre expression](/b/db/postgre-expr) 
 - 2018-09-28 [创业者社保](/b/proj/shebao) 
 - 2018-09-27 [install java](/b/java/java-install) 
 - 2018-09-27 [go routines](/b/go/18.go-routines) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [mysql-datatype](/b/db/mysql-var) 
 - 2018-09-27 [学习 docker](/b/arch/arch-docker) 
 - 2018-09-27 [mysql-time](/b/db/mysql-time) 
-- 2019-07-19 [mysql 查询](/b/db/mysql-ddl-crud) 
-- 2018-10-04 [py-tcp](/b/py/py-tcp) 
