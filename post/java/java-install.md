@@ -62,8 +62,22 @@ You may need to set JAVA_HOME, JRE_HOME, PATH:
   /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java
 
 # compile
+注意文件大小写
+
+    # build HelloWorld.class (大小写、java后缀不可省略)
+    javac HelloWorld.java
+
+不用注意文件大小写
+
+    # 类似go run (.java不可省略)
+    java HelloWorld.java
+    java helloworld.java
+
+    # run class(不要带.class)
+    java HelloWorld
+    java helloworld
+
 ## set classpath
-编译
 
     java -cp "Test.jar:lib/*" my.package.MainClass
 

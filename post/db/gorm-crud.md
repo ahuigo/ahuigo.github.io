@@ -3,11 +3,13 @@ title: Gorm CRUD
 date: 2019-07-19
 private:
 ---
-# Column Name
+# DDL
+## Column Name
 
     `gorm:"column:beast_id"`
+ 	`json:"page_size" form:"pageSize" gorm:"-"` //gorm 忽略
 
-# TableName
+## TableName
     type User struct {} // 默认表名是`users`
 
     // 设置User的表名为`profiles`
@@ -23,21 +25,21 @@ private:
         }
     }
 
-
 设置表名：
 
     db.Table(name string) *DB
 
-## 全局禁用表名复数
+### 全局禁用表名复数
     // 全局禁用表名复数
     db.SingularTable(true) // 如果设置为true,`User`的默认表名为`user`,使用`TableName`设置的表名不受影响
 
-## 更改默认表名
+### 更改默认表名
 您可以通过定义DefaultTableNameHandler对默认表名应用任何规则。
 
     gorm.DefaultTableNameHandler = func (db *gorm.DB, defaultTableName string) string  {
         return "prefix_" + defaultTableName;
     }
+
 # Create 创建记录
 
 ## Creat/newRecord
@@ -150,6 +152,7 @@ Plain SQL
     db.Where([]int64{20, 21, 22}).Find(&users)
     //// SELECT * FROM users WHERE id IN (20, 21, 22);
 
+#### ignore zero/''/false
 提示 当通过结构体进行查询时，GORM将会只通过非零值字段查询，这意味着如果你的字段值为0，''， false 或者其他 零值时，将不会被用于构建查询条件，例如：
 
     db.Where(&User{Name: "jinzhu", Age: 0}).Find(&users)
