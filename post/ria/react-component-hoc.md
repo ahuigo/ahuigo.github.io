@@ -16,6 +16,7 @@ date: 2019-09-08
       return WithSubscription;
     }
 
+    //Chrome 会获取Com.displayName
     function getDisplayName(WrappedComponent) {
       return WrappedComponent.displayName || WrappedComponent.name || 'Component';
     }

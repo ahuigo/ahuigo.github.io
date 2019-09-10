@@ -16,22 +16,19 @@ date: 2018-09-27
 ## jdk
 jdk include jre(java run-time environment)
 
-  sudo yum install java-1.8.0-openjdk -y
-  sudo yum install java-1.8.0-openjdk-devel -y
-  # or download http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+    sudo yum install java-1.8.0-openjdk -y
+    sudo yum install java-1.8.0-openjdk-devel -y
+    sudo yum install java-devel ;# it will install java-1.8.0-openjdk and lib
+    # or download http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 
-  cat <<-MM >> ~/.profile
-  export JAVA_HOME=/usr/local/jdk/jdk1.8.0_73
-  export CLASSPATH=.:$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar
-  export PATH=$JAVA_HOME/bin:$PATH
-  MM
+    cat <<-MM >> ~/.profile
+    export JAVA_HOME=/usr/local/jdk/jdk1.8.0_73
+    export CLASSPATH=.:$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar
+    export PATH=$JAVA_HOME/bin:$PATH
+    MM
 
 Mac jdk
 
-### javac
-
-    yum install java-devel
-    # it will install java-1.8.0-openjdk and lib
 
 # ENV
 
@@ -39,12 +36,13 @@ Mac jdk
 You may need to set JAVA_HOME, JRE_HOME, PATH:
 
   export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
+  export JAVA_HOME="$(/usr/libexec/java_home -v 12)"
   ➜ > ~ /usr/libexec/java_home -v 1.7
   /Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home
 
   export JRE_HOME=$JAVA_HOME/jre
   export PATH=$PATH:$JRE_HOME/bin
-  export CLASSPATH='.;./jdk1.6.0\lib\dt.jar'
+  export CLASSPATH='.;./jdk1.7.0\lib\dt.jar'
 
 ### for mac JAVA_HOME
 

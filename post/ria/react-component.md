@@ -126,6 +126,32 @@ https://stackoverflow.com/questions/39652686/pass-react-component-as-props
         //return React.createElement(CommentList, { comments: this.state.comments })
     }
 
+## Render/Function props
+React 每次render 时都会生成一个新的func prop 来触发更新
+
+    <Mouse children={mouse => (
+        <p>鼠标的位置是 {mouse.x}，{mouse.y}</p>
+    )}/>
+
+为了绕过这一问题，有时你可以定义一个 prop 作为实例方法，类似这样：
+
+    class MouseTracker extends React.Component {
+      // 定义为实例方法，`this.renderTheCat`始终
+      // 当我们在渲染中使用它时，它指的是相同的函数
+      renderTheCat(mouse) {
+        return <Cat mouse={mouse} />;
+      }
+
+      render() {
+        return (
+          <div>
+            <Mouse render={this.renderTheCat} />
+          </div>
+        );
+      }
+
+> 使用 render prop + React.PureComponent 要小心。因为浅比较 func props 的时候总会得到 false，
+
 ## 非受控组件
 如果在constructor 中没有明确写`this.state ={value:1}` 那下面的组件是非爱控组件
 (`setState`or `this.state.name=value+thisforceUpdate`能让它转为受控)
@@ -133,6 +159,11 @@ https://stackoverflow.com/questions/39652686/pass-react-component-as-props
     <input type="text" name={this.state.name} onChange={this.handleChange} />
 
 否则就是受控组件, value 作为input 的唯一数据源
+
+## propTypes
+    Com.propTypes = {
+        test: PropTypes.func.isRequired
+    };
 
 # event
     <button onClick={increment}>ADD</button>
