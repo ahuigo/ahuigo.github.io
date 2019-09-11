@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-10-04 [写npm 包](/b/ria/node-npm-pkg) 
+- 2018-10-04 [向量(vector)](/b/math/vector) 
 - 2019-09-09 [Vscode 开发java 指北](/b/vsc/vsc-java) 
 - 2019-09-08 [React profile](/b/ria/react-profile) 
 - 2019-09-09 [React diff](/b/ria/react-diff) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [Golang fmt](/b/go/6.go-fmt) 
 - 2018-09-27 [Golang：Array and slice](/b/go/10.go-slice-array) 
 - 2018-09-27 [Postgre User and Authentication](/b/db/postgre-ddl-user) 
-- 2019-08-18 [Sed 简记](/b/c/ops-sed) 
-- 2018-09-27 [ops-process-lsof](/b/c/ops-process-lsof) 

@@ -473,7 +473,7 @@ react 把store直接集成到React应用的顶层props里面. 顶层组件叫Pro
 
 ## mapStateToProps
 
-    //sate 映射 props
+    //sate 映射 props, 其实是把Redux中的数据映射到React中的props中去。
     const mapStateToProps = (state) => {
       return {
         foo: state.bar

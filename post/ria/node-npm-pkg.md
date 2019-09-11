@@ -2,6 +2,10 @@
 title: 写npm 包
 date: 2018-10-04
 ---
+# npm reistry
+    npm config set @company:registry https://sina.com.cn/artifactory/api/npm/npm-sina/
+    npm login --registry=https://artifactory.company.works/artifactory/api/npm/npm-company/ --scope=@company
+
 # 写npm 包
 1. 生成包信息package.json
     npm init
