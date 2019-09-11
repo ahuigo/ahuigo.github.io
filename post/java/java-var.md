@@ -1,6 +1,7 @@
 ---
 title: Java Var Type
 date: 2018-09-27
+pvivate:
 ---
 # Type
 
@@ -23,6 +24,7 @@ date: 2018-09-27
 　　String s = String.valueOf(i);
 　　String s = Integer.toString(i);
 　　String s = "" + i;
+　　String s = (char)31 + i;//unicode
 
 # Const
 定义变量的时候，如果加上final修饰符，这个变量就变成了常量：

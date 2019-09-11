@@ -12,6 +12,7 @@ date: 2018-09-27
     java se 标准版
     java ee 企业版
     java ME 微型版：嵌入式、移动设备
+    java -version
 
 ## jdk
 jdk include jre(java run-time environment)
@@ -27,8 +28,22 @@ jdk include jre(java run-time environment)
     export PATH=$JAVA_HOME/bin:$PATH
     MM
 
-Mac jdk
+### Mac jdk
 
+    # clear java 1.7: https://www.java.com/zh_CN/download/help/mac_uninstall_java.xml
+    $ rm -rf  ~/Library/Application\ Support/Oracle
+    $ sudo rm -rf  /Library/Application\ Support/Oracle
+    $ sudo rm -fr /Library/PreferencePanes/JavaControlPanel.prefPane
+    $ sudo rm -fr /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin
+    $ du -sh /System/Library/Java
+    60K	/System/Library/Java
+    !!!!请勿尝试通过从 /usr/bin 删除 Java 工具来卸载 Java。此目录是系统软件的一部分
+    $ cd /Library/Java/JavaVirtualMachines/
+    $ sudo mv jdk1.7.0_45.jdk  jdk1.7.0_45.jdk.backup
+
+install jdk12
+
+    brew  cask install java
 
 # ENV
 

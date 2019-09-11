@@ -5,17 +5,26 @@ private:
 ---
 # Java String
 ## define
+### char
 注意char类型使用单引号'，且仅有一个字符，要和双引号"的字符串类型区分开
 
         char a = 'A';
         char zh = '中';
         char c3 = '\u0041'; // 'A'，因为十六进制0041 = 十进制65
         char c4 = '\u4e2d'; // '中'，因为十六进制4e2d = 十进制20013
+### int to char
+
+    // unicode
+    var a = 31;
+    var b = 31;
+    int c = 65281;
+    String s = "" + (char)a + (char)b  + (char)c;
 
 ### null string
     String s1 = null; // s1是null
     String s2; // 没有赋初值值，s2也是null
     String s3 = s1; // s3也是null
+
 
 ## 字符串不可变
 下列代码只是s 的指向变了
