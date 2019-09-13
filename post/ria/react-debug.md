@@ -48,12 +48,45 @@ React 提供Error 捕获，但错误边界无法捕获以下场景中产生的�
         <MyWidget />
     </ErrorBoundary>
 
+# StrictMode 严格模式
+> 严格模式仅在开发模式下运行
 
-# Error
+是一个用来突出显示应用程序中潜在问题的工具。与 Fragment 一样，StrictMode 不会渲染任何可见的 UI。它为其后代元素触发额外的检查和警告。
+
+    <Header />
+    <React.StrictMode>
+        <div>
+          <ComOne />
+          <ComTwo />
+        </div>
+    </React.StrictMode>
+
+以上，Header 不被 strict 检查，ComOne/ComTwo 会被 strcitMode 检查
+
+## 作用
+    识别不安全的生命周期
+    关于使用过时字符串 ref API 的警告
+    关于使用废弃的 findDOMNode 方法的警告
+        在给定 class 实例的情况下在树中搜索 DOM 节点, 返回第一个子节点。
+        通常你不需要这样做，因为你可以将 ref 直接绑定到 DOM 节点。
+    检测意外的副作用
+    检测过时的 context API
+
+## 幅作用
+严格模式不能自动检测到你的副作用，但它可以帮助你发现它们，使它们更具确定性。通过故意重复调用以下方法来实现的该操作：
+
+    class 组件的 constructor 方法
+    render 方法
+    setState 更新函数 (第一个参数）
+    静态的 getDerivedStateFromProps 生命周期方法
+
+> 默认开发模式下，当发生未捕获异常时，也会double 执行 constructor
+
+# Error 问题
 
 ## double construct, 组件重新装载
 ### excection construct
-当发生异常时，如果不捕获，就会double construct
+当发生异常时，如果不捕获，就会double construct(即组件卸载、并重新render)
 
     this.undefined.foo
 

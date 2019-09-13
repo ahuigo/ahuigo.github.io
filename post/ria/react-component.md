@@ -160,9 +160,37 @@ React 每次render 时都会生成一个新的func prop 来触发更新
 
 否则就是受控组件, value 作为input 的唯一数据源
 
+### defaultValue
+元素上的 value 将会覆盖 DOM 节点中的值.  非受控组件要用defaultValue
+
+    <input defaultValue="Bob" type="text" ref={this.input} />
+
+同样:
+
+    <input type="checkbox"> 和 <input type="radio"> 支持 defaultChecked，
+    <select> 和 <textarea> 支持 defaultValue。
+
+### input file
+`<input type="file" />` 始终是一个非受控组件，因为它的值只能由用户设置，而不能通过代码控制
+
+    handleSubmit(event) {
+        event.preventDefault();
+        alert( `Selected file - ${ this.fileInput.current.files[0].name }`);
+    }
+
+     <form onSubmit={this.handleSubmit}>
+       <label>
+         Upload file: <input type="file" ref={this.fileInput} />
+       </label>
+       <button type="submit">Submit</button>
+     </form>
+
 ## propTypes
+如果 不是用ts, 可以考虑下propType
+
     Com.propTypes = {
         test: PropTypes.func.isRequired
+        time: PropTypes.element.isRequired
     };
 
 # event

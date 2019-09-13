@@ -53,9 +53,9 @@ jsconfig 用于go to defnition
 alias:
 
     // Relative to "baseUrl"
-        "paths": {
+    "paths": {
         "@/*": ["./src/*"],
-        }
+    }
 
 可忽略
 
@@ -68,7 +68,7 @@ alias:
 
     {
         "compilerOptions": {
-            "baseUrl": ".",
+            "baseUrl": "src",
             "paths": {
                 "ClientApp/*": ["./ClientApp/*"],
                 //"*": [ "*", "src/*", "assets/*" ], //最强大的别名
@@ -103,7 +103,7 @@ build\webpack.base.conf.js
         }
     }
 
-#
+# type declare
 Is see that `JSDoc style type annotations` work in VSCode:
 
     import * as Foo from "Foo"

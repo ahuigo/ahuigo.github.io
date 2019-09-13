@@ -108,7 +108,25 @@ append ele to root
 
     ReactDOM.render(element, document.getElementById('root'));
 
-## render() 函数
+## render 过程
+React 分两个阶段工作：
+
+1. 渲染 阶段会确定需要进行哪些更改，比如 DOM。在此阶段的最后，React 调用 render，然后将结果与上次渲染的结果进行比较。
+2. 提交 阶段发生在当 React 应用变化时。（对于 React DOM 来说，会发生在 React 插入，更新及删除 DOM 节点的时候。）在此阶段，React 还会调用 componentDidMount 和 componentDidUpdate 之类的生命周期方法。
+提交阶段通常会很快，但渲染过程可能很慢。因此，
+
+渲染阶段的生命周期包括以下 class 组件方法：
+
+    constructor
+    componentWillMount
+    componentWillReceiveProps
+    componentWillUpdate
+    getDerivedStateFromProps
+    setState 更新函数（第一个参数）
+    shouldComponentUpdate
+    render
+
+## render() 函数的触发
 React Ele元素是不可变对象。一旦被创建不可更改。除非用render重新创建, 
 
     function tick() {
@@ -155,6 +173,49 @@ React Ele元素是不可变对象。一旦被创建不可更改。除非用rende
 由于子树在`a>=2` 会被卸载，如果对div 的background 临时做的修改会被清理, 在`a>5` 时不会再看到这个background
 
     {(state.a<2 ||state.a>5) &&( <div>{state.a}</div>)}
+
+## render 触发优化
+### 虚拟化长列表
+如果你的应用渲染了长列表（上百甚至上千的数据），我们推荐使用“虚拟滚动”技术。这项技术会在有限的时间内仅渲染有限的内容.
+
+1. react-window 和 react-virtualized 是热门的虚拟滚动库。 它们提供了多种可复用的组件，用于展示列表、网格和表格数据
+
+### 虚拟DOM
+React 只更新改变了的 DOM 节点. 那什么时候触发render 呢？
+答案是当一个组件的 props 或 state 变更， 通过shouldComponentUpdate 判断是否触发render
+
+其默认实现总是返回 true(即使prop/state 并没有真的变`setState({})`)：
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return true;
+    }
+
+### shouldComponentUpdate与React.PureComponent
+你可以改写 shouldComponentUpdate:
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if(nextState.a==this.state.a){
+            return false
+        }
+        return true;
+    }
+
+在大部分情况下，你可以继承 React.PureComponent 以代替手写 shouldComponentUpdate()。它用当前与之前 props 和 state 的浅比较覆写了 shouldComponentUpdate() 的实现。
+
+### immutable不可变数据作为props/state
+如果使用 React.PureComponent， 下面的words 变量没有被替换，导致不更新
+
+    const words = this.state.words;
+    words.push('marklar');
+    this.setState({words: words});
+
+好的做法是，不要改变原来的变量words, 而是生成新的words
+
+    this.setState(state => ({
+        words: state.words.concat(['marklar'])
+        //或者 
+        words: [...state.words, 'marklar'],
+    }));
 
 # Portal  
 Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。

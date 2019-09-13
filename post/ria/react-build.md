@@ -4,17 +4,19 @@ date: 2019-08-18
 private:
 ---
 # React Build
+Refer: https://zh-hans.reactjs.org/docs/optimizing-performance.html
 
-## babel
-babel 使用`react-app/prod` 编译jsx
+## Create React App
+如果你的代码 是Create React App 生成的
 
-    npm i babel
-    npx babel --watch src --out-dir . --presets react-app/prod 
+    # react-scripts build
+    npm run build ; # 生成生产环境代码 build/ 
+        $ yarn global add serve; serve -s build
 
-# React Runtime
-React 运行时，需要引入运行时
+    # react-scripts start
+    npm start; # 执行开发模式
 
-## CDN runtime
+## 单文件构建
 阮一峰的demo 中的例子: React + ReactDom + babel
 
     <head>
@@ -33,14 +35,48 @@ React 运行时，需要引入运行时
         </script>
     </body>
 
-## create-react-app
-    $ cnpm install -g create-react-app
-    $ create-react-app my-app
-    $ cd my-app/
-    $ npm start
+## Rollup 构建
+为了最高效的 Rollup 生产构建，需要安装一些插件：
 
-可以看到创建的public/index.html 会调用`src/index.js`:
+    # 如果你使用 npm
+    npm install --save-dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-terser
 
-    import React from 'react';
-    import ReactDOM from 'react-dom';
-    ReactDOM.render(<App />, document.getElementById('root'));
+    # 如果你使用 Yarn
+    yarn add --dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-terser
+
+为了创建生产构建，确保你添加了以下插件 （顺序很重要）：
+1. replace 插件确保环境被正确设置。
+1. commonjs 插件用于支持 CommonJS。
+1. terser 插件用于压缩并生成最终的产物。
+
+配置
+
+    plugins: [
+        // ...
+        require('rollup-plugin-replace')({
+            'process.env.NODE_ENV': JSON.stringify('production')
+        }),
+        require('rollup-plugin-commonjs')(),
+        require('rollup-plugin-terser')(),
+        // ...
+    ]
+
+请注意，你只需要在生产构建时用到它。你不需要在开发中使用 terser 插件或者 replace 插件替换 'production' 变量，因为这会隐藏有用的 React 警告信息并使得构建速度变慢。
+
+## Webpack 构建
+在生产模式下，Webpack v4+ 将默认对代码进行压缩：
+
+    const TerserPlugin = require('terser-webpack-plugin');
+
+    module.exports = {
+      mode: 'production'
+      optimization: {
+        minimizer: [new TerserPlugin({ /* additional options here */ })],
+      },
+    };
+
+## babel 与jsx
+babel 使用`react-app/prod` 编译jsx
+
+    npm i babel
+    npx babel --watch src --out-dir . --presets react-app/prod 
