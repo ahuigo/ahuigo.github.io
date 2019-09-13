@@ -6,6 +6,22 @@ private:
 # todo
 > 参考ruanyifeng: http://www.ruanyifeng.com/blog/2019/09/react-hooks.html
 
+# receiveProps for hook
+
+    import React, { useState } from 'react';
+
+    const App = ({ count }) => {
+        const [derivedCounter, setDerivedCounter] = useState(
+            count > 100 ? 100 : count
+        );
+
+        useEffect(() => {
+            setDerivedCounter(count > 100 ? 100 : count);
+        }, [count]); // this line will tell react only trigger if count was changed
+
+        return <div>Counter: {derivedCounter}</div>;
+    };
+
 # 生命周期
 React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用，三种状态共计五种处理函数。
 
