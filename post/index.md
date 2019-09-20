@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-09-20 [防火墙](/b/net/net-iptables) 
+- 2019-09-16 [Java Object](/b/java/java-obj) 
 - 2019-09-12 [Cesium](/b/ria/cesium) 
 - 2018-10-04 [写npm 包](/b/ria/node-npm-pkg) 
 - 2018-10-04 [向量(vector)](/b/math/vector) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [map](/b/go/7.go-var-map) 
 - 2018-09-27 [Golang func](/b/go/16.go-func) 
 - 2019-04-17 [Aliyun oss](/b/arch/arch-oss) 
-- 2018-09-27 [Golang fmt](/b/go/6.go-fmt) 
-- 2018-09-27 [Golang：Array and slice](/b/go/10.go-slice-array) 

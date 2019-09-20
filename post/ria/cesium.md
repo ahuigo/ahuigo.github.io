@@ -4,6 +4,13 @@ date: 2019-09-12
 ---
 # Cesium
 
+## PolylineCollection
+
+    polylines.removeAll();
+    PolylineCollection#add
+    PolylineCollection#remove
+    PolylineCollection#update
+
 ## Entity
 ### Delete Entity
 

@@ -39,6 +39,16 @@ private:
     double d2 = 1.0 / 0; // Infinity
     double d3 = -1.0 / 0; // -Infinity
 
+# BigInteger
+import java.math.BigInteger; 
+
+    var bi = new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/))
+    var bi = new BigInteger(arg.getBytes(/*YOUR_CHARSET?*/))
+    public String toHex(String arg) {
+        return String.format("%040x", new BigInteger(1, arg.getBytes()));
+        return String.format("%040x", new BigInteger(arg.getBytes()));
+    }
+
 # bits
 ## bit move
 如果对一个负数进行右移，最高位的1不动，结果仍然是一个负数：
