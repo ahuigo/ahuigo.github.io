@@ -13,7 +13,7 @@ List Open File
 ## format
 
 	-n  inhibits  the conversion of network numbers to host names for network files.
-	-P  inhibits  the  conversion  of port numbers to port names for network files.
+	-P  inhibits  the conversion of port numbers to port names for network files.
 
 ## via socket
 Find original owning process of a Linux socket
@@ -49,6 +49,10 @@ example
 	lsof -i udp:portNumber
 	lsof -i :80
 	lsof -i :80 | grep LISTEN
+
+find all listen port
+
+     sudo lsof -i -P -n | grep LISTEN
 
 列出目前连接主机nf5260i5-td上端口为：20，21，80相关的所有文件信息，且每隔3秒重复执行
 

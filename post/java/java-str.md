@@ -3,9 +3,8 @@ title: Java String
 date: 2019-09-08
 private:
 ---
-# Java String
-## define
-### char
+# Java define
+## char
 注意char类型使用单引号'，且仅有一个字符，要和双引号"的字符串类型区分开
 
         char a = 'A';
@@ -20,12 +19,58 @@ private:
     int c = 65281;
     String s = "" + (char)a + (char)b  + (char)c;
 
+### char2int
+
+    (int)'a'
+
+## string
+
 ### null string
     String s1 = null; // s1是null
     String s2; // 没有赋初值值，s2也是null
     String s3 = s1; // s3也是null
 
+## toCharArray
+    for (char ch: string.toCharArray()) {
+        String.format("%04x", (int) ch));
+    }
 
+## bytes
+类似于golang bytes，是int
+
+### str2byte
+    String str = "Example String";
+    byte[] b = str.getBytes();
+
+    System.out.println("Array " + b);
+    // Array [B@3578436e
+    System.out.println("Array as String" + Arrays.toString(b));
+    //Array as String[69, 120, 97, 109, 112, 108, 101, 32, 83, 116, 114, 105, 110, 103]
+
+### byte2str
+
+## strhex
+    public static String toHexString(String s) {
+        StringBuilder str = new StringBuilder();
+        var ba = s.getBytes();
+        for(int i = 0; i < ba.length; i++)
+            str.append(String.format("%02x", ba[i]));
+        return str.toString();
+    }
+
+    public static String fromHexString(String hex) {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < hex.length(); i+=2) {
+            str.append((char) Integer.parseInt(hex.substring(i, i + 2), 16));
+        }
+        return str.toString();
+    }
+
+hex2decimal
+
+    var i = Integer.parseInt("0A0a",16);
+
+# string pointer
 ## 字符串不可变
 下列代码只是s 的指向变了
 
@@ -65,7 +110,7 @@ Consequently, if you want to test whether two strings have the same value you wi
     Objects.equals(null, "test") // --> false
 
 ## preg
-与pcre 不完全相同, 默认"^$"
+matcher 隐含了"^$"
 
     import java.util.regex.Pattern;
     import java.util.regex.Matcher;
@@ -80,6 +125,27 @@ Consequently, if you want to test whether two strings have the same value you wi
     } else {
         System.out.println("not found");
     }
+
+## replace
+string:
+
+    s1.replaceAll(" ","")
+
+replace with preg
+
+    str.replaceAll("word(?!([^<]+)?>)", "repl");
+
+## concat
+
+    s1+s2
+    s1.concat(s2)
+
+StringBuilder
+
+    StringBuilder str = new StringBuilder();
+    str.append(s1)
+    str.append(s2)
+
 
 ## url
 

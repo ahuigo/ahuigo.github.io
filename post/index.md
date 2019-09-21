@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-09-21 [防火墙](/b/net/net-iptables) 
+- 2019-09-16 [Java Object](/b/java/java-obj) 
 - 2019-09-12 [Cesium](/b/ria/cesium) 
 - 2018-10-04 [向量(vector)](/b/math/vector) 
 - 2018-09-27 [Java expr](/b/java/java-expr) 
@@ -37,5 +39,3 @@
 - 2019-08-15 [Docker exec nsenter](/b/arch/docker-exec) 
 - 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
 - 2016-09-27 [golang pkg的使用](/b/go/2.go-pkg) 
-- 2019-05-06 [go str](/b/go/go-str-serial) 
-- 2018-09-27 [map](/b/go/7.go-var-map) 
