@@ -206,19 +206,32 @@ global -> caller -> callback(anonymous)
 	}
 	caller();//I'm global
 
+## if scope
+const scope 是块级的，
+
+    if(1){ const a=2 }
+    console.log(a); //undefined
+
+var scope 不是块级的
+
+    if(1){ var a=4 }
+    console.log(a); //4
+
 
 # Lexical arguments
+箭头函数：
+
     function square() {
-    let example = () => {
-        let numbers = [];
-        for (let number of arguments) {
-        numbers.push(number * number);
-        }
+        let example = () => {
+            let numbers = [];
+            for (let number of arguments) {
+                numbers.push(number * number);
+            }
 
-        return numbers;
-    };
+            return numbers;
+        };
 
-    return example();
+        return example();
     }
 
     square(2, 4, 7.5, 8, 11.5, 21); // returns: [4, 16, 56.25, 64, 132.25, 441]

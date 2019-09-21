@@ -32,6 +32,13 @@ private:
     String s = "hello";
     s = "world";
 
+### string 是不可变的引用类型
+Refer: https://www.liaoxuefeng.com/wiki/1252599548343744/1255941599809248
+
+    String[] names = {"ABC", "XYZ", "zoo"};
+    String s = names[1];    //s 指向“ABC”
+    names[1] = "cat";       //s 还是指向“ABC”
+
 # str func
 ## equal
 

@@ -41,7 +41,7 @@ TableName 是根据ModelName 自动生成的, 并且通过下列代码将表名�
         // error handling...
     }
 
-## 错误
+## 错误List
 处理数据时，通常会发生多个错误。 GORM提供了一个API来将所有错误作为切片返回：
 
     // If there are more than one error happened, `GetErrors` returns them as `[]error`

@@ -14,6 +14,29 @@ private:
     db.DB().Ping()
 
 # Gorm Migrate
+## define table
+    type User struct {
+        gorm.Model
+        Name         string
+        Age          sql.NullInt64
+        Birthday     *time.Time
+        Email        string  `gorm:"type:varchar(100);unique_index"`
+        Role         string  `gorm:"size:255"` // set field size to 255
+        MemberNumber *string `gorm:"unique;not null"` // set member number to unique and not null
+        Num          int     `gorm:"AUTO_INCREMENT"` // set num to auto incrementable
+        Address      string  `gorm:"index:addr"` // create index with name `addr` for address
+        IgnoreMe     int     `gorm:"-"` // ignore this field
+    }
+
+multiple key:
+
+    Name string `gorm:"unique_index:idx_name_code"` // Create index with name, and will create combined index 
+                                                    // if find other fields defined same name
+    Code string `gorm:"unique_index:idx_name_code"` // `unique_index` also works
+
+    db.Model(&User{}).AddUniqueIndex("idx_user_name_age", "name", "code") 
+
+## Migrate
 自动迁移仅仅会创建表，缺少列和索引，并且不会改变现有列的类型或删除未使用的列以保护数据。
 
     db.AutoMigrate(&User{})

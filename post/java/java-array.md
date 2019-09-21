@@ -33,18 +33,35 @@ Java的数组有几个特点：
 1. 数组所有元素初始化为默认值，整型都是0，浮点型是0.0，布尔型是false；
 2. 数组一旦创建后，大小就不可改变。
 
-## string 是不可变的引用
-Refer: https://www.liaoxuefeng.com/wiki/1252599548343744/1255941599809248
+### 二维
+    int[][] ns = {
+                { 1, 2, 3, 4 },
+                { 9, 10, 11, 12 }
+            };
 
-    String[] names = {"ABC", "XYZ", "zoo"};
-    String s = names[1];    //s 指向“ABC”
-    names[1] = "cat";       //s 还是指向“ABC”
+### array to string
+
+    import java.util.Arrays;
+    int[] ns = { 1, 1, 2, 3, 5, 8 };
+    System.out.println(Arrays.toString(ns));
 
 ## loop:
 
     // Fill it with numbers using a for-loop
     for (int i = 0; i < nums.length; i++)
         nums[i] = i + 1;  // +1 since we want 1-100 and not 0-99
+
+### foreach
+
+    int[] ns = { 1, 4, 9, 16, 25 };
+    for (int n : ns) {
+        System.out.println(n);
+    }
+
+## sort
+insort
+
+    Arrays.sort(ns);
 
 
 ## split explode

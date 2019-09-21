@@ -65,32 +65,33 @@ You may need to set JAVA_HOME, JRE_HOME, PATH:
     export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
         /Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home
         JAVA_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/HOME
-        /usr/libexec/java_home ;When you install the XCode command line tools
 
 ## which javac
 
-  ➜ > php-lib git:(master) ✗l `which javac`
-  lrwxr-xr-x  1 root  wheel    75B Dec 11  2015 /usr/bin/javac -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/javac
-  /System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/javac
-  ➜ > php-lib git:(master) ✗l `which java`
-  lrwxr-xr-x  1 root  wheel    74B Dec 11  2015 /usr/bin/java ->
-  /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java
+    ➜ > php-lib git:(master) ✗l `which javac`
+    lrwxr-xr-x  1 root  wheel    75B Dec 11  2015 /usr/bin/javac -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/javac
+    /System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/javac
+    ➜ > php-lib git:(master) ✗l `which java`
+    lrwxr-xr-x  1 root  wheel    74B Dec 11  2015 /usr/bin/java ->
+    /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java
 
 # compile
-注意文件大小写
+注意文件大小写+文件名
 
     # build HelloWorld.class (大小写、java后缀不可省略)
     javac HelloWorld.java
 
-不用注意文件大小写
+java12 直接执行.java,  不用注意文件大小写/文件名
 
-    # 类似go run (.java不可省略)
-    java HelloWorld.java
-    java helloworld.java
+    # 类似go run (不关心大小写，甚至文件名)
+    java HelloWorld.java; 
+    ln HelloWorld.java a.java
+    java a.java
+
+java 执行.class,  注意文件名+大小写, 
 
     # run class(不要带.class)
     java HelloWorld
-    java helloworld
 
 ## set classpath
 

@@ -19,7 +19,7 @@ It should be redered as dom
         return <div> My Protected Component </div>
     }
 
-## via history push
+## via props.history push
 > 注意不是原生的history.pushState
 
 

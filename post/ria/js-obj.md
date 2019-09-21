@@ -477,6 +477,13 @@ constructor方法默认返回实例对象（即this），完全可以指定返�
         }
     }
 
+### method vs function
+
+    up(){
+        setTimeout(this.up, 1000)       //error
+        setTimeout(this.up.bind(this), 1000) //ok
+    }
+
 ### set/get
 
     class MyClass {

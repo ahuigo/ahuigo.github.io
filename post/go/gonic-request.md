@@ -5,6 +5,7 @@ private:
 ---
 # Request bind
 ## required
+传`0`，`""` 空字符相当于没传
 Required 限制了，不能传`0`，`""` 空字符等等！！！
 
     struct{
@@ -13,12 +14,14 @@ Required 限制了，不能传`0`，`""` 空字符等等！！！
 
 ## Uri args
 ### one uri param
+
+    r := gin.Default()
 	r.GET("/user/:name", func(c *gin.Context) {
-    name := c.Param("name")
-    name := c.Params.ByName("name")
+        name := c.Param("name")
+        name := c.Params.ByName("name")
+    }
 
-
-## ShoudBindUri
+### ShoudBindUri
 
     type Person struct {
         ID string `uri:"id" binding:"required,uuid"`
@@ -42,8 +45,10 @@ PostForm('name')
     name := c.PostForm("name")  //默认是空
     nick := c.DefaultPostForm("nick", "anonymous")
 
-## bind struct: (get+post)
+## Bind struct
 > Note: 注意bind 成员需要大写！
+
+### Bind:get+post(post优先)
 同时包含post+get(post优先)
 
     type StructA struct {
@@ -51,6 +56,7 @@ PostForm('name')
     }
     type StructB struct {
         NestedStruct StructA
+        //NestedStruct *StructA 也行
         FieldB string `form:"field_b"`
     }
 
@@ -59,7 +65,13 @@ PostForm('name')
     $ curl "http://localhost:8080/getb?field_a=hello&field_b=world"
     {"a":{"FieldA":"hello"},"b":"world"}
 
-### get+post：shoudBind(post优先)
+#### bind checkbox
+
+    type myForm struct {
+        Colors []string `form:"colors[]"`
+    }
+
+### shoudBind:get+post(post优先)
 
 #### ShouldBind
 
@@ -79,11 +91,11 @@ PostForm('name')
     if c.ShouldBindWith(&form, gonic.binding.Query)
     if c.ShouldBind(&form) == nil 
 
-### get only: showBindQuery
+### showBindQuery:get only:
     c.ShouldBindQuery(&fakeForm) 
 
-## map
-### get map:QueryMap 
+## Bind map
+### QueryMap:GET
     POST /post?ids[a]=1234&ids[b]=hello HTTP/1.1
     Content-Type: application/x-www-form-urlencoded
 
@@ -101,7 +113,7 @@ PostForm('name')
         })
         router.Run(":8080")
     }
-### post map:PostFormMap
+### PostFormMap:POST
     names := c.PostFormMap("names")
 
 ## Multipart(post)
@@ -196,6 +208,11 @@ https://github.com/gin-gonic/gin/pull/857/files
     func (c *Context) GetRawData() ([]byte, error) {
         return ioutil.ReadAll(c.Request.Body)
 
+# Request Info
+## URL
+
+    c.Request.URL.Path
+
 ## cookie
     cookie, err := c.Cookie("gin_cookie")
     if err != nil {
@@ -208,3 +225,57 @@ https://github.com/gin-gonic/gin/pull/857/files
     c.JSON(http.StatusOK, gin.H{"user": user, "value": value})
 ## string
     c.String(http.StatusOK, name)
+
+# Custom validators
+It is also possible to register custom validators. See the example code.
+
+    package main
+
+    import (
+        "net/http"
+        "reflect"
+        "time"
+
+        "github.com/gin-gonic/gin"
+        "github.com/gin-gonic/gin/binding"
+        "gopkg.in/go-playground/validator.v8"
+    )
+
+    // Booking contains binded and validated data.
+    type Booking struct {
+        CheckIn  time.Time `form:"check_in" binding:"required,bookabledate" time_format:"2006-01-02"`
+        CheckOut time.Time `form:"check_out" binding:"required,gtfield=CheckIn" time_format:"2006-01-02"`
+    }
+
+    func bookableDate(
+        v *validator.Validate, topStruct reflect.Value, currentStructOrField reflect.Value,
+        field reflect.Value, fieldType reflect.Type, fieldKind reflect.Kind, param string,
+    ) bool {
+        if date, ok := field.Interface().(time.Time); ok {
+            today := time.Now()
+            if today.Year() > date.Year() || today.YearDay() > date.YearDay() {
+                return false
+            }
+        }
+        return true
+    }
+
+    func main() {
+        route := gin.Default()
+
+        if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+            v.RegisterValidation("bookabledate", bookableDate)
+        }
+
+        route.GET("/bookable", getBookable)
+        route.Run(":8085")
+    }
+
+    func getBookable(c *gin.Context) {
+        var b Booking
+        if err := c.ShouldBindWith(&b, binding.Query); err == nil {
+            c.JSON(http.StatusOK, gin.H{"message": "Booking dates are valid!"})
+        } else {
+            c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        }
+    }

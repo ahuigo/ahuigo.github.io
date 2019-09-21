@@ -141,7 +141,6 @@ Object.is 与== 只有两个不同
     NaN == NaN  // false
     +0  == -0   // true
 
-
 # type check
 
 ## typeof: function, object, (except: Array/null)
