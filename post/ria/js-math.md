@@ -31,6 +31,7 @@ py+php+mysql: round(3.55,2)
 
 	num.toFixed(2); //两位小数, 四舍五入
 	(3.555).toFixed(2);// 3.56
+    +(1/3).toFixed(2)
 
 	Math.round(1.5); //2
 	Math.round('1.5'); //2
