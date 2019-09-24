@@ -24,6 +24,7 @@ Hook 是 让你在不编写 class 的情况下使用 state 以及其他的 React
 ## state hook
 多次click，每次执行`useState(0)`, 读取到的count 是不一样的
 
+    import React, { useState } from 'react';
     render(){
         const [count, setCount] = useState(0);
         return  <button onClick={() => setCount(count + 1)}> Click me </button>
@@ -53,6 +54,17 @@ Effect Hook 是在渲染后执行某些操作。相当于didMount+didUpdate
     useEffect(() => {
         document.title = `You clicked ${count} times`;
     });
+
+如果需要async 则：
+
+    useEffect(() => {
+      async function fetchData() {
+        // You can await here
+        const response = await MyAPI.getData(someId);
+        // ...
+      }
+      fetchData();
+    }, [someId]);
 
 ### clean effect
 与componentWillUnmount 类似，effect 也提供清理(除了首次渲染，render 函数内都会先执行clean effect再执行effect)

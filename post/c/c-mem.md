@@ -10,8 +10,8 @@ date: 2018-09-27
 # swap
 内存足够的情况下 不需要 swap
 
-临时： swapoff /dev/sdax  （swapoff -a 关闭）
-永久： /etc/fstab 将 swap 的注释掉或者设置为0，重启后或者 mount -a 生效
+    临时： swapoff /dev/sdax  （swapoff -a 关闭）
+    永久： /etc/fstab 将 swap 的注释掉或者设置为0，重启后或者 mount -a 生效
 
 # todo
 前一段时间看了《深入理解Linux内核》对其中的内存管理部分花了不少时间，但是还是有很多问题不是很清楚，最近又花了一些时间复习了一下，在这里记录下自己的理解和对Linux中内存管理的一些看法和认识。

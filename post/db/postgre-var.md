@@ -3,11 +3,35 @@ title: Posgtre Var
 date: 2019-06-20
 private:
 ---
-# Posgtre Var
+# var
 ## Define and assign
     DECLARE vSite varchar DEFAULT 'TechOnTheNet.com';
     DECLARE vSite varchar := 'TechOnTheNet.com';
     vSite := 'CheckYourMath.com';
+
+## type
+
+SELECT pg_typeof(your_variable);
+json_typeof(var)
+
+类型转换
+
+    var::int
+    var::jsonb
+    var::text::jsonb
+
+## 默认值
+
+    COALESCE(variable,0)
+    COALESCE(counters->>'bar','0')::int
+
+## timestamp
+
+   select date '2001-09-28' + integer '7'
+   select created_at + interval '1' day * day_field as deadline
+   select created_at + interval '1' hour * hour_field as deadline
+
+   select created_at + hour_field as deadline //not work
 
 # Datetime
 ## timestamp
