@@ -90,4 +90,3 @@ That's all. You get:
     NULL .. array is NULL
     FALSE .. any other case
 
-### in array

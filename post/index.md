@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [brew](/b/mac/mac-brew) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2018-09-27 [c-mem](/b/c/c-mem) 
 - 2019-09-21 [防火墙](/b/net/net-iptables) 
@@ -38,4 +39,3 @@
 - 2019-08-14 [JS worker](/b/ria/js-worker) 
 - 2019-08-30 [html5 笔记](/b/ria/js-dom-html5) 
 - 2019-08-17 [Gorm dialect](/b/db/gorm-dialect) 
-- 2019-08-15 [Docker exec nsenter](/b/arch/docker-exec) 
