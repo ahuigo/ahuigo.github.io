@@ -12,3 +12,15 @@ private:
 # math
 
     3^3 //27
+
+# 交集
+http://www.postgresqltutorial.com/postgresql-intersect/
+
+    SELECT employee_id FROM keys
+    INTERSECT
+    SELECT employee_id FROM hipos;
+    //out:
+    employee_id
+    -------------
+            5
+            2
