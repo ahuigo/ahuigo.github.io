@@ -63,6 +63,25 @@ https://github.com/wg/wrk
 	-c    使用 40连接
 	-d30s 请求30秒
 
+## go-wrk
+
+    go-wrk [flags] url
+
+with the flags being
+
+    -H="User-Agent: go-wrk 0.1 bechmark\nContent-Type: text/html;": the http headers sent separated by '\n'
+    -c=100: the max numbers of connections used
+    -k=true: if keep-alives are disabled
+    -i=false: if TLS security checks are disabled
+    -m="GET": the http request method
+    -n=1000: the total number of calls processed
+    -t=1: the numbers of threads used
+    -b="" the http request body
+    -s="" if specified, it counts how often the searched string s is contained in the responses
+for example
+
+go-wrk -c=400 -t=8 -n=100000 http://localhost:8080/index.html
+
 ## tcpkali
 https://github.com/machinezone/tcpkali
 Fast multi-core TCP and WebSockets load generator.

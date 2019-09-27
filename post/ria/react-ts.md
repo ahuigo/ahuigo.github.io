@@ -4,7 +4,9 @@ date: 2019-05-24
 private:
 ---
 # React typescript
+## todo
 https://typescript.bootcss.com/tutorials/react.html
+https://simonknott.de/articles/Using-TypeScript-with-React.html
 
 ## Create React ts app
     npx create-react-app my-app --typescript

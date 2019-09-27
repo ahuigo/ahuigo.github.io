@@ -15,7 +15,9 @@ date: 2019-01-29
         1. 介绍：https://www.fast.ai/2018/09/26/ml-launch/
 2. 深度学习入门/图像识别入门
     0. 互动式深度学习入门 https://livebook.manning.com/#!/book/grokking-deep-learning/chapter-1/1
+    2. 「65页PDF」让 PM 全面理解深度学习 https://easyai.tech/blog/65pdf-pm-understand-dl/
     1. Stanford Li Feifei CS231N, 一步步构造复杂的神经网络， 包括DNN， CNN， RNN等
+
 3.  NLP
     1. 推荐课程： CS224N Stanford
 4. RL入门

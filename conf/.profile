@@ -86,7 +86,7 @@ function gcap(){
             echo "check top_dir $top_dir"
             for subdir in "${subdirs[@]}"; do
                 echo "check subdir $subdir"
-                test -d $subdir && cd $subdir;
+                test -d $subdir && ! test -f $subdir/nopush && cd $subdir;
                 if test $? = 0;then
                     echo git push $subdir;
                     subFullPath="$top_dir/$subdir"
@@ -156,3 +156,4 @@ alias cnpm="npm --registry=https://registry.npm.taobao.org \
 
 [ -f ~/.private ] && source ~/.private
 [ -f ~/.wk ] && source ~/.wk
+[ -f ~/.local.rc ] && source ~/.local.rc

@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-10-04 [js-react](/b/ria/react-install) 
+- 2019-01-29 [AI 入门路线](/b/ai/ai-book) 
 - 2019-09-21 [防火墙](/b/net/net-iptables) 
 - 2019-09-16 [Java Object](/b/java/java-obj) 
 - 2019-09-12 [Cesium](/b/ria/cesium) 
@@ -37,5 +39,3 @@
 - 2019-08-30 [html5 笔记](/b/ria/js-dom-html5) 
 - 2019-08-17 [Gorm dialect](/b/db/gorm-dialect) 
 - 2019-08-15 [Docker exec nsenter](/b/arch/docker-exec) 
-- 2019-01-07 [学习下Golang 的反射](/b/go/17.go-reflect) 
-- 2016-09-27 [golang pkg的使用](/b/go/2.go-pkg) 
