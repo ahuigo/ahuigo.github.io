@@ -108,23 +108,108 @@ append ele to root
 
     ReactDOM.render(element, document.getElementById('root'));
 
-## render 过程
+## render lifecycle
 React 分两个阶段工作：
 
 1. 渲染 阶段会确定需要进行哪些更改，比如 DOM。在此阶段的最后，React 调用 render，然后将结果与上次渲染的结果进行比较。
 2. 提交 阶段发生在当 React 应用变化时。（对于 React DOM 来说，会发生在 React 插入，更新及删除 DOM 节点的时候。）在此阶段，React 还会调用 componentDidMount 和 componentDidUpdate 之类的生命周期方法。
 提交阶段通常会很快，但渲染过程可能很慢。因此，
 
-渲染阶段的生命周期包括以下 class 组件方法：
+当组件的 props 或 state 发生变化时会触发更新。组件更新的生命周期调用顺序如下：https://zh-hans.reactjs.org/docs/react-component.html#getsnapshotbeforeupdate
+![](/img/ria/react-lifecycle.png)
 
-    constructor
-    componentWillMount
-    componentWillReceiveProps
-    componentWillUpdate
-    getDerivedStateFromProps
-    setState 更新函数（第一个参数）
-    shouldComponentUpdate
-    render
+### 1.getDerivedStateFromProps
+
+    static getDerivedStateFromProps(nextProps, prevState)
+
+初始挂载、后续更新时都会被调用, 它只有一个目的：让组件在 props 变化时更新 state
+1. 它是静态方法，不可用于实例
+1. 它应返回一个对象来更新 state，如果返回 null 则不更新。
+2. 如果只想在 prop 更改时重新计算某些数据(不改state)，请使用 memoization helper 代替。
+
+#### memoization
+https://zh-hans.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization
+
+仅在输入变化时，重新计算 render 需要使用的值————这个技术叫做 memoization。其实就函数调用缓存
+
+    import memoize from "memoize-one";
+
+    class Example extends Component {
+      // state 只需要保存当前的 filter 值：
+      state = { filterText: "" };
+
+      // 在 list 或者 filter 变化时，重新运行 filter：
+      filter = memoize(
+        (list, filterText) => list.filter(item => item.text.includes(filterText))
+      );
+
+      handleChange = event => {
+        this.setState({ filterText: event.target.value });
+      };
+
+      render() {
+        // 计算最新的过滤后的 list。
+        // 如果和上次 render 参数一样，`memoize-one` 会重复使用上一次的值。
+        const filteredList = this.filter(this.props.list, this.state.filterText);
+
+        return (
+          <Fragment>
+            <input onChange={this.handleChange} value={this.state.filterText} />
+            <ul>{filteredList.map(item => <li key={item.id}>{item.text}</li>)}</ul>
+          </Fragment>
+        );
+      }
+    }
+
+### 2.shouldComponentUpdate() yes/no
+当 props 或 state 发生变化时，shouldComponentUpdate() 会在渲染执行之前被调用. 默认true
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('shouldComponentUpdate',nextState, this.state)
+        if(nextState.a===3){
+            return false
+        }
+        return true;
+    }
+
+返回 false，则不会调用 UNSAFE_componentWillUpdate()，render() 和 componentDidUpdate()
+一般，你应该考虑使用内置的 PureComponent 组件，而不是手动编写
+
+### 3.render()
+返回Dom
+
+### 4.getSnapshotBeforeUpdate
+1. 在最近一次渲染输出（提交到 DOM 节点）之前调用。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）。
+2. 此生命周期的任何返回值将作为参数传递给 componentDidUpdate()。
+getSnapshotBeforeUpdate() 
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        // 我们是否在 list 中添加新的 items ？
+        // 捕获滚动​​位置以便我们稍后调整滚动位置。
+        if (prevProps.list.length < this.props.list.length) {
+          const list = this.listRef.current;
+          return list.scrollHeight - list.scrollTop;
+        }else{
+            return null;
+        }
+      }
+
+      componentDidUpdate(prevProps, prevState, snapshot) {
+        // 如果我们 snapshot 有值，说明我们刚刚添加了新的 items，
+        // 调整滚动位置使得这些新 items 不会将旧的 items 推出视图。
+        //（这里的 snapshot 是 getSnapshotBeforeUpdate 的返回值）
+        if (snapshot !== null) {
+          const list = this.listRef.current;
+          list.scrollTop = list.scrollHeight - snapshot;
+        }
+      }
+
+
+### 5.componentDidMount() or componentDidUpdate()
+1. componentDidMount() 里可以直接调用 setState() (注意死循环)。。它将触发额外渲染，但此渲染会发生在浏览器更新屏幕之前。如此保证了即使在 render() 两次调用的情况下，用户也不会看到中间状态
+    1. 依赖于 DOM 节点的初始化应该放在这里。如需通过网络请求获取数据，此处是实例化请求的好地方。
+1. componentDidUpdate() 可直接调用 setState()(注意死循环)。
+
 
 ## render() 函数的触发
 React Ele元素是不可变对象。一旦被创建不可更改。除非用render重新创建, 

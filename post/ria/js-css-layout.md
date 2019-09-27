@@ -38,6 +38,13 @@ box 的 horizonal 水平居中
         column-gap: 1em;
     }
 
+## hide scrollbar
+
+    .hideScrollBar::-webkit-scrollbar{ 
+        width: 0 !important ;
+        height: 0 !important ;
+    }
+
 ## img 
 img 会超出div范围, 可以用max-width 限制
 

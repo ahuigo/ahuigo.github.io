@@ -72,7 +72,13 @@ WKT 表示样表：https://www.cnblogs.com/tiandi/archive/2012/07/18/2598093.htm
 
     ST_POINT(116, 39)
 
+### geom from lng/lat
+make geom from lng/lat
+
+    geom = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326);
+
 ## select geom
+### 显示图形:st_force2d
 
     $ select st_force2d(geom) from table_name limit 100
     0102000020E61000000200000000000000788807410000000050D90B41000000002083074100000000B00D0C41

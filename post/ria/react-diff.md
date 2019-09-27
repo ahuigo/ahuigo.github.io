@@ -98,6 +98,9 @@ React 会针对每个子元素 mutate销毁和重建, `<li>Duke</li> 和 <li>Vil
 
 ### Keys
 为了解决以上问题，React 支持 key 属性。当子元素拥有 key 时，React 使用 key 来匹配原有树上的子元素以及最新树上的子元素。
+仅当 key 变化时， React 会创建一个新的而不是更新一个既有的组件
+
+    <EmailInput key={this.props.user.id} />
 
 以下例子在新增 key 之后使得之前的低效转换变得高效：
 

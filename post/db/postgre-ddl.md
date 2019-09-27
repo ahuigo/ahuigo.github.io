@@ -113,7 +113,7 @@ custom-format archive:
 ### export sql 
 relative path 
 
-    \copy (select * from my_table limit 10) TO './a.csv'
+    \copy (select * from my_table limit 10) TO './a.csv'; -- 空格分析
     \copy (select * from my_table limit 10) TO './a.csv' CSV 
     \copy (select * from my_table limit 10) TO './a.csv' CSV HEADER
 

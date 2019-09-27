@@ -1,4 +1,9 @@
 # AHUIGO 的笔记
+- 2018-10-04 [写npm 包](/b/ria/node-npm-pkg) 
+- 2019-09-27 [js charts](/b/ria/chart) 
+- 2018-10-04 [to png](/b/ria/chart-img) 
+- 2018-10-04 [highcharts](/b/ria/chart-highchart) 
+- 2019-09-27 [antv and bizcharts](/b/ria/chart-antv) 
 - 2018-09-27 [brew](/b/mac/mac-brew) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2018-09-27 [c-mem](/b/c/c-mem) 
@@ -34,8 +39,3 @@
 - 2019-08-18 [React Build](/b/ria/react-build) 
 - 2019-08-18 [JS comporess](/b/ria/js-compress) 
 - 2018-10-10 [mac 工具集](/b/mac/mac-tool) 
-- 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
-- 2019-08-18 [js ajax legacy](/b/ria/js-ajax-legacy) 
-- 2019-08-14 [JS worker](/b/ria/js-worker) 
-- 2019-08-30 [html5 笔记](/b/ria/js-dom-html5) 
-- 2019-08-17 [Gorm dialect](/b/db/gorm-dialect) 

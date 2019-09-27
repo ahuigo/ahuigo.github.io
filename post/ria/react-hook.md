@@ -419,39 +419,3 @@ useState 是怎么确定取值的呢？顺序！(所以hook 要放顶层, 如果
 
 ## setState hook 触发
 react 的hook 会监听到setCount 执行，再触发重新渲染
-
-# 生命周期
-React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用，三种状态共计五种处理函数。
-
-    componentWillMount()
-    componentDidMount()
-    shouldComponentUpdate(object nextProps, object nextState)：组件判断是否重新渲染时调用
-    componentWillUpdate(object nextProps, object nextState)
-    componentDidUpdate(object prevProps, object prevState)
-    componentWillUnmount()
-
-此外，React 还提供两种特殊状态的处理函数。
-
-    componentWillReceiveProps(object nextProps)：已加载组件收到新的参数时调用
-
-example:
-
-    UNSAFE_componentWillMount(...res){
-        console.log('willMount',res)
-    }
-    componentDidMount(...res){
-        console.log('didMount',res)
-    }
-    UNSAFE_componentWillUpdate(nextProps, nextState,...res){
-        console.log('willupdate',nextProps, nextState, res)
-    }
-    componentDidUpdate(nextProps, nextState,...res){
-        console.log('didupdate',nextProps, nextState, res)
-    }
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('shouldComponentUpdate',nextState, this.state)
-        if(nextState.a===3){
-            return false
-        }
-        return true;
-    }

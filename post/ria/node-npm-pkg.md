@@ -28,6 +28,14 @@ date: 2018-10-04
 
 npm install 的bin 位于`/usr/local/bin/{mocha, egg-bin}`
 
+也可参考：https://github.com/nicejade/arya-jarvis
+
+## import 
+import directory 其实是import directory/index.js
+
+    import {sth} from './directory'
+
+
 ## link
 在插件还没发布前，可以通过 npm link 的方式进行本地测试，具体参见 npm-link
 

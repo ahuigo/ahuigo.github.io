@@ -126,7 +126,7 @@ endfunc
 """"""""""""""""""""""
 " Search current word
 """"""""""""""""""""""
-map ft :call Search_Word()<CR>:copen<CR>
+"map ft :call Search_Word()<CR>:copen<CR>
 function Search_Word()
 	let w = expand("<cword>")
 	execute "vimgrep " . w . " *"
