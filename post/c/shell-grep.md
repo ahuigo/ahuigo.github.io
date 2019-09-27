@@ -32,6 +32,9 @@ ag 比ack/grep 还快
 
     echo abc1234 |ag 'abc\d{3}$'
 
+## ag escape string
+    ag  -F -- '->>'
+
 ## ag AB
 ag after before 不会重复输出：
 

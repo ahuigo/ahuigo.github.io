@@ -8,7 +8,7 @@ date: 2018-09-27
     # Create a new PostgreSQL database cluster:
     /usr/pgsql-10/bin/postgresql-10-setup initdb
 
-## output formate
+## output format
 
     # \x
     Expanded display is on.

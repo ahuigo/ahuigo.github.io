@@ -207,7 +207,6 @@ withStyles(stypes) 步骤的完整代码是：withStyles(stypes)(Component) ：
     return (Component) => (props) => (<Component {...props} classes={classes} />);
     <div classNames={`this.props.classes.root`}>
 
-
 ## element inside
 Rerfer to:
 https://stackoverflow.com/questions/50368417/styling-element-inside-class-material-ui

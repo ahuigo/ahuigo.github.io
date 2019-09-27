@@ -12,7 +12,7 @@ http://caniuse.com/
     后者css优先覆盖前者
     .cls1.cls2 大于 .cls1 .cls2
     li a.active 优先 a.active
-    先定义优先于后定义:
+    后定义优先于先定义, 跟下面的排序无关
         class="oldDefined newDefined"
 
 ## 层次

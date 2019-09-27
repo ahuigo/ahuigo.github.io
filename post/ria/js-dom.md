@@ -60,6 +60,8 @@ redirect:
 
 	document.cookie='DEBUG=;expires=Mon, 05 Jul 2000 00:00:00 GMT'
 	document.cookie = 'a=1;expires='+d.toGMTString()
+    document.cookie = cookieName +"=" + cookieValue + ";expires=" + myDate 
+                  + ";domain=.example.com;path=/";
 	function getCookie(k){
 		c=document.cookie;
 		start = c.indexOf(k+'=');
@@ -71,6 +73,19 @@ redirect:
 		}
 		return v;
 	}
+
+清理时，必须带path=/
+
+    function deleteAllCookies() {
+        var cookies = document.cookie.split(";");
+
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+        }
+    }
 
 # Window
 
