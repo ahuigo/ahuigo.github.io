@@ -277,6 +277,22 @@ If the proxy server requires a username and password then add these to the URL. 
 
 > 另外，还有一个https_proxy
 
+## http socks5
+Suppose you have a socks5 proxy running on localhost:8001.
+
+    # In curl >= 7.21.7, you can use
+    curl -x socks5h://localhost:8001 http://www.google.com/
+    # In curl >= 7.18.0, you can use
+    curl --socks5-hostname localhost:8001 http://www.google.com/
+
+you can also set proxy using environment variables.
+
+    http_proxy=socks5h://localhost:8001 
+    HTTPS_PROXY=socks5h://localhost:8001 
+    ALL_PROXY=socks5h://localhost:8001 PROGRAM [OPTION]...
+
+Note that `http_proxy` is lower case, the other two is upper case.
+
 ## node-http-proxy
 support https
 

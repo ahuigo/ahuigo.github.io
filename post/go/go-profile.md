@@ -78,3 +78,19 @@ private:
 
 火焰图的y轴表示cpu调用方法的先后，x轴表示在每个采样调用时间内，方法所占的时间百分比，越宽代表占据cpu时间越多
 
+#### bench
+    $ go test -bench . -benchmem -cpuprofile prof.cpu
+
+    $ go tool pprof stats.test  prof.cpu
+    File: stats.test
+    Type: cpu
+    Time: Sep 28, 2019 at 1:52am (CST)
+    Duration: 201.84ms, Total samples = 0
+    No samples were found with the default sample value type.
+    Try "sample_index" command to analyze different sample values.
+    Entering interactive mode (type "help" for commands, "o" for options)
+    (pprof) top10
+    Showing nodes accounting for 0, 0% of 0 total
+        flat  flat%   sum%        cum   cum%
+    (pprof) %                                                                      ➜ stats$ git:(slow)
+
