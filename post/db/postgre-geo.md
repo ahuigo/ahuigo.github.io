@@ -27,7 +27,7 @@ Refer to : https://postgis.net/install/
 # 空间数据标准
 1. EPSG：European Petroleum Survey Group, 目前已有的椭球体，投影坐标系等不同组合都对应着不同的ID号
 [其中 EPSG:4326是比较著名的一个，GPS系统就是在用它，别名叫作WGS84，WGS(World Geodetic System)是世界大地测量系统](https://www.zhihu.com/question/52220968)
-2. SRID：OGC标准中的参数SRID，也是指的空间参考系统的ID，与EPSG一致；
+2. SRID：OGC标准中的参数SRID，也是指的空间参考系统的ID，与EPSG一致；如EPSG:4326
 3. WKT: 只是空间参考系统的文字描述, 无论是参考椭球、基准面、投影方式、坐标单位等，都有相应 的EPSG值表示
 
 WKT 表示样表：https://www.cnblogs.com/tiandi/archive/2012/07/18/2598093.html
