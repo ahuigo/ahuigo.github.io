@@ -47,7 +47,7 @@ Python的内置标准库, 速度中等, 容错能力强
 
 lxml 是c 解释器, 速度快, 唯一支持xml/lxml
 
-	BeautifulSoup(markup, ["lxml", "xml"])
+	BeautifulSoup(markup, ["lxml", "xml", "lxml-xml"])
 	BeautifulSoup(markup, "xml")
 
 html5lib 是python 写的, 不依赖外部扩展, 速度慢, 最强容错
@@ -242,6 +242,13 @@ via text node
 	soup.p.wrap(soup.new_tag("div")
 	# <div><p><b>I wish I was bold.</b></p></div>
     soup.div.unwrap()
+
+remove head/body/html
+
+    soup.html.body.unwrap()
+    if soup.html.select('> head'):
+        soup.html.head.unwrap()
+    soup.html.unwrap()
 
 ### append
 append tag/text

@@ -244,6 +244,10 @@ https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
     (datetime.now()-d).total_seconds()
     (datetime.now()-d).seconds
 
+compare
+
+    d1<d2
+
 ### begin of hour
 
     print(datetime.now().replace(microsecond=0,second=0,minute=0))
@@ -262,6 +266,11 @@ https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
     from datetime import datetime, timedelta, timezone
     tz_utc_8 = timezone(timedelta(hours=8)) # 创建时区UTC+8:00
     tz_utc_0 = timezone.utc
+
+## replace with timezone
+Can't subtract offset-naive and offset-aware datetimes
+
+    naive = dt.replace(tzinfo=None)
 
 ## keep time
 ### replece timezone(keep time, change timestamp)
