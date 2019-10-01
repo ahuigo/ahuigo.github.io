@@ -39,7 +39,6 @@ Cesium supports streaming and visualizing global high-resolution terrain and wat
 ## Format
 Cesium supports popular vector formats `GeoJson and KML`, as well as an open format we developed specifically for describing a scene in Cesium called CZML.
 
-
 ### Delete Entity
 
     var polylineEntity = viewer.entities.add({
@@ -57,4 +56,3 @@ remove all
     PolylineCollection#add
     PolylineCollection#remove
     PolylineCollection#update
-
