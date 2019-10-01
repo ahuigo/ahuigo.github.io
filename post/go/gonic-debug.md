@@ -9,7 +9,7 @@ date: 2019-04-22
  - using env:	export GIN_MODE=release
  - using code:	gin.SetMode(gin.ReleaseMode)
 
-## router log formate
+## router log 
 
     [GIN-debug] POST   /foo                      --> main.main.func1 (3 handlers)
 
@@ -19,7 +19,7 @@ custom it:
 		log.Printf("endpoint %v %v %v %v\n", httpMethod, absolutePath, handlerName, nuHandlers)
     }
 
-## middleware log format
+## request log(middleware )
 https://gin-gonic.com/docs/examples/custom-log-format/
 
 	router := gin.New()
@@ -53,6 +53,7 @@ see go-router.md for logger as middleWare
 
 ## log file
 https://gin-gonic.com/docs/examples/write-log/
+所有的log 都写到文件
 
     // Disable Console Color, you don't need console color when writing the logs to file.
     gin.DisableConsoleColor()

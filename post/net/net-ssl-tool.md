@@ -28,12 +28,15 @@ https://blog.filippo.io/mkcert-valid-https-certificates-for-localhost/
 
 ## RSA
 4.1.2、RSA
-1、私钥
+1、私钥(一般用.key)
 
+    openssl genrsa -out ./testdata/server.key 2048
 	openssl genrsa -out my_rsa_private_key.pem 1024
 
-2、公钥
 
+2、证书、公钥
+
+    openssl req -new -x509 -key ./testdata/server.key -out ./testdata/server.pem -days 365
 	openssl rsa -in my_rsa_private_key.pem -pubout -out my_rsa_public_key.pem
 
 ## self RSA

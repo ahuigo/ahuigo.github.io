@@ -1,10 +1,10 @@
 # AHUIGO 的笔记
 - 2018-09-28 [用BeautifulSoup 处理 html/xml](/b/py/py-html) 
 - 2018-10-04 [写npm 包](/b/ria/node-npm-pkg) 
-- 2019-09-27 [js charts](/b/ria/chart) 
+- 2019-09-28 [js charts](/b/ria/chart) 
 - 2018-10-04 [to png](/b/ria/chart-img) 
 - 2018-10-04 [highcharts](/b/ria/chart-highchart) 
-- 2019-09-27 [antv and bizcharts](/b/ria/chart-antv) 
+- 2019-09-28 [antv and bizcharts](/b/ria/chart-antv) 
 - 2018-09-27 [brew](/b/mac/mac-brew) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2018-09-27 [c-mem](/b/c/c-mem) 

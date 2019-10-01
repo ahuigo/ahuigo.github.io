@@ -40,5 +40,57 @@ private:
     go-torch [options] [binary] <profile source>
 
 ### 调优实例
+1. 下载 [demo](https://github.com/domac/playflame/tree/slow) 代码
+2. 运行：$ go run main.go -printStats
 
+#### pprof profile 调用关系图
+接下来我们用go-wrk （或者ab、siege）压测advanced 接口
+
+    go-wrk  -n=100000 -c=500  http://localhost:9090/advance
+
+在上面的压测过程中，我们再新建一个终端窗口输入以下命令，生成我们的profile文件：
+
+    $ go tool pprof --seconds 10 http://localhost:9090/debug/pprof/profile
+
+命令中，我们设置了10秒的采样时间，当看到(pprof)的时候，我们输入 web, 表示从浏览器打开
+
+    Fetching profile from http://localhost:9090/debug/pprof/profile?seconds=25
+    Please wait... (25s)
+    Saved profile in /Users/ahui/pprof/pprof.localhost:9090.samples.cpu.014.pb.gz
+    Entering interactive mode (type "help" for commands)
+    (pprof) web
+
+这样我们可以得到一个完整的程序调用性能采样profile的输出,如下图：
+![](/img/go/profile/pprof-simple.png)
+
+调用图太不直观了，我们需要简单的火焰图
+
+#### Flame 图
+先压测：
+
+    $ go-wrk  -n=100000 -c=500  http://localhost:9090/advance
+
+压测过程中用 go-torch来生成采样报告, 30s后出报告:
+
+    $ go-torch -u http://localhost:9090 -t 30
+    INFO[08:47:10] Run pprof command: go tool pprof -raw -seconds 30 http://localhost:9090/debug/pprof/profile
+    INFO[08:47:41] Writing svg to torch.svg
+
+火焰图的y轴表示cpu调用方法的先后，x轴表示在每个采样调用时间内，方法所占的时间百分比，越宽代表占据cpu时间越多
+
+#### bench
+    $ go test -bench . -benchmem -cpuprofile prof.cpu
+
+    $ go tool pprof stats.test  prof.cpu
+    File: stats.test
+    Type: cpu
+    Time: Sep 28, 2019 at 1:52am (CST)
+    Duration: 201.84ms, Total samples = 0
+    No samples were found with the default sample value type.
+    Try "sample_index" command to analyze different sample values.
+    Entering interactive mode (type "help" for commands, "o" for options)
+    (pprof) top10
+    Showing nodes accounting for 0, 0% of 0 total
+        flat  flat%   sum%        cum   cum%
+    (pprof) %                                                                      ➜ stats$ git:(slow)
 

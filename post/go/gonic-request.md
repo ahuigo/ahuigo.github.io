@@ -220,12 +220,6 @@ https://github.com/gin-gonic/gin/pull/857/files
         c.SetCookie("gin_cookie", "test", 3600, "/", "localhost", false, true)
     }
 
-# Response
-## JSON
-    c.JSON(http.StatusOK, gin.H{"user": user, "value": value})
-## string
-    c.String(http.StatusOK, name)
-
 # Custom validators
 It is also possible to register custom validators. See the example code.
 
@@ -279,3 +273,123 @@ It is also possible to register custom validators. See the example code.
             c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         }
     }
+
+# Response
+## JSON
+    c.JSON(http.StatusOK, gin.H{"user": user, "value": value})
+## string
+    c.String(http.StatusOK, name)
+
+## Html
+
+### LoadHTMLGlob
+    func main() {
+        router := gin.Default()
+        router.LoadHTMLGlob("templates/**/*")
+        router.GET("/posts/index", func(c *gin.Context) {
+            c.HTML(http.StatusOK, "posts/index.tmpl", gin.H{
+                "title": "Posts",
+            })
+        })
+        router.GET("/users/index", func(c *gin.Context) {
+            c.HTML(http.StatusOK, "users/index.tmpl", gin.H{
+                "title": "Users",
+            })
+        })
+        router.Run(":8080")
+    }
+
+templates/posts/index.tmpl， `define-end`不是必须的，只是方便引入?
+
+    {{ define "posts/index.tmpl" }}
+    <html><h1>
+        {{ .title }}
+    </h1>
+    </html>
+    {{ end }}
+
+### Static
+    // /assets/a.js
+    r.Static("/assets", "./assets")
+
+### Custom Template renderer
+    import "html/template"
+
+    func main() {
+        router := gin.Default()
+        html := template.Must(template.ParseFiles("file1", "file2"))
+        router.SetHTMLTemplate(html)
+        router.GET("/raw", func(c *gin.Context) {
+            c.HTML(http.StatusOK, "file1")
+        })
+        router.Run(":8080")
+    }
+
+also:
+
+    var html = template.Must(template.New("file1").Parse(` <html> </html> `))
+
+### LoadHTMLFiles
+
+    // store raw.tmpl
+    router.LoadHTMLFiles("./testdata/raw.tmpl")
+
+    router.GET("/raw", func(c *gin.Context) {
+        c.HTML(http.StatusOK, "raw.tmpl", map[string]interface{}{
+            "now": time.Date(2017, 07, 01, 0, 0, 0, 0, time.UTC),
+        })
+    })
+
+### Dlimiter
+	r := gin.Default()
+	r.Delims("{[{", "}]}")
+	r.LoadHTMLGlob("/path/to/templates")
+
+### Pipe Func
+	import "html/template"
+
+    func formatAsDate(t time.Time) string {
+        year, month, day := t.Date()
+        return fmt.Sprintf("%d%02d/%02d", year, month, day)
+    }
+
+    func main() {
+        router := gin.Default()
+        router.Delims("{[{", "}]}")
+        router.SetFuncMap(template.FuncMap{
+            "formatAsDate": formatAsDate,
+        })
+        router.LoadHTMLFiles("./testdata/raw.tmpl")
+
+        router.GET("/raw", func(c *gin.Context) {
+            c.HTML(http.StatusOK, "raw.tmpl", map[string]interface{}{
+                "now": time.Date(2017, 07, 01, 0, 0, 0, 0, time.UTC),
+            })
+        })
+
+raw.tmpl
+
+    Date: {[{.now | formatAsDate}]}
+
+## http2 and push
+https://gin-gonic.com/docs/examples/http2-server-push/
+> pem 生成见ssl-tool.md
+
+    r := gin.Default()
+	r.Static("/assets", "./assets")
+	r.SetHTMLTemplate(html)
+
+	r.GET("/", func(c *gin.Context) {
+		if pusher := c.Writer.Pusher(); pusher != nil {
+			// use pusher.Push() to do server push
+			if err := pusher.Push("/assets/app.js", nil); err != nil {
+				log.Printf("Failed to push: %v", err)
+			}
+		}
+		c.HTML(200, "https", gin.H{
+			"status": "success",
+		})
+	})
+
+	// Listen and Server in https://127.0.0.1:8080
+	r.RunTLS(":8080", "./testdata/server.pem", "./testdata/server.key")

@@ -15,7 +15,7 @@ https://blog.bitsrc.io/5-ways-to-style-react-components-in-2019-30f1ccc2b5b
     const sassRegex = /\.(scss|sass)$/;
     const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-# 0. CSSComponent
+# 0. React.CSSComponent
 todo: https://medium.com/@jviereck/modularise-css-the-react-way-1e817b317b04
 
     class MyNotification extends React.CSSComponent {
@@ -177,7 +177,7 @@ local:
         loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' 
     }
 
-## make style(material.io)
+# 4. make style(material.io)
     const classes = makeStyles({
         root: {
             width: 500,
@@ -185,7 +185,7 @@ local:
         },
     });
 
-# 4. jss （css in js）
+# 5. jss （css in js）
 > https://segmentfault.com/q/1010000012687223
 
 Material-UI 中默认支持的jss
@@ -288,29 +288,3 @@ card.jsx
     }
 
     export default Card;
-
-# styled components(第三方：不推荐)
-
-    import React from 'react';
-    import styled from 'styled-components';
-
-    const Div = styled.div`
-      margin: 40px;
-      border: 5px outset pink;
-      &:hover {
-       background-color: yellow;
-     }
-    `;
-
-    const Paragraph = styled.p`
-      font-size: 15px;
-      text-align: center;
-    `;
-
-    const OutsetBox = () => (
-      <Div>
-        <Paragraph>Get started with styled-components 💅</Paragraph>
-      </Div>
-    );
-
-    export default OutsetBox;
