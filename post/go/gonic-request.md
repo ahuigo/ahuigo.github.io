@@ -94,6 +94,16 @@ PostForm('name')
 ### showBindQuery:get only:
     c.ShouldBindQuery(&fakeForm) 
 
+### Bind:json
+    var json struct {
+        Value string `json:"value" binding:"required"`
+    }
+    c.Bind(&json)
+
+test：
+
+    curl -H 'Content-type:application/json' http://foo:bar@localhost:8080/admin -d '{"value":"abc"}'
+
 ## Bind map
 ### QueryMap:GET
     POST /post?ids[a]=1234&ids[b]=hello HTTP/1.1

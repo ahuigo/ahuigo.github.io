@@ -4,15 +4,19 @@ date: 2019-09-18
 private:
 ---
 # Gonic router
+
+## run router
+### router.run
 	router := gin.Default()
 	router.Run(":8080")
 
-## listen
+### router with http wrap
     func main() {
         router := gin.Default()
         http.ListenAndServe(":8080", router)
     }
-    or
+
+router with http.server config
 
     func main() {
         router := gin.Default()
@@ -35,7 +39,7 @@ private:
     //./public/index.html
 	router.Static("/", "./public")
 
-## router map
+## router group
 	// Simple group: v2
 	v2 := router.Group("/v2")
 	{
@@ -43,6 +47,31 @@ private:
 		v2.POST("/submit", submitEndpoint)
 		v2.POST("/read", readEndpoint)
 	}
+
+### group with auth
+
+	authorized := r.Group("/", gin.BasicAuth(gin.Accounts{
+		"foo":  "bar", // user:foo password:bar
+		"manu": "123", // user:manu password:123
+	}))
+
+	authorized.POST("admin", func(c *gin.Context) {
+		user := c.MustGet(gin.AuthUserKey).(string)
+
+		// Parse JSON
+		var json struct {
+			Value string `json:"value" binding:"required"`
+		}
+
+		if c.Bind(&json) == nil {
+			db[user] = json.Value
+			c.JSON(http.StatusOK, gin.H{"status": "ok"})
+		}
+	})
+
+try:
+
+    curl -H 'Content-type:application/json' http://foo:bar@localhost:8080/admin -d '{"value":"abc"}'
 
 ## shutdown & stop
 https://gin-gonic.com/docs/examples/graceful-restart-or-stop/
