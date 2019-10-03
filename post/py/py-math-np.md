@@ -79,7 +79,6 @@ https://chartio.com/resources/tutorials/how-to-check-if-any-value-is-nan-in-a-pa
 ### rename column
 
     df=df.rename(index=str, columns={ "date": "时间"})
-    df=df.rename(index=str, columns={ "date": "时间"})
 
 ### index empty
 
@@ -216,6 +215,23 @@ df to list
     df['col'] = series
     df1.loc[dates[0]:dates[1],'col'] = 1
 
+## to_dict:
+    print(df.set_index('device_id').T.to_dict())
+
+    df.to_dict()
+    df.to_dict('record') # 按行
+    df.to_json()
+    series.to_dict()
+    series.to_json()
+
+    # series alone
+    series.tolist()
+
+### keys
+    df.keys()
+### values
+    df.values
+
 ## add column + row
 
 ### add col series
@@ -334,17 +350,6 @@ update row via loc:
     3    0     0     0
     4    1    -1    -1
 
-### to_dict:
-    print(df.set_index('device_id').T.to_dict())
-
-    df.to_dict()
-    df.to_dict('record') # 按行
-    df.to_json()
-    series.to_dict()
-    series.to_json()
-
-    # series alone
-    series.tolist()
 
 ### len
 

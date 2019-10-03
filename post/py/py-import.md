@@ -15,29 +15,37 @@ python 主要是通过import 实现模块化的, 每个文件就是一个module:
 		mod1.py
 		mod2.py
 	
-mod必须要显式引入，只会引入`mod1`和`__init__`, 如下就不会引入`mod2`:
+mod必须要显式引入:
 
+    # 引入__init__
+    import pkg
+
+    # 引入__init__+mod1
     from pkg import mod1; 
-    from module.mod1
-    from module.mod1 import func; 
+    from pkg.mod1 import func; 
+
+    # 引入__init__+mod1+mod2
+    from pkg import mod1,mod2; 
+
 
 # import
 
 ## import function
+A目录下必须放`__init__.py`才被被作为pkg 引入import
+
 依次从locals, globals, PYTHONPATH查找:
 
 	```python
-	A = __import__('A')
-	A = __import__('A.B') # __import__('A') == __import__('A.B') 但是会加载B
-	A = __import__('A.B', globals(), locals())
+	A = __import__('A')   # import A
+	A = __import__('A.B') # import A.B
+	A = __import__('A.B', globals(), locals()) 
 
 	B = __import__('A.B', fromlist=[''])
 	```
 
-fromlist:
-A目录下必须放`__init__.py`才被被作为pkg 引入import
+fromlist: 
 
-	# 前两种实验结果是一样的B
+	# 加载A.B，但得到B
 	['a', 'b'] is a list of names to emulate ``from A.B import a,b'' : a,b
     [''] fromlist to emulate ``from A.B import *''. : B
 
@@ -51,10 +59,13 @@ A目录下必须放`__init__.py`才被被作为pkg 引入import
 如果想直接获取属性:
 
 	```
-	B = __import__('A.B', globals(), locals(), ['attr1'])
+	B = __import__('A.B', globals(), locals(), fromlist=['attr1'])
 	attr1 = __import__('A.B', globals(), locals(), ['attr1']).attr1
 	attr1 = getattr(__import__('A.B', globals(), locals(), ['attr1']), 'attr1')
 	```
+
+globals(): is only used to determine the context; they are not modified.  
+locals(): is unused(不使用).
 
 ## import dot
 The . is a shortcut that tells it search in current package(not process's cwd) before rest of the PYTHONPATH:

@@ -3,6 +3,8 @@ title: py-obj-classmethod
 date: 2018-10-04
 ---
 # Preface
+bind this
+
     >>> class A(object):
     ...     def a(self):
     ...         print('a')

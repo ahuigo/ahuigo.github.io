@@ -3,7 +3,7 @@ title: 操作符重载
 date: 2018-10-04
 ---
 # 操作符重载
-逻辑或操作符 | 对应了魔法方法 __ror__， 因此我们可以重载 __ror__ 来实现类似 Shell 中的管道(by 网友S142857 at coolshell)：
+逻辑或操作符 `|` 对应了魔法方法 `__ror__`， 因此我们可以重载 `__ror__` 来实现类似 Shell 中的管道(by 网友S142857 at coolshell)：
 
     class Pipe(object):
         def __init__(self, func):
@@ -95,3 +95,12 @@ date: 2018-10-04
     >   object.__gt__(self, other)
 
     filter(User.id==5) ORM SQLAlchemy 中看到这里我还以为写错了。。。原来不是相等的意思。而是magic
+
+## bound magic get
+
+    In [13]: bar.__get__(a)
+    Out[13]: <bound method bar of <__main__.A object at 0x107924160>>
+
+经常
+
+    a.bar = bar.__get__(a)

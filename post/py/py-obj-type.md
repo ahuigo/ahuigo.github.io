@@ -267,21 +267,21 @@ Drawing at position: 10 20
 ```
 
 ### bound and unbound
-```
->>> class B(object):
-...     def __repr__(self):
-...         return "<instance of %s>" % self.__class__.__name__
->>> class C(B):
-...     pass
->>> class D(C):
-...     pass
->>> d = D()
+    ```
+    >>> class B(object):
+    ...     def __repr__(self):
+    ...         return "<instance of %s>" % self.__class__.__name__
+    >>> class C(B):
+    ...     pass
+    >>> class D(C):
+    ...     pass
+    >>> d = D()
 
-# you get
->>> print super(C, d).__repr__
-<bound method D.__repr__ of <instance of D>>
-B.__repr__(d,...)
->>> print super(C, D).__repr__
-<unbound method D.__repr__>
-B.__repr__(D,...)
-```
+    # you get
+    >>> print super(C, d).__repr__
+    <bound method D.__repr__ of <instance of D>>
+    B.__repr__(d,...)
+    >>> print super(C, D).__repr__
+    <unbound method D.__repr__>
+    B.__repr__(D,...)
+    ```

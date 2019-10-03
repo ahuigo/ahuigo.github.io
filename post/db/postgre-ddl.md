@@ -164,6 +164,8 @@ connect db:
         \connect database_name
     SELECT current_database();
 
+current database?
+
 ## table
 
 ### show table

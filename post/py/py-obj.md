@@ -61,9 +61,11 @@ via metaclass/decorator/`__new__`:
 
     class A: pass
     a=A()
-    def bar(): 
+    def bar(self): 
         print('bar')
     a.bar=bar.__get__(a)
+
+参考py-maigc get
 
 ## static value for object
 > `obj.__class__ === type(obj). type(self) === self.__class === __class__`

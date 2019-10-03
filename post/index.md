@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-10-03 [Nexus5 刷机](/b/phone/nexus5) 
+- 2019-10-03 [Mysql why not use Null](/b/db/mysql-null) 
 - 2019-10-02 [Go Sync.Pool](/b/go/go-pool) 
 - 2018-09-28 [用BeautifulSoup 处理 html/xml](/b/py/py-html) 
 - 2018-10-04 [写npm 包](/b/ria/node-npm-pkg) 
@@ -37,5 +39,3 @@
 - 2016-09-27 [go 的变量](/b/go/7.go-var) 
 - 2018-10-04 [Js 中的this scope](/b/ria/js-func-scope) 
 - 2018-10-06 [About Http](/b/net/http) 
-- 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
-- 2019-08-18 [React Build](/b/ria/react-build) 

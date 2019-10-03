@@ -3,14 +3,19 @@ title: gonic
 date: 2019-04-22
 private:
 ---
-# Request bind
-## required
+# Request 
+## binding 属性required 
 传`0`，`""` 空字符相当于没传
-Required 限制了，不能传`0`，`""` 空字符等等！！！
+1. binding:"required" 限制了，不能传`0`，`""` 空字符等等！！！
+1. binding:"-" 不限制
 
     struct{
         PackageType int    `form:"package_type" binding:"required"`
+        Peg int    `form:"peg" binding:"-"`
     }
+
+## Request info
+    c.Request.URL.Path = "/test2"
 
 ## Uri args
 ### one uri param
@@ -44,6 +49,15 @@ PostForm('name')
 
     name := c.PostForm("name")  //默认是空
     nick := c.DefaultPostForm("nick", "anonymous")
+
+## Bind: Must and Should
+gin 有两套[Bind](https://gin-gonic.com/docs/examples/binding-and-validation/):
+1. 基于 MustBindWith： Bind, BindJSON, BindXML, BindQuery, BindYAML
+    1. error发生时： `c.AbortWithError(400, err).SetType(ErrorTypeBind)`.
+    2. 同时header： is set to `text/plain; charset=utf-8`.
+2. 基于 ShouldBindWith： ShouldBind, ShouldBindJSON, ShouldBindXML, ShouldBindQuery, ShouldBindYAML
+    1. 自己控制error
+
 
 ## Bind struct
 > Note: 注意bind 成员需要大写！
@@ -103,6 +117,25 @@ PostForm('name')
 test：
 
     curl -H 'Content-type:application/json' http://foo:bar@localhost:8080/admin -d '{"value":"abc"}'
+
+## Bind Multiple
+[Bind 执行时，c.Request.Body 会到达 EOF](https://gin-gonic.com/docs/examples/bind-body-into-dirrerent-structs/)
+
+如果想让bind body different structs， 就copy body出来, 再用`ShouldBindBodyWith`
+
+    objA := formA{}
+    objB := formB{}
+    if errA := c.ShouldBindBodyWith(&objA, binding.JSON); errA == nil {
+        c.String(http.StatusOK, `the body should be formA`)
+    } else if errB2 := c.ShouldBindBodyWith(&objB, binding.XML); errB2 == nil {
+        c.String(http.StatusOK, `the body should be formB XML`)
+    } else {
+        ...
+    }
+
+This feature is:
+1. only needed for some formats – `JSON, XML, MsgPack, ProtoBuf`.
+2. For other formats, `Query, Form, FormPost, FormMultipart`, can be called by `c.ShouldBind()` multiple times without any damage to performance 
 
 ## Bind map
 ### QueryMap:GET
@@ -283,123 +316,3 @@ It is also possible to register custom validators. See the example code.
             c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         }
     }
-
-# Response
-## JSON
-    c.JSON(http.StatusOK, gin.H{"user": user, "value": value})
-## string
-    c.String(http.StatusOK, name)
-
-## Html
-
-### LoadHTMLGlob
-    func main() {
-        router := gin.Default()
-        router.LoadHTMLGlob("templates/**/*")
-        router.GET("/posts/index", func(c *gin.Context) {
-            c.HTML(http.StatusOK, "posts/index.tmpl", gin.H{
-                "title": "Posts",
-            })
-        })
-        router.GET("/users/index", func(c *gin.Context) {
-            c.HTML(http.StatusOK, "users/index.tmpl", gin.H{
-                "title": "Users",
-            })
-        })
-        router.Run(":8080")
-    }
-
-templates/posts/index.tmpl， `define-end`不是必须的，只是方便引入?
-
-    {{ define "posts/index.tmpl" }}
-    <html><h1>
-        {{ .title }}
-    </h1>
-    </html>
-    {{ end }}
-
-### Static
-    // /assets/a.js
-    r.Static("/assets", "./assets")
-
-### Custom Template renderer
-    import "html/template"
-
-    func main() {
-        router := gin.Default()
-        html := template.Must(template.ParseFiles("file1", "file2"))
-        router.SetHTMLTemplate(html)
-        router.GET("/raw", func(c *gin.Context) {
-            c.HTML(http.StatusOK, "file1")
-        })
-        router.Run(":8080")
-    }
-
-also:
-
-    var html = template.Must(template.New("file1").Parse(` <html> </html> `))
-
-### LoadHTMLFiles
-
-    // store raw.tmpl
-    router.LoadHTMLFiles("./testdata/raw.tmpl")
-
-    router.GET("/raw", func(c *gin.Context) {
-        c.HTML(http.StatusOK, "raw.tmpl", map[string]interface{}{
-            "now": time.Date(2017, 07, 01, 0, 0, 0, 0, time.UTC),
-        })
-    })
-
-### Dlimiter
-	r := gin.Default()
-	r.Delims("{[{", "}]}")
-	r.LoadHTMLGlob("/path/to/templates")
-
-### Pipe Func
-	import "html/template"
-
-    func formatAsDate(t time.Time) string {
-        year, month, day := t.Date()
-        return fmt.Sprintf("%d%02d/%02d", year, month, day)
-    }
-
-    func main() {
-        router := gin.Default()
-        router.Delims("{[{", "}]}")
-        router.SetFuncMap(template.FuncMap{
-            "formatAsDate": formatAsDate,
-        })
-        router.LoadHTMLFiles("./testdata/raw.tmpl")
-
-        router.GET("/raw", func(c *gin.Context) {
-            c.HTML(http.StatusOK, "raw.tmpl", map[string]interface{}{
-                "now": time.Date(2017, 07, 01, 0, 0, 0, 0, time.UTC),
-            })
-        })
-
-raw.tmpl
-
-    Date: {[{.now | formatAsDate}]}
-
-## http2 and push
-https://gin-gonic.com/docs/examples/http2-server-push/
-> pem 生成见ssl-tool.md
-
-    r := gin.Default()
-	r.Static("/assets", "./assets")
-	r.SetHTMLTemplate(html)
-
-	r.GET("/", func(c *gin.Context) {
-		if pusher := c.Writer.Pusher(); pusher != nil {
-			// use pusher.Push() to do server push
-			if err := pusher.Push("/assets/app.js", nil); err != nil {
-				log.Printf("Failed to push: %v", err)
-			}
-		}
-		c.HTML(200, "https", gin.H{
-			"status": "success",
-		})
-	})
-
-	// Listen and Server in https://127.0.0.1:8080
-	r.RunTLS(":8080", "./testdata/server.pem", "./testdata/server.key")

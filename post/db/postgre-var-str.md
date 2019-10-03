@@ -17,17 +17,17 @@ postgre 不支持\ 转义
     select 'a''b' # 不支持 ’a\'b' 
 
 ### concat
-    select 'a:'||'b'||1.2 as bb;
-    select concat('a:','b', 1.2)
+    select 'a:'||'b'||1.2 as bb;    //"a:b1.2"
+    select concat('a:','b', 1.2); // "a:b1.2"
     select concat(key1,key2)
 
 join:
 
     CONCAT_WS(separator,str_1,str_2,...);
 
-join group:
+join group:?????
 
-    string_agg(actor, ', ') AS actor_list
+    select string_agg(actor, ', ') AS actor_list
     SELECT movie, string_agg(actor, ', ' ORDER BY actor) AS actor_list FROM   tbl GROUP  BY 1;
 
 

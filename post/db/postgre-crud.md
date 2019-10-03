@@ -32,13 +32,13 @@ INSERT INTO table (id, field, field2)
     INSERT INTO the_table (id, column_1, column_2) VALUES (1, 'A', 'X'), (2, 'B', 'Y'), (3, 'C', 'Z')
     ON CONFLICT (id) 
     DO UPDATE 
-        SET column_1 = EXCLUDED.column_1, 
-            column_2 = the_table.column_2 
+        SET column_1 = EXCLUDED.column_1, -- 更新值
+            column_2 = the_table.column_2  -- 保留值
         [RETURNING id];
     DO NOTHING;
 
 #### on conflict
-`ON CONFLICT target action [RETURNING id]`:
+`ON CONFLICT [target] action [RETURNING id]`:
 
     target:
         (uid, phone)
@@ -46,6 +46,10 @@ INSERT INTO table (id, field, field2)
         WHERE predicate
     action:
         DO UPDATE SET column_1 = EXCLUDED.value_1,v2, .. WHERE condition
+
+可以什么都不做时，就不需要target:
+
+    ON CONFLICT DO NOTHING
 
 ## select 
 双引号 反引号。表示特殊的字段：

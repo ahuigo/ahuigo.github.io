@@ -27,12 +27,14 @@ postgre 是用cusor 去执行+缓存数据
     cursor.connection.commit()
     cur.query # return sql query string
 
-### execute
+### execute insert
 cursor.execute, conn.commit,close 查询fetch 
 如果没有修改数据，不需要commit
 
+    cursor.execute("insert into  prices values(%s,%s,%s)", ['20170930', 'sh0001', 10.0])
+
 #### batch execute
-executemany:
+executemany(recommend):
 
     tup = [(1,'x'), (2,'y')]
     cur.executemany("INSERT INTO table VALUES(%s,%s,)", tup)
@@ -40,7 +42,7 @@ executemany:
 method2:
 
     args_str = ','.join(cur.mogrify("(%s,%s,)", x) for x in tup)
-    cur.execute("INSERT INTO table VALUES " + args_str) 
+    cur.execute("INSERT INTO prices VALUES " + args_str) 
 
 method3:
 
@@ -54,7 +56,7 @@ method3:
 1. 关键字用：sql.Identifier
 2. 普通数据先自己用%s 拼好，再bind_param
 
-execute 支持变量绑定
+execute 支持变量绑定: %s 针对任何类型
 
     >>> SQL = "INSERT INTO authors (name) VALUES (%s);" # Note: no quotes
     >>> data = ("O'Reilly", )
@@ -95,3 +97,14 @@ table name 这些则不支持，应该使用:
 
     cursor.fetchone()
     cursor.fetchmany([size=cursor.arraysize])
+
+## ddl
+### databases
+    \l
+    cursor.execute('SELECT datname FROM pg_database;')
+
+### tables
+    \dt
+    cursor.execute("""SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'""")
+    for table in cursor.fetchall():
+        print(table)
