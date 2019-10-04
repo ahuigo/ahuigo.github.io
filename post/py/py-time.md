@@ -240,9 +240,10 @@ https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
 	datetime.datetime(2015, 5, 21, 4, 57, 3, 540997)
 
 ### diff
-
-    (datetime.now()-d).total_seconds()
-    (datetime.now()-d).seconds
+    # 精确到us
+    (datetime.now()-d).total_seconds() 
+    # 精确到s, 是除去天之后余秒
+    (datetime.now()-d).seconds 
 
 compare
 

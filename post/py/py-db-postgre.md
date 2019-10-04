@@ -33,6 +33,10 @@ cursor.execute, conn.commit,close 查询fetch
 
     cursor.execute("insert into  prices values(%s,%s,%s)", ['20170930', 'sh0001', 10.0])
 
+#### exception
+execute 永远返回None.
+如果异常，你需要手动try-catch(上层做、底层做，完全看业务需求)
+
 #### batch execute
 executemany(recommend):
 

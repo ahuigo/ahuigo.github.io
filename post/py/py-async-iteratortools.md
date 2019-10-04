@@ -42,6 +42,22 @@ itertools模块提供的全部是处理迭代功能的函数，它们的返回�
     combinations_with_replacement('ABCD', 2)	A只能在前, sorted 指数：4+3+2+1 	AA AB AC AD BB BC BD CC CD DD
     ```
 
+## rolling window
+> for iter2, see py-lib/lib/itertool2.py
+
+    from itertools import islice
+
+    def iterWindow(seq, n=2):
+        "Returns a sliding window (of width n) over data from the iterable"
+        "   s -> (s0,s1,...s[n-1]), (s1,s2,...,sn), ...                   "
+        it = iter(seq)
+        result = tuple(islice(it, n))
+        if len(result) == n:
+            yield result
+        for elem in it:
+            result = result[1:] + (elem,)
+            yield result
+
 ## from_iterable(['ABC', 'DEF']) --> A B C D E F
 
 ## takewhile(break_func, iterable)

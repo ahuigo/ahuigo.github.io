@@ -4,11 +4,8 @@ title:	About Http
 category: blog
 description:
 ---
-# Preface
-
-# range:
-
-header 头
+# range
+range 这个header 头，主要是用于分段下载
 
     Range: bytes=0-1024
 
@@ -64,7 +61,7 @@ header 头
 	0
 
 ## http/2
-为解决 Head-of-line blocking, 诞生了[Http/2](/http2)(SPDY 协议的改进)
+为解决 Head-of-line blocking, 诞生了[Http/2](/p/net/http2)(SPDY 协议的改进)
 
 # favicon.ico
 Disable favicon

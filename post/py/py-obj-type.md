@@ -102,7 +102,7 @@ eg:
 
 # MRO, Method Resolution Order
 http://python-history.blogspot.com/2010/06/method-resolution-order.html
-http://hanjianwei.com/2013/07/25/python-mro/
+[Python的方法解析顺序(MRO)](http://hanjianwei.com/2013/07/25/python-mro/)
 
 Python has three MRO:
 
@@ -111,6 +111,12 @@ Python has three MRO:
 3. C3 Agrithm(>=2.3)
 
 ## new-style mro
+
+      A  B
+      |/\/ 
+      X  Y
+       \ /
+        Z
 
 	class A(object): pass
 	class B(object): pass
@@ -267,7 +273,8 @@ Drawing at position: 10 20
 ```
 
 ### bound and unbound
-    ```
+类似js 的bind this概念
+
     >>> class B(object):
     ...     def __repr__(self):
     ...         return "<instance of %s>" % self.__class__.__name__

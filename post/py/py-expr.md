@@ -120,29 +120,20 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
 	>>> import os # 导入os模块，模块的概念后面讲到
 	>>> [d for d in os.listdir('.')] # os.listdir可以列出文件和目录
 
-# logic expression
+# logic/bit/compare expression
 
-	>>> x =5; 1 < x < 10
-	True
-	>>> False or 0 or '' or 3
-	3
+## bit/logic expr
+and or not xor
 
-	and or not
-	!= (not equal)
-	== (equal)
-	>= (greater-than-equal)
-	<= (less-than-equal)
-	True
-	False
-
-# bit expr
-
-    x << y
-    x >> y
     x & y
     x | y
     ~ x
     x ^ y
+
+bit
+
+    x << y
+    x >> y  
 
     >>> -1<<2
     -4
@@ -154,6 +145,22 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
     0
     >>> 1^1
     0
+
+## logic
+    and or not
+	>>> False or 0 or '' or 3
+	3
+
+## compare
+	>>> x =5; 1 < x < 10
+	True
+
+	!= (not equal)
+	== (equal)
+	>= (greater-than-equal)
+	<= (less-than-equal)
+	True
+	False
 
 # with
 with 可以捕获异常, 类必须支持`__enter__, __exit__`相当于文件open/close:

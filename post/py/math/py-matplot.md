@@ -1,9 +1,9 @@
 ---
 title: matplotlib
 date: 2018-10-04
+private:
 ---
 # matplotlib
-
 > 原文:
 http://www.labri.fr/perso/nrougier/teaching/matplotlib/
 > 译文:

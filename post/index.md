@@ -1,4 +1,9 @@
 # AHUIGO 的笔记
+- 2019-10-03 [Python 的类型注解](/b/py/py-type) 
+- 2018-03-01 [Python 语法](/b/py/py-expr) 
+- 2018-09-28 [py-async-iteratortools](/b/py/py-async-iteratortools) 
+- 2019-10-04 [Python 的math 语法](/b/py/math/py-math) 
+- 2018-10-04 [Data tool](/b/py/math/py-math-tool) 
 - 2019-10-03 [Nexus5 刷机](/b/phone/nexus5) 
 - 2019-10-03 [Mysql why not use Null](/b/db/mysql-null) 
 - 2019-10-02 [Go Sync.Pool](/b/go/go-pool) 
@@ -34,8 +39,3 @@
 - 2018-09-27 [install java](/b/java/java-install) 
 - 2018-09-27 [go routines](/b/go/18.go-routines) 
 - 2018-09-27 [Golang Interfaces](/b/go/16.go-interface) 
-- 2018-09-27 [filepath](/b/go/12.go-file) 
-- 2019-03-24 [Golang 的结构体](/b/go/go-struct) 
-- 2016-09-27 [go 的变量](/b/go/7.go-var) 
-- 2018-10-04 [Js 中的this scope](/b/ria/js-func-scope) 
-- 2018-10-06 [About Http](/b/net/http) 
