@@ -8,6 +8,16 @@ date: 2018-03-01
 True
 ```
 
+# exec
+## exec func by name
+
+    locals()["myfunction"]()
+    globals()["myfunction"]()
+
+or 
+
+    import foo
+    getattr(foo, 'bar')()
 
 # Condition & Loop
 

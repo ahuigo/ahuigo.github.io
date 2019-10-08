@@ -199,7 +199,7 @@ show create table:
 ALTER TABLE table_name `<action>`:
 
     column:
-        ADD COLUMN column_name VARCHAR;
+        ADD COLUMN column_name VARCHAR TYPE [not null  default 3];
         DROP COLUMN column_name;
         ALTER COLUMN location TYPE VARCHAR,
             ALTER COLUMN asset_no TYPE INT USING asset_no::integer;

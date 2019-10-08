@@ -7,9 +7,16 @@ date: 2018-10-04
 
 subprocess模块可以让我们非常方便地启动一个子进程，然后控制其输入和输出。
 
-## enter shell
-    import code
-    code.interact(local=locals())
+## enter interact mode
+    def interactDebug(local):
+        import code
+        import readline
+        import rlcompleter
+        readline.parse_and_bind("tab: complete")
+        code.interact(local=local)
+    
+    interactDebug(locals())
+
 
 ## exec python shell
 via shell args: 

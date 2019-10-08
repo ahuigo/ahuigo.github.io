@@ -248,10 +248,25 @@ repeat
 	>>> list.pop(0) # first one
 	1
 
+### remove inplace
+
+    list.remove(value) # inplace
+
 ### insert and shift
 
     list.insert(pos, item)
     list = list[1:]
+
+move item:
+
+    l.insert(newindex, l.pop(oldindex))
+
+replace
+
+    l[slice] = [item]
+    l[0:0] = [item]
+
+deque:
 
     from collections import deque
     items = deque([1, 2])

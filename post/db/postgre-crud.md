@@ -89,6 +89,8 @@ with order by:
 #### group by with top N
 https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group
 
+不存在first 这个函数
+
     # SELECT FIRST(id), customer, FIRST(total) FROM  purchases GROUP BY customer ORDER BY total DESC;
 
 Supported by any database:
@@ -139,11 +141,8 @@ delete and keep top 2 row(order by peg) with group by industry
 > https://stackoverflow.com/questions/18539223/select-random-row-for-each-group-in-a-postgres-table
 > SELECT DISTINCT ON expressions must match initial ORDER BY expressions
 
-Select random one for each group of customer
+distinct 就是分组，然后按序(order by 取top1)/或随机取一个row
 
-In PostgreSQL this is typically simpler and faster (more performance optimization below):
-
-    # customer 必须出现在: order by
     SELECT DISTINCT ON (customer)
         id, customer, total
     FROM   purchases
@@ -156,6 +155,24 @@ Or shorter (if not as clear) with ordinal numbers of output columns:
         id, customer, total
     FROM   purchases
     ORDER  BY 2, 3 DESC, 1;
+
+`distinct on(fieldList)` 必须匹配`order by list` 排序. 
+`fieldList`中字段顺序不影响分组及结果。
+
+    # ERROR: DISTINCT ON expressions must match initial ORDER BY expressions
+    select distinct on (code,pe) code,pe,end_date from profits order by end_date;
+    # 不是以code-pe分组，而是以pe 分组。code 在这里被忽略
+    select distinct on (code,end_date) code,pe,end_date from profits order by end_date;
+    # 以code分组, 取最新end_date
+    select distinct on (code) code,end_date,pe,peg from profits order by code,end_date desc
+
+where filter, 会导致提前过滤掉的分组top1行, 导致留下topN列上位顶替原来的top1
+
+    # 比如我想找所有股票code 中，最新end_date财报中, peg<1 的(有问题)
+    select distinct on (code,end_date) code,end_date,pe from profits where peg>0 order by code,end_date desc limit 1
+    # 没有问题
+    select p.* from (select distinct on (code) code,end_date,pe,peg from profits order by code,end_date desc  ) p where p.peg<1;
+
 
 If total can be NULL (won't hurt either way, but you'll want to match existing indexes):
 

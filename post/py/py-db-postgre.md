@@ -112,3 +112,14 @@ table name 这些则不支持，应该使用:
     cursor.execute("""SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'""")
     for table in cursor.fetchall():
         print(table)
+
+## import
+
+    cur = conn.cursor()
+    cur.copy_from(open('a.csv'), 'table_name', null="", columns=df.keys()) # null values become ''
+    conn.commit()
+
+copy_to
+
+    cur.copy_to(open('out.csv','w'), 'table')
+

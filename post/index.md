@@ -1,4 +1,8 @@
 # AHUIGO 的笔记
+- 2018-10-04 [Typescript 的module](/b/ria/ts/ts-module) 
+- 2018-10-04 [TypeScript 装饰器](/b/ria/ts/ts-decorator) 
+- 2018-10-04 [初学 Typescript](/b/ria/ts/ts-) 
+- 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
 - 2019-10-03 [Python 的类型注解](/b/py/py-type) 
 - 2018-03-01 [Python 语法](/b/py/py-expr) 
 - 2018-09-28 [py-async-iteratortools](/b/py/py-async-iteratortools) 
@@ -35,7 +39,3 @@
 - 2018-09-28 [社保](/b/life/life-shebao) 
 - 2018-09-27 [Postgre 的索引](/b/db/postgre-index) 
 - 2018-10-04 [Vsc for python](/b/vsc/vsc-python) 
-- 2019-09-08 [Postgre expression](/b/db/postgre-expr) 
-- 2018-09-27 [install java](/b/java/java-install) 
-- 2018-09-27 [go routines](/b/go/18.go-routines) 
-- 2018-09-27 [Golang Interfaces](/b/go/16.go-interface) 

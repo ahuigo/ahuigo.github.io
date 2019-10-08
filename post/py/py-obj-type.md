@@ -69,6 +69,12 @@ isinstance(C, A) # False
     >>> issubclass(int, type)
     False
 
+## 判断None 要用is
+The operators `is` and `is not` test for object identity
+
+    obj is not None
+
+
 # type
 通过type()函数创建的类和直接写class是完全一样的，因为Python解释器遇到class定义时，仅仅是扫描一下class定义的语法，然后调用type()函数创建出class。(都是动态创建的)
 

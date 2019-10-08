@@ -35,16 +35,20 @@ timestamp to date:'2018-07-25 10:30:30' to '2018-07-25', 3种方法
     SELECT DATE(SUBSTRING('2018-07-25 10:30:30' FROM 1 FOR 10));
 
 ## get time
+get time only, date only
+
+    > SELECT CURRENT_TIME; 
+    20:49:04.566025-07
+
+    > CURRENT_DATE;
+    20191001
+
 get datetime(timestamp)
 
     > SELECT NOW();
     > SELECT CURRENT_TIMESTAMP; 
     2016-06-22 20:44:52.134125-07
 
-get time //without date, you use CURRENT_TIME:
-
-    > SELECT CURRENT_TIME; 
-    20:49:04.566025-07
 
 ## delta
 

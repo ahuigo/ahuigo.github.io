@@ -102,10 +102,6 @@ for postgre:
     Oracle	NUMBER(3,0), -103-1 to 103-1
     MySQL	TINYINT, Signed: -128 to 127, Unsigned: 0 to 255
     PostgreSQL	SMALLINT, -32768 to 32767
-    Sybase ASE	TINYINT, 0 to 255
-    Informix	SMALLINT, -32768 to 32767
-    HP Neoview	SMALLINT, Signed: -32768 to 32767, Unsigned: 0 to 65535
-    Ingres	TINYINT, -128 to 127
 
 ### Float
 

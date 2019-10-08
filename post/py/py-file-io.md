@@ -140,11 +140,22 @@ StringIO顾名思义就是在内存中读写str。
 	>>> from io import StringIO
 	>>> i = Image.open(StringIO('Hello!\nHi!\nGoodbye!')) # open(filename/file-object/Path)
 
+再来一个csv+pg 例子：
+
+    output = io.StringIO()
+    df.to_csv(output, sep='\t', header=False, index=False)
+    output.seek(0)
+
 ### read
+受f.seek(0) 影响的
 
 	f.read()
 	f.readline()
 	f.readlines()
+
+io 特有的, 不会改变seek cursor：
+
+    f.getvalue() 
 
 ## BytesIO
 StringIO操作的只能是str，如果要操作二进制数据，就需要使用BytesIO。

@@ -50,6 +50,20 @@ pandas教程：
     s.tolist()
     s.to_json()
 
+to_csv to_pg:
+
+    output = io.StringIO()
+    df.to_csv(output, sep='\t', header=False, index=False)
+    output.seek(0)
+
+    cur = conn.cursor()
+    cur.copy_from(output, 'table_name', null="", columns=df.keys()) # null values become ''
+    conn.commit()
+
+## Modify Series
+    s1=pd.Series(['a1',2,33])
+    s1.drop(0)
+
 ## Calc Series 运算
 ### math 四则运算
 
@@ -93,7 +107,14 @@ df 的聚合是以column 为group 的
     'value' in s.unique()
     'value' in set(s)
 
-values 与to_list() 不一样，后者是纯list
+s.values 与to_list() 不一样，后者是纯list
+
+#### loop Values
+
+    for value in s.values:
+        pass
+    for k,value in s.iteritems():
+        pass
 
 ### get value
 #### via key
@@ -252,6 +273,12 @@ import xlsx
     ['Sheet1', 'Sheet2', 'Sheet3']
     >>> sheet1 = xls.parse("Sheet1")
 
+import json:
+
+    pd.read_json(_, orient='split') #to_json(orient='split')
+    pd.read_json(_, orient='index')  #to_json(orient='index')
+    pd.read_json(_, orient='records') #to_json(orient='record')
+
 export xlsx
 
     df.to_excel('foo.xlsx', sheet_name='Sheet1')
@@ -292,7 +319,7 @@ get column(series)
     col = df.iloc[:,0] # first column
 
     # column key
-    col = df.iloc[:,'col1'] # first column
+    col = df.loc[:,'col1'] # first column
     col = df['col1']
 
 #### filter row/column
@@ -449,10 +476,24 @@ f.apply 是一个row/column 的聚合函数
     df.col.A=1
     df.loc[index].col = v  # not work
 
-#### change NaN,inf
-repalce NaN to 0:
+#### replace NaN/None,inf
+repalce NaN/None to 0/'':
 
+    fillna(0, inplace=True)
+    fillna('', inplace=True)
+
+分组替换：
+
+    values = {'column1': 0, 'columa': 1}
+    df.fillna(value=values)
+
+also with array:
+
+    //np.nan 会替换None/NaN
     newdf = df.replace([np.inf, np.NINF,np.nan], 0)
+
+check is nan
+
     math.isnan(x)
 
 ### isEmpty
@@ -462,14 +503,23 @@ repalce NaN to 0:
     True
 
 ## Raname column/index
+### change column order
+    > cols = df.columns.tolist()
+    > cols = cols[-1:] + cols[:-1]
+    > df = df[cols] 
+
+用set 类型也是可以过滤column
+
+    cols = set(df.columns) - blank_column_list
+    df[cols]
+
 ### rename column name
 immutable rename column
 
     df=df.rename(columns={ "date": "时间"})
-    # index 有什么用？todo
-    df=df.rename(index=str, columns={ "date": "时间"})
 
 ### rename index name
+    df=df.rename(index={"sum":'合计'})
 
 #### set_index
 set_index: move colume to index
@@ -571,15 +621,21 @@ init:
     df['new_col'] = pd.Series([3,1],index=['B','A']) # 指定index
 
 #### add series/dict row
-add row: 还有更简单的方法吗？
 
     df0 = pd.DataFrame([s],index=['index1'])
     df.append(df0)
 
-如果不用支持keep index:
+add row: 还有更简单的方法吗？当然
 
-    df.append(s, ignore_index=True)
+    df.loc['k'] = [33,44]
+    df.loc['k'] = pd.Series([33,44], index=['col1','col2'])
+
+如果想重排ranged index:
+
+    df.append(series, ignore_index=True)
+    df.append(series_list, ignore_index=True)
     df.append({'col1':1}, ignore_index=True)
+
 
 ## Drop
 ### Drop columns

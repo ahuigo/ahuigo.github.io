@@ -1,6 +1,7 @@
 ---
 title: python 变量笔记
-date: 20180303
+date: 2018-03-03
+private:
 ---
 # const
 
@@ -190,7 +191,7 @@ set 是无序的
 	s.add(item);
 	s.update([x1,x2]); union a set
 
-通过remove(key)方法可以删除元素：
+通过remove(key)方法可以删除元素(和list 一样)：
 
 	>>> if 4 in s: s.remove(4)
 	{1, 2, 3}

@@ -9,6 +9,46 @@ https://code.visualstudio.com/docs/python/python-tutorial
 python in vscode 调试方法
 https://www.zhihu.com/question/339718367
 
+## debug
+项目根目录下：.vscode/launch.json
+
+    {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                // 运行模块 python -m hello
+                "name": "Python: 模块",
+                "type": "python",
+                "request": "launch",
+                "module": "hello"
+            },
+            {
+                // 该配置用于运行当前窗口打开的文件 python file.py
+                "name": "Python: 文件",
+                "type": "python",
+                "request": "launch",
+                "program": "${file}",
+                //"program": "${workspaceRoot}/db/run.py",
+            }
+        ]
+    }
+
+环境变量，与参数设定：
+
+            "env": {
+                "FLASK_APP": "app.py",
+                "FLASK_ENV": "development",
+                "FLASK_DEBUG": "0"
+            },
+            "args": [
+                "run",
+                "--no-debugger",
+                "--no-reload"
+            ],
+
+在调试控制台窗口，有一个python shell 用于观察、修改 局部变量
+
+
 ## go to denifition
 1. 安装python extension (go to definition)
     2. `shift+cmd+p` using the `Python: Select Interpreter` command on the `Command Palette (⇧⌘P)`, 
