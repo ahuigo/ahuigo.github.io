@@ -1,7 +1,8 @@
 ---
 layout: page
-title:	ria chrome dev
+title:	chrome dev
 category: blog
+private:
 description: 
 ---
 # Preface
