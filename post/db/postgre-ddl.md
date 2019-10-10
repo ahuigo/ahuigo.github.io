@@ -116,6 +116,7 @@ relative path
     \copy (select * from my_table limit 10) TO './a.csv'; -- 空格分析
     \copy (select * from my_table limit 10) TO './a.csv' CSV 
     \copy (select * from my_table limit 10) TO './a.csv' CSV HEADER
+    \copy (select * from my_table limit 10) TO './a.csv' HEADER
 
 full path
 
@@ -189,6 +190,13 @@ show create table:
         location varchar(25) check (location in ('north', 'south', 'west', 'east',  'northwest')),
         install_date date
     );
+
+#### create view table
+	create view t_view as
+		select s1,s2,t1.id from t1,t2 where t1.id=t2.id order by s2;
+
+	create view t_view_alias (seg1, seg2, id) as
+		select s1,s2,t1.id from t1,t2 where t1.id=t2.id order by s2;
 
 ### drop
 
