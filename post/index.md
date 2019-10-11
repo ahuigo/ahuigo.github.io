@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-10-04 [CSS3 选择器](/b/ria/js-css-selector) 
+- 2018-10-04 [profile](/b/py/py-profiler) 
 - 2018-10-04 [Typescript 的module](/b/ria/ts/ts-module) 
 - 2018-10-04 [TypeScript 装饰器](/b/ria/ts/ts-decorator) 
 - 2018-10-04 [初学 Typescript](/b/ria/ts/ts-) 
@@ -37,5 +39,3 @@
 - 2019-09-09 [Java Array](/b/java/java-array) 
 - 2018-09-28 [社保](/b/proj/life-shebao) 
 - 2018-09-28 [社保](/b/life/life-shebao) 
-- 2018-09-27 [Postgre 的索引](/b/db/postgre-index) 
-- 2018-10-04 [Vsc for python](/b/vsc/vsc-python) 

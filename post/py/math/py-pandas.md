@@ -615,20 +615,24 @@ init:
     1  1  NaN  31.0
 
 ### add series
-#### add series column
+#### add column
+list,series,dict as column
 
     df['new_col'] = range(2)    # 默认以df.index 为顺序添加
     df['new_col'] = pd.Series([3,1],index=['B','A']) # 指定index
+    df['k'] = {0:1,1:2}     # 等价于 df['k']=dict.keys()
 
-#### add series/dict row
-
-    df0 = pd.DataFrame([s],index=['index1'])
-    df.append(df0)
-
-add row: 还有更简单的方法吗？当然
+#### add row
+list,series,dict as row
 
     df.loc['k'] = [33,44]
     df.loc['k'] = pd.Series([33,44], index=['col1','col2'])
+    df.loc['k']={'a':1,'c':2}
+
+还有吗？当然
+
+    df0 = pd.DataFrame([series],index=['index1'])
+    df.append(df0)
 
 如果想重排ranged index:
 
@@ -703,3 +707,13 @@ for col_name key only
 ## copy 
 
     df.copy() series.copy()
+
+# Var type
+## DateTime
+将str 转 time:
+
+    >>> df['date_time'] = pd.to_datetime(df['date_time'])
+
+指定format 更快：
+
+    return pd.to_datetime(df[column_name],format='%d/%m/%y %H:%M')

@@ -102,6 +102,28 @@ onpopstate(when or popstate):
 
 Refer to : http://segmentfault.com/blog/jslite/1190000002465197
 
+## mouse event
+mousedown mouseup
+
+mouseenter 与 mouseout. mouseover 类似mouseenter, 但切换item 会触发
+
+    <ul id="test">
+        <li>item 1</li>
+        <li>item 2</li>
+    </ul>
+    <script>
+        test.addEventListener("mouseenter", function( e) {   
+            console.log('enter',e.target)
+        }, false);
+        test.addEventListener("mouseover", function( e) {   
+            console.log('over',e.target)
+        }, false);
+        test.addEventListener("mouseout", function( e) {   
+            console.log('out',e.target)
+        }, false);
+    </script>
+
+
 ## listener
 
     onclick="func(this)" //notice: this 传的是click node(vue this===window)
