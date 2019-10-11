@@ -352,7 +352,7 @@ filter row:
     df[df.col1>df.col2]
 
     # axis=1 取column 项
-    df[df.apply(lambda x: x['col1'] > x['col2'], axis=1)]
+    df[df.apply(lambda x: 'ST' in x['col1'], axis=1)]
 
 filter column
 
@@ -382,7 +382,7 @@ filter column
     ~df
 
 #### add series
-add as row
+add as row(数值相加)
 
     df0 = pd.DataFrame([{'col1':0,'col2':0}],index=['A']) 
     >> df0.add(pd.Series([1,2],index=['A','B']), axis=0)
@@ -471,10 +471,10 @@ f.apply 是一个row/column 的聚合函数
 
     df.loc[index,col] = v  # work
 
-不能用下面的方法修改修值，series 是copy 不是引用
+不能用下面的方法修改修值，series 是copy 不是引用(还要再确认下) 
 
-    df.col.A=1
-    df.loc[index].col = v  # not work
+    df.col.A=1             # not work?
+    df.loc[index].col = v  # not work? 
 
 #### replace NaN/None,inf
 repalce NaN/None to 0/'':
@@ -556,6 +556,11 @@ revert index to column
     // 上面的等价于下面
     df['index'] = df.index
     df.index=range(len(df.index))
+    df.index=range(len(df))
+
+如果不想再插入index
+
+    df.reset_index(inplace=True, drop=True)
 
 ## Add
 ### concat series/df as df
@@ -686,7 +691,8 @@ for col_name key only
     for index, row in df.iterrows():
         row['col'] = v         # not work, 不是引用
         df.loc[index,'col'] = v  # work, 但是会扩展col
-
+    for i in range(len(df)):
+        row = df.iloc[i]:
 
 ## Index Type
 ### BaseIndex
