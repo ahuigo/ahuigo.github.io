@@ -723,3 +723,47 @@ for col_name key only
 指定format 更快：
 
     return pd.to_datetime(df[column_name],format='%d/%m/%y %H:%M')
+
+利用index isin 切片
+
+    df=pd.DataFrame({'datetime':[datetime.now(),datetime.strptime('20101010 18','%Y%m%d %H')], 'b':[3,4]})
+    df.set_index('date_time', inplace=True)
+
+    # 计算`[17-24)`时段的电费
+    peak_hours = df.index.hour.isin(range(17, 24))
+    df.loc[peak_hours, 'cost_cents'] = df.loc[peak_hours, 'energy_kwh'] * 28
+
+pd.cut()根据分组bins产生的区间生成对应的标签“费率”(include_lowest参数设定第一个间隔是否包含在组bins中)
+
+    cents_per_kwh = pd.cut(x=df.index.hour,
+                           bins=[0, 7, 17, 24],
+                           include_lowest=True,
+                           labels=[12, 20, 28]).astype(int)
+    df['cost_cents'] = cents_per_kwh * df['energy_kwh']
+
+
+
+# pandas 优化
+参考
+1. pandas 优化: https://mp.weixin.qq.com/s?__biz=MzAwOTgzMDk5Ng==&mid=2650834821&idx=1&sn=61c2e85ebbe47f901661a8fa1a6d823f&
+
+## HDFstore
+Pandas的HDFstore方法可以将DataFrame存储在HDF5文件中，可以有效读写，同时仍然保留DataFrame各列的数据类型和其他元数据。不会像读取csv 那样经过漫长的格式转换
+
+    $ pip install --upgrade tables
+
+创建存储类文件并命名 `processed_data`
+
+    data_store = pd.HDFStore('processed_data.h5')
+
+    #将DataFrame写入存储文件中，并设置键（key） 'preprocessed_df'
+    data_store['preprocessed_df'] = df
+    data_store.close()
+
+HDF5文件中访问数据的方法:
+
+    data_store = pd.HDFStore('processed_data.h5')
+
+    # 读取键（key）为'preprocessed_df'的DataFrame
+    df = data_store['preprocessed_df']
+    data_store.close()

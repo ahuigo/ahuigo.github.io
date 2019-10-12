@@ -50,12 +50,14 @@ create table constraint:
 
 ### add index/constraint
 二者实质没啥区别
-add index
+add index(recommended)
 
-    CREATE [ UNIQUE | FULLTEXT | SPATIAL ] INDEX index_name
+    CREATE [ UNIQUE | FULLTEXT | SPATIAL ] INDEX [index_name]
         ON table_name (col_name [length],…) [ASC | DESC]
 
-add constraint 
+    CREATE INDEX ON films ((lower(title)));
+
+add constraint (好像没有index)
 
     \h alter table
     alter table users add UNIQUE(name,id);
