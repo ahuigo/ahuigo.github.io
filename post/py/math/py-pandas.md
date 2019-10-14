@@ -60,10 +60,6 @@ to_csv to_pg:
     cur.copy_from(output, 'table_name', null="", columns=df.keys()) # null values become ''
     conn.commit()
 
-## Modify Series
-    s1=pd.Series(['a1',2,33])
-    s1.drop(0)
-
 ## Calc Series 运算
 ### math 四则运算
 
@@ -139,9 +135,15 @@ via key
     s.loc['index1']
     s.loc[['index1','index2']
 
-## Concat series
+## Modify Series
 ### add element
-    s['new_key'] = 1
+    s['new_key'] = 1 # not work
+    s.new_key = 1   # not work
+
+### drop
+    s1=pd.Series(['a1',33],index=['a','b'])
+    s1.drop('a')
+
 ### update
 s是df 的映射，df 随着s 的修改而修改
 
@@ -471,7 +473,7 @@ f.apply 是一个row/column 的聚合函数
 
     df.loc[index,col] = v  # work
 
-不能用下面的方法修改修值，series 是copy 不是引用(还要再确认下) 
+不能用下面的方法修改修值，series 是on a copy of a slice from a DataFrame, 而不是引用
 
     df.col.A=1             # not work?
     df.loc[index].col = v  # not work? 
@@ -520,6 +522,7 @@ immutable rename column
 
 ### rename index name
     df=df.rename(index={"sum":'合计'})
+    series.rename(index={'b':'b1'})
 
 #### set_index
 set_index: move colume to index
@@ -689,8 +692,8 @@ for col_name key only
 ### loop rows
 
     for index, row in df.iterrows():
-        row['col'] = v         # not work, 不是引用
-        df.loc[index,'col'] = v  # work, 但是会扩展col
+        row['col'] = v         # not work, 是copy 不是引用
+        df.loc[index,'col'] = v  # work
     for i in range(len(df)):
         row = df.iloc[i]:
 

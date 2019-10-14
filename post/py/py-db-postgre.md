@@ -99,8 +99,10 @@ table name 这些则不支持，应该使用:
 
 #### fetchone,fetchmany:
 
-    cursor.fetchone()
-    cursor.fetchmany([size=cursor.arraysize])
+    row = cursor.fetchone()
+    rows = cursor.fetchmany([size=cursor.arraysize])
+    if row is None:
+    if rows == []:
 
 ## ddl
 ### databases

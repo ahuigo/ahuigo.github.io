@@ -10,7 +10,7 @@ private:
         '2016-06-22',
     time
         '19:10:25',
-    timestamp  //datetime
+    timestamp  //datetime, default CURRENT_TIMESTAMP
         '2016-06-22 19:10:25',
     timestamptz
         '2016-06-22 19:10:25-07',
@@ -37,11 +37,11 @@ timestamp to date:'2018-07-25 10:30:30' to '2018-07-25', 3种方法
 ## get time
 get time only, date only
 
-    > SELECT CURRENT_TIME; 
-    20:49:04.566025-07
-
     > CURRENT_DATE;
     20191001
+
+    > SELECT CURRENT_TIME; 
+    20:49:04.566025-07
 
 get datetime(timestamp)
 

@@ -60,6 +60,10 @@ or
 	elif x==6: print x*x
 	else: print x*x*x
 
+if `[]` and `None`
+
+    if [] or None: print('not print')
+
 if is
 
 	if L is None:

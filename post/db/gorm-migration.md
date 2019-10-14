@@ -28,6 +28,12 @@ private:
         IgnoreMe     int     `gorm:"-"` // ignore this field
     }
 
+go 读取 null column时，默认：
+
+    string ""
+    int     0
+    ....
+
 multiple key:
 
     Name string `gorm:"unique_index:idx_name_code"` // Create index with name, and will create combined index 

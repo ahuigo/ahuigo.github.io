@@ -11,7 +11,6 @@
 - 2019-10-04 [Python 的math 语法](/b/py/math/py-math) 
 - 2018-10-04 [Data tool](/b/py/math/py-math-tool) 
 - 2019-10-03 [Nexus5 刷机](/b/phone/nexus5) 
-- 2019-10-03 [Mysql why not use Null](/b/db/mysql-null) 
 - 2019-10-02 [Go Sync.Pool](/b/go/go-pool) 
 - 2018-09-28 [用BeautifulSoup 处理 html/xml](/b/py/py-html) 
 - 2018-10-04 [写npm 包](/b/ria/node-npm-pkg) 
@@ -39,3 +38,4 @@
 - 2019-09-09 [Java Array](/b/java/java-array) 
 - 2018-09-28 [社保](/b/proj/life-shebao) 
 - 2018-09-28 [社保](/b/life/life-shebao) 
+- 2019-09-08 [Postgre expression](/b/db/postgre-expr) 
