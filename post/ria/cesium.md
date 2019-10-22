@@ -56,3 +56,16 @@ remove all
     PolylineCollection#add
     PolylineCollection#remove
     PolylineCollection#update
+
+# draw
+
+## draw ellipse
+    var entity = viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees("116.4", "39.89"), 
+        ellipse : { 
+            semiMinorAxis : 20.0,
+            semiMajorAxis : 40.0,
+            material : Cesium.Color.RED.withAlpha(0.9)
+        }
+    });
+    viewer.zoomTo(entity); 

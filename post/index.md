@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-03-03 [Chrome devtools 使用汇总](/b/ria/js-debug-chrome) 
 - 2018-10-04 [CSS3 选择器](/b/ria/js-css-selector) 
 - 2018-10-04 [profile](/b/py/py-profiler) 
 - 2018-10-04 [Typescript 的module](/b/ria/ts/ts-module) 
@@ -38,4 +39,3 @@
 - 2019-09-09 [Java Array](/b/java/java-array) 
 - 2018-09-28 [社保](/b/proj/life-shebao) 
 - 2018-09-28 [社保](/b/life/life-shebao) 
-- 2019-09-08 [Postgre expression](/b/db/postgre-expr) 
