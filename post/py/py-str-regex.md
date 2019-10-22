@@ -9,7 +9,8 @@ description:
 	import re
     re.compile(pattern, [,modifier]).match(str)
     re.match(pattern, str[, modifier])
-    re.sub(r'test', 'xxx', 'Testing', flags=re.IGNORECASE)
+    re.sub(r'from', 'to', 'content', flags=re.IGNORECASE)
+    re.split(r'[\s\,]+', 'a,b, c  d')
 
 ## ignore string Escape
 
@@ -81,6 +82,11 @@ groups 列出所有的分组，但是不包含: group(0)=group()即整个匹配
     'TeSt'
     >>> re.match('((t)(e))st', 'TeSt', re.IGNORECASE).group(0)
     'TeSt'
+
+## 元字符
+可以是unicode
+
+    re.split(r'[，,]+', '你好，我是..')
 
 ## 去贪婪
 
