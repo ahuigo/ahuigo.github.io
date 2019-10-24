@@ -107,6 +107,14 @@ Effect Hook 是在渲染后执行某些操作。相当于didMount+didUpdate
         document.title = `You clicked ${count} times`;
     }, []); // 只运行一次effect. 默认是每次render 都运行
 
+## useForceUpdate();
+    const forceUpdate = useForceUpdate();
+
+    console.log('rendering');
+    return <button onClick={forceUpdate}>Click To Render</button>;
+
+### update child
+https://stackoverflow.com/questions/55889357/change-react-hook-state-from-parent-component
 
 ## 自定义hook
 > 自定义hook终以 use 开头，这样react hook 不会将useHook 列为setCount 要触发的回调函数
@@ -133,13 +141,17 @@ Effect Hook 是在渲染后执行某些操作。相当于didMount+didUpdate
       return isOnline;
     }
 
-### 使用自定义hook
+### 使用上面自定义hook
+> 来一个例子： https://dev.to/n8tb1t/tracking-scroll-position-with-react-hooks-3bbj
 现在我们可以在组件中使用它：
 
     function FriendStatus(props) {
         const isOnline = useFriendStatus(props.friend.id); //自动订阅-查看friend的状态
         return isOnline ? 'Online' : 'Offline';
     }
+
+或者：
+
     function FriendListItem(props) {
       const isOnline = useFriendStatus(props.friend.id);
       return <li style={{ color: isOnline ? 'green' : 'black' }}> {props.friend.name} </li>
@@ -277,9 +289,9 @@ useCallback Hook 允许你在重新渲染之间保持对相同的回调引用以
 ## useRef
 useRef 会在每次渲染时返回同一个 ref 对象。类似CreateRef
 
-    const inputEl = useRef(null);
-      <input ref={inputEl} type="text" />
-
+    const inputEl = useRef(initialValue);
+    // inputEl.current === initialValue
+    <input ref={inputEl} type="text" />
 
 ### 实时Ref
 要想测量一个 DOM 节点的位置或是尺寸，你可以使用 callback ref。每当 ref 被附加到一个另一个节点，React 就会调用 callback。这里有一个 小 demo:

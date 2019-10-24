@@ -29,13 +29,16 @@ date: 2018-10-04
 ## round/floor/ceil+(toFixed)
 py+php+mysql: round(3.55,2)
 
-	num.toFixed(2); //两位小数, 四舍五入
+    //四舍五入
+	num.toFixed(2); //两位小数, 
 	(3.555).toFixed(2);// 3.56
     +(1/3).toFixed(2)
 
+    //四舍五入
 	Math.round(1.5); //2
 	Math.round('1.5'); //2
 	Math.round(1.4); //1
+
 	Math.floor(1.5); //1
 	Math.floor(Math.random()*20);
 	Math.ceil(1.5);	//2

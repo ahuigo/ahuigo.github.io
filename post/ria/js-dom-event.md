@@ -147,6 +147,7 @@ or:
 
 
 ### add listener
+https://stackoverflow.com/questions/38619981/react-prevent-event-bubbling-in-nested-components-on-click
 
 	//监听顺序FIFO
 	btn1Obj.addEventListener("click",method1,false);

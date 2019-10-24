@@ -5,6 +5,7 @@ date: 2016-01-23
 # Js dom 笔记
     document.documentElement ;//html
     document.body;  //html
+
 # Device
 ## Navigator
 navigator.appName：浏览器名称；
