@@ -322,6 +322,7 @@ remove and insert(in place)
 	.remove(value) -- remove first occurrence of value.
 
 ## sorted list
+not in place
 
     colors = ['red', 'green', 'blue', 'yellow']
     sorted(colors):

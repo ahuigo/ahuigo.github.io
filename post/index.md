@@ -8,7 +8,7 @@
 - 2019-10-03 [Python 的类型注解](/b/py/py-type) 
 - 2018-03-01 [Python 语法](/b/py/py-expr) 
 - 2018-09-28 [py-async-iteratortools](/b/py/py-async-iteratortools) 
-- 2019-10-04 [Python 的math 语法](/b/py/math/py-math) 
+- 2019-10-30 [Python 的math 语法](/b/py/math/py-math) 
 - 2018-10-04 [Data tool](/b/py/math/py-math-tool) 
 - 2019-10-03 [Nexus5 刷机](/b/phone/nexus5) 
 - 2019-10-02 [Go Sync.Pool](/b/go/go-pool) 

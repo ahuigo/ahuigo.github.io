@@ -34,8 +34,8 @@ priority:
 ## operator
 
     2**5	math.pow(2,5)
-    5//2	floor(5/2)
-    -(-5//2) ceil(5/2)
+    5//2	math.floor(5/2)
+    -(-5//2) math.ceil(5/2)
 
 ## number type
 
