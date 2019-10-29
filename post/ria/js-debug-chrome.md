@@ -15,6 +15,9 @@ chrome://net-internals/#spdy
 ## shortcuts
 建议使用vimium
 
+# todo
+https://developers.google.com/web/tools/chrome-devtools/evaluate-performance?hl=zh-CN
+
 # devTool Source
 参考文章:
 - https://umaar.com/dev-tips/162-network-overrides/

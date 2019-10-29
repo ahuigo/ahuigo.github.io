@@ -4,6 +4,13 @@ date: 2019-10-03
 private:
 ---
 # Postgre Time
+## compare time 
+    time > '20101013'
+    time > '2010-10-13'
+    time > '2010-10-13 10:00:00'
+    time > '2010-10-13 10:00:00+08'
+    time > '20101013 10:00:00+08'
+
 ## time type list
     SELECT typname, typlen FROM pg_type WHERE typname ~ '^date';
     date 

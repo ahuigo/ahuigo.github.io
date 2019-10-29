@@ -163,13 +163,13 @@ nginx的transfer-encoding现在只支持chunked,如果客户端随意设置这�
  
 curl localhost:8070  -H 'Transfer-Encoding:1'
 
-<html>
-<head><title>501 Not Implemented</title></head>
-<body bgcolor="white">
-<center><h1>501 Not Implemented</h1></center>
-<hr><center>nginx/1.14.0</center>
-</body>
-</html>
+    <html>
+    <head><title>501 Not Implemented</title></head>
+    <body bgcolor="white">
+    <center><h1>501 Not Implemented</h1></center>
+    <hr><center>nginx/1.14.0</center>
+    </body>
+    </html>
 
 ### 502
 NGX_HTTP_BAD_GATEWAY

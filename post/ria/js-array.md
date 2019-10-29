@@ -24,7 +24,10 @@ empty item 不会被for in 遍历, 但是会被 for of 遍历
 
 以下有问题，可能引入prototype
 
+    // bad
     for(let _ in Array(5))
+    // better
+    for(let _ of Array(5))
 
 undefined 数组:
 

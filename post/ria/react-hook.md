@@ -107,6 +107,14 @@ Effect Hook 是在渲染后执行某些操作。相当于didMount+didUpdate
         document.title = `You clicked ${count} times`;
     }, []); // 只运行一次effect. 默认是每次render 都运行
 
+## useForceUpdate();
+    const forceUpdate = useForceUpdate();
+
+    console.log('rendering');
+    return <button onClick={forceUpdate}>Click To Render</button>;
+
+### update child
+https://stackoverflow.com/questions/55889357/change-react-hook-state-from-parent-component
 
 ## 自定义hook
 > 自定义hook终以 use 开头，这样react hook 不会将useHook 列为setCount 要触发的回调函数
@@ -133,13 +141,17 @@ Effect Hook 是在渲染后执行某些操作。相当于didMount+didUpdate
       return isOnline;
     }
 
-### 使用自定义hook
+### 使用上面自定义hook
+> 来一个例子： https://dev.to/n8tb1t/tracking-scroll-position-with-react-hooks-3bbj
 现在我们可以在组件中使用它：
 
     function FriendStatus(props) {
         const isOnline = useFriendStatus(props.friend.id); //自动订阅-查看friend的状态
         return isOnline ? 'Online' : 'Offline';
     }
+
+或者：
+
     function FriendListItem(props) {
       const isOnline = useFriendStatus(props.friend.id);
       return <li style={{ color: isOnline ? 'green' : 'black' }}> {props.friend.name} </li>
@@ -252,7 +264,6 @@ useCallback Hook 允许你在重新渲染之间保持对相同的回调引用以
     }, [a, b]);
 
 ## useMemo: 取代shouldComponentUpdate
-
 把“创建”函数和依赖项数组作为参数传入 useMemo，`它仅会在某个依赖项改变时才重新计算 memoized 值`。这种优化有助于避免在每次渲染时都进行高开销的计算。
 返回一个 memoized 值。
 
@@ -264,12 +275,23 @@ useCallback Hook 允许你在重新渲染之间保持对相同的回调引用以
 1. 会调用 computeExpensiveValue(a, b)。但如果依赖数组 [a, b] 自上次赋值以来没有改变过，useMemo 会跳过二次调用，只是简单复用它上一次返回的值。
 > 记住，传入 useMemo 的函数会在`渲染期间执行`。请不要在这个函数内部执行与渲染无关的操作，诸如副作用这类的操作属于 useEffect 的适用范畴，而不是 useMemo。
 
+### React.memo 也可代替shouldComponentUpdate
+你可以用 React.memo 包裹一个组件来对它的 props 进行浅比较：
+
+    //export var CreatorExamine = React.memo(CreatorExamineRaw)
+    const Button = React.memo((props) => {
+        // 你的组件
+    });
+
+### useMemo 避免计算
+    const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+
 ## useRef
 useRef 会在每次渲染时返回同一个 ref 对象。类似CreateRef
 
-    const inputEl = useRef(null);
-      <input ref={inputEl} type="text" />
-
+    const inputEl = useRef(initialValue);
+    // inputEl.current === initialValue
+    <input ref={inputEl} type="text" />
 
 ### 实时Ref
 要想测量一个 DOM 节点的位置或是尺寸，你可以使用 callback ref。每当 ref 被附加到一个另一个节点，React 就会调用 callback。这里有一个 小 demo:
@@ -292,8 +314,8 @@ useRef 会在每次渲染时返回同一个 ref 对象。类似CreateRef
     }
 
 Note:
-1. 我们用useCallback, 没有选择使用 useRef，因为当 ref 是一个对象时它并不会把当前 ref 的值的 变化 通知到我们。使用 callback ref 可以确保 即便子组件延迟显示被测量的节点
-2. `[]` 作为 useCallback 的依赖列表。这确保了 ref callback 不会在再次渲染时改变
+1. 我们用useCallback, 没有选择使用 useRef，因为当 ref 是一个对象时它并不会把当前 ref 的值的 变化 通知到我们
+2. `[]` 作为 useCallback 的依赖列表。这确保了 ref callback 不会在再次渲染时改变((可能有bug)
 
 可以 把这个逻辑抽取出来作为 一个可复用的 Hook:
 
@@ -332,7 +354,7 @@ Note:
       }));
       return <input ref={inputRef} ... />;
     }
-    FancyInput = forwardRef(FancyInput);
+    FancyInput = React.forwardRef(FancyInput);
 
 
 ## 如何获取上一轮的 props 或 state？

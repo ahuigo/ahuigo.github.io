@@ -22,8 +22,7 @@ ref.current 指向 div
 
 这是因为:
 1. 在每次渲染时会创建一个新的函数实例，所以 React 清空旧的 ref 并且设置新的。(卸载null与创建, 参考react-diff)
-2. 通过将 ref 的回调函数定义成 class 的绑定函数的方式可以避免上述问题
-
+2. 通过将 ref 的回调函数定义成 class 的绑定函数的方式可以避免上述问题(大多数情况无关紧要)
 
 
 ## 组件Ref
@@ -32,7 +31,7 @@ ref.current 指向 Com3
     <Com3 ref={ref}/>
 
 ### 函数组件Ref
-你不能在函数组件上使用 ref 属性，因为它们没有实例,
+你不能在函数组件上传递 ref 属性，因为它们没有实例,
 不过你可以通过`React.forwardRef`这样做
 
     import React from 'react';
@@ -58,7 +57,9 @@ ref.current 指向 Com3
 
         render(){
             this.subref = React.createRef();
-            this.ref= React.createRef();//任何对象都 可以 的，e.g.: this.ref = {}
+            //任何对象都 可以 的，e.g.: 
+            this.ref= React.createRef();
+            this.ref = {}
 
             return <h1 ref={this.ref}>
                 <Com2 a="1" b="12" key={2} ref={this.subref}>com2</Com2>

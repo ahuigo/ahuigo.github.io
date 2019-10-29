@@ -6,6 +6,8 @@ private:
 # css react material
 可以使用 inputProps (和 inputProps, InputLabelProps 属性) 来控制原生组件的属性。
 
+可以直接传对象或者回调函数
+
     const useStylesReddit = makeStyles(theme => ({
       root: {
         border: '1px solid #e2e2e1',

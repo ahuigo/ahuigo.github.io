@@ -5,6 +5,7 @@ date: 2016-01-23
 # Js dom 笔记
     document.documentElement ;//html
     document.body;  //html
+
 # Device
 ## Navigator
 navigator.appName：浏览器名称；
@@ -195,6 +196,7 @@ jquery:
 example:[js-postion](/demo/js-demo/dom-position.html)
 
 #### 相对偏移
+##### 相对父元素偏移
 offsetLeft,offsetTop 相对上一个offsetParent(not static)左上角的偏移:
 
 left:
@@ -211,7 +213,7 @@ e.g.:
 	ele.offsetLeft, ele.offsetTop; //ele.style.left, ele.style.top 也是相对偏移，不过带有字符串"px"(必须显式指定)
 	$(this).offset().left; $(this).offset().top;
 
-##### touch 偏移
+##### touch 偏移(页面)
 
 	 var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 	 touchOriginY = touch.pageY;
@@ -225,17 +227,23 @@ goto:
 
     window.getComputedStyle($0).left;//可能是auto; 还是相对的偏移
 
-用 `ele.getClientRects()[0]`, 这个left/top/bottom 不是offsetLeft, 受滚动影响（它是相对于窗口的, 而不是页面）
+#### 元素在视窗的位置
+视窗受滚动影响，而不是page
+
+    div.getBoundingClientRect().x y left,top, height,width
+    x==left
+    y==top
+
+用 `ele.getClientRects()[0]`, 这个left/top/bottom, 它不是offsetLeft, 不受滚动影响（它是相对于可视窗口的, 而不是页面）
 
     rect.x = react.left 
-    rect.y = react.left 
+    rect.y = react.top
     rect.right
     react.bottom
 	function visible(ele){
 		rect = ele.getClientRects()[0]
 		return (rect.left<0 || rect.top <0) ? false : true;
 	}
-
 
 #### 查找元素在页面的位置
 或者累加offsetLeft:
@@ -259,7 +267,6 @@ goto:
 
 	document.elementFromPoint(500,10)
     document.elementFromPoint(x, y).click();
-
 
 # Dom type
 

@@ -44,6 +44,9 @@ http://www.pypi-mirrors.org/
     pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ pandas 
     pip install -i https://mirrors.ustc.edu.cn/pypi/web/simple -r requirement.txt
 
+    -i, --index-url <url>
+    --extra-index-url <url>
+
 在~/.pip/pip.conf配置文件中写入：
 
     [global]

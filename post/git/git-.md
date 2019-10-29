@@ -563,6 +563,7 @@ Create an archive of files from a named tree.
 
 	git push <repo> <local_branch>[:remote_branch]
 	git push origin master:test
+	git push . master:test  #.代表upstream origin?
 
     # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
 

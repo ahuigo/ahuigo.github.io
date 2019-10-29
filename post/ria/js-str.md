@@ -283,6 +283,16 @@ Create RegExp：test, exec
 	/\u1321/.test('\u1321');//true
 	/\x31/u.test('\x31');//true
 
+### group name
+
+    /name="(?<name>\w+)"/.exec(`name="ahui"`).group.name
+
+非global 模式的match, 也可以显示groups
+
+    "first 1 second 1".match(/(?<x>\w+) 1/).groups.x
+
+global 模式的match, 结果只有数组
+
 ### zero-width 断言
 正向断言，假定该位置后跟的是X
 
@@ -319,6 +329,8 @@ $ 放前面就不会成功
 
 ### exec 
 like python findall/finditer(返回分组)
+
+while 时必须开启global, 否则会死循环(reg 的cursor不会变)
 
 	str=' 1ing 2ing 3ing';
 	r=/\d(ing)/igm;
