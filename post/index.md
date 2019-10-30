@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2018-10-04 [node 系统相关](/b/ria/node-os) 
+- 2018-09-27 [三角形triangle](/b/math/geo-triangle) 
+- 2018-08-18 [Posix Regex 正则语法](/b/code/code-regex) 
 - 2018-10-04 [管理包和依赖的工具。](/b/py/py-pkg) 
 - 2018-09-27 [shell color](/b/c/shell-color) 
 - 2018-03-03 [Chrome devtools 使用汇总](/b/ria/js-debug-chrome) 
@@ -36,6 +39,3 @@
 - 2019-09-09 [Vscode 开发java 指北](/b/vsc/vsc-java) 
 - 2019-09-08 [React profile](/b/ria/react-profile) 
 - 2019-09-09 [React diff](/b/ria/react-diff) 
-- 2019-09-08 [React HOC 高阶组件](/b/ria/react-component-hoc) 
-- 2019-09-07 [React Ref](/b/ria/React-ref) 
-- 2019-09-09 [Java Array](/b/java/java-array) 

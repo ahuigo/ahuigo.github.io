@@ -104,9 +104,10 @@ e.g.
 
 # 3. CSS modules
 > https://medium.com/@pioul/modular-css-with-react-61638ae9ea3e
-https://juejin.im/post/5c3c3df451882525153c2352
+http://www.ruanyifeng.com/blog/2016/06/css_modules.html
+https://blog.pusher.com/css-modules-react/
 
-react 内置webpack 支持了css module. create-react-app 默认需要`App.module.css`
+react 内置webpack 支持了css module. create-react-app 默认支持`App.module.css`， `.module.scss`, `.module.less`
 
     /* Thumbnail.css */
     .image {
@@ -171,10 +172,17 @@ local:
        text-align: center;
      }
 
-     //webpack.config.js file:
+如果不想`.module.css`为扩展名:
+
+    $ npm run eject
+    $ vi webpack.config.js file 增加`modules:true`
     {
-        test: /\.css$/,
-        loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' 
+      loader: require.resolve('css-loader'),
+      options: {
+        importLoaders: 1,
+        modules: true,
+        localIdentName: "[name]__[local]___[hash:base64:5]"  
+      },
     }
 
 # 4. make style(material.io)

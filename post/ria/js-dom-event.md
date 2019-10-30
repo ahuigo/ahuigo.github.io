@@ -148,6 +148,7 @@ or:
 
 ### add listener
 https://stackoverflow.com/questions/38619981/react-prevent-event-bubbling-in-nested-components-on-click
+useCapture 默认为 false(默认冒泡) 
 
 	//监听顺序FIFO
 	btn1Obj.addEventListener("click",method1,false);
@@ -165,7 +166,7 @@ https://stackoverflow.com/questions/38619981/react-prevent-event-bubbling-in-nes
 
 	//不捕获
 	div1.addEventListener("click",method,true);//捕获时触发  event.stopPropagation()
-	div1.addEventListener("click",method,false);//冒泡时触发 event.preventDefault()
+	div1.addEventListener("click",method,false);//冒泡时触发(默认) event.preventDefault()
 
     Note: window.setCapture/window.captureEvents 这种全局控制不能用了, 有风险.
 

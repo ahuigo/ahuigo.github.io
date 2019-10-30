@@ -88,7 +88,7 @@ $z=a×(b+c)=a×b+a×c$（加法的左分配律）
 ![math/vetor-3.png](/img/math/vetor-3.png)
 
 ## 混合积(三重积)
-三个向量\vec{a}、\vec{b}和\vec{c}的混合积定义为，物理意義為三向量始於同點時所構成的體積：
+三个向量 $\vec{a}$ 、\vec{b}和\vec{c}的混合积定义为，物理意義為三向量始於同點時所構成的體積：
 
 $\vec{a}\cdot(\vec{b}\times \vec{c})=
 \vec{b}\cdot(\vec{c}\times \vec{a})=
