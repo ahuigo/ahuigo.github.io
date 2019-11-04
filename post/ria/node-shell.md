@@ -71,3 +71,9 @@ child_process 提供了很多执行shell 的包:
     console.log('error', child.error);
     console.log('stdout ', child.stdout);
     console.log('stderr ', child.stderr);
+
+# 性能
+如果内存不够, 比如设置4G
+
+    ENV NODE_OPTIONS=--max_old_space_size=4096
+    node --max_old_space_size=4096 a.js

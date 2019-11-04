@@ -9,7 +9,7 @@ ag 比ack/grep 还快
     brew install the_silver_searcher
 
 
-## 自动忽略`.gitinore` 中的文件
+## 自动忽略`.gitinore/.hgignore` 中的文件
 
     # ignore /bar/.gitignore
     ag  foo /bar/ ;

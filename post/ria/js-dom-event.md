@@ -164,24 +164,40 @@ useCapture 默认为 false(默认冒泡)
     先捕获: div1->div2
     冒泡: div2 -> div1
 
+### capture and bubble
+
+    target.addEventListener(type, listener[, options]);
+    target.addEventListener(type, listener[, useCapture = false]);
+
+userCapture 捕获与冒泡:
+
 	//不捕获
 	div1.addEventListener("click",method,true);//捕获时触发  event.stopPropagation()
 	div1.addEventListener("click",method,false);//冒泡时触发(默认) event.preventDefault()
 
     Note: window.setCapture/window.captureEvents 这种全局控制不能用了, 有风险.
 
-	e.stopPropagation()//阻止冒泡
+options: 可用的选项如下：
 
+    capture:  Boolean，表示 listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。
+    once:  Boolean，表示 listener 在添加之后最多只调用一次。如果是 true， listener 会在其被调用之后自动移除。
+    passive: Boolean，设置为true时，表示 listener 永远不会调用 preventDefault()。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。
+
+### target
 	//target
 	e.currentTarget //deprecated, 不用了
 	e.srcElement,//forIE
 	e.target://In most Explore e.target?e.target:e.srcElement
 	e.fromElement(e.relatedTarget): e.toElement(e.target) //for mouse event(from mouseout to mouserover)
 
-### stop
+### stop capture/bubble
+https://stackoverflow.com/questions/5963669/whats-the-difference-between-event-stoppropagation-and-event-preventdefault
+
+	e.stopPropagation() //阻止冒泡+capture
+	e.preventDefault() // 阻止浏览器默认的行为(可放到任何的位置，所有回调函数执行完后，才执行默认的行为)
 
     //event.cancelBubble = true
-	event.preventDefault()  prevents the default action the browser makes on that event.
+	event.preventDefault()  prevents the `default action` the browser makes on that event.
     //event.returnValue = false;
 	event.stopPropagation() stops the event from bubbling up/capturing the event chain.
 

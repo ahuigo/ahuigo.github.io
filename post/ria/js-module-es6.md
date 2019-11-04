@@ -114,6 +114,8 @@ default 与其他变量混用
 2. 默认只能是`*.mjs`，通过Loader Hooks可以自定义配置规则支持`*.js,*.json`等Node原有支持文件
     1. node --experimental-modules ./index.mjs
 
+es6 eg.
+
     // ES6模块
     import 'fs';
     import {stat} from 'fs';
@@ -139,6 +141,10 @@ main.js(babel)
 
 注意，`export *` 命令会忽略模块的default方法
 
+## import index.js
+`import ./module` 代表`module/index.js`:
+
+    import {Foo} from './module'
 
 ## export 与 import 的复合写法 
 

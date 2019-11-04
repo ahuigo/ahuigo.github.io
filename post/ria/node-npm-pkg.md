@@ -1,10 +1,41 @@
 ---
 title: 写npm 包
 date: 2018-10-04
+private:
 ---
 # npm reistry
-    npm config set @company:registry https://sina.com.cn/artifactory/api/npm/npm-sina/
-    npm login --registry=https://artifactory.company.works/artifactory/api/npm/npm-company/ --scope=@company
+
+    npm config set registry https://artifactory.sina.works/artifactory/api/npm/npm/
+    npm login
+
+with scope: 
+
+    npm config set @company:registry https://artifactory.sina.works/artifactory/api/npm/npm/
+    npm login --registry=https://artifactory.company.works/artifactory/api/npm/npm/ --scope=@company
+
+npm install 下载scoped 包时，就会去关联到的私有库下载
+
+## login
+除了使用npm login 外，还可以通过~/.npmrc 配置身份
+
+全局认证
+
+    _auth = <USERNAME>:<PASSWORD> (converted to base 64)
+    email = youremail@email.com
+    always-auth = true
+
+scope 认证：
+
+    @<SCOPE>:registry=https://artifactory.momenta.works/artifactory/api/npm/npm/
+    //artifactory.momenta.works/artifactory/api/npm/npm/:_password=<BASE64_PASSWORD>
+    //artifactory.momenta.works/artifactory/api/npm/npm/:username=<USERNAME>
+    //artifactory.momenta.works/artifactory/api/npm/npm/:email=youremail@email.com
+    //artifactory.momenta.works/artifactory/api/npm/npm/:always-auth=true
+
+## install npm
+
+    npm install <PACKAGE_NAME>
+    npm install <PACKAGE_NAME> --registry https://artifactory.momenta.works/artifactory/api/npm/npm/
 
 # 写npm 包
 1. 生成包信息package.json
@@ -60,6 +91,19 @@ you can declare local dependencies in package.json
     "dependencies": {
         "bar": "file:../foo/bar"
     }
+
+# scoped 包
+scope 是包的命名空间：比如 `@babel/core` 在安装后，会被放在`node_modules/@babel/core/`, 对于企业/个人来说，可以将企业/个人名作为命名空间。
+
+我们可以自己作一个scope 包, 然后发布：
+
+    npm init --scope=ahuigo
+    npm login
+    npm publish
+
+scoped 包默认发布是私有的，你如果没有权限上面的publish 不会成功。我们可以改成
+
+    npm publish --access=public
 
 # 参考
 - Node 实现一个命令行程序 https://zhuanlan.zhihu.com/p/28705824

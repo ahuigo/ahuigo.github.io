@@ -1,4 +1,9 @@
 # AHUIGO 的笔记
+- 2018-08-25 [Node 执行shell 的方法](/b/ria/node-shell) 
+- 2018-04-05 [ES6 Modudle 使用](/b/ria/js-module-es6) 
+- 2018-09-27 [ops-find](/b/c/shell-find) 
+- 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
+- 2019-11-04 [rsion?=0.3.0](/b/arch/docker-makefile) 
 - 2018-10-04 [node 系统相关](/b/ria/node-os) 
 - 2018-09-27 [三角形triangle](/b/math/geo-triangle) 
 - 2018-08-18 [Posix Regex 正则语法](/b/code/code-regex) 
@@ -34,8 +39,3 @@
 - 2018-09-27 [Java expr](/b/java/java-expr) 
 - 2019-09-21 [Go log](/b/go/go-log) 
 - 2019-09-21 [Go Signal](/b/go/go-ipc-signal) 
-- 2018-09-27 [Golang 指针](/b/go/13.go-pointer) 
-- 2019-09-07 [React Error 边界](/b/ria/react-debug) 
-- 2019-09-09 [Vscode 开发java 指北](/b/vsc/vsc-java) 
-- 2019-09-08 [React profile](/b/ria/react-profile) 
-- 2019-09-09 [React diff](/b/ria/react-diff) 

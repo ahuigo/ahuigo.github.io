@@ -12,10 +12,10 @@ https://cesium.com/docs/tutorials/cesium-workshop/#camera-modes
 认识8大坐标标简介：
 https://zhuanlan.zhihu.com/p/59743409
 
-## 坐标转换
+## 坐标表示
     var ellipsoid=viewer.scene.globe.ellipsoid;
 
-### 笛卡尔空间直角坐标系（Cartesian3, 也可position）；
+### 笛卡尔空间直角坐标系（Cartesian3, 也可用position）；
 
     cartesian3 = Cesium.Cartesian3.fromDegrees(longitude, latitude, height, ellipsoid, result) 
     cartesian3 = Cesium.Cartesian3.fromDegrees(-115.0, 37.0);
@@ -23,8 +23,7 @@ https://zhuanlan.zhihu.com/p/59743409
     cartesian3 = camera.position
 
     //to cartographic
-    var ellipsoid=viewer.scene.globe.ellipsoid;
-    var cartographic=ellipsoid.cartesianToCartographic(cartesian3);
+    var cartographic=viewer.scene.globe.ellipsoid.cartesianToCartographic(cartesian3);
 
 ### 地理坐标系下经纬度的弧度表示 Cartographic:
 
@@ -32,15 +31,35 @@ https://zhuanlan.zhihu.com/p/59743409
 
     var cartesian3=ellipsoid.cartographicToCartesian(cartographic);
 
+## camera 坐标获取
+获取直角坐标cartesian3
+
+    camera.position     // new Cesium.Cartesian3(); 直角坐标
+
+获取Cartographic
+
+    //方法1
+    viewer.camera.positionCartographic.longitude
+    //方法2
+    viewer.scene.globe.ellipsoid.cartesianToCartographic(viewer.camera.position).height
+
 ### 度数转换
 
     var lat=Cesium.Math.toDegrees(cartograhphic.latitude);
     var lng=Cesium.Math.toDegrees(cartograhpinc.longitude);
     var alt=cartographic.height;
 
-### camera 坐标
-    camera.position     // new Cesium.Cartesian3(); 直角坐标
-    viewer.scene.globe.ellipsoid.cartesianToCartographic(viewer.camera.position).height
+### camera direction
+camera direction:
+
+    var {heading,pitch,roll} = camera;
+
+setView
+
+    viewer.scene.camera.setView({
+        destination: new Cesium.Cartesian3.fromDegrees(116, 39, 531),
+        orientation: new Cesium.HeadingPitchRoll.fromDegrees(0,-90, 0),
+    });
 
 # Move
 ## flyTo
