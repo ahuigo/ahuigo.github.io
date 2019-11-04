@@ -114,7 +114,7 @@ const mdConponent = {
       dateNode.innerHTML = this.date
       h1node.before(dateNode)
       //set title
-      h1node.style.cssText += 'color: #007998; text-align:center; border-bottom:1px solid'
+      h1node.style.cssText += 'color: #007998; text-align:center; background:initial'
       document.title = h1node.innerText
     }
     disqus_reset()

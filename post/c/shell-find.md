@@ -13,6 +13,12 @@ date: 2018-09-27
 	find . -name .DS_Store -exec rm {} +
 	//du -d 1
 
+# depth
+
+	find . -maxdepth 1 -name '*' -inum 1324 -exec rm {} \;
+    # 只搜索指定层级
+	find . -depth 1 -name '*' -inum 1324 -exec rm {} \;
+
 # -iname
 case insensitive
 

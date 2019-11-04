@@ -1,9 +1,12 @@
 ---
 title: React profile
 date: 2019-09-08
+private:
 ---
+# todo
 # React performance
 Refer: https://zh-hans.reactjs.org/docs/optimizing-performance.html
+profiler: https://juejin.im/post/5ba1f995f265da0a972e1657#heading-8
 
 ## Chrome Performance 标签分析
 ## Chrome react profile 分析

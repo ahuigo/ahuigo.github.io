@@ -57,6 +57,20 @@ date: 2018-08-18
     >> re.findall("(switchport)?", " switchport")
     Out[16]: ['', 'switchport', '']
 
+## 0宽度断言
+判断密码必须符合至少8个字符、大小写、数字
+
+    //(?=exp)	匹配exp前面的位置
+    //(?<=exp)	匹配exp后面的位置
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
+    /^
+    (?=.*\d)          // should contain at least one digit 注意不是 (?=\d)
+    (?=.*[a-z])       // should contain at least one lower case
+    (?=.*[A-Z])       // should contain at least one upper case
+    [a-zA-Z0-9]{8,}   // should contain at least 8 from the mentioned characters
+    $/
+
+
 # Posix Expression
 POSIX正则表达式分为：BRE (Basic Regular Expression) 和 ERE (Extended Regular Expressions)。
 

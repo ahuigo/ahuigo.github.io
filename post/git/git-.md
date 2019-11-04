@@ -252,6 +252,17 @@ checkout 适合working 回滚到某一分支
 	git checkout HEAD^ .
 	working copy from index(priority) or switch to commit(without file)
 
+## .gitignore
+
+    !application/
+
+    application/*
+    !application/language/
+
+    application/language/*
+    !application/language/gr/
+
+
 ## git unadd(git reset)
 
 	git reset file
@@ -811,46 +822,3 @@ git cherry-pick命令"复制"一个提交节点并在当前分支做一次完全
 # git hub
 hub is a command-line wrapper for git that makes you better at GitHub.
 https://hub.github.com/
-
-# dilivery
-主要有以下几种方式
-## create patch
-
-### format-patch
-
-	git format-patch -M origin/master //create patch that commit from traced  origin/master , -M allow to check Rename Commit
-	01.patch
-
-## send patch
-
-### config email
-
-	vim ~/.gitconfig
-	[imap]
-		folder = "[Gmail]/Drafts"
-		host = imaps://imap.gmail.com
-		user = user@gmail.com
-		pass = p4ssw0rd
-		port = 993
-		sslverify = false
-
-### send email
-	git send-email *.patch
-
-## apply patch
-
-### git am
-
-	apply the patch created by `format-patch`
-	$git am format-patch.patch
-	$git am -i mbox //交互
-	$git am -3 format-patch.patch //-3更智能的处理冲突:检测多次打补丁的情况（如果当前分支包含被丁基础代码则合并失败）
-	error: patch failed
-	$git mergetool
-	$git am --resolved
-
-### git apply
-
-	#It is more strictly than patch. 事务性的
-	git apply --check 01.patch//test patch
-	git apply /tmp/01.patch //apply patch to current branch

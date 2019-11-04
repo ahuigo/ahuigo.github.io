@@ -38,7 +38,7 @@ date: 2018-10-04
     > process.cwd();
     '/private/tmp'
 
-end:
+### end:
 
     process.exit(1)
 

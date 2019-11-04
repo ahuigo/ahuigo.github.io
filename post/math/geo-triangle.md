@@ -120,7 +120,8 @@ $c^{2}=a^{2}+b^{2}-2ab\cos(\gamma )$
 $\frac {a}{\sin \angle A}={\frac {b}{\sin \angle B}}={\frac {c}{\sin \angle C}}=2R$
 
 ## 边的关系
-$|a-b|<c<a+b$ <1>
+
+    |a-b|<c<a+b 
 
 
 ## 证明角相等

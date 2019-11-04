@@ -103,6 +103,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
 
     function a(arg1=1, arg2=2){
         console.log(arg1,arg2)
+        console.log(arguments)
     }
     a(undefined,3); //1,3
 

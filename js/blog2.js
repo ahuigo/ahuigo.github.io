@@ -127,7 +127,7 @@ const mdConponent = {
         }
         h1node.after(dateNode)
         //set title
-        h1node.style.cssText += 'color: #007998; text-align:center; '
+        h1node.style.cssText += 'color: #007998; text-align:center; background:initial'
         document.title = h1node.innerText
       }
     },

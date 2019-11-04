@@ -4,10 +4,12 @@ date: 2018-10-04
 private:
 ---
 # Preface
-从最早的Less、SASS，到后来的 PostCSS，再到最近的 CSS in JS，都是为了解决这个问题。
+从最早的Less、SASS，到后来的 PostCSS，再到最近的 CSS in JS，都是为了解决这个问题。--- ruanyifeng(css modules)
 
 less vs sass/scss
 sass 更成熟, 有Compass, Foundation 之类的
+相比 postcss，使用 less 或 sass 结合 module 更好用
+
 
 # less
 http://lesscss.org/
