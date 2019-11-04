@@ -50,13 +50,21 @@ install jdk12
 ## java-home
 You may need to set JAVA_HOME, JRE_HOME, PATH:
 
+    # JRE_HOME: runtime environment
+    Ideally JRE provides runtime environment for your application.
+    # JAVA_HOME: developing Java application
+    JDK provides more debugging and development functionalities 
+
+
+On other end, while you are developing Java application, JDK provides more debugging and development functionalities which wont part of JRE.
+
   export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
   export JAVA_HOME="$(/usr/libexec/java_home -v 12)"
   ➜ > ~ /usr/libexec/java_home -v 1.7
   /Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home
 
-  export JRE_HOME=$JAVA_HOME/jre
-  export PATH=$PATH:$JRE_HOME/bin
+  export JRE_HOME=$JAVA_HOME/
+  export PATH=$PATH:$JDK_HOME/bin
   export CLASSPATH='.;./jdk1.7.0\lib\dt.jar'
 
 ### for mac JAVA_HOME

@@ -15,38 +15,6 @@ https://blog.bitsrc.io/5-ways-to-style-react-components-in-2019-30f1ccc2b5b
     const sassRegex = /\.(scss|sass)$/;
     const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-# 0. React.CSSComponent
-todo: https://medium.com/@jviereck/modularise-css-the-react-way-1e817b317b04
-
-    class MyNotification extends React.CSSComponent {
-      render() {
-        var styleMap = this.mountStyles`
-          @media (min-width: 600px) {
-            .notification {
-              padding: 15px;
-            }
-          }
-          .notification {
-            border: 10px solid ${this.props.color};
-            padding: 10px;
-            color: #333;
-          }
-          /* ".notification span" is rejected by ModularCSS as it
-           * contains a nested CSS selectors. Therefore, need to
-           * use a new class name instead. */  
-          .notification-hint {
-            font-style: italic;
-          }`;
-        return (
-          <div className={styleMap.notification}>
-            {this.props.prompt}
-            <span className={styleMap.notificationHint}>
-              {this.props.hint}
-            </span>
-          </div>);
-      }
-    }
-
 # 1. CSS Stylesheet(global)
 css stylesheet:
 
@@ -102,81 +70,6 @@ e.g.
       </div>
     );
 
-# 3. CSS modules
-> https://medium.com/@pioul/modular-css-with-react-61638ae9ea3e
-https://juejin.im/post/5c3c3df451882525153c2352
-
-react 内置webpack 支持了css module. create-react-app 默认需要`App.module.css`
-
-    /* Thumbnail.css */
-    .image {
-        border-radius: 3px;
-    }
-    #menu .image {
-        border-radius: 3px;
-    }
-
-    /* Thumbnail.jsx */
-    import styles from './Thumbnail.css';
-    console.debug(styles)
-    render() { return (<img id={styles.menu} className={styles.image}/>) }
-
-subclass 正确用法是 global
-
-    //error
-    .menu a:.active { background-color: #3887be; color: #ffffff; }
-    //success
-    .menu a:global(.active) { background-color: #3887be; color: #ffffff; }
-
-composes: 对于样式复用，CSS Modules 只提供了唯一的方式来处理：composes 组合
-
-    /* components/Button.css */
-    .base { /* 所有通用的样式 */ }
-
-    .normal {
-      composes: base;
-      /* normal 其它样式 */
-    }
-
-    .disabled {
-      composes: base;
-      /* disabled 其它样式 */
-    }
-
-    /* Profile.css */
-    .description {
-      composes: primaryColor from './Colors.css';
-    }
-
-global:
-
-    /* Constants.css – imported in app entry point */
-    :global(:root) {
-      --primary-color: #333;
-    }
-
-    /* Profile.css */
-    .description {
-      color: var(--primary-color);
-    }
-
-local:
-
-    :local(.container) {
-       margin: 40px;
-       border: 5px dashed pink;
-     }
-     :local(.content) {
-       font-size: 15px;
-       text-align: center;
-     }
-
-     //webpack.config.js file:
-    {
-        test: /\.css$/,
-        loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' 
-    }
-
 # 4. make style(material.io)
     const classes = makeStyles({
         root: {
@@ -193,14 +86,6 @@ Material-UI 中默认支持的jss
     import { withStyles } from 'material-ui/styles';
     const styles = { root: { width: '100%' } };
     export default withStyles(styles)(MyComponent);
-
--> CSS :
-
-    ComponentName-root_0 { width: 100%; };
-
--> classes
-
-    const classes = { root: 'ComponentName-root_0' };
 
 withStyles(stypes) 步骤的完整代码是：withStyles(stypes)(Component) ：
 

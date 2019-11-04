@@ -1,6 +1,7 @@
 ---
 title: js-css-less
 date: 2018-10-04
+private:
 ---
 # Preface
 从最早的Less、SASS，到后来的 PostCSS，再到最近的 CSS in JS，都是为了解决这个问题。
@@ -77,7 +78,6 @@ http://lesscss.org/
     <link rel="stylesheet/less" type="text/css" href="styles.less">
     <script src="less.js" type="text/javascript"></script>
 
-
 ### 监视模式
 监视模式是客户端的一个功能，这个功能允许你当你改变样式的时候，客户端将自动刷新。
 
@@ -141,4 +141,3 @@ CSS Modules 有所不同:
 
 1. 只加入了局部作用域和模块依赖，
 2. CSS Modules 很容易学，因为它的规则少，同时又非常有用，可以保证某个组件的样式，不会影响到其他组件
-3. 只支持React

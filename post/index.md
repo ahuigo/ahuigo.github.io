@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-10-04 [js-react](/b/ria/react-install) 
 - 2018-10-04 [管理包和依赖的工具。](/b/py/py-pkg) 
 - 2018-09-27 [shell color](/b/c/shell-color) 
 - 2018-03-03 [Chrome devtools 使用汇总](/b/ria/js-debug-chrome) 
@@ -6,7 +7,6 @@
 - 2018-10-04 [profile](/b/py/py-profiler) 
 - 2018-10-04 [Typescript 的module](/b/ria/ts/ts-module) 
 - 2018-10-04 [TypeScript 装饰器](/b/ria/ts/ts-decorator) 
-- 2018-10-04 [初学 Typescript](/b/ria/ts/ts-) 
 - 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
 - 2019-10-03 [Python 的类型注解](/b/py/py-type) 
 - 2018-03-01 [Python 语法](/b/py/py-expr) 

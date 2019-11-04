@@ -89,11 +89,11 @@ with order by:
 #### group by with top N
 https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group
 
-不存在first 这个函数
+不存在first 这个函数, 下面是伪代码
 
     # SELECT FIRST(id), customer, FIRST(total) FROM  purchases GROUP BY customer ORDER BY total DESC;
 
-Supported by any database:
+Supported by any database: 利用 group + column=max(column)
 
     SELECT MIN(x.id),  -- change to MAX if you want the highest
          x.customer, 
