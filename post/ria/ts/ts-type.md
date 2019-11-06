@@ -61,7 +61,9 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
 ## 联合类型
 
-    let myFavoriteNumber: string | number;
+    let age: string | number;
+    if(ag instanceof string) {
+    }
 
 # 对象类型（Object types）。
     Array<string> or string[]
@@ -112,25 +114,6 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
         let args: IArguments = arguments;
     }
 
-## 函数类型
-### 函数声明
-    function sum(x: number, y: number): number {
-        return x + y;
-    }
-
-### 函数表达式
-对函数表达式（Function Expression）的定义
-
-    let mySum = function (x: number, y: number): number {
-    return x + y;
-};
-
-上面函数是类型推论而推断出来的。手动给函数类型如：
-
-    let mySum: (x: number, y: number) => number = function (x: number, y: number): number {
-        return x + y;
-    };
-
 ## 枚举enum
 枚举一般驼峰命名，成员的值默认是从0开始的, 
 
@@ -150,38 +133,64 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
         O = str.length
     }
 
-## 类型转换
+## 内置对象
+内置对象是指根据标准在全局作用域（Global）上存在的对象。这里的标准是指 ECMAScript 和其他环境（比如 DOM）的标准。
+
+### ECMAScript 标准内置对象
+ECMAScript 标准提供的内置对象有：
+
+    Boolean、Error、Date、RegExp 等。
+
+我们可以在 TypeScript 中将变量定义为这些类型：
+
+    let b: Boolean = new Boolean(1);
+    let e: Error = new Error('Error occurred');
+    let d: Date = new Date();
+    let r: RegExp = /[a-z]/;
+
+而他们的定义文件，则在 TypeScript 核心库的定义文件中。
+
+### DOM 和 BOM 的内置对象
+DOM 和 BOM 提供的内置对象有： Document、HTMLElement、Event、NodeList 等。
+
+TypeScript 中会经常用到这些类型：
+
+    let body: HTMLElement = document.body;
+    let allDiv: NodeList = document.querySelectorAll('div');
+    document.addEventListener('click', function(e: MouseEvent) {
+        // Do something
+    });
+
+### TypeScript 核心库的定义文件
+TypeScript 核心库的定义文件中定义了所有浏览器环境需要用到的类型，并且是预置在 TypeScript 中的。
+
+举一个 DOM 中的例子：
+
+    document.addEventListener('click', function(e) {
+        console.log(e.targetCurrent);
+    });
+
+    // index.ts(2,17): error TS2339: Property 'targetCurrent' does not exist on type 'MouseEvent'.
+
+上面的例子中，addEventListener 方法是在 TypeScript 核心库中定义的：
+
+    interface Document extends Node, GlobalEventHandlers, NodeSelector, DocumentEvent {
+        addEventListener(type: string, listener: (ev: MouseEvent) => any, useCapture?: boolean): void;
+    }
+
+所以 e 被推断成了 MouseEvent，而 MouseEvent 是没有 targetCurrent 属性的，所以报错了。
+
+### 用 TypeScript 写 Node.js
+Node.js 不是内置对象的一部分，如果想用 TypeScript 写 Node.js，则需要引入第三方声明文件：
+
+    npm install @types/node 
+
+# 类型断言（Type Assertion）
+有时编译器不知道用什么类型，可以用来手动指定一个值的类型。
+Note: 断言不是类型转换
+
     let c = (a as number).toExponential()
     let d = (<number>a).toExponential()
 
-# 其它
-## 函数
+在 tsx 语法（React 的 jsx 语法的 ts 版）中必须用后一种。
 
-    class Chicken{}
-    class Beef{}
-    ​
-    function cooking(food : Chicken | Beef ) {
-        if(food instanceof Chicken) {
-            console.log("vscode 提示chicken:", food);
-            console.log("煮鸡肉呀~ 我最喜欢吃~");
-        }
-    }
-
-## 泛型(generic)
-如果想支持多种类型补全提示，可以这样:（或者函数重载）
-
-    function one(a: any) : any{
-        if(typeof a === 'number'){
-            let r = (a as number)
-            return r
-        }
-    }
-
-有了泛型，我们可以一随便指定T：
-
-    function one<T>(a: T) : T{
-        return a;
-    }
-
-    let a1 = one<number>(1)
-    let a2 = one(520)
