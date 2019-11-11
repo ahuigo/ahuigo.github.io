@@ -138,7 +138,7 @@ new 是特殊的method
     interface mMouseEvent extends mEvent { x: number; y: number }
 
 ### 接口组合
-`interfaceA & interfaceB`, `interfaceA | interfaceB`
+与`interfaceA & interfaceB`,或 `interfaceA | interfaceB`
 
     interface a {
         name: string;

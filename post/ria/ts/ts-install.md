@@ -38,12 +38,50 @@ run:
         "target":"es2015"
         "module":"es2015"
     
+编译单文件
+
     # 编译ts
     tsc hello.ts; # 编译单文件 和 使用tsconfig.json 不能同时
+
+指定config
+
     # 手动指定配置，编译当前目录下的所有.ts
     $ tsc --p tsconfig.json;
 
-## 代码补全
+编译为commonjs: see ts-module
+
+    tsc --module commonjs a.ts
+
+## module 的编译与引入
+ts 的模块其实就是es6 module. 比如 a.ts
+
+    export default {
+        name: 'a'
+    }
+    export const value = 'ahui';
+
+b.ts
+
+    import a as name from "./a.js";
+    import * as a from "./a.js";
+
+编译得到commonjs规范的 js 文件
+
+    tsc --module commonjs a.ts
+    exports.mainValidator = ZipCodeValidator;
+    exports.__esModule = true;
+    exports["default"] = {
+        name: 'a'
+    };
+
+其他规范:
+
+    tsc --module es2015 a.ts
+    tsc --module amd a.ts
+    tsc --module umd a.ts
+    tsc --module system a.ts
+
+## 代码补全d.ts
 输入关键字后，vscode 会自动基于`ts`补全。但是对于纯js 文件，由于没有强类型，很难做到补全。我们可以手写`.d.ts`. 
 
 `ts` 也可以生成`.d.ts`:

@@ -26,6 +26,20 @@ ts 分 原始数据类型（Primitive data types）和对象类型（Object type
 使用 string 定义字符串类型：
 
     let myName: string = 'Tom';
+    //类型推断
+    let myName = 'Tom';
+
+### 字符串字面量类型
+用type 约束取值(不会编译到js)
+
+    type EventNames = 'click' | 'scroll' | 'mousemove';
+    function handleEvent(event: EventNames) {
+        // do something
+    }
+
+    handleEvent('scroll');  // 没问题
+    handleEvent('dbclick'); // 报错，event 不能为 'dbclick'
+
 
 ### 空值
 void 可以省略，由ts 推断
@@ -53,12 +67,6 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
     let something;
 
-## 类型推断
-    # 推断为string
-    let myFavoriteNumber = 'seven';
-    # 推断为any
-    let myFavoriteNumber;
-
 ## 联合类型
 
     let age: string | number;
@@ -85,7 +93,7 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
     }
     let fibonacci: NumberArray = [1, 1, 2, 3, 5];
 
-### 类数组：
+### 类数组Arguments：
 类数组（Array-like Object）不是数组类型，比如 arguments：
 
     //error
@@ -114,23 +122,152 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
         let args: IArguments = arguments;
     }
 
-## 枚举enum
-枚举一般驼峰命名，成员的值默认是从0开始的, 
+## 元组
+数组合并了相同类型的对象，而元组（Tuple）合并了不同类型的对象。
+无组不会编译进js
 
-    enum Cat{
-        test01 = 100,
-        test02, //101
+### 简单无组
+定义一对值分别为 string 和 number 的元组：
+
+    let tom: [string, number] = ['Tom', 25];
+    let tom: [string, number];
+    tom[0] = 'Tom';
+    tom[1] = 25;
+
+也可以只赋值其中一项：
+
+    let tom: [string, number];
+    tom[0] = 'Tom';
+
+但是当直接对元组类型的变量进行初始化或者赋值的时候，需要提供所有元组类型中指定的项。
+
+    let tom: [string, number];
+    tom = ['Tom'];
+    // Property '1' is missing in type '[string]' but required in type '[string, number]'.
+
+### 越界的元素
+当添加越界的元素时，它的类型会被限制为元组中每个类型的联合类型：
+
+    let tom: [string, number];
+    tom = ['Tom', 25];
+    tom.push('male');
+    tom.push(true);//Err: not assignable of type 'string | number'.
+
+## 枚举enum
+不同于string/number、无组/interface 类型，enum会被编译进js
+
+### 自增枚举enum
+枚举使用 enum 关键字来定义：
+
+    enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat};
+
+枚举成员会被赋值为从 0 开始递增的数字，同时也会对枚举值到枚举名进行反向映射：
+
+    enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat};
+
+    console.log(Days["Sun"] === 0); // true
+    console.log(Days[0] === "Sun"); // true
+
+事实上，上面的例子会被编译为：
+
+    var Days;
+    (function (Days) {
+        Days[Days["Sun"] = 0] = "Sun";
+        Days[Days["Mon"] = 1] = "Mon";
+        ...
+    })(Days || (Days = {}));
+
+### 手动赋值enum
+我们也可以给枚举项手动赋值： 未手动赋值的枚举项会接着上一个枚举项递增。
+
+    enum Days {Sun = 7, Mon = 1, Tue, Wed, Thu, Fri, Sat};
+
+    console.log(Days["Sun"] === 7); // true
+    console.log(Days["Mon"] === 1); // true
+    console.log(Days["Tue"] === 2); // true
+
+如果未手动赋值的枚举项与手动赋值的重复了，TypeScript 是不会察觉到这一点的：
+
+    //递增到 3 的时候与前面的 Sun 的取值重复了，
+    enum Days {Sun = 3, Mon = 1, Tue, Wed, Thu, Fri, Sat};
+
+    console.log(Days["Sun"] === 3); // true
+    console.log(Days["Wed"] === 3); // true
+    console.log(Days[3] === "Sun"); // false
+    console.log(Days[3] === "Wed"); // true
+
+手动赋值的枚举项可以不是数字，此时需要使用类型断言来让 tsc 无视类型检查 (其实不用any也行的)：
+
+    enum Days {Sun = 7, Mon, Tue, Wed, Thu, Fri, Sat = <any>"S"};
+    var Days;
+    (function (Days) {
+        Days[Days["Sun"] = 7] = "Sun";
+        Days[Days["Mon"] = 8] = "Mon";
+        ...
+        Days[Days["Sat"] = "S"] = "Sat";
+    })(Days || (Days = {}));
+
+当然，手动赋值的枚举项也可以为小数或负数，此时后续未手动赋值的项的递增步长仍为 1：
+
+    enum Days {Sun = 7, Mon = 1.5, Tue, Wed, Thu, Fri, Sat};
+
+    console.log(Days["Sun"] === 7); // true
+    console.log(Days["Mon"] === 1.5); // true
+    console.log(Days["Tue"] === 2.5); // true
+
+### 常数项和计算所得项
+枚举项有两种类型：常数项（constant member）和计算所得项（computed member）。
+1. 常数项：9, 2.5, 以及`+, -, *, /, %, <<, >>, >>>, &, |, ^ `运算符定义的可在编译时确立的值
+2. 计算所得项，运行时计算的值
+
+前面我们所举的例子都是常数项，而一个典型的计算所得项的例子：
+
+    enum Color {Red, Green, Blue = "blue".length};
+
+如果紧接在计算所得项后面的是未手动赋值的项，那么它就会因为无法获得初始值而报错：
+
+    //error
+    enum Color {Red = "red".length, Green, Blue};
+
+### 常数枚举
+常数枚举是使用 const enum 定义的枚举类型：
+
+    const enum Directions {
+        Up,
+        Down,
+        Left,
+        Right
     }
 
-    let str = 'something'
-    ​    ​
-    enum FileAccess {
-        None,   //None = 0
-        Read    = 1 << 1,
-        Write   = 1 << 2,
-        ReadWrite  = Read | Write,
-        Test = Cat.test01,
-        O = str.length
+    let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
+
+常数枚举与普通枚举的区别是，它会在编译阶段被删除，并且不能包含计算所得项。
+
+    var directions = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */];
+
+### 外部枚举
+外部枚举（Ambient Enums）是使用 declare enum 定义的枚举类型：
+
+    declare enum Directions {
+        Up,
+        Down,
+        Left,
+        Right
+    }
+
+    let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
+
+declare 章节提过，declare 定义的类型只会用于编译时的检查，编译结果中会被删除。
+
+    var directions = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */];
+
+同时使用 declare 和 const 也是可以的(有没有const 都一样)：
+
+    declare const enum Directions {
+        Up,
+        Down,
+        Left,
+        Right
     }
 
 ## 内置对象
@@ -161,7 +298,7 @@ TypeScript 中会经常用到这些类型：
         // Do something
     });
 
-### TypeScript 核心库的定义文件
+#### TypeScript 核心库的定义文件
 TypeScript 核心库的定义文件中定义了所有浏览器环境需要用到的类型，并且是预置在 TypeScript 中的。
 
 举一个 DOM 中的例子：
@@ -193,4 +330,18 @@ Note: 断言不是类型转换
     let d = (<number>a).toExponential()
 
 在 tsx 语法（React 的 jsx 语法的 ts 版）中必须用后一种。
+
+# ts类型别名
+常用于联合类型
+
+    type Name = string;
+    type NameResolver = () => string;
+    type NameOrResolver = Name | NameResolver;
+    function getName(n: NameOrResolver): Name {
+        if (typeof n === 'string') {
+            return n;
+        } else {
+            return n();
+        }
+    }
 

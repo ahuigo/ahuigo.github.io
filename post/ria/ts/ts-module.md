@@ -2,34 +2,6 @@
 title: Typescript 的module
 date: 2018-10-04
 ---
-# Typescript 的module
-ts 的模块其实就是es6 module. 比如 a.ts
-
-    export default {
-        name: 'a'
-    }
-    export const value = 'ahui';
-
-b.ts
-
-    import a as name from "./a.js";
-    import * as a from "./a.js";
-
-编译得到commonjs规范的 js 文件
-
-    tsc --module commonjs a.ts
-    exports.mainValidator = ZipCodeValidator;
-    exports.__esModule = true;
-    exports["default"] = {
-        name: 'a'
-    };
-
-其他规范:
-
-    tsc --module amd a.ts
-    tsc --module umd a.ts
-    tsc --module system a.ts
-
 ## 外部模块与内部模块
 外部模块(.js) 通过查找.d.ts 导入
 
@@ -98,7 +70,5 @@ export 通过`tsc x.ts -d` 后，会被加上declare:
     export interface Bar {
         count: number;
     }
-
-
 
     import name from './some.js';

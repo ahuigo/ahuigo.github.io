@@ -484,7 +484,7 @@ constructor方法默认返回实例对象（即this），完全可以指定返�
         setTimeout(this.up.bind(this), 1000) //ok
     }
 
-### set/get
+### set/get 存取器
 
     class MyClass {
         constructor() {
@@ -627,7 +627,7 @@ static const/variable, via get/set
             return this._bar;
         }
         static set bar(v) {
-            this._bar = v
+            this._bar = v; //Foo._bar
             console.log(this)
         }
     }
@@ -637,11 +637,10 @@ static const/variable, via get/set
     // consructor
     Foo.bar=1
 
-提案
+最新的直接支持es7:
 
     class MyClass {
-    static myStaticProp = 42;
-
+        static myStaticProp = 42;
 
 ### Generator 
 如果某个方法之前加上星号（*），就表示该方法是一个 Generator 函数。
@@ -965,11 +964,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 	rect.move(1, 1); //Outputs, "Shape moved."
 
 # Reflect
+反射属性
+
     var O = {a: 1};
     Object.defineProperty(O, 'b', {value: 2});
     O[Symbol('c')] = 3;
 
-    Reflect.ownKeys(O); // ['a', 'b', Symbol(c)]
+    Reflect.ownKeys(O); // 输出：['a', 'b', Symbol(c)]
+
+反射实例：
 
     function C(a, b){
     this.c = a + b;

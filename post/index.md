@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-11-11 [function buildName({firstName = 'Tom', lastName=''}:{firstName:string, lastName:string}={}) {](/b/ria/ts/ts-a-todo) 
 - 2018-08-25 [Node 执行shell 的方法](/b/ria/node-shell) 
 - 2018-04-05 [ES6 Modudle 使用](/b/ria/js-module-es6) 
 - 2018-09-27 [ops-find](/b/c/shell-find) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [Java expr](/b/java/java-expr) 
 - 2019-09-21 [Go log](/b/go/go-log) 
 - 2019-09-21 [Go Signal](/b/go/go-ipc-signal) 
-- 2018-09-27 [install java](/b/java/java-install) 
