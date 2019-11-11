@@ -76,16 +76,14 @@ jQuery 的社区声明文件是jQuery in DefinitelyTyped, 我们可以直接下�
 ## 全局变量
 全局变量是最简单的一种场景，之前举的例子就是通过 `<script>` 标签引入 jQuery，注入全局变量 `$` 和 `jQuery`。
 
-1.使用全局变量的声明文件时，如果是以 `npm install @types/xxx --save-dev` 安装的，则不需要任何配置。
+1.使用全局变量的声明文件时，如果是以 `npm install @types/xxx` 安装的，则不需要任何配置。
 2.如果是将声明文件直接存放于当前项目中，则建议和其他源码一起放到 `src` 目录下（或者对应的源码目录下）：
 
-```plain
-/path/to/project
-├── src
-|  ├── index.ts
-|  └── jQuery.d.ts
-└── tsconfig.json
-```
+    /path/to/project
+    ├── src
+    |  ├── index.ts
+    |  └── jQuery.d.ts
+    └── tsconfig.json
 
 如果没有生效，可以检查下 `tsconfig.json` 中的 `files`、`include` 和 `exclude` 配置，确保其包含了 `jQuery.d.ts` 文件。
 
@@ -98,88 +96,44 @@ jQuery 的社区声明文件是jQuery in DefinitelyTyped, 我们可以直接下�
 - [`declare namespace`](#declare-namespace) 声明（含有子属性的）全局对象
 - [`interface` 和 `type`](#interface-he-type) 声明全局类型
 
-#### `declare var`
+### `declare var`
+与其类似的，还有 `declare let` 和 `declare const`，都是用于定义全局变量的
 
-在所有的声明语句中，`declare var` 是最简单的，如之前所学，它能够用来定义一个全局变量的类型。与其类似的，还有 `declare let` 和 `declare const`，使用 `let` 与使用 `var` 没有什么区别：
+    ```ts
+    // src/jQuery.d.ts
 
-```ts
-// src/jQuery.d.ts
+    declare let jQuery: (selector: string) => any;
 
-declare let jQuery: (selector: string) => any;
-```
+    // src/index.ts
+    jQuery('#foo');
+    // 使用 declare let 定义的 jQuery 类型，允许修改这个全局变量
+    jQuery = function(selector) {
+        return document.querySelector(selector);
+    };
+    ```
 
-```ts
-// src/index.ts
-
-jQuery('#foo');
-// 使用 declare let 定义的 jQuery 类型，允许修改这个全局变量
-jQuery = function(selector) {
-    return document.querySelector(selector);
-};
-```
-
-而当我们使用 `const` 定义时，表示此时的全局变量是一个常量，不允许再去修改它的值了[<sup>4</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/04-declare-const-jquery)：
-
-```ts
-// src/jQuery.d.ts
-
-declare const jQuery: (selector: string) => any;
-
-jQuery('#foo');
-// 使用 declare const 定义的 jQuery 类型，禁止修改这个全局变量
-jQuery = function(selector) {
-    return document.querySelector(selector);
-};
-// ERROR: Cannot assign to 'jQuery' because it is a constant or a read-only property.
-```
-
-一般来说，全局变量都是禁止修改的常量，所以大部分情况都应该使用 `const` 而不是 `var` 或 `let`。
-
-需要注意的是，声明语句中只能定义类型，切勿在声明语句中定义具体的实现[<sup>5</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/05-declare-jquery-value)：
-
-```ts
-declare const jQuery = function(selector) {
-    return document.querySelector(selector);
-};
-// ERROR: An implementation cannot be declared in ambient contexts.
-```
+总的说：
+1. 一般，全局变量都是禁止修改的常量，所以大部分情况都应该使用 `const` 而不是 `var` 或 `let`。
+1. declare 声明语句中只能定义类型，切勿在声明语句中定义具体的实现
 
 #### `declare function`
-
 `declare function` 用来定义全局函数的类型。jQuery 其实就是一个函数，所以也可以用 `function` 来定义：
 
-```ts
-// src/jQuery.d.ts
+    // src/jQuery.d.ts
+    declare function jQuery(selector: string): any;
 
-declare function jQuery(selector: string): any;
-```
-
-```ts
-// src/index.ts
-
-jQuery('#foo');
-```
+    // src/index.ts
+    jQuery('#foo');
 
 在函数类型的声明语句中，函数重载也是支持的[<sup>6</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/06-declare-function)：
 
-```ts
-// src/jQuery.d.ts
-
-declare function jQuery(selector: string): any;
-declare function jQuery(domReadyCallback: () => any): any;
-```
-
-```ts
-// src/index.ts
-
-jQuery('#foo');
-jQuery(function() {
-    alert('Dom Ready!');
-});
-```
+    ```ts
+    // src/jQuery.d.ts
+    declare function jQuery(selector: string): any;
+    declare function jQuery(domReadyCallback: () => any): any;
+    ```
 
 #### `declare class`
-
 当全局变量是一个类的时候，我们用 `declare class` 来定义它的类型[<sup>7</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/07-declare-class)：
 
 ```ts
@@ -430,7 +384,7 @@ jQuery.ajax('/api/get_something');
 
 关于声明合并的更多用法，可以查看[声明合并](../advanced/declaration-merging.md)章节。
 
-### npm 包
+## npm 包
 
 一般我们通过 `import foo from 'foo'` 导入一个 npm 包，这是符合 ES6 模块规范的。
 
@@ -700,7 +654,7 @@ declare namespace foo {
 
 由于很多第三方库是 commonjs 规范的，所以声明文件也就不得不用到 `export =` 这种语法了。但是还是需要再强调下，相比与 `export =`，我们更推荐使用 ES6 标准的 `export default` 和 `export`。
 
-### UMD 库
+## UMD 库
 
 既可以通过 `<script>` 标签引入，又可以通过 `import` 导入的库，称为 UMD 库。相比于 npm 包的类型声明文件，我们需要额外声明一个全局变量，为了实现这种方式，ts 提供了一个新语法 `export as namespace`。
 
@@ -734,7 +688,7 @@ declare namespace foo {
 }
 ```
 
-### 直接扩展全局变量
+## 直接扩展全局变量
 
 有的第三方库扩展了一个全局变量，可是此全局变量的类型却没有相应的更新过来，就会导致 ts 编译错误，此时就需要扩展全局变量的类型。比如扩展 `String` 类型[<sup>23</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/23-merge-global-interface)：
 
@@ -772,7 +726,7 @@ jQuery.foo({
 });
 ```
 
-### 在 npm 包或 UMD 库中扩展全局变量
+## 在 npm 包或 UMD 库中扩展全局变量
 
 如之前所说，对于一个 npm 包或者 UMD 库的声明文件，只有 `export` 导出的类型声明才能被导入。所以对于 npm 包或 UMD 库，如果导入此库之后会扩展全局变量，则需要使用另一种语法在声明文件中扩展全局变量的类型，那就是 `declare global`。
 
@@ -800,7 +754,7 @@ export {};
 
 注意即使此声明文件不需要导出任何东西，仍然需要导出一个空对象，用来告诉编译器这是一个模块的声明文件，而不是一个全局变量的声明文件。
 
-### 模块插件
+## 模块插件
 
 有时通过 `import` 导入一个模块插件，可以改变另一个原有模块的结构。此时如果原有模块已经有了类型声明文件，而插件模块没有类型声明文件，就会导致类型不完整，缺少插件部分的类型。ts 提供了一个语法 `declare module`，它可以用来扩展原有模块的类型。
 
@@ -853,7 +807,7 @@ let f: Foo;
 bar.bar();
 ```
 
-### 声明文件中的依赖
+## 声明文件中的依赖
 
 一个声明文件有时会依赖另一个声明文件中的类型，比如在前面的 `declare module` 的例子中，我们就在声明文件中导入了 `moment`，并且使用了 `moment.CalendarKey` 这个类型：
 
@@ -869,7 +823,7 @@ declare module 'moment' {
 
 除了可以在声明文件中通过 `import` 导入另一个声明文件中的类型之外，还有一个语法也可以用来导入另一个声明文件，那就是三斜线指令。
 
-#### 三斜线指令
+### 三斜线指令
 
 与 `namespace` 类似，三斜线指令也是 ts 在早期版本中为了描述模块之间的依赖关系而创造的语法。随着 ES6 的广泛应用，现在已经不建议再使用 ts 中的三斜线指令来声明模块之间的依赖关系了。
 
@@ -952,7 +906,7 @@ export = jQuery;
 
 除了这两种三斜线指令之外，还有其他的三斜线指令，比如 `/// <reference no-default-lib="true"/>`, `/// <amd-module />` 等，但它们都是废弃的语法，故这里就不介绍了，详情可见[官网](http://www.typescriptlang.org/docs/handbook/triple-slash-directives.html)。
 
-### 自动生成声明文件
+## 自动生成声明文件
 
 如果库的源码本身就是由 ts 写的，那么在使用 `tsc` 脚本将 ts 编译为 js 的时候，添加 `declaration` 选项，就可以同时也生成 `.d.ts` 声明文件了。
 

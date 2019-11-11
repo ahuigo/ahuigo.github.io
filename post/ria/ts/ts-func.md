@@ -70,6 +70,19 @@ private:
     let a = [];
     push(a, 1, 2, 3);
 
+## 析构参数destruct arguments
+
+    function buildName({firstName = 'Tom', lastName=''}={}) {
+        return firstName + ' ' + lastName;
+    }
+    let tomcat = buildName({lastName:'Cat'});
+
+todo:
+
+    function buildName({firstName = 'Tom', lastName=''}:{firstName:string, lastName:string}={}) {
+        return firstName + ' ' + lastName;
+    }
+
 ## 重载
 为了能够精确的表达，输入为数字的时候，输出也应该为数字，输入为字符串的时候，输出也应该为字符串。
 
