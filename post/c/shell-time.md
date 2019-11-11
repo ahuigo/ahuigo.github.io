@@ -109,6 +109,18 @@ CST是时区缩写，可以指下列的时区：
 	Read 1 MB sequentially from disk .... 20,000,000 ns  =  20 ms
 	Send packet CA->Netherlands->CA .... 150,000,000 ns  = 150 ms
 
+# 时区设定：
+全局
+
+    echo 'Asia/Beijing' | sudo tee /etc/timezone
+    # 或者
+    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    dpkg-reconfigure -f noninteractive tzdata
+
+局部
+
+    echo 'export TZ=Asia/Shanghai' >> ~/.profile
+
 # Linux date命令
 man date可以发现其参数众多。看起来有些乱，归纳一下：
 

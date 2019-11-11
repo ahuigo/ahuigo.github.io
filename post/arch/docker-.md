@@ -17,6 +17,8 @@ Docker 带来的方便之处：
 3. 弹性伸缩与扩展
 4. 持续集成
 
+阅读：https://yeasy.gitbooks.io/docker_practice/image/dockerfile/arg.html
+
 ## 安装启动：
 
     yum install docker-ce docker-compose
@@ -95,8 +97,8 @@ Delete all images
 
 ### 通过容器副本创建image
 
-    $ docker commit -m="has update" -a="runoob" e218edb10161 ahuigo/ubuntu:v2
-    $ docker commit e218edb10161 ahuigo/ubuntu:v2
+    $ docker commit -m="has update" -a="ahuigo" e218edb10161 ahuigo/ubuntu:v2
+    $ docker commit e2182fxd  ahuigo/ubuntu:v2
     -m:提交的描述信息
     -a:指定镜像作者
     e218edb10161：容器ID
@@ -109,6 +111,8 @@ image to image.tar
     docker save [OPTIONS] IMAGE [IMAGE...] -o image.tar
         Save one or more images to a tar archive (streamed to STDOUT by default)
         如果指的不是IMAGE 而是container, 那打包的是container 背后的image 
+    
+    docker save image-name -o airflow.tar
 
 image.tar to image
 
@@ -156,29 +160,37 @@ docker import理解为将外部文件复制进来形成只有一层文件系统�
     EXPOSE 3000
     FROM    centos:6.7
     MAINTAINER      Fisher "fisher@sudops.com"
+#### build arg
+> https://vsupalov.com/docker-env-vars/
+通过 docker build `--build-arg <varname>=<value>` 传值
 
-#### RUN ENV
-    sudo docker run -d -t -i -e REDIS_NAMESPACE='staging' \ 
-    -e POSTGRES_ENV_POSTGRES_PASSWORD='foo' \
-    -p 80:80 \
-    --link redis:redis \  
-    --name container_name dockerhub_id/image_name
-    --dns=192.168.1.1
-        --dns=[dns1,dns2]
-        https://superuser.com/questions/1302921/tell-docker-to-use-the-dns-server-in-the-host-system
+    # 比如 docker build --build-arg name=ahuigo .
+    //.dockerfile
+    RUN echo "name: $name"
+    RUN echo "name: ${name}"
 
-dockerfile CMD, 不会解析环境变量
-
-    CMD ["sh", "test.sh", "$REDIS_NAMESPACE"]
-
-得用
-
-    CMD ["sh", "-c", "echo $PROJECTNAME"]
-    或
-    CMD echo $PROJECTNAME
+#### build options
+    --cpu-shares :设置 cpu 使用权重；
+    --cpu-period :限制 CPU CFS周期；
+    --cpu-quota :限制 CPU CFS配额；
+    --cpuset-cpus :指定使用的CPU id；
+    --cpuset-mems :指定使用的内存 id；
+    --disable-content-trust :忽略校验，默认开启；
+    -f :指定要使用的Dockerfile路径；
+    --force-rm :设置镜像过程中删除中间容器；
+    --isolation :使用容器隔离技术；
+    --label=[] :设置镜像使用的元数据；
+    -m :设置内存最大值；
+    --memory-swap :设置Swap的最大值为内存+swap，"-1"表示不限swap；
+    --no-cache :创建镜像的过程不使用缓存；
+    --pull :尝试去更新镜像的新版本；
+    --rm :设置镜像成功后删除中间容器；
+    --shm-size :设置/dev/shm的大小，默认值是64M；
+    --ulimit :Ulimit配置。
+    --tag, -t: 镜像的名字及标签，通常 name:tag 或者 name 格式；可以在一次构建中为一个镜像设置多个标签。
+    --network: 默认 default。在构建期间设置RUN指令的网络模式
 
 #### ARG and ENV
-docker `--build-arg <varname>=<value>`
 
     ARG <name>[=<default value>]
     ARG package_path=/pkg/
@@ -188,7 +200,6 @@ docker `--build-arg <varname>=<value>`
         TEST=debug
 
 Note: ENV 同名变量会覆盖 ARG
-
 
 其他：
 
@@ -229,11 +240,12 @@ Note: ENV 同名变量会覆盖 ARG
 #### RUN
 RUN 两种格式
 
-    Shell 格式：RUN
-    Exec 格式：RUN ["executable", "param1", "param2"]
-
-    # $HOME 不会被shell 替换
-    RUN ["echo", "$HOME"]
+    Shell 格式:
+        RUN mkdir tmp123
+    Exec 格式：
+        RUN ["executable", "param1", "param2"]
+        # $HOME 不会被shell 替换,是字面意思
+        RUN ["echo", "$HOME"]
 
 A dockerfile is nothing more but a wrapper on docker run + docker commit.
 
@@ -247,6 +259,12 @@ Is the same thing as doing:
     CID=$(docker run ubuntu:12.10 mkdir tmp123); ID=$(docker commit $CID)
     CID=$(docker run $ID cd tmp123); ID=$(docker commit $CID)
     CID=$(docker run $ID pwd); ID=$(docker commit $CID)
+
+#### RUN VS CMD VS ENTRYPOINT
+CMD 只有一个，可能被docker run 覆盖
+1. RUN executes command(s) in a new layer and *creates a new image*. E.g., it is often used for installing software packages.
+2. CMD sets default command and/or parameters, which **can be overwritten from command line** when docker container runs.
+3. ENTRYPOINT: configures a container that will run as an executable.(/bin/sh)
 
 #### 开始build
 
@@ -268,6 +286,18 @@ docker php 还提供为php 安装扩展的命令
     FROM php:5.6-apache
     RUN docker-php-ext-install mysqli
     CMD apache2-foreground
+
+### 减少image 体积
+1.合并RUN 语句
+
+    RUN apt-get install -y <packageA> <packageB> && cmd2 && cmd3
+
+2.rm /var/lib/apt/lists/
+
+    rm -rf /var/lib/apt/lists/* 
+
+3.https://www.fromlatest.io/ 优化dockerfile
+
 
 ## push image
 首先，去 hub.docker.com 或 cloud.docker.com 注册一个账户。然后，用下面的命令登录。
@@ -316,6 +346,12 @@ Docker Registry 分公开服务和私有服务。
     docker rm <container>
     docker rmi <image>
 
+### run with cmd
+run 可以覆盖dockerfile 的CMD命令
+
+    docker run -d -p 8080:8080 puckel/docker-airflow webserver
+    docker run -d -p 8080:8080 puckel/docker-airflow cd tmp123
+
 ### exited?
 docker 一运行nginx 就退出。因为nginx 是运行的`nginx -g "daemon on;"`， 应该用 `nginx -g "daemon off;"` 或者
 
@@ -342,20 +378,68 @@ removes/deletes all stopped containers
 
     docker rm $(docker ps -a -q) 
 
+
 remove all images
 
     docker rmi $(docker images -q)
+
+#### Unable to remove filesystem
+If you get such error:
+
+    Unable to remove filesystem: /var/lib/docker/container/11667ef16239.../
+
+The solution here(No need to execute `service docker restart` to restart docker):
+
+    # 1. find which process(pid) occupy the fs system
+    $ find /proc/*/mounts  |xargs -n1 grep -l -E '^shm.*/docker/.*/11667ef16239' | cut -d"/" -f3
+    1302   # /proc/1302/mounts
+
+    # 2. kill this process
+    $ sudo kill -9 1302
+
+### RUN ENV
+    sudo docker run -d -t -i -e REDIS_NAMESPACE='staging' \ 
+    -e POSTGRES_ENV_POSTGRES_PASSWORD='foo' \
+    -p 80:80 \
+    --link redis:redis \  
+    --name container_name dockerhub_id/image_name
+dockerfile CMD, 不会解析环境变量
+
+    CMD ["sh", "test.sh", "$REDIS_NAMESPACE"]
+
+得用
+
+    CMD ["sh", "-c", "echo $PROJECTNAME"]
+    或
+    CMD echo $PROJECTNAME
 
 ## net
     $ docker network create hostnet
     557079c79ddf6be7d6def935fa0c1c3c8290a0db4649c4679b84f6363e3dd9a0
     $ docker run --rm --net hostnet slim-image
 
+### dns
+    --dns=192.168.1.1
+    --dns=[dns1,dns2]
+
+https://superuser.com/questions/1302921/tell-docker-to-use-the-dns-server-in-the-host-system
+
+    $ cat /etc/resolv.conf
+    nameserver 127.0.0.1
+    $ docker network create demo
+    557079c79ddf6be7d6def935fa0c1c3c8290a0db4649c4679b84f6363e3dd9a0
+    $ docker run --rm --net demo alpine cat /etc/resolv.conf
+    nameserver 127.0.0.11
+    options ndots:0  
+
 ## 进入容器
 相当于shell 的fg, 用于进入已经启动的容器
 
     $ docker container exec -it <containerID> /bin/bash
     $ docker exec -it <containerID> /bin/bash
+
+### user
+    docker exec -u root -ti my_airflow_container bash
 
 ### 伪终端
 

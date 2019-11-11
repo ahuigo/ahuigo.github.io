@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
 - 2018-10-04 [webspider](/b/py/py-webspider) 
 - 2019-11-06 [Sth. About Mobile Communication](/b/life/life-mobile) 
 - 2018-09-27 [学习 docker](/b/arch/docker-) 
@@ -38,4 +39,3 @@
 - 2019-09-16 [Java Object](/b/java/java-obj) 
 - 2019-09-12 [Cesium](/b/ria/cesium) 
 - 2018-10-04 [向量(vector)](/b/math/vector) 
-- 2018-09-27 [Java expr](/b/java/java-expr) 

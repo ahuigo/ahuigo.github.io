@@ -127,6 +127,9 @@ React 分两个阶段工作：
 1. 它应返回一个对象来更新 state，如果返回 null 则不更新。
 2. 如果只想在 prop 更改时重新计算某些数据(不改state)，请使用 memoization helper 代替。
 
+Note: getDerivedStateFromProps 不支持async fetch data. 请使用componentDidUpdate+componentDidMount, 或者直接在render中使用
+https://github.com/facebook/react/issues/13541
+
 #### memoization
 https://zh-hans.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization
 
@@ -253,6 +256,13 @@ React Ele元素是不可变对象。一旦被创建不可更改。除非用rende
     type: "h1"
 
 如果在chrome 直接修改element style或者删除props.children的`"t:"` ，重新render 更新时这些修改都被保留
+
+## render 执行函数，但是不更新
+    const [a,setA] = useState(0);
+    return <h1 onClick={e=>{ setA(1) }} >
+        a: {a}; 
+        {(e=>{console.log('执行但不render');return Math.random()})()}
+    </h1> 
 
 ## render 中子树卸载
 由于子树在`a>=2` 会被卸载，如果对div 的background 临时做的修改会被清理, 在`a>5` 时不会再看到这个background

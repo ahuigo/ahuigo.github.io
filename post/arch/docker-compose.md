@@ -46,14 +46,25 @@ compose 有很多docker 自己的选项
         web:
             image: wordpress
             links:
-            - mysql
+                - mysql
             environment:
-            - WORDPRESS_DB_PASSWORD=123456
+                - WORDPRESS_DB_PASSWORD=123456
             ports:
-            - "127.0.0.3:8080:80"
+                - "127.0.0.3:8080:80"
             working_dir: /var/www/html
             volumes:
-            - wordpress:/var/www/html
+                - wordpress:/var/www/html
+                - ./dags:/usr/local/airflow/dags
+
+参考下：https://github.com/puckel/docker-airflow/blob/master/docker-compose-LocalExecutor.yml
+的配置，command 可以覆盖dockerfile 中的CMD
+
+        command: webserver
+        environment:
+            - POSTGRES_USER=airflow
+        ports:
+            - "8080:8080"
+
 ## 命令
 example
 
@@ -73,7 +84,7 @@ compose 有很多命令，
     top                Display the running processes
 
     # create container
-    up                  Create and start containers 
+    up                  (Re)Create and start containers 
     down                Stop and remove containers, networks, images, and volumes
     kill               Kill containers
     rm                 Remove stopped containers
@@ -89,3 +100,58 @@ compose 有很多命令，
     # create services
     create             Create services
     build              Build or rebuild services
+
+
+# 网络
+Compose会为我们的app 创建一个网络，服务的每个容器都会加入该网络中.
+假如一个应用程序在名为myapp的目录中，并且docker-compose.yml如下所示：
+
+    version: '2'
+    services:
+        web:
+            build: .
+            ports:
+            - "8000:8000"
+        db:
+            image: postgres
+
+当我们运行docker-compose up时，将会执行以下几步：
+
+1. 创建一个名为myapp_default的默认网络；
+2. 使用web服务的配置创建容器，它以“web”这个名称加入网络myapp_default；
+3. 使用db服务的配置创建容器，它以“db”这个名称加入网络myapp_default。
+
+容器间可使用服务名称（web或db）作为hostname相互访问。例如，web这个服务可使用postgres://db:5432 访问db容器。
+
+
+## 更新容器
+当服务的配置发生更改时，可使用docker-compose up命令更新配置。
+
+此时，Compose会删除旧容器并创建新容器。新容器会以不同的IP地址加入网络，名称保持不变。任何指向旧容器的连接都会被关闭，容器会重新找到新容器并连接上去。
+
+## links(hostname 别名)
+默认情况下，服务之间可使用服务名称相互访问。links允许我们定义一个别名，从而使用该别名访问其他服务。举个例子：
+
+    version: '2'
+    services:
+        web:
+            build: .
+            links:
+            - "db:database"
+        db:
+            image: postgres
+
+这样web服务就可使用db或database作为hostname访问db服务了。
+
+## dns
+set dns server:
+
+    version: 2
+    services:
+        application:
+            dns:
+                - 8.8.8.8
+                - 4.4.4.4
+                - 192.168.9.45
+
+https://docs.docker.com/compose/networking/#use-a-pre-existing-network
