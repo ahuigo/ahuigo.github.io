@@ -1,6 +1,6 @@
 # AHUIGO 的笔记
 - 2019-11-11 [function buildName({firstName = 'Tom', lastName=''}:{firstName:string, lastName:string}={}) {](/b/ria/ts/ts-a-todo) 
-- 2019-10-10 [2019崇礼滑雪指引：雪场、装备、价格](/b/life/ski) 
+- 2019-10-10 [2019崇礼富龙滑雪指引：雪场、装备、价格](/b/life/ski) 
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
 - 2018-10-04 [webspider](/b/py/py-webspider) 
 - 2019-11-06 [Sth. About Mobile Communication](/b/life/life-mobile) 
