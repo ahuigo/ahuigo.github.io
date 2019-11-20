@@ -312,6 +312,17 @@ React 只更新改变了的 DOM 节点. 那什么时候触发render 呢？
         words: [...state.words, 'marklar'],
     }));
 
+# hook lifecycle执行顺序
+
+    const[a,setA] = useState(0)
+    console.log('1!')
+    useEffect(()=>{
+        console.log('3!')
+    },[a])
+    return <h1 onClick={e=>{ setA(1) }}>
+        {(e=>console.log('2!'))()}
+    </h1>
+
 # Portal  
 Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。
 

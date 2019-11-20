@@ -74,12 +74,14 @@ Via FormData and file:
 
 ## blob
 
+### blob as form
+
 	// JavaScript file-like 对象
 	var content = '<a id="a"><b id="b">hey!</b></a>'; // 新文件的正文...
 	var blob = new Blob([content], { type: "text/xml"});
 	formData.append("webmasterfile", blob);
 
-### blob as url
+### blob as data:url
 
     var blob = new Blob(['content'], { type: 'text/csv;charset=utf-8;' });
     var link = document.createElement("a");
@@ -100,6 +102,13 @@ vs:
     var blob = new Blob(['content'], { type: 'text/csv;charset=utf-8;' });
     link.setAttribute("href", URL.createObjectURL(blob));
 
+### blob as base64
+    var reader = new FileReader();
+    reader.readAsDataURL(blob); 
+    reader.onloadend = function() {
+        var base64data = reader.result;                
+        console.log(base64data);
+    }
 
 ### blob=file.slice
 

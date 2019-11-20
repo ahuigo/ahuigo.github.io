@@ -399,7 +399,7 @@ Note:
 
 考虑到这是一个相对常见的使用场景，很可能在未来 React 会自带一个 usePrevious Hook。
 
-# Hook 使用规则与本质
+# Hook 使用规则与本质(lifecycle)
 https://zh-hans.reactjs.org/docs/hooks-rules.html
 
 使用Hook 它们会有两个额外的规则：

@@ -49,6 +49,11 @@ mac下没有adduser, 那如何在mac中添加用户/组?
 	#或者
 	sudo dseditgroup -o edit -a hilojack -t user vboxusers #sudo usermod -a -G vboxusers hilojack
 
+删除group:
+
+    sudo dseditgroup -o edit -d $Username -t user $GroupName
+    sudo dseditgroup -o edit -d ahuigo -t user workgroup
+
 ### change Passwd
 
 	dscl . -passwd /Users/luser password

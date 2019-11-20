@@ -221,3 +221,24 @@ ALTER TABLE table_name `<action>`:
         RENAME TO new_table_name;
     constraint:
         ADD CONSTRAINT constraint_name constraint_definition
+
+### default
+To set a new default for a column, use a command like:
+
+    ALTER TABLE products ALTER COLUMN price SET DEFAULT 7.77;
+
+To remove any default value, use:
+
+    ALTER TABLE products ALTER COLUMN price DROP DEFAULT;
+
+### autoincrement
+删除id, 再重建
+
+    ALTER TABLE player drop column id;
+    ALTER TABLE player ADD COLUMN id SERIAL PRIMARY KEY;
+
+也可不删除id, 创建自增序列：
+
+    create sequence player_id_seq;
+    alter table player alter playerid set default nextval('player_id_seq');
+    Select setval('player_id_seq', 2000051 ); --set to the highest current value of playerID

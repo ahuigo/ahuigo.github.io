@@ -145,6 +145,20 @@ or:
         event.stopPropagation();
     }, true);
 
+最新的:
+
+    getEventListeners(document);
+    getEventListeners(window);
+        click: Array[1]
+        closePopups: Array[1]
+        keyup: Array[1]
+
+    for(var eventType in getEventListeners(document)) {
+        getEventListeners(document)[eventType].forEach(
+            function(o) { o.remove(); }
+        ) 
+    }
+
 
 ### add listener
 https://stackoverflow.com/questions/38619981/react-prevent-event-bubbling-in-nested-components-on-click

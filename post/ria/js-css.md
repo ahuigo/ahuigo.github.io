@@ -7,11 +7,14 @@ css/html5/js 兼容表
 http://caniuse.com/
 
 # priority
+你应该知道的一些事情——CSS权重
+https://www.w3cplus.com/css/css-specificity-things-you-should-know.html
 
 	style > id > hover(鼠标悬停) > class > tag
-    后者css优先覆盖前者
-    .cls1.cls2 大于 .cls1 .cls2
-    li a.active 优先 a.active
+    限制更大的优先级高：
+        li a.active 优先 a.active
+        .cls1.cls2 大于 .cls1 .cls2
+    后定义css优先覆盖前者
 
 后定义的优先：
 
@@ -23,8 +26,6 @@ http://caniuse.com/
     }
 
     <class="angle ignore"> // angle 后定义优先
-
-
 
 ## 层次
 

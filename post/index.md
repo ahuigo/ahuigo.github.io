@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2019-11-20 [js dom file](/b/ria/js-dom-file) 
+- 2019-11-20 [mac user manager](/b/mac/mac-user) 
 - 2019-10-10 [2019崇礼富龙滑雪指引](/b/life/ski) 
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
 - 2018-10-04 [webspider](/b/py/py-webspider) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2018-09-27 [c-mem](/b/c/c-mem) 
 - 2019-09-21 [防火墙](/b/net/net-iptables) 
-- 2019-09-16 [Java Object](/b/java/java-obj) 
-- 2019-09-12 [Cesium](/b/ria/cesium) 

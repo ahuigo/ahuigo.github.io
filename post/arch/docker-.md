@@ -382,6 +382,7 @@ removes/deletes all stopped containers
 remove all images
 
     docker rmi $(docker images -q)
+    docker rmi $(docker images -q) --force
 
 #### Unable to remove filesystem
 If you get such error:
@@ -495,8 +496,8 @@ https://superuser.com/questions/1302921/tell-docker-to-use-the-dns-server-in-the
     $ docker volume inspect www
     "Mountpoint": "/var/lib/docker/volumes/www/_data",
 
-### 端口映射
-`-P` 容器端口映射到宿主机
+### port映射
+`-P` 容器端口映射到宿主机(同时加`EXPOSE`)
 
     # docker pull training/webapp  # 载入镜像
     # docker run -d -P training/webapp python app.py
