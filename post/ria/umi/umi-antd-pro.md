@@ -1,9 +1,8 @@
 ---
-title: Ant desigin pro 开发
+title: Ant desigin pro 开发介绍
 date: 2019-11-20
-private: true
 ---
-# Ant desigin pro 开发
+# Ant desigin pro 开发介绍
 antd pro 由umijs 这个脚手架生成， 我看重的几点：
 1. 按需要加载: 不会因为项目变大，首页加载变慢
 2. HMR: 开发时的热更新
@@ -35,7 +34,27 @@ antd pro 由umijs 这个脚手架生成， 我看重的几点：
     config/
         config.ts       这时放路由、配置
         
-其它参考：https://pro.ant.design/docs/getting-started-cn
+完整的目录说明, 参考：https://pro.ant.design/docs/getting-started-cn
+
+    ├── config                   # umi 配置，包含路由，构建等配置
+    ├── mock                     # 本地模拟数据
+    ├── public
+    │   └── favicon.png          # Favicon
+    ├── src
+    │   ├── assets               # 本地静态资源
+    │   ├── components           # 业务通用组件
+    │   ├── e2e                  # 集成测试用例
+    │   ├── layouts              # 通用布局
+    │   ├── models               # 全局 dva model
+    │   ├── pages                # 业务页面入口和常用模板
+    │   ├── services             # 后台接口服务
+    │   ├── utils                # 工具库
+    │   ├── locales              # 国际化资源
+    │   ├── global.less          # 全局样式
+    │   └── global.ts            # 全局 JS
+    ├── tests                    # 测试工具
+    ├── README.md
+    └── package.json
 
 ## 一个welcome 页面
 初始化一个welcome 页面
