@@ -27,7 +27,7 @@ date: 2019-10-10
 参考下富龙2018价格： http://www.chonglihuaxue.cn/info.asp?id=93
 
 
-## 价格
+## 富龙价格
 现在是富龙试营业，雪票价格便宜接近50%吧。
 1. 雪票+1晚住宿+1早餐: 2人间的、4人间套票比较便宜。算下来1人1天才150元的雪票+住宿。（不过试营业只有初中级道）.万龙2人2天要1100元（不含住宿）
 2. 交通:3个多小时的高速
@@ -39,6 +39,10 @@ date: 2019-10-10
 相关特价票：
 1.万龙试滑特价(贵族雪场)： http://www.wlski.com/products/detail/92 
 2.富龙试滑特价(很便宜，且含住宿): https://traveldetail.fliggy.com/item.htm?id=578103520662&spm=a1z09.2.0.0.c0272e8dwvJwFd
+
+## 怀北滑雪指引
+1. 班车： https://mp.weixin.qq.com/s/AfiSH41pTWFyKTdG1_i04A
+全程高速，往返40元/人， 发车时间： 芍药居：8:00分 16：00—16：30从怀北滑雪场C停车场回京，返程只到芍药居地铁站。 
 
 ## 崇礼各大雪场
 ![](/img/life/ski-place-chongli.png)

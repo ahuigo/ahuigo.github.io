@@ -4,6 +4,7 @@ date: 2019-11-11
 private: 
 ---
 # ts todo
-    function buildName({firstName = 'Tom', lastName=''}:{firstName:string, lastName:string}={}) {
-        return firstName + ' ' + lastName;
-    }
+    function f({ pretty: boolean })
+    function f({ pretty }: { pretty: boolean })
+    function f({ pretty = true }: { pretty?: boolean }){}
+    function f({ pretty = true }: { pretty?: boolean } = {}){}

@@ -6,6 +6,11 @@ private: true
 # Umi form 表单
 https://ant.design/components/form-cn/#components-form-demo-coordinated
 
+    this.props.form
+        setFieldsValue
+        getFieldValue
+        setFieldDecorator
+
 form 不用state, 用form 值
 
       handleSelectChange = value => {
