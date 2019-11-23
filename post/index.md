@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-10-04 [deny ngx_http_access_module](/b/nginx/nginx-location) 
 - 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/umi-antd-pro) 
 - 2019-11-20 [js dom file](/b/ria/js-dom-file) 
 - 2019-11-20 [mac user manager](/b/mac/mac-user) 
@@ -35,7 +36,6 @@
 - 2019-09-28 [js charts](/b/ria/chart) 
 - 2018-10-04 [to png](/b/ria/chart-img) 
 - 2018-10-04 [highcharts](/b/ria/chart-highchart) 
-- 2019-09-28 [antv and bizcharts](/b/ria/chart-antv) 
+- 2019-11-24 [antv and bizcharts](/b/ria/chart-antv) 
 - 2018-09-27 [brew](/b/mac/mac-brew) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
-- 2018-09-27 [c-mem](/b/c/c-mem) 
