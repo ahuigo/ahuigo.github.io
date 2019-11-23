@@ -115,3 +115,33 @@ e.g.:
             status,
         }
     });
+
+## errorhandler
+
+    //src/utils/request.ts
+    const errorHandler = async (error: { response: Response }): Response => {
+        const { response } = error;
+        if (response && response.status) {
+            // const errorText = codeMessage[response.status] || response.statusText;
+            const { status, url } = response;
+            const text = await response.text();
+            let msg = text;
+            try {
+                const res = JSON.parse(text);
+                msg = res.message || text;
+            } catch (e) {
+            }
+
+            // message.error(msg)
+            notification.error({
+                message: `请求错误 ${status}: ${url}`,
+                description: msg,
+            });
+        } else if (!response) {
+            notification.error({
+                description: '您的网络发生异常，无法连接服务器',
+                message: '网络异常',
+            });
+        }
+        return response;
+    };
