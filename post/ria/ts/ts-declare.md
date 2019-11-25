@@ -31,7 +31,7 @@ private:
     declare var jQuery: (selector: string) => any;
     jQuery('#foo');
 
-上例中，declare var 只是定义了全局变量 jQuery 的类型：
+上例中，declare var 只是定义了全局变量 jQuery 的类型, 不生成实际代码：
 
     jQuery('#foo');
 
@@ -726,39 +726,34 @@ jQuery.foo({
 });
 ```
 
-## 在 npm 包或 UMD 库中扩展全局变量
-
-如之前所说，对于一个 npm 包或者 UMD 库的声明文件，只有 `export` 导出的类型声明才能被导入。所以对于 npm 包或 UMD 库，如果导入此库之后会扩展全局变量，则需要使用另一种语法在声明文件中扩展全局变量的类型，那就是 `declare global`。
-
-#### `declare global`
+## 在 npm 包或 UMD 库中扩展全局变量`declare global`
+如之前所说，对于一个 npm 包或者 UMD 库的声明文件，只有 `export` 导出的类型声明才能被导入。
 
 使用 `declare global` 可以在 npm 包或者 UMD 库的声明文件中扩展全局变量的类型[<sup>25</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/25-declare-global)：
 
-```ts
-// types/foo/index.d.ts
+    ```ts
+    // types/foo/index.d.ts
 
-declare global {
-    interface String {
-        prependHello(): string;
+    declare global {
+        interface String {
+            prependHello(): string;
+        }
     }
-}
 
-export {};
-```
+    export {};// 注意即使此声明文件不需要导出任何东西，仍然需要导出一个空对象，用来告诉编译器这是一个模块的声明文件，而不是一个全局变量的声明文件。
+    ```
 
-```ts
-// src/index.ts
+    ```ts
+    // src/index.ts
 
-'bar'.prependHello();
-```
+    'bar'.prependHello();
+    ```
 
-注意即使此声明文件不需要导出任何东西，仍然需要导出一个空对象，用来告诉编译器这是一个模块的声明文件，而不是一个全局变量的声明文件。
 
-## 模块插件
+## 模块插件 `declare module`
 
 有时通过 `import` 导入一个模块插件，可以改变另一个原有模块的结构。此时如果原有模块已经有了类型声明文件，而插件模块没有类型声明文件，就会导致类型不完整，缺少插件部分的类型。ts 提供了一个语法 `declare module`，它可以用来扩展原有模块的类型。
 
-#### `declare module`
 
 如果是需要扩展原有模块的话，需要在类型声明文件中先引用原有模块，再使用 `declare module` 扩展原有模块[<sup>26</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/26-declare-module)：
 
@@ -991,12 +986,10 @@ export declare function bar(): string;
 1. 将声明文件和源码放在一起
 2. 将声明文件发布到 `@types` 下
 
-这两种方案中优先选择第一种方案。保持声明文件与源码在一起，使用时就不需要额外增加单独的声明文件库的依赖了
-
 仅当我们在给别人的仓库添加类型声明文件，但作者不愿pull, 才需要使用第二种方案
 
-### 将声明文件和源码放在一起
-如果声明文件是通过 `tsc` 自动生成的，那么无需做任何其他配置，只需要把编译好的文件也发布到 npm 上，使用方就可以获取到类型提示了。
+## 将声明文件和源码放在一起
+如果声明文件是通过 `tsc` 自动生成的，那么无需做任何其他配置
 
 如果是手动写的声明文件，那么需要满足以下条件之一，才能被正确的识别：
 
@@ -1004,46 +997,59 @@ export declare function bar(): string;
 - 在项目根目录下，编写一个 `index.d.ts` 文件
 - 针对入口文件（`package.json` 中的 `main` 字段指定的入口文件），编写一个同名不同后缀的 `.d.ts` 文件
 
-第一种方式是给 `package.json` 中的 `types` 或 `typings` 字段指定一个类型声明文件地址。比如：
-
-```json
-{
-    "name": "foo",
-    "version": "1.0.0",
-    "main": "lib/index.js",
-    "types": "foo.d.ts",
-}
-```
+### types typings
+第一种方式是给 `package.json` 中的 `types` 或 `typings` 字段指定一个类型声明文件地址。
 
 指定了 `types` 为 `foo.d.ts` 之后，导入此库的时候，就会去找 `foo.d.ts` 作为此库的类型声明文件了。
 
-`typings` 与 `types` 一样，只是另一种写法。
+    ```json
+    {
+        "name": "foo",
+        "version": "1.0.0",
+        "main": "lib/index.js",
+        "types": "foo.d.ts",
+    }
+    ```
 
+
+`typings` 与 `types` 是别名。 
+另外`types`指定文件，`typeRoots`指定目录
+
+        "typeRoots":[
+             "typings"
+        ]
+        "types": "./lib/main.d.ts"
+        // or
+        "typings": "./lib/main.d.ts"
+
+### 查找根目录的index.d.ts
 如果没有指定 `types` 或 `typings`，那么就会在根目录下寻找 `index.d.ts` 文件，将它视为此库的类型声明文件。
 
-如果没有找到 `index.d.ts` 文件，那么就会寻找入口文件（`package.json` 中的 `main` 字段指定的入口文件）是否存在对应同名不同后缀的 `.d.ts` 文件。
+### main 同名.d.ts
+如果没有找到 `index.d.ts` 文件，那么就会寻找（`package.json` 中的 `main` 字段指定的入口文件）是否存在对应同名不同后缀的 `.d.ts` 文件。
 
 比如 `package.json` 是这样时：
 
-```json
-{
-    "name": "foo",
-    "version": "1.0.0",
-    "main": "lib/index.js"
-}
-```
+    ```json
+    {
+        "name": "foo",
+        "version": "1.0.0",
+        "main": "lib/index.js"
+    }
+    ```
 
 就会先识别 `package.json` 中是否存在 `types` 或 `typings` 字段。发现不存在，那么就会寻找是否存在 `index.d.ts` 文件。如果还是不存在，那么就会寻找是否存在 `lib/index.d.ts` 文件。假如说连 `lib/index.d.ts` 都不存在的话，就会被认为是一个没有提供类型声明文件的库了。
 
+### 子模块声明文件
 有的库为了支持导入子模块，比如 `import bar from 'foo/lib/bar'`，就需要额外再编写一个类型声明文件 `lib/bar.d.ts` 或者 `lib/bar/index.d.ts`，这与自动生成声明文件类似，一个库中同时包含了多个类型声明文件。
 
-### 将声明文件发布到 `@types` 下
 
+## 将声明文件发布到 `@types` 下
 如果我们是在给别人的仓库添加类型声明文件，但原作者不愿意合并 pull request，那么就需要将声明文件发布到 `@types` 下。
 
-与普通的 npm 模块不同，`@types` 是统一由 [DefinitelyTyped][] 管理的。要将声明文件发布到 `@types` 下，就需要给 [DefinitelyTyped][] 创建一个 pull-request，其中包含了类型声明文件，测试代码，以及 `tsconfig.json` 等。
-
-pull-request 需要符合它们的规范，并且通过测试，才能被合并，稍后就会被自动发布到 `@types` 下。
+`@types` 是统一由 [DefinitelyTyped][] 管理的。
 1. 在 [DefinitelyTyped][] 中创建一个新的类型声明，需要用到一些工具，[DefinitelyTyped][] 的文档中已经有了[详细的介绍](https://github.com/DefinitelyTyped/DefinitelyTyped#create-a-new-package)，这里就不赘述了，以官方文档为准。
+3. 创建一个 pull-request，其中包含了类型声明文件，测试代码，以及 `tsconfig.json` 等。
+2. pull-request 需要符合它们的规范，并且通过测试，才能被合并，稍后就会被自动发布到 `@types` 下。
 
 如果大家有此类需求，可以参考下笔者[提交的 pull-request](https://github.com/DefinitelyTyped/DefinitelyTyped/pull/30336/files) 。

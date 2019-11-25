@@ -30,7 +30,7 @@ ts 分 原始数据类型（Primitive data types）和对象类型（Object type
     let myName = 'Tom';
 
 ### 字符串字面量类型
-用type 约束取值(不会编译到js)
+用type 约束取值(不会编译到js), 只会用于编译检查
 
     type EventNames = 'click' | 'scroll' | 'mousemove';
     function handleEvent(event: EventNames) {
@@ -71,6 +71,7 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
     let age: string | number;
     if(ag instanceof string) {
+
     }
 
 # 对象类型（Object types）。
@@ -154,7 +155,7 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
     tom.push(true);//Err: not assignable of type 'string | number'.
 
 ## 枚举enum
-不同于string/number、无组/interface 类型，enum会被编译进js
+不同于string/number、元组/interface 类型，enum会被编译进js
 
 ### 自增枚举enum
 枚举使用 enum 关键字来定义：

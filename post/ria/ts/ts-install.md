@@ -33,17 +33,19 @@ run:
 ## 编译为es6
 如果想编译为es6, 我们生成编译配置 tsconfig.json
 
-    $ tsc --init; #默认是es5+commonjs
+    $ tsc --init; #默认是es5+commonjs 的tsconfig
     $ vi tsconfig.json ;#手动配置
         "target":"es2015"
         "module":"es2015"
+
+默认tsconfig.json 是严格的:`strict:true`
     
-编译单文件
+### 编译单文件
 
     # 编译ts
-    tsc hello.ts; # 编译单文件 和 使用tsconfig.json 不能同时
+    tsc hello.ts; # 编译单文件不使用tsconfig.json, 而是(`strict:false`)
 
-指定config
+### 指定config
 
     # 手动指定配置，编译当前目录下的所有.ts
     $ tsc --p tsconfig.json;
@@ -82,7 +84,7 @@ b.ts
     tsc --module system a.ts
 
 ## 代码补全d.ts
-输入关键字后，vscode 会自动基于`ts`补全。但是对于纯js 文件，由于没有强类型，很难做到补全。我们可以手写`.d.ts`. 
+输入关键字后，vscode 会自动基于`ts`补全。但是对于纯js 文件、第三方库js，由于没有强类型，很难做到补全。我们可以手写`.d.ts`. 
 
 `ts` 也可以生成`.d.ts`:
 
