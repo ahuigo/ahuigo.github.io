@@ -12,6 +12,7 @@ private:
         name VARCHAR (100),
         phones TEXT []
     );
+
     select array[1,2];
     select array['a','b'];
     select array['a',1]; # error
@@ -24,15 +25,15 @@ private:
 
 or use bracket to insert:
 
-    INSERT INTO contacts (name, phones) VALUES (
-        'William Gate', 
-        '{"(408)-589-5842","(408)-589-58423"}'
-    );
+    INSERT INTO contacts (name, phones) VALUES ( 'William Gate', '{"(408)-589-5842","(408)-589-58423"}');
+    INSERT INTO contacts (name, phones) VALUES ( 'William Gate', '{(408)-589-5842",(408)-589-58423}');
 
 ## select array
 select first phone number(不是从0开始)
 
-    SELECT phones[1] FROM contacts;
+    > SELECT phones[1] FROM contacts;
+    > SELECT phones FROM contacts;
+    {(408)-589-5842",(408)-589-58423}
 
 ### where array
 检查第一个值

@@ -82,7 +82,6 @@ private:
     }
     let tomcat = buildName({lastName:'Cat'});
 
-
 ## 重载
 为了能够精确的表达，输入为数字的时候，输出也应该为数字，输入为字符串的时候，输出也应该为字符串。
 

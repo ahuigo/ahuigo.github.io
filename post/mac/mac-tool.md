@@ -399,8 +399,10 @@ https://sm.ms/
 	brew install asciinema
 	asciinema rec
 
-## screencapture
+## Flameshot
+Flameshot：Linux下最接近Snipaste的截图软件
 
+## screencapture
 screencapture命令可以截图。和Grab.app与cmd + shift + 3或cmd + shift + 4热键相似，但更加的灵活。
 
 抓取包含鼠标光标的全屏幕，并以image.png插入到新邮件的附件中：

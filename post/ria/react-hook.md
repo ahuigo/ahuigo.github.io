@@ -30,6 +30,11 @@ Hook 是 让你在不编写 class 的情况下使用 state 以及其他的 React
         return  <button onClick={() => setCount(count + 1)}> Click me </button>
     }
 
+### useState
+只用setC 才能改变count, Math.random 不可以改变count.
+
+    const [count, setC] = useState(Math.random(10));
+
 ### setState 函数式
 
     <button onClick={() => setCount(initialCount)}>Reset</button>
@@ -399,7 +404,7 @@ Note:
 
 考虑到这是一个相对常见的使用场景，很可能在未来 React 会自带一个 usePrevious Hook。
 
-# Hook 使用规则与本质
+# Hook 使用规则与本质(lifecycle)
 https://zh-hans.reactjs.org/docs/hooks-rules.html
 
 使用Hook 它们会有两个额外的规则：

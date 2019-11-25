@@ -125,6 +125,20 @@ React 会针对每个子元素 mutate销毁和重建, `<li>Duke</li> 和 <li>Vil
 
 如果 key 是一个下标，那么修改顺序时会修改当前的 key，导致非受控组件的 state（比如输入框）可能相互篡改导致无法预期的变动。
 
+## 执行但不render
+    function App(props){
+        const [c,setClick] = useState(0);
+        const [a,setA] = useState(0);
+        console.log('renderApp',a,c)
+        return (<Provider store={store}>
+            <div>
+                <h1 onClick={e=>{ setA(1) }}
+                >a: {a}; {(e=>{console.log('执行但不render');return Math.random()})()}</h1>
+                {a<5 && <Child a={1} pclick={setClick.bind(this)} /> }
+            </div>
+        </Provider>)
+    }
+
 # 权衡
 我们定期探索优化协调算法。在当前的实现中，
 1. 可以理解为一棵子树能在其`兄弟之间`移动，但不能移动到其他位置。在这种情况下，算法会重新渲染整棵子树。

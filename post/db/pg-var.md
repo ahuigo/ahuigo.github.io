@@ -246,6 +246,31 @@ SET 可以指定预定值中的一个或者多个值
 ## AUTO_INCREMENT
 Auto +1 and it must be defined as a key(primary key)
 
+### initalize value
+in mysql:
+
+    ALTER TABLE users AUTO_INCREMENT=8;
+    # if you haven't already added an id column, also add it
+    ALTER TABLE users ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT, ADD INDEX (id);
+
+in pg: using the SERIAL or BIGSERIAL :
+
+    CREATE TABLE books (
+        id              SERIAL PRIMARY KEY,
+        title           VARCHAR(100) NOT NULL,
+    );
+    ALTER TABLE test1 ADD COLUMN id SERIAL PRIMARY KEY;
+
+in pg: if you want id start from 8,Using a Custom Sequence: https://chartio.com/resources/tutorials/how-to-define-an-auto-increment-primary-key-in-postgresql/
+
+    CREATE SEQUENCE books_sequence
+        start 8 increment 2;
+
+    INSERT INTO books
+        (id, title)
+    VALUES
+        (nextval('books_sequence'), 'The Hobbit');
+
 ## BINARY(Case Sensitive)
 比较BINARY 列时将区分大小小方排序，默认不区分
 

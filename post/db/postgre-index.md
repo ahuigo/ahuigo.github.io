@@ -219,6 +219,13 @@ table 独立的unique:
     下面的查询将会用到该部分索引：
     SELECT * FROM access_log WHERE url = '/index.html' AND client_ip = inet '212.78.10.32';
 
+## autoincrement
+
+    CREATE TABLE fruits(
+        id SERIAL PRIMARY KEY,
+        name VARCHAR NOT NULL
+    );
+
 # optimize,优化
 
     explain (analyze,verbose,timing,costs,buffers) select * from t_gin1 where arr @> array[1,2];

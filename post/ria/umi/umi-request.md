@@ -1,0 +1,147 @@
+---
+title: Umi request
+date: 2019-11-13
+private: true
+---
+# Umi request
+http://blog.poetries.top/2018/09/16/ant-design-pro/#2-3-Pro-%E6%89%A9%E5%B1%95%E9%85%8D%E7%BD%AE
+步骤 是：
+1. UI 组件交互操作；
+1. 调用 model 的 effect；
+1. 调用统一管理的 service 请求函数；
+1. 使用封装的 request.js发送请求；
+1. 获取服务端返回；
+1. 然后调用reducer改变 state；
+1. 更新 model
+
+为了方便管理维护，统一的请求处理都放在 services 文件夹中，并且一般按照 model 维度进行拆分文件
+
+    services/
+    user.js
+    api.js
+    ...
+
+## action
+https://dvajs.com/guide/introduce-class.html#app-model
+
+    state: 该 Model 当前的状态。数据保存在这里，直接决定了视图层的输出
+    reducers: Action 处理器，处理同步动作，用来算出最新的 State
+    effects：Action 处理器，处理异步动作
+
+## 同步
+    // services/user.js
+    import request from '../utils/request';
+
+    export async function query() {
+        return request('/api/users');
+    }
+
+    export async function queryCurrent() {
+        return request('/api/currentUser');
+    }
+
+    // models/user.js
+    import { queryCurrent } from '../services/user';
+    ...
+    effects: {
+        *fetch({ payload }, { call, put }) {
+            ...
+            const response = yield call(queryUsers);
+            ...
+        },
+    }
+
+## 处理异步请求
+
+在处理复杂的异步请求的时候，很容易让逻辑混乱，陷入嵌套陷阱，所以 Ant Design Pro 的底层基础框架 dva使用 effect 的方式来管理同步化异步请求
+
+    effects: {
+      *fetch({ payload }, { call, put }) {
+        yield put({
+          type: 'changeLoading',
+          payload: true,
+        });
+        // 异步请求 1
+        const response = yield call(queryFakeList, payload);
+        yield put({
+          type: 'save',
+          payload: response,
+        });
+        // 异步请求 2
+        const response2 = yield call(queryFakeList2, payload);
+        yield put({
+          type: 'save2',
+          payload: response2,
+        });
+        yield put({
+          type: 'changeLoading',
+          payload: false,
+        });
+      },
+    },
+    reducers: {
+        queryList(state, action) {
+            return {
+                ...state,
+                list: action.payload,
+            };
+        },
+
+## dispatch
+    call：执行异步函数
+    put：发出一个 Action，类似于 dispatch
+
+e.g.:
+
+    dispatch({ type: 'add', payload: {name:"ahuigo" }, }).then(d=>console.log(g));
+    
+# Request api
+## post
+    return request(url, {
+        method: 'POST',
+        params: { id, status, }
+        data:{page}
+    });
+
+## raw json:
+
+    return request(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: {
+            id,
+            status,
+        }
+    });
+
+## errorhandler
+
+    //src/utils/request.ts
+    const errorHandler = async (error: { response: Response }): Response => {
+        const { response } = error;
+        if (response && response.status) {
+            // const errorText = codeMessage[response.status] || response.statusText;
+            const { status, url } = response;
+            const text = await response.text();
+            let msg = text;
+            try {
+                const res = JSON.parse(text);
+                msg = res.message || text;
+            } catch (e) {
+            }
+
+            // message.error(msg)
+            notification.error({
+                message: `请求错误 ${status}: ${url}`,
+                description: msg,
+            });
+        } else if (!response) {
+            notification.error({
+                description: '您的网络发生异常，无法连接服务器',
+                message: '网络异常',
+            });
+        }
+        return response;
+    };

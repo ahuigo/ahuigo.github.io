@@ -1,3 +1,10 @@
-    function buildName({firstName = 'Tom', lastName=''}:{firstName:string, lastName:string}={}) {
-        return firstName + ' ' + lastName;
-    }
+---
+title: ts todo
+date: 2019-11-11
+private: 
+---
+# ts todo
+    function f({ pretty: boolean })
+    function f({ pretty }: { pretty: boolean })
+    function f({ pretty = true }: { pretty?: boolean }){}
+    function f({ pretty = true }: { pretty?: boolean } = {}){}

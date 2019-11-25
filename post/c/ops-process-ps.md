@@ -95,6 +95,14 @@ mac:
 		Use 132 columns to display information.
 		If the -w option is specified more than once(-ww,ww), ps will use as many columns as necessary without regard for your window size
 
+#### get process name
+
+    NAME=`ps -q $PID -o comm=`
+
+查看挂载点：
+
+    MNTNS=`readlink /proc/$PID/ns/mnt`
+
 #### specify field
 
 	ps -o rss,vsz

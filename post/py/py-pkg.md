@@ -58,7 +58,7 @@ http://www.pypi-mirrors.org/
 
     return s.decode('utf_8') 改为return s.decode('cp936')
 
-## pip with file
+## pip with requirement
 
     $ cat requirements-dev.txt
     -r requirements-ci.txt
@@ -67,3 +67,8 @@ http://www.pypi-mirrors.org/
     ipython==5.1.0
     aiodns==1.1.1
     $ pip3 install -r requirements-dev.txt
+
+## pip with user
+使用用户身份安装
+
+    pip3 install --user -r requirements-dev.txt
