@@ -2,7 +2,7 @@
 layout: page
 title:	Sth. About Mobile Communication
 category: blog
-description:
+private:
 ---
 # Preface
 > ps: 绝大部分业务在月末是无法办理的.
