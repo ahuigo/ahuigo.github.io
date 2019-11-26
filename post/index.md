@@ -11,7 +11,6 @@
 - 2019-11-20 [2019滑雪指引](/b/life/ski) 
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
 - 2018-10-04 [webspider](/b/py/py-webspider) 
-- 2019-11-25 [Sth. About Mobile Communication](/b/life/life-mobile) 
 - 2018-09-27 [学习 docker](/b/arch/docker-) 
 - 2018-08-25 [Node 执行shell 的方法](/b/ria/node-shell) 
 - 2018-04-05 [ES6 Modudle 使用](/b/ria/js-module-es6) 
