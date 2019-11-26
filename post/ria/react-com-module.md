@@ -43,6 +43,10 @@ React 默认webpack 支持`import()`代码分割
 
 
 ## Suspense
+> https://zhuanlan.zhihu.com/p/57938605
+> 在render阶段的所有生命周期函数都应该幂等, suspense 可以有ajax副作用但是要幂等。
+Suspense提供了统一的无缝的代码分割（Code Splitting）兼异步加载方法，在v16.6.0就实现了这样的Suspense功能
+
 OtherComponent 的模块还没有被加载完成，我们可以使用加载指示器为此组件做优雅降级。这里我们使用 Suspense 组件来解决。
 
     import { Suspense, lazy } from 'react';

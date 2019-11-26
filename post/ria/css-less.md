@@ -56,6 +56,29 @@ http://lesscss.org/
       }
     }
 
+## global
+    :global(.ocssContainer) {
+        :global(.ui_column) {
+            padding-left: 0;
+        }
+    }
+
+And this is what it compiles to:
+
+    .ocssContainer .ui_column {
+        padding-left: 0;
+    }
+
+## merge 合并
+合并为`.largeImageStep1`
+
+    :global(.largeImage) {
+        &Step1{
+            margin: 20px;
+        }
+    }
+
+
 ## 函数 & 运算
 运算提供了加，减，乘，除操作；我们可以做属性值和颜色的运算，这样就可以实现属性值之间的复杂关系。LESS中的函数一一映射了JavaScript代码，如果你愿意的话可以操作属性值。
 

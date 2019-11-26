@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-09-08 [React HOC 高阶组件](/b/ria/react-com-hoc) 
 - 2019-09-09 [React diff](/b/ria/react-diff) 
 - 2018-10-10 [mac 工具集](/b/mac/mac-tool) 
 - 2018-09-27 [Postgre 的索引](/b/db/postgre-index) 
@@ -7,7 +8,7 @@
 - 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/umi-antd-pro) 
 - 2019-11-25 [js dom file](/b/ria/js-dom-file) 
 - 2019-11-25 [mac user manager](/b/mac/mac-user) 
-- 2019-10-10 [2019崇礼富龙滑雪指引](/b/life/ski) 
+- 2019-11-20 [2019滑雪指引](/b/life/ski) 
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
 - 2018-10-04 [webspider](/b/py/py-webspider) 
 - 2019-11-25 [Sth. About Mobile Communication](/b/life/life-mobile) 
@@ -38,4 +39,3 @@
 - 2018-09-28 [用BeautifulSoup 处理 html/xml](/b/py/py-html) 
 - 2018-10-04 [写npm 包](/b/ria/node-npm-pkg) 
 - 2019-09-28 [js charts](/b/ria/chart) 
-- 2018-10-04 [to png](/b/ria/chart-img) 

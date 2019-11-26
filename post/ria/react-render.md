@@ -118,6 +118,16 @@ React 分两个阶段工作：
 当组件的 props 或 state 发生变化时会触发更新。组件更新的生命周期调用顺序如下：https://zh-hans.reactjs.org/docs/react-component.html#getsnapshotbeforeupdate
 ![](/img/ria/react-lifecycle.png)
 
+
+随着getDerivedStateFromProps的推出，同时deprecate了一组生命周期API，包括(防止开发者滥用)：
+https://zhuanlan.zhihu.com/p/38030418
+
+    componentWillReceiveProps
+    componentWillMount
+    componentWillUpdate
+
+React v16.3还引入了一个新的声明周期函数getSnapshotBeforeUpdate，这函数会在render之后执行，而执行之时DOM元素还没有被更新，给了一个机会去获取DOM信息，计算得到一个snapshot，这个snapshot会作为componentDidUpdate的第三个参数传入。
+
 ### 1.getDerivedStateFromProps
 
     static getDerivedStateFromProps(nextProps, prevState)
@@ -322,91 +332,6 @@ React 只更新改变了的 DOM 节点. 那什么时候触发render 呢？
     return <h1 onClick={e=>{ setA(1) }}>
         {(e=>console.log('2!'))()}
     </h1>
-
-# Portal  
-Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。
-
-    ReactDOM.createPortal(child, container)
-
-第一个参数（child）是任何可渲染的 React 子元素，例如一个元素，字符串或 fragment。第二个参数（container）是一个 DOM 元素。
-
-## 通过 Portal 进行事件冒泡
-通过 Portal ，父Dom可以捕获到不是本Dom 的事件冒泡
-
-假设存在如下 HTML 结构：
-
-    <div id="app-root"></div>
-    <div id="modal-root"></div>
-
-在 `#app-root` 里的 Parent 组件能够捕获到未被捕获的从兄弟节点 `#modal-root` 冒泡上来的事件。
-
-    // 在 DOM 中有两个容器是兄弟级 （siblings）
-    const appRoot = document.getElementById('app-root');
-    const modalRoot = document.getElementById('modal-root');
-    
-    class Modal extends React.Component {
-      constructor(props) {
-        super(props);
-        this.el = document.createElement('div');
-      }
-    
-      componentDidMount() {
-        modalRoot.appendChild(this.el);
-      }
-    
-      componentWillUnmount() {
-        modalRoot.removeChild(this.el);
-      }
-    
-      render() {
-        return ReactDOM.createPortal(
-          this.props.children,
-          this.el,
-        );
-      }
-    }
-    
-    class Parent extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = {clicks: 0};
-        this.handleClick = this.handleClick.bind(this);
-      }
-    
-      handleClick() {
-        // 当子元素modal里的按钮被点击时触发， 即使这个按钮在 DOM 中不是直接关联的后代
-        this.setState(state => ({
-          clicks: state.clicks + 1
-        }));
-      }
-    
-      render() {
-        return (
-          <div onClick={this.handleClick}>
-            <p>Number of clicks: {this.state.clicks}</p>
-            <p>
-              Open up the browser DevTools to observe that the button is not a child of the div with the onClick handler.
-            </p>
-            <Modal>
-              <Child />
-            </Modal>
-          </div>
-        );
-      }
-    }
-    
-    function Child() {
-      // 这个按钮的点击事件会冒泡到父元素
-      // 因为这里没有定义 'onClick' 属性
-      return (
-        <div className="modal">
-          <button>Click</button>
-        </div>
-      );
-    }
-    
-    ReactDOM.render(<Parent />, appRoot);
-
 
 
 # Refer
