@@ -32,7 +32,7 @@ ref.current 指向 Com3
 
 ### 函数组件Ref
 你不能在函数组件上传递 ref 属性，因为它们没有实例,
-不过你可以通过`React.forwardRef`这样做
+不过你可以通过`React.forwardRef` wrap 一层，第二个参数传ref:
 
     import React from 'react';
 

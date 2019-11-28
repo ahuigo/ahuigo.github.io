@@ -133,19 +133,20 @@ mouseenter 与 mouseout. mouseover 类似mouseenter, 但切换item 会触发
 	target.removeEventListener('click', listener, false);
 
 ### remove all listener:
+节点替换
 
     var el = document.getElementById('el-id'),
         elClone = el.cloneNode(true);
 
     el.parentNode.replaceChild(elClone, el);
 
-or:
+利用stopPropagation
 
     window.addEventListener(type, function (event) {
         event.stopPropagation();
     }, true);
 
-最新的:
+最新的getEventListeners:
 
     getEventListeners(document);
     getEventListeners(window);

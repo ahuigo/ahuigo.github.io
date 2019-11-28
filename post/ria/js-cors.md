@@ -32,7 +32,7 @@ http://www.ruanyifeng.com/blog/2016/04/cors.html
 
 适用于Cookie 和 iframe 窗口
 
-# DOM
+# window 同源策略
 iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信。
 
     document.getElementById("myIFrame").contentWindow.document
@@ -88,6 +88,11 @@ iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信
 
 这个API为window对象新增了一个window.postMessage方法，允许跨窗口通信，不论这两个窗口是否同源。
 
+### postMessage
+
+    otherWindow.postMessage(message, targetOrigin, [transfer]);
+    otherWindow.postMessage(message, otherWindow, [transfer]);
+
 举例来说，父窗口http://aaa.com向子窗口http://bbb.com发消息，调用postMessage方法就可以了。
 
     var popup = window.open('http://bbb.com', 'title');
@@ -97,8 +102,13 @@ iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信
 postMessage方法的:
 
 1. 第一个参数是具体的信息内容，
-2. 第二个参数是接收消息的窗口的源（origin），即"协议 + 域名 + 端口"。也可以设为*，表示不限制域名，向所有窗口发送
+2. 第二个参数是接收消息的窗口的源（origin），即"协议 + 域名 + 端口"。也可以设为`*`，表示不限制域名，向所有窗口发送
 
+子窗口向父窗口传值：
+
+    window.opener.postMessage('msg','*')
+
+### receiveMessage
 父窗口和子窗口都可以通过message事件，监听对方的消息。
 
     window.addEventListener('message', function(e) {

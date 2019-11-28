@@ -121,6 +121,11 @@ CST是时区缩写，可以指下列的时区：
 
     echo 'export TZ=Asia/Shanghai' >> ~/.profile
 
+docker 设置时区
+
+    # 注意，Debian Stretch 版本后需要 rm /etc/localtime，否则时区修改可能无法生效（被替换回原值）。
+    RUN rm /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+
 # Linux date命令
 man date可以发现其参数众多。看起来有些乱，归纳一下：
 
@@ -219,7 +224,7 @@ The following optional flags may follow '%':
 	$date -s '2013-08-14 12:50:00 +8' //设置时间(rfc-2822格式) 东8区
 	$date -s 'Wed Aug 14 14:48:33 CST 2013' //设置时间(美国时间格式)
 
-# mac
+# mac date 命令
 
     The command:
 

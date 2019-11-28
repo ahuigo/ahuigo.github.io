@@ -16,6 +16,7 @@ antd pro 由umijs 这个脚手架生成， 我看重的几点：
 2. typescript(可选) https://github.com/xcatliu/typescript-tutorial
 3. antd pro 学习：https://pro.ant.design/docs/getting-started-cn
 4. antd 学习: https://ant.design/docs/react/getting-started-cn 
+5. antd plus 组件：https://antd-plus.alitajs.com/components/send-code
 
 ## antd pro 文件结构
 典型的业务代码结构：

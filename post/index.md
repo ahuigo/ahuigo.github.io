@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-10-04 [浏览器同源政策及其规避方法](/b/ria/js-cors) 
 - 2019-09-08 [React HOC 高阶组件](/b/ria/react-com-hoc) 
 - 2019-09-09 [React diff](/b/ria/react-diff) 
 - 2018-10-10 [mac 工具集](/b/mac/mac-tool) 

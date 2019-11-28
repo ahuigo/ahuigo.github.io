@@ -190,6 +190,22 @@ https://stackoverflow.com/questions/55889357/change-react-hook-state-from-parent
       }
     }
 
+### 封装useEffect
+
+    const useTitle = title=>{
+        useEffect(()=>{
+            window.document.title = title;
+        }, [title])
+    }
+
+使用：
+
+    function Com(props){
+        useTitle();
+        return <div/>
+    }
+
+
 ## context hook(避免嵌套)
 useContext 让你不使用组件嵌套就可以订阅 React 的 Context。
 

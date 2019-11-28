@@ -329,6 +329,7 @@ Note: 断言不是类型转换
 
     let c = (a as number).toExponential()
     let d = (<number>a).toExponential()
+    process.env.APP_ENV as APPENV || 'dev';
 
 在 tsx 语法（React 的 jsx 语法的 ts 版）中必须用后一种。
 

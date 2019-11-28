@@ -91,3 +91,9 @@ React 提供Error 捕获，但错误边界无法捕获以下场景中产生的�
     this.undefined.foo
 
 ### Render 不要动态生成Hoc
+render 内生成动态高阶组件，将导致高阶组件频繁生成、卸载，无法应用diff 算法
+
+## memory leak
+> Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method
+
+一般都是因为fetch ajax 请求还没有结束

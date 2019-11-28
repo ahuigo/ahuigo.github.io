@@ -283,6 +283,7 @@ button 自带`text-align:center`, `lineHeight:100%`+`vertical-align:center`
     }
 
 ## flex container align
+主要的：
 
     //parent
 	justify-content: horizonal center
@@ -291,13 +292,17 @@ button 自带`text-align:center`, `lineHeight:100%`+`vertical-align:center`
 
 居中:
 
-    <div style="display: flex;
-        width: 100%;
-        justify-content: center;
-        align-items: center; //height
-        height: 100%;
+    <div style="
         display: flex;
+        justify-content: center;
+        align-items: center; 
+        width: 100%;
+        height: 100%;
         position: fixed;
+        z-index: 9999;
+        background:rgba(128,128,128, 0.5);
+        top: 0;
+        left:0;
     "><img src="/a/img//eng/eng-tense-and-auxiliary-verbs.png" alt=""></div>
 
 ## inline align(self)

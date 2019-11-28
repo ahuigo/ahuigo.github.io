@@ -39,7 +39,11 @@ Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节�
         }
     }
 
-### 三方实现的portal close
+使用：
+
+    <BodyEnd>sth. </BodyEnd>
+
+### 第三方实现的portal+close
 Refer: https://www.npmjs.com/package/react-portal
 
     import { PortalWithState } from 'react-portal';
