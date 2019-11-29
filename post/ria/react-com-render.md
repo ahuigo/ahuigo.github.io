@@ -122,7 +122,8 @@ React 分两个阶段工作：
 随着getDerivedStateFromProps的推出，同时deprecate了一组生命周期API，包括(防止开发者滥用)：
 https://zhuanlan.zhihu.com/p/38030418
 
-    componentWillReceiveProps
+    componentWillReceiveProps (里面要写this.props=nextProps)
+        仅限你需要更新状态以响应 prop 更改（例如，重置它），你可以比较 this.props 和 nextProps 并在此方法中使用 this.setState() 执行 state 转换。
     componentWillMount
     componentWillUpdate
 

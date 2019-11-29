@@ -78,6 +78,13 @@ And this is what it compiles to:
         }
     }
 
+合并为`.large::before`:
+
+    :global(.large) {
+        &::before {
+            margin: 20px;
+        }
+    }
 
 ## 函数 & 运算
 运算提供了加，减，乘，除操作；我们可以做属性值和颜色的运算，这样就可以实现属性值之间的复杂关系。LESS中的函数一一映射了JavaScript代码，如果你愿意的话可以操作属性值。

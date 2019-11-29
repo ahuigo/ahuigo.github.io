@@ -59,6 +59,17 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
 
     JSON.stringify(data); //默认： text/plain
 
+### cors
+默认(跨域名)是不发送cookie的：
+
+    credentials: "same-origin"
+
+为了让浏览器发送包含凭据的请求（即跨域源），要:
+
+    credentials : "include"
+
+当设置成include时，服务器返回的`Access-Control-Allow-Origin` 不能为`*`
+
 ### headers
 #### x-www-urlencode
 如果想发送  application/x-www-form-urlencoded

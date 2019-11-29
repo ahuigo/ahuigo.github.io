@@ -28,10 +28,36 @@ React.cloneElement() 几乎等同于：
 
     <element.type {...element.props} {...props}>{children}</element.type>
 
-# 定制一个rc-notification
+
+# 定制一个addCom
 message.success('msg')
 
-核心源码：
+    function success(msg){ 
+        const Com = (props)=>{
+            return <div>{props.msg}</div>
+        }
+        AddCom.addCom(Com, {msg})
+    }
+
+    class AddCom {
+        static addCom(Com, props={}) {
+            const div = document.createElement('div');
+            document.body.appendChild(div);
+            div.onclick = (e)=>{
+                ReactDOM.unmountComponentAtNode(div);
+                div.parentNode.removeChild(div);
+            }
+            // onClick是多余的
+            ReactDOM.render(<div onClick={e => {
+                ReactDOM.unmountComponentAtNode(div);
+                div.parentNode.removeChild(div);
+            }}>
+                <Com {...props}/>
+            </div>, div);
+        }
+    }
+
+参考核心源码：
 https://github.com/react-component/notification/blob/master/src/Notification.jsx
 
     Notification.newInstance = function newNotificationInstance(properties, callback) {

@@ -53,6 +53,8 @@ https://dvajs.com/guide/introduce-class.html#app-model
 
 ## 处理异步请求
 
+        yield call(User.setCookie, arg1, arg2)
+
 在处理复杂的异步请求的时候，很容易让逻辑混乱，陷入嵌套陷阱，所以 Ant Design Pro 的底层基础框架 dva使用 effect 的方式来管理同步化异步请求
 
     effects: {
