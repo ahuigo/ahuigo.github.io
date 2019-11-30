@@ -14,6 +14,16 @@ getattr(foo, 'bar')()
 locals()['bar']()
 globals()['bar']()
 
+## exec func by name
+
+    locals()["myfunction"]()
+    globals()["myfunction"]()
+
+or 
+
+    import foo
+    getattr(foo, 'bar')()
+
 ## access var accross file
 settings.py
 
