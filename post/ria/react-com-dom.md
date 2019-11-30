@@ -36,26 +36,31 @@ message.success('msg')
         const Com = (props)=>{
             return <div>{props.msg}</div>
         }
-        AddCom.addCom(Com, {msg})
+        addCom(Com, {msg})
     }
 
-    class AddCom {
-        static addCom(Com, props={}) {
-            const div = document.createElement('div');
-            document.body.appendChild(div);
-            div.onclick = (e)=>{
-                ReactDOM.unmountComponentAtNode(div);
-                div.parentNode.removeChild(div);
-            }
-            // onClick是多余的
-            ReactDOM.render(<div onClick={e => {
-                ReactDOM.unmountComponentAtNode(div);
-                div.parentNode.removeChild(div);
-            }}>
-                <Com {...props}/>
-            </div>, div);
+    function addCom(Com, props = {}) {
+        const div = document.createElement('div');
+        document.body.appendChild(div);
+        div.onclick = (e) => {
+            ReactDOM.unmountComponentAtNode(div);
+            div.parentNode.removeChild(div);
         }
+        let dom = Com;
+        if (typeof Com === 'function') {
+            dom = <div onClick={e => {
+                ReactDOM.unmountComponentAtNode(div);
+                div.parentNode.removeChild(div);
+            }}>;
+            <Com {...props} />
+            </div>
+        }
+        ReactDOM.render(dom, div);
     }
+
+参考https://www.npmjs.com/package/rc-notification
+
+
 
 参考核心源码：
 https://github.com/react-component/notification/blob/master/src/Notification.jsx

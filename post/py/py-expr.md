@@ -1,25 +1,15 @@
 ---
-title: Python 语法
+title: Python 的语法
 date: 2018-03-01
 ---
-# compare
-```s
->>> 1<3>=3>1==1<100
-True
-```
+# 多条件compare
+多条件比较
 
-# exec
-## exec func by name
+    >>> 5<i<100
+    >>> 1 < 3 >= 3 > 1==1 <100
+    True
 
-    locals()["myfunction"]()
-    globals()["myfunction"]()
-
-or 
-
-    import foo
-    getattr(foo, 'bar')()
-
-# Condition & Loop
+# 条件和循环
 
 ## try finnaly
 
@@ -56,9 +46,11 @@ or
 
 	x=10;
 	if 1<=x<=5:
-		print x
-	elif x==6: print x*x
-	else: print x*x*x
+		print(x)
+	elif x==6:
+        print x*x
+	else: 
+        print(x*x*x)
 
 if `[]` and `None`
 
