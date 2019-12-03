@@ -14,7 +14,6 @@
 - 2018-10-10 [mac 工具集](/b/mac/mac-tool) 
 - 2012-07-08 [GMT,UTC,DST,CST 各种时间标准](/b/c/shell-time) 
 - 2018-10-04 [deny ngx_http_access_module](/b/nginx/nginx-location) 
-- 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/umi-antd-pro) 
 - 2019-11-25 [js dom file](/b/ria/js-dom-file) 
 - 2019-11-25 [mac user manager](/b/mac/mac-user) 
 - 2019-11-20 [2019滑雪指引](/b/life/ski) 
@@ -39,3 +38,4 @@
 - 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
 - 2019-10-03 [Python 的类型注解](/b/py/py-type) 
 - 2018-03-01 [Python 的语法](/b/py/py-expr) 
+- 2018-09-28 [py-async-iteratortools](/b/py/py-async-iteratortools) 
