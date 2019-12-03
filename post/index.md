@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-12-01 [2019 年崇礼富龙滑雪](/b/life/ski) 
 - 2018-09-28 [py-func](/b/py/py-func) 
 - 2018-09-27 [Postgre 的索引](/b/db/pg-index) 
 - 2019-06-20 [PG help](/b/db/pg-help) 
@@ -16,7 +17,6 @@
 - 2018-10-04 [deny ngx_http_access_module](/b/nginx/nginx-location) 
 - 2019-11-25 [js dom file](/b/ria/js-dom-file) 
 - 2019-11-25 [mac user manager](/b/mac/mac-user) 
-- 2019-11-20 [2019滑雪指引](/b/life/ski) 
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
 - 2018-10-04 [webspider](/b/py/py-webspider) 
 - 2018-09-27 [学习 docker](/b/arch/docker-) 
