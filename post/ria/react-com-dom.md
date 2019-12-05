@@ -60,9 +60,20 @@ message.success('msg')
 
 参考https://www.npmjs.com/package/rc-notification
 
-
+    notification.notice({
+        content: <span>closable</span>,
+        duration: null,
+        onClose() {
+            console.log('closable close');
+        },
+        closable: true,
+        onClick() {
+            console.log('clicked!!!');
+        },
+    });
 
 参考核心源码：
+https://github.com/ant-design/ant-design/blob/master/components/message/index.tsx
 https://github.com/react-component/notification/blob/master/src/Notification.jsx
 
     Notification.newInstance = function newNotificationInstance(properties, callback) {
@@ -96,3 +107,30 @@ https://github.com/react-component/notification/blob/master/src/Notification.jsx
       }
       ReactDOM.render(<Notification {...props} ref={ref} />, div);
     };
+
+# portal
+https://github.com/ahuigo/react-portal?organization=ahuigo&organization=ahuigo
+
+
+    <Portal node={document && document.getElementById('san-francisco')}>
+        This text is portaled into San Francisco!
+    </Portal>
+
+自定义onClick onClose ....
+
+    <PortalWithState closeOnOutsideClick closeOnEsc>
+      {({ openPortal, closePortal, isOpen, portal }) => (
+        <React.Fragment>
+          <button onClick={openPortal}>
+            Open Portal
+          </button>
+          {portal(
+            <p>
+              This is more advanced Portal. It handles its own state.{' '}
+              <button onClick={closePortal}>Close me!</button>, hit ESC or
+              click outside of me.
+            </p>
+          )}
+        </React.Fragment>
+      )}
+    </PortalWithState>
