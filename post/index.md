@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-12-05 [code split](/b/webpack/12.webpack-codesplit-and-lazy) 
 - 2019-12-01 [2019 年崇礼富龙滑雪](/b/life/ski) 
 - 2018-09-27 [Postgre User and Authentication](/b/db/pg-ddl-user) 
 - 2018-09-27 [Postgre 安装\配置\管理](/b/db/pg-ddl-install) 
@@ -38,4 +39,3 @@
 - 2019-10-03 [Nexus5 刷机](/b/phone/nexus5) 
 - 2019-10-02 [Go Sync.Pool](/b/go/go-pool) 
 - 2018-09-28 [用BeautifulSoup 处理 html/xml](/b/py/py-html) 
-- 2018-10-04 [写npm 包](/b/ria/node-npm-pkg) 
