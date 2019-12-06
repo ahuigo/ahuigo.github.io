@@ -37,6 +37,11 @@ scope 认证：
     npm install <PACKAGE_NAME>
     npm install <PACKAGE_NAME> --registry https://artifactory.momenta.works/artifactory/api/npm/npm/
 
+### with branch
+
+    npm install webpack@beta
+    npm install webpack/webpack#<tagname/branchname>
+
 # 写npm 包
 1. 生成包信息package.json
     npm init

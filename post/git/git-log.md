@@ -218,7 +218,12 @@ git reglog 就可以找到丢失的commit 引用记录
         c19cfa7 HEAD@{0}: commit: A0
         64c86f6 HEAD@{1}: commit: A1
         3edf2f0 HEAD@{2}: commit: A0
+
+然后通过这两个命令恢复：
+
 	git branch recovery-branch HEAD@{2}; //HEAD{2} 是引用序，跟HEAD^^/HEAD~2 不是同一个commit
+    # 或者
+    git reset --hard HEAD@{2}
 
 如果 commit 丢失的原因并没有记录在 reflog 中: 可以通过删除 recover-branch 和 reflog 来模拟这种情况。
 这样最新的 commit A1 不会被任何东西引用到：
