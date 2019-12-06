@@ -60,6 +60,7 @@ get datetime(timestamp)
 ## delta
 
    select date '2001-09-28' + integer '7'
+   select created_at + interval '1' day * 7 as deadline
    select created_at + interval '1' day * day_field as deadline
    select created_at + interval '1' hour * hour_field as deadline
 

@@ -4,55 +4,72 @@ date: 2019-11-13
 private: true
 ---
 # Js clipboard image
+```html
 <canvas style="border:1px solid grey;" id="mycanvas">
 <script>
 
-/**
- * This handler retrieves the images from the clipboard as a blob and returns it in a callback.
- * 
- * @see http://ourcodeworld.com/articles/read/491/how-to-retrieve-images-from-the-clipboard-with-javascript-in-the-browser
- * @param pasteEvent 
- * @param callback 
- */
-function retrieveImageFromClipboardAsBlob(pasteEvent, callback){
-    var items = pasteEvent.clipboardData.items;
+window.addEventListener("paste", (e)=>{
+    var items = e.clipboardData.items;
     for (var item of items) {
         if (item.type.indexOf("image") >=0){
             var blob = item.getAsFile();
-            callback(blob);  
-        }
-    }
-}
+            console.log(blob, URL.createObjectURL(blob));
 
-window.addEventListener('paste', function(e){
-    // Handle the event
-    retrieveImageFromClipboardAsBlob(e, function(imageBlob){
-        // If there's an image, display it in the canvas
-        if(imageBlob){
+            /**
+             * load image blob
+             */
             var canvas = document.getElementById("mycanvas");
             var ctx = canvas.getContext('2d');
-            
-            // Create an image to render the blob on the canvas
             var img = new Image();
-
-            // Once the image loads, render the img on the canvas
             img.onload = function(){
-                // Update dimensions of the canvas with the dimensions of the image
                 canvas.width = this.width;
                 canvas.height = this.height;
-
-                // Draw the image
                 ctx.drawImage(img, 0, 0);
             };
 
-            // Crossbrowser support for URL
-            var URLObj = window.URL || window.webkitURL;
-
-            // Creates a DOMString containing a URL representing the object given in the parameter
-            // namely the original Blob
-            img.src = URLObj.createObjectURL(imageBlob);
+            img.src = URL.createObjectURL(blob);
         }
-    });
-});
+    }
+}, false);
+
 
 </script>
+```
+
+## zclipboard 封装
+```js
+class Zclipboard{
+    static retrieveImageFromClipboardAsBlob(pasteEvent, callback){
+        var items = pasteEvent.clipboardData.items;
+        for (var item of items) {
+            if (item.type.indexOf("image") >=0){
+                var blob = item.getAsFile();
+                this.blobAsBase64Url(blob).then(url=>callback(url,blob));
+            }
+        }
+    }
+    static blobAsBase64Url(blob){
+        return new Promise((resolve, reject)=>{
+            var reader = new FileReader();
+            reader.readAsDataURL(blob); 
+            reader.onloadend = function() {
+                var base64data = reader.result;                
+                resolve(base64data);
+            }
+        })
+    }
+
+    static handlePasteImage(callback){
+        return window.addEventListener("paste", (e)=>{
+            this.retrieveImageFromClipboardAsBlob(e, (url,blob)=>{
+                callback(url,blob); //ele.src=url
+            });
+        }, false);
+    }
+    static removePasteListener(listener){
+        window.removeEventListener('paste', listener)
+    }
+}
+
+export default Zclipboard;
+```

@@ -93,7 +93,22 @@ title: git submodule
     git submodule foreach 'git push'
 
 ## update
+三选1：
+
+    # --remote 相当于fetch+check branch
+    git submodule update --recursive --remote
+    # 相当于fetch
+    git submodule update --recursive
+    # 相当于pull?
+    git pull --recurse-submodules
+    # 相当于pull?
     git submodule foreach git pull
+    # 相当于pull?
+    git submodule foreach --recursive git pull
+
+if it's the first time you checkout a repo you need to use --init first:
+
+    git submodule update --init --recursive
 
 ## log
 提交之后，你也可以运行 git log -p 查看这个信息。
