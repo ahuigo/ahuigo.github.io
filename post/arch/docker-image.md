@@ -151,7 +151,7 @@ docker import理解为将外部文件复制进来形成只有一层文件系统�
 ARG/ENV 都可以在build 阶段定义和使用
 ARG/ENV 都可以将环境变量传给容器
 
-#### build arg
+#### arg
 只有一种用法， `ARG name Lilei`是错误用法
 
     ARG <name>[=<default value>]
@@ -242,10 +242,22 @@ Is the same thing as doing:
     CID=$(docker run $ID pwd); ID=$(docker commit $CID)
 
 ### RUN VS CMD VS ENTRYPOINT
-CMD 只有一个，可能被docker run 覆盖
 1. RUN executes command(s) in a new layer and *creates a new image*. E.g., it is often used for installing software packages.
 2. CMD sets default command and/or parameters, which **can be overwritten from command line** when docker container runs.
 3. ENTRYPOINT: configures a container that will run as an executable.(/bin/sh)
+
+e.g.
+CMD 可能被docker run 覆盖
+
+    CMD ["executable","param1","param2"] (exec form, preferred)
+    CMD ["param1","param2"] (sets additional default parameters for ENTRYPOINT in exec form)
+    CMD command param1 param2 (shell form)
+
+ENTRYPOINT 只有一个, 一定会执行，不像CMD那样被忽略
+ENTRYPOINT has two forms:
+
+    ENTRYPOINT ["executable", "param1", "param2"] (exec form, preferred)
+    ENTRYPOINT command param1 param2 (shell form)
 
 ### 开始build
 

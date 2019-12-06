@@ -58,24 +58,40 @@ redirect:
 	history.forward() // history.go(1)
 
 ## cookie
+setcookie:
 
 	document.cookie='DEBUG=;expires=Mon, 05 Jul 2000 00:00:00 GMT'
 	document.cookie = 'a=1;expires='+d.toGMTString()
     document.cookie = cookieName +"=" + cookieValue + ";expires=" + myDate 
                   + ";domain=.example.com;path=/";
-	function getCookie(k){
-		c=document.cookie;
-		start = c.indexOf(k+'=');
-		v = '';
-		if(start>-1){
-			end = c.indexOf(';', start);
-			if(end <0) end = c.length;
-			v = c.substr(start, end)
-		}
-		return v;
-	}
+
+    function setCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+getcookie:
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
 
 清理时，必须带path=/
+
+    function eraseCookie(name) {   
+        document.cookie = name+'=; Max-Age=-99999999;';  
+    }
 
     function deleteAllCookies() {
         var cookies = document.cookie.split(";");

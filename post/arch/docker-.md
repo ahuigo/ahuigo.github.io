@@ -53,7 +53,7 @@ daemon:
 ### run with cmd
 run 可以覆盖dockerfile 的CMD命令
 
-    docker run -d -p 8080:8080 puckel/docker-airflow webserver
+    docker run --rm -d -p 8080:8080 puckel/docker-airflow webserver
     docker run -d -p 8080:8080 puckel/docker-airflow cd tmp123
 
 ### exited?
@@ -148,6 +148,7 @@ https://superuser.com/questions/1302921/tell-docker-to-use-the-dns-server-in-the
 
 ### user
     docker exec -u root -ti my_airflow_container bash
+    docker run -u root -ti my_airflow_container bash
 
 ### 伪终端
 
