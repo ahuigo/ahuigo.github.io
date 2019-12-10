@@ -123,6 +123,17 @@ docker import理解为将外部文件复制进来形成只有一层文件系统�
     FROM    centos:6.7
     MAINTAINER      Fisher "fisher@sudops.com"
 
+### COPY and WORKDIR
+WORKDIR 相当于cd
+
+    COPY . /app
+    WORKDIR /app
+
+COPY 与linux copy 是一样的
+
+    # 错误用法：COPY package.json /app
+    COPY package.json /app/
+
 ### build options
     --cpu-shares :设置 cpu 使用权重；
     --cpu-period :限制 CPU CFS周期；

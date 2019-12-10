@@ -189,7 +189,12 @@ https://superuser.com/questions/1302921/tell-docker-to-use-the-dns-server-in-the
     $ docker run -p 80:80 --name mynginx -v $HOME/www:/www -v $HOME/conf/nginx.conf:/etc/nginx/nginx.conf -d nginx  
     $ docker inspect dockerid
 
-如果创建一个匿名的映射
+宿主目录必须是绝对路径！
+
+    -v $HOME/conf:/conf
+    -v $(pwd)/nginx.conf:/conf
+
+如果创建一个匿名的映射目录
 
     -v /www
         可能遇到到host 机上的 "Mountpoint": "/var/lib/docker/volumes/www/_data",

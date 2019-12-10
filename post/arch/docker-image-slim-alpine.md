@@ -6,6 +6,12 @@ private: true
 # Docker slim vs alpine
 
 ## Alpine
-alpine 装上bash
+dockerfile
+
+    From alpine:latest
+    WORKDIR /app/
+    RUN apk add --no-cache bash && mkdir tmp && echo yxh > tmp/a.txt && cat tmp/a.txt
+
+### alpine 装上bash
 
     RUN apk add --no-cache bash

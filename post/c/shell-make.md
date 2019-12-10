@@ -7,6 +7,22 @@ private:
 ## Specify Makefile
     -f makefile2
 
+## variable
+    x := foo
+    y := $(x) bar
+    x := later
+
+    main:
+        echo $(x)
+
+### variable in shell
+需要一个`$$`转义：
+
+    main:
+        echo $$PATH
+
+> 注意：shell 之间是不同的进程
+
 ## argv
     $ make test FLAG=debug
 
