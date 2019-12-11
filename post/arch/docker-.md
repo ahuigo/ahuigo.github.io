@@ -89,7 +89,7 @@ remove all images
     docker rmi $(docker images -q) --force
 
 #### Unable to remove filesystem
-If you get such error:
+If you encounter this problem
 
     Unable to remove filesystem: /var/lib/docker/container/11667ef16239.../
 

@@ -24,6 +24,12 @@ Mac OSX Image 不可以修改路径：
     docker search httpd
     docker run httpd
 
+### check image exists
+
+    if [[ "$(docker images -q myimage:mytag 2> /dev/null)" == "" ]]; then
+    # do something
+    fi
+
 ## list image layer
 
     $ docker history python:3.7
@@ -123,16 +129,28 @@ docker import理解为将外部文件复制进来形成只有一层文件系统�
     FROM    centos:6.7
     MAINTAINER      Fisher "fisher@sudops.com"
 
+### USER
+    USER root
+
 ### COPY and WORKDIR
 WORKDIR 相当于cd
 
     COPY . /app
     WORKDIR /app
 
-COPY 与linux copy 是一样的
+COPY 中文件夹要带`/`
 
-    # 错误用法：COPY package.json /app
+    # app是文件：
+    COPY package.json /app
+    # app是目录：
     COPY package.json /app/
+
+COPY 中文件夹, 不带文件名本身
+
+    # copy -r /app/dist/ .
+    COPY --from=build-dist /app/dist .
+    # copy -r /app/dist .
+    COPY --from=build-dist /app/dist ./dist
 
 ### build options
     --cpu-shares :设置 cpu 使用权重；
