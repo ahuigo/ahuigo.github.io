@@ -12,8 +12,12 @@ private: true
         component: './Welcome',
     },
 
-# pathinfo 
+## redirect
 
+    import router from 'umi/router';
+    <a onClick={() => router.push('/profileadvanced?id=' + item.id)}> 查看详情</a>,
+
+# pathinfo 
 
     // path?id=152
     function Welcome(props){

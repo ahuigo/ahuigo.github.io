@@ -56,6 +56,15 @@ http://lesscss.org/
       }
     }
 
+### child
+
+    .panel {
+        ...
+        >.control {
+            ...
+        }
+    }
+
 ## global
     :global(.ocssContainer) {
         :global(.ui_column) {

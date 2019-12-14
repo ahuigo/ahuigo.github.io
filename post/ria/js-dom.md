@@ -74,6 +74,7 @@ setcookie:
         }
         document.cookie = name + "=" + (value || "")  + expires + "; path=/";
     }
+
 getcookie:
 
     function getCookie(name) {
@@ -91,6 +92,7 @@ getcookie:
 
     function eraseCookie(name) {   
         document.cookie = name+'=; Max-Age=-99999999;';  
+        document.cookie = name+'=; Max-Age=-99999999; Domain=.ahuigo.com';  
     }
 
     function deleteAllCookies() {

@@ -39,13 +39,40 @@ https://bizcharts.net/products/bizCharts/docs/qa 设置padding 解决留白
     };
 
 ## Axis
+Axis 是不分纵横的。
+
+    <Axis name="year" title/>
+    <Axis name="value" title/>
+    <Geom type="areaStack" position="year*value" color="country" />
+
+
+### Axis label
 
     <Axis name="value" label={
-        { formatter: val => { return (val / 10000).toFixed(1) + "k"; } }
+        { 
+            formatter: val => { return (val / 10000).toFixed(1) + "k"; },
+            offset: 12,
+        }
     } />
 
-先map 后fold
+### Axis title
+必须和geom 中的一样命名country ：
 
+    const scale = {
+        country: { alias: '里程' },
+    }
+
+    <Axis name="country" title />
+    <Geom type="interval" position="country*population" />
+
+
+
+## 分组fold
+https://bizcharts.net/products/bizCharts/demo/detail?id=g2-clustered-stacked&selectedKey=%E6%A6%82%E8%A7%88
+https://codepen.io/ahuigo/pen/jOEMBed?&editable=true
+
+    const ds = new DataSet();
+    const dv = ds.createView().source(data);
     dv.transform({
         type: 'map',
         callback(row) {
@@ -53,13 +80,44 @@ https://bizcharts.net/products/bizCharts/docs/qa 设置padding 解决留白
             row.ave_queue_wait_time /= 3600;
             return row;
         }
-    });
-    dv.transform({
+    }).transform({
         type: 'fold',
         fields: ['ave_execution_time', 'ave_queue_wait_time'],
-        key: 'type',
+        key: 'time',
         value: 'value',
     })
+
+
+### 根据值分类
+像这样：
+https://bizcharts.net/products/bizCharts/demo/detail?id=area-stacked&selectedKey=%E7%82%B9%E5%9B%BE
+https://codepen.io/ahuigo/pen/YzPGZmr
+
+    const data = [
+      {
+        country: "Asia",
+        year: "1750",
+        value: 502
+      },
+      {
+        country: "Asia",
+        year: "1800",
+        value: 635
+      },
+      {
+        country: "Africa",
+        year: "1750",
+        value: 106
+      },
+      {
+        country: "Africa",
+        year: "1800",
+        value: 107
+      },
+    ]
+    <Geom type="line" position="year*value" color="country" />
+
+
 
 ## Tooltip
 https://www.yuque.com/antv/g2-docs/api-tooltip#tg6xkz

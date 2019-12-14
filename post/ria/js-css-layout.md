@@ -186,6 +186,11 @@ http://www.ruanyifeng.com/blog/2018/10/flexbox-form.html 参考
 
 > flex container 会限制item: max-width
 
+### 布局
+container:
+
+    display: inline-flex;
+
 ### flex: grow shrink basis
 https://codepen.io/ahuigo/pen/VJedwm
 
