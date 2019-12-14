@@ -5,5 +5,6 @@ private: true
 ---
 # Pg display
 
-    \x vertical display
     \h help
+    \x vertical display
+    \c show connected to database and user 

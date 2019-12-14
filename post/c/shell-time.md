@@ -110,21 +110,31 @@ CST是时区缩写，可以指下列的时区：
 	Send packet CA->Netherlands->CA .... 150,000,000 ns  = 150 ms
 
 # 时区设定：
-全局
+## 全局
 
     echo 'Asia/Beijing' | sudo tee /etc/timezone
     # 或者
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
     dpkg-reconfigure -f noninteractive tzdata
 
-局部
-
-    echo 'export TZ=Asia/Shanghai' >> ~/.profile
-
 docker 设置时区
 
     # 注意，Debian Stretch 版本后需要 rm /etc/localtime，否则时区修改可能无法生效（被替换回原值）。
-    RUN rm /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+    RUN rm /etc/localtime &&\
+    echo "Asia/Shanghai" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata
+
+docker alpine 还要安装tzdata
+
+    apk add --no-cache tzdata
+
+## 局部
+
+    echo 'export TZ=Asia/Shanghai' >> ~/.profile
+
+golang:
+
+    os.Setenv("TZ", "Africa/Cairo")
 
 # Linux date命令
 man date可以发现其参数众多。看起来有些乱，归纳一下：

@@ -24,6 +24,12 @@ Mac OSX Image 不可以修改路径：
     docker search httpd
     docker run httpd
 
+### check image exists
+
+    if [[ "$(docker images -q myimage:mytag 2> /dev/null)" == "" ]]; then
+    # do something
+    fi
+
 ## list image layer
 
     $ docker history python:3.7
@@ -123,6 +129,29 @@ docker import理解为将外部文件复制进来形成只有一层文件系统�
     FROM    centos:6.7
     MAINTAINER      Fisher "fisher@sudops.com"
 
+### USER
+    USER root
+
+### COPY and WORKDIR
+WORKDIR 相当于cd
+
+    COPY . /app
+    WORKDIR /app
+
+COPY 中文件夹要带`/`
+
+    # app是文件：
+    COPY package.json /app
+    # app是目录：
+    COPY package.json /app/
+
+COPY 中文件夹, 不带文件名本身
+
+    # copy -r /app/dist/ .
+    COPY --from=build-dist /app/dist .
+    # copy -r /app/dist .
+    COPY --from=build-dist /app/dist ./dist
+
 ### build options
     --cpu-shares :设置 cpu 使用权重；
     --cpu-period :限制 CPU CFS周期；
@@ -151,7 +180,7 @@ docker import理解为将外部文件复制进来形成只有一层文件系统�
 ARG/ENV 都可以在build 阶段定义和使用
 ARG/ENV 都可以将环境变量传给容器
 
-#### build arg
+#### arg
 只有一种用法， `ARG name Lilei`是错误用法
 
     ARG <name>[=<default value>]
@@ -242,10 +271,22 @@ Is the same thing as doing:
     CID=$(docker run $ID pwd); ID=$(docker commit $CID)
 
 ### RUN VS CMD VS ENTRYPOINT
-CMD 只有一个，可能被docker run 覆盖
 1. RUN executes command(s) in a new layer and *creates a new image*. E.g., it is often used for installing software packages.
 2. CMD sets default command and/or parameters, which **can be overwritten from command line** when docker container runs.
 3. ENTRYPOINT: configures a container that will run as an executable.(/bin/sh)
+
+e.g.
+CMD 可能被docker run 覆盖
+
+    CMD ["executable","param1","param2"] (exec form, preferred)
+    CMD ["param1","param2"] (sets additional default parameters for ENTRYPOINT in exec form)
+    CMD command param1 param2 (shell form)
+
+ENTRYPOINT 只有一个, 一定会执行，不像CMD那样被忽略
+ENTRYPOINT has two forms:
+
+    ENTRYPOINT ["executable", "param1", "param2"] (exec form, preferred)
+    ENTRYPOINT command param1 param2 (shell form)
 
 ### 开始build
 

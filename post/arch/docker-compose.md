@@ -33,7 +33,7 @@ compose 有很多docker 自己的选项
     --service-ports 配置服务端口并映射到本地主机。
     -T 不分配伪 tty，意味着依赖 tty 的指令将无法运行。
 
-## 配置
+## service 配置
 当前目录下配置docker-compose.yml 配置
 
     version: '1.1'
@@ -64,6 +64,47 @@ compose 有很多docker 自己的选项
             - POSTGRES_USER=airflow
         ports:
             - "8080:8080"
+
+### build 参数
+
+    # 指定含有dockerfile 的目录
+    build: ../
+
+build参数可以指定dockerfile、构建文件工作区context路径
+  
+    version: '3.5'
+
+    services:
+      ant-design-pro_dev:
+        ports:
+          - 8000:8000
+        build:
+          context: ../
+          dockerfile: Dockerfile.dev
+        image: "image1"
+        container_name: 'ant-design-pro_dev'
+        volumes:
+          - ../src:/usr/src/app/src
+          - ../config:/usr/src/app/config
+          - ../mock:/usr/src/app/mock
+
+
+#### rebuild image
+默认image 存在就不构建`--no-build`
+
+    docker-compose up -d --no-build
+
+除非：
+
+    docker-compose up --build
+
+### image
+    services:
+      ant-design-pro_dev:
+        image: "image1"
+
+### container_name
+    container_name: 'ant-design-pro_dev'
 
 ## 命令
 example
@@ -100,6 +141,12 @@ compose 有很多命令，
     # create services
     create             Create services
     build              Build or rebuild services
+
+### up and down
+services 启动的container 都是daemon, 注意daemon 之间的端口号不要冲突. (比如nginx/redis/web抢端口)
+
+    docker-compose up -d
+    docker-compose down
 
 
 # 网络

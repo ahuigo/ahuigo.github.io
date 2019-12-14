@@ -95,7 +95,8 @@ Via FormData and file:
         document.body.removeChild(link);
     }
 
-vs:
+### blob as blob:url
+比如给链接增加下载功能
 
     link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
 
