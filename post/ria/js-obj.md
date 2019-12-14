@@ -64,11 +64,11 @@ list forEach
 		console.log(key, obj[key])
 	})
 
-keys / for-in base / getOwnPropertyNames all
+keys / for-in base proto / getOwnPropertyNames enumerable
 
     var o = Object.create({base:0})
     Object.defineProperty(o, 'yes', {enumerable: true})
-    Object.defineProperty(o, 'not', {enumerable: false})
+    Object.defineProperty(o, 'not', {enumerable: false, value:2})
 
     console.log(Object.keys(o))
     // [ 'yes' ]
