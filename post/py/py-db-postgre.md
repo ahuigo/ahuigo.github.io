@@ -104,6 +104,10 @@ table name 这些则不支持，应该使用:
     if row is None:
     if rows == []:
 
+#### fetch var
+    cursor.execute("select name from prices where code=%s order by trade_date desc limit 1", [code])
+    return cursor.fetchone()
+
 ## ddl
 ### databases
     \l
