@@ -39,6 +39,7 @@ If your component is a child of <Route /> component, I mean if it is something l
 ## Link
 you can use <Link /> component
 
+    import { Link } from "react-router-dom";
     <Link to='/path' > some stuff </Link>
 
 # Router

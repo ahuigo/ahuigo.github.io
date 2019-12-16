@@ -4,6 +4,11 @@ date: 2019-11-01
 private: 
 ---
 # yarn
+    # 国内源tyarn
+    npm i yarn tyarn -g
+
+## yarn bin
+    echo 'export PATH="$PATH:`yarn global bin`"' >> ~/.profile
 
 ## yarn create
 类似npx： yarn create运行时会自动安装或者更新需要的包，同时在它的名字前加上`create-`前缀。

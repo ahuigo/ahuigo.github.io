@@ -1,7 +1,8 @@
 # AHUIGO 的笔记
-- 2019-12-15 [antv and bizcharts](/b/ria/chart-antv) 
+- 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/0.umi-share) 
+- 2019-11-25 [antv and bizcharts](/b/ria/chart-antv) 
 - 2019-12-06 [code split](/b/webpack/12.webpack-codesplit-and-lazy) 
-- 2019-12-06 [git 使用之日志、数据恢复](/b/git/git-log) 
+- 2019-12-05 [git 使用之日志、数据恢复](/b/git/git-log) 
 - 2019-12-01 [2019 年崇礼富龙滑雪](/b/life/ski) 
 - 2018-09-27 [Postgre User and Authentication](/b/db/pg-ddl-user) 
 - 2018-09-27 [Postgre 安装\配置\管理](/b/db/pg-ddl-install) 
@@ -38,4 +39,3 @@
 - 2018-09-28 [py-async-iteratortools](/b/py/py-async-iteratortools) 
 - 2019-10-30 [Python 的math 语法](/b/py/math/py-math) 
 - 2018-10-04 [Data tool](/b/py/math/py-math-tool) 
-- 2019-10-03 [Nexus5 刷机](/b/phone/nexus5) 
