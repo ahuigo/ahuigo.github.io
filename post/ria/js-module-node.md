@@ -141,6 +141,7 @@ hello module: hello.js
         hello: hello,
         greet: greet
     };
+    //或者
     exports.hello = hello;
     exports.greet = greet;
 
@@ -148,9 +149,9 @@ hello module: hello.js
 
     // 引入./hello.js模块,
     var s = 'Hello';
-    var greet = require('./hello');
+    var greet = require('./hello').greet;
     greet('Michael'); // Hello, Michael!
 
 如果没有`.`或者`绝对路劲`, Node会依次在内置模块、全局模块和当前模块下查找hello.js, 但是不会在当前目录查找
 
-    var greet = require('hello');
+    var greet = require('hello').greet;
