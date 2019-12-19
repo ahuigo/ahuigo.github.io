@@ -15,30 +15,7 @@ https://blog.bitsrc.io/5-ways-to-style-react-components-in-2019-30f1ccc2b5b
     const sassRegex = /\.(scss|sass)$/;
     const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-# 1. CSS Stylesheet(global)
-css stylesheet:
-
-    .DottedBox {
-      margin: 40px;
-      border: 5px dotted pink;
-    }
-
-    .DottedBox_content {
-      font-size: 15px;
-      text-align: center;
-    }
-
-e.g.
-
-    import 'mapbox-gl/dist/mapbox-gl.css'
-    import './DottedBox.css';
-
-    const DottedBox = () => (
-    <div className="DottedBox">
-        <p className="DottedBox_content">Get started with CSS styling</p>
-    </div>
-    );
-
+# style.module.css
 因为react 内置了css-loader
 
     npm install css-loader --save-dev
@@ -52,6 +29,10 @@ e.g.
         ]
       }
     };
+
+使用：
+
+    import styles from "./style.module.css";
 
 # 2. inline styling object
 
@@ -70,7 +51,7 @@ e.g.
       </div>
     );
 
-# 4. make style(material.io)
+# 3. make style(material.io)
     const classes = makeStyles({
         root: {
             width: 500,
@@ -78,60 +59,51 @@ e.g.
         },
     });
 
-# 5. jss （css in js）
-> https://segmentfault.com/q/1010000012687223
+# less
+config/webpack.config.js 找到sassRegex 后添加
 
-Material-UI 中默认支持的jss
+    const lessRegex = /\.less$/;
+    const lessModuleRegex = /\.module\.less$/;
+    .....
+    // Less 解析配置
+    {
+        test: lessRegex,
+        exclude: lessModuleRegex,
+        use: getStyleLoaders(
+            {
+                importLoaders: 2,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
+            },
+            'less-loader'
+        ),
+        sideEffects: true,
+    },
+    {
+        test: lessModuleRegex,
+        use: getStyleLoaders(
+            {
+                importLoaders: 2,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
+                modules: true,
+                getLocalIdent: getCSSModuleLocalIdent,
+            },
+            'less-loader'
+        )
+    },
 
-    import { withStyles } from 'material-ui/styles';
-    const styles = { root: { width: '100%' } };
-    export default withStyles(styles)(MyComponent);
-
-withStyles(stypes) 步骤的完整代码是：withStyles(stypes)(Component) ：
-
-    return (Component) => (props) => (<Component {...props} classes={classes} />);
-    <div classNames={`this.props.classes.root`}>
-
-## element inside
-Rerfer to:
-https://stackoverflow.com/questions/50368417/styling-element-inside-class-material-ui
-
-    shopForm: {
-        textAlign : 'center',
-        '& input' :{
-            width: '60%',
-            color:'grey'
-        },
-    }
-
-so you have to find which element you want to style first and then give style to parent's class.
-
-    <Grid item lg={4} className={classes.shopForm} >
-        <Field name="name" type="text" label="name">
-
-## 伪类支持
-
-    /* Button.jsx */
-    var styles = {
-      button: {
-        backgroundColor: 'black',
-
-        ':hover': {
-          backgroundColor: 'grey'
-        }
-      }
-    };
 
 # .scss
 https://facebook.github.io/create-react-app/docs/adding-a-sass-stylesheet
 
-webpack:
+    npm run eject 
+
+config/webpack.config.js
 
     module: {
         loaders: [
-        {test: /\.scss$/, loaders: ["style", "css", "sass"]},
-        {test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")},
-        {test   : /\.woff|\.woff2|\.svg|.eot|\.ttf|\.png/, loader : 'url?prefix=font/&limit=10000&name=/assets/fonts/[name].[ext]'
+            {test: /\.scss$/, loaders: ["style", "css", "sass"]},
+            {test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")},
+            {test   : /\.woff|\.woff2|\.svg|.eot|\.ttf|\.png/, loader : 'url?prefix=font/&limit=10000&name=/assets/fonts/[name].[ext]'
         }
     ]
 
