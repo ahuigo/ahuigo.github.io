@@ -12,6 +12,8 @@ private: true
     module.exports = {
         ...fabric.prettier,
         "tabWidth": 4,
+        tailingComma: 'none',
+
     };
 
 
@@ -21,3 +23,6 @@ private: true
             "json",
             "markdown",
     ]
+
+## format
+  tailingComma: 'all',
