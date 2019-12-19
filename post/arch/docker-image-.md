@@ -174,11 +174,10 @@ COPY 中文件夹, 不带文件名本身
     --network: 默认 default。在构建期间设置RUN指令的网络模式
 
 ### ARG and ENV
-2. ARG for building your Docker image. `docker build --build-arg <varname>=<value>`
-1. ENV is for future running containers. `docker run -e APP_ENV=dev`
-
-ARG/ENV 都可以在build 阶段定义和使用
-ARG/ENV 都可以将环境变量传给容器
+不同点：
+1. ARG/ENV 都可以在build 阶段定义和使用
+2. arg 可以在build时改变 `docker build --build-arg <varname>=<value>`
+2. 只有ENV 才将环境变量传给容器, 也可用run时改变 `docker run -e APP_ENV=dev`
 
 #### arg
 只有一种用法， `ARG name Lilei`是错误用法
@@ -192,6 +191,12 @@ ARG/ENV 都可以将环境变量传给容器
     ARG name=who
     RUN echo "name: $name"
     RUN echo "name: ${name}"
+
+ARG 改变ENV
+
+    ARG arg1=arg1
+    ENV env1=${arg1} env2=env2
+    ENV env3=$arg1
 
 #### ENV
 两种用法
