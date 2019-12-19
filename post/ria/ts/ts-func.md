@@ -82,6 +82,20 @@ private:
     }
     let tomcat = buildName({lastName:'Cat'});
 
+或者：
+
+    function goto(point2D: {x: number, y: number}) {
+        // Imagine some code that might break
+        // if you pass in an object
+        // with more items than desired
+    }
+
+不是这样, 会有error
+
+    function goto({x: number, y: number}) {
+        ....
+    }
+
 ## 重载
 为了能够精确的表达，输入为数字的时候，输出也应该为数字，输入为字符串的时候，输出也应该为字符串。
 

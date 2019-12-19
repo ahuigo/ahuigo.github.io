@@ -60,6 +60,11 @@ private:
 
 上例中，我们使用了两个类型参数，其中要求 T 继承 U，这样就保证了 U 上不会出现 T 中不存在的字段
 
+## 泛型函数
+Foo 组件需要两个参数
+
+  export const Foo: React.FC<{ age: number; name: string }> = ({age:number, name:string})
+
 ## 泛型接口
 用含有泛型的接口来定义函数的形状：
 
