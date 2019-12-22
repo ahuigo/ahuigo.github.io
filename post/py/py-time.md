@@ -243,7 +243,10 @@ https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
     # 精确到us
     (datetime.now()-d).total_seconds() 
     # 精确到s, 是除去天之后余秒
-    (datetime.now()-d).seconds 
+    diff.seconds 
+    # 总天数
+    diff.days
+    
 
 compare
 

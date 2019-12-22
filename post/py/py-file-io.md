@@ -10,10 +10,13 @@ date: 2018-09-28
 # flush buffer
 开启buffer 后，默认是换行才flush, print 调用的就是sys.stdout
 
+    # mac测试后：不一定有效
     PYTHONUNBUFFERED=0 python3 <<<'import sys,time; sys.stdout.write("sys");time.sleep(10)'
     PYTHONUNBUFFERED=0 python3 <<<'import sys,time; sys.stdout.write("sys\n");time.sleep(10)'
     PYTHONUNBUFFERED=0 python3 <<<'import sys,time; print("print",end="");time.sleep(10)'
+    # 有效
     python3 -u <<<'import sys,time; sys.stdout.write("sys");time.sleep(10)'
+    python3 -u test.py
 
 也可以定向到别的地方：
 
@@ -34,8 +37,9 @@ python [完全关闭buffer](http://jaseywang.me/2015/04/01/stdio-%E7%9A%84-buffe
 
 1. sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 2. 直接定向到stderr 
-3. 直接脚本的时候加上 -u 参数。但是需要注意下，xreadlines(), readlines() 包含一个内部 buffer，不受 -u 影响，因此如果通过 stdin 来遍历会出现问题
-4. 将其 stream 关联到 pseudo terminal(pty) 上，script 可以做这事情的: `script -q -c "command1" /dev/null | command2`
+3. 直接脚本的时候加上 -u 参数。`python -u tool/bench.py`
+   1. 但是需要注意下，xreadlines(), readlines() 包含一个内部 buffer，不受 -u 影响，因此如果通过 stdin 来遍历会出现问题
+4. 将其 stream 关联到 pseudo terminal(pty) 上，script 命令可以做这事情的: `script -q -c "command1" /dev/null | command2`
 或者通过 socat 这个工具实现，
 
 

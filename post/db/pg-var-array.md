@@ -41,16 +41,14 @@ select first phone number(不是从0开始)
     where phone[1]='(408)-589-58423'
 
 ### array.include
+1.利用ANY
 
     WHERE '(408)-589-5555' = ANY (phones);
+    WHERE phone = ANY (phones);
 
-### array in
-利用交集：
+2.利用交集：
 
     SELECT ARRAY[1,4,3] && ARRAY[2,1] -- true
-
-所以array in 的写法
-
     where (phones && ARRAY['1234','1235'])
 
 ## modify array

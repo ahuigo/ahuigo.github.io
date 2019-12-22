@@ -74,6 +74,10 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
     }
 
+### 常量联合类型
+    type t1= 'number' | 'float' | 'int' | 'ordinal' | 'time';
+    var name:t1 = 'ordinal' as 'number' | 'float' | 'int' | 'ordinal' | 'time'
+
 # 对象类型（Object types）。
     Array<string> or string[]
     enum Choose { Wife = 1, Mother = 2} // 选择 妻子 还是 妈妈
@@ -86,6 +90,10 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 ### 数组泛型（Array Generic） 
 
     let fibonacci: Array<number> = [1, 1, 2, 3, 5];
+
+???
+
+    let fibonacci: Array<number|string> = ['1', 1, 2, 3, 5];
 
 ### 接口数组
 

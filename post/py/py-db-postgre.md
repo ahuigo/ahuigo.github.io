@@ -76,6 +76,15 @@ table name 这些则不支持，应该使用:
     from psycopg2 import sql
     cur.execute( sql.SQL("insert into {} values (%s, %s)") .format(sql.Identifier('my_table')), [10, 20])
 
+### where 数据类型
+postgre 能自动处理Array/Datetime
+
+        cursor.execute( 
+            "select * from prices where code = ANY (%s) and time=%s",
+            [codes, datetime.now],
+        )
+        cursor.query
+
 ### select fetch
 
 #### cur.query
@@ -85,8 +94,9 @@ table name 这些则不支持，应该使用:
 
 #### fetch iter
 
-    cur.execute("SELECT id, name, address, salary from COMPANY")
-    for row in cur: print(row)
+    cursor.execute("SELECT id, name, address, salary from COMPANY")
+    for row in cursor:
+        print(row)
 
 #### fetchall
 

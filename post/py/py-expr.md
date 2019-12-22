@@ -243,7 +243,7 @@ Better: break else
 				print('found, break else')
                 break
         else:
-            return -1
+            return 'not found'
         return i
 
     for i in range(1):

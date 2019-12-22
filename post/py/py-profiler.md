@@ -56,6 +56,18 @@ py:
     p.print_stats(4)    # 打印出前4个
 
 ### for file
+prime.py
+
+    import time
+    def s(n=1): time.sleep(n)
+    def s1(): s(1)
+    def s2(): s(2)
+    def f():
+        s(3)
+        s1()
+
+    f()
+
 cProfile 执行整个脚本:
 
     python -m cProfile -o out.pstats prime.py arg1 arg2
@@ -63,14 +75,22 @@ cProfile 执行整个脚本:
     python -m cProfile -o out.pstats $(which py.test)
 
 可用以下脚本分析：
-```
+
     import pstats
     p = pstats.Stats('out.pstats')
     p.strip_dirs()
-    #p.sort_stats('cumtime')
-    p.sort_stats('time') # 基于对time排序
+    p.sort_stats('cumtime')
+    #p.sort_stats('time') # 基于对time排序
     p.print_stats(50)
-```
+
+结果：
+
+            self               total
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    4.007    4.007 a.py:8(f)
+        2    0.000    0.000    4.007    2.004 a.py:3(s)
+        2    4.007    2.004    4.007    2.004 {built-in method time.sleep}
+        1    0.000    0.000    1.003    1.003 a.py:6(s1)
 
 还可以使用一些图形化工具，比如 gprof2dot 来可视化分析 cProfile 的诊断结果: 火焰图,
 用dot 生成调用结构图(循环调用这种最麻烦了)
