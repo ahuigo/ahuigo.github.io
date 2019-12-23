@@ -15,7 +15,11 @@ https://blog.bitsrc.io/5-ways-to-style-react-components-in-2019-30f1ccc2b5b
     const sassRegex = /\.(scss|sass)$/;
     const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-# style.module.css
+# 0.global css
+
+    import 'xxx.css';
+
+# 1.style.module.css
 因为react 内置了css-loader
 
     npm install css-loader --save-dev
