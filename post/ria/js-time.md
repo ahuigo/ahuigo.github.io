@@ -88,7 +88,7 @@ Then you can clear it like so:
 	.getMilliseconds()	返回 Date 对象的毫秒(0 ~ 999)。getUTCMilliseconds()
 
 	//unixstimestamp in miliseconds
-	.valueOf()
+    +date === d.valueOf()
 	.getTime()	返回 1970 年 1 月 1 日至今的毫秒数。
 	Date.parse("Jul 8, 2005 0:0:32"); //返回指定时间的毫秒数
         Date.parse('1970-01-01 08:01:00') === 60*1000
