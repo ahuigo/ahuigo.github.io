@@ -73,11 +73,9 @@ raw string
 
 ## format()
 ### value type
-```
-'{:s}'.format('str')
-'{:d}'.format(123)
-'{:f}'.format(123.0)
-```
+    '{:s}'.format('str')
+    '{:d}'.format(123)
+    '{:f}'.format(123.0)
 
 ### value conversion(str & repr)
 ```
@@ -281,7 +279,35 @@ e.g
     #!/usr/bin/env python3
     # -*- coding: utf-8 -*-
 
-### raw string
+### binary/hex binascii
+bin to Hexadecimal hex(b2a)
+
+    >>> binascii.b2a_hex(b'01')
+    b'3031'
+    >>> binascii.a2b_hex(b'3031')
+    b'01'
+
+bin to binary literal
+
+    >>> 0b11
+    3
+    >>> bin(255)
+    '0b11111111'
+    >>> list(map(bin, b'\x01\x02\x10')) 
+    ['0b1', '0b10', '0b10000']
+
+binary literal to number:
+
+    >>> int('1111',2) 
+    15
+
+#### char to hex literals
+
+    >>> hex(ord('0'))
+    '0x30'
+    >>> map(hex, map(ord,'abc'))
+
+### raw string(regex)
 string literals: r'...', r'''...''', r"...", r"""...""" are all literal strings for regex
 
     >>> r'a\n\t'

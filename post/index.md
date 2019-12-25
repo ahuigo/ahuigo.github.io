@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2017-08-09 [Python 字符处理](/b/py/py-str) 
 - 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/0.umi-share) 
 - 2019-11-25 [antv and bizcharts](/b/ria/chart-antv) 
 - 2019-12-06 [code split](/b/webpack/12.webpack-codesplit-and-lazy) 
@@ -38,4 +39,3 @@
 - 2018-03-01 [Python 的语法](/b/py/py-expr) 
 - 2018-09-28 [py-async-iteratortools](/b/py/py-async-iteratortools) 
 - 2019-10-30 [Python 的math 语法](/b/py/math/py-math) 
-- 2018-10-04 [Data tool](/b/py/math/py-math-tool) 
