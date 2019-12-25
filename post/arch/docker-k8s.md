@@ -11,10 +11,10 @@ private:
     1. Master 上运行着多个进程，包括面向用户的 API 服务
     2. 负责维护集群状态的 Controller Manager
     3. 负责调度任务的 Scheduler 等。
-2. Node: 最小硬件节点, 提供 CPU、内存和存储资源的节点。
+2. Node: 最小硬件节点, 提供 CPU、内存和存储资源的节点。(相当于虚拟机吧)
     1. Node是k8s中最小的计算硬件单元，它类似于传统集群中单台机器的概念，是对硬件物理资源的一层抽象，它可以是真实机房的物理机器，又或者是云平台上的ECS，甚至可以是边缘计算的一个终端。
     1. 每个 node 上运行着维护 node 状态并和 master 通信的 kubelet，以及实现集群网络服务的 kube-proxy。
-3. pod
+3. pod: 类似docker-compose 
    1. Kubernetes 中部署的最小单位是 pod， 一个 pod 中可以包含一个或多个 Docker 容器. 除非紧密耦合通常一个 pod 中只有一个容器
    2. docker-compose中的多个containers 放到一个pod中
 
@@ -55,23 +55,35 @@ Minikube 启动时会自动配置 kubectl，把它指向 Minikube 提供的 Kube
     NAME       STATUS    AGE       VERSION
     minikube   Ready     1h        v1.10.0
 
-# 
-## 创建一个叫 pod.yml 的定义文件：
-这里定义了一个叫 k8s-demo 的 Pod，使用我们刚才构建的 k8s-demo:0.1 镜像。这个文件也告诉 Kubernetes 容器内的进程会监听 80 端口。然后把它跑起来：
+# 部署一个单实例服务
+在与 Docker 结合使用时，一个 pod 中可以包含一个或多个 Docker 容器(但除了有紧密耦合的情况下，通常一个 pod 中只有一个容器，这样方便不同的服务各自独立地扩展)
+
+Minikube 自带了 Docker 引擎，所以我们需要重新配置客户端，让 docker 命令行与 Minikube 中的 Docker 进程通讯：
+
+    $ eval $(minikube docker-env)
+
+在运行上面的命令后，再运行 `docker image ls` 时只能看到一些 Minikube 自带的镜像(docker客户端不再访问本机的`/var/../docker.sock`)
+
+我们在minikube 中重新构建一个image
+
+    $ docker build -t k8s-demo:0.1 .
+
+然后创建一个叫 pod.yml 的定义文件(跟docker-compose差不多)：
 
     apiVersion: v1
     kind: Pod
     metadata:
-    name: k8s-demo
+      name: k8s-demo
     spec:
-    containers:
+      containers:
         - name: k8s-demo
-        image: k8s-demo:0.1
-        ports:
+          image: k8s-demo:0.1
+          ports:
             - containerPort: 80
 
-## 运行pod
-    $ kubectl create -f pod.yml
+这里定义了一个叫 k8s-demo 的 Pod，使用我们刚才构建的 k8s-demo:0.1 镜像。这个文件也告诉 Kubernetes 容器内的进程会监听 80 端口。然后把它跑起来：
+
+    $ kubectl create -f pod.ymj
     pod "k8s-demo" created
 
 kubectl 把这个文件提交给 Kubernetes API 服务，然后 Kubernetes Master 会按照要求把 Pod 分配到 node 上。用下面的命令可以看到这个新建的 Pod：
@@ -80,7 +92,195 @@ kubectl 把这个文件提交给 Kubernetes API 服务，然后 Kubernetes Maste
     NAME       READY     STATUS    RESTARTS   AGE
     k8s-demo   1/1       Running   0          5s
 
-因为我们的镜像在本地，并且这个服务也很简单，所以运行 kubectl get pods 的时候 STATUS 已经是 running。要是使用远程镜像（比如 Docker Hub 上的镜像），你看到的状态可能不是 Running，就需要再等待一下。
+这个pod 都运行在一个内网，我们无法从外部直接访问。要把服务暴露出来，我们需要创建一个 Service。
+Service 的作用有点像建立了一个`反向代理和负载均衡器`，负责把请求分发给后面的 pod。
+
+创建一个 Service 的定义文件 svc.yml：
+
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: k8s-demo-svc
+      labels:
+        app: k8s-demo
+    spec:
+      type: NodePort
+      ports:
+        - port: 80
+          nodePort: 30050
+      selector:
+        app: k8s-demo
+
+这个 service 会把容器的 80 端口从 node 的 30050 端口暴露出来。
+注意文件最后两行的 selector 部分，这里决定了请求会被发送给集群里的哪些 pod。这里的定义是所有包含「app: k8s-demo」这个标签的 pod。然而我们之前部署的 pod 并没有设置标签：
+
+    $ kubectl describe pods | grep Labels
+    Labels:		<none>
+
+> name 要唯一，labels 不唯一
+所以要先更新一下 pod.yml，把标签加上（注意在 metadata: 下增加了 labels 部分）：
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: k8s-demo
+      labels:
+        app: k8s-demo
+    spec:
+      containers:
+        - name: k8s-demo
+          image: k8s-demo:0.1
+          ports:
+            - containerPort: 80
+
+然后更新 pod 并确认成功新增了标签：
+
+    $ kubectl apply -f pod.yml
+    pod "k8s-demo" configured
+    $ kubectl describe pods | grep Labels
+    Labels:		app=k8s-demo
+
+然后就可以创建这个 service 了：
+
+    $ kubectl create -f svc.yml
+    service "k8s-demo-svc" created
+
+用下面的命令可以得到暴露出来的 URL，在浏览器里访问，就能看到我们之前创建的网页了。
+
+    $ minikube service k8s-demo-svc --url
+    http://192.168.64.4:30050
+
+# 横向扩展、滚动更新、版本回滚
+在这一节，我们来实验一下在一个高可用服务的生产环境会常用到的一些操作。在继续之前，先把刚才部署的 pod 删除（但是保留 service，下面还会用到）：
+
+    $ kubectl delete pod k8s-demo
+    pod "k8s-demo" deleted
+
+在正式环境中我们需要让一个服务不受单个节点故障的影响，并且还要根据负载变化动态调整节点数量，所以不可能像上面一样逐个管理 pod。Kubernetes 的用户通常是用 Deployment 来管理服务的。一个 deployment 可以创建指定数量的 pod 部署到各个 node 上，并可完成更新、回滚等操作。
+
+## deployment.yml
+
+首先我们创建一个定义文件 deployment.yml：
+
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: k8s-demo-deployment
+    spec:
+      replicas: 10
+      template:
+        metadata:
+          labels:
+            app: k8s-demo
+        spec:
+          containers:
+            - name: k8s-demo-pod
+              image: k8s-demo:0.1
+              ports:
+                - containerPort: 80
+
+注意开始的 
+1. apiVersion 和之前不一样，因为 Deployment API 没有包含在 v1 里，
+2. `replicas: 10` 指定了这个 deployment 要有 10 个 pod，后面的部分和之前的 pod 定义类似。
+
+## create 运行
+提交这个文件，创建一个 deployment：
+
+    $ kubectl create -f deployment.yml
+    deployment "k8s-demo-deployment" created
+
+用下面的命令可以看到这个 deployment 的副本集（replica set），有 10 个 pod 在运行。
+
+    $ kubectl get rs
+    NAME                             DESIRED   CURRENT   READY     AGE
+    k8s-demo-deployment-774878f86f   10        10        10        19s
+
+## apply更新
+假设我们对项目做了一些改动，要发布一个新版本。
+
+    $ echo '<h1>Hello Kubernetes!</h1>' > html/index.html
+    $ docker build -t k8s-demo:0.2 .
+
+然后更新 deployment.yml：
+
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: k8s-demo-deployment
+    spec:
+      replicas: 10
+      minReadySeconds: 10
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
+      template:
+        metadata:
+          labels:
+            app: k8s-demo
+        spec:
+          containers:
+            - name: k8s-demo-pod
+              image: k8s-demo:0.2
+              ports:
+                - containerPort: 80
+这里有几个改动，
+1. 第一个是更新了镜像版本号 image: k8s-demo:0.2，
+3. 更新策略`minReadySeconds: 10` 指在更新了一个 pod 后，需要在它进入正常状态后 10 秒再更新下一个 pod；
+2. `strategy` 部分。
+    1. `maxUnavailable: 1` 指同时处于不可用状态的 pod 不能超过一个；
+    2. `maxSurge: 1` 指多余的 pod 不能超过一个。这样 Kubernetes 就会逐个替换 service 后面的 pod。
+    
+### apply 更新
+运行下面的命令开始更新：
+
+    $ kubectl apply -f deployment.yml --record=true
+    deployment "k8s-demo-deployment" configured
+
+这里的 `--record=true` 让 Kubernetes 把这行命令记到发布历史中备查。这时可以马上运行下面的命令查看各个 pod 的状态：
+
+    $ kubectl get pods
+    NAME                                   READY  STATUS        ...   AGE
+    k8s-demo-deployment-774878f86f-5wnf4   1/1    Running       ...   7m
+    k8s-demo-deployment-774878f86f-6kgjp   0/1    Terminating   ...   7m
+    k8s-demo-deployment-774878f86f-8wpd8   1/1    Running       ...   7m
+    k8s-demo-deployment-774878f86f-hpmc5   1/1    Running       ...   7m
+    k8s-demo-deployment-774878f86f-rd5xw   1/1    Running       ...   7m
+    k8s-demo-deployment-774878f86f-wsztw   1/1    Running       ...   7m
+    k8s-demo-deployment-86dbd79ff6-7xcxg   1/1    Running       ...   14s
+
+## 状态记录rollout status/history
+下面的命令可以显示发布的实时状态：
+
+    $ kubectl rollout status deployment k8s-demo-deployment
+    Waiting for rollout to finish: 1 old replicas are pending termination...
+    Waiting for rollout to finish: 1 old replicas are pending termination...
+    deployment "k8s-demo-deployment" successfully rolled out
+
+由于我输入得比较晚，发布已经快要结束，所以只有三行输出。下面的命令可以查看发布历史，因为第二次发布使用了 `--record=true` 所以可以看到用于发布的命令。
+
+    $ kubectl rollout history deployment k8s-demo-deployment
+    deployments "k8s-demo-deployment"
+    REVISION	CHANGE-CAUSE
+    1		<none>
+    2		kubectl apply --filename=deploy.yml --record=true
+
+## 回滚rollout undo
+设新版发布后，我们发现有严重的 bug，需要马上回滚到上个版本，可以用这个很简单的操作：
+
+    $ kubectl rollout undo deployment k8s-demo-deployment --to-revision=1
+    deployment "k8s-demo-deployment" rolled back
+
+Kubernetes 会按照既定的策略替换各个 pod，与发布新版本类似，只是这次是用老版本替换新版本：
+
+    $ kubectl rollout status deployment k8s-demo-deployment
+    Waiting for rollout to finish: 6 out of 10 new replicas have been updated...
+    Waiting for rollout to finish: 8 out of 10 new replicas have been updated...
+    Waiting for rollout to finish: 1 old replicas are pending termination...
+    deployment "k8s-demo-deployment" successfully rolled out
+
+在回滚结束之后，刷新浏览器就可以确认网页内容又改回了「Hello Docker!」。
 
 # 查看资源状态
 
