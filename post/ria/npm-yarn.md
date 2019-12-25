@@ -20,6 +20,8 @@ private:
     -P, --peer                          save package to your `peerDependencies`
     -O, --optional                      save package to your `optionalDependencies`
 
+optionalDependencies 一般是最不需要安装的，如puppeteer
+
 #### peerDependencies
 假设packageA 依赖packageB, 则有：
 

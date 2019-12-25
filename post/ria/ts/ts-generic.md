@@ -63,7 +63,31 @@ private:
 ## 泛型函数
 Foo 组件需要两个参数
 
-  export const Foo: React.FC<{ age: number; name: string }> = ({age:number, name:string})
+    const TimelineChart: React.FC<TimelineChartProps> = props => {
+        return null
+    }
+    export default (): React.ReactNode => {
+        return null
+    }
+
+
+@types/react/index.d.ts 中的原型:
+
+    export = React;
+    export as namespace React;
+
+    declare namespace React {
+        type FC<P = {}> = FunctionComponent<P>;
+
+        interface FunctionComponent<P = {}> {
+            (props: PropsWithChildren<P>, context?: any): ReactElement | null; //第一个参数props, 第2个是context
+            propTypes?: WeakValidationMap<P>;
+            contextTypes?: ValidationMap<any>;
+            defaultProps?: Partial<P>;
+            displayName?: string;
+        }
+        type PropsWithChildren<P> = P & { children?: ReactNode };
+    }
 
 ## 泛型接口
 用含有泛型的接口来定义函数的形状：

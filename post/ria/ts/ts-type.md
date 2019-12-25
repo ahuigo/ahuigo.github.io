@@ -74,8 +74,15 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
     }
 
+### 对象联合
+
+    type PropsWithChildren<P> = P & { children?: ReactNode };
+
 ### 常量联合类型
     type t1= 'number' | 'float' | 'int' | 'ordinal' | 'time';
+
+使用：
+
     var name:t1 = 'ordinal' as 'number' | 'float' | 'int' | 'ordinal' | 'time'
 
 # 对象类型（Object types）。
