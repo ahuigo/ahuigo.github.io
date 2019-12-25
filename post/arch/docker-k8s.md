@@ -3,26 +3,59 @@ title: kubectl
 date: 2019-05-16
 private:
 ---
-# Kubernetes 简介
-Docker 和 Kubernetes 从听过到略懂：给程序员的旋风教程
-https://1byte.io/developer-guide-to-docker-and-kubernetes/
+# Kubernetes 构架
+参考：[Docker 和 Kubernetes 从听过到略懂：给程序员的旋风教程](https://1byte.io/developer-guide-to-docker-and-kubernetes/)
+
 典型的 Kubernetes 集群包含一个 master 和很多 node。
 1. Master 是控制集群的中心
-    1. Master 上运行着多个进程，包括面向用户的 API 服务、负责维护集群状态的 Controller Manager、负责调度任务的 Scheduler 等。
+    1. Master 上运行着多个进程，包括面向用户的 API 服务
+    2. 负责维护集群状态的 Controller Manager
+    3. 负责调度任务的 Scheduler 等。
 2. Node: 最小硬件节点, 提供 CPU、内存和存储资源的节点。
     1. Node是k8s中最小的计算硬件单元，它类似于传统集群中单台机器的概念，是对硬件物理资源的一层抽象，它可以是真实机房的物理机器，又或者是云平台上的ECS，甚至可以是边缘计算的一个终端。
     1. 每个 node 上运行着维护 node 状态并和 master 通信的 kubelet，以及实现集群网络服务的 kube-proxy。
 3. pod
    1. Kubernetes 中部署的最小单位是 pod， 一个 pod 中可以包含一个或多个 Docker 容器. 除非紧密耦合通常一个 pod 中只有一个容器
+   2. docker-compose中的多个containers 放到一个pod中
 
 Kubernetes 是不依赖于 Docker 的，完全可以使用其他的容器引擎在 Kubernetes 管理的集群中替代 Docker
 
+# 安装
+
+    # 命令行客户端
+    $ brew install kubectl
+
+    # k8s server：
+    $ brew cask install minikube
+
+    # 给 Minikube 使用的虚拟化引擎 hyperkit
+    $ brew install docker-machine-driver-hyperkit 
+
+Minikube 默认的虚拟化引擎是 VirtualBox，而 hyperkit 是一个更轻量、性能更好的替代。
+它需要以 root 权限运行，所以安装完要把所有者改为 root:wheel，并把 setuid 权限打开：
+
+    $ sudo chown root:wheel /usr/local/opt/docker-machine-driver-hyperkit/bin/docker-machine-driver-hyperkit
+    $ sudo chmod u+s /usr/local/opt/docker-machine-driver-hyperkit/bin/docker-machine-driver-hyperkit
+
+然后就可以启动 Minikube 了：
+
+    $ minikube start --vm-driver hyperkit
+
+如果你在第一次启动 Minikube 时遇到错误或被中断，可以尝试运行 `minikube delete` 把集群删除，重新来过。
+
+Minikube 启动时会自动配置 kubectl，把它指向 Minikube 提供的 Kubernetes API 服务。可以用下面的命令确认：
+
+    $ kubectl config current-context
+    minikube
+
+## 查看nodes
 作为一个开发和测试的环境，Minikube 会建立一个有一个 node 的集群，用下面的命令可以看到：
 
     $ kubectl get nodes
     NAME       STATUS    AGE       VERSION
     minikube   Ready     1h        v1.10.0
 
+# 
 ## 创建一个叫 pod.yml 的定义文件：
 这里定义了一个叫 k8s-demo 的 Pod，使用我们刚才构建的 k8s-demo:0.1 镜像。这个文件也告诉 Kubernetes 容器内的进程会监听 80 端口。然后把它跑起来：
 
@@ -48,6 +81,7 @@ kubectl 把这个文件提交给 Kubernetes API 服务，然后 Kubernetes Maste
     k8s-demo   1/1       Running   0          5s
 
 因为我们的镜像在本地，并且这个服务也很简单，所以运行 kubectl get pods 的时候 STATUS 已经是 running。要是使用远程镜像（比如 Docker Hub 上的镜像），你看到的状态可能不是 Running，就需要再等待一下。
+
 # 查看资源状态
 
     # 使用 kubectl get <resource> 查看集群资源的状态信息
@@ -82,6 +116,48 @@ kubectl 把这个文件提交给 Kubernetes API 服务，然后 Kubernetes Maste
 
     kubectl logs <pod-name> -n <namespace>
     kubectl logs -f node-name -n dev-namespace
+
+
+# 部署、删除、重启资源
+
+## 部署
+将您的配置更改推送到集群。
+
+    这个命令将会把推送的版本与以前的版本进行比较，并应用您所做的更改，但是不会覆盖任何你没有指定的自动更改的属性。
+    kubectl apply -f <config-file>
+
+## edit
+https://k8smeetup.github.io/docs/concepts/cluster-administration/manage-deployment/#kubectl-apply
+或者，您也可以使用 kubectl edit 更新资源：
+
+    $ kubectl edit deployment/my-nginx
+
+这相当于首先 get 资源，在文本编辑器中编辑它，然后用更新的版本 apply 资源：
+
+    $ kubectl get deployment my-nginx -o yaml > /tmp/nginx.yaml
+    $ vi /tmp/nginx.yaml
+    # 编辑并保存文件
+    $ kubectl apply -f /tmp/nginx.yaml
+    deployment "my-nginx" configured
+    $ rm /tmp/nginx.yaml
+ 
+## 删除
+### 通过部署文件删除
+kubectl delete -f <config-fiel>
+ 
+ 
+### 重启pod, 直接删除pod，会自动重启
+    kubectl delete pod <podname> -n <namespace>
+
+进入容器
+
+    #类似于 docker的命令
+    # 如果一个 pod 内有多个 container， 加上 -c <conatainer-name>
+    kubectl exec -ti <pod-name> bash/sh
+ 
+### 复制文件或者文件夹
+
+    kubectl cp <source-file-path> <pod-name>:<target-path> -n <namespace>
 
 # dns
 > 参考：CoreDNS系列1：Kubernetes内部域名解析原理、弊端及优化方式
@@ -139,44 +215,3 @@ curl b 请求时：
 
 ### ClusterFirstWithHostNet
     在某些场景下，我们的 POD 是用 HOST 模式启动的（HOST模式，是共享宿主机网络的），一旦用 HOST 模式，表示这个 POD 中的所有容器，都要使用宿主机的 /etc/resolv.conf 配置进行DNS查询，但如果你想使用了 HOST 模式，还继续使用 Kubernetes 的DNS服务，那就将 dnsPolicy 设置为 ClusterFirstWithHostNet。k
-
-# 删除、重启、部署资源
-
-## 部署
-将您的配置更改推送到集群。
-
-    这个命令将会把推送的版本与以前的版本进行比较，并应用您所做的更改，但是不会覆盖任何你没有指定的自动更改的属性。
-    kubectl apply -f <config-file>
-
-## edit
-https://k8smeetup.github.io/docs/concepts/cluster-administration/manage-deployment/#kubectl-apply
-或者，您也可以使用 kubectl edit 更新资源：
-
-    $ kubectl edit deployment/my-nginx
-
-这相当于首先 get 资源，在文本编辑器中编辑它，然后用更新的版本 apply 资源：
-
-    $ kubectl get deployment my-nginx -o yaml > /tmp/nginx.yaml
-    $ vi /tmp/nginx.yaml
-    # 编辑并保存文件
-    $ kubectl apply -f /tmp/nginx.yaml
-    deployment "my-nginx" configured
-    $ rm /tmp/nginx.yaml
- 
-## 删除
-### 通过部署文件删除
-kubectl delete -f <config-fiel>
- 
- 
-### 重启pod, 直接删除pod，会自动重启
-    kubectl delete pod <podname> -n <namespace>
-
-进入容器
-
-    #类似于 docker的命令
-    # 如果一个 pod 内有多个 container， 加上 -c <conatainer-name>
-    kubectl exec -ti <pod-name> bash/sh
- 
-### 复制文件或者文件夹
-
-    kubectl cp <source-file-path> <pod-name>:<target-path> -n <namespace>

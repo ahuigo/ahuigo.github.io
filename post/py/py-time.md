@@ -263,6 +263,9 @@ compare
     'Thu Sep 22 2016 17:50:56 GMT+0800 (CST)'
 
 # timezone
+    import datetime
+    datetime.datetime.now(datetime.timezone.utc).isoformat()
+    '2019-12-25T04:13:39.774413+00:00'
 
 ## create timeinfo
 一个datetime类型有一个时区属性tzinfo

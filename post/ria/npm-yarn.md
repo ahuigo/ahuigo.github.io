@@ -11,7 +11,40 @@ private:
     echo 'export PATH="$PATH:`yarn global bin`"' >> ~/.profile
 
 ## dependencies
-    yarn --ignore-optional
+
+    yarn [install] --ignore-optional
+
+### dependencies 种类
+
+    -D, --dev                           save package to your `devDependencies`
+    -P, --peer                          save package to your `peerDependencies`
+    -O, --optional                      save package to your `optionalDependencies`
+
+#### peerDependencies
+假设packageA 依赖packageB, 则有：
+
+    |- node_modules
+        |- PackageA
+            |- node_modules
+                |- PackageB
+
+
+如果在项目中直接这样写会有问题:
+
+    var packageA = require('PackageA')
+    var packageB = require('PackageB')//找不到
+
+这时可以在packageA 中的package.json中注明：
+
+    "peerDependencies": {
+        "PackageB": "1.0.0"
+    }
+
+表示packageA 向npm/node 表示谁引入我的话，就必须在相同目录中引入packageB
+
+    |- node_modules
+        |- PackageA
+        |- PackageB
 
 ## yarn create
 类似npx： yarn create运行时会自动安装或者更新需要的包，同时在它的名字前加上`create-`前缀。
