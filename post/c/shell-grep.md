@@ -10,8 +10,22 @@ ag 比ack/grep 还快
 
 
 ## 自动忽略`.gitinore/.hgignore` 中的文件
+https://github.com/ggreer/the_silver_searcher/wiki/Advanced-Usage
+ag 支持`.ignore/.gitinore/.hgignore`
 
-    # ignore /bar/.gitignore
+1. Patterns with Single asterisks `*` must be prefixed with a leading `/`. Example:
+    Wrong: `my-folder/*/vendor/*`
+    Good: `/my-folder/*/vendor/*`
+1. Currently double asterisks` **` patterns in `.gitignore and .hgignore and .ignore` are not recognized
+    2. 只能用`node_modules` 代替
+2. 其它规则跟git 一样
+
+If you want a global `.ignore` file:
+
+    alias ag='ag --path-to-ignore ~/.ignore'
+
+## ag 一般操作
+
     ag  foo /bar/ ;
 
     # ignore case

@@ -98,6 +98,8 @@ React 是根据key 按需更新的
         return <li key={index}>{number}</li>
     });
 
+It's a bad idea to use the array index since it `doesn't uniquely identify` your elements. In cases where the array is `sorted` or an element is `added` to the beginning of the array, the index will be changed even though the element representing that index may be the same. This results in unnecessary renders.
+
 ## 布尔类型、Null 以及 Undefined 将会忽略
 下列字符不可显示
 

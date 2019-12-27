@@ -35,12 +35,17 @@ select first phone number(不是从0开始)
     > SELECT phones FROM contacts;
     {(408)-589-5842",(408)-589-58423}
 
-### where array
-检查第一个值
+## where array
+
+### in array
+    where code in ('1','2')
+    where code=any(ARRAY['1','2'])
+
+### array.include
+0.利用index
 
     where phone[1]='(408)-589-58423'
 
-### array.include
 1.利用ANY
 
     WHERE '(408)-589-5555' = ANY (phones);

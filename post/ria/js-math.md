@@ -26,6 +26,11 @@ date: 2018-10-04
     -1%10 === -1
     -11%10 === -1
 
+## math.pow
+
+    2**10
+    Math.pow(2,10)
+
 ## round/floor/ceil+(toFixed)
 py+php+mysql: round(3.55,2)
 

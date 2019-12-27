@@ -32,7 +32,7 @@ TypeScript 的代码检查最佳方案就是 `typescript-eslint`，提供了 TS�
     npm install --save-dev @typescript-eslint/eslint-plugin
 
 ## 创建配置文件
-ESLint 需要一个配置文件来决定对哪些规则进行检查，配置文件的名称一般是 .eslintrc.js 或 .eslintrc.json。
+ESLint 需要一个配置文件来决定对哪些规则进行检查，配置文件的名称一般是 `.eslintrc.js 或 .eslintrc.json`。
 
 > 当运行 ESLint 的时候检查一个文件的时候，它会首先尝试读取该文件的目录下的配置文件，然后再一级一级往上查找，将所找到的配置合并起来，作为当前被检查文件的配置。
 
@@ -57,15 +57,62 @@ ESLint 需要一个配置文件来决定对哪些规则进行检查，配置文�
 2.  @typescript-eslint/consistent-type-definitions 是 @typescript-eslint/eslint-plugin 新增的规则。
 
 ### 规则取值
-规则的取值一般是一个数组（上例中的 @typescript-eslint/consistent-type-definitions），其中第一项是 off、warn 或 error 中的一个，表示关闭、警告和报错。后面的项都是该规则的其他配置。
+规则的取值一般是一个数组（上例中的 @typescript-eslint/consistent-type-definitions），其中第一项是 off(0)、warn 或 error 中的一个，表示关闭、警告和报错。后面的项都是该规则的其他配置。
 
 如果没有其他配置的话，则可以将规则的取值简写为数组中的第一项（上例中的 no-var）。
 
 ### 关闭、警告和报错的含义
 
-    关闭：禁用此规则
+    关闭：禁用此规则, "off" 或0
     警告：代码检查时输出错误信息，但是不会影响到 exit code
     报错：发现错误时，不仅会输出错误信息，而且 exit code 将被设为 1（一般 exit code 不为 0 则表示执行出现错误）
+
+### 常用规则
+#### es6
+es6+jsx的规则：
+
+    {
+        "parserOptions": {
+            "ecmaVersion": 6,
+            "sourceType": "module",
+            "ecmaFeatures": {
+                "jsx": true
+            }
+        },
+        "rules": {
+            "no-console": "off"
+            "semi": "error"
+            "semi": ["error", "always"],
+        }
+    }
+
+## 禁用规则
+https://eslint.org/docs/user-guide/configuring#configuring-rules
+
+有几种：
+
+1.直接在配置文件`.eslintrc.js` 中禁用
+
+    "rules": {
+        "no-var": "off",
+        "no-console": "off",
+        "no-else-return": "off",
+        "semi": "off",
+        "no-restricted-syntax": 0,
+    }
+
+2.disable ESLint on `a specific line` for `a specific rule` with a Javascript comment
+
+    alert("hello"); // eslint-disable-line
+
+    // eslint-disable-next-line 
+    alert("eslint is disabled here");
+
+3.disable ESLint for `a whole file` with a Javascript comment
+
+    /* eslint-disable */
+    alert("no linting here");
+    /* eslint-enable */
 
 ## 检查一个 ts 文件
 创建了配置文件之后，我们来检查一个新文件 index.ts：
@@ -143,7 +190,7 @@ ESLint 包含了一些代码格式的检查，比如空格、分号等。但前�
 
     npm install --save-dev prettier
 
-### 创建prettier.config.js
+### 创建prettier.config.js 或者.prettierrc.js
 然后创建一个 prettier.config.js 文件，里面包含 Prettier 的配置项。Pr
 这里我推荐大家一个配置规则，作为参考：
 
