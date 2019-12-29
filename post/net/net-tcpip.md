@@ -666,11 +666,22 @@ Note:
 [tcp-ip.key](/doc/tcp-ip.key)
 
 ## 为什么要有2MSL的 TIME_WAIT, 不直接进入CLOSED：
-1. 防止因为客户端因为回应的ACK丢失，*服务端一直处于LAST_ACK 状态*: 在MSL 时间内，服务端没有收到ACK, 会重新发起FIN, 直到：
-    1. 放弃断开连接
+如果网络不稳定时，2MSL能保证Server 尽量网络不好时处在LAST_ACK状态：
+
+        Client                  Server
+    FIN_WAIT1      <--FIN--     LAST_ACK
+    TIME_WAIT      ---ACK->     LAST_ACK(丢失包)
+    TIME_WAIT      <--FIN--     LAST_ACK(重新发包)
+    TIME_WAIT      ---ACK->     LAST_ACK(不丢包)
+    CLOSED                      CLOSED
+
+总结：
+1. 防止因为客户端因为回应的ACK丢失，**服务端一直处于`LAST_ACK` 状态**: 在MSL 时间内，服务端没有收到ACK, 会重新发起FIN, 直到：
     2. 收到ACK包结束
     3. 收到RST包重启
-2. 防止上一次连接中的包，迷路后重新出现，影响新连接(经过2MSL,上一次连接中所有的重复包都会消失)
+    1. 或超时断开连接
+2. 防止“已失效的连接请求报文段”出现在下一连接中。
+客户端在发送完最后一个ACK报文段后，再经过2MSL，就可以使本连接持续的时间内所产生的所有报文段都从网络中消失，使下一个新的连接中不会出现这种旧的连接请求报文段。
 
 TIME_WAIT 连接太多会占用端口资源(src:ip+port,dst:ip+port)和内存，可以考虑:
 1. tcp_tw_recycle tcp_tw_reuse
@@ -705,11 +716,23 @@ LVS 做负载均衡(一种NAT)，当请求到达 LVS 后，它修改地址数据
 
 # Security
 
-## SYN FLOOD
-如果C 向S 发送大量的带有伪造的client ip 的询问包SYN, S 就会向不存在的client ip 发送SYN/ACK 包信息。 当S 发送了SYN/ACK 后，S 会进程一个half-open 的半开状态(不是半连接单工)，这种状态非常耗费系统的资源，Client ip 是伪造的，S 就会进入漫长的等待。当这种半开状态的连接超过一定值时，服务器会因为资源耗尽而瘫痪。
+## SYN FLOOD, SYN攻击
+三次握手中：
+
+    第二次server 向client发送SYN+ACK 时， server处于SYN_RCVD 状态（server 把这个连接放到半连接队列）
+        server端会分配内存资源(接收数据)
+    第三次client 回传ACK。只有第三次握手带可以带数据。
+        同时client端分配内存资源
+
+我们看到第二次握手后，server就会给半连接分配资源了，
+如果C 向S 发送大量的带有伪造的client ip 的询问包SYN, S 就会向不存在的client ip 发送SYN/ACK 包信息。
+1. 当S 发送了SYN/ACK 后，S 会进程一个half-open 的半开状态(不是半连接单工)，这种状态非常耗费系统的资源，
+2. Client ip 是伪造的，S 就会进入漫长的等待。当这种半开状态的连接超过一定值时，服务器会因为资源耗尽而瘫痪。
 
 - 如果确定服务器受到了SYN FLOOD?
-用netstat 查看是否有大量的`SYN_RCVD`连接(握手的第二步)
+用netstat 查看是否有大量的`随机的伪造IP`的`SYN_RCVD`连接(握手的第二步)
+
+    netstat -n -p TCP | grep SYN_RECV
 
 服务器往往半开连接数限制都比较大（或者干脆没限制)，可以设置一下这个值以应对SYN FLOOD.
 

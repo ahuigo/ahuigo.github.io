@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 
 - 2018-09-27 [install java](/b/java/1.java-install) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2017-08-09 [Python 字符处理](/b/py/py-str) 
@@ -38,4 +39,3 @@
 - 2018-10-04 [TypeScript 装饰器](/b/ria/ts/ts-decorator) 
 - 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
 - 2019-10-03 [Python 的类型注解](/b/py/py-type) 
-- 2018-03-01 [Python 的语法](/b/py/py-expr) 
