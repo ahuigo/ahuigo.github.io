@@ -242,15 +242,20 @@ https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
 ### diff
     # 精确到us
     (datetime.now()-d).total_seconds() 
+
     # 精确到s, 是除去天之后余秒
     diff.seconds 
+
     # 总天数
     diff.days
-    
+
+    # 小时数
+    date(2019,12,28)-d1)/timedelta(hours=1)
 
 compare
 
     d1<d2
+    d1==d2
 
 ### begin of hour
 
