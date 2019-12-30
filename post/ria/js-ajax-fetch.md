@@ -132,7 +132,8 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
 
 
 ## response
-### data:
+### data
+json(), text(), blob(), arrayBuffer()
 
     response.json().then
     response.text().then(function (text) {

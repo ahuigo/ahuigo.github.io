@@ -1,9 +1,11 @@
 # AHUIGO 的笔记
+- 2018-09-27 [sequence of numbers](/b/math/math-num-seq) 
+- 2018-09-27 [hadoop 介绍](/b/db/had-) 
 - 2018-09-27 [install java](/b/java/1.java-install) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2017-08-09 [Python 字符处理](/b/py/py-str) 
 - 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/0.umi-share) 
-- 2019-11-25 [antv and bizcharts](/b/ria/chart-antv) 
+- 2019-12-31 [antv and bizcharts](/b/ria/chart-antv) 
 - 2019-12-06 [code split](/b/webpack/12.webpack-codesplit-and-lazy) 
 - 2019-12-05 [git 使用之日志、数据恢复](/b/git/git-log) 
 - 2019-12-01 [2019 年崇礼富龙滑雪](/b/life/ski) 
@@ -37,5 +39,3 @@
 - 2018-10-04 [Typescript 的module](/b/ria/ts/ts-module) 
 - 2018-10-04 [TypeScript 装饰器](/b/ria/ts/ts-decorator) 
 - 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
-- 2019-10-03 [Python 的类型注解](/b/py/py-type) 
-- 2018-03-01 [Python 的语法](/b/py/py-expr) 

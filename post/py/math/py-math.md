@@ -18,10 +18,6 @@ priority:
 	'\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
     # head -c 24 /dev/urandom
 
-## math operator
-
-	print x**2; # x^2
-
 ## floor
 
     import math
@@ -98,3 +94,8 @@ https://docs.python.org/3.2/library/math.html
     math.log10(x)¶
     math.sqrt(x)¶
 
+
+## math operator
+
+	print x**2; # x^2
+    math.factorial(5) == 120
