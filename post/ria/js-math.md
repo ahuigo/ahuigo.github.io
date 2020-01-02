@@ -31,6 +31,18 @@ date: 2018-10-04
     2**10
     Math.pow(2,10)
 
+## factorial + combinations
+    function factorial(n, r = 1) {
+        while (n > 1) r *= n--;
+        return r;
+    }
+    function combinations(n,r){
+        let s = 1;
+        let i = r;
+        while(i<n) s*=++i;
+        return s/factorial(n-r)
+    }
+
 ## round/floor/ceil+(toFixed)
 py+php+mysql: round(3.55,2)
 

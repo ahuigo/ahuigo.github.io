@@ -23,27 +23,89 @@ https://bizcharts.net/products/bizCharts/docs/qa 设置padding 解决留白
         value: 'value',
     });
 
+
+# geom
+
+    // 柱形
+    <Geom type="interval"/>
+    // 面积
+    <Geom type="area"/>
+
+# 轴
+## 横轴
+指定轴的数据是时间、还是线性... lineNear vs time
+
+    scale = {
+        year: {
+            type: "linear",
+            tickInterval: 50
+        }
+
+        startDate: {
+            type: 'time',
+            tickCount: 8,
+            mask: 'YYYY-MM',
+        },
+    }
+
+## 纵轴
+给纵轴数据值加 label 单位k, 或者其它（`%`,`km`...）
+
+    <Axis
+        name="value"
+        label={{
+            formatter: val => {
+            return (val / 10000).toFixed(1) + "k";
+            }
+        }}
+    />
+
 # 各元素
 ## yAxis 名
+聚合轴名
+
     const scale = {
         type: {
             formatter: k => {
                 return { aveExecutionTime: '执行时长', aveQueueWaitTime: '排队时长' }[k];
             }
         },
-        startDate: {
-            type: 'time',
-            tickCount: 8,
-            mask: 'YYYY-MM',
-        },
+        price:{
+            alias: '价格'
+        }
     };
+
+### Label
+Label 一般用于圆饼图标签
+
+        <Geom
+            type="intervalStack"
+            position="percent"
+            tooltip={[
+              "item*percent",
+              (item, percent) => {
+                percent = percent * 100 + "%";
+                return {
+                  name: item,
+                  value: percent
+                };
+              }
+            ]}
+          >
+            <Label
+              content="percent"
+              formatter={(val, item) => {
+                return item.point.item + ": " + val;
+              }}
+            />
+          </Geom>
 
 ## Axis
 Axis 是不分纵横的。
 
     <Axis name="year" title/>
     <Axis name="value" title/>
-    <Geom type="areaStack" position="year*value" color="country" />
+    <Geom type="areaStack" position="year*value" />
 
 
 ### Axis label
@@ -117,19 +179,21 @@ https://codepen.io/ahuigo/pen/YzPGZmr
     ]
     <Geom type="line" position="year*value" color="country" />
 
-
+color 取数据field
 
 ## Tooltip
 https://www.yuque.com/antv/g2-docs/api-tooltip#tg6xkz
+https://bizcharts.net/products/bizCharts/demo/detail?id=area-stacked&selectedKey=%E7%82%B9%E5%9B%BE
 悬浮提示
 
-    <Tooltip crosshairs={{ type: "line" }} />
+    <Tooltip crosshairs={{ type: "cross" }} />
 
 ### tooltip value format
+
     // year*value
     const scale = {
       value: {
-        alias: "The Share Price in Dollars",
+        alias: "价格",
         formatter: function(val) {
           return "$" + val;
         }
@@ -140,4 +204,7 @@ https://www.yuque.com/antv/g2-docs/api-tooltip#tg6xkz
     };
 
 ## Legend 图例
+多条线fold/或多线, 它是图例
+https://bizcharts.net/products/bizCharts/demo/detail?id=area-stacked&selectedKey=%E7%82%B9%E5%9B%BE
+
     <Legend />

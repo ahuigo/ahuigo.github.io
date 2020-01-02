@@ -11,4 +11,15 @@ http://www.cnblogs.com/chijianqiang/archive/2012/06/25/hadoop-info.html
 http://www.cnblogs.com/sharpxiajun/archive/2013/06/02/3113923.html
 
 
-## gokeeper
+## 课程
+阿里云实时数仓实战.  
+ https://edu.aliyun.com/course/1966 
+ https://edu.aliyun.com/course/1967
+ https://edu.aliyun.com/course/1968
+ 
+ 阿里云离线数仓实战 
+ https://edu.aliyun.com/course/1954 
+ https://edu.aliyun.com/course/1955 
+ https://edu.aliyun.com/course/1956 
+ https://edu.aliyun.com/course/1957  
+ https://edu.aliyun.com/course/1958

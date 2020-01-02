@@ -2,7 +2,7 @@
 layout: page
 title: math-bezier_curve
 category: blog
-description: 
+private:
 date: 2018-09-27
 ---
 # Preface
@@ -18,3 +18,45 @@ https://zh.wikipedia.org/wiki/%E8%B2%9D%E8%8C%B2%E6%9B%B2%E7%B7%9A
 3点确定2个点
 
 4点确定3个点
+
+
+实现：
+
+```
+function factorial(n, r = 1) {
+  while (n > 1) r *= n--;
+  return r;
+}
+function combinations(n,r){
+    let s = 1;
+    let i = r;
+    while(i<n) s*=++i;
+    return s/factorial(n-r)
+}
+function getBezierCurve3DPoints(nodes, n=100){
+    const points = [];
+    for(let t=0; t<=1.0001; t+=1/n){
+        nodesLength = nodes.length
+        const point = [0,0,0];
+        for(let i=0; i<nodes.length; i++){
+            const node =nodes[i];
+            point[0] += combinations(n,i)* ((1-t)**(n-i)) * (t**i) * node[0];
+            point[1] += combinations(n,i)* ((1-t)**(n-i)) * (t**i) * node[1];
+            point[2] += combinations(n,i)* ((1-t)**(n-i)) * (t**i) * node[2];
+        }
+        points.push(point)
+    }
+    return points;
+}
+
+
+const p0 = [0,100,0]
+const p1 = [0,50,0]
+const p2 = [50,0,0]
+const p3 = [100,0,0]
+
+const res = (getBezierCurve3DPoints([p0,p1,p2,p3],100))
+for(let r of res){
+    console.log(r)
+}
+```
