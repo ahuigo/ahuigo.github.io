@@ -58,6 +58,25 @@ dict, list 赋值都是按引用的，如果是一维的值:
 	dict.items()
 		[('x', 1), ('y', 2)]
 
+### destruct
+python  没有es6的destruction
+
+    const {a,b}={a:1,b:2}
+
+但是有params descruct
+
+    def some_func(a, b):
+        print a,b
+
+    params = {'a':1,'b':2}
+    som_func(**params)
+
+你可以这样：
+
+    d = {'a':'Apple', 'b':'Banana','c':'Carrot'}
+    a,b,c = [d[k] for k in ('a', 'b','c')]
+
+
 ### dict get keys and values
 
 	dict.keys();//keys list generator

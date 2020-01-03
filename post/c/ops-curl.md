@@ -73,6 +73,11 @@ urlencode
      curl 'https://httpbin.org/post?c=1&p=2' -d 'f=1' -d 'b=2&c=3'
         //    "Content-Type": "application/x-www-form-urlencoded",
 
+## octet-stream
+
+    curl --header "Content-Type:application/octet-stream" --trace-ascii debugdump.txt -d @asdf.file http://server:1234/url
+    curl --header "Content-Type:application/octet-stream" -d @asdf.file http://server:1234/url
+
 # compress
 如果数据经过了gzip等压缩，则需要加选项:
 
