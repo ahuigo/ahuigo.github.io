@@ -182,3 +182,9 @@ itemStyle 的normal 不是必须的
             },
         }
     }
+
+# 参考
+- Customized Chart Styles
+https://www.echartsjs.com/en/tutorial.html#Customized%20Chart%20Styles
+- itemStyle
+https://echartsjs.com/en/option.html#series-line.itemStyle
