@@ -10,10 +10,13 @@ private:
 ## variable
     x := foo
     y := $(x) bar
+    y := ${x} bar
     x := later
 
     main:
         echo $(x)
+        echo ${x}
+
 
 ### variable in shell
 需要一个`$$`转义：
@@ -46,3 +49,11 @@ image example
     test:
         echo $(version)
 
+# 执行
+
+    make init
+    make install
+
+合并
+
+    make init install
