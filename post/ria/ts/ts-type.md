@@ -346,7 +346,9 @@ Note: 断言不是类型转换
     let d = (<number>a).toExponential()
     process.env.APP_ENV as APPENV || 'dev';
 
-在 tsx 语法（React 的 jsx 语法的 ts 版）中必须用后一种。
+有时编译器类型不确定：
+
+    refEl.current as unknown as HTMLDivElement
 
 # ts类型别名
 常用于联合类型

@@ -138,3 +138,22 @@ setInterval(()=>{
     });
 },5000);
 ```
+
+# line 
+## symbol
+    series: [{
+        type: "line",
+        symbolSize:10,
+        showSymbol:true,
+        itemStyle: {
+            normal: {
+                color: "#2ec7c9", //symbol color
+                lineStyle: {
+                    color: "blue", //line color
+                }
+            }
+        },
+        lineStyle: {
+            color: "blue", //line color
+        }
+    }]
