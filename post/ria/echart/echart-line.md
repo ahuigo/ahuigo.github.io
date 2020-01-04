@@ -141,19 +141,44 @@ setInterval(()=>{
 
 # line 
 ## symbol
+
     series: [{
         type: "line",
         symbolSize:10,
+        symbol: 'circle',
         showSymbol:true,
         itemStyle: {
-            normal: {
-                color: "#2ec7c9", //symbol color
-                lineStyle: {
-                    color: "blue", //line color
-                }
+            color: "#FF0000", //symbol color
+            lineStyle: {
+                color: "blue", //line color
             }
         },
         lineStyle: {
             color: "blue", //line color
         }
     }]
+
+### symbol color callback
+
+    itemStyle: {
+        color: (item)=>{
+            console.log(item.data.name)  
+            return item.data.value[1]>0?'red':'green'
+        },           
+    }, 
+
+## itemStyle
+itemStyle 的normal 不是必须的
+
+    itemStyle: {
+        normal: {
+            width: 1.5,
+            color: 'blue',
+            borderWidth:1,
+            lineStyle: {
+                type: 'solid',
+                color:'orange',
+                width:2
+            },
+        }
+    }
