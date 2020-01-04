@@ -234,10 +234,17 @@ packet filter syntax
 	tcpdump -i lo0 <protocol>
 		tcp, udp, arp, ip, ether,ip6,rarp 等, 但tcpdump 不深入到应用层协议(eg. http)
 
+tcp vs udp
+
 	tcpdump -i lo0 'tcp'
 
 	# 抓DNS请求数据
 	tcpdump -i eth1 udp dst port 53
+
+udp:
+
+    sudo tcpdump -i eth0 udp
+    sudo tcpdump -i eth0 proto 17
 
 ## dst & src
 可以借助`or` `and`, 限制源与目的机ip
