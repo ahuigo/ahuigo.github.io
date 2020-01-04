@@ -146,6 +146,9 @@ short:
 		return (this.getTime() - d.getTime())/weight;
 	}
 
+### add time
+
+    +d + 86400*100
 
 ## set date time
 
