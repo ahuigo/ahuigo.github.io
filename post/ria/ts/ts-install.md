@@ -83,6 +83,28 @@ b.ts
     tsc --module umd a.ts
     tsc --module system a.ts
 
+## 引入json
+tsconfig.json:
+
+    "compilerOptions": {
+        "resolveJsonModule": true,
+
+
+## exclude
+    "exclude": [
+        "node_modules",
+        "build",
+        "dist",
+        "scripts",
+        "acceptance-tests",
+        "webpack",
+        "jest",
+        "src/setupTests.ts",
+        "tslint:latest",
+        "tslint-config-prettier"
+    ]
+
+
 ## 代码补全d.ts
 输入关键字后，vscode 会自动基于`ts`补全。但是对于纯js 文件、第三方库js，由于没有强类型，很难做到补全。我们可以手写`.d.ts`. 
 

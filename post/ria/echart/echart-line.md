@@ -29,7 +29,7 @@ option = {
     xAxis: {
         type: 'category',
         boundaryGap: false,
-        // data: ['周一','周二','周三','周四','周五','周六','周日']
+        data: ['周一','周二','周三','周四','周五','周六','周日']
     },
     yAxis: {
         type: 'value'
@@ -47,48 +47,38 @@ option = {
             stack: '总量',
             data:[220, 182, 191, 234, 290, 330, 310]
         },
-        {
-            name:'视频广告',
-            type:'line',
-            stack: '总量',
-            data:[150, 232, 201, 154, 190, 330, 410]
-        },
-        {
-            name:'直接访问',
-            type:'line',
-            stack: '总量',
-            data:[320, 332, 301, 334, 390, 330, 320]
-        },
-        {
-            name:'搜索引擎',
-            type:'line',
-            stack: '总量',
-            data:[820, 932, 901, 934, 1290, 1330, 1320]
-        }
     ]
 };
 ```
 
+## grid
+grid 控制图形周边的空白，类似css padding
+
+    grid: {
+        left: '30%',
+        right: '18%',
+        bottom: '3%',
+        containLabel: true
+    },
+
 # dynamic + time
 ```js
-function randomData(i) {
-    now = new Date(+now + oneDay);
-    value = value + Math.random() * 21 - 10;
-    return {
-        name: now.toString(),
-        value: [
-            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-            Math.round(value)
-        ]
+function getData(mm=1) {
+    var start_day = new Date(1997, 9, 3);
+    var data = [];
+    for (var i = 0; i < 10; i++) {
+        const now = new Date(+start_day + (86400*1000*i));
+        var value =  Math.random() * 20 - 10;
+        const item =  {
+            name: now.toString(),
+            value: [
+                [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+                Math.round(value/mm)
+            ]
+        }
+        data.push(item)
     }
-}
-
-var data = [];
-var now = +new Date(1997, 9, 3);
-var oneDay = 24 * 3600 * 1000;
-var value = 1 * 10;
-for (var i = 0; i < 10; i++) {
-    data.push(randomData(i));
+    return data
 }
 
 option = {
@@ -122,19 +112,79 @@ option = {
     series: [{
         name: '模拟数据',
         type: 'line',
-        showSymbol: false,
+        showSymbol: true,
         hoverAnimation: false,
-        data: data
-    }]
+        data: getData()
+    },
+    {
+        name: '模拟数据',
+        type: 'line',
+        showSymbol: true,
+        hoverAnimation: false,
+        data: getData()
+    }
+    ],
 };
 
-setInterval(function () {
-
-
+setInterval(()=>{
+    
+     //update data
     myChart.setOption({
         series: [{
-            data: data
+            data: getData(1)
+        },{
+            data: getData(10)
         }]
     });
-}, 1000);
+},5000);
 ```
+
+# line 
+## symbol
+
+    series: [{
+        type: "line",
+        symbolSize:10,
+        symbol: 'circle',
+        showSymbol:true,
+        itemStyle: {
+            color: "#FF0000", //symbol color
+            lineStyle: {
+                color: "blue", //line color
+            }
+        },
+        lineStyle: {
+            color: "blue", //line color
+        }
+    }]
+
+### symbol color callback
+
+    itemStyle: {
+        color: (item)=>{
+            console.log(item.data.name)  
+            return item.data.value[1]>0?'red':'green'
+        },           
+    }, 
+
+## itemStyle
+itemStyle 的normal 不是必须的
+
+    itemStyle: {
+        normal: {
+            width: 1.5,
+            color: 'blue',
+            borderWidth:1,
+            lineStyle: {
+                type: 'solid',
+                color:'orange',
+                width:2
+            },
+        }
+    }
+
+# 参考
+- Customized Chart Styles
+https://www.echartsjs.com/en/tutorial.html#Customized%20Chart%20Styles
+- itemStyle
+https://echartsjs.com/en/option.html#series-line.itemStyle
