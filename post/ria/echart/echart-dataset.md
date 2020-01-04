@@ -35,19 +35,23 @@ private:
     };
 
 ### dimensions 健映射
-        // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
-        // 如果不指定 dimensions，也可以通过指定 series.encode 完成映射，参见后文。
-        // 后3个是y轴
-        dimensions: ['date', '动作', '喜剧', '科幻'], 
+    // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
+    // 如果不指定 dimensions，也可以通过指定 series.encode 完成映射
+    dataset{
+        dimensions: ['date', '动作', '喜剧', '科幻'], //映射成纯数组value=[item[k] for k in dimensions]
         source: [
             {date: '一季度', '动作': 43.3, '喜剧': 85.8, '科幻': 93.7},
             {date: '二季度', '动作': 83.1, '喜剧': 73.4, '科幻': 55.1},
             {date: '三季度', '动作': 86.4, '喜剧': 65.2, '科幻': 82.5},
             {date: '四季度', '动作': 72.4, '喜剧': 53.9, '科幻': 39.1}
         ]
+    }
 
 ## encode 列名映射
     var option = {
+        grid: {containLabel: true},
+        xAxis: {},
+        yAxis: {type: 'category'},
         dataset: {
             source: [
                 ['score', 'amount', 'city'],
@@ -60,9 +64,6 @@ private:
                 [30, 4000, '杭州']
             ]
         },
-        grid: {containLabel: true},
-        xAxis: {},
-        yAxis: {type: 'category'},
         series: [
             {
                 type: 'bar',
@@ -76,7 +77,27 @@ private:
         ]
     };
 
-encode 不仅可映射x,y,还可以映射 tooltip ....
+### encode 映射key-value:
+
+        dataset: {
+            source: [
+                {amount:20, city:'Beijing'},
+                {amount:24, city:'Shenzhen'},
+            ]
+        },
+        series: [
+            {
+                type: 'bar',
+                encode: {
+                    // amount 列映射到 x 轴
+                    x: 'amount',
+                    // city 映射到 y 轴
+                    y: 'city'
+                }
+            }
+        ]
+
+### encode 不仅可映射x,y,还可以映射 tooltip ....
 
     // 例如在直角坐标系（grid/cartesian）中：
     encode: {

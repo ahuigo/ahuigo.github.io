@@ -183,6 +183,33 @@ itemStyle 的normal 不是必须的
         }
     }
 
+## tooltip
+多维：
+
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            label: {
+                backgroundColor: '#6a7985'
+            }
+        }
+    },
+
+### 自定义format
+
+    tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+            params = params[0];
+            var date = new Date(params.name);
+            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+        },
+        axisPointer: {
+            animation: false
+        }
+    },
+
 # 参考
 - Customized Chart Styles
 https://www.echartsjs.com/en/tutorial.html#Customized%20Chart%20Styles
