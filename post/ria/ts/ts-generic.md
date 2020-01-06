@@ -33,7 +33,7 @@ private:
         console.log(arg.length);// Property 'length' does not exist on type 'T'.
         return arg;
     }
-
+### 父子类型约束
 这时，我们可以对泛型进行约束，只允许这个函数传入那些包含 length 属性的变量。这就是泛型约束：
 
     interface Lengthwise {
@@ -45,7 +45,8 @@ private:
         return arg;
     }
 
-多个类型参数之间也可以互相约束：
+### 多个类型参数之间也可以互相约束：
+我们使用了两个类型参数，其中要求 T 继承 U，这样就保证了 U 上不会出现 T 中不存在的字段
 
     function copyFields<T extends U, U>(target: T, source: U): T {
         for (let id in source) {
@@ -58,7 +59,35 @@ private:
 
     copyFields(x, { b: 10, d: 20 });
 
-上例中，我们使用了两个类型参数，其中要求 T 继承 U，这样就保证了 U 上不会出现 T 中不存在的字段
+keyof 可以实现泛型多参数依赖
+
+    interface TMap {
+        "a": (w: number) => any
+        "b": (w: number | string) => any
+        "c": (w: Date) => any
+    }
+
+    function fn2<T extends keyof TMap, F extends TMap[T]>(a: T, fn: F, ) {
+
+    }
+
+## keyof
+索引类型查询操作符。
+
+    interface Itest{
+        name:string;
+        age:number;
+    }
+    //等价 type ant = "name" |"age"
+    type ant=keyof Itest;
+
+keyof 可以取Map 的keys
+
+    interface Map<T> {
+        [key: string]: T;
+    }
+    let keys: keyof Map<number>;//string
+    let value: Map<number>['antzone'];//number
 
 ## 泛型函数
 Foo 组件需要两个参数
@@ -69,7 +98,6 @@ Foo 组件需要两个参数
     export default (): React.ReactNode => {
         return null
     }
-
 
 @types/react/index.d.ts 中的原型:
 

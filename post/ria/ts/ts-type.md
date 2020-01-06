@@ -170,7 +170,7 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
     tom.push(true);//Err: not assignable of type 'string | number'.
 
 ## 枚举enum
-不同于string/number、元组/interface 类型，enum会被编译进js
+不同于string/number、元组/interface 类型，`enum会被编译进js`
 
 ### 自增枚举enum
 枚举使用 enum 关键字来定义：
