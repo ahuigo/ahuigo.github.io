@@ -84,7 +84,12 @@ setView
         }
     });
 
-# Rotate
+## Rotate
 
     viewer.camera.lookAt(Cesium.Cartesian3.fromDegrees(15, 0, 100), new Cesium.HeadingPitchRange(0, 0, 100));
     viewer.camera.setView({destination: Cesium.Cartesian3.fromDegrees(15, 0, 100)});
+
+## center
+    viewer.camera.setView({destination: Cesium.Cartesian3.fromDegrees(15, 0, 100)});
+    window.id.map().centerEase([lng, lat, ele])
+

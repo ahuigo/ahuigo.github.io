@@ -78,9 +78,10 @@ with the flags being
     -t=1: the numbers of threads used
     -b="" the http request body
     -s="" if specified, it counts how often the searched string s is contained in the responses
+
 for example
 
-go-wrk -c=400 -t=8 -n=100000 http://localhost:8080/index.html
+    go-wrk -c=400 -t=8 -n=100000 http://localhost:8080/index.html
 
 ## tcpkali
 https://github.com/machinezone/tcpkali
@@ -147,6 +148,7 @@ Refer: [tcp-ip](/p/tcp-ip)
 		-m method       Method name
 
 		-r              Don't exit on socket receive errors.
+        -s timeout      default 30s
 
 Example:
 

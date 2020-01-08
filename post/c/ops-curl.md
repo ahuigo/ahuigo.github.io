@@ -58,6 +58,15 @@ modify host for https:
 
 	-I, --head
 	  (HTTP/FTP/FILE)  Fetch  the  HTTP-header only!
+# output
+## format
+
+    curl http://zhihu.com -w 'code=%{http_code};time=%{time_total}s'
+
+## output
+
+    -o, --output
+        -o /dev/null 
 
 # upload
 form 不要自己设置content-type(boundary 因为要自动算)

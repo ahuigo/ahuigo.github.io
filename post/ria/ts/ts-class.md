@@ -5,7 +5,17 @@ private:
 ---
 # ts 类
 
+## instance
+    class Animal {
+        static instance:Animal;
+        static ins() {
+            Animal.instance = this;
+        }
+    }
+
 ## private public protected
+默认public:
+
     class Animal {
         public name;
         protected constructor (name) {

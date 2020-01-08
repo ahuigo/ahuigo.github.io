@@ -31,6 +31,14 @@ TypeScript 的代码检查最佳方案就是 `typescript-eslint`，提供了 TS�
 
     npm install --save-dev @typescript-eslint/eslint-plugin
 
+或用：
+
+    yarn add -D typescript @typescript-eslint/parser  @typescript-eslint/eslint-plugin
+
+ts+react+vscode 另外一个测试代码见：
+https://github.com/ahuigo/vscode-eslint-react-ts/tree/88a1538d3ea40d0918c5974639a6d61e92ec6290
+
+
 ## 创建配置文件
 ESLint 需要一个配置文件来决定对哪些规则进行检查，配置文件的名称一般是 `.eslintrc.js 或 .eslintrc.json`。
 
