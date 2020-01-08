@@ -17,7 +17,13 @@ Python has a more primitive serialization module called *marshal*(support Python
 2. pickle(support *user-defined* classes); marshal not
 3. pickle is guaranteed to be  *backwards compatible* across Python releases.
 
-# joblib
+# json
+    class DateEnconding(json.JSONEncoder):
+        def default(self, o):
+            if isinstance(o, datetime.date):
+                return o.strftime('%Y/%m/%d')
+
+    lines = json.dumps(dict(item),  cls=DateEnconding)
 
 # base64
 

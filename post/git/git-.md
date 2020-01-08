@@ -245,6 +245,7 @@ If you want to also remove *directories*, run
 
 checkout 适合working 回滚到某一分支
 - git revert: checkout+add+commit
+    - git revert [倒数第一个提交] [倒数第二个提交]
 	Revert some existing commits
 - git reset: 改变commit+index: 顺便清理working
  	rollback commit: (clean index)

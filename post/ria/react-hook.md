@@ -311,6 +311,7 @@ useCallback Hook 允许你在重新渲染之间保持对相同的回调引用以
 useRef 会在每次渲染时返回同一个 ref 对象。类似CreateRef
 
     const inputEl = useRef(initialValue);
+    const inputEl = useRef(null);
     // inputEl.current === initialValue
     <input ref={inputEl} type="text" />
 

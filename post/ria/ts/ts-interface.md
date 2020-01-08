@@ -5,6 +5,21 @@ private:
 ---
 # TS 的接口
 # 接口属性
+    interface TMap {
+        "a": (a: number) => any
+        "b": (b: number | string) => any
+        "c": (c: Date) => any
+    }
+
+或者 
+
+    interface TMap {
+        a: (a: number) => any
+        b: (b: number | string) => any
+        c: (c: Date) => any
+    }
+
+
 ## 只读属性
 接口属性可以设定为只读
 
