@@ -31,6 +31,11 @@ https://bizcharts.net/products/bizCharts/docs/qa 设置padding 解决留白
     // 面积
     <Geom type="area"/>
 
+柱的大小：
+
+    <Geom type="interval" size={10}/>
+
+
 # 轴
 ## 横轴
 指定轴的数据是时间、还是线性... lineNear vs time
@@ -109,16 +114,31 @@ Axis 是不分纵横的。
 
 
 ### Axis label
+>api: https://bizcharts.net/product/bizcharts/category/7/page/26
+
+formatter + offset
 
     <Axis name="value" label={
         { 
             formatter: val => { return (val / 10000).toFixed(1) + "k"; },
             offset: 12,
+            autoRotate: false,
         }
     } />
 
+label textStyle
+
+    { offset:200,
+       textStyle: {
+            fontSize: '22',
+            textAlign: 'right',
+            fontWeight: 'bold',
+        }, 
+    }
+
 ### Axis title
-必须和geom 中的一样命名country ：
+> title 的object|string|null 与 Axis.label一样
+必须和geom 中的一样指定name：
 
     const scale = {
         country: { alias: '里程' },
@@ -128,6 +148,9 @@ Axis 是不分纵横的。
     <Geom type="interval" position="country*population" />
 
 
+### Axis position
+
+     <Axis name="value" position={'right'} />
 
 ## 分组fold
 https://bizcharts.net/products/bizCharts/demo/detail?id=g2-clustered-stacked&selectedKey=%E6%A6%82%E8%A7%88

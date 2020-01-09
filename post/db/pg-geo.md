@@ -46,6 +46,21 @@ WKT 表示样表：https://www.cnblogs.com/tiandi/archive/2012/07/18/2598093.htm
     POINT EMPTY
     MULTIPOLYGON EMPTY
 
+## EPSG 标准
+> https://github.com/penouc/blog/issues/1
+
+### EPSG:4326 (WGS84)
+世界大地测量系统1984 （World Geodetic System of 1984) 是 GPS 用来描述地球上位置的地理学坐标系统（`三维`）。
+1. WGS84 通常使用 GeoJSON 作为坐标系统的单位，GeoJSON 中使用数字作为经度和纬度的单位。
+2. 我们没有办法在二位平面上展示 WGS84 坐标系统，所以大部分的软件在展现这种坐标的时候都会使用一个叫做 equirectangular （EPSG:54001）的投影（即直接使用经纬度单位）
+Equirectangular projection(ERP)是一种简单的投影方式，将经线映射为恒定间距的垂直线，将纬线映射为恒定间距的水平线。这种投影方式映射关系简单，但既不是等面积的也不是保角的，引入了相当大的失真。
+
+### EPSG: 3857 (Pseudo-Mercator)
+Pseudo-Mercator 投影系统将 WGS84 坐标系统投影在平面上(这个投影系统北纬和南纬的85.06度以上的地区不会展示)。
+1. 这些投影（EPSG:3857）内部都是使用的 WGS84 坐标系统 -- 即使用的 WGS84 椭球体构建，但是将它们（EPSG:3857）的坐标是投射在一个球面上。
+2. 通过这个投影规则可以投射出的正方形的地图，但是如果想将两个不同的参考椭球体投影在同一个投影坐标系上是不对的，这就表示在软件上必须展示是动态可变的。
+（这也是为什么 mapBox 在存储数据的时候使用的是 EPSG: 4326 但是展示的时候使用 EPSG:3857）。
+
 # geom 操作
 
 ## create geom
@@ -87,29 +102,33 @@ make geom from lng/lat
 
 ### 读取格式
 
+### select AsText/AsGeoJson
+
     select ST_AsText(roads_geom),ST_AsGeoJson(roads_geom) from roads;
                     st_astext                |                             st_asgeojson
     -----------------------------------------+-----------------------------------------------------------------------
     LINESTRING(192783 228138,192612 229814) | {"type":"LineString","coordinates":[[192783,228138],[192612,229814]]}
 
-selete Ewkt
+### select Ewkt
 
     > SELECT ST_AsEwkt(the_geom)
      SRID=4326;LINESTRING(192783 228138,192612 229814)
     
+### select x/y/z
 点的经纬
 
     ST_X(the_geom), ST_Y(the_geom) FROM cities;
 
 ## where 
 ### within box
-REfer : https://gis.stackexchange.com/questions/223828/select-all-points-within-a-bounding-box/223955
+REfer : 
+https://gis.stackexchange.com/questions/223828/select-all-points-within-a-bounding-box/223955
 
 #### ST_Contains
 
     SELECT *
     FROM planet_osm_roads
-    WHERE planet_osm_roads.way && ST_Transform(
+    WHERE planet_osm_roads.geom && ST_Transform(
         ST_MakeEnvelope(-122.271189, 37.804339, -122.275244, 37.808264, 4326),
         3857
     );
@@ -121,13 +140,15 @@ or change it to this:
     WHERE ST_Contains(
         ST_Transform(
             ST_MakeEnvelope(-122.271189, 37.804339, -122.275244, 37.808264, 4326),3857)
-        ,planet_osm_roads.way);
+        ,planet_osm_roads.geom);
 
 #### ST_SetSRID
-Sets the SRID on a geometry to a particular integer value. Useful in constructing bounding boxes for queries.
+1.Sets the SRID on a geometry to a particular integer value. Useful in constructing bounding boxes for queries.
 
     geometry ST_SetSRID(geometry geom, integer srid);
 
-利用交集空间查询
+2.1.利用交集空间查询
 
     WHERE (geom && ST_SETSRID(ST_MakeBox2D(ST_POINT(116, 39),ST_POINT(117, 40)), 4326)) 
+    //或者
+    WHERE ST_INTERSECTS(geom , ST_SETSRID(ST_MakeBox2D(ST_POINT(116, 39),ST_POINT(117, 40)), 4326)) 
