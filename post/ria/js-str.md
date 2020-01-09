@@ -123,18 +123,6 @@ repeat(alloc)
     > Buffer.alloc(5, 15)
     <Buffer 0f 0f 0f 0f 0f>
 
-## pad+repeat
-
-    ('0'+6).slice(-2)
-    '6'.padStart(3,'0')             //'006'
-    'Vue'.padStart(10)          //'       Vue'
-    'Vue'.padStart(10, '_*')    //'_*_*_*_Vue'
-    'Vue'.padEnd(10, '_*')      //'Vue_*_*_*_'
-
-    'abc'.repeat(2);    // 'abcabc'
-
-    [...Array(2)].map(()=>'value'); //['value', 'value']
-
 ## 字符串是不可变的
     var s = 'Test';
     s[0] = 'X';
@@ -168,10 +156,24 @@ endsWith
     isNaN(s) // check +s
     s.match(/^-?\d+$/)
 
+### pad+repeat
+
+    ('0'+6).slice(-2)
+    '6'.padStart(3,'0')             //'006'
+    'Vue'.padStart(10)          //'       Vue'
+    'Vue'.padStart(10, '_*')    //'_*_*_*_Vue'
+    'Vue'.padEnd(10, '_*')      //'Vue_*_*_*_'
+
+    'abc'.repeat(2);    // 'abcabc'
+
+    [...Array(2)].map(()=>'value'); //['value', 'value']
+
 ### .trim()
 trim space only
 
 	' a '.trim()
+	' a '.trimStart()
+	' a '.trimEnd()
 
 replace strip
 
@@ -279,6 +281,7 @@ Create RegExp：test, exec
 	new RegExp("^str$",'igm')
 	new RegExp("(^|&)str$",'igm')
 
+### unicode
 
 	/\u1321/.test('\u1321');//true
 	/\x31/u.test('\x31');//true
