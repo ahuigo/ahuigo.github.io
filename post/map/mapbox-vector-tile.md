@@ -7,6 +7,7 @@ private:
 https://docs.mapbox.com/vector-tiles/specification/
 
 ## parse pbf
+https://github.com/mapbox/vector-tile-js
 
     var VectorTile = require('@mapbox/vector-tile').VectorTile;
     var VectorTileFeature = require('@mapbox/vector-tile').VectorTileFeature;
