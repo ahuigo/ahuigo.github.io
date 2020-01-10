@@ -262,12 +262,19 @@ dict and array:
         console.log(key, value); // "first", "one"
     }
 
+### fromEntries
+    Object.fromEntries([['a',1],['b',2]])
+
 ## loop circle
 
     var len = myArray.length
     for (const [i, value] of myArray.entries()) {
         console.log('%d: %s', i, myArray[(i+1)%len]);
     }
+
+## flat
+    [[1,2],3].flat() //[1,2,3]
+    ['a','b,c'].flatMap(v=>v.split(',')) //[a,b,c]
 
 ## inter, diff, union 交差并
 intersection:

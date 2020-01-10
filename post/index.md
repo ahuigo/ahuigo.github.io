@@ -1,6 +1,6 @@
 # AHUIGO 的笔记
-- 2020-01-08 [test](/b/c/ops-benchmark) 
-- 2020-01-04 [tcpdump](/b/net/net-tcpdump) 
+- 2019-09-28 [test](/b/c/ops-benchmark) 
+- 2019-03-08 [tcpdump](/b/net/net-tcpdump) 
 - 2018-09-28 [netcat](/b/net/net-ncat) 
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 
 - 2018-09-27 [install java](/b/java/1.java-install) 
