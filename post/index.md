@@ -7,7 +7,7 @@
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2017-08-09 [Python 字符处理](/b/py/py-str) 
 - 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/0.umi-share) 
-- 2020-01-09 [antv and bizcharts](/b/ria/chart-antv) 
+- 2020-01-13 [antv and bizcharts](/b/ria/chart-antv) 
 - 2019-12-06 [code split](/b/webpack/12.webpack-codesplit-and-lazy) 
 - 2019-12-05 [git 使用之日志、数据恢复](/b/git/git-log) 
 - 2019-12-01 [2019 年崇礼富龙滑雪](/b/life/ski) 

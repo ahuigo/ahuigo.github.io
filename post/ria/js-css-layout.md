@@ -265,6 +265,13 @@ flex 能有效传递height percent(需要`flex:1`填满)
     .d{background:green;height:100%;margin:10px;}    better
 
 # align
+## text-align + vertical-align:top
+ `lineHeight:100%`+`vertical-align:center`
+
+    <div style="text-align:left">
+        <img style="vertical-align:top">
+    </div>
+
 ## circle center
     div{
         background: red;

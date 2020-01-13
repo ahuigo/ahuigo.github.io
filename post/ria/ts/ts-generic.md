@@ -3,6 +3,37 @@ title: TS 泛型 generic
 date: 2019-11-04
 private: 
 ---
+# 声明合并
+https://www.tslang.cn/docs/handbook/declaration-merging.html
+
+## 合并接口
+    interface Cloner {
+        clone(animal: Dog): Dog;
+        clone(animal: Cat): Cat;
+        clone(animal: Sheep): Sheep;
+        clone(animal: Animal): Animal;
+    }
+
+## 合并命名空间
+Animals声明合并示例：
+
+    namespace Animals {
+        export class Zebra { }
+    }
+
+    namespace Animals {
+        export interface Legged { numberOfLegs: number; }
+        export class Dog { }
+    }
+
+等同于：
+
+    namespace Animals {
+        export interface Legged { numberOfLegs: number; }
+
+        export class Zebra { }
+        export class Dog { }
+    }
 # 泛型(generic)
 ## 基本泛型
 有了泛型，我们可以一随便指定T：

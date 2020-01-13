@@ -128,7 +128,7 @@ formatter + offset
 
 label textStyle
 
-    { offset:200,
+    label={ offset:200,
        textStyle: {
             fontSize: '22',
             textAlign: 'right',
@@ -210,6 +210,17 @@ https://bizcharts.net/products/bizCharts/demo/detail?id=area-stacked&selectedKey
 悬浮提示
 
     <Tooltip crosshairs={{ type: "cross" }} />
+
+### tooltip format
+https://bizcharts.net/products/bizCharts/api/geom
+
+    <Geom
+    tooltip={['sales*city', (sales, city)=>{
+        return {
+        name:'xxx',
+        value:city + ':' + sales
+        }
+    }]}
 
 ### tooltip value format
 

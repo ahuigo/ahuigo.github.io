@@ -122,9 +122,15 @@ dockerfile CMD, 不会解析环境变量
     CMD echo $PROJECTNAME
 
 ## net
+    $ docker network ls
     $ docker network create hostnet
     557079c79ddf6be7d6def935fa0c1c3c8290a0db4649c4679b84f6363e3dd9a0
     $ docker run --rm --net hostnet slim-image
+
+### host bridage
+
+    --net host
+    --net none # localhost only
 
 ### dns
     --dns=192.168.1.1

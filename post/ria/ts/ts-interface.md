@@ -4,6 +4,8 @@ date: 2019-11-04
 private: 
 ---
 # TS 的接口
+参考：https://www.tslang.cn/docs/handbook/interfaces.html
+
 # 接口属性
     interface TMap {
         "a": (a: number) => any
@@ -78,6 +80,14 @@ private:
         }
     }
 
+### 描述数组
+    interface StringArray {
+        [index: number]: string;
+    }
+
+    let myArray: StringArray;
+    myArray = ["Bob", "Fred"];
+
 ### 描述 function
 
     interface Db {
@@ -118,7 +128,7 @@ private:
     }
 
 ### 描述 实例化
-new 是特殊的method
+`new` 是特殊的method, 也constructor 等价？
 
     interface MyDateInit {
         new (year: string, month: string, day: string) : MyDate;
@@ -128,7 +138,20 @@ new 是特殊的method
         return new Class(year, month, day);
     }
 
+### 接口继承
+    interface ClockConstructor {
+        new (hour: number, minute: number);
+    }
+
+    class Clock implements ClockConstructor {
+        currentTime: Date;
+        constructor(h: number, m: number) { }
+    }
+
+
 ### 描述混合类型
+函数、方法、属性混合
+
     interface Counter {
         (start: number): string;
         interval: number;
