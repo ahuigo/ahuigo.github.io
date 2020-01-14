@@ -10,14 +10,14 @@ Context 解决的是向孙子组件传值的问题。如主题、偏好
 比如，考虑这样一个 Page 组件，它层层向下传递 user 和 avatarSize 属性，从而深度嵌套的 Link 和 Avatar 组件可以读取到这些属性：
 
     <Page user={user} avatarSize={avatarSize} />
-    // ... 渲染出 ...
-    <PageLayout user={user} avatarSize={avatarSize} />
-    // ... 渲染出 ...
-    <NavigationBar user={user} avatarSize={avatarSize} />
-    // ... 渲染出 ...
-    <Link href={user.permalink}>
-        <Avatar user={user} size={avatarSize} />
-    </Link>
+        // ... 渲染出 ...
+        <PageLayout user={user} avatarSize={avatarSize} />
+            // ... 渲染出 ...
+            <NavigationBar user={user} avatarSize={avatarSize} />
+                // ... 渲染出 ...
+                <Link href={user.permalink}>
+                    <Avatar user={user} size={avatarSize} />
+                </Link>
 
 层层传递这两个 props 就显得非常冗余。而且一旦 Avatar 组件需要更多从来自顶层组件的 props，你还得在中间层级一个一个加上去，这将会变得非常麻烦。
 一种解决方法，是直传Avatar

@@ -87,6 +87,7 @@ remove all images
 
     docker rmi $(docker images -q)
     docker rmi $(docker images -q) --force
+    docker rmi $(docker images -q -a) --force
 
 #### Unable to remove filesystem
 If you encounter this problem

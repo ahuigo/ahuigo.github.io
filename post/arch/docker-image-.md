@@ -145,12 +145,18 @@ COPY 中文件夹要带`/`
     # app是目录：
     COPY package.json /app/
 
-COPY 中文件夹, 不带文件名本身
+COPY 中, 复制文件夹还是`子内容` , 取决于destination是目录 还是不存在的目录
 
     # copy -r /app/dist/ .
     COPY --from=build-dist /app/dist .
     # copy -r /app/dist .
     COPY --from=build-dist /app/dist ./dist
+
+如是distination 是存在的目录，则复制的是文件`子内容`
+
+    COPY dir1 dir2 ./
+    # that actually works like
+    COPY dir1/* dir2/* ./
 
 ### build options
     --cpu-shares :设置 cpu 使用权重；

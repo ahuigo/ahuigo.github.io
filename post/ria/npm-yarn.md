@@ -10,11 +10,20 @@ private:
 ## yarn bin
     echo 'export PATH="$PATH:`yarn global bin`"' >> ~/.profile
 
-## dependencies
+## yarn install
+### lock
+    # 如果package.json与yarn.lock 不匹配就会更新lock
+    yarn 
+    # 使用yarn.lock
+    yarn install --frozen-lockfile
+
+add/remove/update 都是更新lock
+
+### dependencies
 
     yarn [install] --ignore-optional
 
-### dependencies 种类
+#### dependencies 种类
 
     -D, --dev                           save package to your `devDependencies`
     -P, --peer                          save package to your `peerDependencies`
@@ -22,7 +31,7 @@ private:
 
 optionalDependencies 一般是最不需要安装的，如puppeteer
 
-#### peerDependencies
+##### peerDependencies
 假设packageA 依赖packageB, 则有：
 
     |- node_modules
