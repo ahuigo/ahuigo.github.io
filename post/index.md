@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2020-01-14 [TS ignore type when import module](/b/ria/ts/ts-ignore) 
 - 2019-09-28 [test](/b/c/ops-benchmark) 
 - 2019-03-08 [tcpdump](/b/net/net-tcpdump) 
 - 2018-09-28 [netcat](/b/net/net-ncat) 
@@ -38,4 +39,3 @@
 - 2018-03-03 [Chrome devtools 使用汇总](/b/ria/js-debug-chrome) 
 - 2018-10-04 [CSS3 选择器](/b/ria/js-css-selector) 
 - 2018-10-04 [profile](/b/py/py-profiler) 
-- 2018-10-04 [Typescript 的module](/b/ria/ts/ts-module) 
