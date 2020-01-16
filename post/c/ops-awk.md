@@ -258,6 +258,7 @@ awk 的字符串是以双引号括起来的 不可用单引号
 
 ## regex
 
+### replace
 gsub - replace
 
 	echo 'abc,123 ,' | awk -F\, '{gsub(/[ \t]+$/, "", $2); print $2 ":"}'

@@ -197,13 +197,19 @@ itemStyle 的normal 不是必须的
     },
 
 ### 自定义format
+多根线series 共用一个tooltips
 
     tooltip: {
         trigger: 'axis',
-        formatter: function (params) {
-            params = params[0];
-            var date = new Date(params.name);
-            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+        formatter: function (seriesList) {
+            const series0 = seriesList[0]
+            let msg = series0.data[series0.dimensionNames[series0.encode.x]] + '<br>'
+            // msg += 'add:' + series0.data.add + '<br>'
+            for (const params of seriesList) {
+                const key = params.dimensionNames[params.encode.y]
+                msg += params.seriesName + ':' + params.data[key] + '<br/>'
+            }
+            return msg
         },
         axisPointer: {
             animation: false
