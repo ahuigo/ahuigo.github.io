@@ -277,28 +277,3 @@ jquery:
     element.dataset.key // undefined
 
     $(element).attr('data-key', 'value');
-
-# history
-
-## pushstate
-不刷新页面ajax
-http://www.cnblogs.com/xuchengzone/archive/2013/04/18/html5-history-pushstate.html
-- help.gitbook.io
-
-Example:
-
-	var stateObj = { foo: "bar" };
-	history.pushState(stateObj, title="page 2", "bar2.html");
-
-参数：
-
-    stateObj
-        当离开此页时，popstate 会收到e.stateObj
-	title
-        可能不生效
-
-## popstate
-
-	window.onpopstate = function(event) {
-		alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
-	};

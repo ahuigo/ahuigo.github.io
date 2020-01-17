@@ -16,3 +16,15 @@ In SampleInterface.ts
     import { IfcSampleInterface } from './IfcSampleInterface';
     // import { IfcSampleInterface } from './IfcSampleInterface.d';
     let sampleVar: IfcSampleInterface;
+
+# export enum
+
+    // *.d.ts or *.ts
+    export const enum MenuKeys {
+        Time = 'time',
+        TimeDistribution = 'timeDistribution',
+    }
+    export default const menuMap = {
+        [MenuKeys.Time]: '时长',
+        [MenuKeys.TimeDistribution]: '时长分布',
+    };

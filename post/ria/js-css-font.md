@@ -26,6 +26,8 @@ like bootstrap
 字体选择
 
     标题: STKaiti
+        font-weight: bold;500;
+        h1: Avenir, -apple-system, system-ui, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         h1: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif
         blog: 
             "Russo One", "Arial Black", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
@@ -35,3 +37,5 @@ like bootstrap
     正文：
         p:"Google Sans Display","lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif
 
+    副标题：浅色
+        rgba(105,123,140,.6)

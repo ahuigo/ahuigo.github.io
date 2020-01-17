@@ -4,6 +4,7 @@ date: 2020-01-14
 private: true
 ---
 # antv brush
+> doesn't work with histogram: https://github.com/alibaba/BizCharts/issues/827
 https://codepen.io/ahuigo/pen/jOEKmxp?editors=1010
 https://bizcharts.net/products/bizCharts/demo/detail?id=g2-brush-interval&selectedKey=%E6%A6%82%E8%A7%88
 
@@ -31,8 +32,11 @@ https://bizcharts.net/products/bizCharts/demo/detail?id=g2-brush-interval&select
                   chart.get('options').filters = {};
                   chart.repaint();
               });
-        }
+    }
+
+    return <Chart onGetG2Instance={g2Chart => { chart = g2Chart; }} />
 
 
 # 交互
-
+bizChart图表交互
+https://bizcharts.net/products/bizCharts/docs/interaction

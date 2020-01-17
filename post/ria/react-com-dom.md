@@ -28,18 +28,23 @@ React.cloneElement() 几乎等同于：
 
     <element.type {...element.props} {...props}>{children}</element.type>
 
+# AppendCom
+appendCom(Com, props) 
 
-# 定制一个addCom
-message.success('msg')
+    appendCom(Com, props)
+    appendCom(<Com {...props}/>)
+
+## 例子
+例子1 message.success('msg') 
 
     function success(msg){ 
         const Com = (props)=>{
             return <div>{props.msg}</div>
         }
-        addCom(Com, {msg})
+        appendCom(Com, {msg})
     }
 
-    function addCom(Com, props = {}) {
+    function appendCom(Com, props = {}) {
         const div = document.createElement('div');
         document.body.appendChild(div);
         div.onclick = (e) => {
@@ -58,7 +63,7 @@ message.success('msg')
         ReactDOM.render(dom, div);
     }
 
-参考https://www.npmjs.com/package/rc-notification
+例子2: https://www.npmjs.com/package/rc-notification 
 
     notification.notice({
         content: <span>closable</span>,
@@ -72,7 +77,7 @@ message.success('msg')
         },
     });
 
-参考核心源码：
+更多参考核心源码：
 https://github.com/ant-design/ant-design/blob/master/components/message/index.tsx
 https://github.com/react-component/notification/blob/master/src/Notification.jsx
 
@@ -109,28 +114,6 @@ https://github.com/react-component/notification/blob/master/src/Notification.jsx
     };
 
 # portal
-https://github.com/ahuigo/react-portal?organization=ahuigo&organization=ahuigo
-
-
-    <Portal node={document && document.getElementById('san-francisco')}>
-        This text is portaled into San Francisco!
-    </Portal>
-
-自定义onClick onClose ....
-
-    <PortalWithState closeOnOutsideClick closeOnEsc>
-      {({ openPortal, closePortal, isOpen, portal }) => (
-        <React.Fragment>
-          <button onClick={openPortal}>
-            Open Portal
-          </button>
-          {portal(
-            <p>
-              This is more advanced Portal. It handles its own state.{' '}
-              <button onClick={closePortal}>Close me!</button>, hit ESC or
-              click outside of me.
-            </p>
-          )}
-        </React.Fragment>
-      )}
-    </PortalWithState>
+Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。
+它的本质就是AppendCom to container
+参考：react-com-portal.md
