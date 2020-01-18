@@ -34,7 +34,7 @@ appendCom(Com, props)
     appendCom(Com, props)
     appendCom(<Com {...props}/>)
 
-## 例子
+## Append + unmount
 例子1 message.success('msg') 
 
     function success(msg){ 
@@ -44,6 +44,7 @@ appendCom(Com, props)
         appendCom(Com, {msg})
     }
 
+    import ReactDOM from 'react-dom';
     function appendCom(Com, props = {}) {
         const div = document.createElement('div');
         document.body.appendChild(div);
@@ -57,7 +58,7 @@ appendCom(Com, props)
                 ReactDOM.unmountComponentAtNode(div);
                 div.parentNode.removeChild(div);
             }}>;
-            <Com {...props} />
+                <Com {...props} />
             </div>
         }
         ReactDOM.render(dom, div);
@@ -117,3 +118,28 @@ https://github.com/react-component/notification/blob/master/src/Notification.jsx
 Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。
 它的本质就是AppendCom to container
 参考：react-com-portal.md
+
+# Convert JSX to html
+    html = ReactDOMServer.renderToStaticMarkup(
+        <div>...</div>
+    )
+
+如果想给这个dom 传context.store
+
+    import React from 'react';
+    import ReactDOMServer from 'react-dom/server';
+    import {Provider} from 'react-redux';
+
+    class ParentComponent extends React.Component {
+        ...
+        getHtml(config) {
+            const {classes, children} = config
+            return ReactDOMServer.renderToStaticMarkup(
+                <Provider store={this.context.store}>
+                    <ChildComponent classes={classes}>{children}</ChildComponent>
+                </Provider>
+            )
+        }
+    }
+
+    ParentComponent.contextTypes = { store: React.PropTypes.object };

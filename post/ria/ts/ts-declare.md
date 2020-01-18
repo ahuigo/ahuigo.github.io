@@ -749,6 +749,16 @@ jQuery.foo({
     'bar'.prependHello();
     ```
 
+或者 用extend
+
+    // custom.window.ts
+    export interface CustomWindow extends Window {
+        customAttribute: any;
+    }
+
+    // app.ts
+    import {CustomWindow} from './custom.window.ts';
+
 
 ## 模块插件 `declare module`
 

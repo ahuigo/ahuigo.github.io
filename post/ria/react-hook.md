@@ -217,8 +217,10 @@ useContext 让你不使用组件嵌套就可以订阅 React 的 Context。
 
 推荐的替代方案是通过 context 用 useReducer 往下传一个 dispatch 函数：
 
+    // context.js
     const TodosDispatch = React.createContext(null);
 
+    // app.js
     function TodosApp() {
       // 提示：`dispatch` 不会在重新渲染之间变化
       const [todos, dispatch] = useReducer(todosReducer);
