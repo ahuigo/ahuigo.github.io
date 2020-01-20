@@ -684,8 +684,9 @@ Step 2. Merge the branch and push the changes to GitLab
 
 Also, you can use pull directly:
 
-	git pull other master
-	git pull other # fetch only
+	git pull origin master
+	git pull origin 
+	git pull 
 
 to keep the remote or local file, :
 
@@ -707,8 +708,11 @@ to keep the remote or local file, :
 
 e.g.
 
-        git pull -X ours
+    # 直接用自己的
+        git pull -s ours   
+    # recursive 冲突时才用自己的
         git pull -s recursive -Xours  
+        git pull -Xours   # 默认-s recursive
 
 ### option
 

@@ -3,6 +3,12 @@ title: G2/bizcharts theme
 date: 2020-01-08
 private: true
 ---
+# 样式
+采用canvas 相同的属性
+
+## 颜色
+    <Geom style={{ stroke: 'white', lineWidth: 20 }}>
+
 # G2/bizcharts theme
 ## 新增主题
 新增主题可以使用 Global 上的 registerTheme 接口。

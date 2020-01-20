@@ -4,13 +4,16 @@ date: 2019-11-25
 private: true
 ---
 # React portal
+
 Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。
 
+    // 它的本质就是AppendCom to container
     ReactDOM.createPortal(child, container)
 
 第一个参数（child）是任何可渲染的 React 子元素，例如一个元素，字符串或 fragment。第二个参数（container）是一个 DOM 元素。
 
-## 实现dialog
+## 实现一个AppendChild
+BodyEnd
 
     import React from 'react';
     import ReactDOM from 'react-dom';
@@ -43,30 +46,8 @@ Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节�
 
     <BodyEnd>sth. </BodyEnd>
 
-### 第三方实现的portal+close
-Refer: https://www.npmjs.com/package/react-portal
-
-    import { PortalWithState } from 'react-portal';
- 
-    <PortalWithState closeOnOutsideClick closeOnEsc>
-    {({ openPortal, closePortal, isOpen, portal }) => (
-        <React.Fragment>
-        <button onClick={openPortal}>
-            Open Portal
-        </button>
-        {portal(
-            <p>
-            This is more advanced Portal. It handles its own state.{' '}
-            <button onClick={closePortal}>Close me!</button>, hit ESC or
-            click outside of me.
-            </p>
-        )}
-        </React.Fragment>
-    )}
-    </PortalWithState>
-
 ## 通过 Portal 进行事件冒泡
-通过 Portal ，父Dom可以捕获到不是本Dom 的事件冒泡
+通过 Portal，父Dom可以捕获到不是本Dom(Portal dom) 的事件冒泡
 
 假设存在如下 HTML 结构：
 
@@ -79,6 +60,7 @@ Refer: https://www.npmjs.com/package/react-portal
     const appRoot = document.getElementById('app-root');
     const modalRoot = document.getElementById('modal-root');
     
+    // Modal: AppendChild to el, el to modalRoot
     class Modal extends React.Component {
       constructor(props) {
         super(props);
@@ -101,6 +83,7 @@ Refer: https://www.npmjs.com/package/react-portal
       }
     }
     
+    // 捕获Portal:Modal的事件
     class Parent extends React.Component {
       constructor(props) {
         super(props);
@@ -141,3 +124,32 @@ Refer: https://www.npmjs.com/package/react-portal
     }
     
     ReactDOM.render(<Parent />, appRoot);
+
+# Portal 包示例
+包地址： https://github.com/ahuigo/react-portal?organization=ahuigo&organization=ahuigo
+
+    <Portal node={document && document.getElementById('san-francisco')}>
+        This text is portaled into San Francisco!
+    </Portal>
+
+## 自定义onClick onClose ....
+Refer: https://www.npmjs.com/package/react-portal
+
+    import { PortalWithState } from 'react-portal';
+ 
+    <PortalWithState closeOnOutsideClick closeOnEsc>
+    {({ openPortal, closePortal, isOpen, portal }) => (
+        <React.Fragment>
+        <button onClick={openPortal}>
+            Open Portal
+        </button>
+        {portal(
+            <p>
+            This is more advanced Portal. It handles its own state.{' '}
+            <button onClick={closePortal}>Close me!</button>, hit ESC or
+            click outside of me.
+            </p>
+        )}
+        </React.Fragment>
+    )}
+    </PortalWithState>
