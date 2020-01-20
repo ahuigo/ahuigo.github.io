@@ -112,6 +112,14 @@ Effect Hook 是在渲染后执行某些操作。相当于didMount+didUpdate
         document.title = `You clicked ${count} times`;
     }, []); // 只运行一次effect. 默认是每次render 都运行
 
+### useLayoutEffect vs useEffect
+https://blog.logrocket.com/useeffect-vs-uselayouteffect/
+1. The `useLayoutEffect` function is triggered synchronously, `before` the DOM mutations are painted. 
+2. However, the `useEffect` function is called `after` the DOM mutations are painted.
+Ref 只能用于useEffect
+
+
+
 ## useForceUpdate();
     const forceUpdate = useForceUpdate();
 
@@ -316,6 +324,22 @@ useRef 会在每次渲染时返回同一个 ref 对象。类似CreateRef
     const inputEl = useRef(null);
     // inputEl.current === initialValue
     <input ref={inputEl} type="text" />
+
+### useRef with ts
+
+    const htmlRef = React.useRef<HTMLElement>(null);
+
+    // <div> reference type
+    const divRef = React.useRef<HTMLDivElement>(null);
+
+    // <button> reference type
+    const buttonRef = React.useRef<HTMLButtonElement>(null);
+
+    // <br /> reference type
+    const brRef = React.useRef<HTMLBRElement>(null);
+
+    // <a> reference type
+    const linkRef = React.useRef<HTMLLinkElement>(null);
 
 ### 实时Ref
 要想测量一个 DOM 节点的位置或是尺寸，你可以使用 callback ref。每当 ref 被附加到一个另一个节点，React 就会调用 callback。这里有一个 小 demo:

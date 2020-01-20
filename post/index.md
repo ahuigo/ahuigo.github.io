@@ -1,8 +1,8 @@
 # AHUIGO 的笔记
-- 2020-01-20 [python 字典](/b/py/py-var-dict) 
+- 2020-01-03 [python 字典](/b/py/py-var-dict) 
 - 2018-10-04 [python's super,type, object](/b/py/py-obj-type-super) 
 - 2018-09-28 [py-debug-log](/b/py/py-debug-log) 
-- 2020-01-20 [Python 的math 语法](/b/py/math/py-math) 
+- 2019-12-31 [Python 的math 语法](/b/py/math/py-math) 
 - 2020-01-14 [TS ignore type when import module](/b/ria/ts/ts-ignore) 
 - 2019-09-28 [test](/b/c/ops-benchmark) 
 - 2019-03-08 [tcpdump](/b/net/net-tcpdump) 

@@ -246,7 +246,7 @@ goto:
     window.getComputedStyle($0).left;//可能是auto; 还是相对的偏移
 
 #### 元素在视窗的位置
-视窗受滚动影响，而不是page
+下面的是视窗位置(即窗口), 它受滚动影响，而不是page 位置
 
     div.getBoundingClientRect().x y left,top, height,width
     x==left

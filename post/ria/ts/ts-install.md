@@ -54,6 +54,35 @@ run:
 
     tsc --module commonjs a.ts
 
+### exclude 无关文件
+ts 编译时，通过tsconfig.json 指定无关文件
+
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts",
+    "tslint:latest",
+    "tslint-config-prettier"
+  ]
+## exclude
+    "exclude": [
+        "node_modules",
+        "build",
+        "dist",
+        "scripts",
+        "acceptance-tests",
+        "webpack",
+        "jest",
+        "src/setupTests.ts",
+        "tslint:latest",
+        "tslint-config-prettier"
+    ]
+
+
 ## module 的编译与引入
 ts 的模块其实就是es6 module. 比如 a.ts
 
@@ -89,20 +118,6 @@ tsconfig.json:
     "compilerOptions": {
         "resolveJsonModule": true,
 
-
-## exclude
-    "exclude": [
-        "node_modules",
-        "build",
-        "dist",
-        "scripts",
-        "acceptance-tests",
-        "webpack",
-        "jest",
-        "src/setupTests.ts",
-        "tslint:latest",
-        "tslint-config-prettier"
-    ]
 
 
 ## 代码补全d.ts

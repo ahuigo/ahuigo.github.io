@@ -40,6 +40,42 @@ React.cloneElement() 几乎等同于：
         document.getElementById('root')
     );
 
+## render with redux store
+App.tsx
+
+    import React, { useEffect, useLayoutEffect } from 'react';
+    import { useSelector, useDispatch } from 'react-redux';
+    import ReactDOM from 'react-dom';
+    import { Provider } from 'react-redux';
+
+    function App(props:any) {
+
+        useEffect(() => {
+            const store = window.g_app._store; // how to get the store in umi??
+            const subAppContainer = document.createElement('div')
+            document.body.appendChild(subAppContainer);
+            ReactDOM.render(
+                <Provider store={store}>
+                        <SubApp />
+                </Provider>, subAppContainer
+            );
+
+        }, []);
+        return <div>Main APP</div>
+    }
+
+
+SubApp.tsx
+
+    import React, { useEffect, useLayoutEffect } from 'react';
+    import { useSelector, useDispatch } from 'react-redux';
+
+    function SubApp(props: any) {
+        const title = useSelector((state: any) => state.subApp.title);
+
+        return <div>{title}</div>
+    }
+
 # AppendCom
 appendCom(Com, props) 
 
@@ -144,15 +180,22 @@ Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节�
     import {Provider} from 'react-redux';
 
     class ParentComponent extends React.Component {
-        ...
+        static contextTypes = { store: React.PropTypes.object };
+
         getHtml(config) {
-            const {classes, children} = config
             return ReactDOMServer.renderToStaticMarkup(
                 <Provider store={this.context.store}>
-                    <ChildComponent classes={classes}>{children}</ChildComponent>
+                    <ChildComponent />
                 </Provider>
             )
         }
     }
 
-    ParentComponent.contextTypes = { store: React.PropTypes.object };
+
+# 总结
+1. ReactDOMServer: 生成html
+2. Render: 
+    1. 子组件：传递provider
+        1. React.render
+        1. appendCom(portal)
+    1. 本身： React.render

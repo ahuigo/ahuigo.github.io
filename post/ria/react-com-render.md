@@ -245,8 +245,8 @@ React Ele元素是不可变对象。一旦被创建不可更改。除非用rende
 
 其它更新方式(原理都是重新执行render 函数)：
 
-    com.forceUpdate
-    com.setState({})
+    this.forceUpdate()
+    this.setState({})
 
 ## React 只更新需要更新的部分
 

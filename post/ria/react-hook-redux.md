@@ -62,10 +62,12 @@ useDispath 只能在function component 内使用，这样会报错的：
         }, []);
         return <div {...props} style={{ background: 'red', 'zIndex': 9999 }}>
             <div onClick={e => {
-                labelHooks.addLabel('ahui', { lng: 139, lat: 40 }, <div><h1>hahah</h1></div>)
-            }}><h1 id="ahuix">test</h1></div>
+                labelHooks.addLabel('ahui', { lng: 139, lat: 40 }, <div><h1>new1</h1></div>)
+            }}>
+                <h1 id="ahuix">test</h1>
+            </div>
+
             {Object.entries(lableList).map(([labelId, labelInfo]: [string, any]) => {
-                // todo
                 const style = {} // getLabelStyle(labelInfo.position);
                 return <div key={labelId} style={style}>{labelInfo.labelEl}</div>
             })}

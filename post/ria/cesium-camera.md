@@ -35,6 +35,7 @@ https://zhuanlan.zhihu.com/p/59743409
 获取直角坐标cartesian3
 
     camera.position     // new Cesium.Cartesian3(); 直角坐标
+    const camera = window.id.cesium.viewer.camera
 
 获取Cartographic
 
@@ -48,6 +49,16 @@ https://zhuanlan.zhihu.com/p/59743409
     var lat=Cesium.Math.toDegrees(cartograhphic.latitude);
     var lng=Cesium.Math.toDegrees(cartograhpinc.longitude);
     var alt=cartographic.height;
+
+度数转换
+
+    function getPos(viewer){
+        const camera = viewer.camera;
+        const {longitude, latitude, height:alt} = viewer.camera.positionCartographic
+        var lat=Cesium.Math.toDegrees(latitude);
+        var lng=Cesium.Math.toDegrees(longitude);
+        return {lng,lat,alt}
+    }
 
 ### camera direction
 camera direction:
@@ -84,13 +95,38 @@ setView
         }
     });
 
+## add text entities with position
+
+    // viewer.entities.add({
+    //     position : window.Cesium.Cartesian3.fromDegrees(lng,lat,height),
+    //     label : {
+    //         text : 'Philadelphia'
+    //     }
+    // })
+    // viewer.zoomTo(entity);
+
 ## Rotate
 
     viewer.camera.lookAt(Cesium.Cartesian3.fromDegrees(15, 0, 100), new Cesium.HeadingPitchRange(0, 0, 100));
     viewer.camera.setView({destination: Cesium.Cartesian3.fromDegrees(15, 0, 100)});
 
-## center
+## center position
     viewer.camera.setView({destination: Cesium.Cartesian3.fromDegrees(15, 0, 100)});
     //momenta
     window.id.map().centerEase([lng, lat, ele])
 
+
+## DOM position
+如果想用html 元素放到指定的位置，得用 wgs84ToWindowCoordinates
+
+    const windowCoords = window.Cesium.SceneTransforms.wgs84ToWindowCoordinates(
+        viewer.scene,
+        window.Cesium.Cartesian3.fromDegrees(lng, lat, height)
+    );
+
+    const styles = {
+        left: (windowCoords.x ) + 'px',
+        top: (windowCoords.y ) + 'px',
+        right: 'auto'
+    };
+    return styles;
