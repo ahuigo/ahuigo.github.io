@@ -391,6 +391,9 @@ iterate
     for cookie in session.cookies:
         print(cookie.name, cookie.value, cookie.domain)
 
+### save/load cookie
+	session.cookies.save(COOKIE_FILE, ignore_discard=True, ignore_expires=True)
+
 other: save cookie
 
     import requests, requests.utils, pickle

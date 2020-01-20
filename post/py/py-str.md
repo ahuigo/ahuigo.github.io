@@ -40,7 +40,7 @@ same as js:
 ## format
 https://pyformat.info/
 
-old
+### old format
 
 	>>> print 'This is (%r) (%s)' % ("Hilojack\"", "Blog")
 	This is ('Hilojack"') (Blog)
@@ -437,7 +437,11 @@ python2 bytes translate reverse:
 ```
 
 ## trim
-包括\n, ' ', '\t\r'
+trim 字符集
+
+    'abcdef'.strip('efg')
+
+默认字符集\n, ' ', '\t\r'
 
 	'a\n  '.strip() + ',end'
     s.lstrip()

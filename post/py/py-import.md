@@ -5,7 +5,7 @@ date: 2018-09-28
 # Preface
 
 ## package vs module
-1. pkg/__init__.py is package, 优先级高 包含多个module
+1. `pkg/__init__.py` is package, 优先级高 包含多个module
 2. mod.py is module, 优先级低
 
 python 主要是通过import 实现模块化的, 每个文件就是一个module:
@@ -122,6 +122,40 @@ module find path
 相当于: sys.path.insert(1,'.'): 注意不是0个，第0个是执行入口文件所在的目录, 比如flask/gunicorn 所在的目录
 
 	export PYTHONPATH=. ;# 当前的working 目录
+
+# module is store
+
+    $ tree mod
+    mod
+    ├── run.py
+    ├── b.py
+    └── store.py
+
+    
+    $  cat store.py 
+    name=None
+
+    $  cat b.py 
+    from . import store
+    def debug():
+        print(store.name)
+
+    $  cat run.py 
+    from . import b
+    from . import store
+    store.name='name from run.py'
+    b.debug()
+
+module `store.py` is used as store
+
+    $ python
+    >>> from mod import run
+    name from run.py
+
+## conf with env
+
+    # from conf import DEBUG
+    DEBUG = os.getenv("DEBUG", "")
 
 # scope
 模块内变量作用scope

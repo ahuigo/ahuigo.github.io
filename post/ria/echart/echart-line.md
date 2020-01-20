@@ -145,13 +145,10 @@ setInterval(()=>{
     series: [{
         type: "line",
         symbolSize:10,
-        symbol: 'circle',
-        showSymbol:true,
+        // symbol: 'circle',
+        // showSymbol:true,
         itemStyle: {
             color: "#FF0000", //symbol color
-            lineStyle: {
-                color: "blue", //line color
-            }
         },
         lineStyle: {
             color: "blue", //line color
@@ -167,8 +164,8 @@ setInterval(()=>{
         },           
     }, 
 
-## itemStyle
-itemStyle 的normal 不是必须的
+## itemStyle 内嵌line 必须是normal
+itemStyle内置line, normal 是必须的
 
     itemStyle: {
         normal: {

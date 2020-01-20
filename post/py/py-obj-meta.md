@@ -235,11 +235,11 @@ metaclass conflict: the metaclass of a derived class must be a (non-strict) subc
 ### What type can create a class?
 type, or anything that subclasses!
 
-To illustrate, M_A must be subtype of metaclass of `type = (A's base object).__class__`
-```
-class M_A(object): pass
-class A(object, metaclass = M_A): pass
-```
+To illustrate, `M_A` must be subtype of metaclass of `type = (A's base object).__class__`
+
+    class M_A(object): pass
+    class A(object, metaclass = M_A): pass
+
 原因是:
 1. The "derived class" is A.
 2. The "metaclass of a derived class" A is M_A.

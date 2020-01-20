@@ -1,5 +1,5 @@
 ---
-title: type vs object
+title: python's super,type, object
 date: 2018-10-04
 ---
 # type vs object
@@ -278,7 +278,7 @@ Drawing.  Setting shape to: triangle
 Drawing at position: 10 20
 ```
 
-### bound and unbound
+### bound and unbound with super
 类似js 的bind this概念
 
     >>> class B(object):

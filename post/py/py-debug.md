@@ -14,16 +14,17 @@ date: 2018-09-28
 1. 抛异常。在想要的位置异常，比如Flask的DEBUG的模式下，werkzeug里面的DebuggedApplication: 会把Web页面渲染成一个可调试和可执行的环境，直接到上面调试
 
 ## trace
-```
-import sys
-def debug_info():
-    return {
-        'file':sys._getframe().f_code.co_filename,
-        'fileno':sys._getframe().f_lineno,
-        'funcname':sys._getframe(0).f_code.co_name,
-        'caller':sys._getframe(1).f_code.co_name,
-    }
-```
+getframe(0) 是`debug_info`本身，getframe(1) 是caller
+
+    import sys
+    def debug_info():
+        return {
+            'file':sys._getframe().f_code.co_filename,
+            'fileno':sys._getframe().f_lineno,
+            'funcname':sys._getframe(0).f_code.co_name,
+            'caller':sys._getframe(1).f_code.co_name,
+        }
+
 或者：
 
     import sys

@@ -9,8 +9,13 @@ priority:
     0b11
 
 ## random
+`[0,1)` 小数
 
 	import random
+    random.random()
+
+包含`[3,8]` 的整数
+
 	random.randint(3,8)
 
 	# 主要用于密码强随机

@@ -24,13 +24,37 @@ description:
         $ { echo ass; xxxxxxx} 2>a.txt
         zsh: command not found: xxxxxxx
 
+下面的语法全等价, 都是重定向err+stdout到a.txt
+
+    >& a.txt
+    &> a.txt
+    >&a.txt
+    &>a.txt
+    # 可以记忆为`&` 代表err,  `>`代表stdtout
+
+感觉应该尽量使用`>&`：
+
+    # out+err
+    { echo ass; xxxxxxx} 2>&1 | tee c.txt
+
+    # 两次stdout
+    { echo ass; xxxxxxx} >&1 | tee c.txt
+
+`&>`与`>&`一样，`2&>` 非常特殊
+
+    # out+err 到文件1 (stdout screen关闭)
+    { echo ass; xxxxxxx} &>1 
+
+    # 两次err 到文件1, (stdout screen正常)
+    { echo ass; xxxxxxx} 2&>1
+
 参考下面的exec
 
     >& or &> : 重定向标准输出和标准错误
         $ { echo ass; xxxxxxx} >& a.txt
         ass
         zsh: command not found: xxxxxxx
-    2>& 重定向标准错误(重复)
+    2>& 重定向标准错误(重复error, 没有stdout)
         $ { echo ass; xxxxxxx} 2>& a.txt
 
 ## 输入重定向

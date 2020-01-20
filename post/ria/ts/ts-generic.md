@@ -64,6 +64,11 @@ Animals声明合并示例：
         console.log(arg.length);// Property 'length' does not exist on type 'T'.
         return arg;
     }
+
+React 例子：
+
+    const t = React.createContext<string>('light')
+
 ### 父子类型约束
 这时，我们可以对泛型进行约束，只允许这个函数传入那些包含 length 属性的变量。这就是泛型约束：
 

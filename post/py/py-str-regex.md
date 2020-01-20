@@ -72,7 +72,7 @@ in js:
     (?:pattern) # 非命名
 
 	pattern = re.search(r'(?P<fstar>f.*)(?P<bstar>b.*)', 'Hello foobar')
-	print "f* => {0}".format(pattern.group('fstar')) # prints f* => foo
+	pattern.group('fstar')
 
 groups 列出所有的分组，但是不包含: group(0)=group()即整个匹配
 
@@ -82,6 +82,16 @@ groups 列出所有的分组，但是不包含: group(0)=group()即整个匹配
     'TeSt'
     >>> re.match('((t)(e))st', 'TeSt', re.IGNORECASE).group(0)
     'TeSt'
+
+group 可以取多个key
+
+    >>> m.group('k1','k2')
+    ('v1','v2')
+
+groupdict 判断key 存在性
+
+    mdict = m.groupdict()
+    'k1' in mdict
 
 ## 元字符
 可以是unicode
@@ -136,6 +146,7 @@ groups 列出所有的分组，但是不包含: group(0)=group()即整个匹配
 compile with modifier:
 
 	re.compile(r'.*', re.S) # re.S == re.DOTALL
+	re.compile(r'.*', re.S|re.IGNORECASE) 
     re.IGNORECASE
     re.UNICODE
 

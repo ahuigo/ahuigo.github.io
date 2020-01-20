@@ -175,7 +175,7 @@ trim space only
 	' a '.trimStart()
 	' a '.trimEnd()
 
-replace strip
+replace strip 字符集
 
     '#adf#'.replace(/^#+|#+$/g,'')
 

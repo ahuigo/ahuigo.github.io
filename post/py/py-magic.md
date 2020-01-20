@@ -95,12 +95,3 @@ date: 2018-10-04
     >   object.__gt__(self, other)
 
     filter(User.id==5) ORM SQLAlchemy 中看到这里我还以为写错了。。。原来不是相等的意思。而是magic
-
-## bound magic get
-
-    In [13]: bar.__get__(a)
-    Out[13]: <bound method bar of <__main__.A object at 0x107924160>>
-
-经常
-
-    a.bar = bar.__get__(a)

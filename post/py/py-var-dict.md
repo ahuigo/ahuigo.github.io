@@ -59,7 +59,7 @@ dict, list 赋值都是按引用的，如果是一维的值:
 		[('x', 1), ('y', 2)]
 
 ### destruct
-python  没有es6的destruction
+python dict 没有es6的destruction
 
     const {a,b}={a:1,b:2}
 
@@ -105,7 +105,7 @@ python >=3.5
 	z = {**x, **y}
 ```
 
-or with update:
+or with update inplace:
 
     d = {}
     d.update(d1).update(d2)

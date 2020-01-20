@@ -39,7 +39,7 @@ https://blog.filippo.io/mkcert-valid-https-certificates-for-localhost/
     openssl req -new -x509 -key ./testdata/server.key -out ./testdata/server.pem -days 365
 	openssl rsa -in my_rsa_private_key.pem -pubout -out my_rsa_public_key.pem
 
-## self RSA
+## self cert(RSA)
 下例生成一个自签名证书(self sign certificate), 而非[ssl-ca](/p/ssl-ca) 中CA 签名证书(`CA -sign`)
 
 	# 生成一个RSA密钥

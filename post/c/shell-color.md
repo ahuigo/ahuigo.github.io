@@ -20,6 +20,7 @@ http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
         UNDERLINE = '\033[4m'
 
     print(bcolors.WARNING + "Warning: xxxx" + bcolors.ENDC)
+    for i in range(120): print(f'\033[{i}m'+f'中国{i}'+'\033[0m')    
 
 ## color codes
 

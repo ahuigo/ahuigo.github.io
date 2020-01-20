@@ -41,7 +41,9 @@ charles 需要在`Proxy`-`Proxy Settings - SSl` 中设置 `Enable SSL`, 且选�
 > 其实还有一步要做：客户端安装charles 证书。否则: 只能通过`curl -k -x '127.0.0.1:800' url` 跳过证书检查
 
 ### 给客户端装charles CA证书
+教程：
 http://www.charlesproxy.com/documentation/using-charles/ssl-certificates/
+charles 菜单：Help > SSL Proxying
 
 对于MAC OSX: 
 1. "Help > SSL Proxying > Install Charles Root Certificate".
@@ -57,6 +59,16 @@ JAVA:
 		#(changeit is the default password on the cacerts file)
 	Then try: keytool -list -keystore JAVA_HOME/jre/lib/security/cacerts -storepass changeit
 
+对于android:
+
+    1. 访问chls.pro/ssl安装证书
+    2. 下载的charles-proxy-ssl-pro.pem
+    3. 安装：
+        （miui10及以上）点击设置-更多设置-系统安全-加密与凭据-从存储卡安装文件
+        （miui10一下）点击设置-更多设置-系统安全-从存储卡安装文件
+        其它按提示
+
+
 #### trust certificate
 Key chains:
 
@@ -71,6 +83,10 @@ Click:
     Proxy -> SSL Proxying Setting ->
         select: enable SSL Proxing
         add:    *.443 or domain:443
+
+## android proxy
+### hosts
+android 访问charles 的时候，会受主机上的`/etc/hosts`影响
 
 ## cracker
 Via github or google , search `charles.jar` for cracker, then:

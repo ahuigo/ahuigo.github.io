@@ -1,4 +1,8 @@
 # AHUIGO 的笔记
+- 2020-01-20 [python 字典](/b/py/py-var-dict) 
+- 2018-10-04 [python's super,type, object](/b/py/py-obj-type-super) 
+- 2018-09-28 [py-debug-log](/b/py/py-debug-log) 
+- 2020-01-20 [Python 的math 语法](/b/py/math/py-math) 
 - 2020-01-14 [TS ignore type when import module](/b/ria/ts/ts-ignore) 
 - 2019-09-28 [test](/b/c/ops-benchmark) 
 - 2019-03-08 [tcpdump](/b/net/net-tcpdump) 
@@ -35,7 +39,3 @@
 - 2018-09-27 [三角形triangle](/b/math/geo-triangle) 
 - 2018-08-18 [Posix Regex 正则语法](/b/code/code-regex) 
 - 2018-10-04 [管理包和依赖的工具。](/b/py/py-pkg) 
-- 2018-09-27 [shell color](/b/c/shell-color) 
-- 2018-03-03 [Chrome devtools 使用汇总](/b/ria/js-debug-chrome) 
-- 2018-10-04 [CSS3 选择器](/b/ria/js-css-selector) 
-- 2018-10-04 [profile](/b/py/py-profiler) 

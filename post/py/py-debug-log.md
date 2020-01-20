@@ -23,6 +23,10 @@ https://docs.python.org/3.4/howto/logging.html
     logger.debug('error message')
     logger.debug({'err':'error message'})
 
+我的项目代码 lib/logger.py 有更多示例，支持更多参数
+
+    from lib.logger import logger
+    logger.log(a,b,c,d)
 
 ## autolog: excepthook
 
@@ -143,6 +147,13 @@ define datefmt(see shell date):
     logging.info(msg, *args, **kwargs)
     logging.debug(msg, *args, **kwargs)
     logger.info/debug/...
+
+注意: msg args 关系
+
+    Log 'msg % args' with severity 'INFO'.
+
+### custom multi args log
+see lib.logger import logger
 
 # Advanced logging
 ## loggging components:

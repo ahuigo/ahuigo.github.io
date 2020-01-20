@@ -18,6 +18,9 @@ Python has a more primitive serialization module called *marshal*(support Python
 3. pickle is guaranteed to be  *backwards compatible* across Python releases.
 
 # json
+
+## json encode date
+    import datetime
     class DateEnconding(json.JSONEncoder):
         def default(self, o):
             if isinstance(o, datetime.date):
