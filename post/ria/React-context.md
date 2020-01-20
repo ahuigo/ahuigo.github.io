@@ -66,6 +66,23 @@ Context 解决的是向孙子组件传值的问题。如主题、偏好
       }
     }
 
+## 更多Provider context：
+
+### Material
+
+    import { MuiThemeProvider } from '@material-ui/core/styles';
+
+    <MuiThemeProvider theme={theme}> </MuiThemeProvider>,
+
+### Redux Provider
+import { Provider } from 'react-redux';
+
+    import { store } from './store/store.js';
+
+    <Provider store={store}>
+        ....
+    </Provider>
+
 ## Provide
     <MyContext.Provider value={/* 某个值 */}>
 
@@ -73,7 +90,6 @@ Provider 接收一个 value 属性，传递给消费组件。一个 Provider 可
 1. 多个 Provider 也可以嵌套使用，里层的会覆盖外层的数据。
 2. 当 Provider 的 value 值发生变化时，它内部的所有消费组件都会重新渲染。consumer 不受制于 shouldComponentUpdate 函数
 3. 通过新旧值检测来确定变化，使用了与 Object.is 相同的算法。
-
 
 ## contextType 订阅单个
 挂载在 class 上的 contextType 订阅this.context。通过 this.context 来消费最近 Context 上的值

@@ -26,7 +26,19 @@ private: true
 
 React.cloneElement() 几乎等同于：
 
-    <element.type {...element.props} {...props}>{children}</element.type>
+    <element.type {...element.props} {...props}>{children}</element.type
+
+# Replace DOM(render)
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import { Provider } from 'react-redux';
+
+    ReactDOM.render(
+        <Provider store={1}>
+            <div></div>
+        </Provider>,
+        document.getElementById('root')
+    );
 
 # AppendCom
 appendCom(Com, props) 
@@ -118,6 +130,7 @@ https://github.com/react-component/notification/blob/master/src/Notification.jsx
 Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。
 它的本质就是AppendCom to container
 参考：react-com-portal.md
+
 
 # Convert JSX to html
     html = ReactDOMServer.renderToStaticMarkup(
