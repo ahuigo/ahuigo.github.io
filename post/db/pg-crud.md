@@ -95,7 +95,7 @@ https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-gr
 
 Supported by any database: 利用 group + column=max(column)
 
-    SELECT MIN(x.id),  -- change to MAX if you want the highest
+    SELECT MIN(x.id),  -- change to MAX if you want the highest id
          x.customer, 
          x.total
     FROM PURCHASES x
