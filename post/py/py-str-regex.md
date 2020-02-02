@@ -127,6 +127,13 @@ groupdict 判断key 存在性
 
     re.search(r'^(?P<flag><)?[a-z]+(?(flag)>)$', string)
 
+## 断言
+
+    >>> re.match(r'(\w+)=1,(?=bc\w+)', 'a=1,bcd')
+    ('a')
+    >>> re.match(r'(\w+)=([^=]*)(?:(?=,\w+=)|$)', 'a=1,b=3').groups()
+    ('a', '1')
+
 # regex 函数
 
 	re.match(r'regex', str)
@@ -205,7 +212,12 @@ If you want to locate a match anywhere in string, use search() .
 	['a', 'b', 'c', 'd']
 
 ## findall
-re.search/match/fullmatch 都是只找一次
+re.search/match/fullmatch 都是只找一次. 多个分组还会覆盖！
+
+    >>> m=re.match(r'((\w+)=(\w+),?)+', 'a=1,b=2')
+    >>> m.groups()
+    ('b=2', 'b', '2')
+
 Use re.findall or re.finditer instead.
 
 	re.findall(pattern, string) returns a list of matching strings.
@@ -213,8 +225,8 @@ Use re.findall or re.finditer instead.
 
 findall
 
-	>>> re.findall(r'\w+', ' ahui jack')
-	['ahui', 'jack']
+    >>> re.findall(r'(a)(\w+)', ' ahui jack')
+    [('a', 'hui'), ('a', 'ck')]
     # 不会返回分组结果
     >>> re.findall(r'(\w+)', ' ahui jack')
 	['ahui', 'jack']
