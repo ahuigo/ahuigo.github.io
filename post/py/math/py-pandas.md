@@ -334,6 +334,8 @@ filter row: via index/key
     # via row key
     df['row0':'row3']
     df.loc['row0':'row3']
+    # 包括了3
+    df.loc['0':'3']
 
 filter column: axis=1
 
