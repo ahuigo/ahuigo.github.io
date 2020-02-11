@@ -34,7 +34,7 @@ credential 发送include 时，allow-origin 不能是`*`
 
     fetch(url, {
         credentials: "same-origin"
-        credentials: "include", // send cookie
+        credentials: "include", // send cookie, use "omit" if not send cookie
         mode: 'cors', //"same-origin"
     }).then(...).then(..).catch(...);
     fetch(url).then(async r=> console.log(await r.text()))

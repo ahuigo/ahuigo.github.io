@@ -303,6 +303,9 @@ export xlsx
     df.keys()       //col name list
     df.columns      //col name list
 
+### exist index/column
+    'g' in df.index
+
 ### Read values
     df.values       //column values list(二维数组)
     series.values   //一维数组
@@ -481,8 +484,8 @@ f.apply 是一个row/column 的聚合函数
 #### replace NaN/None,inf
 repalce NaN/None to 0/'':
 
-    fillna(0, inplace=True)
-    fillna('', inplace=True)
+    df.fillna(0, inplace=True)
+    df.fillna('', inplace=True)
 
 分组替换：
 
