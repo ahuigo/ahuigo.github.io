@@ -77,6 +77,10 @@ example:
         import shutil
         shutil.rmtree('/path/to/your/dir/'); # recursive
 
+### link file
+    os.symlink(src, dst)
+    os.link(src, dst)
+
 ### rename file:
 
 	os.rename(fileA_or_dirA, existedDir/fileB)

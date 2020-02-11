@@ -437,7 +437,7 @@ python2 bytes translate reverse:
 ```
 
 ## trim
-trim 字符集
+trim left and right:
 
     'abcdef'.strip('efg')
 
@@ -446,7 +446,7 @@ trim 字符集
 	'a\n  '.strip() + ',end'
     s.lstrip()
 
-left:
+trim left or right:
 
     '00a00'.lstrip('0')
     '00a00'.rstrip('0')
