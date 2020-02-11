@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-28 [Python 文件处理](/b/py/py-file) 
 - 2020-01-03 [python 字典](/b/py/py-var-dict) 
 - 2018-10-04 [python's super,type, object](/b/py/py-obj-type-super) 
 - 2018-09-28 [py-debug-log](/b/py/py-debug-log) 
@@ -38,4 +39,3 @@
 - 2018-10-04 [node 系统相关](/b/ria/node-os) 
 - 2018-09-27 [三角形triangle](/b/math/geo-triangle) 
 - 2018-08-18 [Posix Regex 正则语法](/b/code/code-regex) 
-- 2018-10-04 [管理包和依赖的工具。](/b/py/py-pkg) 

@@ -51,17 +51,20 @@ option = {
 };
 ```
 
-## grid
-grid 控制图形周边的空白，类似css padding
 
-    grid: {
-        left: '30%',
-        right: '18%',
-        bottom: '3%',
-        containLabel: true
-    },
+## update
 
-# dynamic + time
+    
+     //update data
+    myChart.setOption({
+        series: [{
+            data: getData(1)
+        },{
+            data: getData(10)
+        }]
+    });
+
+## dynamic + time
 ```js
 function getData(mm=1) {
     var start_day = new Date(1997, 9, 3);
@@ -138,83 +141,3 @@ setInterval(()=>{
     });
 },5000);
 ```
-
-# line 
-## symbol
-
-    series: [{
-        type: "line",
-        symbolSize:10,
-        // symbol: 'circle',
-        // showSymbol:true,
-        itemStyle: {
-            color: "#FF0000", //symbol color
-        },
-        lineStyle: {
-            color: "blue", //line color
-        }
-    }]
-
-### symbol color callback
-
-    itemStyle: {
-        color: (item)=>{
-            console.log(item.data.name)  
-            return item.data.value[1]>0?'red':'green'
-        },           
-    }, 
-
-## itemStyle 内嵌line 必须是normal
-itemStyle内置line, normal 是必须的
-
-    itemStyle: {
-        normal: {
-            width: 1.5,
-            color: 'blue',
-            borderWidth:1,
-            lineStyle: {
-                type: 'solid',
-                color:'orange',
-                width:2
-            },
-        }
-    }
-
-## tooltip
-多维：
-
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross',
-            label: {
-                backgroundColor: '#6a7985'
-            }
-        }
-    },
-
-### 自定义format
-多根线series 共用一个tooltips
-
-    tooltip: {
-        trigger: 'axis',
-        formatter: function (seriesList) {
-            const series0 = seriesList[0]
-            let msg = series0.data[series0.dimensionNames[series0.encode.x]] + '<br>'
-            // msg += 'add:' + series0.data.add + '<br>'
-            for (const params of seriesList) {
-                const key = params.dimensionNames[params.encode.y]
-                msg += params.seriesName + ':' + params.data[key] + '<br/>'
-            }
-            return msg
-        },
-        axisPointer: {
-            animation: false
-        }
-    },
-
-# 参考
-- Customized Chart Styles
-https://www.echartsjs.com/en/tutorial.html#Customized%20Chart%20Styles
-- itemStyle
-https://echartsjs.com/en/option.html#series-line.itemStyle
