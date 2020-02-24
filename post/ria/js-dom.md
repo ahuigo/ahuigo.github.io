@@ -241,7 +241,7 @@ goto:
 
     element.scrollIntoView();
 
-不用： getComputedStyle(ele).left 是auto (相当于offsetLeft)
+不要用： getComputedStyle(ele).left， 因为它可能是auto (相当于offsetLeft)
 
     window.getComputedStyle($0).left;//可能是auto; 还是相对的偏移
 

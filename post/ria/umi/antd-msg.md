@@ -7,3 +7,9 @@ private: true
 
     import { message } from 'antd';
     message.success('提交成功');
+
+# tooltip
+
+    <Tooltip placement="topLeft" title={text}>
+        <Button>TL</Button>
+      </Tooltip>

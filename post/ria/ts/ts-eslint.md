@@ -116,6 +116,9 @@ https://eslint.org/docs/user-guide/configuring#configuring-rules
     // eslint-disable-next-line 
     alert("eslint is disabled here");
 
+    // eslint-disable-line no-use-before-define
+    /* eslint-disable no-underscore-dangle */
+
 3.disable ESLint for `a whole file` with a Javascript comment
 
     /* eslint-disable */

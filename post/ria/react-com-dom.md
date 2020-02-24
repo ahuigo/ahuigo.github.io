@@ -112,6 +112,7 @@ appendCom(Com, props)
         ReactDOM.render(dom, div);
     }
 
+## 例子
 例子2: https://www.npmjs.com/package/rc-notification 
 
     notification.notice({

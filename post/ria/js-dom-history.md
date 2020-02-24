@@ -22,6 +22,10 @@ Example:
 	title
         可能不生效
 
+## replaceState
+    history.replaceState(data, title [, url ])
+    history.replaceState({page: 1}, 'title 1', '?page=1')
+
 # history event
 trigger:
 

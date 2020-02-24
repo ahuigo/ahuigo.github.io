@@ -49,6 +49,10 @@ in js:
 	>>> m.groups()[0]
 	010
 
+named group
+
+    re.sub(r'(?P<quote>")abc\1',r'\g<quote>ABC\g<quote>' ,'"abc"')
+
 ## refer group
 
     pattern itself	    
