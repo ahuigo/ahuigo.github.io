@@ -106,6 +106,7 @@ keyof 可以实现泛型多参数依赖
     function fn2<T extends keyof TMap, F extends TMap[T]>(a: T, fn: F, ) {
 
     }
+    fn2('a',(w:number) => any)
 
 ## keyof
 索引类型查询操作符。
@@ -124,6 +125,13 @@ keyof 可以取Map 的keys
     }
     let keys: keyof Map<number>;//string
     let value: Map<number>['antzone'];//number
+
+keyof 取函数类型
+
+    const foo = (): FooReturnType => { }
+    
+    // 获取函数类型
+    typeof foo
 
 ## 泛型函数
 Foo 组件需要两个参数

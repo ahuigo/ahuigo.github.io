@@ -138,6 +138,12 @@ WORKDIR 相当于cd
     COPY . /app
     WORKDIR /app
 
+不要点`.`
+
+    COPY package.json yarn.lock /app/
+    COPY ["package.json", "yarn.lock", "/app/"]
+
+
 COPY 中文件夹要带`/`
 
     # app是文件：

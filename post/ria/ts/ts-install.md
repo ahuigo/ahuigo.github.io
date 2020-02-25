@@ -35,11 +35,40 @@ run:
 
     $ tsc --init; #默认是es5+commonjs 的tsconfig
     $ vi tsconfig.json ;#手动配置
-        "target":"es2015"
-        "module":"es2015"
+        "target":"es2016"
+        "module":"es2016"
 
 默认tsconfig.json 是严格的:`strict:true`
+
+### lib 支持es2020/dom
+    $ vi tsconfig.json
+    "compilerOptions": {
+        "lib": [ "es2020", "dom" ]
+    }
+
+### 支持@根目录
+      "compilerOptions": {
+        "baseUrl": ".",
+        "paths": { 
+            "@/*": ["./src/*"],
+         }
+      },
     
+### jest path mapping: 
+https://kulshekhar.github.io/ts-jest/user/config/
+jest 默认使用jest.config.ts
+
+    // jest.config.js
+    const { pathsToModuleNameMapper } = require('ts-jest/utils');
+
+    // In the following statement, replace `./tsconfig` with the path to your `tsconfig` file
+    const { compilerOptions } = require('./tsconfig');
+
+    module.exports = {
+        //moduleNameMapper:{ '^@/(.*)$': '<rootDir>/src/$1', },
+        moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }  )
+    };
+
 ### 编译单文件
 
     # 编译ts

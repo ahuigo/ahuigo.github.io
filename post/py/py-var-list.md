@@ -237,6 +237,10 @@ repeat
 
 	'.'.join(['pad']*2)
 
+## concat
+
+    a+b
+
 ## pop,append(push)
 
 	>>> list = [1,2]
