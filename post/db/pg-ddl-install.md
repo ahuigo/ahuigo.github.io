@@ -45,6 +45,37 @@ see db-user.md
 
     createdb `whoami`
 
+### debug
+#### 升级问题
+    psql: error: could not connect to server: could not connect to server: No such file or directory
+        Is the server running locally and accepting
+        connections on Unix domain socket "/tmp/.s.PGSQL.5432"?
+
+    $ tail /usr/local/var/postgres/server.log
+
+    2020-02-28 13:00:12.285 CST [6972] FATAL:  database files are incompatible with server
+    2020-02-28 13:00:12.285 CST [6972] DETAIL:  The data directory was initialized by PostgreSQL version 11, which is not compatible with this version 12.2.
+
+方案1：
+
+    $ brew postgresql-upgrade-database
+    FATAL:  role "ahui" does not exist
+
+方案2：
+
+    https://olivierlacan.com/posts/migrating-homebrew-postgres-to-a-new-version/
+
+寻求方案:
+
+    https://github.com/Homebrew/homebrew-core/issues/new?template=bug.md
+    https://github.com/Homebrew/homebrew-core/issues/47077
+
+### conf path
+mac conf:
+
+    /usr/local/var/postgres/pg_hba.conf
+    /usr/local/var/postgres/postgresql.conf
+
 ### change listen host
 1. postgres -h 0.0.0.0
 2. vim /var/lib/pgsql/10/data/postgresql.conf

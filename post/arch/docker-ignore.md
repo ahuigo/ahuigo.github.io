@@ -6,6 +6,7 @@ private: true
 # Docker ignore
 Refer to:
 https://docs.docker.com/engine/reference/builder/#dockerignore-file
+.dockerignore
 
 
     # comment	Ignored.

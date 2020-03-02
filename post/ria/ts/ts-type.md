@@ -89,6 +89,13 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
     Array<string> or string[]
     enum Choose { Wife = 1, Mother = 2} // 选择 妻子 还是 妈妈
 
+## 对象类型
+    type LayerName = 'data_marker' | 'quality_marker';
+
+    export interface State {
+        [key in LayerName]?: boolean
+    }
+
 ## 数组类型
 
     let fibonacci: number[] = [1, 1, 2, 3, 5];

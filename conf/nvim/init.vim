@@ -167,7 +167,7 @@ noremap <c-k> [c
 """"""""""""""
 " File Format
 """""""""""""
-colorscheme desert
+colorscheme industry
 set mouse=a
 set wrap
 " xterm

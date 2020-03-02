@@ -44,7 +44,23 @@ private: true
 1. declare 声明语句中只能定义类型，切勿在声明语句中定义具体的实现
 
 #### extend window,String
-Note: No need to 'declare global'.(https://stackoverflow.com/questions/39877156/how-to-extend-string-prototype-and-use-it-next-in-typescript)
+> https://stackoverflow.com/questions/39877156/how-to-extend-string-prototype-and-use-it-next-in-typescript
+If you want to augment the `class`, and not the instance, augment the `constructor`:
+
+    declare global {
+        interface StringConstructor {
+            padZero(s: string, length: number): string;
+        }
+    }
+
+    String.padZero = (s: string, length: number) => {
+        while (s.length < length) {
+            s = '0' + s;
+        }
+        return s;
+    };
+
+If you want the function on the `instance`(aka prototype)
 
     // extend global
     declare global {

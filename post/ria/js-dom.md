@@ -281,7 +281,7 @@ goto:
 		return pos;
 	}
 
-##### 根据窗口的(innerWidth,innerHeight) 查询element
+##### 根据窗口的内部位置(innerWidth,innerHeight) 查询element
 
 	document.elementFromPoint(500,10)
     document.elementFromPoint(x, y).click();
