@@ -61,6 +61,27 @@ note, 除了局部变量/常量， 其它变量在字符串中的拼接时，不
     end
     cust1=Customer.new("1", "John", "Wisdom Apartments, Ludhiya")
 
+### 类方法
+    class Accounts
+        def Accounts.return_date(str)
+            puts "return #{str}"
+        end
+    end
+    Accounts.return_date('hello')
+
+### alias 
+这个语句用于为方法或全局变量起别名
+
+    alias 新方法名 方法名
+    alias 全局变量 全局变量
+
+    alias foo bar
+    alias $MATCH $&
+
+取消别名：
+
+    undef 方法名
+
 
 ### 静态方法与动态方法
 

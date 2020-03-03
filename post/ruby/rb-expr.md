@@ -109,13 +109,6 @@ private: true
         code
     end
 
-# function
-    def echo(str)
-        p str
-    end
-    echo('hello1')
-    echo 'hello2'
-
 # 多行注释begin/end
     =begin
     这是注释。
@@ -123,35 +116,3 @@ private: true
     这也是注释。
     这还是注释。
     =end
-
-# BEGIN/END 初始语句
-
-    END {
-        puts "停止 Ruby 程序"
-    }
- 
-    puts "这是主 Ruby 程序"
-    
-    BEGIN {
-        puts "初始化 Ruby 程序"
-    }
-
-# Ruby Block
-写brew cask 包时遇到奇怪的语法`Cask "package-name" do ... end`，原来这就是ruby 的block 呀！
-
-    def test(j)
-        p j
-        yield 5
-        puts "在 test 方法内"
-        yield 100
-    end
-    test 1 do |i| 
-        puts "你在块 #{i} 内"
-    end
-
-`test 1`产生迭代器, `do |i|` 相当于python的`for i in test(1)`, output:
-
-    1
-    你在块 5 内
-    在 test 方法内
-    你在块 100 内
