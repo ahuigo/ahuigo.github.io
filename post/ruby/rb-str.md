@@ -67,6 +67,8 @@ Ruby 使用用 ASCII 编码来读源码，中文会出现乱码，解决方法�
     array=p 1,2,3
 
 # function
+## ord
+    "a".ord
 ## upper,lower
 
     'aaa'.upcase

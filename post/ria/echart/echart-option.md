@@ -36,7 +36,7 @@ demo:
         axisLabel: {show: false},
     }
 
-可以在axisPointer 控制label
+可以用axisPointer.label 控制label
 https://www.echartsjs.com/examples/en/editor.html?c=doc-example/candlestick-axisPointer
 
     axisPointer: {

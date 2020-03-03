@@ -41,15 +41,3 @@ exec with variable
     system "ls", "*"
     # ok
     printf `ls -la *`
-
-## env
-HOME:
-
-    print "#{ENV['HOME']}"
-    print Dir.home
-
-ENV 可以被改变
-
-    system("echo $PATH")
-    ENV['PATH'] = '/nothing/here'
-    system("echo $PATH")
