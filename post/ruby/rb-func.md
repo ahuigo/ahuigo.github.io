@@ -4,8 +4,11 @@ date: 2020-03-03
 private: 
 ---
 # Ruby function
+## return 可以省略
+
     def method_name [( [arg [= default]]...[, * arg [, &expr ]])]
         expr..
+        [return] val
     end
 
 ## 可变数量参数

@@ -8,8 +8,8 @@ private:
 
 ## execute sql file
 
-    $ psql db -f sql.sql >/dev/null
     $ psql db < sql.sql 
+    $ psql -U username dbname -f sql.sql >/dev/null
     $ cat sql.sql | psql db 
 
 # pager

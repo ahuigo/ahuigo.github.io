@@ -95,5 +95,8 @@ dir:
     brew --cache
         ~/Library/Caches/Homebrew/downloads
 
-# brew via ss
-export ALL_PROXY=socks5://127.0.0.1:1080
+# dev command
+    $ /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/cmd/postgresql-upgrade-database.rb
+
+# proxy(via socks5)
+    export ALL_PROXY=socks5://127.0.0.1:1080

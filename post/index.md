@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2020-03-04 [brew dev](/b/mac/mac-brew-dev) 
 - 2020-02-24 [python 的正则表达式](/b/py/py-str-regex) 
 - 2018-09-28 [Python 文件处理](/b/py/py-file) 
 - 2020-01-03 [python 字典](/b/py/py-var-dict) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
 - 2019-11-04 [rsion?=0.3.0](/b/arch/docker-makefile) 
 - 2018-10-04 [node 系统相关](/b/ria/node-os) 
-- 2018-09-27 [三角形triangle](/b/math/geo-triangle) 

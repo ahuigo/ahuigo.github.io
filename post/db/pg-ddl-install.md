@@ -31,6 +31,7 @@ see db-user.md
     elif osx:
         # To have launchd start postgresql now and restart at login:
         brew services start postgresql
+
         # Or, if you don't want/need a background service you can just run:
         pg_ctl -D /usr/local/var/postgres start
 
@@ -38,12 +39,24 @@ see db-user.md
         ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
 
         cat <<MM >> ~/.zshrc
+        # 开机启动
         alias pg-start="launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
-        # 就是rm plist
+
+        # 关闭开机启动 是rm plist
         alias pg-stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
         MM
 
     createdb `whoami`
+
+## path
+### log
+mac log默认在
+
+    /usr/local/var/log/postgres
+
+### 数据文件
+    $ ls /usr/local/var/postgres/PG_VERSION
+    $ ls /usr/local/var/postgres@11/
 
 ### debug
 #### 升级问题
@@ -59,7 +72,9 @@ see db-user.md
 方案1：
 
     $ brew postgresql-upgrade-database
-    FATAL:  role "ahui" does not exist
+    FATAL:  role "role2" does not exist
+
+    pg_upgrade -U role1
 
 方案2：
 

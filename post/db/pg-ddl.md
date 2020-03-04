@@ -1,10 +1,16 @@
 ---
-title: FUNCTION
+title: Posstgre shell+ddl
 date: 2018-09-27
+private:
 ---
 # shell
 
 ## connect shell
+首次安装后，默认数据库是postgres
+
+    psql postgres
+
+### shell 参数
 默认同时支持 unix domain socket + ip/port net socket
 
     psql DBNAME USERNAME
@@ -13,7 +19,7 @@ date: 2018-09-27
         \W prompt enter password(可省略)
     psql postgresql://t1:1@47.96.1.162:6379/template1
 
-Non interactive password:
+### Non interactive password:
 
 1. vim ~/.pgpass:
     `hostname:port:database:username:password`

@@ -58,12 +58,17 @@ pg:
 `create user` 默认带login 权限(唯一区别):
 
     create user demo_role
-    # give ability to ligin in
+    # give ability to login in
     CREATE ROLE demo_role WITH LOGIN;
 
 通过shell: creat super user
 
     sudo -u postgres createuser --superuser dbuser
+
+### role with permission
+
+    \h CREATE USER
+    CREATE USER role1 with SUPERUSER CREATEROLE CREATEDB REPLICATION BYPASSRLS;
 
 ### password
 By default, users are only allowed to login locally with the system username
@@ -117,10 +122,21 @@ Let a user the "inherit" group property with no need "set role" command:
 ALTER ROLE name RENAME TO new_name
 
 ## query roles
+current_user:
+
+    SELECT current_user;
+
+list roles
 
     \du
+
+query table
+
     \z myTable
-    \l
+
+list of databases
+
+    \l 
 
 ### default user
 如果使用test1 帐号登录，psql 会默认以test1 连接数据库test1

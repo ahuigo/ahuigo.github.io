@@ -55,6 +55,22 @@ Ruby 使用用 ASCII 编码来读源码，中文会出现乱码，解决方法�
     
     puts "你好，世界！";
 
+# access string
+## slice string
+    str[position] # 注意返回的是ASCII码而不是字符
+    str[start, length]
+    str[start..end]
+    str[start...end]
+    str[0...-1]
+
+## strip
+只移除末尾的`"\r\n"`
+
+    str.chomp
+    # inplace replace
+    str.chomp!
+
+
 # print
 打印text
 
@@ -68,11 +84,15 @@ Ruby 使用用 ASCII 编码来读源码，中文会出现乱码，解决方法�
 
 # function
 ## ord
-    "a".ord
+    "a".ord # 97
 ## upper,lower
 
     'aaa'.upcase
     'AAA'.downcase
+
+## hash
+    str.hash
+
 ## concat
 
     dir = Dir.home+"/www"
