@@ -19,3 +19,13 @@ form 不用state, 用form 值
           note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
         });
       };
+
+# Input
+
+    <Input
+        placeholder="Basic usage"
+        defaultValue="ahui"
+        ref={(node: any) => {
+            node.select()
+            node.input.select()
+        }}

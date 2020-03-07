@@ -61,16 +61,35 @@ https://zhuanlan.zhihu.com/p/59743409
     }
 
 ### camera direction
-camera direction:
+#### get camera direction:
 
     var {heading,pitch,roll} = camera;
 
-setView
+#### set camera direction: setView
 
     viewer.scene.camera.setView({
         destination: new Cesium.Cartesian3.fromDegrees(116, 39, 531),
         orientation: new Cesium.HeadingPitchRoll.fromDegrees(0,-90, 0),
     });
+
+example:
+
+    var {heading,pitch,roll} = camera;
+    async function sleep(n){
+        await new Promise(r=>{ setTimeout(r,n*1000) })
+    }
+
+    async function f(){
+        for(var i=10; i>-15; i--){
+            // Set the initial view
+            await sleep(0.01)
+            camera.setView({
+                orientation : new Cesium.HeadingPitchRoll.fromDegrees(Cesium.Math.toDegrees(heading),Cesium.Math.toDegrees(pitch), i),
+            });
+            console.log('i',i)
+        }
+    }
+    f()
 
 # Move
 ## flyTo

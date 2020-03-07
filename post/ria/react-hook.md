@@ -390,20 +390,27 @@ Note:
     }
 
 ### useImperativeHandle
-用来给ref.current加方法的。
+useImperativeHandle 可以让你在使用 ref 时自定义暴露给父组件的实例值
+
+    useImperativeHandle(ref, createHandle, [deps])
+    // ref.current = createHandle()
+
+用来给ref.current加方法focus的。
+
+    FancyInput = React.forwardRef( (props, ref)=>{ 
+        const inputRef = useRef();
+        useImperativeHandle(ref, () => ({
+            focus: () => {
+                inputRef.current.focus();
+            }
+        }));
+        return <input ref={inputRef} ... />;
+    } );
+
 在本例中，渲染 `<FancyInput ref={fancyInputRef} />` 的父组件可以调用 fancyInputRef.current.focus()。
 
-    function FancyInput(props, ref) {
-      const inputRef = useRef();
-      useImperativeHandle(ref, () => ({
-        focus: () => {
-          inputRef.current.focus();
-        }
-      }));
-      return <input ref={inputRef} ... />;
-    }
-    FancyInput = React.forwardRef(FancyInput);
-
+    const fancyInputRef = useRef()
+    <FancyInput ref={fancyInputRef} onClick={()=>fancyInputRef.current.focus()}/>
 
 ## 如何获取上一轮的 props 或 state？
 目前，你可以 通过 ref 来手动实现：

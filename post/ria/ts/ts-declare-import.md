@@ -80,8 +80,20 @@ If you want the function on the `instance`(aka prototype)
         return s;
     }
 
+#### extend JSX
+为了支持`<center/>` 标签，我们可以这样
 
-### `declare function`
+    // test.d.ts
+    declare global {
+        namespace JSX {
+            interface IntrinsicElements {
+                center: any
+            }
+        }
+    }
+
+### declare
+#### `declare function`
 `declare function` 用来定义全局函数的类型。jQuery 其实就是一个函数，所以也可以用 `function` 来定义：
 
     // src/jQuery.d.ts
