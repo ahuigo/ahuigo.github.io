@@ -107,6 +107,8 @@ Supported by any database: 利用 group + column=max(column)
     GROUP BY x.customer, x.total
 
 
+
+
 #### partition
 partition:
 
@@ -137,6 +139,17 @@ delete and keep top 2 row(order by peg) with group by industry
 
     PARTITION BY company, department
 
+### concat rows
+合并为array
+
+    SELECT uid, ARRAY_AGG (first_name || ' ' || last_name) fullname FROM users; 
+    select code, ARRAY_AGG(label) l from t group by code;
+
+合并为字符串：
+
+    -- GROUP BY 1 is a positional reference and a shortcut for GROUP BY movie
+    SELECT movie, string_agg(actor, ', ') AS actor_list FROM tbl GROUP  BY 1; 
+
 ### DISTINCT
 > https://stackoverflow.com/questions/18539223/select-random-row-for-each-group-in-a-postgres-table
 > SELECT DISTINCT ON expressions must match initial ORDER BY expressions
@@ -156,12 +169,12 @@ Or shorter (if not as clear) with ordinal numbers of output columns:
     FROM   purchases
     ORDER  BY 2, 3 DESC, 1;
 
-`distinct on(fieldList)` 必须匹配`order by list` 排序. 
-`fieldList`中字段顺序不影响分组及结果。
+`distinct on(fieldList)` 必须匹配`order by list`. list与fieldlist 必须要有交集
+`fieldList`中字段顺序不影响分组及结果, `list` 排序则影响顺序
 
-    # ERROR: DISTINCT ON expressions must match initial ORDER BY expressions
+    # ERROR: DISTINCT ON expressions must match initial ORDER BY expressions: (code,pe)与end_date 没有交集
     select distinct on (code,pe) code,pe,end_date from profits order by end_date;
-    # 不是以code-pe分组，而是以pe 分组。code 在这里被忽略
+    # 以code,end_date分组
     select distinct on (code,end_date) code,pe,end_date from profits order by end_date;
     # 以code分组, 取最新end_date
     select distinct on (code) code,end_date,pe,peg from profits order by code,end_date desc

@@ -72,6 +72,7 @@ modify host for https:
 form 不要自己设置content-type(boundary 因为要自动算)
 
 	curl 'http://localhost:8000/up.php'  -F 'pic=@img/a.png'
+    curl https://httpbin.org/post --F 'file=@a.txt'  -F 'b=1'  -F  'c=2'
 	curl 'http://localhost:8000/up.php'  -F 'pic=@img/a.png' -F 'var=value' -F 'k2=v2'
 	curl -F "file=@localfile;filename=nameinpost" url.com
 	curl -F "file=@localfile;filename=nameinpost;type=text/html" url.com

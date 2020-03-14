@@ -41,6 +41,7 @@ Null 列的缺点:
     var::jsonb
     var::text::jsonb
     select name::text::jsonb
+    select 1::real
 
 ### Cast Convert
 

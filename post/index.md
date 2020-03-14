@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2020-03-14 [安全的帐号设计](/b/sec/sec-account) 
+- 2018-09-28 [py-http](/b/py/py-http) 
 - 2020-03-04 [brew dev](/b/mac/mac-brew-dev) 
 - 2020-02-24 [python 的正则表达式](/b/py/py-str-regex) 
 - 2018-09-28 [Python 文件处理](/b/py/py-file) 
@@ -37,5 +39,3 @@
 - 2018-04-05 [ES6 Modudle 使用](/b/ria/js-module-es6) 
 - 2018-09-27 [ops-find](/b/c/shell-find) 
 - 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
-- 2019-11-04 [rsion?=0.3.0](/b/arch/docker-makefile) 
-- 2018-10-04 [node 系统相关](/b/ria/node-os) 

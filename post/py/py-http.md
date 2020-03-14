@@ -163,6 +163,18 @@ If you want, you can send strings to be received as files:
 	data=urllib.parse.parse_qs('a=1&b=1')
 	>>> r = requests.post("http://httpbin.org/post", data = data)
 
+### dump curl
+    def dump_curl():
+        req = response.request
+
+        command = "curl -X {method} -H {headers} -d '{data}' '{uri}'"
+        method = req.method
+        uri = req.url
+        data = req.body
+        headers = ['"{0}: {1}"'.format(k, v) for k, v in req.headers.items()]
+        headers = " -H ".join(headers)
+        return command.format(method=method, headers=headers, data=data, uri=uri)
+
 ## proxy
 代理
 

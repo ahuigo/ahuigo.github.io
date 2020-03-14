@@ -5,6 +5,7 @@ private:
 ---
 # Kubernetes 构架
 参考：[Docker 和 Kubernetes 从听过到略懂：给程序员的旋风教程](https://1byte.io/developer-guide-to-docker-and-kubernetes/)
+k8s教程：https://jimmysong.io/kubernetes-handbook/cloud-native/from-kubernetes-to-cloud-native.html
 
 典型的 Kubernetes 集群包含一个 master 和很多 node。
 1. Master 是控制集群的中心
