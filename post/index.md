@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-01-03 [vscode 笔记](/b/vsc/vsc-shortcut) 
+- 2018-09-27 [ops-device](/b/c/ops-device) 
 - 2020-03-14 [安全的帐号设计](/b/sec/sec-account) 
 - 2018-09-28 [py-http](/b/py/py-http) 
 - 2020-03-04 [brew dev](/b/mac/mac-brew-dev) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [学习 docker](/b/arch/docker-) 
 - 2018-08-25 [Node 执行shell 的方法](/b/ria/node-shell) 
 - 2018-04-05 [ES6 Modudle 使用](/b/ria/js-module-es6) 
-- 2018-09-27 [ops-find](/b/c/shell-find) 
-- 2018-09-27 [Shell 变量的数据类型](/b/c/1.shell-var) 
