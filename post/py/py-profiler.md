@@ -211,8 +211,6 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     22        50           54      1.1     28.4      return [2]+[x for x in s if x]
 ```
 
-
-
 ## memory
 ```
 $ pip install psutil
@@ -249,12 +247,12 @@ memory_profiler和line_profiler有一个鲜为人知的小窍门，两者都有�
 
 这样可以节省你很多时间和精力，因为你的源代码不需要为使用这些分析命令而进行修改。
 
-### objgraph 内存泄漏在哪里？
+# objgraph 内存泄漏在哪里？
 cPython解释器使用引用计数做为记录内存使用的主要方法. 
 1. 如果程序中不再被使用的对象的引用一直被占有，那么就经常发生内存泄漏。
 2. 查找“内存泄漏”可用objgraph，查看内存中对象的数量，定位含有该对象的引用的所有代码的位置。
 
-#### 安装 objgraph
+## 安装 objgraph
 
     $ pip install objgraph
 
@@ -280,7 +278,8 @@ cPython解释器使用引用计数做为记录内存使用的主要方法.
     getset_descriptor          451
     type                       439
     ```
-    哪些对象已经被添加或删除？
+
+### 哪些对象已经被添加或删除？
 
 我们也可以查看两个时间点之间那些对象已经被添加或删除：
 
@@ -298,7 +297,8 @@ cPython解释器使用引用计数做为记录内存使用的主要方法.
     list                   667        +1
     tuple                16969        +1
     ```
-谁引用着泄漏的对象？
+
+### 谁引用着泄漏的对象？
 
 继续，你还可以查看哪里包含给定对象的引用。让我们以下述简单的程序做为一个例子：
 
@@ -306,10 +306,12 @@ cPython解释器使用引用计数做为记录内存使用的主要方法.
     x = [1]
     y = [x, [x], {"a":x}]
     import pdb; pdb.set_trace()
-    ```
+
 想要看看哪里包含变量x的引用，执行objgraph.show_backref()函数：
+
     ```
     (pdb) import objgraph
     (pdb) objgraph.show_backref([x], filename="/tmp/backrefs.png")
     ```
+
 我们得到一个refs.png 引用图

@@ -119,16 +119,6 @@ https://blog.logrocket.com/useeffect-vs-uselayouteffect/
 Ref 只能用于useEffect
 
 
-
-## useForceUpdate();
-    const forceUpdate = useForceUpdate();
-
-    console.log('rendering');
-    return <button onClick={forceUpdate}>Click To Render</button>;
-
-### update child
-https://stackoverflow.com/questions/55889357/change-react-hook-state-from-parent-component
-
 ## 自定义hook
 > 自定义hook终以 use 开头，这样react hook 不会将useHook 列为setCount 要触发的回调函数
 
