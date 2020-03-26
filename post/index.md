@@ -1,8 +1,8 @@
 # AHUIGO 的笔记
-- 2018-10-04 [profile](/b/py/py-profiler) 
+- 2018-10-04 [python 性能分析](/b/py/py-profiler) 
 - 2018-01-03 [vscode 笔记](/b/vsc/vsc-shortcut) 
 - 2018-09-27 [ops-device](/b/c/ops-device) 
-- 2020-03-14 [安全的帐号设计](/b/sec/sec-account) 
+- 2020-03-26 [安全的帐号设计](/b/sec/sec-account) 
 - 2018-09-28 [py-http](/b/py/py-http) 
 - 2020-03-04 [brew dev](/b/mac/mac-brew-dev) 
 - 2020-02-24 [python 的正则表达式](/b/py/py-str-regex) 

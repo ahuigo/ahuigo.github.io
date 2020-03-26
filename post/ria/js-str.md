@@ -86,6 +86,7 @@ str vs base64 buffer
 
 str vs base64 string
 
+    ### node only
     >     Buffer.from('a').toString('base64')
     'YQ=='
     >     Buffer.from('YQ==', 'base64').toString()

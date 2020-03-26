@@ -827,7 +827,17 @@ ClassB 继承 ClassA
 	}
 	new ClassB('red', 5);
 
-### Call()
+### bind
+
+    i = 'global'
+    obj={i:'local', f:function(){console.log(this.i)}}
+    obj.bind(null)(); // global
+    obj.bind()(); // global
+    obj.bind({i:'haha'})(); // haha
+
+注意： bind 无法改变箭头函数的this
+
+### call()
 
 	function sayColor(sPrefix,sSuffix) {
 		alert(sPrefix + this.color + sSuffix);

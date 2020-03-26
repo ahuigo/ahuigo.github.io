@@ -4,6 +4,8 @@ date: 2019-11-29
 private: true
 ---
 # Mapbox popup
+https://docs.mapbox.com/mapbox-gl-js/api/#popup
+
     const popupWindow = new mapboxgl.Popup({
         closeButton: true,
         closeOnClick: false
@@ -18,3 +20,11 @@ private: true
 
 
 ## setHTML
+    popupWindow.setHTML
+
+## setMaxWidth
+    .setMaxWidth("300px")
+
+
+## remove
+    popupWindow.remove()

@@ -49,6 +49,13 @@ vscode有可能提示delve 版本太低，可以升级下
 
 按F5执行程序，当程序达到断点触发的条件后，就可以看到断点处的环境变量、调用栈。
 
+### debug console 
+在debug console 中, 可以直接输入变量观察
+
+    > somevar
+    "world"
+    > string(somebytes)
+
 
 ### 注意，对于web server 来说：
 

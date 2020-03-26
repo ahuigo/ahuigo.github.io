@@ -1,8 +1,9 @@
 ---
-title: profile
+title: python 性能分析
 date: 2018-10-04
 ---
-# profile
+# python 性能分析
+介绍几个分析工具：
 - cProfile
 类似于xdebug cachegrind profiler 性能画像
 - py-spy python 版的top

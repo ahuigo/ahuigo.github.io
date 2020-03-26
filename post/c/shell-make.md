@@ -7,6 +7,27 @@ private:
 ## Specify Makefile
     -f makefile2
 
+## env
+As MadScientist pointed out, you can export individual variables with:
+
+    export MY_VAR = foo  # Available for all targets
+
+Or export variables for a specific target (target-specific variables):
+
+    my-target: export MY_VAR_1 = foo
+    my-target: export MY_VAR_2 = bar
+    my-target: export MY_VAR_3 = baz
+
+    my-target: dependency_1 dependency_2
+        echo do something
+
+You can also specify the `.EXPORT_ALL_VARIABLES` target to—you guessed it!—EXPORT ALL THE THINGS!!!:
+
+    .EXPORT_ALL_VARIABLES:
+    MY_VAR_1 = foo
+    MY_VAR_2 = bar
+    MY_VAR_3 = baz
+
 ## variable
     x := foo
     y := $(x) bar

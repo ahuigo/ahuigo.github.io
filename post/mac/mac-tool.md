@@ -320,14 +320,13 @@ processon flowchart + mind + UI(Wireframes) + UML
 	https://www.omnigroup.com/omniGraffle
 
 ### web app
-- Zen Flowchart 简单好用的在线流程图工具。
-- www.processon.com 速度快
-- draw 服务器在国外
-https://www.draw.io/
-- gliffy
-https://www.gliffy.com
-- lucidchart 画连线特别方便
-https://www.lucidchart.com/invitations/accept/40084b0d-b124-433c-b63f-f938ce4f1bbf
+0. https://excalidraw.com/ 最极简的画板工具
+1. Zen Flowchart 简单好用的在线流程图工具。
+2. www.processon.com 功能非常全
+3. draw 服务器在国外 https://www.draw.io/
+4. gliffy https://www.gliffy.com
+5. lucidchart 画连线特别方便
+6. 百度脑图 速度非常快
 
 ## 图床
 https://zhuanlan.zhihu.com/p/35270383
