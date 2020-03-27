@@ -7,18 +7,31 @@ date: 2018-09-27
     ALTER ROLE name RENAME TO new_name
 
 # Postgre User and Authentication
-    psql -U postgres -c 'SHOW all' |grep hba_file
-    psql -U postgres -c 'SHOW hba_file'
+找到pg_hba.conf
+
+    $ psql -U postgres -c 'SHOW all' |grep hba_file
+    $ psql -U postgres -c 'SHOW hba_file'
     /usr/local/var/postgres/pg_hba.conf        | Sets the server's "hba" configuration file.
+    /usr/share/pgsql/pg_hba.conf # centos
+
+然后改配置：
 
     host    all             all             127.0.0.1/32            md5
     host    all             all             0.0.0.0/0               md5
+
+    # "local" is for Unix domain socket connections only
+    local   all             all                                     trust
+    # IPv4 local connections:
+    host    all             all             127.0.0.1/32            trust
+    # IPv6 local connections:
+    host    all             all             ::1/128                 trust
+
 
 auth method:
 1. Peer : use kernel os system user name, only supported on local connections.
 2. indent:  client's operating system user name, only supported on TCP/IP connections,  *for a local (non-TCP/IP) connection, peer is used instead*
 3. password: 独立的帐号密码
-3. trust:
+3. trust: 无密码
 
 ## password method(md5)
 password method 使用独立的帐号，使用ROLE管理

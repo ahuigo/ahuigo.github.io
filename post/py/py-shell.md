@@ -7,6 +7,18 @@ date: 2018-10-04
 
 subprocess模块可以让我们非常方便地启动一个子进程，然后控制其输入和输出。
 
+## shell readline
+
+    # ~/.pythonrc
+    # enable syntax completion
+    try:
+        import readline
+    except ImportError:
+        print("Module readline not available.")
+    else:
+        import rlcompleter
+        readline.parse_and_bind("tab: complete")
+
 ## enter interact mode
     def interactDebug(local):
         import code
@@ -16,7 +28,6 @@ subprocess模块可以让我们非常方便地启动一个子进程，然后控�
         code.interact(local=local)
     
     interactDebug(locals())
-
 
 ## exec python shell
 via shell args: 

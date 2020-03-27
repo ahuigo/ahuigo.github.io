@@ -7,27 +7,31 @@ date: 2018-09-27
 ## intall
 centos:
 
-    rpm -Uvh https://yum.postgresql.org/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm
-    yum install postgresql10-server postgresql10 -y
-    # Create a new PostgreSQL database cluster:
-    /usr/pgsql-10/bin/postgresql-10-setup initdb
+    yum install postgresql-server postgresql-contrib -y
+    sudo postgresql-setup initdb
+    sudo systemctl start postgresql
 
 mac:
+
+    brew install postgresql
 
 ## auth
 see db-user.md
 
     psql -U postgres -c 'SHOW all' |grep hba_file
     psql -U postgres -c 'SHOW hba_file'
+
+    # mac
     /usr/local/var/postgres/pg_hba.conf        | Sets the server's "hba" configuration file.
+    # centos
+     /var/lib/pgsql/data/pg_hba.conf
 
 ## run & config
 
     if centos:
-        systemctl start postgresql-10.service
-        systemctl enable postgresql-10.service
-        #sudo systemctl start postgresql
-        #sudo systemctl enable postgresql
+        sudo systemctl start postgresql
+        # auto reboot
+        sudo systemctl enable postgresql
     elif osx:
         # To have launchd start postgresql now and restart at login:
         brew services start postgresql
@@ -46,7 +50,15 @@ see db-user.md
         alias pg-stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
         MM
 
-    createdb `whoami`
+## login 
+第一次默认安装后只有一个role： postgres, 只登录这个role
+
+    sudo -u postgres -i
+    psql
+
+或者：
+
+    psql -U postgres postgres
 
 ## path
 ### log
@@ -90,6 +102,10 @@ mac conf:
 
     /usr/local/var/postgres/pg_hba.conf
     /usr/local/var/postgres/postgresql.conf
+
+centos conf:
+
+    /var/lib/pgsql/data/pg_hba.conf
 
 ### change listen host
 1. postgres -h 0.0.0.0

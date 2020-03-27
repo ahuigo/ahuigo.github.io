@@ -165,13 +165,15 @@ list db:
     \l
         list all databases
 
-connect db:
+### connect db:
 
     \c database_name
         \connect database_name
     SELECT current_database();
 
-current database?
+### current database
+
+    SELECT current_database();
 
 ## table
 

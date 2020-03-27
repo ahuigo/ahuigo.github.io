@@ -207,3 +207,6 @@ https://stackoverflow.com/questions/1710839/custom-distutils-commands
 # install dev
 
     pip install -e dir 
+    pip install -e /xxx/xxx
+    pip install -e .
+
