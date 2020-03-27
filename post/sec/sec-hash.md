@@ -43,3 +43,8 @@ Refer to :
 
 # SHA1
 SHA全称Secure Hash Standard，又称安全哈希标准，SHA家族算法有SHA-1、SHA-224、SHA-256、SHA-384和SHA-512（后四者通常并称SHA2），原理和MD4、MD5原理相似，SHA是由美国国家安全局（NSA）所设计，由美国国家标准与技术研究院（NIST）发布。SHA可将一个最大2^64位（2305843009213693952字节）信息，转换成一串160位（20字节）的散列值（摘要信息），目前也是应用最广泛的HASH算法。同MD5一样，从理论角度，SHA1也不是绝对可靠，目前也已经找到SHA1的碰撞条件，但“实用”的碰撞算法软件还没出现。于是美国NIST又开始使用SHA2，研究更新的加密算法。
+
+# bcrypt
+bcrypt 可以控制hash 速度(DefaultCost)，越慢越安全：
+
+    bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)

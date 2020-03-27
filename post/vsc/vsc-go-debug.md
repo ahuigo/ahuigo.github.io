@@ -61,3 +61,8 @@ vscode有可能提示delve 版本太低，可以升级下
 
     如果断点设置在server 启动阶段，则每次启动server 才能触发断点。
     如果断点设置在 请求响应阶段（比如service），则发送请求后才能触发断点。
+
+## debug 配置
+https://code.visualstudio.com/docs/editor/debugging#_launch-configurations
+
+    "cwd": "{workspaceRoot}",

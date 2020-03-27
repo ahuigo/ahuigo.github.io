@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2018-10-04 [path](/b/vsc/vsc-path) 
+- 2020-03-28 [hash](/b/sec/sec-hash) 
+- 2018-09-28 [py-debug](/b/py/py-debug) 
 - 2018-10-04 [python 性能分析](/b/py/py-profiler) 
 - 2018-01-03 [vscode 笔记](/b/vsc/vsc-shortcut) 
 - 2018-09-27 [ops-device](/b/c/ops-device) 
@@ -36,6 +39,3 @@
 - 2019-12-06 [js dom file](/b/ria/js-dom-file) 
 - 2019-11-25 [mac user manager](/b/mac/mac-user) 
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
-- 2018-10-04 [webspider](/b/py/py-webspider) 
-- 2018-09-27 [学习 docker](/b/arch/docker-) 
-- 2018-08-25 [Node 执行shell 的方法](/b/ria/node-shell) 

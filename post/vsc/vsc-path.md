@@ -22,3 +22,10 @@ active file: window.showFullPath: true
     // ${rootName}: e.g. myProject
     // ${rootPath}: e.g. /Users/Development/myProject
     // ${appName}: e.g. VS Code
+
+directory:
+
+    workspaceFolder
+    workspaceRoot
+
+

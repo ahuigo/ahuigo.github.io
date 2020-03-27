@@ -55,15 +55,20 @@ compose 有很多docker 自己的选项
             volumes:
                 - wordpress:/var/www/html
                 - ./dags:/usr/local/airflow/dags
+            restart: on-failure
+
 
 参考下：https://github.com/puckel/docker-airflow/blob/master/docker-compose-LocalExecutor.yml
 的配置，command 可以覆盖dockerfile 中的CMD
 
         command: webserver
+        # command: npm start
         environment:
             - POSTGRES_USER=airflow
         ports:
             - "8080:8080"
+        
+也可以参考ory/hydra 的quickstart.yml
 
 ### build 参数
 

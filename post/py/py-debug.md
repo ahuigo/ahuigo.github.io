@@ -101,6 +101,11 @@ exit(n), quit(n), sys.exit(n)都是一个东西: SystemExit(n);
     PYTHONASYNCIODEBUG=1 python3 a.py
 
 ## raise异常
+Exception:
+
+    raise Exception(*args)
+    e.args
+
 More: raise语句如果不带参数，就会把当前错误原样抛出
 
     class FooError(ValueError):
@@ -121,11 +126,6 @@ More: raise语句如果不带参数，就会把当前错误原样抛出
         print('finally...')
     print('END')
 
-
-Exception:
-
-    raise Exception(*args)
-    e.args
 
 ### 记录异常错误
 
