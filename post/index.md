@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2016-09-27 [golang pkg的使用](/b/go/2.go-pkg-dev) 
 - 2018-10-04 [path](/b/vsc/vsc-path) 
 - 2018-10-06 [hash](/b/sec/sec-hash) 
 - 2018-09-28 [py-debug](/b/py/py-debug) 
@@ -38,4 +39,3 @@
 - 2018-10-04 [deny ngx_http_access_module](/b/nginx/nginx-location) 
 - 2019-12-06 [js dom file](/b/ria/js-dom-file) 
 - 2019-11-25 [mac user manager](/b/mac/mac-user) 
-- 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 

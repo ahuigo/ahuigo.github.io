@@ -62,6 +62,16 @@ gin 有两套[Bind](https://gin-gonic.com/docs/examples/binding-and-validation/)
 ## Bind struct
 > Note: 注意bind 成员需要大写！
 
+### struct format time
+gonic 只支持RFC3339, 忽略time_format
+
+    var json struct {
+        EndTime   *time.Time `json:"end_time" form:"end_time" time_format:"2012-11-01T22:08:41+08:00"`
+    }
+
+    if err:=c.Bind(&json);err == nil {
+
+
 ### Bind:get+post(post优先)
 同时包含post+get(post优先)
 

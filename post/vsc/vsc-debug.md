@@ -53,6 +53,11 @@ Such as windows/osx/linux properties
         "args": ["myFolder\\path\\app.js"]
       }
 
+### cwd
+https://code.visualstudio.com/docs/editor/debugging#_launch-configurations
+
+    "cwd": "${workspaceRoot}",
+
 # Advanced breakpoint topics
 > Some debugger does not support conditional/inline breakpoints. 
 > Different languages need different debugger, install by menu: `Run->install additional debugger`
