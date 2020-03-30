@@ -76,8 +76,12 @@ https://github.com/cosmtrek/air
 
 配置文件 .air.conf, 在里面写好你好触发的编译命令和可执行文件：
 
-    cmd = "go build -o ./tmp/main cmd/main.go"
+    cmd = "rm ./tmp/main;go build -o ./tmp/main cmd/main.go"
     bin = "tmp/main"
+
+或
+
+    full_bin = "MONGODB_HOST=127.0.0.1:27017 MONGODB_USER=test MONGODB_PASSWORD=test REDIS_ADDR=127.0.0.1 GIN_MODE=debug go run *.go"
 
 执行:
 

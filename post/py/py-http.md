@@ -51,7 +51,7 @@ dict + parse_qsl:
 
 ### .parse.quote unquote
 	urllib.parse.quote('中国人')
-	urllib.parse.unquote('1%2C3
+	urllib.parse.unquote('1%2C3)
 
 # SimpleCookie
 

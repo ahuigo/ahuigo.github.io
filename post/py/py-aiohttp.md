@@ -107,7 +107,7 @@ Because the response content attribute is a StreamReader, you can chain get and 
 
 # Cookie
 
-## Custom Cookies
+## send Cookies
 To send your own cookies to the server, you can use the cookies parameter of ClientSession constructor:
 
     url = 'http://httpbin.org/cookies'

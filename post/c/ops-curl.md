@@ -68,6 +68,11 @@ modify host for https:
     -o, --output
         -o /dev/null 
 
+# post form
+post 默认是:application/x-www-form-urlencoded, 则不是multipart
+
+    curl https://httpbin.org/post -d 'a=1'
+
 # upload
 form 不要自己设置content-type(boundary 因为要自动算)
 

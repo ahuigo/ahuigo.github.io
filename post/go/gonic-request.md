@@ -262,9 +262,19 @@ https://github.com/gin-gonic/gin/pull/857/files
         return ioutil.ReadAll(c.Request.Body)
 
 # Request Info
+## header
+    c.Request.Method
+    c.ClientIP()
+    c.Request.UserAgent()
+
+response info
+
+    c.Writer.Status()
+
 ## URL
 
     c.Request.URL.Path
+    c.Request.URL.RawQuery
 
 ## cookie
     cookie, err := c.Cookie("gin_cookie")

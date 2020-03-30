@@ -1,4 +1,9 @@
 # AHUIGO 的笔记
+- 2018-05-09 [vim plug 插件系统](/b/vim/nvim-plugin) 
+- 2018-09-28 [Requests](/b/py/py-aiohttp) 
+- 2018-09-28 [server](/b/py/py-aiohttp-server) 
+- 2019-03-24 [Golang 的结构体](/b/go/go-struct) 
+- 2018-09-27 [golang help](/b/go/11.go-help) 
 - 2016-09-27 [golang pkg的使用](/b/go/2.go-pkg-dev) 
 - 2018-10-04 [path](/b/vsc/vsc-path) 
 - 2018-10-06 [hash](/b/sec/sec-hash) 
@@ -34,8 +39,3 @@
 - 2018-09-27 [Postgre CRUD](/b/db/pg-crud) 
 - 2019-09-08 [React HOC 高阶组件](/b/ria/react-com-hoc) 
 - 2019-09-09 [React diff](/b/ria/react-diff) 
-- 2018-10-10 [mac 工具集](/b/mac/mac-tool) 
-- 2012-07-08 [GMT,UTC,DST,CST 各种时间标准](/b/c/shell-time) 
-- 2018-10-04 [deny ngx_http_access_module](/b/nginx/nginx-location) 
-- 2019-12-06 [js dom file](/b/ria/js-dom-file) 
-- 2019-11-25 [mac user manager](/b/mac/mac-user) 

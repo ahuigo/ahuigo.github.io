@@ -220,6 +220,9 @@ e.g.
         return web.FileResponse('./index.html')
         app.router.add_static('/prefix', path_to_static_folder)
 
+## response header cookie
+
+
 ## Template Rendering
 1. First, setup a jinja2 environment with a call to aiohttp_jinja2.setup():
 

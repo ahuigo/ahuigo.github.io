@@ -139,96 +139,13 @@ null struct 不占用空间，用来实现set
         owner int
     }{2, 0755}
 
-### Anonymous field(继承)
-匿名字段的类型就是 同名类型
-
-    type User struct{
-        age int
-     }
-    type Class struct{
-        User
-        id int
-    }
-
-    c := Class{User:User{age:0}, id:0}
-    c := Class{User{age:0}, 0}
-    //如果是用 struct{User User} 那么c.age 就非法
-    c.age == c.User.age  //true
-
-编译器从外向内逐级查找所有层次的匿名字段
-
-    type Resource struct {
-        id int
-    }
-    type User struct {
-        Resource
-        name string 
-    }
-    type Manager struct {
-        User
-        title string 
-    }
-    var m Manager
-    m.id = 1
-    m.name = "Jack"
-    m.title = "Administrator"
-
-Note: 相同层次的同名字段也会让编译器⽆无所适从, 应该用显式的字段
-
-不能同时嵌⼊入某⼀一类型和其指针类型，因为它们名字相同
-
-    type Manager struct {
-        User
-        *User
-        title string 
-    }
-
-### 继承get/set 值
-
-    type User struct {
-        gorm.Model
-        title string 
-    }
-    user:=User{Model:gorm.Model{ID:1}}
-    pf("%#v,%#v\n", user, user.ID==user.Model.ID)
-
-    user.ID=1
-    user.Model.ID=1
-
-example2
-
-    type Pet struct {
-        age int
-    }
-    type PetX struct {
-        Pet
-        name string
-    }
-
-    <!-- main.PetX{Pet:main.Pet{age:200}, name:"name"}
-
-#### init
-    type A struct{
-        a int
-    }
-    type B struct{
-        A
-        b int
-    }
-
-    func main() {
-        b:=B{A:A{a:1}}
-            //error: b:=B{a:A{a:1}}
-        fmt.Println(b)
-
-
 ## 面向对象
 go struct 仅支持封装，没有继承、多态
 
 - Anonymous 可以实现继承
 - Interface 可以实现多态
 
-### Struct method
+### 动态修改method
 struct method 是一个值：
 
     package main
@@ -243,21 +160,57 @@ struct method 是一个值：
         return "Speak"
     }
 
-    func NewPet(name string) *Pet {
+    func main() {
         p := &Pet{
             name: name,
         }
         p.speaker = p.Speak
-        return p
+        fmt.Println(p.speaker()) //Speak
+        fmt.Println(p.Speak())  //Speak
     }
 
-    func main() {
-        d := NewPet("spot")
-        fmt.Println(d.speaker()) //Speak
-        fmt.Println(d.Speak())  //Speak
+### Anonymous field(继承)
+匿名字段的类型就是 同名类型
+
+    type User struct{
+        age int
+     }
+    type Class struct{
+        User
+        id int
     }
 
-非指针类型：随意(反正不会改值)
+    c := Class{User:User{age:0}, id:0}
+    c := Class{User{age:0}, 0}
+    //如果定义为 struct{User User} 那么使用c.age就是非法
+    c.age == c.User.age  //true
+
+不能同时嵌⼊入某⼀一类型和其指针类型，因为它们名字相同会有冲突
+
+    type Manager struct {
+        User
+        *User
+        title string 
+    }
+
+### 继承props+method
+User继承 Model 所有属性， 包括gorm.Model.ID、方法
+
+    type User struct {
+        gorm.Model
+        title string 
+    }
+    user:=User{Model:gorm.Model{ID:1}}
+
+    // 完全等价
+    user.ID=1
+    user.Model.ID=1
+    pf("%#v,%#v\n", user, user.ID==user.Model.ID)
+
+e.g: go-lib/object/inherit.go
+
+### interface 
+interface 是通用类型，可以是指针、 非指针类型
 
     type A interface{
         Say()
@@ -269,8 +222,18 @@ struct method 是一个值：
     Test(&Dog{}) //ok
     Test(Dog{}) //ok
 
-注意指针类型匹配，严格 
+注意interface 会严格检查method
 
+    // struct 作为参数
     func (d *Dog) Say() { }
+    (&Dog{}).Say() //ok
+    (Dog{}).Say() //not ok
+
+    // interface 作为参数
+    func Test(o A){
+        o.Say()
+    }
     Test(&Dog{}) //ok
-    Test(Dog{}) //not ok
+    Test(Dog{}) //not ok: Dog does not implement A(Say has pointer receiver)
+
+

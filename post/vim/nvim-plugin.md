@@ -1,5 +1,5 @@
 ---
-date: 20180509
+date: 2018-05-09
 title: vim plug 插件系统
 ---
 # vim plug 插件系统
@@ -52,6 +52,7 @@ let ack use ag:
     :Ack [options] {pattern} [{directories}]
 
 # Denite
+文件切换
 
     nnoremap <C-p> :Denite file/rec buffer<CR>
     :h denite-usage
