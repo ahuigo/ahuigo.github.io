@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2016-09-27 [go 的变量](/b/go/7.go-var) 
+- 2018-09-27 [map](/b/go/7.go-var-map) 
 - 2018-05-09 [vim plug 插件系统](/b/vim/nvim-plugin) 
 - 2018-09-28 [Requests](/b/py/py-aiohttp) 
 - 2018-09-28 [server](/b/py/py-aiohttp-server) 
@@ -19,7 +21,7 @@
 - 2020-01-03 [python 字典](/b/py/py-var-dict) 
 - 2018-10-04 [python's super,type, object](/b/py/py-obj-type-super) 
 - 2018-09-28 [py-debug-log](/b/py/py-debug-log) 
-- 2019-12-31 [Python 的math 语法](/b/py/math/py-math) 
+- 2020-03-31 [Python 的math 语法](/b/py/math/py-math) 
 - 2020-01-14 [TS ignore type when import module](/b/ria/ts/ts-ignore) 
 - 2019-09-28 [test](/b/c/ops-benchmark) 
 - 2019-03-08 [tcpdump](/b/net/net-tcpdump) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [Postgre 安装\配置\管理](/b/db/pg-ddl-install) 
 - 2019-06-20 [Postgre SQL function](/b/db/pg-ddl-function) 
 - 2018-09-27 [Postgre CRUD](/b/db/pg-crud) 
-- 2019-09-08 [React HOC 高阶组件](/b/ria/react-com-hoc) 
-- 2019-09-09 [React diff](/b/ria/react-diff) 

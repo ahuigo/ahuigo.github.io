@@ -145,6 +145,16 @@ go struct 仅支持封装，没有继承、多态
 - Anonymous 可以实现继承
 - Interface 可以实现多态
 
+### extend package method
+    // Context a
+    type Context gin.Context
+
+    // Resp
+    func (c *Context) Resp(code int, obj interface{}) {
+        (*gin.Context)(c).JSON(code, obj)
+        (*gin.Context)(c).Abort()
+    }
+
 ### 动态修改method
 struct method 是一个值：
 

@@ -27,7 +27,9 @@ priority:
 
     import math
     math.ceil(x)
+        负数： -(-5//2) == math.ceil(5/2)
     math.floor(x) == x//1
+        正数：math.floor(5/2) == 5//2	
     round(x, 2) # 小数点后两位, 四舍五入
 		'%.2f'%x
 	'%.3e' % 53.3432 # 有效位数，四舍五入
@@ -35,8 +37,6 @@ priority:
 ## operator
 
     2**5	math.pow(2,5)
-    5//2	math.floor(5/2)
-    -(-5//2) math.ceil(5/2)
 
 ## number type
 

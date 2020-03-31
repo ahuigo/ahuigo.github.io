@@ -333,6 +333,8 @@ Insert/Command mode 移动​, 只需要加前缀`<C-o>`
 
 
 # Text object, 文本对象
+> :h object-select
+> :h motion
 motion 分两种：
 1. 移动光标的: hjklwbeWBE
 2. 不能移动光标的textObject：iw,aw,a{,i{

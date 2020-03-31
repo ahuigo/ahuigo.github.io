@@ -15,31 +15,36 @@ date: 2019-05-06
 
     resp, err := http.Get("http://example.com/")
 
-
-    StatusOK                   = 200 // RFC 7231, 6.3.1
-    StatusCreated              = 201 // RFC 7231, 6.3.2
-    StatusAccepted             = 202 // RFC 7231, 6.3.3
-    StatusNonAuthoritativeInfo = 203 // RFC 7231, 6.3.4
-    StatusNoContent            = 204 // RFC 7231, 6.3.5
-    StatusResetContent         = 205 // RFC 7231, 6.3.6
-    StatusPartialContent       = 206 // RFC 7233, 4.1
-    StatusMultiStatus          = 207 // RFC 4918, 11.1
-    StatusAlreadyReported      = 208 // RFC 5842, 7.1
-    StatusIMUsed               = 226 // RFC 3229, 10.4.1
+    resp.StatusCode
+    http.StatusOK                   = 200 // RFC 7231, 6.3.1
      StatusMovedPermanently = 301 // RFC 7231, 6.4.2
     StatusFound            = 302 // RFC 7231, 6.4.3
     StatusUnauthorized                 = 401 // RFC 7235, 3.1
 
 ## post
+    func (c *Client) Post(url, contentType string, body io.Reader) (resp *Response, err error)
+
+### post json
+> http://networkbit.ch/golang-http-client/
+
+    data := []byte(`{"hello": "world"}`)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
+	req.Header.Set("Content-Type", "application/json")
 
 ### post form
-    resp, _ := http.PostForm("https://httpbin.org/post",
-	url.Values{"key": {"Value"}, "id": {"123"}})
+####  post data
+	resp, err := http.Post("http://127.0.0.1:5000/header.php", "application/x-www-form-urlencoded",
+		strings.NewReader("username=admin&password=pass"))
+        
+#### url.Values
+urlencoded:
+
     pn := fmt.Println
+    resp, _ := http.PostForm("https://httpbin.org/post", url.Values{"key": {"Value"}, "id": {"123"}})
     body, _:= ioutil.ReadAll(resp.Body)
     pn(string(body))
 
-e.g.:
+其中的url.Values:
 
     values := make(url.Values)
     values.Set("user", user)
@@ -60,39 +65,30 @@ For control over HTTP client headers, redirect policy, and other settings, creat
     resp, err := client.Get("http://example.com")
     // ...
 
-### add header to client
+### set header
 
     req, err := http.NewRequest("GET", "http://example.com", nil)
     // ...
     req.Header.Add("If-None-Match", `W/"wyzzy"`)
+	req.Header.Set("Content-Type", "application/json") //覆盖
+	req.Header.Set("Host", "httpbin.org")
     resp, err := client.Do(req)
+
+del header
+
+	req.Header.Del("Host")
+
+loop header:
+
+    for k, v := range req.Header{
+		fmt.Printf("k=%v, v=%v\n", k, v)
+	}
 
 ### timeout
     client := http.Client{
         Timeout: 5 * time.Second,
     }
     client.Get(url)
-
-### store cookieJar
-会在整个会话期间保持cookie
-
-    import (
-        "net/http"
-        "net/http/cookiejar"
-    )
-
-    cookieJar, _ := cookiejar.New(nil)
-
-    client := &http.Client{
-        Jar: cookieJar,
-    }
-
-初始化 指定url:cookie
-
-    type CookieJar interface {
-        SetCookies(u *url.URL, cookies []*Cookie)
-        Cookies(u *url.URL) []*Cookie
-    }
 
 ### skip redirect
 
@@ -121,7 +117,7 @@ For control over proxies, TLS configuration, keep-alives, compression, and other
 ## get location
     location, _ :=resp.Location() //*url.URL
 
-## header:
+## get header:
 
     for k, v := range resp.Header{
 		fmt.Printf("k=%v, v=%v\n", k, v)
@@ -161,13 +157,15 @@ More control over the server's behavior is available by creating a custom Server
     log.Fatal(s.ListenAndServe())
 
 # cookie
-## send cookie(http)
+## request
+### client req cookie
 
-    expiration := time.Now().Add(5 * time.Minute)
-    cookie := http.Cookie{Name: "myCookie", Value: "Hello World", Expires: expiration}
-    http.SetCookie(w, &cookie)
+    // Create and Add cookie to request
+	cookie := http.Cookie{Name: "cookie_name", Value: "cookie_value"}
+	req.AddCookie(&cookie)
 
-## send cookie(client)
+### session cookie
+session cookie维持：要save 再send
 
     //save cookie
     cookie = resp.Cookies() //save cookies
@@ -177,3 +175,34 @@ More control over the server's behavior is available by creating a custom Server
     for i := range cookie {
         req.AddCookie(cookie[i])
     }
+
+#### store cookieJar
+> go-lib/http/session.go
+会在整个会话期间保持cookie
+
+    import (
+        "net/http"
+        "net/http/cookiejar"
+    )
+
+    cookieJar, _ := cookiejar.New(nil)
+
+    client := &http.Client{
+        Jar: cookieJar,
+    }
+
+初始化 指定url:cookie
+
+    type CookieJar interface {
+        SetCookies(u *url.URL, cookies []*Cookie)
+        Cookies(u *url.URL) []*Cookie
+    }
+
+
+## server send cookie(http)
+
+    func SetCookie(w ResponseWriter, cookie *Cookie)
+
+    expiration := time.Now().Add(5 * time.Minute)
+    cookie := http.Cookie{Name: "myCookie", Value: "Hello World", Expires: expiration}
+    http.SetCookie(w, &cookie)
