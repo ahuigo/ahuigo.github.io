@@ -133,6 +133,10 @@ run Twine to upload all of the archives under dist:
     # pip install --upgrade twine
     twine upload  dist/*
 
+一键上传：
+
+    python setup.py sdist bdist_wininst upload -r http://example.com/pypi
+
 use:
 
     pip install --index-url https://test.pypi.org/simple/ example_pkg

@@ -15,6 +15,13 @@ date: 2019-05-06
     bytes1 := json.Marshal(response2{})
     bytes1 := json.Marshal(&response2{})
 
+map
+
+    bytes1 := json.Marshal(map[string]interface{}{
+        "a":1,
+        "k2":"b",
+    })
+
 ### encode stdout
     enc := json.NewEncoder(os.Stdout)
     d := map[string]int{"apple": 5, "lettuce": 7}
@@ -22,7 +29,15 @@ date: 2019-05-06
 
 ## Unmarshal
 ### str to struct
-    res := response2{}
+https://gobyexample.com/json
+
+    type Resp struct {
+        Name            string              `json:"name"`
+        Description     string              `json:"description"`
+        Fruits []string `json:"fruits"`
+
+    }
+    res := Resp{}
     json.Unmarshal([]byte(str), &res)
 
 ### str to map 

@@ -25,20 +25,6 @@ getframe(0) 是`debug_info`本身，getframe(1) 是caller
             'caller':sys._getframe(1).f_code.co_name,
         }
 
-或者：
-
-    import sys
-    def foo(exctype, value, tb):
-        print('My Error Information')
-        print('Type:', exctype)
-        print('Value:', value)
-        print('Traceback:', tb)
-        print('tb_frame', tb.tb_frame)
-        import code
-        code.interact(local=locals())
-
-    sys.excepthook = foo
-
 ## 异常调用栈
     try:
         a=1/0
@@ -46,6 +32,31 @@ getframe(0) 是`debug_info`本身，getframe(1) 是caller
         print(e) # only e.__str__
         import traceback
         tb = traceback.format_exc()
+
+## global exception handler
+
+    import sys
+    def my_except_hook(exctype, value, traceback):
+        if exctype == KeyboardInterrupt:
+            print("Handler code goes here")
+        print('Value:', value)
+        print('tb_frame', traceback.tb_frame)
+        <!-- print('tb_frame', traceback.format_exc()) -->
+        sys.__excepthook__(exctype, value, traceback)
+    sys.excepthook = my_except_hook
+
+## interactive
+    import sys
+    def foo(exctype, value, traceback):
+        print('My Error Information')
+        print('Type:', exctype)
+        print('Value:', value)
+        print('Traceback:', traceback)
+        print('tb_frame', traceback.tb_frame)
+        import code
+        code.interact(local=locals())
+
+    sys.excepthook = foo
 
 ## For More
 Python 代码调试技巧: \

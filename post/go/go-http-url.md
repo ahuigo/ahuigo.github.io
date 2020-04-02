@@ -12,9 +12,9 @@ private: true
 	v.Add("friend", "Sarah")
 	v.Add("friend", "Zoe")
 	// v.Encode() == "name=Ava&friend=Jess&friend=Sarah&friend=Zoe"
-	fmt.Println(v.Get("name"))
-	fmt.Println(v.Get("friend"))
-	fmt.Println(v["friend"])
+	v.Get("name"))
+	v.Get("friend"))
+	v["friend"])
 
 build url:
 

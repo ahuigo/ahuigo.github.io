@@ -19,7 +19,7 @@ custom it:
 		log.Printf("endpoint %v %v %v %v\n", httpMethod, absolutePath, handlerName, nuHandlers)
     }
 
-## request log(middleware )
+## request header (middleware )
 https://gin-gonic.com/docs/examples/custom-log-format/
 
 	router := gin.New()

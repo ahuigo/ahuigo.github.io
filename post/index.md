@@ -1,4 +1,8 @@
 # AHUIGO 的笔记
+- 2018-10-04 [py-pkg-setuptool](/b/py/py-pkg-setuptool) 
+- 2020-04-03 [current status of China](/b/life/covid-19) 
+- 2020-04-03 [ina is only the first country to detect the virus. If the first country which detect and report the virus should responsible for it, then no country will report the virus.](/b/life/covid-19-china) 
+- 2019-05-06 [go str](/b/go/go-str-serial) 
 - 2016-09-27 [go 的变量](/b/go/7.go-var) 
 - 2018-09-27 [map](/b/go/7.go-var-map) 
 - 2018-05-09 [vim plug 插件系统](/b/vim/nvim-plugin) 
@@ -35,7 +39,3 @@
 - 2019-12-06 [code split](/b/webpack/12.webpack-codesplit-and-lazy) 
 - 2019-12-05 [git 使用之日志、数据恢复](/b/git/git-log) 
 - 2019-12-01 [2019 年崇礼富龙滑雪](/b/life/ski) 
-- 2018-09-27 [Postgre User and Authentication](/b/db/pg-ddl-user) 
-- 2018-09-27 [Postgre 安装\配置\管理](/b/db/pg-ddl-install) 
-- 2019-06-20 [Postgre SQL function](/b/db/pg-ddl-function) 
-- 2018-09-27 [Postgre CRUD](/b/db/pg-crud) 

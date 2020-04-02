@@ -4,10 +4,22 @@ date: 2019-10-03
 private:
 ---
 # Response
+## error
+
+    // 不用这个： 没有body
+    c.AbortWithError(http.StatusBadRequest, errors.New("no task_id"))
+    // 请用这个： 有body
+    c.String(http.StatusBadRequest, "no task_id")
+    c.String(http.StatusBadRequest, err.Error())
+
+## string
+    c.String(http.StatusOK, name)
+
 ## JSON
     // gin.H is a shortcut for map[string]interface{}
     c.JSON(http.StatusOK, gin.H{"user": user, "value": value})
     c.JSON(http.StatusOK, structA{"user": user, "value": value})
+    ctx.JSON(http.StatusOK, map[string]string{"message": "state"})
 
 ### PureJSON
 避免将 `<` 转成`\u003c`:
@@ -34,9 +46,6 @@ https://gin-gonic.com/docs/examples/rendering/
     // Note that data becomes binary data in the response
     // Will output protoexample.Test protobuf serialized data
     c.ProtoBuf(http.StatusOK, data)
-
-## string
-    c.String(http.StatusOK, name)
 
 ## Redirect
 	c.Redirect(http.StatusMovedPermanently, "http://www.google.com/")
@@ -69,6 +78,10 @@ Issuing a Router redirect, use `HandleContext` like below.
 
 		c.DataFromReader(http.StatusOK, contentLength, contentType, reader, extraHeaders)
 	})
+
+## Cookie
+
+	ctx.SetCookie("key", fmt.Sprintf("%v", idt), 86400, "", cookieDomain, false, false)
 
 ## Html
 

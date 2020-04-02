@@ -1,13 +1,13 @@
 ---
-title: golang str buffer
+title: golang io buffer
 date: 2020-03-29
 private: true
 ---
-# golang str buffer
+# golang buffer
 > go-lib/str/buffer.go
 
-# initial buffer
-bytes.buffer是一个缓冲byte类型的缓冲器. 
+## initial buffer
+bytes.Buffer是一个缓冲byte类型的缓冲器. 
 
     //等价
     buf1 := bytes.NewBufferString("hello")
@@ -25,11 +25,11 @@ buffer 是slice结构，可以自动扩容，也可以指定始容量
     var buf bytes.Buffer
     buf := &bytes.Buffer{}
 
-# convert buffer
+## convert buffer
     buf.Bytes()
     buf.String()
 
-# write buffer
+## write buffer
 > write 相当于字符串连接join bytes.buffer 比strings.Join 快一点儿:
 write byte slice
 
@@ -53,7 +53,7 @@ via Fprintf
     fmt.Fprintf(&buf3, " world!")
 
 
-## 重置buffer
+### 重置buffer
 buf 可以重置，如果buf 是从buffer 池取出来的，就必须重置：[go-pool](/go/go-pool)
 
     buf := bufPool.Get().(*bytes.Buffer)
@@ -61,16 +61,16 @@ buf 可以重置，如果buf 是从buffer 池取出来的，就必须重置：[g
     buf.Reset()
     buf.WriteString(name)
 
-## readFromFile
+### readFromFile
 
     file, _ := os.Open("hello.txt")
     buf := bytes.NewBufferString("bob ")
     buf.ReadFrom(file)
     fmt.Println(buf.String()) //bob hello world
 
-# read buffer(读出)
+## read buffer(读出)
 也就是取buffer
-## read to bytes
+### read to bytes
 read 数量取决于写入bytes的容量
 
    s3 := make([]byte,3)
@@ -79,22 +79,39 @@ read 数量取决于写入bytes的容量
    fmt.Println(string(s3))   //hel
    buff.Read(s3) //继续读入3个，原来的被覆盖
 
-## read 一个byte/rune
+### read 一个byte/rune
 
     b,_ := buf.ReadByte()   //取出第一个byte，赋值给b
     r,_ := buf.ReadRune()   //取出第一个Rune
 
-## read 2 个bytes
+### read 2 个bytes
     b := buf.Next(2)  //取前2个
 
-## read 到分隔符停止
+### read 到分隔符停止
 e.g.读取一行(包括分隔符)
 
    line,_ := buf.ReadBytes('\n')  //读到分隔符\n，并返回给line(bytes)
    lineStr,_ := buf.ReadString('\n')  //读到分隔符\n
 
-## read 到文件
+### read 到文件
    file,_ := os.Create("text.txt")
    buf := bytes.NewBufferString("hello world")
    buf.WriteTo(file)
    //或者使用写入，fmt.Fprintf(file,buf.String())
+
+# io.Reader interface
+除了bytes Buffer, 还有strings reader, 它们都实现了io.Reader interface
+
+
+    bytes.NewReader(jsonBytes) // *bytes.Reader
+    bytes.NewBuffer(jsonBytes) // *bytes.Buffer
+    strings.NewReader(json) // *strings.Reader
+    var s *strings.Reader = strings.NewReader("username=admin&password=pass"))
+
+## convert map to io.Reader
+
+
+
+# todo
+Go 中 io 包的使用方法
+https://segmentfault.com/a/1190000015591319

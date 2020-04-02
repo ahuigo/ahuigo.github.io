@@ -49,6 +49,7 @@ click 之于argparse/argv, 相当于requests 之于urllib
 
     import argparse
     parser = argparse.ArgumentParser()
+    parser.add_argument("-n", "--name", default="ahui", help="your name")
     parser.parse_args()
 
 ## description and help
@@ -58,11 +59,10 @@ click 之于argparse/argv, 相当于requests 之于urllib
 
 ## file
 
-    >>> parser = argparse.ArgumentParser()
-    >>> parser.add_argument('--raw', type=argparse.FileType('wb', 0))
-    >>> parser.add_argument('out', type=argparse.FileType('w', encoding='UTF-8'))
-    >>> parser.parse_args(['--raw', 'raw.dat', 'file.txt'])
-    Namespace(out=<_io.TextIOWrapper name='file.txt' mode='w' encoding='UTF-8'>, raw=<_io.FileIO name='raw.dat' mode='wb'>)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--raw', type=argparse.FileType('wb', 0))
+    parser.add_argument('out', type=argparse.FileType('w', encoding='UTF-8'))
+    parser.parse_args(['--raw', 'raw.dat', 'file.txt'])
 
 ## enum args
     from enum import Enum

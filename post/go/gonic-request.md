@@ -42,6 +42,7 @@ private:
 query('id') 
 
     id := c.Query("id") // shortcut for c.Request.URL.Query().Get("id")
+        id, _ := c.GetQuery("id")
     page := c.DefaultQuery("page", "0")
 
 ### post one key
@@ -61,6 +62,7 @@ gin 有两套[Bind](https://gin-gonic.com/docs/examples/binding-and-validation/)
 
 ## Bind struct
 > Note: 注意bind 成员需要大写！
+> 小写的成员无效, 且不会报err (go-lib/gonic/bind/bind.go)
 
 ### struct format time
 gonic 只支持RFC3339, 忽略time_format
@@ -98,6 +100,8 @@ gonic 只支持RFC3339, 忽略time_format
 ### shoudBind:get+post(post优先)
 
 #### ShouldBind
+方法 - ShouldBind, ShouldBindJSON, ShouldBindQuery
+行为 - 这些方法在底层使用 ShouldBindWith
 
     type myForm struct {
         querya string `form:"a"`
@@ -108,7 +112,7 @@ gonic 只支持RFC3339, 忽略time_format
 #### ShouldBindWith
     "github.com/gin-gonic/gin/binding"
     type LoginForm struct {
-        User     string `form:"user" binding:"required"`
+        User     string `form:"user" binding:"required" json:"user"`
         Password string `form:"password" binding:"required"`
     }
 

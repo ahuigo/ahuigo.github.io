@@ -24,15 +24,20 @@ date: 2019-05-06
 ## post
     func (c *Client) Post(url, contentType string, body io.Reader) (resp *Response, err error)
 
-### post json
+### post jsonStr
 > http://networkbit.ch/golang-http-client/
 
     data := []byte(`{"hello": "world"}`)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
 	req.Header.Set("Content-Type", "application/json")
 
+### post map
+    values := map[string]string{"username": username, "password": password}
+    jsonValue, _ := json.Marshal(values)
+    resp, err := http.Post(authAuthenticatorUrl, "application/json", bytes.NewBuffer(jsonValue))
+
 ### post form
-####  post data
+#### post urlencoded
 	resp, err := http.Post("http://127.0.0.1:5000/header.php", "application/x-www-form-urlencoded",
 		strings.NewReader("username=admin&password=pass"))
         
@@ -65,9 +70,15 @@ For control over HTTP client headers, redirect policy, and other settings, creat
     resp, err := client.Get("http://example.com")
     // ...
 
+client.Do
+
+    req, err := http.NewRequest("POST", "http://example.com", nil) //body io.Reader=nil
+	req.Header.Set("Content-Type", "application/json") //覆盖
+    resp, err := client.Do(req)
+
 ### set header
 
-    req, err := http.NewRequest("GET", "http://example.com", nil)
+    req, err := http.NewRequest("GET", "http://example.com", nil) //body io.Reader=nil
     // ...
     req.Header.Add("If-None-Match", `W/"wyzzy"`)
 	req.Header.Set("Content-Type", "application/json") //覆盖
