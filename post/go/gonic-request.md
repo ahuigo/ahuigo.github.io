@@ -3,7 +3,7 @@ title: gonic
 date: 2019-04-22
 private:
 ---
-# Request 
+# Request Bind
 ## binding 属性required 
 传`0`，`""` 空字符相当于没传
 1. binding:"required" 限制了，不能传`0`，`""` 空字符等等！！！
@@ -13,9 +13,6 @@ private:
         PackageType int    `form:"package_type" binding:"required"`
         Peg int    `form:"peg" binding:"-"`
     }
-
-## Request info
-    c.Request.URL.Path = "/test2"
 
 ## Uri args
 ### one uri param
@@ -267,6 +264,10 @@ https://github.com/gin-gonic/gin/pull/857/files
 
 # Request Info
 ## header
+Request   *http.Request
+
+    c.Request.URL.Path = "/test2"
+    c.Request.Host // host or host:port
     c.Request.Method
     c.ClientIP()
     c.Request.UserAgent()

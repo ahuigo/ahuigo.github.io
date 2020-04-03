@@ -122,24 +122,48 @@ use:
 
 Once this is done, `~/.pypirc` file will store the login name and the password. 
 
+    [distutils]
+    index-servers =
+        pypi
+        ahuigo
+
+    [pypi]
+    repository: https://upload.pypi.org/legacy/
+    username:ahuigo
+    password:yourpasssword
+
+    [testpypi]
+    repository: https://test.pypi.org/legacy/
+    username:ahuigo
+    password:yourpasssword
+
+    [ahuigo]
+    repository: https://ahuigo.com/api/pypi
+    username:yexuehui
+    password:password
+
 ## The next step is to upload your package. 
 create sdist+egg-info
 
-    python3 setup.py sdist bdist_wheel
-
-run Twine to upload all of the archives under dist:
-
-    # twine upload --repository-url https://test.pypi.org/legacy/ dist/*
-    # pip install --upgrade twine
-    twine upload  dist/*
+    # egg 格式包
+    python3 setup.py sdist 
+    # wheel 格式包
+    python3 setup.py bdist_wheel
 
 一键上传：
 
-    python setup.py sdist bdist_wininst upload -r http://example.com/pypi
+    python setup.py sdist bdist_wheel upload -r http://test.example.com
+    python setup.py sdist bdist_wheel upload -r ahuigo
+    python setup.py sdist bdist_wheel upload -r pypi
 
 use:
 
+    # 默认源
     pip install --index-url https://test.pypi.org/simple/ example_pkg
+    # 额外源
+    pip install --extra-index-url https://ahuigo.com/api/pypi/simple example_pkg
+    pip install --extra-index-url https://ahuigo.com/api/pypi/simple example_pkg==0.0.2
+
 
 # Config
 ## subcommand

@@ -47,7 +47,7 @@ alias drmi='docker rmi $( docker images --filter "dangling=true" -q --no-trunc)'
 
 # go
 # goenv
-export GOROOT=/usr/local/Cellar/go/1.14/libexec
+export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
 [[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.12.9/libexec
 export GO111MODULE=on 
 export GOPATH=~/go
