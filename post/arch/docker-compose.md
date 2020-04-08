@@ -153,6 +153,10 @@ services 启动的container 都是daemon, 注意daemon 之间的端口号不要�
     docker-compose up -d
     docker-compose down
 
+    docker-compose -f quickstart-dev.yml \
+    -f quickstart-tracing.yml \
+    up
+
 
 # 网络
 Compose会为我们的app 创建一个网络，服务的每个容器都会加入该网络中.

@@ -333,6 +333,7 @@ You can tell Requests to stop waiting for a response after a given number of sec
 	requests.exceptions.Timeout: HTTPConnectionPool(host='github.com', port=80): Request timed out. (timeout=0.001)
 
 ## Cookie
+### get cookie
 get Cookies(instance of RequestsCookieJar)
 
 	>>> r.cookies['example_cookie_name']
@@ -340,6 +341,7 @@ get Cookies(instance of RequestsCookieJar)
     >>> print(r.cookies.get_dict())
 
 
+### send cookie
 To send your own cookies
 
 	>>> r = requests.get(url, cookies={'key':'value'})

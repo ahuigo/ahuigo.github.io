@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-28 [py-func](/b/py/py-func) 
 - 2018-10-04 [py-pkg-setuptool](/b/py/py-pkg-setuptool) 
 - 2020-04-03 [current status of China](/b/life/covid-19) 
 - 2020-04-03 [ina is only the first country to detect the virus. If the first country which detect and report the virus should responsible for it, then no country will report the virus.](/b/life/covid-19-china) 
@@ -38,4 +39,3 @@
 - 2020-01-13 [antv and bizcharts](/b/ria/chart-antv) 
 - 2019-12-06 [code split](/b/webpack/12.webpack-codesplit-and-lazy) 
 - 2019-12-05 [git 使用之日志、数据恢复](/b/git/git-log) 
-- 2019-12-01 [2019 年崇礼富龙滑雪](/b/life/ski) 

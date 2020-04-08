@@ -1,3 +1,9 @@
+---
+title: Covid China
+date: 2020-04-08
+private: true
+---
+# Covid China
 China is only the first country to detect the virus. If the first country which detect and report the virus should responsible for it, then no country will report the virus.
 
 China warned the world immediately when they realized it, and has been updating the information.

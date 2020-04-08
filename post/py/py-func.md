@@ -34,6 +34,7 @@ Next, your subfile.py can import globals:
 	import settings
 	settings.myList.append('hey')
 
+
 # function
 
 ## locals()
@@ -218,6 +219,12 @@ or:
         foo.counter += 1
 
 # args
+## destruct args
+    *args, **kw
+
+    l = [*l1, *l2]
+    l = l1+l2
+
 ## find def args name:
 
 >>> func = lambda x, y: (x, y)

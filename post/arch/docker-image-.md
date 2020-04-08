@@ -30,6 +30,9 @@ Mac OSX Image 不可以修改路径：
     # do something
     fi
 
+## build history
+    docker image history --no-trunc image_name > image_history
+
 ## list image layer
 
     $ docker history python:3.7

@@ -1,3 +1,15 @@
+---
+title: covid-19
+date: 2020-04-08
+private: true
+---
+# covid-19
+# biase 
+https://www.quora.com/Is-it-true-that-many-anti-CCP-Chinese-became-pro-CCP-after-having-learnt-how-Western-media-are-biased-against-China
+# game
+Humanitarian is a joke in front of virus.  Ironically, China ’s measures have saved the lives of millions of people. Now that conspiracy theories ignore China ’s experience, they will sacrifice millions of lives. 
+This is a survival game, not a political game!
+
 # current status of China
 China has 829 million Internet users
 
