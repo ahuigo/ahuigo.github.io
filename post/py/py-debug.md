@@ -38,7 +38,7 @@ getframe(0) 是`debug_info`本身，getframe(1) 是caller
     import sys
     def my_except_hook(exctype, value, traceback):
         if exctype == KeyboardInterrupt:
-            print("Handler code goes here")
+            print("KeyboardInterrupt...")
         print('Value:', value)
         print('tb_frame', traceback.tb_frame)
         <!-- print('tb_frame', traceback.format_exc()) -->
@@ -63,8 +63,12 @@ Python 代码调试技巧: \
     https://www.ibm.com/developerworks/cn/linux/l-cn-pythondebugger/
 
 # 异常
+## new Exception
 
-## exception
+    e = Exception(obj1, obj2)
+    e.args # (obj1,obj2)
+
+## exception type
 
     BaseException
      +-- SystemExit

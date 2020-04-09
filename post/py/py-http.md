@@ -22,12 +22,26 @@ urllib2 is deprecated, use requests instead , except: `urllib.parse.urlsplit/url
         print('Data:', data.decode('utf-8'))
 
 ## .parse.urlparse
-	urllib.parse.urlsplit(url)
-	urllib.parse.urlparse(url)
+	u = urllib.parse.urlparse(url)
 		.scheme
 		.path
 		.query
 		.netloc not .host
+    >>> u._replace(scheme='http')
+
+urlparse
+
+    >>> from urlparse import urlparse
+    >>> o = urlparse('http://www.cwi.nl:80/%7Eguido/Python.html')
+    >>> o   
+    ParseResult(scheme='http', netloc='www.cwi.nl:80', path='/%7Eguido/Python.html',
+                params='', query='', fragment='')
+    >>> o.scheme
+    'http'
+    >>> o.port
+    80
+    >>> o.geturl()
+    'http://www.cwi.nl:80/%7Eguido/Python.html'
 
 ### .parse.parse_qsl
 
