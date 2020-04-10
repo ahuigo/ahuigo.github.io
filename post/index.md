@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-03-03 [css 布局](/b/ria/css-layout) 
 - 2018-09-28 [py-func](/b/py/py-func) 
 - 2018-10-04 [py-pkg-setuptool](/b/py/py-pkg-setuptool) 
 - 2020-04-03 [current status of China](/b/life/covid-19) 
@@ -38,4 +39,3 @@
 - 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/0.umi-share) 
 - 2020-01-13 [antv and bizcharts](/b/ria/chart-antv) 
 - 2019-12-06 [code split](/b/webpack/12.webpack-codesplit-and-lazy) 
-- 2019-12-05 [git 使用之日志、数据恢复](/b/git/git-log) 
