@@ -111,12 +111,7 @@ build参数可以指定dockerfile、构建文件工作区context路径
 ### container_name
     container_name: 'ant-design-pro_dev'
 
-## 命令
-example
-
-    # docker-compose -f docker-compose.yml up -d
-    $ cat docker-compose.yml
-
+# 操作
 compose 有很多命令，
 
     $ docker-compose -h
@@ -147,7 +142,7 @@ compose 有很多命令，
     create             Create services
     build              Build or rebuild services
 
-### up and down
+## up/down:create/remove container
 services 启动的container 都是daemon, 注意daemon 之间的端口号不要冲突. (比如nginx/redis/web抢端口)
 
     docker-compose up -d
@@ -156,6 +151,29 @@ services 启动的container 都是daemon, 注意daemon 之间的端口号不要�
     docker-compose -f quickstart-dev.yml \
     -f quickstart-tracing.yml \
     up
+
+## shell cmd
+Override the default command.
+
+    web:
+        command: bundle exec thin -p 3000
+        command: ["bundle", "exec", "thin", "-p", "3000"]
+
+multi command:
+
+        command: 
+        - echo 1
+        - echo 2
+
+## 健康检查与重启
+    services:
+        web:
+            healthcheck:
+                test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+                interval: 30s
+                timeout: 30s
+                retries: 3
+
 
 
 # 网络
@@ -167,7 +185,7 @@ Compose会为我们的app 创建一个网络，服务的每个容器都会加入
         web:
             build: .
             ports:
-            - "8000:8000"
+                - "8000:8000"
         db:
             image: postgres
 
@@ -178,6 +196,22 @@ Compose会为我们的app 创建一个网络，服务的每个容器都会加入
 3. 使用db服务的配置创建容器，它以“db”这个名称加入网络myapp_default。
 
 容器间可使用服务名称（web或db）作为hostname相互访问。例如，web这个服务可使用postgres://db:5432 访问db容器。
+
+## external network
+有时我们需要创建外部网络
+
+    $ docker network create airflow
+
+再使用外部网络
+
+    services:
+        web:
+            ports:
+                - "8000:8000"
+    networks:
+        default:
+            external:
+                name: airflow
 
 
 ## 更新容器

@@ -56,3 +56,22 @@ https://github.com/csbun/thal
 ### remove 
     page.removeAllListeners()
     page.removeListener(listener)
+
+## cookie
+### Save cookies to disk
+
+    const fs = require('fs').promises;
+
+    // ... puppeteer code
+    const cookies = await page.cookies();
+    await fs.writeFile('./cookies.json', JSON.stringify(cookies, null, 2));
+    This will read the cookies for the current URL and save them to disk via JSON.stringify and fs.writeFile.
+
+### Reuse cookies
+
+    const fs = require('fs').promises;
+
+    // ... puppeteer code
+    const cookiesString = await fs.readFile('./cookies.json');
+    const cookies = JSON.parse(cookiesString);
+    await page.setCookie(...cookies);

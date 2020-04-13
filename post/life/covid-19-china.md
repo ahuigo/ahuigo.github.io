@@ -3,6 +3,9 @@ title: Covid China
 date: 2020-04-08
 private: true
 ---
+# china action
+https://www.quora.com/How-did-China-come-out-of-COVID-19-from-81-000-to-zero/answer/Hilo-Jackson?__filter__=all&__nsrc__=1&__sncid__=4705423310&__snid3__=7599569237
+
 # China number
 > https://www.quora.com/What-are-your-thoughts-on-the-CIA-dismissing-the-Chinese-government-virus-totals-saying-theyre-vastly-underestimating
 

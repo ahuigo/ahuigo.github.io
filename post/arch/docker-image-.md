@@ -195,7 +195,7 @@ COPY 中, 复制文件夹还是`子内容` , 取决于destination是目录 还�
 2. 只有ENV 才将环境变量传给容器, 也可用run时改变 `docker run -e APP_ENV=dev`
 
 #### arg
-只有一种用法， `ARG name Lilei`是错误用法
+只有以下一种用法， `ARG name Lilei`是错误用法
 
     ARG <name>[=<default value>]
 
@@ -231,10 +231,7 @@ ENV 同名变量会覆盖 ARG
     ENV ENV_MODE=staging \
         TEST=debug
 
-### 其他指令
-
-    # ENV
-    ENV MYSQL_VERSION 5.6.31-1debian8
+### Workdir/COPY
 
     # 内置目录数据卷VOLUME(容器stop, 数据不会丢失)
     RUN mkdir /data && chown redis:redis /data
@@ -244,24 +241,51 @@ ENV 同名变量会覆盖 ARG
     # copy 到image 的/usr/local/bin
     COPY docker-entrypoint.sh /usr/local/bin/
 
+### ENTRYPOINT CMD
+> https://docs.docker.com/engine/reference/builder/#cmd
+The CMD instruction has three forms:
+
+    CMD ["executable","param1","param2"] (exec form, this is the preferred form)
+    CMD ["param1","param2"] (as default parameters to ENTRYPOINT)
+    CMD command param1 param2 (shell form)
+
     # 配置容器启动时运行的命令
     ENTRYPOINT ["docker-entrypoint.sh"]
 
     # 启动时默认的命令
     CMD ["php-fpm", "-D"]
-    CMD     /usr/sbin/sshd -D
+    CMD /usr/sbin/sshd -D
 
+#### multiple cmd
+There can only be one `CMD` instruction in a Dockerfile. If you list more than one CMD then **only the last CMD will take effect**
+
+    [sh, -c, "cd /usr/src/app && npm start"]
+
+(docker-compose.yml)
+
+    command: bash -c "
+        python manage.py migrate
+        && python manage.py runserver 0.0.0.0:8000
+    "
+
+#### with shell env variable
+    # wrong
+    CMD ["django-admin", "startproject", "$PROJECTNAME"]
+    # ok
+    CMD ["sh", "-c", "django-admin startproject $PROJECTNAME"]
+
+#### with entrypoint
 实际启动的命令为ENTRYPOINT + CMD
 
     CMD ["test.py"]
     ENTRYPOINT ["python3"]
 
-覆盖ENTRY
+#### 覆盖ENTRY
 
     --entrypoint="sh"
     docker run --rm -it --entrypoint=sh image:0.0.2
 
-覆盖CMD:
+#### 覆盖CMD:
 
     docker exec -it $CONTAINER_ID /bin/bash
     或

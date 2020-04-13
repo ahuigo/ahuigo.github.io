@@ -38,8 +38,10 @@ private:
 ### get one key
 query('id') 
 
-    id := c.Query("id") // shortcut for c.Request.URL.Query().Get("id")
+    id := c.Query("id") // shortcut for c.Request.URL.Query().Get("id") 默认是空字符
         id, _ := c.GetQuery("id")
+
+    _, isDebug := c.GetQuery("id")
     page := c.DefaultQuery("page", "0")
 
 ### post one key
@@ -54,12 +56,12 @@ gin 有两套[Bind](https://gin-gonic.com/docs/examples/binding-and-validation/)
     1. error发生时： `c.AbortWithError(400, err).SetType(ErrorTypeBind)`.
     2. 同时header： is set to `text/plain; charset=utf-8`.
 2. 基于 ShouldBindWith： ShouldBind, ShouldBindJSON, ShouldBindXML, ShouldBindQuery, ShouldBindYAML
-    1. 自己控制error
-
+    1. 返回err, 自己控制error
 
 ## Bind struct
-> Note: 注意bind 成员需要大写！
-> 小写的成员无效, 且不会报err (go-lib/gonic/bind/bind.go)
+Note: 
+1. 注意bind 成员需要大写！ > 小写的成员无效, 且不会报err (go-lib/gonic/bind/bind.go)
+1. 需要使用引用：`bind(&query)`
 
 ### struct format time
 gonic 只支持RFC3339, 忽略time_format

@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [学习 docker](/b/arch/docker-begin) 
 - 2018-03-03 [css 布局](/b/ria/css-layout) 
 - 2018-09-28 [py-func](/b/py/py-func) 
 - 2018-10-04 [py-pkg-setuptool](/b/py/py-pkg-setuptool) 
@@ -12,7 +13,7 @@
 - 2018-09-28 [server](/b/py/py-aiohttp-server) 
 - 2019-03-24 [Golang 的结构体](/b/go/go-struct) 
 - 2018-09-27 [golang help](/b/go/11.go-help) 
-- 2016-09-27 [golang pkg的使用](/b/go/2.go-pkg-dev) 
+- 2016-09-27 [golang pkg 开发包](/b/go/2.go-pkg-dev) 
 - 2018-10-04 [path](/b/vsc/vsc-path) 
 - 2018-10-06 [hash](/b/sec/sec-hash) 
 - 2018-09-28 [py-debug](/b/py/py-debug) 
@@ -38,4 +39,3 @@
 - 2017-08-09 [Python 字符处理](/b/py/py-str) 
 - 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/0.umi-share) 
 - 2020-01-13 [antv and bizcharts](/b/ria/chart-antv) 
-- 2019-12-06 [code split](/b/webpack/12.webpack-codesplit-and-lazy) 

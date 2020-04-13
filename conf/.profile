@@ -151,6 +151,8 @@ alias cnpm="npm --registry=https://registry.npm.taobao.org \
   --disturl=https://npm.taobao.org/dist \
   --userconfig=$HOME/.cnpmrc"
 
+alias yarn=tyarn
+
 # z.lua
 #eval "$(lua ~/conf/z.lua --init zsh)"
 
