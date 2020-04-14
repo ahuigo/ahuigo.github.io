@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-10-04 [管理包和依赖的工具。](/b/py/py-pkg) 
 - 2018-09-27 [学习 docker](/b/arch/docker-begin) 
 - 2018-03-03 [css 布局](/b/ria/css-layout) 
 - 2018-09-28 [py-func](/b/py/py-func) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2017-08-09 [Python 字符处理](/b/py/py-str) 
 - 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/0.umi-share) 
-- 2020-01-13 [antv and bizcharts](/b/ria/chart-antv) 

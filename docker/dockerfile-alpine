@@ -2,5 +2,8 @@ From alpine:latest
 WORKDIR /app/
 RUN ls /app/
 RUN apk add --no-cache bash && mkdir tmp && echo yxh > tmp/a.txt && cat tmp/a.txt
-CMD ["ls", "abc"]
-ENTRYPOINT ["echo"]
+USER daemon
+#CMD ["ls", "abc"]
+CMD ["sh", "-c", "whoami && pwd && ls -la"]
+ENTRYPOINT ["sh", "-c", "whoami && pwd && ls -la && echo end..."]
+#ENTRYPOINT ["echo"]

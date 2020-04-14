@@ -125,6 +125,10 @@ postgre 能自动处理Array/Datetime
 
 ### tables
     \dt
+    SELECT * FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';
+
+all
+
     cursor.execute("""SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'""")
     for table in cursor.fetchall():
         print(table)
@@ -138,4 +142,3 @@ postgre 能自动处理Array/Datetime
 copy_to
 
     cur.copy_to(open('out.csv','w'), 'table')
-

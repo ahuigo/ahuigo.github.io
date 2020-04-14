@@ -72,3 +72,6 @@ http://www.pypi-mirrors.org/
 使用用户身份安装
 
     pip3 install --user -r requirements-dev.txt
+
+    --user
+        Install to the Python user install directory for your platform. Typically ~/.local/ on windows
