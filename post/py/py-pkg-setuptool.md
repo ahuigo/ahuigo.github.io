@@ -156,6 +156,7 @@ create sdist+egg-info
     python setup.py sdist bdist_wheel upload -r ahuigo
     python setup.py sdist bdist_wheel upload -r pypi
 
+## download
 use:
 
     # 默认源
@@ -163,6 +164,17 @@ use:
     # 额外源
     pip install --extra-index-url https://ahuigo.com/api/pypi/simple example_pkg
     pip install --extra-index-url https://ahuigo.com/api/pypi/simple example_pkg==0.0.2
+
+指定源： ~/.pip/pip.conf:
+
+    [global]
+    index-url = http://download.zope.org/simple
+    trusted-host = download.zope.org
+                pypi.org
+                secondary.extra.host
+    extra-index-url= http://pypi.org/simple
+                    http://secondary.extra.host/simple
+    extra-index-url = https://<USERNAME>:<PASSWORD>@artifactory.ahuigo.com/artifactory/api/pypi/pypi/simple
 
 
 # Config

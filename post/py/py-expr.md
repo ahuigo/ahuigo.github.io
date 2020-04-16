@@ -126,6 +126,11 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
 	>>> import os # 导入os模块，模块的概念后面讲到
 	>>> [d for d in os.listdir('.')] # os.listdir可以列出文件和目录
 
+## Nested List Ccomprehension
+通常用于二维数组
+
+    flatten_matrix = [val for sublist in matrix for val in sublist]
+
 # logic/bit/compare expression
 
 ## bit/logic expr

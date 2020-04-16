@@ -290,6 +290,15 @@ response info
         c.SetCookie("gin_cookie", "test", 3600, "/", "localhost", false, true)
     }
 
+# Proxy
+
+	ketoProxy := httputil.NewSingleHostReverseProxy(ketoURL)
+	ketoHandler := func(c *gin.Context) {
+		c.Request.Host = ketoURL.Host
+		ketoProxy.ServeHTTP(c.Writer, c.Request)
+	}
+	e.Any("engines/acp/ory/:flavor/:resouces", ketoHandler)
+
 # Custom validators
 It is also possible to register custom validators. See the example code.
 
