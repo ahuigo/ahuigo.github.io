@@ -8,4 +8,4 @@ private: true
 > code example: go-lib/go-debug/
 
 ## Prepare 准备
-1. 项目代码，比如main.go
+1. 项目代码，比如go-lib/debug/main.go

@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-09-27 [ops-ftp-rsync](/b/c/ops-ftp-rsync) 
+- 2020-04-19 [linux 文件管理](/b/c/ops-file) 
 - 2018-10-04 [管理包和依赖的工具。](/b/py/py-pkg) 
 - 2018-09-27 [学习 docker](/b/arch/docker-begin) 
 - 2018-03-03 [css 布局](/b/ria/css-layout) 
@@ -21,7 +23,7 @@
 - 2018-10-04 [profile](/b/py/py-profiler) 
 - 2018-01-03 [vscode 笔记](/b/vsc/vsc-shortcut) 
 - 2018-09-27 [ops-device](/b/c/ops-device) 
-- 2020-03-26 [安全的帐号设计](/b/sec/sec-account) 
+- 2020-04-19 [安全的帐号设计](/b/sec/sec-account) 
 - 2018-09-28 [py-http](/b/py/py-http) 
 - 2019-02-20 [brew dev](/b/mac/mac-brew-dev) 
 - 2020-02-02 [python 的正则表达式](/b/py/py-str-regex) 
@@ -37,5 +39,3 @@
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 
 - 2018-09-27 [install java](/b/java/1.java-install) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
-- 2017-08-09 [Python 字符处理](/b/py/py-str) 
-- 2019-11-20 [Ant desigin pro 开发介绍](/b/ria/umi/0.umi-share) 

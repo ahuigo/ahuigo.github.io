@@ -97,3 +97,15 @@ oAuth2 rfc 或许有讨论。
 
 ## gsid 
 weibo 身份认证，主要存储于cookie. 他不同于token, 它不仅用验证用户身份，还可解析用户数据
+
+# AD and ldap
+Active Directory (AD) supports both Kerberos and LDAP 
+
+– Microsoft AD is by far the most common directory services system in use today. AD provides Single-SignOn (SSO) and works well in the office and over VPN. AD and Kerberos are not cross platform, which is one of the reasons companies are implementing access management software to manage logins from many different devices and platforms in a single place. AD does support LDAP, which means it can still be part of your overall access management scheme.
+
+https://www.varonis.com/blog/the-difference-between-active-directory-and-ldap/
+
+openid 协议
+
+Clients authenticate to Active Directory using the Kerberos protocol.
+Clients authenticate to _____________ using the OpenID Connect protocol.

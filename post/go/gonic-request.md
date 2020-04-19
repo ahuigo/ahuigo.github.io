@@ -20,7 +20,6 @@ private:
     r := gin.Default()
 	r.GET("/user/:name", func(c *gin.Context) {
         name := c.Param("name")
-        name := c.Params.ByName("name")
     }
 
 ### ShoudBindUri

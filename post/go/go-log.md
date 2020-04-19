@@ -3,8 +3,10 @@ title: Go log
 date: 2019-09-21
 ---
 # Go log
+
+## log.Println
     import "log"
-    log.Println("timeout of 5 seconds.")
+    log.Println("timeout of 5 seconds.", []string{"abc"})
     //2019/09/21 08:34:19 timeout of 5 seconds.
 
 ## logger

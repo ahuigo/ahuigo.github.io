@@ -14,7 +14,6 @@ image:
 push:
 	docker push registry.ahuigo.com/ahuigo/blog:$(version)
 
-
 test-docker:
 	echo $(version)
 	docker run --rm --dns=100.127.255.5 -e ENV_MODE=dev -v `pwd`/packages:/tmp/data registry.ahuigo.com/ahuigo/blog:${version}

@@ -7,11 +7,6 @@ description:
 # Preface
 本该讲述的是与shell 相关的 Linux文件管理
 
-# fswatch
-
-    brew install fswatch
-    fswatch -o ~/path/to/watch | xargs -n1 -I{} ~/script/to/run/when/files/change.sh
-
 # ls
 
 	ll -S 按文件大小排序
