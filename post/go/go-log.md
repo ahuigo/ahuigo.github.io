@@ -33,3 +33,7 @@ e.g.
         fmt.Print(&buf)
 
 gonic根据log 定制logger
+
+# zap
+https://studygolang.com/articles/17394
+https://studygolang.com/articles/14220

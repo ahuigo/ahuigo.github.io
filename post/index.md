@@ -1,6 +1,7 @@
 # AHUIGO 的笔记
+- 2019-09-21 [Go log](/b/go/go-log) 
 - 2018-09-27 [ops-ftp-rsync](/b/c/ops-ftp-rsync) 
-- 2020-04-19 [linux 文件管理](/b/c/ops-file) 
+- 2018-10-06 [linux 文件管理](/b/c/ops-file) 
 - 2018-10-04 [管理包和依赖的工具。](/b/py/py-pkg) 
 - 2018-09-27 [学习 docker](/b/arch/docker-begin) 
 - 2018-03-03 [css 布局](/b/ria/css-layout) 
@@ -11,7 +12,7 @@
 - 2019-05-06 [go str](/b/go/go-str-serial) 
 - 2016-09-27 [go 的变量](/b/go/7.go-var) 
 - 2018-09-27 [map](/b/go/7.go-var-map) 
-- 2018-05-09 [vim plug 插件系统](/b/vim/nvim-plugin) 
+- 20180509 [vim plug 插件系统](/b/vim/nvim-plugin) 
 - 2018-09-28 [Requests](/b/py/py-aiohttp) 
 - 2018-09-28 [server](/b/py/py-aiohttp-server) 
 - 2019-03-24 [Golang 的结构体](/b/go/go-struct) 
@@ -38,4 +39,3 @@
 - 2018-09-28 [netcat](/b/net/net-ncat) 
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 
 - 2018-09-27 [install java](/b/java/1.java-install) 
-- 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
