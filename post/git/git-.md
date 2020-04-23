@@ -452,6 +452,10 @@ git show specify commit
 	git show somebranch:from/the/root/myfile.txt
 	git show HEAD^^^:test/test.py
 
+## show remote
+
+    git show origin/dev:go.sum
+
 ## show commit diff
 	git show $REV [FILE]
     git show head

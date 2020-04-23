@@ -21,6 +21,113 @@ module 的出现主要是为了解决以下问题：
 
 而 module 的出现，可以让我们将 go 代码放到任何地方。
 
+# go mod 核心
+## go mod path
+go get 使用的目录是 $GOROOT/src/github.com/
+go mod 使用的目录是 $GOROOT/pkg/mod/github.com/
+
+## go.mod
+### go.mod中的module与package
+module 定义全局命名空间. 里面可以有很多package
+
+    // 这module 全局空间，可以跟实际的path 不一样. 执行时必须cd 到项目go-lib根目录执行
+    $ cat github.com/ahuigo/go-lib/go.mod: 
+    module github.com/ahuigo/go-lib
+
+package 定义局部命名空间, 依赖于路径查找：
+
+    github.com/ahuigo/go-lib/router/*.go: package router
+    github.com/ahuigo/go-lib/model/*.go: package model
+
+### package alias
+如果文件夹名与package 名`不同名`. 比如
+
+    // ahuigo/go-lib/godemo/fault.go
+    package godemo1
+    type FaultInfo struct { }
+
+不同名：import 需要 通过alias 引出包名(取任意一个名字就行，很震惊是吧！)
+
+    import godemo_any "github.com/ahuigo/go-lib/godemo" 
+
+如果文件夹与package名`不同名`. 就用默认用文件夹名 作包名:
+
+    // package godemo
+    import godemo "github.com/ahuigo/go-lib/godemo" 
+
+如果文件夹下`多个包名`, 会报error
+
+    // ahuigo/go-lib/godemo/fault1.go 用 package godemo1
+    // ahuigo/go-lib/godemo/fault2.go 用 package godemo2
+    $ go run main.go
+    main.go:3:8: found packages godemo1 (fault1.go) and godemo2 (fault2.go) in
+
+### indirect 间隔引入
+
+    module tt
+
+    require (
+        github.com/mitchellh/mapstructure latest 
+        github.com/ahuigo/go-hello v0.0.0-20190325051759-913dff133b48 // indirect
+        github.com/jinzhu/gorm v1.9.1
+        github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
+        github.com/jinzhu/now v0.0.0-20181116074157-8ec929ed50c3 // indirect
+    )
+
+go.mod 存在时，如果cache-hash 目录不存在，go run 会自动下载更新
+
+    //indirect 是间接引入
+
+## go.mod init
+使用步骤：
+1.`export GO111MODULE=on ` 
+
+    此时再执行go run hello.go 会报错`go: cannot find main module;`，需要创建`go mod init proj`
+
+2.先在project 目录下生成go.mod(空文件就可以)
+
+    $ go mod init github.com/you/hello
+
+3.使用 go build, go test, go mod tidy 等命令就会修改go.mod (add missing and remove unused modules)
+
+    // 同时它们都会安装pkg/mod/*. 
+    $ go build 
+    $ go mod tidy  
+
+## 依赖不同的包
+### 依赖本地包
+1.在项目根下用go.mod 配置本地依赖包: 
+
+    require (
+        mytest v0.0.0
+    )
+    replace (
+        mytest v0.0.0 => ../mytest
+    )
+
+2.本地包mytest 的限制(非本地包则没有这个限制)：
+1. 项目根和本地包都必须要有go.mod
+
+示例代码见：https://github.com/ahuigo/go-lib/tree/master/import-local-mod
+
+### ambiguous import
+	github.com/ugorji/go/codec: ambiguous import: found package github.com/ugorji/go/codec in multiple modules:
+        github.com/ugorji/go v1.1.4 (/Users/ahui/go/pkg/mod/github.com/ugorji/go@v1.1.4/codec)
+        github.com/ugorji/go/codec v0.0.0-20181204163529-d75b2dcb6bc8 (/Users/ahui/go/pkg/mod/github.com/ugorji/go/codec@v0.0.0-20181204163529-d75b2dcb6bc8)
+
+由于同步依赖ugorji/go/codec 不同的两个版本，可以指定一个唯一版本. go.mod增加
+
+    replace github.com/ugorji/go => github.com/ugorji/go/codec v1.1.7
+
+## debug
+### mod error
+go: cannot find main module; see 'go help modules'"，因为没有找到go.mod文件，所以会报错。创建一个就行
+
+    $ cd project;
+    $ go mod init project-name
+
+
+
 # 语义导入版本控制
 语义导入版本控制 （Semantic Import Versioning），是使用 module 必须要遵循的一些规定。
 
@@ -80,6 +187,17 @@ go get/run/build会在：
 
 # go 包相关的命令
 这一节主要介绍怎么使用 go module，以及墙内用户怎么解决墙外的下载问题。
+
+    Usage: go help mod
+	init        initialize new module in current directory
+	tidy        add missing and remove unused modules
+	vendor      create `vendored` copy directory of dependencies`
+
+    download    download modules to local cache: pkg/mod/cache
+	edit        edit go.mod from tools or scripts
+	graph       print module requirement graph
+	verify      verify dependencies have expected content
+
 
 先看一下官方给的一个例子：
 

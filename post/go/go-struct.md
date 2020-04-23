@@ -89,6 +89,15 @@ init 时必须包含全部字段
     }
     fmt.Println(n1,n2)
 
+### init nil
+    var a *Node
+    a == nil //true
+
+但是这个nil 是有类型的nil：
+
+    (*main.Node)(nil)
+
+
 ## define:
 
     type Node struct {

@@ -14,8 +14,10 @@ Go语言主要是通过两个包完成的。一个是os包，一个是syscall包
  包括:
 
   os.Setenv(k, v)
-  os.Getenv(k)
+  os.Getenv(k) string
   range os.Environ()
+
+  _, isExist := os.LookupEnv(key)
 
 例子
 
