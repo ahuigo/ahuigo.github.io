@@ -150,7 +150,7 @@ create sdist+egg-info
     # wheel 格式包
     python3 setup.py bdist_wheel
 
-一键上传：
+一键上传, 通过 `-r` 指定源名
 
     python setup.py sdist bdist_wheel upload -r http://test.example.com
     python setup.py sdist bdist_wheel upload -r ahuigo
@@ -174,7 +174,11 @@ use:
                 secondary.extra.host
     extra-index-url= http://pypi.org/simple
                     http://secondary.extra.host/simple
-    extra-index-url = https://<USERNAME>:<PASSWORD>@artifactory.ahuigo.com/artifactory/api/pypi/pypi/simple
+                    https://<USERNAME>:<PASSWORD>@artifactory.ahuigo.com/artifactory/api/pypi/pypi/simple
+
+然后通过指定源下载
+
+    pip3 install  --extra-index-url artifactory.ahuigo.com/artifactory/api/pypi/pypi/simple data_warehouse_py
 
 
 # Config
