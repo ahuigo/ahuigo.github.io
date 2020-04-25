@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-03-25 [Golang notes: argv](/b/go/go-argv) 
 - 2019-09-21 [Go log](/b/go/go-log) 
 - 2018-09-27 [ops-ftp-rsync](/b/c/ops-ftp-rsync) 
 - 2018-10-06 [linux 文件管理](/b/c/ops-file) 
@@ -38,4 +39,3 @@
 - 2019-03-08 [tcpdump](/b/net/net-tcpdump) 
 - 2018-09-28 [netcat](/b/net/net-ncat) 
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip) 
-- 2018-09-27 [install java](/b/java/1.java-install) 

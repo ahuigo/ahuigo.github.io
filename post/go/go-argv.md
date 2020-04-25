@@ -29,3 +29,12 @@ date: 2019-03-25
 
         fmt.Println("tail:", flag.Args())
     }
+
+shell:
+
+    $ go run cli.go --word word1 -numb 41 -fork -svar bar1 arg1 arg2
+    word: word1
+    numb: 41
+    fork: true
+    svar: bar1
+    tail: [arg1 arg2]
