@@ -68,6 +68,17 @@ Python 代码调试技巧: \
     e = Exception(obj1, obj2)
     e.args # (obj1,obj2)
 
+## custom exception
+
+    class ValidationError(Exception):
+        def __init__(self, message, errors):
+
+            # Call the base class constructor with the parameters it needs
+            super().__init__(message)
+
+            # Now for your custom code...
+            self.errors = errors
+
 ## exception type
 
     BaseException

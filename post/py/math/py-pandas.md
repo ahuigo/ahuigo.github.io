@@ -596,7 +596,7 @@ init:
     0  2  32
     1  1  31
 
-基于on 的merge (通过`how`控制, 重复的column 会自动加col_x, col_y)
+基于on 的merge (通过`how`控制(`how:{‘left’, ‘right’, ‘outer’, ‘inner’}, default ‘inner’`), 重复的column 会自动加col_x, col_y)
 
     In [23]: pd.merge(df1, df2, how='left', left_on=['a'], right_on=['a'])
     In [23]: pd.merge(df1, df2, left_on=['a'], right_on=['a'])

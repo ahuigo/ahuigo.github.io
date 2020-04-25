@@ -319,9 +319,8 @@ method2:
     d.update((k, v * 0.5) for k,v in d.items())
 
 ## delete dict
-Note: in python 3 to iterate through a dictionary you have to *explicidly* write: *list(d.keys())* because d.keys() returns a "dictionary view" (an iterable that provide a dynamic view on the dictionary’s keys).
 
-	# list 将iter 转了一下
+	# list 必须将iter 转了一下
     for k in list(d.keys()):
         if k.startswith('r'):
             del d[k]

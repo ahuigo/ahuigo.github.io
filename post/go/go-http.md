@@ -24,17 +24,18 @@ date: 2019-05-06
 ## post
     func (c *Client) Post(url, contentType string, body io.Reader) (resp *Response, err error)
 
-### post jsonStr
+### post json
+#### post jsonStr
 > http://networkbit.ch/golang-http-client/
 
     data := []byte(`{"hello": "world"}`)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
 	req.Header.Set("Content-Type", "application/json")
 
-### post map
+#### post map
     values := map[string]string{"username": username, "password": password}
     jsonValue, _ := json.Marshal(values)
-    resp, err := http.Post(authAuthenticatorUrl, "application/json", bytes.NewBuffer(jsonValue))
+    resp, err := http.Post(authUrl, "application/json", bytes.NewBuffer(jsonValue))
 
 ### post form
 #### post urlencoded
@@ -49,7 +50,7 @@ urlencoded:
     body, _:= ioutil.ReadAll(resp.Body)
     pn(string(body))
 
-其中的url.Values:
+其中的url.Values 是map[string][]string (https://golang.org/pkg/net/url/#Values)
 
     values := make(url.Values)
     values.Set("user", user)
@@ -74,7 +75,7 @@ client.Do
 
     req, err := http.NewRequest("POST", "http://example.com", nil) //body io.Reader=nil
 	req.Header.Set("Content-Type", "application/json") //覆盖
-    resp, err := client.Do(req)
+    resp, _ := client.Do(req)
 
 ### set header
 
@@ -125,6 +126,13 @@ For control over proxies, TLS configuration, keep-alives, compression, and other
     resp, err := client.Get("https://example.com")
 
 # response
+    type Response struct {
+        Status     string // e.g. "200 OK"
+        StatusCode int    // e.g. 200
+        Proto      string // e.g. "HTTP/1.0"
+        ProtoMajor int    // e.g. 1
+        ProtoMinor int    // e.g. 0
+
 ## get location
     location, _ :=resp.Location() //*url.URL
 

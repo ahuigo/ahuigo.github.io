@@ -163,7 +163,7 @@ compile with modifier:
 
 ## replace, sub
 
-    re.sub(r'test', 'xxx', 'Testing', flags=re.IGNORECASE)
+    re.sub(r'helo', 'hello', 'helo world', flags=re.IGNORECASE)
         str.replace(needle, word, 1);
 
 like `str.replace`

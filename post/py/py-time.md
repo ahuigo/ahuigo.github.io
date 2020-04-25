@@ -133,11 +133,17 @@ pd.date_range():
 	timestamp
 		d.timestamp()
 
-### by format
+### show format
 
 	d=datetime.strptime('2015-6-1 18:19:59', '%Y-%m-%d %H:%M:%S')
 	d.strftime('%a, %b %d %H:%M')
 	d.strftime('%Y-%m-%d %H:%M')
+
+rfc3339 format:
+
+    import datetime
+    datetime.datetime.now(datetime.timezone.utc).isoformat()
+    //"2016-07-19T07:30:36.000+00:00"
 
 和shell 一样
 
@@ -217,6 +223,13 @@ https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
 
     # with format
 	d=datetime.strptime('2015-6-1 18:19:59', '%Y-%m-%d %H:%M:%S')
+
+parse rfc3339 format:
+
+    from dateutil.parser import parse
+    s = "2016-07-19T07:30:36+05:00"
+    d = parse("2016-07-19T07:30:36+05:00")
+
 
 ## timedelta: datetime加减
 

@@ -49,4 +49,4 @@ inotify的主要应用于桌面搜索软件，像：Beagle，得以针对有变�
 
     -r          recursive
     -e MODIFY 
-    -m path     specify the file that we monitor in our case /build dir)
+    -m path     specify the path that we monitor 

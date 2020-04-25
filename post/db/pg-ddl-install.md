@@ -50,6 +50,10 @@ see db-user.md
         alias pg-stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
         MM
 
+## debug
+
+    ps aux| grep postgres
+
 ## login 
 第一次默认安装后只有一个role： postgres, 只登录这个role
 

@@ -45,7 +45,7 @@ private:
 ## Creat/newRecord
 
 Creat: 创建真正的record
-NewRecord: check if value's primary key is blank(没啥用，可直接 check v.ID)
+NewRecord: check if value's primary key is blank(check v.ID, 不会insert 数据)
 
     p := Product{Code: "L1217", Price: 17}
     fmt.Printf("%#v\n", db.NewRecord(p))    // => 主键为空返回`true`

@@ -69,18 +69,34 @@ e.g.
 
 # import export
 ## pg_dump
+    pg_dump help
 ### backup
 
     # only schema
-    pg_dump -U [db_username] -s  -f [filename.sql] [db_name]
+    pg_dump -U db_username -s  -f [filename.sql] [db_name]
+    # only data
+    pg_dump -U db_username -a  -f [filename.sql] [db_name]
     # data+schema
     pg_dump                      -f [filename.sql] [db_name]
 
     -F format
         -Fc custom, Output a custom-format archive suitable for input
         -Fp plain 默认
+    -U username
+
+恢复：
+
+    cat  filename.sql | psql  -U db_username
 
 ### restore
+https://www.postgresql.org/docs/9.2/app-pgrestore.html
+
+只用于自定的数据的恢复
+
+    $ pg_dump -Fc mydb > db.dump
+    $ dropdb mydb
+    $ pg_restore -C -d postgres db.dump
+
 custom-format archive:
 
     # schema

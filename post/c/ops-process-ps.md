@@ -202,11 +202,18 @@ top 中的MEM：
 	-+= 00001 root /sbin/launchd
 	\-+= 03001 root /usr/sbin/httpd -D FOREGROUND
 	\--- 03027 www /usr/sbin/httpd -D FOREGROUND
+	$ pstree -alp 3027
+        -a     Show command line arguments.
+        -l     Display long lines.
+        -p, --show-pids
+        -n     Sort processes with the same ancestor by PID instead of by
+              name.  (Numeric sort.)
 
 # proc
 proc(`man 5 proc`) 可以获取更详细的进程信息
 
 	/proc/<pid>/cwd
+	/proc/<pid>/cmdline
 	/proc/<pid>/port
 
 ## process status
