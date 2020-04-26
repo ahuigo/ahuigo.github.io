@@ -10,12 +10,13 @@ private: true
         "log"
     )
     func init(){
-        log.Println("init")
+        log.Println("2. init")
     }
     func f() int {
+        log.Println("1. assign")
         return 1
     }
     var c = f()
     func main(){
-        log.Println(c)
+        log.Println("3. main")
     }

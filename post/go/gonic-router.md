@@ -55,6 +55,23 @@ router with http.server config:
     //./public/index.html
 	router.Static("/", "./public")
 
+## router match
+match uri field
+
+	r.GET("/user/:name", func(c *gin.Context) {
+        name := c.Param("name")
+    }
+
+match all:
+
+    r.Any("/v1/*path", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+            "all_path":    c.Request.URL.Path,
+            "sub_path": c.Param("path"),
+		})
+	})
+
 ## router group
 	// Simple group: v2
 	v2 := router.Group("/v2")
