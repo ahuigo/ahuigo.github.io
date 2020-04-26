@@ -1,6 +1,7 @@
 ---
-title: install:
+title: python yaml
 date: 2018-10-04
+private:
 ---
 # install:
     ```
