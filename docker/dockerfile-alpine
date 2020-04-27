@@ -5,5 +5,5 @@ RUN apk add --no-cache bash && mkdir tmp && echo yxh > tmp/a.txt && cat tmp/a.tx
 USER daemon
 #CMD ["ls", "abc"]
 CMD ["sh", "-c", "whoami && pwd && ls -la"]
-ENTRYPOINT ["sh", "-c", "whoami && pwd && ls -la && echo end..."]
+ENTRYPOINT ["sh", "-c", "whoami && pwd && ls -la && echo ENTRYPOINT end..."]
 #ENTRYPOINT ["echo"]
