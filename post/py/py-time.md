@@ -230,7 +230,6 @@ parse rfc3339 format:
     s = "2016-07-19T07:30:36+05:00"
     d = parse("2016-07-19T07:30:36+05:00")
 
-
 ## timedelta: datetime加减
 
     >>> timedelta(days=2, hours=12)
@@ -284,6 +283,18 @@ compare
     import datetime
     datetime.datetime.now(datetime.timezone.utc).isoformat()
     '2019-12-25T04:13:39.774413+00:00'
+
+## get time with zone
+    >>> import datetime
+    >>> today = datetime.datetime.now()
+    >>> from pytz import reference
+    >>> reference.LocalTimezone().tzname(today)
+    'UTC'
+
+所以：
+
+    >>> tz = reference.LocalTimezone().tzname(today)
+    datetime.datetime.now(tz)
 
 ## create timeinfo
 一个datetime类型有一个时区属性tzinfo

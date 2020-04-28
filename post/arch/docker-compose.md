@@ -176,6 +176,12 @@ multi command:
 
 
 
+# exec
+exec with root: 
+
+    docker-compose -f docker-compose.yml exec -u root webserver \
+        ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
 # 网络
 Compose会为我们的app 创建一个网络，服务的每个容器都会加入该网络中.
 假如一个应用程序在名为myapp的目录中，并且docker-compose.yml如下所示：

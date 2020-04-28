@@ -481,7 +481,9 @@ A -> B -> C ,C的refer 是B
 	document.getElementById(frame_id).contentDocument
 	window.frames[frame_name].contentDocument//这个不被支持
 
-	//获取子iframe 的src
+父parent frame 获取iframe静态值（不是frame src 加载后的值）
+
+	//获取子iframe 的src(获取不了的src变化值)
 	window.frames[index].src
 	window.frames[frame_id].src
 	document.getElementById(frame_id).src

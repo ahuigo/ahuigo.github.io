@@ -16,6 +16,12 @@ description:
     onsubmit="return callback()" //return: true/false
     onsubmit="callback()" //不行！return 才能break
 
+
+## iframe
+iframe 必须有闭合`</iframe>`，不能是`<iframe />`, 否则会使js 失效
+
+    <iframe  height="100%" id="mainframe" width="100%" src="//bing.com" > </iframe>
+
 ## button
 button will auto submit by default  `type="submit"`, change it to:
 

@@ -244,5 +244,8 @@ private:
         return buf.String()
     }
 
+# 踩坑记： go 服务内存暴涨
+https://www.v2ex.com/t/666257#reply94
+
 # 参考
 - [Go代码调优利器-火焰图](https://lihaoquan.me/2017/1/1/Profiling-and-Optimizing-Go-using-go-torch.html) 

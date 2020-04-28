@@ -5,6 +5,7 @@ private:
 ---
 # ssh proxy
 
+    man ssh
     -f Rquests ssh to go to background just before command execution.
 
 ## tcp port forwarding
@@ -21,6 +22,7 @@ private:
     ssh -N -C -D1080 user@hostB &
     -N   Do not execute a remote command
     -T   Disable pseudo-terminal allocation.
+    -C  Requests compression of all data(gzip)
 
 
 ### 本地端口转发

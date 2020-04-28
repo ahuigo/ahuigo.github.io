@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-10-04 [浏览器同源政策及其规避方法](/b/ria/js-cors) 
+- 2018-09-27 [社保及养老保险](/b/life/life-pension) 
 - 2018-09-27 [Postgre 安装\配置\管理](/b/db/pg-ddl-install) 
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
 - 2016-09-27 [golang pkg 开发包](/b/go/go-pkg-dev) 
@@ -37,5 +39,3 @@
 - 2018-10-04 [python's super,type, object](/b/py/py-obj-type-super) 
 - 2018-09-28 [py-debug-log](/b/py/py-debug-log) 
 - 2020-03-31 [Python 的math 语法](/b/py/math/py-math) 
-- 2020-01-14 [TS ignore type when import module](/b/ria/ts/ts-ignore) 
-- 2019-09-28 [test](/b/c/ops-benchmark) 

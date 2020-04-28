@@ -66,8 +66,8 @@ iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信
 
     parent.location.href= target + "#" + hash;
 
-## window.name
-这个属性的最大特点是，无论是否同源，只要在*同一个窗口*里，*前一个网页* 设置了这个属性，*后一个网页* 可以读取它。
+## window.name(不实用)
+这个属性的最大特点是，无论是否同源，只要在*同一个窗口*里，*前一个网页* 设置了这个属性`name`，*后一个网页* 可以读取它。
 
 父窗口先打开一个子窗口，载入一个不同源的网页，该网页将信息写入window.name属性。
 
@@ -81,9 +81,20 @@ iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信
 
     var data = document.getElementById('myFrame').contentWindow.name;
 
+子窗口再跳回去：
+
+    location = 'http://child.url.com/xxx.html';
+
 这种方法的优点是，*window.name容量很大*，可以放置非常长的字符串；缺点是必须监听子窗口window.name属性的变化，影响网页性能。
 
+## document.domain(cookie 子源设定同源)
+举例来说，A网页是http://w1.example.com/a.html，B网页是http://w2.example.com/b.html，那么只要设置相同的document.domain，两个网页就可以共享Cookie. （对其它资源无效)
+
+    document.domain = 'example.com';
+
 ## window.postMessage
+> 示例： js-lib/cors-iframe/parent.html
+
 上面两种方法都属于破解，HTML5为了解决这个问题，引入了一个全新的API：跨文档通信 API（Cross-document messaging）。
 
 这个API为window对象新增了一个window.postMessage方法，允许跨窗口通信，不论这两个窗口是否同源。
@@ -92,6 +103,7 @@ iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信
 
     otherWindow.postMessage(message, targetOrigin, [transfer]);
     otherWindow.postMessage(message, otherWindow, [transfer]);
+    parent.postMessage(anyTypeMsg,"*");  //  `*` on any domain         
 
 举例来说，父窗口http://aaa.com向子窗口http://bbb.com发消息，调用postMessage方法就可以了。
 
@@ -107,12 +119,14 @@ postMessage方法的:
 子窗口向父窗口传值：
 
     window.opener.postMessage('msg','*')
+    window.parent.postMessage('msg','*')  //parent iframe
+    window.parent.postMessage('msg','http://localhost:8089')
 
 ### receiveMessage
 父窗口和子窗口都可以通过message事件，监听对方的消息。
 
     window.addEventListener('message', function(e) {
-      console.log(e.data);
+      console.log(e.data, e.source, e.origin);
     },false);
 
 message事件的事件对象event，提供以下三个属性。

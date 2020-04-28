@@ -120,9 +120,10 @@ CST是时区缩写，可以指下列的时区：
 # 时区设定：
 ## 全局
 
-    echo 'Asia/Beijing' | sudo tee /etc/timezone
-    # 或者
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+    # 或者
+    echo 'Asia/Beijing' | sudo tee /etc/timezone
     dpkg-reconfigure -f noninteractive tzdata
 
 docker 设置时区
