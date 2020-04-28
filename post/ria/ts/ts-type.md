@@ -390,3 +390,7 @@ https://stackoverflow.com/questions/36015691/obtaining-the-return-type-of-a-func
     type T13 = ReturnType<(<T extends U, U extends number[]>() => T)>;  // number[]
 
 
+## 自动判断类型
+    declare function isPromise<T, S>(obj: PromiseLike<T> | S): obj is PromiseLike<T>;
+
+

@@ -35,7 +35,7 @@ trigger:
 　　　　e.preventDefault();
 　　});
 
-## onpushstate
+## onpushstate(自定义)
 listen pushstate:
 
     (function(history){
@@ -48,14 +48,14 @@ listen pushstate:
         };
     })(window.history);
 
-## onpopstate
+## onpopstate(custom)
 onpopstate 是后退事件
 
 	window.onpopstate = function(event) {
 		alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
 	};
 
-## onpopstate, onhashchange
+## onpopstate, onhashchange(browser action)
 listen popstate(on user click back only): 
 
     //window.onpopstate
