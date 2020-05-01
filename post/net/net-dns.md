@@ -82,8 +82,16 @@ AAAA记录是一个指向IPv6地址的记录。
     58.com	mail exchanger = 5 mxbiz1.qq.com.
 
 ## PTR
+邮件交换记录中有A记录和PTR记录
+1. A记录解析名字到地址
+2. 而PTR记录解析地址到名字
+
+反向解析常用于邮件反垃圾，比如有人冒充name.com 给别的SMTP发邮件。
+SMTP接收时，反向解析发现这个IP没有对应到name.com，那么就拒绝这封邮件
+
 PTR：逆向查询记录（Pointer Record），只用于从IP地址查询域名
 
+  nslookup -qt=ptr 192.30.252.153
   dig -x 192.30.252.153
   153.252.30.192.in-addr.arpa. 3600 IN    PTR pages.github.com.
 

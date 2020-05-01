@@ -61,6 +61,55 @@ INSERT INTO table (id, field, field2)
 
     select 'abc'
 
+### not in
+https://stackoverflow.com/questions/19363481/select-rows-which-are-not-present-in-other-table
+
+    table name     column names
+    -----------    ------------------------
+    login_log      ip | etc.
+    ip_location    ip | location | hostname | etc.
+
+### not exists
+Often fastest in Postgres.
+
+    SELECT ip FROM   login_log l WHERE  NOT EXISTS (
+        SELECT  -- SELECT list mostly irrelevant; can just be empty in Postgres
+        FROM   ip_location
+        WHERE  ip = l.ip
+    );
+
+### left join/is null
+Sometimes this is fastest. Often shortest. Often results in the same query plan as NOT EXISTS.
+
+
+    SELECT l.ip FROM   login_log l 
+    LEFT   JOIN ip_location i USING (ip)  -- short for: ON i.ip = l.ip
+    WHERE  i.ip IS NULL;
+
+### Except
+Short. Not as easily integrated in more complex queries.
+
+    SELECT ip 
+    FROM   login_log
+
+    EXCEPT ALL  -- "ALL" keeps duplicates and makes it faster
+    SELECT ip
+    FROM   ip_location;
+
+ want the ALL keyword. If you don't care, still use it because it makes the query faster.
+
+### NOT IN
+Only good without NULL values or if you know to handle NULL properly. 
+
+    SELECT ip 
+    FROM   login_log
+    WHERE  ip NOT IN (
+        SELECT DISTINCT ip  -- DISTINCT is optional
+        FROM   ip_location
+    );
+
+
+
 ### between
 
     hourt between 0 and 23

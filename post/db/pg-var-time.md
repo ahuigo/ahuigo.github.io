@@ -60,8 +60,14 @@ get datetime(timestamp)
 ## delta
 
    select date '2001-09-28' + integer '7'
+   select date '2001-09-28' + integer '7' day
+   select date '2001-09-28' + integer '7 day'
    select created_at + interval '1' day * 7 as deadline
    select created_at + interval '1' day * day_field as deadline
    select created_at + interval '1' hour * hour_field as deadline
 
    select created_at + hour_field as deadline //not work
+
+### delta time
+    select  TIMESTAMP 'yesterday' ;
+    select  now() - INTERVAL '1 day' ;

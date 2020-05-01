@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2018-09-28 [net-dns](/b/net/net-dns) 
+- 2019-02-14 [查找数组中的第K大的值](/b/algorithm/sort-topk-kth) 
+- 2018-09-26 [动态规划(Dynamic programing, DP)](/b/algorithm/algo-dp) 
 - 2018-10-04 [浏览器同源政策及其规避方法](/b/ria/js-cors) 
 - 2018-09-27 [社保及养老保险](/b/life/life-pension) 
 - 2018-09-27 [Postgre 安装\配置\管理](/b/db/pg-ddl-install) 
@@ -36,6 +39,3 @@
 - 2020-04-26 [python 的正则表达式](/b/py/py-str-regex) 
 - 2018-09-28 [Python 文件处理](/b/py/py-file) 
 - 2020-04-26 [python 字典](/b/py/py-var-dict) 
-- 2018-10-04 [python's super,type, object](/b/py/py-obj-type-super) 
-- 2018-09-28 [py-debug-log](/b/py/py-debug-log) 
-- 2020-03-31 [Python 的math 语法](/b/py/math/py-math) 

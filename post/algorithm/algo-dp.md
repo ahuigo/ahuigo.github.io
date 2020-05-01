@@ -3,7 +3,7 @@ title: 动态规划(Dynamic programing, DP)
 date: 2018-09-26
 ---
 # 动态规划(Dynamic programing, DP)
-动态规则(Dynamic programing, DP) 的大体思路是：将一个特定的问题，切割成若干类似的子问题，最后合并子问题的解并得出总问题的解。
+动态规则(Dynamic programing, DP) 的大体思路是(数学归纳法)：将一个特定的问题，切割成若干类似的子问题，最后合并子问题的解并得出总问题的解。
 
 适用场景：
 

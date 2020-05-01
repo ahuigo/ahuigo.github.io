@@ -76,6 +76,8 @@ e.g.
     pg_dump -U db_username -s  -f [filename.sql] [db_name]
     # only data
     pg_dump -U db_username -a  -f [filename.sql] [db_name]
+    # spcify table
+    pg_dump -U db_username -t table_name -a  -f [filename.sql] [db_name]
     # data+schema
     pg_dump                      -f [filename.sql] [db_name]
 
