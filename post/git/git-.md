@@ -697,17 +697,17 @@ to keep the remote or local file, :
 	git checkout --theirs /path/to/file
 	git checkout --ours /path/to/file
 
-## merge option
+## merge strategy
 
     -s, --strategy
         resolve     This resolves cases with only two heads,
         octopus     This resolves cases with more than two heads,
         recursive   This can only resolve two heads using a 3-way merge algorithm
             -X <options>     this strategy can take merge-options:
-            ours
-            theirs
-            patience
-            ignore-space-change
+                ours
+                theirs
+                patience
+                ignore-space-change
         ours        This resolves any number of heads
 
 e.g.
@@ -717,6 +717,10 @@ e.g.
     # recursive 冲突时才用自己的
         git pull -s recursive -Xours  
         git pull -Xours   # 默认-s recursive
+
+用别人的:
+
+    git pull -s recursive -Xtheirs origin dev
 
 ### option
 

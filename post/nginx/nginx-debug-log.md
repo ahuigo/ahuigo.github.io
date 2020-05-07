@@ -109,7 +109,7 @@ nginx不会打印出变量. 有一个办法可以[探测变量](http://www.justi
 Update: 其实nginx 有一个echo moudle, 需要编译一下
 
 	location /{
-	 echo The current request uri is $request_uri;
+        echo The current request uri is $request_uri;
 	 }
 
 

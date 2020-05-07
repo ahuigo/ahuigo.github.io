@@ -10,8 +10,58 @@ private: true
     <Geom style={{ stroke: 'white', lineWidth: 20 }}>
 
 # G2/bizcharts theme
-## 新增主题
-新增主题可以使用 Global 上的 registerTheme 接口。
+
+## 设置主题
+初始化主题
+
+    const chart1 = new Chart({
+        container: 'container',
+        theme: 'dark', // 使用命名为 'dark' 的主题
+    });
+
+    const chart2 = new Chart({
+        container: 'container',
+        theme: {
+            defaultColor: 'red',
+        }, // 修改内置主题的某些配置
+    });
+
+动态更新主题
+chart.theme() 声明之后，必须调用 chart.render() / chart.render(true) 方可生效
+
+    // 在创建图表的时候，就切换主题
+    chart1.theme('dark');
+    chart1.render(); // 渲染图表
+
+    // 图表渲染后，动态切换主题
+    chart2.theme({
+        defaultColor: 'red',
+    }); // 修改内置主题的某些配置
+    chart2.render(true);
+
+
+## 获取主题
+G2.Global 移除，默认的主题配置可以通过以下方式获取：
+
+    // 方式 1
+    import { getTheme } from '@antv/g2';
+    const defaultTheme = getTheme();
+
+    // 方式 2，通过 chart 示例获取当前主题
+    const theme = chart.getTheme();
+
+## registerTheme
+注册自定义主题
+
+    import { registerTheme } from '@antv/g2';
+
+    registerTheme('themeName', {
+        colors: [ 'red', 'blue', 'yello' ]
+    }); // 传入两个参数，一个参数是主题的名称，另一个参数是主题配置项
+
+使用注册主题
+
+    chart.theme('themeName');
 
     const { Global } = G2; // 获取 Global 全局对象
     Global.registerTheme('newTheme', {
@@ -19,17 +69,6 @@ private: true
     }); // 传入两个参数，一个参数是主题的名称，另一个参数是主题配置项
 
 这样就可以在全局切换这个主题或者在 chart 新建的时候指定设置的主题了。
-
-## 全局图表主题切换
-直接传入主题名
-
-    const { Global } = G2; // 获取 Global 全局对象
-    Global.setTheme('dark'); // 传入值为 'default'、'dark' 的一种，如果不是，那么使用 default 主题。
-
-或者：
-
-    import {setTheme} from 'bizcharts';
-    setTheme('dark');
 
 ## 变更全局样式
 G2 图表样式的配置项都是设置到全局变量 G2.Global 上，可以通过如下两种方式进行局部的样式设置：

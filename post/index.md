@@ -1,4 +1,8 @@
 # AHUIGO 的笔记
+- 2020-05-07 [install](/b/nginx/nginx-install) 
+- 2020-05-07 [nginx debug](/b/nginx/nginx-debug-log) 
+- 2019-02-05 [Lua 的变量](/b/lua/lua-var) 
+- 2019-01-06 [lua module](/b/lua/lua-module) 
 - 2018-09-28 [net-dns](/b/net/net-dns) 
 - 2019-02-14 [查找数组中的第K大的值](/b/algorithm/sort-topk-kth) 
 - 2018-09-26 [动态规划(Dynamic programing, DP)](/b/algorithm/algo-dp) 
@@ -35,7 +39,3 @@
 - 2018-09-27 [ops-device](/b/c/ops-device) 
 - 2020-04-19 [安全的帐号设计](/b/sec/sec-account) 
 - 2018-09-28 [py-http](/b/py/py-http) 
-- 2019-02-20 [brew dev](/b/mac/mac-brew-dev) 
-- 2020-04-26 [python 的正则表达式](/b/py/py-str-regex) 
-- 2018-09-28 [Python 文件处理](/b/py/py-file) 
-- 2020-04-26 [python 字典](/b/py/py-var-dict) 

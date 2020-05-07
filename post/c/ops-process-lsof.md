@@ -8,7 +8,9 @@ date: 2018-09-27
 # lsof
 [/p/linux-process-lsof](/p/linux-process-lsof)
 
-List Open File
+List Open File. 比如查看所有打开file descriptor
+
+    lsof | wc -l
 
 ## format
 
@@ -19,7 +21,12 @@ List Open File
 Find original owning process of a Linux socket
 
 	sudo lsof /dev/shm/mc.sock
-	lsof -U #all UNIX socket
+
+## filter
+	-U          #selects the listing of UNIX domain socket files.
+    -u users    #selects  the  listing of files for the user whose login names or
+                user ID numbers  are  in  the  comma-separated  set  s  -  e.g.,
+                ``abe'',  or  ``548,root''.
 
 ## and logic
 
@@ -81,10 +88,42 @@ find all listen port
 	$lsof -p $$
 	$lsof -p pid1 -p pid2
 
+    # OR
+    ls -l /proc/23295/fd/
+
 ## via dir
 查询指定目录下被进程开启的文件（使用+D 递归目录）：
 
 	$lsof +d mydir1/
+
+# /proc(procfs File System)
+/proc (or procfs) is a pseudo-file system that it is dynamically generated after each reboot. It is used to access kernel information.
+
+    /proc/PID/cmdline : process arguments
+    /proc/PID/cwd : process current working directory (symlink)
+    /proc/PID/exe : path to actual process executable file (symlink)
+    /proc/PID/environ : environment used by process
+    /proc/PID/root : the root path as seen by the process. For most processes this will be a link to / unless the process is running in a chroot jail.
+    /proc/PID/status : basic information about a process including its run state and memory usage.
+    /proc/PID/task : hard links to any tasks that have been started by this (the parent) process.
+
+# List File Descriptors in Kernel Memory
+
+    $ sysctl fs.file-nr
+    fs.file-nr = 1020	0	70000
+    # or
+    $ cat /proc/sys/fs/file-nr
+
+Where:
+
+    1020 The number of allocated file handles.
+    0 The number of unused-but-allocated file handles.
+    70000 The system-wide maximum number of file handles.
+
+find out the system-wide maximum number of file handles:
+
+    $ sysctl fs.file-max
+    fs.file-max = 70000
 
 # find process
 

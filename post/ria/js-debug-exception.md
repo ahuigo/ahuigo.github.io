@@ -17,6 +17,25 @@ date: 2018-10-04
         this.message = message;
         this.name = "UserException";
     }
+    UserException.prototype = new Error();
+
+    e = new UserException("msg")
+    e.stack string
+    e.message
+    e.name
+
+## catch specific exception
+
+    // ...
+    try {
+        throw new SpecificError;
+    } catch (e) {
+        if (e instanceof SpecificError) {
+            // specific error
+        } else {
+            throw e; // let others bubble up
+        }
+    }
 
 ## ReferenceError:
 
