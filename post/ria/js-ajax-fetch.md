@@ -23,6 +23,15 @@ Detect Ajax(php 为例)：
 	$_SERVER['HTTP_X_REQUESTED_WITH']
 	$_SERVER['HTTP_ACCEPT'] === 'application/json';
 
+## isAjax
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    )
+
+
 # fetch
 ## request
         fetch('http://localhost:5001').then(response=>response.json()).then(json=>{

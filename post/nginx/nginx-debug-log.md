@@ -21,8 +21,8 @@ description:
 	http {
 		#设定日志格式
 		log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-						  '$status $body_bytes_sent "$http_referer" '
-						  '"$http_user_agent" "$http_x_forwarded_for"';
+                '$status $body_bytes_sent "$http_referer" '
+                '"$http_user_agent" "$http_x_forwarded_for"';
 		access_log  logs/access.log  main;
 		error_log /var/log/nginx-error.log info;
 		error_log  /dir/error.log  main;
@@ -109,9 +109,8 @@ nginx不会打印出变量. 有一个办法可以[探测变量](http://www.justi
 Update: 其实nginx 有一个echo moudle, 需要编译一下
 
 	location /{
-        echo The current request uri is $request_uri;
+        echo The current request uri is $request_uri; //http body response. 类似ngx.say
 	 }
-
 
 ## error code
 

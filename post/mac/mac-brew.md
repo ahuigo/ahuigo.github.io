@@ -84,8 +84,12 @@ or:
 
 	$ brew --prefix homebrew/php/php55
 	/usr/local/Cellar/php55/5.5.16
-  # 查看文件
+    # 查看文件
 	$ brew list php55
+
+# brew命令
+
+## brew sth.
 
 ### brew update
 Update formulae: brew update
@@ -101,10 +105,15 @@ Edit formulae
 	brew edit <softname>
 	brew edit emacs
 
-### install cli program via brew
+## brew install
+install cli program via brew
 
 	brew install vim                 # installs from Homebrew/homebrew
 	brew install username/repo/vim   # installs from your custom repo
+
+### forece uninstall
+    brew uninstall --force luarocks
+
 
 ## brew tap
 brew tap allows you to add more Github repos to the list of formulae that brew tracks, updates and installs from.

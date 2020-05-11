@@ -16,7 +16,7 @@ date: 2019-02-05
     table	Lua 中的表（table）其实是一个"关联数组"（associative arrays），数组的索引可以是数字或者是字符串。
         在 Lua 里，table 的创建是通过"构造表达式"来完成，最简单构造表达式是{}，用来创建一个空表。
 
-type
+## type
 
     print(type("Hello world"))      --> string
     print(type(10.4*3))             --> number
@@ -26,6 +26,7 @@ type
     print(type(nil))                --> nil
     print(type(type(X)))            --> string
 
+    if not (type(name) == "string") then
 
 
 ## thread

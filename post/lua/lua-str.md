@@ -47,8 +47,12 @@ private: true
     print(string.format("日期格式化 %02d/%02d/%03d", date, month, year))
     print(string.format("%.4f",1/3))
 
+### split/join
+ngx only
 
-# Bytes
+    local t, err = ngx_re.split(cookie, ";")
+
+# Bytes/char
     string.char(arg) 和 string.byte(arg[,int])
 
 char 将整型数字转成字符并连接， byte 转换字符为整数值(可以指定某个字符，默认第一个字符, 不是从0开始)。
@@ -56,14 +60,13 @@ char 将整型数字转成字符并连接， byte 转换字符为整数值(可�
     > string.char(97,98,99,100)
     abcd
     > string.byte("ABCD",4)
+    > string.byte("ABCD",-1)
     68
     > string.byte("ABCD")
     65
 
+
 # regex
-## 非regex
-    > string.find("Hello Lua user", "Lua", 1) 
-    7    9
 
 ## char
 在模式匹配中有一些特殊字符，他们有特殊的意义，Lua中的特殊字符如下：
@@ -106,10 +109,16 @@ char 将整型数字转成字符并连接， byte 转换字符为整数值(可�
 ## match/gmatch
 ### string.match(str, pattern, init)
 string.match()只寻找源字串str中的第一个配对. 参数init可选, 指定搜寻过程的起点, 默认为1。 
-在成功配对时, 函数将返回配对表达式中的所有捕获结果; 如果没有设置捕获标记, 则返回整个配对字符串. 当没有成功的配对时, 返回nil。
+
+如果没有设置捕获标记, 则返回整个配对字符串. 当没有成功的配对时, 返回nil。
 
     > = string.match("I have 2 questions for you.", "%d+ %a+")
     2 questions
+    > = string.match("a",'b+')
+    nil
+
+在成功配对时, 函数将返回配对表达式中的所有捕获结果; 
+group match 会返回多个值
 
     > = string.format("%d, %q", string.match("I have 2 questions for you.", "(%d+) (%a+)"))
     2, "questions"
@@ -126,10 +135,22 @@ string.match()只寻找源字串str中的第一个配对. 参数init可选, 指�
 
     > = string.find("I have 2 questions for you.", "(%d+) (%a+)")
     	string.find (str, substr, [init, [end]])
-    在一个指定的目标字符串中搜索指定的内容(第三个参数为索引),返回其具体位置。不存在则返回 nil。
+
+在一个指定的目标字符串中搜索指定的内容(第三个参数为索引),返回其具体位置。不存在则返回 nil。
+
     > string.find("Hello Lua user", "Lua", 1) 
     7    9
 
-## gsub
-    > string.gsub("aaaa","a","z",3);
-    zzza    3
+## gsub 替换
+    = string.gsub("---aaaa","a","z",1);
+    ---zaaa    1
+
+gsub 支持group capture 
+
+    =string.gsub("ab","(a)(b)","%2:%1");
+    b:a     1
+
+## sub(slice)
+
+    s = "hello"
+    = string.sub(s, 2, string.len(s))

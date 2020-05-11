@@ -41,8 +41,10 @@ out:
 
     #t
 
-当我们获取 table 的长度的时候无论是使用 # 还是 table.getn 其都会在索引中断的地方停止计数，而导致无法正确取得 table 的长度。
-可以使用以下方法来代替：
+当我们获取 table 的长度的时候无论是使用 `#` 还是 `table.getn` 其都会在索引中断的地方停止计数，而导致无法正确取得 table 的长度。
+
+### loop table
+可以使用`pairs` 方法来代替`#`求长度：
 
     function table_leng(t)
         local leng=0
@@ -52,6 +54,7 @@ out:
         return leng;
     end
 
+ipairs 只有用于list(key从1开始)
 
 ## assign and nil
 ### nil 可销毁key和变量
@@ -86,7 +89,7 @@ out:
         print(key, value)
     end
 
-### 无状态iter
+## 无状态iter
 不保留任何状态的迭代器
 
     function square(iteratorMaxCount,currentNumber)
@@ -97,7 +100,7 @@ out:
        end
     end
 
-    -- square即是函数，也是迭代器
+    -- square即是函数，也是迭代器(返回nil, 即无return则中断)
     for i,n in square,3,0
     do
        print(i,n)
@@ -113,14 +116,37 @@ ipairs 的内部实现：
         end
     end
     
-    -- for i,v in iter, a, 0
+    -- ipairs(a)返回 iter, a, 0
     function ipairs (a)
         return iter, a, 0
     end
 
-iter, a, i中每次传单个状态i
+### 迭代本质
+iter, a, i中, 只有i只是初始值, 然后从1递增，直到iter返回nil
 
-### 多状态的迭代器
+    i=0
+    function count(max, j)
+        i=i+1
+        print('j=',j)
+        if i>max then
+            return nil
+        end
+        return i
+    end
+    for v in count,2,100
+    do
+        print(v)
+    end
+
+返回：
+
+    j=	nil
+    1
+    j=	1
+    2
+    j=	2
+
+## 多状态的迭代器
 很多情况下，迭代器需要保存多个状态信息而不是简单的状态常量和控制变量，最简单的方法是使用闭包，
 还有一种方法就是将所有的状态信息封装到table内，将table作为迭代器的状态常量，因为这种情况下可以将所有的信息存放在table内，所以迭代函数通常不需要第二个参数。
 

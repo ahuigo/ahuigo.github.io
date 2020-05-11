@@ -9,7 +9,17 @@ date: 2018-10-04
 	默认值:	—
 	上下文:	http
 
-upstream目前支持 5 种方式的分配
+## 域名解析
+    upstream upstream_name {
+        server localhost; # 不走/etc/host
+    }
+
+可以配置dns:
+
+    resolver 223.5.5.5;
+	proxy_pass $scheme://$http_host;
+
+## upstream目前支持 5 种方式的分配
 
 	1)、轮询（默认）
 	每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。
@@ -44,7 +54,7 @@ Example:
 	}
 
 
-upstream 每个设备的状态:
+## upstream 每个设备的状态:
 
 	down 表示单前的server暂时不参与负载
 	weight 默认为1.weight越大，负载的权重就越大。
@@ -84,6 +94,14 @@ upstream 每个设备的状态:
         hash_method crc32;
     }
 
+# use upstream
+## proxy_pass upstream
+	server {
+		location / {
+			proxy_pass http://backend;
+		}
+	}
+
 ## memcache upstream
 
 	upstream memcached_backend {
@@ -115,8 +133,8 @@ upstream 每个设备的状态:
 		}
 	}
 
-### fastcgi keepalive(fastcgi_pass)
-启用fastcgi 长连接支持 增加 `fastcgi_keep_conn on`, 见nginx-fastcgi.md
+## fastcgi upstream 
+下例启用fastcgi 长连接支持 增加 `fastcgi_keep_conn on`, 见nginx-fastcgi.md
 
 	upstream fastcgi_backend {
 		server 127.0.0.1:9000;
@@ -131,7 +149,7 @@ upstream 每个设备的状态:
 		}
 	}
 
-## fastcgi_next_upstream
+### fastcgi_next_upstream
 Specifies in which cases a request should be passed to the next server(upstream)
 
 	Syntax:	fastcgi_next_upstream error | timeout | invalid_header | http_500 | http_503 | http_403 | http_404 | off ...;

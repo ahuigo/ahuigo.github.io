@@ -116,7 +116,7 @@ type 用于查看命令的属性
 ## alias
 
 	unalias rgrep
-
+# exec cmd
 ## exec self process
 
     $ bash -c 'echo $$ ; ls -l /proc/self ; echo foo'
@@ -145,7 +145,7 @@ Empty command is fobidden:
 
     sh -c 'ls & ;ls'; # syntax error
 
-## execute command `cmd` or $(cmd)
+## `cmd` or $(cmd)
 以子进程执行cmd.(你也可通过source 以当前进程执行cmd)
 
 	`cmd` or $(cmd)
@@ -261,8 +261,7 @@ Note that here string behavior can also be accomplished (reversing the order) vi
 
 	echo 'one two' | tr a-z A-Z
 
-## Caculation
-
+# Caculation cmd
 ### expr
 expr 算式:
 

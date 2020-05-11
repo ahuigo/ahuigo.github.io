@@ -2,10 +2,10 @@
 title: nginx proxy
 date: 2018-10-04
 ---
-## http_proxy
+# http_proxy
 The ngx_http_proxy_module module allows passing requests to another server.
 
-### proxy_pass
+## proxy_pass
 
 	Syntax:	proxy_pass URL;
 	Default:	—
@@ -18,24 +18,31 @@ The address can be specified as a domain name or IP address, and an optional por
 
 an address can be specified as a server group.
 
-#### proxy_pass URI
-A request URI is passed to the server as follows:
+### proxy_pass URI
+#### path append：
 
-- If the proxy_pass is with a URI, the part of a *normalized request URI*(literal location only) matching the location is replaced by a URI specified in the directive:
-
-	location /name/ {
-		proxy_pass http://127.0.0.1/remote/;    #access "http://host/name/act" will be replaced with "http://host/remote/act"
+	location /name {
+        #access "http://host/name/act?q=a" will be replaced with "http://host/remote/?pass=1/act?q=a"
+		proxy_pass http://127.0.0.1/remote/?pass=1;    
 	}
 
-- If proxy_pass is specified without a URI,
-the request URI is passed to the server in the *same form* as sent by a client when the original request is processed
+#### rewrite 会全部替换path
 
-    proxy_pass http://127.0.0.1;
-    proxy_pass http://api.ahuigo.github.io;
+	location /name/ {
+        #access "http://host/name/act?q=a" will be replaced with "http://host/rewrite?r=1"
+        rewrite ^ /rewrite?r=1 break;
+		proxy_pass http://127.0.0.1/remote/?pass=1;    
+	}
 
-> When location is specified using a regular expression,  the directive should be specified `without a URI`
+#### regexp location with not path
+Regexp location, or inside named location, or inside "if" statement, or inside "limit_except" block, **cannot have URI part!**
 
-#### Variable for hosts
+	location ^/name.*/ {
+        proxy_pass http://127.0.0.1;
+        proxy_pass http://api.ahuigo.github.io;
+	}
+
+### Variable for hosts
 If you use variables in `proxy_pass`, nginx will not use local `/etc/hosts` and `local dns setting`
 You should specify `resolver` instead (in case of proxy loop).
 
@@ -43,7 +50,7 @@ You should specify `resolver` instead (in case of proxy loop).
 	#proxy_pass $scheme://$http_host/$request_uri;
 	proxy_pass $scheme://$http_host;
 
-##### dnsmasq
+#### dnsmasq
 `resolver` will not use `hosts` file.  
 You can get around this by installing `dnsmasq` and setting your resolver to 127.0.0.1.
 1. Basically this uses your local DNS as a resolver, but it only resolves what it knows about (among those things is your /etc/hosts) and forwards the rest to your default DNS.
@@ -62,20 +69,16 @@ You can get around this by installing `dnsmasq` and setting your resolver to 127
 	proxy_set_header X-Real-IP  $remote_addr;
 	proxy_set_header X-Forwarded-For $remote_addr;
 
-## proxy example
-example
+## cookie
+为了规则proxy回返的set-cookie: host=localhost 域名.
+There could be several proxy_cookie_domain directives:
 
-	server {
-		listen 8888;
-		location / {
-			resolver 223.5.5.5;
-			if ( $host ~ "ahuigo.github.io" ) {
-				proxy_pass http://127.0.0.1:80;
-			}
-			if ( $host !~ "ahuigo.github.io" ) {
-				proxy_pass $scheme://$http_host;
-			}
-		}
-	}
+    proxy_cookie_domain localhost example.org;
+    proxy_cookie_domain ~\.([a-z]+\.[a-z]+)$ $1;
+    proxy_cookie_domain ~\.(?P<sl_domain>[-0-9a-z]+\.[a-z]+)$ $sl_domain;
 
-curl -x '127.0.0.1:8888' 'http://ahuigo.github.io/test.php'
+note: proxy_cookie的正则要以`~`开头
+
+
+# proxy example
+see: a/conf/nginx/nginx.proxy.conf

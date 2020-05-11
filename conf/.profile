@@ -20,6 +20,9 @@ export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blu
 #export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
 export PIP_FORMAT=columns
 
+##############lua
+export LUA_DIR=/usr/local/opt/lua@5.1
+
 #################NVM##############
 echo "nvm.sh"
 export NVM_DIR="$HOME/.nvm"
@@ -48,6 +51,7 @@ alias drmi='docker rmi $( docker images --filter "dangling=true" -q --no-trunc)'
 
 # go
 # goenv
+export GODEV=local
 export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
 [[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.12.9/libexec
 export GO111MODULE=on 

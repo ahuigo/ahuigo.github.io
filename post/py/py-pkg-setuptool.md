@@ -165,7 +165,7 @@ use:
     pip install --extra-index-url https://ahuigo.com/api/pypi/simple example_pkg
     pip install --extra-index-url https://ahuigo.com/api/pypi/simple example_pkg==0.0.2
 
-指定源： ~/.pip/pip.conf:
+指定源列表： ~/.pip/pip.conf 及下载帐号密码:
 
     [global]
     index-url = http://download.zope.org/simple
