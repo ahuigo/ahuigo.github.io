@@ -320,21 +320,22 @@ shell 没有三元运算符：不过可以这样
 	[[ 1 -le 3 ]] && echo yes
 
 # Brackets, 括号
+执行cmd
 
 	(cmd1;cmd2) 	以子shell执行命令集
 		(var=notest;echo $var) # 无空格限制
 		arr=(1 2 3) 也用于初始化数组
-	[ expr ] 		测试,  test expr 等价
-		[ 1 ] && echo 1 # true
-		[ 0 ] && echo 1 # true
-		[ '' ] && echo 1 # false
-		[ $(echo $str | grep -E '^[0-9]+$') ] && echo 1 #小心命令替换出现恶意字符 导致syntax error.
 	{ cmds;}		命令集(在前shell执行, 在bash 中左花括号后必须有一个空格，而cmds中最后一个cmd后必须有分号; zsh 则没有这些限制)
 		for i in {0..4};do echo $i;done 产生一个for in序列
 		ls {a,b}.sh		通配符(globbing)
 		echo a{p,c,d,b}e # ape ace ade abe
 		echo {a,b,c}{d,e,f} # ad ae af bd be bf cd ce cf
 		{code block}
+	[ expr ] 		测试,  test expr 等价
+		[ 1 ] && echo 1 # true
+		[ 0 ] && echo 1 # true
+		[ '' ] && echo 1 # false
+		[ $(echo $str | grep -E '^[0-9]+$') ] && echo 1 #小心命令替换出现恶意字符 导致syntax error.
 
 下面是结果替换为命令字符
 

@@ -117,7 +117,7 @@ type 用于查看命令的属性
 
 	unalias rgrep
 # exec cmd
-## exec self process
+## sh -c cmdstr
 
     $ bash -c 'echo $$ ; ls -l /proc/self ; echo foo'
     7218
@@ -129,7 +129,7 @@ type 用于查看命令的属性
     7217
     lrwxrwxrwx 1 root root 0 Jun 30 16:49 /proc/self -> 7217
 
-## multiple command to one
+## async/sync command
 
     sh -c 'ls ; ls'
     sh -c 'cmd1 && cmd2'
@@ -145,7 +145,18 @@ Empty command is fobidden:
 
     sh -c 'ls & ;ls'; # syntax error
 
-## `cmd` or $(cmd)
+## 子shell cmd
+
+	(cmd1;cmd2) 	以子shell执行命令集
+		(var=notest;echo $var) # 无空格限制
+		arr=(1 2 3) 也用于初始化数组
+	{ cmds;}		命令集(在前shell执行, 在bash 中左花括号后必须有一个空格，而cmds中最后一个cmd后必须有分号; zsh 则没有这些限制)
+		for i in {0..4};do echo $i;done 产生一个for in序列
+		ls {a,b}.sh		通配符(globbing)
+		echo a{p,c,d,b}e # ape ace ade abe
+		echo {a,b,c}{d,e,f} # ad ae af bd be bf cd ce cf
+		{code block}
+## args: `cmd` or $(cmd)
 以子进程执行cmd.(你也可通过source 以当前进程执行cmd)
 
 	`cmd` or $(cmd)
@@ -175,7 +186,8 @@ shell arguments:
 
 请参考：[Why does $var where var="foo bar" not do what I expect?](http://zsh.sourceforge.net/FAQ/zshfaq03.html)
 
-## Process Substitution - 进程替换
+
+## file: Process Substitution - 进程替换
 有些命令需要以文件名为参数(file args)，这样一来就不能使用管道。这个时候 `<()` `>()` 就显出用处了，它可以接受一个命令，并把它转换成临时文件名。
 
 	# 下载并比较两个网页
@@ -220,46 +232,6 @@ or :
 	echo abc | tee /dev/stdout | cmd
 	#with tty(screen)
 	echo abc | tee /dev/tty | cmd
-
-## heredoc and nowdoc
-Act as stdin
-
-	# heredoc 任何字词都可以当作分界符 (cat < file)
-	cat  << MM
-	echo $? #支持变量替换
-	MM
-
-	#nowdoc 加引号防止变量替换
-	cat << 'MM' > out.txt
-	echo $?
-	MM
-
-	# `<<-` ignore tab(not space)
-	if true ; then
-		cat <<- MM | sudo tee -a file > /dev/null
-		The leading tab is ignored.
-    MM
-	fi
-	# nowdoc + ignore tab(not include space) MM 仍然要顶行写
-	cat <<-'MM' | sudo tee -a a.txt > /dev/null
-		echo $PATH
-    MM
-
-## here string
-> Note: here string 结尾会追加'\n'
-
-Act as stdin
-
-    python <<<'import os;os._exit(0)'
-	tr a-z A-Z <<< 'one two'
-	cat <<< 'one two'
-
-	cat <<< $PATH a.txt
-	echo "$PATH" | cat a.txt
-
-Note that here string behavior can also be accomplished (reversing the order) via piping and the echo command, as in:
-
-	echo 'one two' | tr a-z A-Z
 
 # Caculation cmd
 ### expr

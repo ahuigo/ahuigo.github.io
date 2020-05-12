@@ -14,11 +14,15 @@ private: true
     fswatch -o -r ~/path/to/watch | xargs -n1 -I{} nginx -s reload
         -I{} 表示不加参数
     fswatch -o -r ~/path/to/watch | xargs -n1 sh -c 'nginx -s reload'
-        sh 忽略多余参数
+        sh -c 会忽略多余参数
 
 杀进程：
 
     $ fswatch -r -o conf | xargs -n1 -I% sh -c 'echo event number%;kill $(cat ngx.pid);nginx -p `pwd`/ -c conf/lua.conf& echo $!>ngx.pid;'
+
+reload + detect
+
+    $ fswatch -r -o conf | xargs -n1 -I% sh -c 'echo event number%;nginx -c conf/lua.conf ||kill $(cat ngx.pid);nginx -p `pwd`/ -c conf/lua.conf& echo $!>ngx.pid;'
 
 help: 
 
