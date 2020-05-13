@@ -42,6 +42,11 @@ Regexp location, or inside named location, or inside "if" statement, or inside "
         proxy_pass http://api.ahuigo.github.io;
 	}
 
+### 500 URI
+如果URI 为空会报500(error.log)：
+
+    invalid URL prefix in "",
+
 ### Variable for hosts
 If you use variables in `proxy_pass`, nginx will not use local `/etc/hosts` and `local dns setting`
 You should specify `resolver` instead (in case of proxy loop).

@@ -156,6 +156,7 @@ Empty command is fobidden:
 		echo a{p,c,d,b}e # ape ace ade abe
 		echo {a,b,c}{d,e,f} # ad ae af bd be bf cd ce cf
 		{code block}
+
 ## args: `cmd` or $(cmd)
 以子进程执行cmd.(你也可通过source 以当前进程执行cmd)
 

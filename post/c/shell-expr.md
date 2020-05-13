@@ -150,12 +150,19 @@ Nop command
 		:;
 	fi
 
+
 ### 测试命令执行
 
 	if command; then echo echo succ:$?; else echo failed:$?; fi
 
 	if ls; then echo succ:$?; else echo failed:$?; fi
 	if :; then echo succ:"空命令':'始终会执行"; else echo failed:$?; fi
+
+if not command
+
+    if ! { echo a && false; } then
+        echo false
+    fi
 
 ### 测试函数执行
 

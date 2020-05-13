@@ -24,6 +24,12 @@ ps工具标识进程的5种状态码:
 1. Z 僵死 a defunct (”zombie”) process
 1. T 停止 traced or stopped
 
+## check pid exist
+
+    kill -0 $pid && echo pid exist
+    [ -n "$PID" -a -e /proc/$PID ]
+    [ -n "$(ps -p $PID -o pid=)" ]
+
 # ps
 
 	ps -options
