@@ -314,6 +314,8 @@ ps: <C-O> 或者 <C-I>/<TAB> 前面都可加数字(jumpid),比如
 
     <C-o> + hjkl
     <C-o> + wbeWBE
+    " C-\ 不会切换光标位置
+    <C-\><C-o> + wbeWBE
 
 一般`<C-o>` 是要结合map 做成方便的快捷键的, 比如在`~/.vimrc` 加入
 

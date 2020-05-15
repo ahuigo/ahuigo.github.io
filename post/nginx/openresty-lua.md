@@ -122,7 +122,7 @@ output:
     end
 
 #### set header(request)
-
+    proxy_set_header Cookie "$http_cookie;k=1"; 
     ngx.req.set_header("Content-Type", "text/css")
     ngx.req.set_header("Foo", {"a", "abc"})
 

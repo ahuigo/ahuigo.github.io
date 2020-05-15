@@ -55,7 +55,7 @@ old way lua modle in 5.1 5.0 不用return
 ## 加载机制：
 1.先在全局变量 LUA_PATH + package.path 找lua，如果找过目标文件，则会调用 package.loadfile 来加载模块。
 
-    export LUA_PATH="~/lua/?.lua;;"
+    export LUA_PATH="path1;path2;~/lua/?.lua;;"
     # 文件路径以 ";" 号分隔，最后的 2 个 ";;" 表示新加的路径后面加上原来的默认路径。
     # ~/lua/?.lua;./?.lua;
 

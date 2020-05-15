@@ -319,7 +319,7 @@ Go back one word in iTerm2?
 
 Also you can add a shortcuts in `preference -> keys`:
 
-	shortcuts: alt+f
+	shortcuts: alt+f/alt+right_arrow
 	action: send escape sequence
 	ESC+: f
 

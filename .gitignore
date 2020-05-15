@@ -37,3 +37,4 @@ conf/z.lua
 go.sum
 /conf/nginx/dump.rdb
 /config/karabiner/automatic_backups
+/config/karabiner/karabiner.json

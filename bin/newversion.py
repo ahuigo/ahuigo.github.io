@@ -4,6 +4,11 @@ import re
 if len(sys.argv)<2:
     quit(f'Usage: newversion.py version.file')
 
+print(''' use version:
+1. newversion.py version
+2. version = open('version').read().strip(),
+''')
+
 versionFile = sys.argv[1]
 
 def incrNum(m):

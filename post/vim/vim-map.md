@@ -128,6 +128,10 @@ Use visual block as object via `:normal`
     <C-H>==Backspace
     :h keycodes 或者 :h key-notation
 
+    "alt+del
+    inoremap <A-BS> <C-o>dB<BS>
+
+
 应该对这些键引起重视，比如以下两个映射是完全等价的.
 
     map <TAB> >

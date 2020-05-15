@@ -76,6 +76,7 @@ noremap <silent> 0 g0
 """""""""""""""""""""""""""""""""""
 noremap! <C-a> <Home>
 inoremap <C-e> <End>
+inoremap <A-BS> <C-\><C-o>dB
 noremap! <C-f>  <Right>
 "cnoremap <A-f> <C-f>
 cnoremap ƒ <C-f>

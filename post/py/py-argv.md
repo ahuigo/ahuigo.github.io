@@ -115,6 +115,12 @@ action="store_true" is bool
 ## help?
     @click.command(no_args_is_help=True)
 
+echo help:
+
+    ctx = click.get_current_context()
+    click.echo(ctx.get_help())
+    ctx.exit()
+
 ## option
 option 的先后，也args name的先后无关
 
