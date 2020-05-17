@@ -5,21 +5,8 @@ private: true
 ---
 # Ruby class
 
-## 变量
-Ruby 提供了5种类型的变量：
 
-    一般小写字母、下划线开头：变量（Variable）。
-    $开头：全局变量（Global variable）。
-    @开头：实例变量（Instance variable）。
-    @@开头：类变量（Class variable）类变量被共享在整个继承链中
-    大写字母开头：常数（Constant）
-
-## 实例
-    cust1 = Customer.new
-    cust2 = Customer. new
-    cust3 = Customer. new(arg1,arg2)
-
-### 类变量实例
+## 类定义与实例
 
     class Customer
        @@no_of_customers=0
@@ -39,20 +26,22 @@ Ruby 提供了5种类型的变量：
        end
     end
     
-    # 创建对象
-    cust1=Customer.new("1", "John", "Wisdom Apartments, Ludhiya")
-    cust2=Customer.new("2", "Poul", "New Empire road, Khandala")
-
 Note: 除了局部变量/常量之外的其它变量, 在字符串中的拼接时不用加`{}`
 
     puts "#@cust_id #@@no_of_customers"
 
+### 类实例
+    cust1 = Customer.new
+    cust2 = Customer. new
+    cust3 = Customer. new(arg1,arg2)
+    cust1=Customer.new("1", "John", "Wisdom Apartments, Ludhiya")
+    cust2=Customer.new("2", "Poul", "New Empire road, Khandala")
 
 ### 访问成员属性
-默认不可以直接访问成员变量, 只能这样
+默认不可以直接访问成员变量, 只能这样访问
 
     obj = Hello.new
-    p obj.instance_variable_get(:@hello) #nil
+    p obj.instance_variable_get(:@hello) 
 
 如果想以`obj.name`的方式访问成员属性，可以这样
 
@@ -76,6 +65,26 @@ Note: 除了局部变量/常量之外的其它变量, 在字符串中的拼接�
         puts "Box object is normal object"
     end
 
+## 类常量
+
+    MR_COUNT = 0        # 定义在主 Object 类上的常量
+    module Foo
+      ::MR_COUNT = 1    # 设置全局计数为 1
+      MR_COUNT = 2      # 设置局部计数为 2
+    end
+    puts MR_COUNT       # 这是全局常量
+    puts Foo::MR_COUNT  # 这是 "Foo" 的局部常量
+
+## 类变量
+Ruby 提供了5种类型的变量：
+
+    一般小写字母、下划线开头：变量（Variable）。
+    $开头：全局变量（Global variable）。
+    @开头：实例变量（Instance variable）。 类似this.@xx
+    @@开头：类变量（Class variable）类变量被共享在整个继承链中
+    大写字母开头：常数（Constant）
+
+特殊的self 就像是php中的self+this结合体：可以访问静态动态的方法、变量
 
 ## method
 方法名总是`以小写字母`开始
@@ -94,12 +103,12 @@ Note: 除了局部变量/常量之外的其它变量, 在字符串中的拼接�
 ### 类方法(静态方法)
 类方法使用 def self.methodname() 定义
 
-    class Accounts
-        def Accounts.return_date(str)
+    class Account
+        def self.return_date(str)
             puts "return #{str}"
         end
     end
-    Accounts.return_date('hello')
+    Account.return_date('hello')
 
 ### setter/getter
     class Box
@@ -122,6 +131,26 @@ Note: 除了局部变量/常量之外的其它变量, 在字符串中的拼接�
     
     # 使用访问器方法
     p box.getWidth()
+
+## 类生命周期
+    class Foo
+        p "1. before new instance....."
+        def self.make_hello_method
+            class_eval do
+            p "3.生成实例方法hello..."
+                def hello
+                    puts "HELLO"
+                end
+            end
+        end
+    end
+
+    p "2.生成实例方法hello...outer"
+    Bar.make_hello_method
+    p '4.exec hello'
+    Bar.new.hello
+    Bar.new().hello
+
 
 ### to_s(toString)
     class Box
@@ -217,7 +246,6 @@ eg.
     
     # 定义子类
     class BigBox < Box
-    
        # 添加一个新的实例方法
        def printArea
           @area = @width * @height
@@ -231,6 +259,10 @@ eg.
     # 输出面积
     box.printArea()
 
+最简单的继承：
+
+    class Bar < Foo; end
+
 ### 方法重载
 改写父类的方法
 
@@ -238,12 +270,13 @@ eg.
     class BigBox < Box
        # 改变已有的 getArea 方法
        def getArea
-          @area = @width * @height
+          #@area = @width * @height
+          @area = self.getArea
           puts "Big box area is : #@area"
        end
     end
 
-### 运算符重载
+## 运算符重载
 我们希望使用: 
 1. 用`+` 运算符执行两个 Box 对象的向量加法，
 2. 用 `*` 运算符来把 Box 的 width 和 height 相乘
@@ -273,36 +306,8 @@ eg.
     end
     a=Box.new(2,3)
     b=a+Box.new(3,2)
-    p b
+    p b.width
 
-
-### todo
-下面两个例子snippet 等价， 都将打印“HELLO”(生成class时就执行)。 `make_hello_method`是静态方法
-
-    class Foo
-        def self.make_hello_method
-            class_eval do
-                def hello
-                    puts "HELLO"
-                end
-            end
-        end
-    end
-
-    class Bar < Foo # snippet 1
-        puts "exec before new"
-        make_hello_method
-    end
-
-    class Bar < Foo; end # snippet 2
-
-比较下静态和动态方法
-
-    Bar.make_hello_method
-    Bar.new.hello
-    Bar.new.func2
-
-class_eval方法也接受一个String，所以当创建一个类时，可以随时创建方法，它基于传入的参数具有不同的语义。
 
 ## meta 类信息
 self在ruby 指的是类，不是实例

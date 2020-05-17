@@ -50,9 +50,7 @@ python vs js
     arr[:-3] arr.slice(0,-3)
 
 ## concat merge array
-	var arr = ['A', 'B', 'C'];
-	var added = arr.concat([1, 2, 3]);
-	added; // ['A', 'B', 'C', 1, 2, 3]
+    [...arr1,...arr2]
 
 concat()方法可以接收任意个元素和Array，并且自动把Array拆开，然后全部添加到新的Array里：
 

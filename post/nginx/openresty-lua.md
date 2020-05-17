@@ -191,6 +191,13 @@ args:
         ngx.say(ngx.var.arg_a)
     }
 
+ngx.req.get_uri_args()
+
+    # try access /nginx_var?isOn&a=1 //isOn==true
+    for k,v in pairs(ngx.req.get_uri_args()) do
+        s = s.. k.."="..(v).."\n"
+    end
+
 ### post data
 
     ngx.req.read_body()

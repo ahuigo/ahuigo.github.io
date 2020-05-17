@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2020-05-18 [nginx 的变量类型](/b/nginx/nginx-var-env-str) 
 - 2020-05-11 [nginx 的变量类型](/b/nginx/nginx-var) 
 - 2018-10-04 [nginx location](/b/nginx/nginx-router) 
 - 2020-05-11 [2](/b/nginx/a.) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [golang help](/b/go/11.go-help) 
 - 2018-10-04 [path](/b/vsc/vsc-path) 
 - 2018-10-06 [hash](/b/sec/sec-hash) 
-- 2018-09-28 [py-debug](/b/py/py-debug) 

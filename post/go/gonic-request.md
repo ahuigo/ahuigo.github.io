@@ -49,18 +49,18 @@ PostForm('name')
     name := c.PostForm("name")  //默认是空
     nick := c.DefaultPostForm("nick", "anonymous")
 
-## Bind: Must and Should
+## Bind struct
+Note: 
+1. 注意bind 成员需要大写！ > 小写的成员无效, 且不会报err (go-lib/gonic/bind/bind.go)
+1. 需要使用引用：`bind(&query)`
+
+### Must and Should
 gin 有两套[Bind](https://gin-gonic.com/docs/examples/binding-and-validation/):
 1. 基于 MustBindWith： Bind, BindJSON, BindXML, BindQuery, BindYAML
     1. error发生时： `c.AbortWithError(400, err).SetType(ErrorTypeBind)`.
     2. 同时header： is set to `text/plain; charset=utf-8`.
 2. 基于 ShouldBindWith： ShouldBind, ShouldBindJSON, ShouldBindXML, ShouldBindQuery, ShouldBindYAML
     1. 返回err, 自己控制error
-
-## Bind struct
-Note: 
-1. 注意bind 成员需要大写！ > 小写的成员无效, 且不会报err (go-lib/gonic/bind/bind.go)
-1. 需要使用引用：`bind(&query)`
 
 ### struct format time
 gonic 只支持RFC3339, 忽略time_format

@@ -3,15 +3,25 @@ title: Ruby shell
 date: 2019-02-17
 private:
 ---
-# exec ruby
+# exec ruby file
     -a	与 -n 或 -p 一起使用时，可以打开自动拆分模式(auto split mode)。请查看 -n 和 -p 选项。
     -c	只检查语法，不执行程序。
     -C dir	在执行前改变目录（等价于 -X）。
     -d	启用调试模式（等价于 -debug）。
+    -w 可从stdin 读入代码
 
+e.g
+
+    #!/usr/bin/ruby -w
+    puts "yes"
 
     ruby -e 'printf "sss"' a.rb
+
 # exec shell
+## irb 交互
+
+    irb
+    > 
 
 ## 跳脱符(php like)
 类似php

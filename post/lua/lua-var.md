@@ -61,7 +61,5 @@ thread 中执行的是corotine, 不像thread 能同时执行
     a, b, c = 0, 1
         print(a,b,c)             --> 0   1   nil
 
-
-
 # 参考
 http://www.runoob.com/lua/lua-data-types.html

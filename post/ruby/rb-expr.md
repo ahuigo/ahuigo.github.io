@@ -3,6 +3,21 @@ title: ruby expr
 date: 2020-03-02
 private: true
 ---
+# 语法块
+## 语句结束：
+分号、或换行就是语句结束flag
+
+## 函数调用 vs 表达式
+    a + b 被解释为 a+b （这是一个局部变量）
+    a  +b 被解释为 a(+b) （这是一个方法调用）
+
+## 注释
+    # 单行
+    =begin
+    这是注释。
+    这是注释。
+    =end
+
 # 运算符
 ## 比较
     <=>	
@@ -25,12 +40,7 @@ private: true
 ## Ruby defined? 运算符
 返回表达式的描述字符串，如果表达式未定义则返回 nil。
 
-    下面是 defined? 运算符的各种用法：
-
     用法 1
-    defined? variable # 如果 variable 已经初始化，则为 True
-    例如：
-
     foo = 42
     defined? foo    # => "local-variable"
     defined? $_     # => "global-variable"
@@ -50,18 +60,33 @@ private: true
 ## 和双冒号运算符 "::"
 > 请记住：在 Ruby 中，类和方法也可以被当作常量。
 1. `.`用于访问实例属性
-2. 如果 `::` 前的表达式为类或模块名称，则返回该类或模块内对应的常量值；如果 :: 前未没有前缀表达式，则返回主Object类中对应的常量值。 。
+2. 如果 `::` 前的表达式为类或模块名称，则返回该类或模块内对应的常量值
 
 下面是两个实例：
 
     MR_COUNT = 0        # 定义在主 Object 类上的常量
     module Foo
-      MR_COUNT = 0
       ::MR_COUNT = 1    # 设置全局计数为 1
       MR_COUNT = 2      # 设置局部计数为 2
     end
     puts MR_COUNT       # 这是全局常量
     puts Foo::MR_COUNT  # 这是 "Foo" 的局部常量
+
+# 表达式
+## if
+注意: `''`与`0`都是true
+
+    if conditional [then]
+        code...
+    [elsif conditional [then]
+        code...]...
+    [else
+        code...]
+    end
+
+若想在一行内写出完整的 if 式，则必须以 then 隔开条件式和程式区块。如下所示:
+
+    if a == 4 then a = 7 end
 
 ## code if
     code if condition
@@ -81,14 +106,26 @@ private: true
         puts "x 大于 2"
     end
 
-## case
+## case when else
     case expr0
-    when expr1, expr2
+    when expr1, expr2,expr3....
        stmt1
-    when expr3, expr4
+    when expr11, expr12,....
        stmt2
     else
        stmt3
+    end
+
+e.g.
+
+    $age =  5
+    case $age
+    when 0 .. 2
+        puts "婴儿"
+    when 3 .. 6
+        puts "小孩"
+    else
+        puts "其他年龄段的"
     end
 
 ## while
@@ -108,11 +145,3 @@ private: true
     until conditional [do]
         code
     end
-
-# 多行注释begin/end
-    =begin
-    这是注释。
-    这也是注释。
-    这也是注释。
-    这还是注释。
-    =end

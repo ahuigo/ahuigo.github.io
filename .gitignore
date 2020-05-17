@@ -30,7 +30,7 @@ node_modules
 post/p/
 no-commit
 blog2
-a.py
+/a.*
 
 #conf
 conf/z.lua

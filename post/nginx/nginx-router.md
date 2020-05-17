@@ -72,7 +72,7 @@ Matches a `request URI`(无query)
 	Context:	server, location, if
 
 ### rewrite 修改的值
-- 不修改` $request_uri ` , 改变`$uri(不含query)`
+- 少数不修改:`$request_uri,$request_method` 
 - 追加 `$query_string` 
 - 影响location path
 
