@@ -263,6 +263,21 @@ eg.
 
     class Bar < Foo; end
 
+#### 继承静态方法的执行
+
+    class Formula
+        def self.url(url)
+            p url
+            @url=url
+        end
+    end
+
+    class BigBox < Formula
+        url "home"
+    end
+
+
+
 ### 方法重载
 改写父类的方法
 

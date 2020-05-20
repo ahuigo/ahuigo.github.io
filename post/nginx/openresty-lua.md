@@ -162,10 +162,13 @@ Nginx Syntax:	`add_header name value`;
 
 #### set cookie (response)
 ##### 设置cookie一（原生）
+
+    # nginx
     add_header Set-Cookie foo=bar;
+    # lua
     ngx.header['Set-Cookie'] = {'a=32; path=/', 'b=4; path=/'}  -- 批量设置cookie
 
-设置单个cookie，通过多次调用来设置多个值
+设置单个cookie
 
     ngx.header['Set-Cookie'] = 'a=32; path=/' 
     ngx.header['Set-Cookie'] = 'c=5; path=/; Expires=' .. ngx.cookie_time(ngx.time() + 60 * 30) -- 设置Cookie过期时间为30分钟
@@ -256,11 +259,15 @@ Similarly, Nginx config
      -- equivalent to ngx.header["Content-Type"] = 'text/plain'
     ngx.header.content_type = 'text/plain';
 
+多个值
+
+    ngx.header.user_list= {'a','b','c'}
+
 # router
 ### 中断
 
 #### exit 403
     ngx.exit(ngx.HTTP_FORBIDDEN)
 
-#### location
-    ngx.redirect(uri, args)  #执行301或者302的重定向。
+#### redirect
+    ngx.redirect(uri, 301)  #执行301或者302的重定向。

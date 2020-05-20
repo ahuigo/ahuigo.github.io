@@ -98,14 +98,28 @@ oAuth2 rfc 或许有讨论。
 ## gsid 
 weibo 身份认证，主要存储于cookie. 他不同于token, 它不仅用验证用户身份，还可解析用户数据
 
-# AD and ldap
-Active Directory (AD) supports both Kerberos and LDAP 
+# AD and ldap and openID
+2. AD supports LDAP(Lightweight Directory Access Protocol)
+    1. Ldap uses the TCP/IP stack and a string encoding scheme of the X.500 Directory Access Protocol (DAP), giving it more relevance on the Internet.
+1. Active Directory is a directory services implemented by Microsoft, 
+    1. based on this LDAP/X.500 stack, Microsoft implemented a modern directory service for Windows, originating from the X.500 directory, created for use in Exchange Server. And this implementation is called Active Directory.
 
-– Microsoft AD is by far the most common directory services system in use today. AD provides Single-SignOn (SSO) and works well in the office and over VPN. AD and Kerberos are not cross platform, which is one of the reasons companies are implementing access management software to manage logins from many different devices and platforms in a single place. AD does support LDAP, which means it can still be part of your overall access management scheme.
+Active Directory (AD) supports both [`Kerberos and LDAP`](https://www.varonis.com/blog/the-difference-between-active-directory-and-ldap/)
+:
 
-https://www.varonis.com/blog/the-difference-between-active-directory-and-ldap/
+1. AD provides Single-SignOn (SSO) and works well in the office and over VPN. 
+2. AD and Kerberos are not cross platform, which is one of the reasons companies are implementing access management software to manage logins from many different devices and platforms in a single place. 
+3. AD does support LDAP, which means it can still be part of your overall access management scheme.
 
-openid 协议
+## openid 协议
+CAS as a protocol is a mechanism to `provide web single signon`. There is also CAS, the software platform that implements that protocol amongst many others, including openid.
 
-Clients authenticate to Active Directory using the Kerberos protocol.
-Clients authenticate to _____________ using the OpenID Connect protocol.
+OpenId is also an authentication protocol, similar to CAS, able to achieve `web single sign` on but more in a `federated fashion`.
+
+LDAP is a protocol that defines `how one should talk to a directory server`. Most systems use LDAP to talk to a directory to `retrieve user accounts`, `verify them and retrieve attributes associated with them`. It has nothing to do with authentication or single sign on. CAS, the software, can be configured to find user accounts from ldap, find attributes from ldap or do other things with ldap.
+
+# ldap
+公司DC：domain component一般为公司名，例如：dc=163,dc=com
+部门OU：organization unit为组织单元，最多可以有四级，每级最长32个字符，可以为中文
+用户组CN：common name为用户名或者服务器名，最长可以到80个字符，可以为中文
+唯一性的记录项DN：distinguished name为一条LDAP记录项的名字，有唯一性，例如：dc:”cn=admin,ou=developer,dc=163,dc=com”

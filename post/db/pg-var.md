@@ -91,6 +91,26 @@ Hive内置的数据类型之间是否可以进行隐式的转换操作:
     SELECT typname, typlen FROM pg_type WHERE typname ~ '^date';
 
 
+# 数据类型
+## bool
+    True	False
+    ------------
+    true	false
+    ‘t’	    ‘f‘
+    ‘true’	‘false’
+    ‘y’	    ‘n’
+    ‘yes’	‘no’
+    ‘1’	    ‘0’
+
+使用
+
+    insert into users(is_deleted) values(false)
+    insert into users(is_deleted) values('false')
+    insert into users(is_deleted) values('f')
+    insert into users(is_deleted) values('0')
+
+
+
 # Data Property
 
 ## AUTO_INCREMENT

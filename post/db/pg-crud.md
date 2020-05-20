@@ -15,6 +15,12 @@ date: 2018-09-27
 
     INSERT INTO "table1" ("created_at","status") VALUES ('2019-05-13 15:34:51','1') RETURNING "table1"."id";
 
+### insert with select 
+    insert into items_ver (item_id, name, item_group)
+        select item_id, name, item_group from items where item_id=2;
+    insert into items_ver (id, item_id, name, item_group)
+        select 100, item_id, name, item_group from items where item_id=2;
+
 ### last insert id
 3 ways,all are concurrent safe:
 

@@ -103,6 +103,7 @@ list 也一样
 python >=3.5
 ```
 	z = {**x, **y}
+	z = {1:2, **x, **y}
 ```
 
 or with update inplace:

@@ -3,7 +3,26 @@ title: lua debug
 date: 2020-05-08
 private: true
 ---
-# lua debug
+# lua exception
+
+## pcall 和 xpcall(catch)
+Lua中处理错误，可以使用函数pcall（protected call）来包装需要执行的代码。
+
+pcall 类似于js 的call
+
+    # pcall(function_name, ….)
+    local success, res = pcall(json.decode, json_str);
+    if success then
+        -- res contains a valid json object
+        ...
+    else
+        -- res contains the error message
+        ...
+    end
+
+pcall以一种"保护模式"来调用第一个参数，因此pcall可以捕获函数执行中的任何错误。
+
+> 通常在错误发生时，希望落得更多的调试信息，而不只是发生错误的位置。但pcall返回时，它已经销毁了调用桟的部分内容。
 
 ## error函数(throw exception)
 功能：终止正在执行的函数，并返回message的内容作为错误信息(error函数永远都不会返回)
@@ -17,41 +36,23 @@ Level参数指示获得错误的位置:
     Level=2：指出哪个调用error的函数的函数
     Level=0:不添加错误位置信息
 
-## pcall 和 xpcall、debug(catch)
-Lua中处理错误，可以使用函数pcall（protected call）来包装需要执行的代码。
+### error(data)
 
-pcall接收一个函数和要传递给后者的参数，并执行，执行结果：有错误、无错误；返回值true或者或false, errorinfo。
-
-语法格式如下
-
-    if pcall(function_name, ….) then
-    -- 没有错误
-    else
-    -- 一些错误
+    succ, res = pcall(function(d) error({"msg",d}) end, "data")
+    if not succ then
+        err = res[1]
+        data = res[2]
+        print(err,data)
     end
 
-简单实例：
-
-    > =pcall(function(i,j) print(i+j) end, 30, 3)
-    33
-    true
-   
-    > =pcall(function(i) print(i) error('error..') end, 33)
-    33
-    false        stdin:1: error..
-
-pcall以一种"保护模式"来调用第一个参数，因此pcall可以捕获函数执行中的任何错误。
-
-> 通常在错误发生时，希望落得更多的调试信息，而不只是发生错误的位置。但pcall返回时，它已经销毁了调用桟的部分内容。
-
-## xpcall(catch with err)
+## xpcall(catch with errorHandler)
 Lua提供了xpcall函数，xpcall接收第二个参数——一个错误处理函数，当错误发生时，Lua会在调用桟展开（unwind）前调用错误处理函数，于是就可以在这个函数中使用debug库来获取关于错误的额外信息了。
 
 xpcall 使用实例 2:
 
     实例
     function myfunction ()
-    n = n/nil
+        n = n/nil
     end
 
     function myerrorhandler( err )
@@ -66,6 +67,7 @@ xpcall 使用实例 2:
     ERROR:    test2.lua:2: attempt to perform arithmetic on global 'n' (a nil value)
     false
 
+# debug
 ## debug(调用栈)
 debug库提供了两个通用的错误处理函数:
 
@@ -151,6 +153,7 @@ e.g.
 
 ## getinfo
 print function's name
+
     local function myFunc()
         print(debug.getinfo(1, "n").name);
     end

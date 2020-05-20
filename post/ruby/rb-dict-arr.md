@@ -52,6 +52,12 @@ padding 4 'good' elelement
     arr<<ele
         push
 
+### append
+
+    arr << ele  
+    arr << ele  if true
+    arr << ele  if build.with? "iconv"
+
 ### delete
 #### delete obj
 从 self 中删除等于 obj 的项。如果未找到相等项，则返回 nil。如果未找到相等项且给出了可选的代码 block，则返回 block 的结果。
@@ -257,6 +263,7 @@ while if 是一体的，下面的代码片段从标准输入打印行，其中�
     end
 
 # hash
+## define hash
 string key
 
     grades = { "Jane Doe" => 10, "Jim Doe" => 6 }
@@ -274,6 +281,11 @@ symbol value: `:symbol` 是一种symbol类型数据
     options = {:key=>:value}
     options = {key: :value}
     options[:key]==:value
+
+### 传值
+
+    fun(k:1, arg2,arg3)
+    fun k:1, arg2,arg3
 
 ## access dict
 

@@ -56,7 +56,14 @@ out:
 
 ipairs 只有用于list(key从1开始)
 
-## assign and nil
+
+
+## modify
+### check empty
+    foo = {}
+    table.insert(foo, "bar")
+
+### append list
 ### nil 可销毁key和变量
 
     b=nil

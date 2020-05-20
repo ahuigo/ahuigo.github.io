@@ -12,3 +12,8 @@
 
     $ nginx    -p `pwd`/ -c conf/redis.conf -g 'daemon off;'
     $ nginx -s reload   -p `pwd`/ -c conf/redis.conf -g 'daemon off;'
+
+## reload 
+refer: http://nginx.org/en/docs/control.html
+
+refer: ops-fs-watch

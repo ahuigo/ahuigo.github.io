@@ -10,12 +10,18 @@ private: true
     print("a\nb")
     print('a\nb')
 
+### multiple line
+
+    str= 'begin-' .. 
+    'end'
+
 可以用 2 个方括号 `[[]]` 来表示"一块"字符串。
 
     doc = [[
         string
     ]]
     doc = [[ string ]] --空白也是字符
+
 
 ## str func
 ### string length
@@ -92,7 +98,8 @@ char 将整型数字转成字符并连接， byte 转换字符为整数值(可�
 
 上述的字符类用大写书写时, 表示与非此字符类的任何字符配对. 例如, %S表示与任何非空白字符配对.例如，'%A'非字母的字符:
 
-    > print(string.gsub("hello, up-down!", "%A", "."))
+    > a,b = string.gsub("hello, up-down!", "%A", ".")
+    > print(a,b)
     hello..up.down.    4
 
 模式条目可以是：
@@ -112,12 +119,13 @@ string.match()只寻找源字串str中的第一个配对. 参数init可选, 指�
 
 如果没有设置捕获标记, 则返回整个配对字符串. 当没有成功的配对时, 返回nil。
 
-    > = string.match("I have 2 questions for you.", "%d+ %a+")
+    > a = string.match("I have 2 questions for you.", "%d+ %a+")
+    > print(a)
     2 questions
-    > = string.match("a",'b+')
-    nil
+    > a,b= string.match("a",'b+')
+    > print(a,b)
+    nil nil
 
-在成功配对时, 函数将返回配对表达式中的所有捕获结果; 
 group match 会返回多个值
 
     > = string.format("%d, %q", string.match("I have 2 questions for you.", "(%d+) (%a+)"))

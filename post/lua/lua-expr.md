@@ -18,6 +18,8 @@ private: true
     --]]
 
 # loop/if
+空字符、0都被认为是true
+
 ## 循环
 do while
 
@@ -74,6 +76,7 @@ and or not
     not ''
 
 # relation operators
+compare operators
 
     ==  equal
     ~=  not equal

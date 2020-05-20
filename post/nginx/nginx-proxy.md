@@ -19,19 +19,27 @@ The address can be specified as a domain name or IP address, and an optional por
 an address can be specified as a server group.
 
 ### proxy_pass URI
-#### path append：
+#### without uri
+access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/name/act?q=a"
+
 
 	location /name {
-        #access "http://host/name/act?q=a" will be replaced with "http://host/remote/?pass=1/act?q=a"
+		proxy_pass http://127.0.0.1;    
+    }
+
+#### with uri(合并)
+access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/remote/?pass=1/act?q=a"
+
+	location /name {
 		proxy_pass http://127.0.0.1/remote/?pass=1;    
-	}
+    }
 
 #### rewrite 会全部替换path
+access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/rewrite?r=1&q=a"
 
 	location /name/ {
-        #access "http://host/name/act?q=a" will be replaced with "http://host/rewrite?r=1"
         rewrite ^ /rewrite?r=1 break;
-		proxy_pass http://127.0.0.1/remote/?pass=1;    
+		proxy_pass http://127.0.0.1;    
 	}
 
 #### regexp location with not path
@@ -40,6 +48,23 @@ Regexp location, or inside named location, or inside "if" statement, or inside "
 	location ^/name.*/ {
         proxy_pass http://127.0.0.1;
         proxy_pass http://api.ahuigo.github.io;
+	}
+
+#### with variable
+with uri: 不合并(特殊)
+access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/remote?r=1"
+
+    set $url 'http://127.0.0.1/remote?r=1';
+	location /name/ {
+		proxy_pass $url;    
+	}
+
+no uri: 合并
+access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/name/act?q=a"
+
+    set $url 'http://127.0.0.1';
+	location /name/ {
+		proxy_pass $url;    
 	}
 
 ### 500 URI

@@ -11,6 +11,7 @@ private: true
     tar xvf nginx-1.0.10.tar.gz
     cd nginx-1.0.10/
     ./configure --with-debug
+     # ./configure --prefix=/usr/local/opt/openresty --with-http_iconv_module  --with-http_postgres_module --with-debug
     make
     sudu make install
 

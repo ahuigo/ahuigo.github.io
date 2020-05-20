@@ -4,6 +4,8 @@ date: 2020-05-08
 private: true
 ---
 # lua file
+## stdio
+    print(type("Hello world")) 
 
 ## 基本操作
 通常我们需要在同一时间处理多个文件。我们需要使用 file:function_name 来代替 io.function_name 方法。以下实例演示了如何同时处理同一个文件:

@@ -118,6 +118,14 @@ postgre 能自动处理Array/Datetime
     cursor.execute("select name from prices where code=%s order by trade_date desc limit 1", [code])
     return cursor.fetchone()
 
+#### fetch as dict
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    ....
+    rows = cursor.fetchall() # list
+    for row in rows:
+        row['id'],row[0] # 特殊的dict
+        row = dict(row) # 普通的dict
+
 ## ddl
 ### databases
     \l

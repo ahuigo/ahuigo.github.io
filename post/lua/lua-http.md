@@ -74,7 +74,8 @@ The params table accepts the following fields:
     ssl_verify 
         Verify SSL cert matches hostname
 
-## example
+## post
+post 必须加 content-type
 
     local http = require "resty.http"
       local httpc = http.new()
@@ -83,6 +84,7 @@ The params table accepts the following fields:
         body = "a=1&b=2",
         headers = {
           ["Content-Type"] = "application/x-www-form-urlencoded",
+          ["x"] = "d",
         },
         keepalive_timeout = 60000,
         keepalive_pool = 10

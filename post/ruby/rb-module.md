@@ -3,6 +3,13 @@ title: Ruby module
 date: 2020-03-04
 private: 
 ---
+# gem
+gem 类似于pip、yarn/npm. gem 的包管理使用文件Gemfile
+
+    gem "libxml-ruby"
+    gem "libxml-ruby", ">= 2.0.5"
+    gem "libxml-ruby", ">= 2.0.5", :require => "libxml" # 依赖
+
 # Ruby module
 模块（Module）定义了一个命名空间，相当于一个沙盒. 模块名与类常量命名类似，以大写字母开头
 
@@ -15,7 +22,6 @@ private:
         end
     end
 
-# 加载
 ## require 文件
 require 语句来加载模块文件：
 

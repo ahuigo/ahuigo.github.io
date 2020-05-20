@@ -16,6 +16,12 @@ date: 2019-02-05
     table	Lua 中的表（table）其实是一个"关联数组"（associative arrays），数组的索引可以是数字或者是字符串。
         在 Lua 里，table 的创建是通过"构造表达式"来完成，最简单构造表达式是{}，用来创建一个空表。
 
+### bool
+比较特殊的是
+
+    '',0 都是true
+    if '' then print(1) end
+
 ## type
 
     print(type("Hello world"))      --> string
@@ -27,7 +33,6 @@ date: 2019-02-05
     print(type(type(X)))            --> string
 
     if not (type(name) == "string") then
-
 
 ## thread
 thread 中执行的是corotine, 不像thread 能同时执行

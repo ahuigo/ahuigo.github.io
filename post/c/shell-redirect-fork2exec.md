@@ -14,7 +14,15 @@ description:
     /dev/stdout -> /dev/fd/1
     /dev/stderr -> /dev/fd/2
 
-重定向：
+    # sleep 130 >& 1.txt &
+    [2] 19598
+    # ls -la /proc/19598/fd
+    lrwx------ 1 root root 64 May 20 19:34 0 -> /dev/pts/1
+    l-wx------ 1 root root 64 May 20 19:34 1 -> /root/1.txt
+    l-wx------ 1 root root 64 May 20 19:34 2 -> /root/1.txt
+
+## 重定向语法
+### 重定向：
 
     < or 0< : 
         $ cat <a.txt
@@ -24,6 +32,7 @@ description:
         $ { echo ass; xxxxxxx} 2>a.txt
         zsh: command not found: xxxxxxx
 
+### 叠加重定
 下面的语法全等价, 都是重定向err+stdout到a.txt
 
     >& a.txt
@@ -35,18 +44,18 @@ description:
 感觉应该尽量使用`>&`：
 
     # out+err
-    { echo ass; xxxxxxx} 2>&1 | tee c.txt
+    ( echo ass; xxxxxxx) 2>&1 | tee stdout.txt
 
     # 两次stdout
-    { echo ass; xxxxxxx} >&1 | tee c.txt
+    ( echo ass; xxxxxxx) >&1 | tee stdout.txt
 
-`&>`与`>&`一样，`2&>` 非常特殊
+`&>`与`>&`相同，`2&>` 非常特殊
 
     # out+err 到文件1 (stdout screen关闭)
-    { echo ass; xxxxxxx} &>1 
+    ( echo ass; xxxxxxx) &>1 
 
-    # 两次err 到文件1, (stdout screen正常)
-    { echo ass; xxxxxxx} 2&>1
+    # 语法问题
+    ( echo ass; xxxxxxx) 2&>1
 
 参考下面的exec
 
