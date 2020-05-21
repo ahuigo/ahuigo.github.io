@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-10-04 [php str](/b/php/php-str) 
+- 2019-01-18 [哈希](/b/algorithm/4.algo-hash) 
 - 2018-09-27 [ops-init](/b/c/service/ops-init) 
 - 2018-09-27 [Systemd](/b/c/service/init-systemd) 
 - 2018-09-27 [Systemd 日志管理](/b/c/service/init-systemd-log) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [map](/b/go/7.go-var-map) 
 - 20180509 [vim plug 插件系统](/b/vim/nvim-plugin) 
 - 2018-09-28 [Requests](/b/py/py-aiohttp) 
-- 2018-09-28 [server](/b/py/py-aiohttp-server) 
-- 2019-03-24 [Golang 的结构体](/b/go/go-struct) 

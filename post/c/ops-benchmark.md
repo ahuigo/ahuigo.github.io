@@ -150,6 +150,7 @@ Refer: [tcp-ip](/p/tcp-ip)
 		-r              Don't exit on socket receive errors.
         -s timeout      default 30s
 
+### header+output
 Example:
 
 	 ab -r -l -n 200 -c 2 http://baidu.com/
@@ -176,6 +177,9 @@ ab 只支持1.0, 如果需要http1.1 可以考虑siege
 
 	-v verbosity    How much troubleshooting info to print
 	-v 5
+
+### post
+    ab -T 'application/x-www-form-urlencoded' -c 10 -n 100  -p <(echo 'password=1') 'http://localhost:1111/header.php'
 
 ### Failed requests
 

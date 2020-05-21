@@ -149,6 +149,7 @@ Nginx Syntax:	`add_header name value`;
 
     -- 获取单个cookie的值，如果不存在则返回nil
     print(cookie:get('c'))             
+
 #### set cookie(request)
 两者不能同时读取`http_cookie`，否则优先级高的cookie会被放弃
 
@@ -170,7 +171,6 @@ Nginx Syntax:	`add_header name value`;
 
 设置单个cookie
 
-    ngx.header['Set-Cookie'] = 'a=32; path=/' 
     ngx.header['Set-Cookie'] = 'c=5; path=/; Expires=' .. ngx.cookie_time(ngx.time() + 60 * 30) -- 设置Cookie过期时间为30分钟
 
 ##### 设置cookie二（lua-resty-cookie）

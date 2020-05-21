@@ -77,11 +77,25 @@ post 默认是:application/x-www-form-urlencoded, 则不是multipart
 form 不要自己设置content-type(boundary 因为要自动算)
 
 	curl 'http://localhost:8000/up.php'  -F 'pic=@img/a.png'
-    curl https://httpbin.org/post --F 'file=@a.txt'  -F 'b=1'  -F  'c=2'
+    curl https://httpbin.org/post -F 'pic=@a.txt'  -F 'b=1'  -F  'c=2'
 	curl 'http://localhost:8000/up.php'  -F 'pic=@img/a.png' -F 'var=value' -F 'k2=v2'
 	curl -F "file=@localfile;filename=nameinpost" url.com
 	curl -F "file=@localfile;filename=nameinpost;type=text/html" url.com
-	curl 'http://localhost:8000/up.php' -H 'Content-Type: multipart/form-data; boundary=W' -d $'--W\r\nContent-Disposition: form-data; name="pic"; filename="a.png"\r\nContent-Type: image/png\r\n\r\ndata\r\n--W\r\nContent-Disposition: form-data; name="var"\r\n\r\nvalue\r\n--W--\r\n'
+	curl https://httpbin.org/post -H 'Content-Type: multipart/form-data; boundary=W' -d $'--W\r\nContent-Disposition: form-data; name="pic"; filename="a.png"\r\nContent-Type: image/png\r\n\r\ndata\r\n--W\r\nContent-Disposition: form-data; name="var"\r\n\r\nvalue\r\n--W--\r\n'
+
+注意boundary=W, 以及`\r\n` 不是`\n--W`:
+
+    --W
+    Content-Disposition: form-data; name="pic"; filename="a.png"
+    Content-Type: image/png
+    
+    data
+    
+    --W
+    Content-Disposition: form-data; name="var"
+    
+    value
+    --W--
 
 urlencode
 

@@ -692,12 +692,8 @@ Also, you can use pull directly:
 	git pull origin 
 	git pull 
 
-to keep the remote or local file, :
 
-	git checkout --theirs /path/to/file
-	git checkout --ours /path/to/file
-
-## merge strategy
+## merge strategy(before)
 
     -s, --strategy
         resolve     This resolves cases with only two heads,
@@ -722,6 +718,11 @@ e.g.
 
     git pull -s recursive -Xtheirs origin dev
 
+## merge strategy(after)
+to keep the remote or local file, :
+
+	git checkout --theirs /path/to/file
+	git checkout --ours /path/to/file
 ### option
 
 	git merge --no-commits //告诉 Git 此时无需自动生成和记录(合并)提交.最后一起提交

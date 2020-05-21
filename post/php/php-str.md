@@ -17,8 +17,8 @@ string mb_detect_encoding ( string $str [, mixed $encoding_list = mb_detect_orde
 # print
 
     var_dump()
-    var_export($a, true)
-    print_r($a,true)
+    $r = var_export($a, true) //reture 
+    $r = print_r($a,true)
 
 # String
 

@@ -6,8 +6,12 @@ date: 2019-05-06
 # go http request
 
 ## 注意close body
-如果body既没有被完全读取，也没有被关闭，那么这次http事务就没有完成，除非连接因超时终止了，否则相关资源无法被回收。
+如果body既没有被完全读取，连接不会释放
 
+    resp, err := http.Get("http://example.com/")
+    if err != nil {
+        // handle error
+    }
     defer resp.Body.Close()
     body, err := ioutil.ReadAll(resp.Body)
 
