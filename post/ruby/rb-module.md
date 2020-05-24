@@ -3,12 +3,61 @@ title: Ruby module
 date: 2020-03-04
 private: 
 ---
-# gem
-gem 类似于pip、yarn/npm. gem 的包管理使用文件Gemfile
+# tool
+下面是rb 的包工具
+
+## RVM
+用于帮你安装Ruby环境，帮你管理多个Ruby环境，帮你管理你开发的每个Ruby应用使用机器上哪个Ruby环境。
+Ruby 环境不仅仅是Ruby本身，还包括依赖的第三方Ruby插件。都由RVM管理。
+
+
+## Rake
+Rake是一门构建语言，和make类型。Rake是用Ruby写的，它支持自己的DSL用来处理和维护Ruby
+程序。Rails用rake扩展来完成多种不同任务，如数据库初始化、更新等。
+
+## RubyGems
+RubyGems 是一个方便而强大的Ruby程序包管理器（package
+manager），类似Redhat的RPM。它讲一个Ruby应用程序打包到一个gem
+里，作为一个安装单元。无需安装，最新的Ruby版本已经包含RubyGems了。
+
+### gem命令
+在终端使用的gem命令，是指通过RubyGems管理Gem包。
+
+### Bundle
+相等于多个RubyGems批处理运行。在配置文件gemfile里说明你的应用依赖哪些第三方包，他自动帮你
+下载安装多个包，并且会下载这些包依赖的包。
+
+    bundle install
+
+### Gemfile
+定义你的应用依赖哪些第三方包，bundle根据该配置去寻找这些包。
 
     gem "libxml-ruby"
     gem "libxml-ruby", ">= 2.0.5"
     gem "libxml-ruby", ">= 2.0.5", :require => "libxml" # 依赖
+
+
+## Rack
+以Ruby为语言编写的轻量级的http server服务。 
+
+    # my_rack_app.rb
+    require 'rack'
+
+    app = Proc.new do |env|
+        ['200', {'Content-Type' => 'text/html'}, ['A barebones rack app.']]
+    end
+
+    Rack::Handler::WEBrick.run app
+
+    > ruby my_rack_app.rb
+    [2015-12-14 23:27:19] INFO  WEBrick 1.3.1
+    [2015-12-14 23:27:19] INFO  ruby 2.2.2 (2015-04-13) [x86_64-darwin14]
+    [2015-12-14 23:27:19] INFO  WEBrick::HTTPServer#start: pid=84264 port=8080
+    localhost - - [14/Dec/2015:23:27:43 CST] "GET / HTTP/1.1" 200 21
+
+
+## 本节参考
+AQ王浩 链接：https://www.jianshu.com/p/4587f91c7dbe
 
 # Ruby module
 模块（Module）定义了一个命名空间，相当于一个沙盒. 模块名与类常量命名类似，以大写字母开头

@@ -56,6 +56,16 @@ The type `[n]T` is an array of `n` values of type `T`
 	fmt.Println(pf)
 	fmt.Println(pfArr)
 
+## in_array
+    func arrayIndex(a string, list []string) (int) {
+        for i, b := range list {
+            if b == a {
+                return i
+            }
+        }
+        return -1
+    }
+
 # Slices
 slice 中的array 是C++隐式引用array:
 
@@ -222,8 +232,8 @@ The `range` form the `for loop iterates` over a `array, slice, string or map`, o
 You can skip the index or value by assigning to _.
 
     for _, v := range [2]int{1,2} {
-            fmt.Printf("2**%d = %d\n", _, v)
-        }
+        fmt.Printf("2**%d = %d\n", _, v)
+    }
 
 skip value:
 

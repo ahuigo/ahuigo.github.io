@@ -67,7 +67,6 @@ example
         def teardown_class(cls):
             print('teardown_class: end')
 
-
 ## run test
 
     py -m pytest

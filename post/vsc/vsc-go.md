@@ -78,6 +78,8 @@ https://github.com/cosmtrek/air
 
     cmd = "rm ./tmp/main;go build -o ./tmp/main cmd/main.go"
     bin = "tmp/main"
+    cmd = "echo re run"
+    bin = "/usr/bin/env go run cmd/main.go -port 8081"
 
 或
 

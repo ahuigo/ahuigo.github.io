@@ -129,7 +129,7 @@ Starting with Python version 3.5, the glob module supports the `"**"` directive 
 
 	import glob
 	glob.glob(pathname, *, recursive=False); # list
-	glob.iglob(pathname, *, recursive=False); # iterator
+	glob.iglob(pathname, *, recursive=False); # iterator `**`
 
 	for filepath in glob.iglob('src/**/*.c', recursive=True):
 		print(filepath)

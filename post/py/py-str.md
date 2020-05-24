@@ -488,7 +488,7 @@ long delimiter `"""` and `'''`(same): `\n` is still transfered by python
 	\xhh	Character with hex value hh
 
 #### not Escape
-use repr encode
+use repr encode: 返回代码表达式
 
 	>>> string = "abc\ndef"
 	>>> print (repr(string))

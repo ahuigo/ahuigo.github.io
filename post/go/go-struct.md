@@ -219,7 +219,8 @@ User继承 Model 所有属性， 包括gorm.Model.ID、方法
         gorm.Model
         title string 
     }
-    user:=User{Model:gorm.Model{ID:1}}
+    user:=User{Model:gorm.Model{ID:1}}  # ok
+    user:=User{Model:{gorm.Model{ID:1}}} # missing type in composite literal
 
     // 完全等价
     user.ID=1

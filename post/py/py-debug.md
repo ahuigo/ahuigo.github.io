@@ -13,7 +13,7 @@ date: 2018-09-28
 3. perf 性能
 1. 抛异常。在想要的位置异常，比如Flask的DEBUG的模式下，werkzeug里面的DebuggedApplication: 会把Web页面渲染成一个可调试和可执行的环境，直接到上面调试
 
-## trace
+## sys 调用栈
 getframe(0) 是`debug_info`本身，getframe(1) 是caller
 
     import sys
@@ -24,26 +24,6 @@ getframe(0) 是`debug_info`本身，getframe(1) 是caller
             'funcname':sys._getframe(0).f_code.co_name,
             'caller':sys._getframe(1).f_code.co_name,
         }
-
-## 异常调用栈
-    try:
-        a=1/0
-    except Exception as e:
-        print(e) # only e.__str__
-        import traceback
-        tb = traceback.format_exc()
-
-## global exception handler
-
-    import sys
-    def my_except_hook(exctype, value, traceback):
-        if exctype == KeyboardInterrupt:
-            print("KeyboardInterrupt...")
-        print('Value:', value)
-        print('tb_frame', traceback.tb_frame)
-        <!-- print('tb_frame', traceback.format_exc()) -->
-        sys.__excepthook__(exctype, value, traceback)
-    sys.excepthook = my_except_hook
 
 ## interactive
     import sys
@@ -63,21 +43,78 @@ Python 代码调试技巧: \
     https://www.ibm.com/developerworks/cn/linux/l-cn-pythondebugger/
 
 # 异常
-## new Exception
+## Exception对象
 
     e = Exception(obj1, obj2)
     e.args # (obj1,obj2)
+    str(e)
 
-## custom exception
+### custom exception
 
-    class ValidationError(Exception):
+    class CustomE(Exception):
         def __init__(self, message, errors):
-
-            # Call the base class constructor with the parameters it needs
-            super().__init__(message)
-
-            # Now for your custom code...
+            super().__init__(message, "argv2")
             self.errors = errors
+    try:
+        raise CustomE("msg", ["errors"])
+    except Exception as e:
+        print(e.args, e.errors, str(e))
+        a = e
+
+### 异常信息叠加
+可以把异常信息放到第二个参数
+
+    try:
+        raise Exception("msg1")
+    except Exception as err:
+        raise Exception("get upload url failed", err.args)
+        reise e
+
+### callstack
+callstack 要利用到traceback
+
+    except:
+        import traceback
+        print('call stack:', traceback.format_exc()) 
+
+    
+## global exception
+
+    import sys
+    def my_except_hook(exctype, value, traceback):
+        if exctype == KeyboardInterrupt:
+            print("KeyboardInterrupt...")
+        print('Value:', value)
+        print('tb_frame', traceback.tb_frame)
+        sys.__excepthook__(exctype, value, traceback)
+    sys.excepthook = my_except_hook
+
+## decorator exception
+    def user_exception(func):
+        def func_wrapper(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except Exception as e:
+                print(e)
+                return None 
+        return func_wrapper
+
+## try catch finnaly else
+
+	try:
+		do sth.
+    except ZeroDivisionError as e:
+        print(e)
+	except ValueError:
+		raise
+		raise ValueError('sth error!')
+    except (RuntimeError, TypeError, NameError) as e:
+        print("Unexpected error:", e)
+        pass
+	else:
+		return None
+	finally:
+		do sth.
 
 ## exception type
 
@@ -87,25 +124,6 @@ Python 代码调试技巧: \
      +-- GeneratorExit
      +-- Exception
           +-- StopIteration
-
-try catch
-
-	try:
-		do sth.
-    except ZeroDivisionError as e:
-        print(e)
-	except ValueError:
-		raise
-		raise ValueError('sth error!')
-    except (RuntimeError, TypeError, NameError):
-        print("Unexpected error:", sys.exc_info()[0])
-        pass
-	else:
-		return None
-	finally:
-		do sth.
-
-else 仅当没有异常或者没有被捕获的异常时, 才生效. 当有未捕获的异常出现时，finally 也会执行, 然后才抛出异常中断执行
 
 ### SystemExit
 exit(n), quit(n), sys.exit(n)都是一个东西: SystemExit(n); 
@@ -126,58 +144,7 @@ exit(n), quit(n), sys.exit(n)都是一个东西: SystemExit(n);
 
     PYTHONASYNCIODEBUG=1 python3 a.py
 
-## raise异常
-Exception:
-
-    raise Exception(*args)
-    e.args
-
-More: raise语句如果不带参数，就会把当前错误原样抛出
-
-    class FooError(ValueError):
-        pass
-
-    try:
-        print('try...')
-        r = 10 / int('2')
-        print('result:', r)
-    except ValueError as e:
-        print('ValueError:', e)
-    except ZeroDivisionError as e:
-        print('ZeroDivisionError:', e)
-    except:
-        print('no error!')
-        raise FooError('invalid value:')
-    finally:
-        print('finally...')
-    print('END')
-
-
-### 记录异常错误
-
-#### exception as string
-print(traceback.format_exc())
-
-    import traceback
-    from functools import wraps
-    def retry(howmany=2):
-        def tryIt(func):
-            @wraps(func)
-            def f(*args,**kw):
-                attempts = 0
-                while attempts < howmany:
-                    try:
-                        return func(*args, **kw)
-                    except:
-                        print(traceback.format_exc())
-                        attempts += 1
-            return f
-        return tryIt
-
-    @retry(5)
-    def download(i,j): 1/0
-
-#### logging exception
+### logging.exception
 
 	import logging
 
@@ -200,13 +167,6 @@ logging file path(default by current path):
 
 	logging.getLoggerClass().root.handlers[0].baseFilename
 
-### 抛出异常
-
-	raise TypeError('invalid value: %s' % s)
-	# 或
-	except ValueError as e:
-        print('ValueError!')
-        raise
 
 # 调试
 调试包括print, assert, logging, pdb,ipdb,...

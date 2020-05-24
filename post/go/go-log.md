@@ -2,44 +2,51 @@
 title: Go log
 date: 2019-09-21
 ---
-# Go log
-
-## log.Println
-    import "log"
-    log.Println("timeout of 5 seconds.", []string{"abc"})
-    //2019/09/21 08:34:19 timeout of 5 seconds. [abc]
-
-## logger
-new logger
-
-    func New(out io.Writer, prefix string, flag int) *Logger
-
-e.g. go-lib/log/log-logger.go
-
-    import (
-        "bytes"
-        "fmt"
-        "log"
-    )
-
-    func main() {
-        var (
-            buf    bytes.Buffer
-            logger = log.New(&buf, "prefix: ", log.Lshortfile)
-        )
-
-        logger.Print("Log msg with file:fileno!")
-
-        fmt.Print(&buf)
-
-gonic根据log 定制logger
-
-# zap
+# zap log
 Refer: https://studygolang.com/articles/17394
 
-## 基础
+## Sugar Logger
+sugar log 支持任意的类型(基于reflect实现类型检测)
+### Info/Error
+    loggerS:= zap.NewExample().Sugar()
+    loggerS.Info(obj1, obj2, ...) //中间无空格
+    loggerS.Error(obj1, obj2,...) //
 
-## zap dev-prod
+### Infow/Infof
+
+    sugar := zap.NewExample().Sugar()
+    defer sugar.Sync()
+    sugar.Infow("failed to fetch URL",
+        "url", "http://example.com",
+        "attempt", 3,
+        "backoff", time.Second,
+    )
+
+sugar log 提供了 formatter 接口(基于reflect实现类型检测)
+
+    sugar.Infof("failed to fetch URL: %s", "http://example.com")
+
+### Debugw
+
+    loggerS := logger.Named("service").Sugar()
+    loggerS.Debugw("msg", "k1", 123, "k2", "v2")
+
+	logger.Debugw("msg", "msg2", map[string]interface{"k":1})
+    loggerS.Debugw("msg", "k1", map[string]interface{}{"k":1})
+
+
+
+## logger
+
+### logger Sugar vs Field
+有两种logger，sugarLogger接受任意类型，更慢; 普通的logger 只接受类型field
+
+    logger := zap.NewExample()
+    defer logger.Sync()
+    sugar := logger.Sugar()
+    plain := sugar.Desugar()
+
+#### field logger(dev-prod)
 go-lib/log/zip-dev-prod.go
 
     package main
@@ -63,12 +70,20 @@ dev logger 结果:
 
     2020-04-20T23:54:46.601+0800	INFO	log/zap1.go:12	无法获取网址	{"url": "http://www.baidu.com", "attempt": 3, "backoff": "1s"}
 
-也可以prod logger 
+
+### logger Names
+    logger, _ := zap.NewProduction()
+    logger = logger.Named("service")
+
+### logger format
+    logger := zap.NewExample()
 
     // zap.NewProduction json序列化输出
     logger, _ := zap.NewProduction()
+    // zap.NewDevelopment
+    logger, _ := zap.NewDevelopment()
 
-### developement format
+#### developement format
 
     // 开启开发模式，堆栈跟踪
 	caller := zap.AddCaller()
@@ -94,39 +109,10 @@ log/zap-config.go
 
 
 
-## Writer
-
-### hook: roll log
+## logger file: roll
 归档日志：
 
     log/zap-rolling.go
-
-
-## zap field: format vs field
-Refer:
-https://godoc.org/go.uber.org/zap
-有两种logger，sugarLogger接受任意类型，更慢; 普通的logger 只接受类型field
-
-    logger := zap.NewExample()
-    defer logger.Sync()
-    sugar := logger.Sugar()
-    plain := sugar.Desugar()
-
-### SugarLogger
-sugar log 支持任意的类型(基于reflect实现类型检测)
-
-    sugar := zap.NewExample().Sugar()
-    defer sugar.Sync()
-    sugar.Infow("failed to fetch URL",
-        "url", "http://example.com",
-        "attempt", 3,
-        "backoff", time.Second,
-    )
-
-sugar log 提供了 formatter 接口(基于reflect实现类型检测)
-
-    sugar.Infof("failed to fetch URL: %s", "http://example.com")
-
 
 ## logger工具
 

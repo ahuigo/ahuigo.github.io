@@ -6,6 +6,7 @@
 stty start undef
 stty stop undef
 bindkey \^U backward-kill-line
+alias md='mkdir'
 
 ###############
 #export
@@ -118,7 +119,7 @@ function gcap(){
 # grep
 unset GREP_OPTIONS
 alias grep='grep --color=auto --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn'
-mcd(){ mkdir -p $@; cd $1}
+mcd(){ mkdir -p $@; cd $1;}
 alias grepr='grep -rn -F'
 grepr.(){ grep -rn $@ .}
 

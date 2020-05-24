@@ -53,6 +53,43 @@ multiple key:
     db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&User{})
 
 # Table
+## 表名
+表名默认就是结构体名称的复数，例如：
+
+    type User struct {} // 默认表名是 `users`
+    type UserDomain struct {} // 默认表名是 `user_domains`
+    // 禁用默认表名的复数形式，如果置为 true，则 `User` 的默认表名是 `user`
+    db.SingularTable(true)
+
+更改默认表名称（table name）
+
+    gorm.DefaultTableNameHandler = func (db *gorm.DB, defaultTableName string) string  {
+        return "prefix_" + defaultTableName;
+    }
+
+将 User 的表名设置为 `profiles`
+
+    func (User) TableName() string {
+        return "profiles"
+    }
+
+    func (u User) TableName() string {
+        if u.Role == "admin" {
+            return "admin_users"
+        } else {
+            return "users"
+        }
+    }
+
+指定表名称
+
+    // 使用User结构体创建名为`deleted_users`的表
+    db.Table("deleted_users").CreateTable(&User{})
+
+    db.Table("deleted_users").Where("name = ?", "jinzhu").Delete()
+    //// DELETE FROM deleted_users WHERE name = 'jinzhu';
+
+
 ## hasTable 检查表是否存在
     // 检查模型`User`表是否存在
     db.HasTable(&User{})
@@ -75,16 +112,57 @@ multiple key:
     db.DropTableIfExists(&User{}, "products")
 
 ## 列
+### primary key
+默认ID 是primary
+
+    type User struct {
+        ID   string // field named `ID` will be used as primary field by default
+        Name string
+    }
+
+    // Set field `AnimalID` as primary field
+    type Animal struct {
+        AnimalID int64 `gorm:"primary_key"`
+        Name     string
+        Age      int64
+    }
+
+自增
+
+    Num          int     `gorm:"AUTO_INCREMENT"` // set num to auto incrementable
+
+### 列名
+下划线分割命名（Snake Case）的列名
+
+    type User struct {
+      ID        uint      // column name is `id`
+      Name      string    // column name is `name`
+      Birthday  time.Time // column name is `birthday`
+      CreatedAt time.Time // column name is `created_at`
+    }
+
+    // Overriding Column Name
+    type Animal struct {
+      AnimalId    int64     `gorm:"column:beast_id"`         // set column name to `beast_id`
+      Birthday    time.Time `gorm:"column:day_of_the_beast"` // set column name to `day_of_the_beast`
+      Age         int64     `gorm:"column:age_of_the_beast"` // set column name to `age_of_the_beast`
+    }
+
+### 列注解
+	Domains  []string `gorm:"not null" json:"domains"`
+    Password string `gorm:"not null" json:"-"`  //json 不保留
+	UUID     string `gorm:"not null;unique" json:"uuid"`
+	Domain string `gorm:"primary_key" json:"domain"`
+
 ### 修改列
 修改列的类型为给定值
 
     // 修改模型`User`的description列的数据类型为`text`
     db.Model(&User{}).ModifyColumn("description", "text")
 
-### 1.2.6. 删除列
+### 删除列
     // 删除模型`User`的description列
     db.Model(&User{}).DropColumn("description")
-
 
 # 索引
 
@@ -96,13 +174,23 @@ multiple key:
     // 为`name`, `age`列添加索引`idx_user_name_age`
     db.Model(&User{}).AddIndex("idx_user_name_age", "name", "age")
 
+或者声明普通索引
+
+    Address      string  `gorm:"index:addr"` // create index with name `addr` for address
+    Country      string  `gorm:"index:addr"` // create index with name `addr` for address
+
 ## AddUniqueIndex
 
     // 添加唯一索引
-    db.Model(&User{}).AddUniqueIndex("idx_user_name", "name")
+    db.Model(&User{}).AddUniqueIndex("idx_name", "name")
 
     // 为多列添加唯一索引
-    db.Model(&User{}).AddUniqueIndex("idx_user_name_age", "name", "age")
+    db.Model(&User{}).AddUniqueIndex("idx_name_age", "name", "age")
+
+声明索引, 相同的`idx_name_code` 就是联合索引
+
+    Name string `gorm:"unique_index:idx_name_code"` // Create index with name, and will create combined index if find other fields defined same name
+    Code string `gorm:"unique_index:idx_name_code"` // `unique_index` also works
 
 ## RemoveIndex
 

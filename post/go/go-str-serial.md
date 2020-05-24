@@ -9,6 +9,7 @@ date: 2019-05-06
     import "encoding/json"
     type response2 struct {
         Page   int      `json:"page"` //json 是可选的, 用于转名字
+        Password   string     `json:"-"` //json 不保存
         Fruits []string `json:"fruits"`
     }
     //等价

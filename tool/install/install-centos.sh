@@ -17,12 +17,13 @@ sudo pip3.6 install gunicorn
 
 # zsh
 echo 'install zsh'
-sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+sudo yum install zsh git -y
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 sudo yum install autojump autojump-zsh -y
 sed -i  's/^# export PATH=/export PATH=/' ~/.zshrc
 cat <<'MM' >> ~/.zshrc
 export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
-alias p='python3.6'
+alias p='python3'
 alias pi='pip3'
 [ -f ~/.profile ] && source ~/.profile
 #[[ -s /etc/profile.d/autojump.sh ]] && . /etc/profile.d/autojump.sh

@@ -30,8 +30,19 @@ private:
     }
     route.GET("/:name/:id", func(c *gin.Context) {
 		var person Person
-		if err := c.ShouldBindUri(&person);
+        if err := c.ShouldBindUri(&person); err != nil {
+            c.AbortWithError(http.StatusBadRequest, err)
+            return
+        }
 
+### BindUri
+    func (c *Context) BindUri(obj interface{}) error {
+        if err := c.ShouldBindUri(obj); err != nil {
+            c.AbortWithError(http.StatusBadRequest, err).SetType(ErrorTypeBind) 
+            return err
+        }
+        return nil
+    }
 
 ## One key param(get/post)
 ### get one key
@@ -49,10 +60,21 @@ PostForm('name')
     name := c.PostForm("name")  //默认是空
     nick := c.DefaultPostForm("nick", "anonymous")
 
-## Bind struct
+## Bind 方法
 Note: 
 1. 注意bind 成员需要大写！ > 小写的成员无效, 且不会报err (go-lib/gonic/bind/bind.go)
 1. 需要使用引用：`bind(&query)`
+
+### bind struct 定义
+    type Person struct {
+        ID string `uri:"id" binding:"required,uuid"`
+        Name string `form:"name"` // post form 字段
+        Age in `json:"age"`     // post application/json 字段
+    }
+
+gonic 目前只支持RFC3339, time_format 不起作用（2020.01.02）
+
+    EndTime   *time.Time `json:"end_time" form:"end_time" time_format:"2012-11-01T22:08:41+08:00"`
 
 ### Must and Should
 gin 有两套[Bind](https://gin-gonic.com/docs/examples/binding-and-validation/):
@@ -61,16 +83,6 @@ gin 有两套[Bind](https://gin-gonic.com/docs/examples/binding-and-validation/)
     2. 同时header： is set to `text/plain; charset=utf-8`.
 2. 基于 ShouldBindWith： ShouldBind, ShouldBindJSON, ShouldBindXML, ShouldBindQuery, ShouldBindYAML
     1. 返回err, 自己控制error
-
-### struct format time
-gonic 只支持RFC3339, 忽略time_format
-
-    var json struct {
-        EndTime   *time.Time `json:"end_time" form:"end_time" time_format:"2012-11-01T22:08:41+08:00"`
-    }
-
-    if err:=c.Bind(&json);err == nil {
-
 
 ### Bind:get+post(post优先)
 同时包含post+get(post优先)
@@ -117,7 +129,7 @@ gonic 只支持RFC3339, 忽略time_format
     if c.ShouldBindWith(&form, gonic.binding.Query)
     if c.ShouldBind(&form) == nil 
 
-### showBindQuery:get only:
+### showBindQuery:get only
     c.ShouldBindQuery(&fakeForm) 
 
 ### Bind:json

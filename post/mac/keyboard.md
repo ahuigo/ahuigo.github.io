@@ -68,7 +68,7 @@ niz好像所有的按键都可以定制
 karabiner 
 
 # Karabiner 定制快捷键
-## 按键
+## 基本按键
 https://ke-complex-modifications.pqrs.org/
 
     "modifiers.mandatory": 
@@ -125,3 +125,26 @@ https://apple.stackexchange.com/questions/89981/remapping-keys-in-iterm2
 2. 在iterm 修改keys. 将`cmd+backspace`映射到`0x15`
 
 ![](/img/shell/keyboard/iterm-keys-map.png)
+
+## app 绑定
+首先找到app 的bundle identifier
+
+    $ osascript -e 'id of app "chrome"'
+    $ osascript -e 'id of app "wechat"'
+    com.tencent.xinWeChat
+    $ mdls -name kMDItemCFBundleIdentifier -r /System/Volumes/Data/Applications/Charles.app
+    com.xk72.Charles
+
+再绑定app
+
+
+    "manipulators": [
+    {
+        "conditions": [
+            {
+                "bundle_identifiers": [
+                    "^com\\.apple\\.finder$"
+                ],
+                "type": "frontmost_application_if"
+            }
+        ],

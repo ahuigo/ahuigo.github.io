@@ -37,3 +37,45 @@ For proxy `proxy_set_header X-Forwarded-For $remote_addr;`
 		return 403;
 	}
 
+# limit speed/memory
+定义限速区
+
+    Syntax:	limit_req_zone key zone=name:size rate=rate [sync];
+    Context:	http
+
+    zone=name:size ：分出一块名为name的区，用于存储各种key
+        (limit_req)会使用zone
+    sync
+         enables synchronization of the shared memory zone.
+    key
+        统计key(如ip) 出现的请求速度（空值不统计）
+    rate=size
+        限速，单位r/s（second), r/m(minute)
+
+limit_req 启用限速区
+    
+    Syntax:	limit_req zone=name [burst=number] [nodelay | delay=number];
+    Context:	http, server, location
+    burst
+        请求超rate后的缓冲队列长度(默认是0)
+        超过了burst缓冲队列长度和rate处理能力的请求被直接丢弃
+        超出这个长度数后，新请求就直接503, 
+    ondelay/delay
+        delay控制缓冲请求等待的时间(默认无限)
+        nodelay: 不等待，立即处理. 峰值请求速度是：rate+burst
+        峰值请求后，等待缓存区不再接受新请求
+
+nodelay不延迟请求
+
+    limit_req zone=one burst=5 nodelay;
+
+例子：https://blog.csdn.net/hellow__world/article/details/78658041
+
+    limit_req_zone $binary_remote_addr zone=perip:10m rate=1r/s;
+    limit_req_zone $server_name zone=perserver:10m rate=10r/s;
+
+    server {
+        ...
+        limit_req zone=perip burst=5 nodelay;
+        limit_req zone=perserver burst=10;
+    }

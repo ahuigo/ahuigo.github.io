@@ -18,7 +18,6 @@ TableName 是根据ModelName 自动生成的, 并且通过下列代码将表名�
     // Debug a single operation, show detailed log for this operation
     db.Debug().Where("name = ?", "jinzhu").First(&User{})
 
-
 ## 自定义 Logger
 参考GORM的默认记录器如何自定义它 https://github.com/jinzhu/gorm/blob/master/logger.go
 
