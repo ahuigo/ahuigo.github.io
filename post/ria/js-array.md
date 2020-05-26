@@ -78,7 +78,7 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
     arr.shift()
         .shift();//左移(移出) .unshift(item1,item2);//右移(移入)
 
-remove:
+## remove: splice
 
     first:
         arr.indexOf('3') !== -1 && arr.splice(arr.indexOf('3'), 1)

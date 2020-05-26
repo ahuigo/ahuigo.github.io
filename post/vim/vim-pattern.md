@@ -105,7 +105,7 @@ word boundary:
 
 	<Up><Down><Left><Right>
 
-#### origin atom
+### origin atom
           magic   nomagic	matches ~
 
     |/\%^|	\%^	\%^	beginning of file |/zero-width|		*E71*
@@ -129,6 +129,20 @@ word boundary:
     |/\%c|	\%23c	\%23c	in column 23 |/zero-width|
     |/\%v|	\%23v	\%23v	in virtual column 23 |/zero-width|
 
+### hexcode
+The full table of character search patterns includes some additional options: 'sssssssss 1'
+
+    \%u20ac
+    \%d match specified decimal character (eg \%d123)
+    \%x match specified hex character (eg \%x2a)
+    \%o match specified octal character (eg \%o040)
+    \%u match specified multibyte character (eg \%u20ac)
+    \%U match specified large multibyte character (eg \%U12345678)
+
+### collection*
+
+    [0-9]
+
 ### in replace
 一般情况下`\r\n`分别代表回车与换行，但是在`:%s/pattern/replace` 中的replace
 
@@ -139,15 +153,6 @@ replace 比较特别：
     \r 代表\n
     ^M  在replace中居然表示\n
         不表示<c-v><c-m>, <c-v>013
-
-The full table of character search patterns includes some additional options: 'sssssssss 1'
-
-    \%u20ac
-    \%d match specified decimal character (eg \%d123)
-    \%x match specified hex character (eg \%x2a)
-    \%o match specified octal character (eg \%o040)
-    \%u match specified multibyte character (eg \%u20ac)
-    \%U match specified large multibyte character (eg \%U12345678)
 
 
 ## multi

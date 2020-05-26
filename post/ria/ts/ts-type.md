@@ -393,4 +393,41 @@ https://stackoverflow.com/questions/36015691/obtaining-the-return-type-of-a-func
 ## 自动判断类型
     declare function isPromise<T, S>(obj: PromiseLike<T> | S): obj is PromiseLike<T>;
 
+## keyof
+    interface Person {
+        name: string;
+        age: number;
+        location: string;
+    }
 
+    type K1 = keyof Person; // "name" | "age" | "location"
+    type K2 = keyof Person[]; // "length" | "push" | "pop" | "concat" | ...
+    type K3 = keyof { [x: string]: Person }; // string
+
+## valueof
+
+    type ValueOf<T> = T[keyof T];
+
+which gives you
+
+    type Foo = { a: string, b: number };
+    type ValueOfFoo = ValueOf<Foo>; // string | number
+    // or 
+    type sameAsString = Foo['a']; // lookup a in Foo
+    type sameAsNumber = Foo['b']; // lookup b in Foo
+
+
+## generic
+https://stackoverflow.com/questions/49285864/is-there-a-valueof-similar-to-keyof-in-typescript
+
+    type JWT = { id: string, token: string, expire: Date };
+    const obj: JWT = { id: 'abc123', token: 'tk01', expire: new Date(2018, 2, 14) };
+
+    function onChange(key: keyof JWT, value: JWT[keyof JWT]) {
+        obj[key] = value //value match key type?
+    }
+
+应该用泛型, The idea is that the `key` parameter allows the compiler to infer the `generic K` parameter.
+ Then it requires that `value` matches `JWT[K]`, the lookup type you need.
+
+    declare function onChange<K extends keyof JWT>(key: K, value: JWT[K]): void; 

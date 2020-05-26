@@ -213,6 +213,12 @@ class HAL9000(object):
 ## encoding
 python 内存中string 全部是以unicode编码的，而bytes则可以任何特定的编码
 
+### show now-ascii
+有时我们想显示隐藏字符:
+
+    >>> print(str('abc-1*中国'.encode()))
+    b'abc-1*\xe4\xb8\xad\xe5\x9b\xbd'
+
 ### unicode
 以下三个等价, 且都是 class str
 

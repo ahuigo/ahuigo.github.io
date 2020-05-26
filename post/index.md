@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2017-09-26 [跳跃表](/b/algorithm/tree-skiplist) 
+- 2018-09-26 [二叉查找树和红黑树](/b/algorithm/tree-binary-search-tree) 
 - 2018-10-04 [py-test](/b/py/py-test) 
 - 2018-09-28 [flask route request response](/b/py/flask/2.flask-route) 
 - 2020-05-24 [nginx security](/b/nginx/nginx-sec) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [学习 docker](/b/arch/docker-begin) 
 - 2018-03-03 [css 布局](/b/ria/css-layout) 
 - 2018-09-28 [py-func](/b/py/py-func) 
-- 2018-10-04 [py-pkg-setuptool](/b/py/py-pkg-setuptool) 
-- 2020-04-03 [current status of China](/b/life/covid-19) 

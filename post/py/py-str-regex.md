@@ -101,6 +101,8 @@ groupdict 判断key 存在性
 可以是unicode
 
     re.split(r'[，,]+', '你好，我是..')
+    >>> re.match(r'.', '你好').group()
+    '你'
 
 ## 去贪婪
 

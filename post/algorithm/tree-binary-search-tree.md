@@ -10,6 +10,13 @@ priority:
 - 任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；
 - 任意节点的左、右子树也分别为二叉查找树。
 - 没有键值相等的节点（no duplicate nodes）。
+##  各种树比较
+> https://github.com/skywind3000/avlmini
+
+- AVL树: 平衡二叉树。Solais 用了AVL, windows对进程地址空间的管理用到了AVL树。
+- 红黑树: 平衡二叉树，广泛用在C++的STL中。如map和set都是用红黑树实现的
+- B/B+树: 用在磁盘文件组织 数据索引和数据库索引。
+- Trie树(字典树): 用在统计和排序大量字符串，如自动机
 
 ## 特点
 1. 中序遍历的结果是有序的
@@ -392,6 +399,8 @@ AVL 树的每个节点存放了一个平衡因子：
    1. 如果没有子树，直接删除此节点，父节点Balance 变化需要再平衡
 
 AVL 树的实现可以参考:
+0. https://github.com/skywind3000/avlmini/blob/master/avlmini.c
+https://github.com/ahuigo/avlmini/blob/master/avlmini.c
 1. 维基百科
 2. Problem Solving with Algorithms and Data Structures using Python：
     1. http://interactivepython.org/runestone/static/pythonds/Trees/AVLTreePerformance.html

@@ -136,6 +136,9 @@ Refer: [tcp-ip](/p/tcp-ip)
 	sysctl net.ipv4.tcp_timestamps=1 # 开启对于TCP时间戳的支持,若该项设置为0，则下面一项设置 不起作用
 	sysctl net.ipv4.tcp_tw_recycle=1 # 表示开启TCP连接中TIME-WAIT sockets的快速回收
 
+## vegeta(golang版本)
+压测工具
+
 ## ab ApacheBench 
 
     yum install httpd-tools
@@ -165,6 +168,11 @@ Example:
 	Waiting: 建立连接后，到服务器response 第一个byte 的时间
 	Processing: waiting + responsing
 	Total:	Connect + Processing
+
+### view response
+-v 4 观察response 
+
+    ab -n 100 -c 1 -C "$MY_COOKIE" -v 4 $url
 
 ### http1.0
 ab 只支持1.0, 如果需要http1.1 可以考虑siege

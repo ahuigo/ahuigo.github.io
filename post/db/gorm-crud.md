@@ -108,6 +108,9 @@ If you want to update a field’s value in BeforeCreate hook, you can use scope.
     db.Set("gorm:insert_option", "ON CONFLICT").Create(&product)
     // INSERT INTO products (name, code) VALUES ("name", "code") ON CONFLICT;
 
+## INSERT + update
+    Set("gorm:insert_option", "ON CONFLICT (user_id, date) DO UPDATE SET completion = excluded.completion").Create(&user)
+
 # Update(Save)
     func (s *DB) Save(value interface{}) *DB
     Save update value in database, if the value doesn't have primary key, will insert it
