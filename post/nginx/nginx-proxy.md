@@ -18,6 +18,19 @@ The address can be specified as a domain name or IP address, and an optional por
 
 an address can be specified as a server group.
 
+## proxy response rewrite
+如果不想302跳转返回不一致的代理域名：
+
+    proxy_pass $url;
+    proxy_redirect     off;
+    proxy_set_header   Host $host;
+
+如果端口不一样的话, 应该这样
+
+    proxy_redirect $osm_domain "http://$host:5098";
+    # proxy_set_header   Host $host; //禁用
+
+
 ### proxy_pass URI
 #### without uri
 access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/name/act?q=a"

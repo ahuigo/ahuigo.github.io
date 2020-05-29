@@ -153,7 +153,7 @@ dispatch 传callback 时，callback 与可以返回promise:
     };
     
     /**
-     * combine1
+     * combine reducers
      */
     const combinedReducer = (rootState, action) => Object.entries(reducers).reduce(
         (state, [ name, reducer]) => {
@@ -162,7 +162,7 @@ dispatch 传callback 时，callback 与可以返回promise:
     );
     
     /**
-     * combine2
+     * root reducer(柯里化)
      */
     const initialState = {};
     const rootReducer = function (

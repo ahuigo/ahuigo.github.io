@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2020-05-29 [mysql 索引](/b/db/mysql-index) 
+- 2018-09-27 [Shell 变量的数据类型](/b/c/shell-var) 
 - 2017-09-26 [跳跃表](/b/algorithm/tree-skiplist) 
 - 2018-09-26 [二叉查找树和红黑树](/b/algorithm/tree-binary-search-tree) 
 - 2018-10-04 [py-test](/b/py/py-test) 
@@ -12,7 +14,7 @@
 - 2018-09-27 [ops-init](/b/c/service/ops-init) 
 - 2018-09-27 [Systemd](/b/c/service/init-systemd) 
 - 2018-09-27 [Systemd 日志管理](/b/c/service/init-systemd-log) 
-- 2020-05-18 [nginx 的变量类型](/b/nginx/nginx-var-env-str) 
+- 2020-05-29 [nginx 的变量类型](/b/nginx/nginx-var-env-str) 
 - 2020-05-11 [nginx 的变量类型](/b/nginx/nginx-var) 
 - 2018-10-04 [nginx location](/b/nginx/nginx-router) 
 - 2020-05-11 [2](/b/nginx/a.) 
@@ -37,5 +39,3 @@
 - 2018-10-06 [linux 文件管理](/b/c/ops-file) 
 - 2018-10-04 [管理包和依赖的工具。](/b/py/py-pkg) 
 - 2018-09-27 [学习 docker](/b/arch/docker-begin) 
-- 2018-03-03 [css 布局](/b/ria/css-layout) 
-- 2018-09-28 [py-func](/b/py/py-func) 

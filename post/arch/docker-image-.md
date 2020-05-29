@@ -128,7 +128,7 @@ docker import理解为将外部文件复制进来形成只有一层文件系统�
     COPY . /app
     WORKDIR /app
     RUN npm install --registry=https://registry.npm.taobao.org
-    EXPOSE 3000
+    EXPOSE 3000 3002
     FROM    centos:6.7
     MAINTAINER      Fisher "fisher@sudops.com"
 

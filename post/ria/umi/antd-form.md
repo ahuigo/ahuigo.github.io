@@ -29,3 +29,21 @@ form 不用state, 用form 值
             node.select()
             node.input.select()
         }}
+
+## fieldset
+    <div>
+        <label for="username">Name: <abbr title="required" aria-label="required">*</abbr></label>
+        <input id="username" type="text" name="username">
+    </div>
+
+    <fieldset>
+        <legend>你的性别是：</legend>
+        <p>
+        <input type="radio" name="gender" id="male" value="male">
+        <label for="male">男</label>
+        </p>
+        <p>
+        <input type="radio" name="gender" id="female" value="female">
+        <label for="female">女</label>
+        </p>
+    </fieldset>

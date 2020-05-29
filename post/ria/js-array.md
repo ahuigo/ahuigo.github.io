@@ -57,16 +57,23 @@ concat()方法可以接收任意个元素和Array，并且自动把Array拆开�
 	var arr = ['A', 'B', 'C'];
 	arr.concat(1, 2, [3, 4]); // ['A', 'B', 'C', 1, 2, 3, 4]
 
-## join 转换:
+## join/obj
+### join 转换:
 
     arr.toString();arr.valueOf();
     arr.join(',');//
 	.join([separator]); //implode
+### obj 转换:
+    obj ={...arr}
 
 ## concat
 
 	.concat(arr2) not in-place
 	.concat(1,2) not in-place
+
+## flat
+
+    arr.flat(2); //二维变一维
 
 ## push,pop, shift
 

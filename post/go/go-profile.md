@@ -13,13 +13,47 @@ private:
     block profile、traces等
 
 ### go profiling常用的分析工具
-1. 基准测试文件：例如使用命令go test . -bench . -cpuprofile prof.cpu 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。(有点类似php的xhprof 的调用关系图，调用关系复杂就不直观了)
+我了解的有以下工具
+1. via `go test` 基准测试文件：例如使用命令`go test . -bench=. -cpuprofile prof.cpu` 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。(有点类似php的xhprof 的调用关系图，调用关系复杂就不直观了)
 
-2. `import _ net/http/pprof`：如果我们的应用是一个web服务，我们可以在http服务启动的代码文件(eg: main.go)添加 import _ net/http/pprof，这样我们的服务 便能自动开启profile功能，有助于我们直接分析采样结果。
+2. via `import _ net/http/pprof`：如果我们的应用是一个web服务，我们可以在http服务启动的代码文件(eg: main.go)添加 import _ net/http/pprof，这样我们的服务 便能自动开启profile功能，有助于我们直接分析采样结果。
 
 3. 通过在代码里面调用 `runtime.StartCPUProfile`或者`runtime.WriteHeapProfile`
+4. via `pkg/profile` 见下文
 
-更多调试的使用，建议可以阅读The Go Blog的 Profiling Go Programs
+更多调试的使用，可以阅读The Go Blog的 Profiling Go Programs
+
+## go profiler 工具
+参考：https://wjp2013.github.io/go/go-tools-basic/
+
+    import (
+        "time"
+        "github.com/pkg/profile"
+    )
+
+    func joinSlice() []string {
+        var arr []string
+        for i := 0; i < 10000; i++ {
+            arr = append(arr, "arr")
+        }
+        return arr
+    }
+
+    func main() {
+        stopper := profile.Start(profile.CPUProfile, profile.ProfilePath("."))
+
+        defer stopper.Stop()
+
+        joinSlice()
+
+        time.Sleep(time.Second)
+    }
+
+用 go tool 工具链输出 pdf 格式文件：
+
+    go build -o cpu cpu.go
+    ./cpu
+    go tool pprof --pdf cpu cpu.pprof > cpu.pdf
 
 ## go-torch 火焰
 ### install

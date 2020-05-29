@@ -70,5 +70,5 @@ inotify的主要应用于桌面搜索软件，像：Beagle，得以针对有变�
 其中：
 
     -r          recursive
-    -e MODIFY 
+    -e MODIFY  DELETE 等事件
     -m path     specify the path that we monitor 

@@ -406,6 +406,7 @@ https://stackoverflow.com/questions/36015691/obtaining-the-return-type-of-a-func
 
 ## valueof
 
+    Person[keyof Person];
     type ValueOf<T> = T[keyof T];
 
 which gives you

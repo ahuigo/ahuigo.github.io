@@ -47,7 +47,8 @@ $http_user_agent, $http_cookie, and so on.
 ### 按url
     echo $scheme://$http_host$request_uri?$query_string;
     echo $uri; # path
-    echo $host
+    echo $host; # host domain
+    echo $http_host; //with port
 
     path: SCRIPT_NAME /PHP_SELF / DOCUMENT_URI (nginx: SCRIPT_URL 默认是空的)
 		nginx: $fastcgi_script_name , 这可以被 rewrite 改写, 以上path 都会变

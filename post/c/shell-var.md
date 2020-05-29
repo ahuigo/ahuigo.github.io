@@ -225,6 +225,7 @@ substr is beginning:
 #### substr 截取
 
 	echo ${str:start:length}
+	echo ${str:start} #start 不为负数.否则当作0
 	echo ${str: -1}; #负数前面需要有空格
 	echo ${str:(-1)}; #或者负数用括号. 否则负数不会生效
 

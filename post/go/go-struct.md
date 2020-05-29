@@ -72,6 +72,12 @@ partial copy struct
         fmt.Println("RegistrationRequest :",req.Name, *req.Email, *req.Username, *req.Password)
     }
 
+## compare struct
+
+    a := User{"ahui"}
+    b := User{"ahui2"}
+    fmt.Printf("%v", a==b) //true
+
 ## init 
 init 时必须包含全部字段
 
@@ -96,7 +102,6 @@ init 时必须包含全部字段
 但是这个nil 是有类型的nil：
 
     (*main.Node)(nil)
-
 
 ## define:
 

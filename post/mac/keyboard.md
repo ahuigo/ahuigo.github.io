@@ -8,6 +8,14 @@ private: true
 1. HHKB-Pro2，是一款电脑键盘，重量0.53kg， 长29.4 x 宽11.0 x 高39.9mm 。
 2. Niz Atom68 31.9*11.0
 
+考虑到了hhkb的缺点, 入手了niz plum 
+
+1. 双桥不支持有线传输hhkb 数据线数据走线不灵活，只有一个方向. NIZ是三个方向
+2. hhkb 官方版是没有锂电池的贵hhkb只有一个60键盘布局。 niz 有66 68 84 87 108(我买的68，但想换成mini 84)
+3. hhkb 只用一个压力位。niz 有35g, 45g可选.
+4. hhkb 只有6个开关提供定制功能，仅仅是交换Command键和Alt键或者交换Fn键. Niz 可以通过软件定制任意按键、快捷键
+5. hhkb 贵，NIZ 性价比太高了
+
 ## Office/program1/program2 三种模式
     Office 是固定按键。
     program2/1 模式下按键可定制

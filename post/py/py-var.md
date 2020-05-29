@@ -39,7 +39,7 @@ calling a func by name
     False
 
 ### is
-is 比较的是id
+is 比较的是id, == 比较的是内容
 
     >>> 'a'[:]+'b' == 'ab'
     True

@@ -204,7 +204,7 @@ len(src)>len(dst) 会被golang 截断
 
 新分配空间 append 会copy 并扩容
 
-    s2 = append(s,1,2) //s!=s2 (完全不同的内存区域)
+    s2 = append(s,1,2) //s!=s2 (如果是新分配空间，则是完全不同的内存区域)
 
 如果不分配空间就用:
 
@@ -250,3 +250,66 @@ Since a slice doesn't make a copy of the underlying array. To decrease memory  m
         copy(c, b)
         return c
     }
+
+# copy and deepcopy
+https://flaviocopes.com/go-copying-structs/
+
+## 浅copy
+见go-lib/struct/copy-*.go
+
+### slice 浅copy
+slice copy：
+
+    copy(s_dst, s_src)
+
+e.g:
+
+    type Cat struct {
+        age     int
+        name    string
+        friends []string
+    }
+
+    func main() {
+        wilson := []Cat{{7, "Wilson", []string{"Tom", "Tabata", "Willie"}}}
+        nikita := []Cat{{}}        
+        copy(nikita, wilson)            //Cat是浅复制
+        nikita[0].age=6
+        nikita[0].friends[0]="newuser"  //friends 同时改变
+
+        fmt.Println(wilson)             //[{7 Wilson [newuser Tabata Willie]}]
+        fmt.Println(nikita)             //[{6 Wilson [newuser Tabata Willie]}]
+    }
+
+### assign 浅copy
+    s_dst := s_src[:]
+    s_dst := s_src
+
+与copy slice 一样的结果
+
+    wilson := Cat{7, "Wilson", []string{"Tom", "Tabata", "Willie"}}
+    nikita := wilson        //浅copy Cat
+    nikita.age = 6
+    nikita.friends[0]= "newuser"
+
+## append 浅copy
+
+    cat:= Cat{7, "Wilson", []string{"Tom", "Tabata", "Willie"}}
+    s := append([]Cat{}, cat)
+    s[0].age=6
+    s[0].friends[0]="newuser"
+    fmt.Println(s)      //[{6 Wilson [newuser Tabata Willie]}]
+
+
+## deepcopy
+深复制的方法：利用copier+新对象
+
+### copier+new Class
+
+    // "github.com/jinzhu/copier"
+    wilson := Cat{7, "Wilson", []string{"Tom", "Tabata", "Willie"}}
+    nikita := Cat{}
+    copier.Copy(&nikita, &wilson)
+
+### copier+make
+    nikita.friends = make([]string, len(wilson.friends))  //指针替换

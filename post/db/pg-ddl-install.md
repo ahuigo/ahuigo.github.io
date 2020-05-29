@@ -33,6 +33,7 @@ see db-user.md
         # auto reboot
         sudo systemctl enable postgresql
     elif osx:
+        # 手动
         # To have launchd start postgresql now and restart at login:
         brew services start postgresql
 
@@ -49,6 +50,10 @@ see db-user.md
         # 关闭开机启动 是rm plist
         alias pg-stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
         MM
+
+然后登录：
+
+    psql -U role1 ahuigo
 
 ## debug
 

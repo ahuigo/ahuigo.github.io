@@ -42,6 +42,7 @@ password method 使用独立的帐号，使用ROLE管理
     psql -U user_name -d database_name -h 127.0.0.1 -W
         \W prompt enter password
 
+## user login
 Non interactive password:
 
 1. vim ~/.pgpass:

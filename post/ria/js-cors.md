@@ -92,6 +92,16 @@ iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信
 
     document.domain = 'example.com';
 
+
+以下限制：只能是子域名, 不能是top域名
+
+    //不能是其它域名
+    document.domain = 'other.com' 
+    // 不能是顶级域名
+    document.domain = 'localhost'
+    // 不能加端口
+    document.domain = 'example.com:83';
+
 ## window.postMessage
 > 示例： js-lib/cors-iframe/parent.html
 

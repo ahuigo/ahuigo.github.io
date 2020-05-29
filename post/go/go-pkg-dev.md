@@ -7,6 +7,8 @@ date: 2016-09-27
 ---
 # golang write mod package
 > 下面的例子我放在了：https://github.com/ahuigo/go-lib/tree/master/import-local-mod
+## write a go cli
+cli 程序的实现说明见：go/go-pkg-cli.md https://github.com/ahuigo/go-cli-demo.git
 
 ## write go mod package
 go mod 不是加载`$GOPATH/src/`。包文件也不需要放在`$GOPATH`
@@ -73,17 +75,11 @@ clean 命令清：
                 生成与module同名的bin (不会缓存到pkg目录)
 	get         download and install packages and dependencies
                 download pkg+install
+        -u      update
+        -d      only download
 
-### run
-可以直接run (compile and excute) 不产生bin
-
-	$ go run a.go
-
-### build
-
-	$ go build a.go;# gen binary excute file ./a
-
-    $ packr build -o /bin/hello ./hello.go
+go get 可以用于：download+install 或者只download
+go install 只用于install
 
 # gopath 结构(modulle,package,dir)
 1. module: 是一组package list
