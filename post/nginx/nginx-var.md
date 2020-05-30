@@ -148,7 +148,7 @@ $arg_name 不仅可以匹配 name 参数，也可以匹配 NAME 参数，抑或�
         echo "arg_a: $arg_a";
     }
 
-改写会影响`$arg_a`
+上例改写会影响`$args 和 $arg_x`
 
     $ curl 'http://localhost:8080/test?a=0&b=1&c=2'
     args: a=3&b=4
@@ -172,13 +172,12 @@ $arg_name 不仅可以匹配 name 参数，也可以匹配 NAME 参数，抑或�
         }
     }
 
-## 变量set/get handler 与缓存
+## 变量set/get handler、容器、缓存
 按是否存值，变量分变两种
-1. 拥有值容器的变量在 Nginx 核心中被称为“被索引的”（indexed）；
-2. 反之，则被称为“未索引的”（non-indexed）。
+1. 拥有值容器的变量在 Nginx 核心中被称为“被索引的”（indexed）:如`$args`
+2. 反之，则被称为“未索引的”（non-indexed）, 如`$arg_XXX`。
 
 比如`$arg_XXX`并不实际存储值 我们读取 `$arg_XXX`时，是通过`get handler` 读的。
-
 
 ### get handler
 在设置了“取处理程序(get handler)”的情况下，Nginx 变量也可以选择将其值容器用作缓存，这样在多次读取变量的时候，就只需要调用“取处理程序”计算一次。
@@ -221,7 +220,7 @@ $arg_name 不仅可以匹配 name 参数，也可以匹配 NAME 参数，抑或�
     自定义变量在使用get handler 第二次访问时，是有缓存的(如上例中的foo)
     $arg_name 访问时，并不会使用值容器进行缓存
 
-支持值缓存的内建变量很少, 包括
+支持值缓存的内建变量很少, 我知道的包括
 
     $request_uri
     $request_method
@@ -323,7 +322,8 @@ Note: 为什么‘子请求’ /sub 的输出没有出现在最终的输出里�
     main method: POST
     sub method: POST
 
-我们需要求助于第三方模块 ngx_echo 提供的内建变量 $echo_request_method：
+要获取子请求的method
+需要求助于第三方模块 ngx_echo 提供的内建变量 $echo_request_method：
 
     location /main {
         echo "main method: $echo_request_method";
@@ -337,7 +337,14 @@ Note: 为什么‘子请求’ /sub 的输出没有出现在最终的输出里�
     main method: POST
     sub method: GET
 
-Nginx 变量漫谈（七）
+# 其它变量结构
+## 变量和空字符串
+nginx 变量无法区分变量空字符:
+
+    location /test {
+        echo "name: [$arg_name]";
+    }
+
 幸运的是，通过第三方模块 ngx_lua，我们可以轻松地在 Lua 代码中做到这一点。请看下面这个例子：
 
     location /test {
@@ -354,7 +361,7 @@ Nginx 变量漫谈（七）
 
 要解决这些局限，可以直接在 Lua 代码中使用 ngx_lua 模块提供的 ngx.req.get_uri_args()
 
-# 变量数组
+## 变量数组
 像 ngx_array_var 这样的第三方模块让 Nginx 变量也能存放数组类型的值。
 
     location /test {

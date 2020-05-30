@@ -42,7 +42,7 @@ Delve is full featured debugging tool for Go.
 ## 利用docker 执行
 本例我们使用docker执行 dlv:
 
-    docker run --rm --name server8 -v $PWD:/build -p8080:8080 -p2345:2345 --security-opt=seccomp:unconfined delve-docker-vscode-example
+    docker run --rm --name server8 -v $$PWD:/build -p8080:8080 -p2345:2345 --security-opt=seccomp:unconfined delve-docker-vscode-example
     API server listening at: [::]:2345
 
 `--security-opt=seccomp:unconfined` 是必须的, 因为:

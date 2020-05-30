@@ -9,6 +9,9 @@ table 就跟php 的一样，dict+list混合
 ### table dict+list
 
     tab1 = {key1="val1", key2 = "val2", "val3"}
+    k1 = "key1"
+    k2 = "key2"
+    tab1 = {[k1]="val1", [k2] = "val2", "val3"}
     for k, v in pairs(tab1) do
         print(k .. " -> " .. v)
     end
