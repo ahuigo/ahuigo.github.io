@@ -8,15 +8,20 @@ location 是用于路由的. 默认路由 或者location 语句体为空，则�
 
 	Context: server / location
 
-### 优先级
+### 优先级、匹配规则
+匹配规则:
 
-	=     #进行普通字符精确匹配
-	^~    #^~表示普通字符前缀匹配，相当于没有`^~`
-	~      #波浪线表示执行一个正则匹配，区分大小写
+	= /path #进行普通字符精确匹配
+            相当于 $uri == "/path"
+	^~ /path   #表示普通字符前缀匹配，
+            相当于 $uri.startsWith("/path")
+	~ "\.png$" #波浪线表示执行一个正则匹配，区分大小写
+            reg.match($uri, /\.png$/)
         ~*    大小写不敏感匹配
         !~    大小写敏感不匹配(!~) 
         !~*   大小写不敏感不匹配(!~*)
     /     常规字符串匹配(前缀匹配)
+         location /
 	@     #"@" 定义一个命名的 location，使用在内部定向时，例如 error_page, try_files
 
 优先级顺序：
@@ -112,17 +117,82 @@ A option 'flag' parameter can be one of: 默认是last
 - `redirect` 302
 
 #### break rewrite
-If query URI is '/XX.html',
+rewrite会跳出rewrite阶段, 这个例子为例：
 
-Example 1: The final URI is '/mac/index.html'
+    server{
+        listen       5004;
+        set $sub_uri "https://127.0.0.1:5002/get?ori=1";
+        location /{
+            #rewrite ^ /rewrite?r=1 break;
+            set $sub_uri "https://127.0.0.1:5002/get?ori=2";
+            set $a 1;
+            echo "a=$a";
+            echo $sub_uri; 
+        }
+    }
 
-	 location ~ "^/XX" {
-		 rewrite "(?i)^/xx" /mac/index.html break;
-         #echo "echo /XX"
-	 }
-	 location ~ "^/mac" {
-		 rewrite "(?i)^/mac" /last.html break;
-	 }
+执行结果：
+
+    $ curl -H 'Cookie:a=2;b=2' 'localhost:5004/debug?a=-1'
+    a=1
+    https://127.0.0.1:5002/get?ori=2
+
+同时查看errors.log (debug)日志：
+
+    $tail -f logs/error.log| grep -E 'http script | phase: | location| using '
+    ...
+    *9 http header: "Accept: */*"
+    *9 http header: "Cookie: a=2;b=2"
+    *9 http header done
+    *9 rewrite phase: 0
+    *9 rewrite phase: 1
+    *9 http script value: "https://127.0.0.1:5002/get?ori=1"
+    *9 http script set $sub_uri
+
+    use location /:
+    *9 test location: "/"
+    *9 using configuration "/"
+    *9 rewrite phase: 3
+    *9 rewrite phase: 4
+
+    set a and sub_uri:
+    *9 http script value: "https://127.0.0.1:5002/get?ori=2"
+    *9 http script set $sub_uri
+    *9 http script value: "1"
+    *9 http script set $a
+
+    *9 post rewrite phase: 5
+    *9 generic phase: 6
+    *9 generic phase: 7
+    *9 access phase: 8
+    *9 access phase: 9
+    *9 post access phase: 10
+    *9 generic phase: 11
+    *9 generic phase: 12
+
+    echo "a=$a":
+    *9 http script copy: "a="
+    *9 http script var: "1"
+    ...
+
+    echo $sub_uri;
+    *9 http script var: "https://127.0.0.1:5002/get?ori=2"
+
+rewrite与set 同属于rewrite 阶段，`rewrite+break`会跳过后面的`set $a、sub_uri`
+
+    set $sub_uri "https://127.0.0.1:5002/get?ori=1";
+    location /{
+        #rewrite ^ /rewrite?r=1 break;
+        set $sub_uri "https://127.0.0.1:5002/get?ori=2";
+        set $a 1;
+        echo "a=$a";
+        echo $sub_uri; 
+    }
+    $ curl -H 'Cookie:a=2;b=2' 'localhost:5004/debug?a=-1'
+    a=
+    https://127.0.0.1:5002/get?ori=1
+
+
 
 #### last rewrite(默认)
 Example 2: The final URI is 'last.html'

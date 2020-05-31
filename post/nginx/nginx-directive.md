@@ -71,7 +71,7 @@ private: true
 
     post-read、server-rewrite、find-config、rewrite、post-rewrite、preaccess、access、post-access、try-files、content 以及 log.
 
-Nginx 的 rewrite 阶段的配置指令一般用来:
+rewrite 阶段的配置指令一般用来:
 1. 对当前请求进行各种修改（比如对 URI 和 URL 参数进行改写），
 2. 或者创建并初始化 Nginx 变量。
 
@@ -81,6 +81,10 @@ Nginx 的 rewrite 阶段的配置指令一般用来:
 
 content 阶段
 1. 主要是输出内容, 例如 echo 指令的文档： `phase: content` 显示其指令在cotent 中执行
+
+查看指令的执行顺序，可以加debug log, 然后执行script 时观察
+
+    tail -f errors.log | grep -E 'http script '
 
 ## rewrite 阶段
  ngx_set_misc 模块的指令可与rewrite 放一起顺序执行

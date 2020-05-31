@@ -6,78 +6,102 @@ date: 2018-10-04
 The ngx_http_proxy_module module allows passing requests to another server.
 
 ## proxy_pass
+proxy_pass 指令语法:
 
 	Syntax:	proxy_pass URL;
 	Default:	—
 	Context:	location, if in location, limit_except
 
-The address can be specified as a domain name or IP address, and an optional port:
+反向代理示例:
 
 	proxy_pass http://localhost:8000/uri/;
 	proxy_pass http://unix:/tmp/other.socket:/uri/;
 
-an address can be specified as a server group.
+## request header
+Note that the app at http://ip_of_the_app:7180/ will now receive the request with the Host: my-app.net header.
 
-## proxy response rewrite
-如果不想302跳转返回不一致的代理域名：
-
-    proxy_pass $url;
-    proxy_redirect     off;
-    proxy_set_header   Host $host;
-
-如果端口不一样的话, 应该这样
-
-    proxy_redirect $osm_domain "http://$host:5098";
-    # proxy_set_header   Host $host; //禁用
-
-
-### proxy_pass URI
-#### without uri
-access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/name/act?q=a"
-
-
-	location /name {
-		proxy_pass http://127.0.0.1;    
+    location / { 
+        proxy_pass http://ip_of_the_app:7180/; 
+        proxy_set_header HOST $host;
     }
 
-#### with uri(合并)
+also
+
+    proxy_set_header Referer $http_referer;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+## proxy_redirect
+此指令用于修改代理server 返回的301/302响应头地址. 
+假设nginx 服务器对外的地址`http://frontend/one/`， 
+代理server 返回响应: `Location: http://localhost:8000/two/`. 则可以这样修改
+
+    # rewrite this string to “Location: http://frontend/one/some/uri/”.
+    proxy_redirect http://localhost:8000/two/ http://frontend/one/;
+
+A server name may be omitted in the replacement string:
+
+    # rewrite this string to "http://frontend/"
+    proxy_redirect http://localhost:8000/two/ /;
+
+### proxy_pass URI
+    listen       5002;
+    location /{
+        echo  "req_uri=$request_uri";
+        echo  "uri:$uri"; 
+        echo   "host=$host";
+        echo   "http_host=$http_host";
+    }
+
+#### with no uri(keep)
+access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1:5002/name/act?q=a"
+
+    # uri = request_uri 
+	location /name {
+		proxy_pass http://127.0.0.1:5002;    
+    }
+
+#### with uri(替换)
 access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/remote/?pass=1/act?q=a"
 
+    # uri = request_uri.replace("/name", proxy_uri)
 	location /name {
 		proxy_pass http://127.0.0.1/remote/?pass=1;    
     }
 
-#### rewrite 会全部替换path
+#### rewrite(+query_string)
 access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/rewrite?r=1&q=a"
 
+    # uri = rewrite_uri + '&q=a'
 	location /name/ {
         rewrite ^ /rewrite?r=1 break;
-		proxy_pass http://127.0.0.1;    
+		proxy_pass http://127.0.0.1/any_path;    
 	}
 
-#### regexp location with not path
-Regexp location, or inside named location, or inside "if" statement, or inside "limit_except" block, **cannot have URI part!**
+#### regexp location with no path(keep)
+Regexp/named location, or inside "if" statement, **cannot have URI part!**
 
 	location ^/name.*/ {
         proxy_pass http://127.0.0.1;
-        proxy_pass http://api.ahuigo.github.io;
 	}
 
-#### with variable
-with uri: 不合并(特殊)
+#### with variable uri
 access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/remote?r=1"
 
+    # uri = variable_uri
     set $url 'http://127.0.0.1/remote?r=1';
 	location /name/ {
-		proxy_pass $url;    
+        rewrite ^ /rewrite?r=1 break; #不影响
+		proxy_pass $url;
 	}
 
-no uri: 合并
+#### with variable no uri
 access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/name/act?q=a"
 
+    # uri = request_uri
     set $url 'http://127.0.0.1';
 	location /name/ {
-		proxy_pass $url;    
+		proxy_pass $url;
 	}
 
 ### 500 URI

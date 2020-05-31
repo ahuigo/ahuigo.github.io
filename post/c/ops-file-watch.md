@@ -24,16 +24,17 @@ reload + detect
 
     $ fswatch -r -o conf | xargs -n1 -I% sh -c 'echo event number%; sh nginx-reload.sh'
     $ cat nginx-reload.sh
-    pid=$(cat ngx.pid);
-    if kill -HUP $pid; then
-        if ! { nginx -t  -p `pwd`/ -c nginx.conf && nginx -s reload; } then
+    pid=$(cat ngx.pid); 
+    if kill -HUP $pid; then 
+        if ! { nginx -t -p $PWD -c nginx.conf && nginx -s reload -p $PWD -c nginx.conf; } then
             echo "wrong config!"
             kill $pid;
         fi
     else
         echo "start nginx"
-        nginx -p `pwd`/ -c nginx.conf & echo $!>ngx.pid;
-    fi
+        nginx -p $PWD -c nginx.conf & echo $! > ngx.pid;
+    fi 
+
 
 help: 
 

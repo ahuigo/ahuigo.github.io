@@ -125,55 +125,43 @@ $arg_name 不仅可以匹配 name 参数，也可以匹配 NAME 参数，抑或�
 ### 变量只读
 许多内建变量都是只读的，比如:
 
-    $arg_XXX
+    $arg_XXX //大部分nginx只读，不过在openresty里可写!
+    $query_string
     `$uri 和 $request_uri` 
 
 这个配置是错误的：
 
     location /bad {
-        set $uri /blah;
+        set $uri /uri_value;
+        set $arg_a arg_a_value;
         echo $uri;
+        echo $arg_a;
     }
     // 启动时
     [emerg] the duplicate "uri" variable in ...
+    [emerg] the duplicate "arg_a" variable in ...
+
+Note: 在openresty版本的`args_a`是可写的
 
 ### 变量可写
-也有一些内建变量是支持改写的, 如
-
-    $args
+也有一些内建变量是支持改写的, 如 `$args`
 
     location /test {
         set $args "a=3&b=4";
         echo "args: $args";
         echo "arg_a: $arg_a";
+        echo "query: $query_string";
     }
 
-上例改写会影响`$args 和 $arg_x`
+上例改写会影响`$args 和 $arg_x $query_string`
 
     $ curl 'http://localhost:8080/test?a=0&b=1&c=2'
     args: a=3&b=4
     arg_a: 3
-
-我们再来看一个通过修改 $args 变量影响标准的 HTTP 代理模块 ngx_proxy 的例子：
-
-    server {
-        listen 8080;
-
-        location /test {
-            set $args "foo=1&bar=2";
-            proxy_pass http://127.0.0.1:8081/args;
-        }
-    }
-    server {
-        listen 8081;
-
-        location /args {
-            echo "args: $args";
-        }
-    }
+    query_string: a=3&b=4
 
 ## 变量set/get handler、容器、缓存
-按是否存值，变量分变两种
+按是否存值，变量分两种
 1. 拥有值容器的变量在 Nginx 核心中被称为“被索引的”（indexed）:如`$args`
 2. 反之，则被称为“未索引的”（non-indexed）, 如`$arg_XXX`。
 
@@ -195,8 +183,6 @@ $arg_name 不仅可以匹配 name 参数，也可以匹配 NAME 参数，抑或�
 
             echo "original foo: $orig_foo";
             echo "foo: $foo";
-            set $args debug1;
-            echo "foo: $foo";
         }
     }
 
@@ -210,20 +196,47 @@ $arg_name 不仅可以匹配 name 参数，也可以匹配 NAME 参数，抑或�
     original foo: 1
     foo: 1
 
-为什么foo会出现0？这个结果的原因是, 这个get hadnler 第一次读取执行并缓存
+为什么foo会出现两次0？这个结果的原因是, get hadnler 第一次读取执行并缓存
 1. 第一次read `set $orig_foo $foo`时，取值为0
 1. 第二次read $foo时，取缓存值0
 
 > 类似 ngx_map 模块，标准的 ngx_geo 等模块也一样使用了变量值的缓存机制。
 
 ### 变量缓存
-    自定义变量在使用get handler 第二次访问时，是有缓存的(如上例中的foo)
-    $arg_name 访问时，并不会使用值容器进行缓存
-
-支持值缓存的内建变量很少, 我知道的包括
+支持值`缓存的内建变量`很少, 我知道的只包括
 
     $request_uri
     $request_method
+
+普通`自定义变量`和`大部分内建变量`，都没有缓存. 
+
+    localtion /{
+        set $a 1;
+        set $b $a; #读取$a 不会缓存
+        set $a 2;
+        echo $a; #echo 2
+    }
+
+Note: 在openresty 版本的nginx中，`$arg_name`,`$cookie_a`这种内建变量是即可写的，也不用get handler.
+
+    localtion /{
+        set $arg_a 2;           #arg_a 脱离了a
+        set $args "a=x&b=%2F"; # 不会影响a
+        echo $arg_a; # echo 2
+    }
+
+
+## 变量副本
+变量先声明后使用，一旦声明，在整个生命周期都有效。
+
+下例中，set 除了创建变量，还有一个副作用就是声明了一个 `$a`。这样每次请求时，都有一个`$a`变量副本。
+
+    location /test1{
+        echo "a=$a "; //访问/test1 时不会报$a undefined。因`set $a`声明了一个全局的副本: 空字符串
+    }
+    location /test{
+        set $a 1;
+    }
 
 # 子请求subrequest间的变量
 内部跳转的请求就是subrequest

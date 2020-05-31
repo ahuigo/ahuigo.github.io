@@ -4,7 +4,7 @@ date: 2019-04-11
 private:
 ---
 # Nginx 
-原文：https://segmentfault.com/a/1190000016901812
+参考原文：https://segmentfault.com/a/1190000016901812
 
     worker_processes  1;
     events {
@@ -50,88 +50,47 @@ private:
 ### 400
 NGX_HTTP_BAD_REQUEST
 
-    Host头不合法
+Host头不合法
     
     curl localhost:8070  -H 'Host:123/com'
-
-
-    <html>
     <head><title>400 Bad Request</title></head>
-    <body bgcolor="white">
-    <center><h1>400 Bad Request</h1></center>
-    <hr><center>nginx/1.14.0</center>
-    </body>
-    </html>
     
-    Content-Length头重复
+Content-Length头重复
+
     curl localhost:8070  -H 'Content-Length:1'  -H 'Content-Length:2'
-
-
-    <html>
     <head><title>400 Bad Request</title></head>
-    <body bgcolor="white">
-    <center><h1>400 Bad Request</h1></center>
-    <hr><center>nginx/1.14.0</center>
-    </body>
-    </html>
 
 ### 401
 NGX_HTTP_UNAUTHORIZED
 
 参考如上nginx配置,访问abc.html需要认证
  
-curl localhost:8070/abc.html
+    curl localhost:8070/abc.html
 
-
-<html>
-<head><title>401 Authorization Required</title></head>
-<body bgcolor="white">
-<center><h1>401 Authorization Required</h1></center>
-<hr><center>nginx/1.14.0</center>
-</body>
-</html>
-403
+    <head><title>401 Authorization Required</title></head>
+### 403
 NGX_HTTP_FORBIDDEN
 
-chmod 222 index.html
+    chmod 222 index.html
+
 将index.html设置为不可读
  
-curl localhost:8070
+    curl localhost:8070
+    <head><title>403 Forbidden</title></head>
 
-
-<html>
-<head><title>403 Forbidden</title></head>
-<body bgcolor="white">
-<center><h1>403 Forbidden</h1></center>
-<hr><center>nginx/1.14.0</center>
-</body>
-</html>
-404
+### 404
 NGX_HTTP_NOT_FOUND
 
-curl localhost:8070/cde.html
+    curl localhost:8070/cde.html
+    <head><title>404 Not Found</title></head>
 
-
-<html>
-<head><title>404 Not Found</title></head>
-<body bgcolor="white">
-<center><h1>404 Not Found</h1></center>
-<hr><center>nginx/1.14.0</center>
-</body>
-</html>
-405
+### 405
 NGX_HTTP_NOT_ALLOWED
 
 使用非GET/POST/HEAD方法访问一个静态文件
-curl -X DELETE localhost:8070/index.html -I
 
-
-HTTP/1.1 405 Not Allowed
-Server: nginx/1.14.0
-Date: Tue, 18 Sep 2018 10:02:22 GMT
-Content-Type: text/html
-Content-Length: 173
-Connection: keep-alive
+    curl -X DELETE localhost:8070/index.html -I
+    HTTP/1.1 405 Not Allowed
 
 ## 5xx系列
 ### 500
@@ -139,56 +98,27 @@ NGX_HTTP_INTERNAL_SERVER_ERROR
 
 修改index.php为
 
-<?php
-echo "124"
+    <?php
+    echo "124"
+
 缺少引号,语法错误
 
-curl localhost:8070/index.php -I
-
-
-HTTP/1.1 500 Internal Server Error
-Server: nginx/1.14.0
-Date: Tue, 18 Sep 2018 11:29:19 GMT
-Content-Type: text/html; charset=UTF-8
-Connection: keep-alive
-Set-Cookie: PHPSESSID=aoesvcuvbh1nh95kdkp152r9e1; path=/
-Expires: Thu, 19 Nov 1981 08:52:00 GMT
-Cache-Control: no-store, no-cache, must-revalidate
-Pragma: no-cache
+    curl localhost:8070/index.php -I
+    HTTP/1.1 500 Internal Server Error
 
 ### 501
 NGX_HTTP_NOT_IMPLEMENTED
 
-nginx的transfer-encoding现在只支持chunked,如果客户端随意设置这个值,会报501
+比如：nginx的transfer-encoding现在只支持chunked,如果客户端随意设置这个值,会报501
  
-curl localhost:8070  -H 'Transfer-Encoding:1'
-
-    <html>
-    <head><title>501 Not Implemented</title></head>
-    <body bgcolor="white">
-    <center><h1>501 Not Implemented</h1></center>
-    <hr><center>nginx/1.14.0</center>
-    </body>
-    </html>
+    curl localhost:8070  -H 'Transfer-Encoding:1'
 
 ### 502
 NGX_HTTP_BAD_GATEWAY
 
-修改nginx配置为
-fastcgi_pass 127.0.0.1:8000;
 指向一个未监听的端口
 
-curl localhost:8070/index.php -I
-
-
-HTTP/1.1 502 Bad Gateway
-Server: nginx/1.14.0
-Date: Tue, 18 Sep 2018 11:28:17 GMT
-Content-Type: text/html
-Content-Length: 537
-Connection: keep-alive
-ETag: "5ad6113c-219"
-
+    fastcgi_pass 127.0.0.1:2300;
 
 ### 503
 NGX_HTTP_SERVICE_UNAVAILABLE
@@ -198,15 +128,9 @@ NGX_HTTP_SERVICE_UNAVAILABLE
     limit_req zone=one;
 
 连续发送两个请求，第二请求会报503
-curl localhost:8070/index.php -I
 
+    curl localhost:8070/index.php -I
     HTTP/1.1 503 Service Temporarily Unavailable
-    Server: nginx/1.14.0
-    Date: Tue, 18 Sep 2018 11:31:43 GMT
-    Content-Type: text/html
-    Content-Length: 537
-    Connection: keep-alive
-    ETag: "5ad6113c-219"
 
 ### 504
 NGX_HTTP_GATEWAY_TIME_OUT
@@ -215,26 +139,20 @@ NGX_HTTP_GATEWAY_TIME_OUT
 
     <?php
     echo "124";
-    sleep(5);
-
-休息5秒钟
+    sleep(5); 休息5秒钟
  
 修改nginx配置为
-三秒钟读超时
-fastcgi_read_timeout 3;
-curl localhost:8070/index.php -I
 
-HTTP/1.1 504 Gateway Time-out
-Server: nginx/1.14.0
-Date: Tue, 18 Sep 2018 12:17:57 GMT
-Content-Type: text/html
-Content-Length: 537
-Connection: keep-alive
-ETag: "5ad6113c-219"
-505
+    #三秒钟读超时
+    fastcgi_read_timeout 3;
+
+    curl localhost:8070/index.php -I
+    HTTP/1.1 504 Gateway Time-out
+
+### 505
 NGX_HTTP_VERSION_NOT_SUPPORTED
 
-telnet8070端口,输入GET /index.html HTTP/2.1
+telnet 8070端口,输入`GET /index.html HTTP/2.1`
 不支持http/2.1,会报505
  
     $telnet localhost 8070
@@ -243,8 +161,3 @@ telnet8070端口,输入GET /index.html HTTP/2.1
     Escape character is '^]'.
     GET /index.html HTTP/2.1
     HTTP/1.1 505 HTTP Version Not Supported
-    Server: nginx/1.14.0
-    Date: Tue, 18 Sep 2018 12:26:35 GMT
-    Content-Type: text/html
-    Content-Length: 203
-    Connection: close
