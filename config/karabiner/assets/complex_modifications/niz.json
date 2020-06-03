@@ -42,6 +42,13 @@
                 "command"
               ]
             }
+        },{
+          "type": "basic",
+          "from": { "key_code": "f10", "modifiers": { "mandatory": [ "left_control" ] }
+          },
+          "to": {
+              "key_code": "volume_decrement"
+           }
         }
       ]
     }

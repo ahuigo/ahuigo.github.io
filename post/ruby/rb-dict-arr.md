@@ -8,6 +8,7 @@ private: true
     arr = 'js','python','ts'
     arr = ['js','python','ts']
     arr = (1..10).to_a
+    arr = %w(Jane, aara, multiko)
 
 空数组：
 
@@ -59,6 +60,7 @@ padding 4 'good' elelement
     arr << ele  if build.with? "iconv"
 
 ### delete
+
 #### delete obj
 从 self 中删除等于 obj 的项。如果未找到相等项，则返回 nil。如果未找到相等项且给出了可选的代码 block，则返回 block 的结果。
 
@@ -80,6 +82,17 @@ padding 4 'good' elelement
 
     array.slice!(index) [or] array.slice!(start, length) [or]
     array.slice!(range)
+
+##### replace
+完全用arr2代替arr1
+
+    #等价
+    arr1.replace(arr2)
+    arr1 = arr2
+
+### map
+    words = %w(Jane, aara, multiko)
+    upcase_words = words.map(&:upcase)
 
 ### sort
 返回一个排序的数组。
@@ -284,8 +297,14 @@ symbol value: `:symbol` 是一种symbol类型数据
 
 ### 传值
 
-    fun(k:1, arg2,arg3)
-    fun k:1, arg2,arg3
+    # 等价
+    fun({k:1,f:2}, arg2,arg3)
+    fun ({k:1,f:2}), arg2,arg3
+
+    # 等价
+    fun({k:1,f:2})
+    fun(k:1,f:2)
+    fun k:1,f:2
 
 ## access dict
 

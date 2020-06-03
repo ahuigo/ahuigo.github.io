@@ -17,8 +17,9 @@ Ruby支持的数据类型包括基本的Number、String、Ranges、Symbols，以
 
     "".match(//).class
     Time.new.class
+    var.class
 
-`is_a?`与`instance_of?`可以检测特定类型
+`is_a?`与`instance_of?`只能检测特定类型
 
     def type?(var)
         p var
@@ -32,7 +33,6 @@ Ruby支持的数据类型包括基本的Number、String、Ranges、Symbols，以
             return Time
         end
     end
-
 
 ## 变量生命
     一般小写字母、下划线开头：局部变量（Variable）。

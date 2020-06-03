@@ -9,6 +9,13 @@ private:
         [return] val
     end
 
+如果方法的最后一个参数前带有`&`，那么您可以向该方法传递一个块: rb-expr-block
+
+    def test(&block)
+        block.call
+    end
+    test{ puts "Hello World!"}
+
 ## return 可以省略
 这个返回的值是最后一个语句的值
 

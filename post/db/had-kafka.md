@@ -1,7 +1,10 @@
 ---
 title: Debug
 date: 2018-09-27
+private:
 ---
+# todo
+Kafka知识点大全 https://zhuanlan.zhihu.com/p/141101733
 # Debug
 ZookeeperConsumerConnector can create message streams at most once
 

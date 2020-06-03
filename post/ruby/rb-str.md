@@ -89,9 +89,29 @@ Ruby 使用用 ASCII 编码来读源码，中文会出现乱码，解决方法�
 ## slice string
     str[position] # 注意返回的是ASCII码而不是字符
     str[start, length]
-    str[start..end]
-    str[start...end]
+    str[start..end] # 包含end
+    str[start...end] # 不包end
     str[0...-1]
+    str[-3..-1] # 最后3个
+
+first-last:
+
+    2.4.1 :010 > a.chars.last(5).join
+    => "fghij"
+    2.4.1 :011 > a.chars.last(100).join
+    => "abcdefghij"
+
+If you're using Ruby on Rails:
+
+    [2] pry(main)> a.first(3)                                                                                                                   
+    => "abc"
+    [3] pry(main)> a.last(4)                                                                                                                    
+    => "defg"
+
+## padding
+
+    '123'.rjust(5, '.')
+    > ..123
 
 ## strip
 只移除末尾的`"\r\n"`

@@ -39,7 +39,8 @@ https://detail.tmall.com/item.htm?id=614767798852&ali_refid=a3_430582_1006:12874
 8. 再点“connect” 连接(如果6个数字码不对，会要求重新连接
 
 Note: 
-mac 的蓝牙键盘，不应该从蓝牙直接连接。mac先清理蓝牙连接，然后从 System Setting > Keyboard > 点击 Setup Bluetooth Keyboard 这里连接键盘。
+我一开始也遇到mac 蓝牙连接键盘连不上的问题。后来重启了mac（平时半年也不会重启），键盘fn+蓝牙1 长按3秒以上，重新连接就正常了。
+据说升级到10.15.2 mac osx 不会有问题？我的没有升级，一直是用的10.15.0(the Xcode Command Line Tools 最新）
 
 # 快捷键
     ctrl+f/b/n/p

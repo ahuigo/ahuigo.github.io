@@ -6,6 +6,7 @@ private: true
 # debug： vscode + hotReload + docker + dlv
 > refer1:livereload https://medium.com/@hananrok/debugging-hot-reloading-go-app-within-docker-container-b44d2929e8bd
 > refer2:vscode https://bloggie.io/@_ChristineOo/debugging-go-with-delve-and-vscode
+> vscode+go debug: https://github.com/Microsoft/vscode-go/wiki/Debugging-Go-code-using-VS-Code
 code example: go-lib/debug/docker/main.go
 
 ## 利用ionotify+目录挂载实现livereload

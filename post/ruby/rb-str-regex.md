@@ -23,3 +23,11 @@ private: true
     if ( line1 =~ /Cats(.*)/ )
         puts "Line1 contains Cats"
     end
+
+# 正则函数
+
+## gsub
+   s = 'abc'.gsub(/b/, 'B')
+
+## match
+    name = 'name=hilo'.match(/name=(.+)/)[1]

@@ -88,6 +88,7 @@ use moral 例子:
 require 模块搜索的目录是是
 
     `$LOAD_PATH << '.'` 在当前目录中搜索
+    puts $LOAD_PATH
 
 还可以使用 `require_relative` 来从一个相对目录引用文件。
  
@@ -105,6 +106,7 @@ require 模块搜索的目录是是
 include 用于为了在类中内嵌入模块
 
     # support.rb
+    p $LOAD_PATH #全局变量
      module Week
        FIRST_DAY = "Sunday"
        def Week.weeks_in_month
@@ -118,6 +120,7 @@ include 用于为了在类中内嵌入模块
 现在，您可以在类中引用该模块，如下所示：
 
     # main.rb
+    $LOAD_PATH << '.'
     require "support"
     
     class Decade
@@ -134,6 +137,9 @@ include 用于为了在类中内嵌入模块
     Week.weeks_in_month
     Week.weeks_in_year
     d1.no_of_months
+
+## 命名规范
+ gem a，里面有 module A，并且所有内容都在 A 的命名空间下。gem b 应该有 module B，并且把所有内容放在 module B。gem 的名字和命名空间是对应的，但这只是规范约束没有强约束。
 
 # Mixins
 ruby 不提供Mixins 多重继承, 但是include 替代了多重继承
