@@ -141,6 +141,19 @@ include 用于为了在类中内嵌入模块
 ## 命名规范
  gem a，里面有 module A，并且所有内容都在 A 的命名空间下。gem b 应该有 module B，并且把所有内容放在 module B。gem 的名字和命名空间是对应的，但这只是规范约束没有强约束。
 
+ ## 第三方gem
+Gemfile.lock
+
+     hashie (3.5.6)
+
+然后可直接bundle exec 会读取gem 后, 直接使用, 不用include
+
+    # require "hashie" # if not gem
+    hsh = Hashie::Mash.new("latitude"=>"40.695")
+    hsh = Hashie::Mash.new(latitude:40.695)
+    hsh.latitude
+    => "40.695"
+
 # Mixins
 ruby 不提供Mixins 多重继承, 但是include 替代了多重继承
 

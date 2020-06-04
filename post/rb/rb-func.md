@@ -8,7 +8,7 @@ private:
         expr..
         [return] val
     end
-
+## block argument
 如果方法的最后一个参数前带有`&`，那么您可以向该方法传递一个块: rb-expr-block
 
     def test(&block)
@@ -39,6 +39,17 @@ private:
           puts "参数值为 #{test[i]}"
        end
     end
+
+## function as argument
+    def first_option
+        puts "space jam"
+    end
+
+    def receives_function(func)
+        method(func).call
+    end
+
+    receives_function(:first_option)
 
 ## exec function
 

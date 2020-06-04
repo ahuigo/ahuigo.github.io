@@ -5,7 +5,6 @@ private: true
 ---
 # Ruby class
 
-
 ## 类定义与实例
 
     class Customer
@@ -43,7 +42,7 @@ Note: 除了局部变量/常量之外的其它变量, 在字符串中的拼接�
     obj = Hello.new
     p obj.instance_variable_get(:@hello) 
 
-如果想以`obj.name`的方式访问成员属性，可以这样
+如果想以`obj.name`的方式访问成员属性，可以这样`attr_reader`创建`getter`
 
     class Hello
         attr_reader :name
@@ -53,6 +52,10 @@ Note: 除了局部变量/常量之外的其它变量, 在字符串中的拼接�
     end
     obj = Hello.new
     p obj.name
+
+Calling `attr_accessor` will create a `getter` AND a `setter` for the given variable:
+
+    attr_accessor :name
 
 ### 冻结对象
 让对象只读
@@ -75,7 +78,7 @@ Note: 除了局部变量/常量之外的其它变量, 在字符串中的拼接�
     puts MR_COUNT       # 这是全局常量
     puts Foo::MR_COUNT  # 这是 "Foo" 的局部常量
 
-## 类变量
+## 类变量 vs instance var
 Ruby 提供了5种类型的变量：
 
     一般小写字母、下划线开头：变量（Variable）。
@@ -84,7 +87,82 @@ Ruby 提供了5种类型的变量：
     @@开头：类变量（Class variable）类变量被共享在整个继承链中
     大写字母开头：常数（Constant）
 
-特殊的self 就像是php中的self+this结合体：可以访问静态动态的方法、变量
+特殊的self 就像是php中的self+this结合体：可以访问静态动态(`def self.method, def method`)的方法、变量
+
+类变量与实例变量的用法：
+https://stackoverflow.com/questions/15773552/ruby-class-instance-variable-vs-class-variable
+
+### instance var on class
+access `instance var` via `class/self.class method`:
+
+    class Parent
+        @ths = []
+        def self.things
+          @ths
+        end
+        def things
+          self.class.things
+        end
+      end
+  
+    class Child < Parent
+        @ths = []
+    end
+
+    Parent.things << :car
+    Child.things  << :doll
+    mom = Parent.new
+    chi = Child.new
+
+    p Parent.things #=> [:car]
+    p Child.things  #=> [:doll]
+    p mom.things    #=> [:car]
+    p chi.things    #=> [:doll]
+
+### 类变量
+access `class var` via `class/instance method`:
+
+    class Parent
+      @@ths = []
+      def self.things
+        @@ths
+      end
+      def things
+        @@ths
+      end
+    end
+
+    class Child < Parent
+    end
+
+    Parent.things << :car
+    Child.things  << :doll
+
+    p Parent.things #=> [:car,:doll]
+    p Child.things  #=> [:car,:doll]
+    p Parent.new.things  #=> [:car,:doll]
+    p Child.new.things  #=> [:car,:doll]
+
+### class/instance 是不同对象
+class 与实例本质都是对象
+
+    class A
+      @name="ahui"
+      def echo
+        p @name
+      end
+      def self.echo
+        p @name
+      end
+      def mod
+        @name = 'hilo'
+      end
+    end
+    a = A.new
+    A.echo #=> ahui
+    a.echo #=> nil
+    a.mod 
+    a.echo #=> hilo
 
 ## method
 方法名总是`以小写字母`开始
@@ -283,13 +361,30 @@ eg.
 
     # 定义子类
     class BigBox < Box
-       # 改变已有的 getArea 方法
+       # 修改父类已有的 getArea 方法
        def getArea
           #@area = @width * @height
           @area = self.getArea
           puts "Big box area is : #@area"
        end
     end
+
+### super vs self
+`super` method calls the `parent class/instance method`.
+`self` calls the `self class/instance method`.
+
+    class A
+      def a
+        # do stuff for A
+      end
+    end
+
+    class B < A
+      def self.a
+        super # or use super() 
+      end
+    end
+    B.new.a
 
 ## 运算符重载
 我们希望使用: 
@@ -325,7 +420,7 @@ eg.
 
 
 ## meta 类信息
-self在ruby 指的是类，不是实例
+下例self指的是类，不是实例
 
     class Box
         # 输出类信息
@@ -337,3 +432,32 @@ self在ruby 指的是类，不是实例
 
     Class of self = Class
     Name of self = Box
+
+# ::命名空间
+双冒号`::`或`module`是定义 namespace 的(https://ruby-china.org/topics/7932)
+1. `Foo::Bar`,`Foo::method`: 找一个名字叫 Foo 的 namespace ，然后让它返回它里面的 Bar/method 参数( 可以是个常量，可以是个类，可以是个方法（后两者在 Ruby 中可视为常量）
+2. `FooBar.method1` 可访问静态方法。`::` 只能用来找 class method, 而`instance method` 就只能用 `.` 了
+
+比方这样
+
+    class Foo
+    Bar = "hello"
+    bar = "hello"
+    end
+    =========
+    Foo::Bar  # => "hello"
+    Foo::bar  #  => 出错
+    Foo.Bar  #  => 出错
+    Foo.bar  #  => 出错
+
+另外 :: 在开始位置则表示回到 root namespace ，就是不管前面套了几个 Module ，都算你其实写在最外层。
+
+    module Foo
+        class ::FooBar
+            def self.method1
+                "method1"
+            end
+        end
+    end
+    p FooBar::method1
+    => "method1"

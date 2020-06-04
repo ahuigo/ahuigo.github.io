@@ -350,3 +350,10 @@ values
 不支持：
 
     hsh1+hsh2
+
+# hash obj
+    # require "hashie" # if not gem
+    hsh = Hashie::Mash.new("latitude"=>"40.695")
+    hsh = Hashie::Mash.new(latitude:40.695)
+    hsh.latitude
+    => "40.695"

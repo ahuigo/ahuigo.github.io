@@ -10,7 +10,7 @@ Ruby 提供了一个完美的处理异常的机制。我们可以在 begin/end �
 
     begin #开始
         raise.. #抛出异常
-    rescue [ExceptionType = StandardException] #捕获指定类型的异常默认值是 StandardException
+    rescue [StandardException] #捕获指定类型的异常默认值是 StandardException
         p $! #表示异常信息
         p $@ #表示异常出现的代码位置
     else #其余异常
@@ -45,7 +45,7 @@ Ruby 提供了一个完美的处理异常的机制。我们可以在 begin/end �
         raise 'A test exception.'  
     rescue Exception => e  
         puts e.message  
-            # 等价e==$!
+            # 等价$!
         puts e.backtrace.inspect  
             # 等价$@
     end

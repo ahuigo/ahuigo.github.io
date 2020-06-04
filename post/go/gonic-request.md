@@ -276,6 +276,12 @@ https://github.com/gin-gonic/gin/pull/857/files
         return ioutil.ReadAll(c.Request.Body)
 
 # Request Info
+
+## clientIp
+    r := gin.New()
+    r.ForwardedByClientIP = false //默认是true
+    func (c *Context) ClientIP() string {
+
 ## header
 Request   *http.Request
 

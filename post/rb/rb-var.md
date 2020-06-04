@@ -87,3 +87,9 @@ ngx+lua+redis 架构模式在高并发的情况下完胜 ngx+php-fpm+php
         1 == 1.0 返回 true，但是 1.eql?(1.0) 返回 false。
     equal?	相同的对象 id，则返回 true。	
         如果 aObj 是 bObj 的副本，那么 aObj == bObj 返回 true，a.equal?bObj 返回 false，但是 a.equal?aObj 返回 true
+
+## 初值
+如果没有初值就不赋值：
+
+    a ||= '100'
+    a ||= '100' if true
