@@ -8,7 +8,6 @@ ag 比ack/grep 还快
 
     brew install the_silver_searcher
 
-
 ## 自动忽略`.gitinore/.hgignore` 中的文件
 https://github.com/ggreer/the_silver_searcher/wiki/Advanced-Usage
 ag 支持`.ignore/.gitinore/.hgignore`

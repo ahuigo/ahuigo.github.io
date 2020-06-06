@@ -117,3 +117,19 @@ Ruby 的标准类和模块抛出异常。所有的异常类组成一个层次，
             raise FileSaveError.new($!)
         end
     end
+
+# caller stack
+## caller
+    def a(skip)
+      caller(skip)
+    end
+    def b(skip)
+      a(skip)
+    end
+    def c(skip)
+      b(skip)
+    end
+    c(0)   #=> ["prog:2:in `a'", "prog:5:in `b'", "prog:8:in `c'", "prog:10"]
+    c(1)   #=> ["prog:5:in `b'", "prog:8:in `c'", "prog:11"]
+    c(2)   #=> ["prog:8:in `c'", "prog:12"]
+    c(3)   #=> ["prog:13"]

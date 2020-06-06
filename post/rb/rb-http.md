@@ -18,6 +18,28 @@ URI 默认内置, cgi/erb 不是内置的
     CGI.escape
     CGI.unescape
 
+## url info
+    uri = URI("http://www.example.com:80/something?param1=value1&param2=value2&param3=value3")
+    uri.query
+    uri.path
+
+### query:
+    Rack::Utils.parse_query URI("http://example.com?par=hello&par2=bye").query
+    { "par" => "hello", "par2" => "bye" } 
+
+    Rack::Utils.build_query URI("http://example.com?par=hello&par2=bye").query
+
+parse query
+
+    require 'cgi'
+    CGI::parse('param1=value1&param2=value2&param3=value3')
+    // {"param1"=>["value1"], "param2"=>["value2"], "param3"=>["value3"]}
+    URI::decode_www_form(uri.query).to_h # if you are in 2.1 or later version of Ruby
+    # => {"param1"=>"value1", "param2"=>"value2", "param3"=>"value3"}
+
+
+
+
 # cookie
     h = {'cookie1' => 'val1', 'cookie2' => 'val2'}
     req['Cookie'] = h.map { |k,v| "#{k}=#{URI.escape v}" } .join('; ')

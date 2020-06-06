@@ -20,13 +20,19 @@ Note: '\x87' 并不是单字节字符！它不是合法utf8, 会被转成合法�
     '\x87' === Buffer.from([0xc2,0x87]).toString() === String.fromCharCode(0x87)
 
 ## es6 string
-支持backquote 多行(es6):
+支持backquote 多行(es6): 解析`\`和 `$`
 
 	`multiple
+    ${var}
 	line`
 
-    # 可能适合用于复杂的正则
+raw 只解析 `$`
+
+    # 适合用于复杂的正则
     String.raw`\a` === `\\a`
+    String.raw`\a` === `\\a`
+    > String.raw`${1+2}`
+    '3'
 
 ### charcode(unicode)
 length/slice/substr/都是基于字符的

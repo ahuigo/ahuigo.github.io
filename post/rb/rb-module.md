@@ -29,13 +29,21 @@ manager），类似Redhat的RPM。它讲一个Ruby应用程序打包到一个gem
 
     bundle install
 
+#### bundle exec
+`bundle exec` 让 command 执行于当前的`context of current bundle (the one from your directory's Gemfile)`. 
+
+    # the script where db is the namespace and migrate is the task name 
+    rake db:migrate 
+
+    # in current context of gemfile
+    bundle exec rake db:migrate 
+
 ### Gemfile
 定义你的应用依赖哪些第三方包，bundle根据该配置去寻找这些包。
 
     gem "libxml-ruby"
     gem "libxml-ruby", ">= 2.0.5"
     gem "libxml-ruby", ">= 2.0.5", :require => "libxml" # 依赖
-
 
 ## Rack
 以Ruby为语言编写的轻量级的http server服务。 
@@ -142,8 +150,13 @@ include 用于为了在类中内嵌入模块
  gem a，里面有 module A，并且所有内容都在 A 的命名空间下。gem b 应该有 module B，并且把所有内容放在 module B。gem 的名字和命名空间是对应的，但这只是规范约束没有强约束。
 
  ## 第三方gem
-Gemfile.lock
-
+    // Gemfile
+      gem "hashie"
+      group :development, :test do
+        gem "capybara", "~> 2.13"
+        gem "byebug"
+      end
+    // Gemfile.lock
      hashie (3.5.6)
 
 然后可直接bundle exec 会读取gem 后, 直接使用, 不用include

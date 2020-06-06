@@ -8,9 +8,14 @@ Ruby支持的数据类型包括基本的Number、String、Ranges、Symbols，以
 同时还有两种重要的数据结构——Array和Hash
 
 ## 类型转化
+    var.to_s
+    var.to_i #int
+        "11".to_i(base=2)    
+        "11".to_i(base=10)    
+    var.to_f    #float
+    '0.3'.to_r  # 3/10
+    '1.1e5'.to_c  # 复数：(110000.0+0i)
 
-    Number('100') error
-    String(100)     ok
 
 ## 类型检测
 通用meta 信息

@@ -151,6 +151,14 @@ If you're using Ruby on Rails:
 
     str.rindex
 
+### startWith
+    if 'abc'.start_with? 'ab' 
+    if SomeString.match(/^abc/) 
+
+### include
+
+    if my_string.include? "cde"
+
 ## strip
 	str.rstrip
     str.rstrip! 从 str 中移除尾随的空格，如果没有变化则返回 nil。
@@ -195,3 +203,9 @@ If you're using Ruby on Rails:
     str.sub(pattern) { |match| block }
     str.sub!(pattern, replacement) [or]
     str.sub!(pattern) { |match| block }
+
+e.g.
+
+
+    'abc'.gsub('ab','AB')
+    'abc'.gsub(/^ab/,'AB')

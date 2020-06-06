@@ -16,7 +16,100 @@ private: true
         end
     end
 
+## request
+get and  post
+
+    params[:name]
+
+### cookie
+get cookie
+
+    token = cookies[:token]
+
+set cookie
+
+    cookies[:key] = "a yummy cookie"
+    cookies[:key] = {
+       :value => 'a yummy cookie',
+       :expires => 1.year.from_now,
+       :domain => 'domain.com'
+     }
+
+delete cookie
+
+     cookies.delete(:key)
+     cookies.delete :key,domain:'.ahuigo.com'
+
+### session
+get/set session:
+
+    session[:referrer] = request.referrer
+    referrer  = session.delete(:referrer)
+
+### header
+    request.headers["referer"]
+    request.referrer
+
+### host/port
+    @hostname = request.host || "www.mydomain.com"
+    request.protocol 
+        https://
+    request.host_with_port
+
+## response
+      response.headers["WWW-Authenticate"] = "Basic realm=\"#{realm}\""
+      render :plain => errormessage, :status => :unauthorized  #401
+
+json
+
+    render :json => data
+
+### redirect
+redirect
+
+    redirect_to @post
+    redirect_to "http://www.rubyonrails.org"
+    redirect_to "/images/screenshot.jpg"
+    redirect_to posts_url
+    redirect_to proc { edit_post_url(@post) }
+
+with status/msg
+
+    redirect_to post_url(@post), status: :found
+    redirect_to post_url(@post), status: 301
+    redirect_to action: 'atom', status: 302
+
+    redirect_to post_url(@post), alert: "Watch it, mister!"
+    redirect_to post_url(@post), status: :found, notice: "Pay attention to the road"
+
+
+基于routes 的redirect
+
+    // params[:referer]
+    redirect_to :controller => "user", :action => "login", :referer => request.fullpath
+    redirect_to action: "show", id: 5
+
+# config
+https://blog.arkency.com/custom-application-configuration-variables-in-rails-4-and-5/
+
+    // config/application.rb
+    config.my_custom_setting = "WOW"
+    config.x.external_api.timeout = 5
+
+在controller 中使用
+
+
+    Rails.configuration.x.external_api
+    # => {:timeout=>5, :url=>"https://example.org/api/path"}
+
+    Rails.configuration.x.external_api.timeout
+    # => 5
+
+
+
 # debug
+> https://guides.rubyonrails.org/debugging_rails_applications.html
+
 hot reload code, 如果想修改代码时让请求生效，那么修改下面的配置
 
     //vi config/environment/production.rb
@@ -26,6 +119,8 @@ hot reload code, 如果想修改代码时让请求生效，那么修改下面的
 
 ## passenger
     passenger start -e development
+    bundle exec passenger start -e development
+    bundle exec passenger-config restart-app
 
 ## logger format
 如果修改自定义format ，修改config/environment/production.rb

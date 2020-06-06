@@ -119,6 +119,8 @@ access `instance var` via `class/self.class method`:
     p mom.things    #=> [:car]
     p chi.things    #=> [:doll]
 
+Note: class 与 instance实例之间的`@var` 是相互独立的变量副本
+
 ### 类变量
 access `class var` via `class/instance method`:
 
@@ -144,7 +146,8 @@ access `class var` via `class/instance method`:
     p Child.new.things  #=> [:car,:doll]
 
 ### class/instance 是不同对象
-class 与实例本质都是对象
+class 与实例本质都是对象:
+class 与 instance实例之间的`@var` 是相互独立的变量副本
 
     class A
       @name="ahui"
@@ -163,6 +166,28 @@ class 与实例本质都是对象
     a.echo #=> nil
     a.mod 
     a.echo #=> hilo
+
+## 变量作用域
+下例中:`attr_accessor` 会将`self.name`指针指向`@name`. 只能修改实例的self, 而不是类的self
+1. 访问name: 先查局部变量name, 再查@name/self.name
+2. 访问@name/self.name: 本实例的属性
+
+如果没有`attr_accessor`
+1. `self.name`是一个属性而不是`undefined method`。
+2. `@name` 是实例/类 属性
+
+e.g.
+
+    class A
+      attr_accessor :name
+      def echo
+        self.name = 'self.name'
+        #name = 'name'
+        p [@name,self.name,name]
+      end
+    end
+    a = A.new
+    a.echo #=> "self.name, self.name, self.name"
 
 ## method
 方法名总是`以小写字母`开始

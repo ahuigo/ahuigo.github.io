@@ -31,6 +31,16 @@ private: true
     equal?	如果接收器和参数具有相同的对象 id，则返回 true。	
         如果 aObj 是 bObj 的副本，那么 aObj == bObj 返回 true，
 
+## 逻辑
+
+    not 1 , !1
+    and &&
+    or ||
+    if !1
+
+    a = 1 unless false
+    a = 1 if not false
+
 ## 并行赋值
 并行赋值在交换两个变量的值时也很有用：
 

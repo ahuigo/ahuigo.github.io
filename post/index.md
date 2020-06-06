@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2020-05-29 [mysql 索引](/b/db/mysql-index) 
 - 2018-09-27 [Shell 变量的数据类型](/b/c/shell-var) 
 - 2017-09-26 [跳跃表](/b/algorithm/tree-skiplist) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [ops-ftp-rsync](/b/c/ops-ftp-rsync) 
 - 2018-10-06 [linux 文件管理](/b/c/ops-file) 
 - 2018-10-04 [管理包和依赖的工具。](/b/py/py-pkg) 
-- 2018-09-27 [学习 docker](/b/arch/docker-begin) 
