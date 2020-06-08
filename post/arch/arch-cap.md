@@ -141,5 +141,5 @@ CC BY 3.0, https://en.wikipedia.org/w/index.php?curid=16452453
 2. Raft 则是对Paxos做的精简的分布式一致性复制协议。
 
 Raft 图解
-http://raftconsensus.github.io/
+https://raft.github.io/
 http://thesecretlivesofdata.com/raft/?from=timeline

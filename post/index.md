@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [数据库CAP 理论 与事务](/b/arch/arch-cap) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2020-05-29 [mysql 索引](/b/db/mysql-index) 
 - 2018-09-27 [Shell 变量的数据类型](/b/c/shell-var) 
@@ -22,7 +23,7 @@
 - 2018-09-27 [brew](/b/mac/mac-brew) 
 - 2014-03-05 [Shell 编程](/b/c/shell-cmd) 
 - 2020-05-20 [install](/b/nginx/nginx-install) 
-- 2020-05-11 [nginx debug](/b/nginx/nginx-debug-log) 
+- 2020-06-08 [nginx debug](/b/nginx/nginx-debug-log) 
 - 2019-02-05 [Lua 的变量](/b/lua/lua-var) 
 - 2019-01-06 [lua module](/b/lua/lua-module) 
 - 2018-09-28 [net-dns](/b/net/net-dns) 
@@ -38,4 +39,3 @@
 - 2019-09-21 [Go log](/b/go/go-log) 
 - 2018-09-27 [ops-ftp-rsync](/b/c/ops-ftp-rsync) 
 - 2018-10-06 [linux 文件管理](/b/c/ops-file) 
-- 2018-10-04 [管理包和依赖的工具。](/b/py/py-pkg) 

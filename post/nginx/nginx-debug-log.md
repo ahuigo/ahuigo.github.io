@@ -24,7 +24,7 @@ description:
                 '$status $body_bytes_sent "$http_referer" '
                 '"$http_user_agent" "$http_x_forwarded_for"';
 		access_log  logs/access.log  main;
-		error_log /var/log/nginx-error.log info;
+		# error_log /var/log/nginx-error.log info;
 		error_log  /dir/error.log  main;
     }
 

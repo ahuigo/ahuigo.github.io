@@ -37,9 +37,6 @@ parse query
     URI::decode_www_form(uri.query).to_h # if you are in 2.1 or later version of Ruby
     # => {"param1"=>"value1", "param2"=>"value2", "param3"=>"value3"}
 
-
-
-
 # cookie
     h = {'cookie1' => 'val1', 'cookie2' => 'val2'}
     req['Cookie'] = h.map { |k,v| "#{k}=#{URI.escape v}" } .join('; ')
