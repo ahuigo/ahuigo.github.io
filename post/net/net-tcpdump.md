@@ -23,13 +23,13 @@ tshark比较新是wireshark的命令行版。 它和tcpdump 都是基于libpcap�
 
 # tcpdump Example
 
-	sudo tcpdump -i lo0 -nn -X  -c 1 port 8000
-	sudo tcpdump -i en0 -nn -X  -c 1 port 8000
+	sudo tcpdump -i lo0 -n -X  -c 1 port 8000
+	sudo tcpdump -i en0 -n -X  -c 1 port 8000
 
 	-i interface
 		lo0 监听lo0
 		any 所有接口(not support promiscuous，监听其它主机的接口 )
-	-nn, -n
+	-n
 		遇到协议号或端口号时，不要将这些号码转换成对应的协议名称或端口名称。比如，我们希望显示21，而非tcpdump自作聪明的将它显示成FTP。
 	-X, -x(小写显示hex，不显示ascii)
 		把协议头和包内容都以16 进制显示出来（tcpdump会以16进制和ASCII的形式显示），这在进行协议分析时是绝对的利器。
@@ -90,7 +90,7 @@ tshark比较新是wireshark的命令行版。 它和tcpdump 都是基于libpcap�
 # 以太网信息
 
 	-e 显示以太网信息
-	sudo tcpdump -i lo0 -nn -c 1 -e
+	sudo tcpdump -i lo0 -n -c 1 -e
 
 它会多一些这样的以太信息：
 
@@ -171,7 +171,7 @@ flowdata 是一个binary! 查看的话需要借助`-r`
 # tcp
 分析tcp 包时，不要限制`dst or src`：
 
-	sudo tcpdump -i en5 -nn -A host ahuigo.github.io
+	sudo tcpdump -i en5 -n -A host ahuigo.github.io
 
 ## 三次握手
 ```
@@ -250,6 +250,7 @@ udp:
 可以借助`or` `and`, 限制源与目的机ip
 
 	$ tcpdump -i eth0 'dst 8.8.8.8'
+    $ tcpdump -i any -n -X  -c 100 'dst 172.16.110.14 and port 80'
 	$ tcpdump -i eth0 -c 3 'dst port 53 or dst port 80'
     tcpdump -n "dst host 192.168.1.1 and (dst port 80 or dst port 443)"
 
@@ -295,7 +296,7 @@ filter pcap
 	tcpdump 'tcp[tcpflags] & tcp-syn != 0 and not dst host qiyi.com'
 
 	# 计算抓10000个SYN包花费多少时间，可以判断访问量大概是多少。
-	time tcpdump -nn -i eth0 'tcp[tcpflags] = tcp-syn' -c 10000 > /dev/null
+	time tcpdump -n -i eth0 'tcp[tcpflags] = tcp-syn' -c 10000 > /dev/null
 
 
 这个语句看着比较复杂，其实如果要把这段解释清楚的确不容易，需要你具备计算机网络专业知识才行。这个我会安排一章来讲。
@@ -356,7 +357,7 @@ tcp 包本身有个偏移20(ip包头占用0x14=20字节）
     tcp[3] tcp[3:1]==80 80端口
 
     # tcp[20:4]==0x47455420   "GET "
-    tcpdump -i en0 -nn -X -A  "tcp[20:4]==0x47455420"
+    tcpdump -i en0 -n -X -A  "tcp[20:4]==0x47455420"
 
 要提取TCP协议的SYN、ACK、FIN标识字段，语法是：
 

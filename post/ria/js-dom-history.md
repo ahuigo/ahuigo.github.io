@@ -27,6 +27,7 @@ Example:
     history.replaceState({page: 1}, 'title 1', '?page=1')
 
 # history event
+## change a link
 trigger:
 
     $('#container').on('click', 'a', function(e) {
@@ -35,41 +36,39 @@ trigger:
 　　　　e.preventDefault();
 　　});
 
-## onpushstate(自定义)
-listen pushstate:
-
-    (function(history){
-        var pushState = history.pushState;
-        history.pushState = function(state) {
-            if (typeof history.onpushstate == "function") {
-                history.onpushstate({state: state});
-            }
-            return pushState.apply(history, arguments);
-        };
-    })(window.history);
-
-## onpopstate(custom)
-onpopstate 是后退事件
-
-	window.onpopstate = function(event) {
-		alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
-	};
-
 ## onpopstate, onhashchange(browser action)
-listen popstate(on user click back only): 
+popstate 触发条件：browser.back()或 hashchange
+hashchange 触发条件：hashchange
 
     //window.onpopstate
     window.addEventListener('popstate', function(e) {     
 　　　　anchorClick(location.pathname); 	
  　　});
 
-Note:
-这popstate/hashchange only triggered by doing a `browser action`
-1. history.back() 会trigger popstate/hashchange
-2. 调用history.pushState() 本身不会trigger(这个算是bug) 
+Note: 调用history.pushState/replaceState 不会trigger event
 
-manully trigger popstate/hashchange
+## onlocationchange(custom)
+    /* These are the modifications: */
+    history.pushState = ( f => function pushState(){
+        var ret = f.apply(this, arguments);
+        window.dispatchEvent(new Event('pushstate'));
+        window.dispatchEvent(new Event('locationchange'));
+        return ret;
+    })(history.pushState);
 
-    history.pushState(state, '', url);
-    var popStateEvent = new PopStateEvent('popstate', { state: state });
-    dispatchEvent(popStateEvent);
+    history.replaceState = ( f => function replaceState(){
+        var ret = f.apply(this, arguments);
+        window.dispatchEvent(new Event('replacestate'));
+        window.dispatchEvent(new Event('locationchange'));
+        return ret;
+    })(history.replaceState);
+
+    window.addEventListener('popstate',()=>{
+        window.dispatchEvent(new Event('locationchange'))
+    });
+
+现在就可以用了:
+
+    window.addEventListener('locationchange', function(){
+        console.log('location changed!');
+    })

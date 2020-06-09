@@ -4,23 +4,106 @@ date: 2019-11-12
 private: true
 ---
 # Umi form 表单
-https://ant.design/components/form-cn/#components-form-demo-coordinated
 
-    this.props.form
-        setFieldsValue
-        getFieldValue
-        setFieldDecorator
+## fields 存值
+Store Form Data into Upper Component
 
-form 不用state, 用form 值
+    // const initFields = Object.entries(def).map((item) => ({name:item[0],value:item[1]}))
+    const [fields, setFields] = useState([{ name: 'username', value: 'Ant' }]);
 
-      handleSelectChange = value => {
-        console.log(value);
-        this.props.form.setFieldsValue({
-          note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
+    return <Form
+      name="global_state"
+      layout="inline"
+      fields={fields}
+      onFieldsChange={(changedFields, allFields) => {
+        setFields(allFields);
+      }}
+    >
+      <Form.Item
+        name="username"
+        label="Username"
+        rules={[{ required: true, message: 'Username is required!' }]}
+      >
+        <Input />
+      </Form.Item>
+    </Form>
+
+## formInstance 存值
+可以通过formInstance, 建立Input 与form 之间的数据响应
+
+    const LoginForm = () => {
+        const form = Form.useform({
+            onValuesChange: () => console.log('Value changes'),
         });
-      };
+        useEffect(()=>{
+            form.setFieldsValue({username:'hilo'})
+        })
+        const { getFieldDecorator, validateFields } = form;
+        return (
+            <Form onSubmit={handleSubmit}>
+                <Form.Item>
+                    {getFieldDecorator('userName')(<Input placeholder="Username" />)}
+                </Form.Item>
+            </Form>
+        );
+    };
+
+
+
+# 更新field
+## 手动更新field
+Item: 用setFieldsValue
+
+    <input 
+        onChange={(e)=>form.setFieldsValue({name:e.target.value}}}
+        value={form.getFieldValue('name')}
+    >
+
+## via decorator item
+    {getFieldDecorator('labels', {
+        rules: [
+            {
+                required: true,
+                message: '请选择标签',
+                type: 'array',
+            },
+        ],
+    })(<Input/>)
+
+## via Form.Item
+
+      <Form.Item
+        name="username"
+        label="Username"
+        rules={[{ required: true, message: 'Username is required!' }]}
+      >
+        <Input/>
+
+## 监听所有field
+可用Form的onFieldsChange 监听变化
+
+    <Form
+        onFieldsChange={(changedFields, allFields) => {
+            form.setFieldsValue(allFields);
+        }}
+    >
+
+## onSubmit(e)/onFinish(data)
+    <Form onSubmit={ (e) => {
+        e.preventDefault();
+    }} >
+
+或者只监听数据data:
+
+    <Form 
+        onFinish={(data)=>console.log(data)}
+
+还可以通过 form 得到data
+
+    const data = form.getFieldsValue()
 
 # Input
+自动激活
 
     <Input
         placeholder="Basic usage"
