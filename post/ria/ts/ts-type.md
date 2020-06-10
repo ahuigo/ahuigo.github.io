@@ -100,6 +100,7 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
     let fibonacci: number[] = [1, 1, 2, 3, 5];
     let list: any[] = ['xcatliu', 25, {href: 'b.com' }];
+    Array<string> or string[]
 
 ### 数组泛型（Array Generic） 
 

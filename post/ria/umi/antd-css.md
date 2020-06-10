@@ -37,6 +37,26 @@ For example, modify the font size of all Tag in src/global.less.
       }
     }
 
+## 局部主题切换
+定义一个局部的local.less
+
+    // local.less
+    @import '~antd/es/style/themes/default.less';
+
+    .nav {
+        :global(.num) {
+            margin: 0 5px;
+        }
+    }
+
+然后直接引入
+
+    import styles from './local.less';
+
+    <div className={styles.nav}>    
+        <div className={'num'}>    
+
+
 ## create-react-app
 ### 引入antd
 Add antd/dist/antd.css at the top of src/App.css.

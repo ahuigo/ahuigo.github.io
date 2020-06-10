@@ -13,7 +13,7 @@ private: true
 
     const forceUpdate: () => void = React.useState()[1].bind(null, {}) 
     //相当于
-    const [,setUpdate] = React.useState()
+    const [,forceUpdate] = React.useState()
     const forceUpdate: () => void = setUpdate.bind(null, {}) 
 
 

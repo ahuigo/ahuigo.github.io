@@ -1,10 +1,49 @@
 {
-  "title": "Ctrl+u/w to arrow del",
+  "title": "redline shortcuts for mac osx...",
   "rules": [
     {
-      "description": "Ctrl+u/w to (niz)...",
+      "description": "redline shortcuts for mac osx...",
       "manipulators": [
         {
+          "type": "basic",
+          "from": {
+            "key_code": "p",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": {
+              "key_code": "up_arrow"
+         }
+        },{
+          "type": "basic",
+          "from": {
+            "key_code": "n",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": {
+              "key_code": "down_arrow"
+         }
+        },{
+          "type": "basic",
+          "from": {
+            "key_code": "b",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": {
+              "key_code": "left_arrow"
+         }
+        },{
           "type": "basic",
           "from": {
             "key_code": "w",

@@ -5,6 +5,12 @@ private: true
 ---
 # Umi form 表单
 
+    <Form
+        layout="inline" ...
+    >
+
+# 存值
+
 ## fields 存值
 Store Form Data into Upper Component
 

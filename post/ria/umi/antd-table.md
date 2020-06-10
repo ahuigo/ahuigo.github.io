@@ -9,7 +9,7 @@ private: true
 
     const pager = {
         current: page,
-        pageSize: 20,
+        pageSize: 20, //默认会分页
         showSizeChanger: false, //不切换页数
         total: pageTotal > 10000 ? 10000 : pageTotal,
     };

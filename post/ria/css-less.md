@@ -78,6 +78,13 @@ And this is what it compiles to:
         padding-left: 0;
     }
 
+umijs 下 src/global.less 
+
+    //全局
+    td.ant-table-column-sort{
+        background: orange;
+    }
+
 ## merge 合并
 合并为`.largeImageStep1`
 
