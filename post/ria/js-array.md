@@ -193,10 +193,19 @@ returns the value of the first element:
     ['a', 'b', 'c', 'd'].includes('c', 2)      // true
     ['a', 'b', 'c', 'd'].includes('c', 3)      // false
 
+inludes 是类型匹配的
+
+    ['',undefined].includes(null) //false
+
 for string
 
     'hello world'.includes('hello') //true
     'hello world'.includes('')      //true
+
+### in array
+    const set = new Set(['foo', 'bar']);
+    console.log(set.has('foo'));
+    console.log(set.has('baz'));
 
 ## index in arr/obj
 是用：`index in arr`, 不是`value in arr`(这与python 不同)

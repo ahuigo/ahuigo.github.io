@@ -9,6 +9,8 @@ grep 与sed 同样是以按行匹配，不过sed 不仅能按行匹配，还能�
 
 >ps: mac 下的sed与linux下的gnu sed有很大的不同，建议安装gsed（如果你熟悉gnu-sed）: brew install gnu-sed
 
+## mac linux sed
+
 mac 使用的是BSD sed, `-i` 参数后必须跟一个扩展名, 如果想直接修改原文件，则扩展名用空字符串:
 
 	sed -i '.ori' $'/^PATH=/c\\\n sth.' a.txt #> a.txt.ori (注意bash的string不直接支持\n, 只能使用$'string\n' , 不是$"string\n"哈, $"string\n"与 "string\n"没有分别) $'\\\n' 会被bash 解析为'\n', '\n' 又被sed 解析为换行
@@ -20,6 +22,7 @@ mac 使用的是BSD sed, `-i` 参数后必须跟一个扩展名, 如果想直接
 	gsed $'/^PATH=/c\\\n sth.' a.txt > a.txt.ori
 	gsed -i $'/^PATH=/c\\\n sth.' a.txt #> a.txt
 
+## sed 基本格式
 sed 命令行基本格式为:
 
 	sed option 'script' file1 file2 ...
@@ -29,6 +32,10 @@ sed 命令行基本格式为:
 
 	/pattern/action
 	range{/pattern/action}
+
+example:
+
+    echo abc | gsed 's/a/A/'
 
 # action, 操作码
 

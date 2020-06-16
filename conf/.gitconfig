@@ -6,6 +6,7 @@
 	filemode = false
 	quotepath = false
 	symlinks = true
+	ignorecase = false
 [color]
 	diff = auto
 	status = auto

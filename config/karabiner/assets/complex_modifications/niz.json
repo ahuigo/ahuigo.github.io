@@ -33,19 +33,6 @@
         },{
           "type": "basic",
           "from": {
-            "key_code": "b",
-            "modifiers": {
-              "mandatory": [
-                "left_control"
-              ]
-            }
-          },
-          "to": {
-              "key_code": "left_arrow"
-         }
-        },{
-          "type": "basic",
-          "from": {
             "key_code": "w",
             "modifiers": {
               "mandatory": [

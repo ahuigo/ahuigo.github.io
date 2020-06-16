@@ -72,6 +72,12 @@ http://lesscss.org/
         }
     }
 
+or:
+
+    :global {
+        .ant-tabs-bar {}
+    }
+
 And this is what it compiles to:
 
     .ocssContainer .ui_column {

@@ -108,6 +108,7 @@ gin 有两套[Bind](https://gin-gonic.com/docs/examples/binding-and-validation/)
     }
 
 ### shoudBind:get+post(post优先)
+需要用到注解:`form:"key"`
 
 #### ShouldBind
 方法 - ShouldBind, ShouldBindJSON, ShouldBindQuery
@@ -116,7 +117,7 @@ gin 有两套[Bind](https://gin-gonic.com/docs/examples/binding-and-validation/)
     type myForm struct {
         querya string `form:"a"`
     }
-    err := c.ShouldBind(&fakeForm)
+    err := c.ShouldBind(&myForm)
     $ curl -X GET "localhost:8085/testing?a=1
 
 #### ShouldBindWith
@@ -130,7 +131,10 @@ gin 有两套[Bind](https://gin-gonic.com/docs/examples/binding-and-validation/)
     if c.ShouldBind(&form) == nil 
 
 ### showBindQuery:get only
-    c.ShouldBindQuery(&fakeForm) 
+    type myForm struct {
+        querya string `form:"a"`
+    }
+    c.ShouldBindQuery(&myForm) 
 
 ### Bind:json
     var json struct {

@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2020-06-16 [python thread 线程笔记](/b/py/py-thread) 
 - 2020-06-09 [tcpdump](/b/net/net-tcpdump) 
 - 2018-09-27 [数据库CAP 理论 与事务](/b/arch/arch-cap) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [系统调用](/b/go/go-os) 
 - 2018-09-27 [go-test](/b/go/15.go-test) 
 - 2019-09-21 [Go log](/b/go/go-log) 
-- 2018-09-27 [ops-ftp-rsync](/b/c/ops-ftp-rsync) 

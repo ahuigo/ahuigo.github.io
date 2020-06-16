@@ -139,7 +139,7 @@ Ref 只能用于useEffect
         return () => {
           ChatAPI.unsubscribeFromFriendStatus(friendID, handleStatusChange);
         };
-      });
+      },[]);
 
       return isOnline;
     }
@@ -203,7 +203,6 @@ Ref 只能用于useEffect
         return <div/>
     }
 
-
 ## context hook(避免嵌套)
 useContext 让你不使用组件嵌套就可以订阅 React 的 Context。
 
@@ -232,6 +231,7 @@ useContext 让你不使用组件嵌套就可以订阅 React 的 Context。
 
 TodosApp 内部组件树里的任何子节点都可以使用 dispatch 函数来向上传递 actions 到 TodosApp：
 
+    import TodosDispatch from 'context.js'
     function DeepChild(props) {
       // 如果我们想要执行一个 action，我们可以从 context 中获取 dispatch。
       const dispatch = useContext(TodosDispatch);
@@ -292,9 +292,14 @@ useCallback Hook 允许你在重新渲染之间保持对相同的回调引用以
     const child1 = useMemo(() => <Child1 a={a} />, [a]);
     return <> {child1} </>
 
+    // only if [a,b] changes
+    const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+
+
 这行代码
 1. 会调用 computeExpensiveValue(a, b)。但如果依赖数组 [a, b] 自上次赋值以来没有改变过，useMemo 会跳过二次调用，只是简单复用它上一次返回的值。
 > 记住，传入 useMemo 的函数会在`渲染期间执行`。请不要在这个函数内部执行与渲染无关的操作，诸如副作用这类的操作属于 useEffect 的适用范畴，而不是 useMemo。
+> `[a,b]`依赖不会作为参数传进去
 
 ### React.memo 也可代替shouldComponentUpdate
 你可以用 React.memo 包裹一个组件来对它的 props 进行浅比较：

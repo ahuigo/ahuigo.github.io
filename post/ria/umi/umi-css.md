@@ -4,6 +4,10 @@ date: 2020-05-25
 private: true
 ---
 # umi
+## css modules 方案
+umi 通用 css modules 方案讨论
+https://github.com/umijs/umi/issues/1417
+
 ## 修改主题
     //.umirc.ts
     import darkTheme from '@ant-design/dark-theme';
@@ -16,7 +20,8 @@ private: true
         },
     })
 
-## global css
+## global.less
+> note: 此文件内不需要加:global
 src/global.less:
 
     .pad10{

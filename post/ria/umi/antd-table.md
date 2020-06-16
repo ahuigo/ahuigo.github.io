@@ -26,3 +26,6 @@ private: true
         pagination={pager}
         dataSource={data}
     />
+
+## row key
+        rowKey={(row: any, i) => `key${i}`}

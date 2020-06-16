@@ -62,6 +62,17 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 threading.current_thread().ident
 threading.current_thread().name
 
+## 变量的线程不安全
+因为有些操作的字节码 不是原子性的
+
+    n = 1
+    def foo:
+        global n
+        n+=1 # 不是原子的
+
+    import dis
+    dis..(foo) //多个字节码，不是原子的
+
 ## lock thread
 如果线程要修改全局变量，为防collision 冲突，可以加lock
 1. Rlock(),允许多重嵌套锁，

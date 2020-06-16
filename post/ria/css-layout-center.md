@@ -69,17 +69,16 @@ private: true
         <div style="background:blue">center</div>
     </div>
 
-## item center(inner center)
+## flex center(inner center)
 ### flex container: item center
 one: flex 
 
     display: flex
-    justify-content: center; /*vertical*/
-    align-items: center; 
+    align-items: center; /*vertical*/
+    justify-content: center; /*horizontal*/
 
-    height: 100px;
-	align-content: 与justify-content属性类似。只是多行生效。
-
+    align-content: center; /*替代align-items, 合并多行*/
+    flex-wrap: wrap; /*align-items 失效*/
 
 居中:
 

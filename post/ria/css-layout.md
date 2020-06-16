@@ -179,7 +179,7 @@ http://www.ruanyifeng.com/blog/2018/10/flexbox-form.html 参考
             为1，当空间不足时，都将等比例缩小
             为0，其他项目都为1，则空间不足时，前者不缩小。
         flex-basis（伸缩基准值）这个三个属性的缩写写. 默认auto, 可以是百分比30%/30px
-            定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小dd
+            定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小
     [align-self] （高度对齐）用来在单独的伸缩项目上覆写默认的对齐方式，这个属性是用来覆盖伸缩容器属性
         align-self: auto | flex-start | flex-end | center | baseline | stretch
 
@@ -212,6 +212,20 @@ http://zh.learnlayout.com/flexbox.html
 	display:flex;
 	align-items: center;
 	justify-content: center;
+
+    align-items - 控制交叉轴（纵轴）上所有 flex 项目的对齐。
+    align-content - 控制“多条主轴”的 flex 项目在交叉轴的对齐。(flex-warp:wrap)
+    justify-content - 控制主轴（横轴）上所有 flex 项目的对齐。
+
+单个item
+
+    align-self - 控制交叉轴（纵轴）上的单个 flex 项目的对齐。继承align-items
+
+Note: align-content 有两个作用：
+1. 合并多行为一个整体, 也就必须有`flex-wrap:wrap` 
+2. 替代align-items 控制整体的垂直居中
+
+[对齐弹性容器中的弹性项目](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container#%E8%BD%B4%E5%AF%B9%E9%BD%90%E5%86%85%E5%AE%B9%E2%80%94%E2%80%94_align-content%E5%B1%9E%E6%80%A7)
 
 ## flex 被子div 放大
 
