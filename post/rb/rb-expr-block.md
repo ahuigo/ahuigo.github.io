@@ -16,6 +16,10 @@ block 形式：`{}`或者 `do ...end`两种
         statement2
     end
 
+## block vs dict
+    p {k:1} #block
+    p ({k:1}) #dict
+
 ## BEGIN/END 初始语句
 
     END {

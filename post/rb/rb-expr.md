@@ -98,6 +98,15 @@ private: true
 
     if a == 4 then a = 7 end
 
+## break next
+
+    for i in 0..5
+        if i < 2
+            next
+        end
+        puts "Value of local variable is #{i}"
+    end
+
 ## code if
     code if condition
     code while condition

@@ -2,11 +2,46 @@
 title: Postgre CRUD
 date: 2018-09-27
 ---
-# Postgre CRUD
+# Postgre meta
 ## string or keyword
     select 'string';
     select "count"(1) from "table_name"
 
+## find foreign keys
+查找使用users为外键foreign key的表
+
+    select R.table_name,R.column_name,U.column_name as id
+    from INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE u
+    inner join INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS FK
+        on U.CONSTRAINT_CATALOG = FK.UNIQUE_CONSTRAINT_CATALOG
+        and U.CONSTRAINT_SCHEMA = FK.UNIQUE_CONSTRAINT_SCHEMA
+        and U.CONSTRAINT_NAME = FK.UNIQUE_CONSTRAINT_NAME
+    inner join INFORMATION_SCHEMA.KEY_COLUMN_USAGE R
+        ON R.CONSTRAINT_CATALOG = FK.CONSTRAINT_CATALOG
+        AND R.CONSTRAINT_SCHEMA = FK.CONSTRAINT_SCHEMA
+        AND R.CONSTRAINT_NAME = FK.CONSTRAINT_NAME
+    where U.TABLE_NAME = 'users'
+
+## select primary key
+refer: https://dataedo.com/kb/query/postgresql/list-all-primary-keys-and-their-columns
+
+    select kcu.column_name as pk
+    from information_schema.table_constraints tco
+    join information_schema.key_column_usage kcu
+        on kcu.constraint_name = tco.constraint_name
+        and kcu.constraint_schema = tco.constraint_schema
+        and kcu.constraint_name = tco.constraint_name
+    where tco.constraint_type = 'PRIMARY KEY' and kcu.table_name='oauth_tokens';
+
+说明：
+
+    table_schema - PK schema name
+    table_name - PK table name
+    constraint_name - PK constraint name
+    position - index of column in table (1, 2, ...). 2 or higher means key is composite (contains more than one column)
+    key_column - PK column name
+
+# crud
 ## insert 
     CREATE TABLE users (id INT, counters JSONB NOT NULL DEFAULT '{}');
     INSERT INTO users (id, counters) VALUES (1, '{"bar": 10}');

@@ -171,6 +171,11 @@ padding 4 'good' elelement
         puts i
     end
 
+### for in
+
+    for i in [1,2,3] do
+    end
+
 #### each
     arr.each do |i|
         puts i
@@ -268,6 +273,9 @@ while if 是一体的，下面的代码片段从标准输入打印行，其中�
     (0..9).each do |n|
         print n, ' '
     end
+
+    //or
+    (0..9).each {|n| p n; break}
 
 或者：
 

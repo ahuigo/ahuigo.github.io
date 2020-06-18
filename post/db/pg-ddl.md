@@ -5,7 +5,7 @@ private:
 ---
 # shell
 
-## connect shell
+## connect pg
 首次安装后，默认数据库是postgres
 
     psql postgres
@@ -29,11 +29,7 @@ private:
 e.g.
 
     psql postgresql://
-    psql postgresql://localhost
-    psql postgresql://localhost:5433
-    psql postgresql://localhost/mydb
-    psql postgresql://user@localhost
-    psql postgresql://user:secret@localhost
+    psql postgresql://user:secret@localhost:5432/mydb
     psql postgresql://other@localhost/otherdb?connect_timeout=10&application_name=myapp
     psql postgresql://host1:123,host2:456/somedb?target_session_attrs=any&application_name=myapp
 

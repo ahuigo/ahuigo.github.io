@@ -84,6 +84,7 @@ Shortcuts:
 	http.request.method=="GET",   只显示HTTP GET方法的。
 	http.host=="ahuigo.github.io"
 	http.host==ahuigo.github.io
+	http.host==ahuigo.github.io:81
 
 5. 逻辑运算符为 and or
 

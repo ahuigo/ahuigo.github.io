@@ -24,12 +24,18 @@ URI 默认内置, cgi/erb 不是内置的
     uri.path
 
 ### query:
+    require 'rack'
+
+parse query via URI
+
     Rack::Utils.parse_query URI("http://example.com?par=hello&par2=bye").query
     { "par" => "hello", "par2" => "bye" } 
 
-    Rack::Utils.build_query URI("http://example.com?par=hello&par2=bye").query
+build query
 
-parse query
+    Rack::Utils.build_query ({k:'中',k2:2})
+
+parse query via cgi
 
     require 'cgi'
     CGI::parse('param1=value1&param2=value2&param3=value3')

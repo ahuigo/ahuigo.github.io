@@ -20,7 +20,7 @@ private: true
 
     line1 = "Cats are smarter than dogs";
     
-    if ( line1 =~ /Cats(.*)/ )
+    if  line1 =~ /Cats(.*)/ 
         puts "Line1 contains Cats"
     end
 
@@ -31,3 +31,10 @@ private: true
 
 ## match
     name = 'name=hilo'.match(/name=(.+)/)[1]
+
+
+# glob
+ruby 的`*`表示实际代表`**`多个目录
+
+    File.fnmatch("/foo/*/c", "/foo/ab/c/c")
+    // true

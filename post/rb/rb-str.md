@@ -33,11 +33,13 @@ private: true
     print <<EOF
         这是第一种方式创建here document 。
         多行字符串。
+        #{var}
     EOF
 
     print <<"EOF";                # 与上面相同
         这是第二种方式创建here document 。
         多行字符串。
+        #{var}
     EOF
 
     print <<`EOC`                 # 执行命令

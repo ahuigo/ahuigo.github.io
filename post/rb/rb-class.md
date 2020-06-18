@@ -235,6 +235,25 @@ e.g.
     # 使用访问器方法
     p box.getWidth()
 
+### include vs extend
+1. `include`: methods are imported as `instance methods`.
+1. `extend` methods are imported as `class methods`.
+
+For example 
+
+    module Module_test
+        def func
+            puts "M - in module"
+        end
+    end
+
+Now, for include module. 
+
+    class A
+        include Module_test
+    end
+    A.new.func
+
 ## 类生命周期
     class Foo
         p "1. before new instance....."

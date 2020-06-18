@@ -17,7 +17,13 @@ private: true
     end
 
 ## request
-get and  post
+### request url
+    "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
+    request.original_url # => "http://www.example.com/articles?page=2"
+    request.fullpath    #=> /path?a=1
+    request.method
+
+### get and  post
 
     params[:name]
 

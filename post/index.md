@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-10-04 [python virtualenv](/b/py/py-test-virtualenv) 
+- 2018-09-28 [wireshark](/b/net/net-sniffer-wireshark) 
 - 2020-06-16 [python thread 线程笔记](/b/py/py-thread) 
 - 2020-06-09 [tcpdump](/b/net/net-tcpdump) 
 - 2018-09-27 [数据库CAP 理论 与事务](/b/arch/arch-cap) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
 - 2016-09-27 [golang pkg 开发包](/b/go/go-pkg-dev) 
 - 2018-09-27 [系统调用](/b/go/go-os) 
-- 2018-09-27 [go-test](/b/go/15.go-test) 
-- 2019-09-21 [Go log](/b/go/go-log) 

@@ -111,6 +111,7 @@ build参数可以指定dockerfile、构建文件工作区context路径
 ### container_name
     container_name: 'ant-design-pro_dev'
 
+
 # 操作
 compose 有很多命令，
 
@@ -176,11 +177,59 @@ multi command:
 
 
 
-# exec
+## exec
 exec with root: 
 
     docker-compose -f docker-compose.yml exec -u root webserver \
         ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+## run 
+### run env
+https://docs.docker.com/compose/environment-variables/#set-environment-variables-with-docker-compose-run
+
+直接用run
+
+    docker-compose run -e DEBUG=1 web python console.py
+
+或者：
+
+    web:
+      environment:
+        - DEBUG=1
+
+或者用`docker run --env-file=FILE ...`
+
+    web:
+      env_file:
+        - web-variables.env
+
+或者用`.env`
+
+    $ cat .env
+    TAG=v1.5
+
+    $ cat docker-compose.yml
+    version: '3'
+    services:
+      web:
+        image: "webapp:${TAG}"
+
+然后检查配置
+
+    $ docker-compose config
+    version: '3'
+    services:
+      web:
+        image: 'webapp:v1.5'
+
+环境变量的优化级
+
+    Compose file (.env)
+    Shell environment variables
+    Environment file
+    Dockerfile
+    Variable is not defined
+
 
 # 网络
 Compose会为我们的app 创建一个网络，服务的每个容器都会加入该网络中.

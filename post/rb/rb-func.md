@@ -4,6 +4,7 @@ date: 2020-03-03
 private: 
 ---
 # Ruby function
+## default arguments
     def method_name [( [arg [= default]]...[, * arg [, &expr ]])]
         expr..
         [return] val

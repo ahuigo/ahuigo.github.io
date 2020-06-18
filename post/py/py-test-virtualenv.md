@@ -5,11 +5,23 @@ category: blog
 description: 
 date: 2018-10-04
 ---
-# virtualenv
-本文介绍两种python 虚拟环境
+# python env
+本文介绍数种python 虚拟环境
 - virtualenv 提供了 Python 虚拟环境的隔离，但是命令复杂，目录的管理也比较混乱，
 - VirtualEnvWrapper 基于它提供了更简易的命令和操作。
+- venv, python3 自带，类似于virtualenv
+# venv
+    python3 -m venv blog_dir
+    #不带pip
+    pyvenv --without-pip blog_dir
 
+使用：
+
+    $ . blog_dir/bin/activate
+    (blog_pyenv) ➜ umi3$ git:(dev) ✗ 
+    $ deactivate   
+
+# virtualenv
 ## install
 
 首先，我们用pip安装virtualenv：

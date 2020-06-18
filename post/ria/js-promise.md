@@ -2,6 +2,26 @@
 title: JS Promise
 date: 2018-10-04
 ---
+# promise 执行顺序
+macrotasks: setTimeout, setInterval, setImmediate, I/O, UI rendering
+microtasks: process.nextTick, Promise, MutationObserver
+
+一个事件循环中只有一个macrotask任务，可以有一个或多个microtask任务。
+
+    setTimeout(()=>{
+        console.log(5)
+    },0)
+    new Promise((resolve, reject)=>{
+        console.log(1)
+        for(let i=0;i<1e4;i++){
+            i==999 && resolve()
+        }
+        console.log(2)
+    }).then(()=>{
+        console.log(4)
+    })
+    console.log(3)
+
 # 递归promise
 Promise 是递归的，Reject 不是
 
