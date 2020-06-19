@@ -40,6 +40,10 @@ private: true
 ### where
     .where('name LIKE :name OR email LIKE :name OR postcode LIKE :name', :name => t)
 
+## update
+    user = User.find_by(name: 'David')
+    user.update(name: 'Dave')
+
 ## save
     if not user.save
         logger.error 'save error'

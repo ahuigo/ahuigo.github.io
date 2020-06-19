@@ -4,24 +4,69 @@ date: 2020-06-18
 private: true
 ---
 # ldap
-## 条目
+## todo
+理解ldap
+https://blog.zhaogaz.com/post/2019/ldap-something.html
+
+1. ldap 目录是一个树形结构。
+2. 每一个节点entry, 名为DN, DN是可编辑修改的，不变的是EntryUUID
+    1. BIND DN （连接director server需要用到的认证用户名，一般还需要密码
+    1. Base DN: 含义是搜索的起点DN。配置了之后，就会搜索这个DN以下的节点。
+    2. 附加用户DN：这个位置配置的是filter，含义是筛出所有人员的节点
+## 属性
+每个entry有很多attributes,
+1. 普通属性： 如姓名、email
+2. 特别属性： object class，这个东西会描述节点的schema 也就是说这个节点中能有什么属性，不能有什么属性，这都是object class说了算的。
+3. LDAP还可以保存用户加密过的密码。经常它作为账号服务器，像什么Rancher啊、Jira啊
+    1. 表示人员的 Entry 常用inetOrgPerson 、person 这类object class。部门也有部门的object class
+
+openldap 修改某人的密码：
+
+    ldappasswd -H ldap://server_domain_or_IP -x -D "user's_dn" -w old_passwd -a old_passwd -S
+
+
+## 条目与Directory structure
+https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol#History
+
+LDAP目录的条目（entry）由属性（attribute）的一个聚集组成
 dn：每一个条目都有一个唯一的标识名（distinguished Name ，DN），如dn：”cn=baby,ou=marketing,ou=people,dc=mydomain,dc=org” 。通过DN的层次型语法结构，可以方便地表示出条目在LDAP树中的位置，通常用于检索。
 
-rdn：一般指dn逗号最左边的部分，如cn=baby。它与RootDN不同，RootDN通常与RootPW同时出现，特指管理LDAP中信息的最高权限用户。
+            dc=org
+        |dc=wikipedia
+        /          \
+    ou=people     ou=groups
 
-Base DN：LDAP目录树的最顶部就是根，也就是所谓的“Base DN”，如”dc=mydomain,dc=org”。
+dn种类有很多，从目标结构层次上分：
+1. rdn：一般指dn逗号最左边的部分，如cn=baby
+2. Base DN：LDAP目录树的最顶部就是根，也就是所谓的“Base DN”，如”dc=mydomain,dc=org”. is the DN of the parent entry,
 
-## 属性 Attribute
-每个条目都可以有很多属性（Attribute），比如常见的人都有姓名、地址、电话等属性。每个属性都有名称及对应的值，属性值可以有单个、多个，比如你有多个邮箱。
+从功能上，可以定义很多DN
+1. 部门表 dn
+1. 员工表 dn
+1. user's dn
+3. ....
 
-属性不是随便定义的，需要符合一定的规则，而这个规则可以通过schema制定。比如，如果一个entry没有包含在 inetorgperson 这个 schema 中的 objectClass: inetOrgPerson ,那么就不能为它指定employeeNumber属性，因为employeeNumber是在inetOrgPerson中定义的。
+An entry can look like this when represented in LDAP Data Interchange Format (LDIF) (LDAP itself is a binary protocol):
 
-LDAP为人员组织机构中常见的对象都设计了属性(比如commonName，surname)。下面有一些常用的别名：
+    dn: cn=John Doe,dc=example,dc=com
+    cn: John Doe
+    givenName: John
+    sn: Doe
+    telephoneNumber: +1 888 555 6789
+    telephoneNumber: +1 888 555 1232
+    mail: john@example.com
+    manager: cn=Barbara Doe,dc=example,dc=com
+    objectClass: inetOrgPerson
+    objectClass: organizationalPerson
+    objectClass: person
+    objectClass: top
 
-属性	语法	描述	值(举例)
-cn	Directory String	姓名	sean
-sn	Directory String	姓	Chow
-ou	Directory String	单位（部门）名称	IT_SECTION
-o	Directory String	组织（公司）名称	example
-telephoneNumber	Telephone Number	电话号码	110
-objectClass	 	内置属性	organizationalPerson
+## LDAP 连接协议
+LDAP 使用tcp连接
+
+这个协议的核心目的是访问目录的，所以这个协议 有一些操作 Entry 的方法（add delete modify modifyDN） 
+还有连接到指定LDAP服务器的方法（bind、unbind）当然了还有几种搜索方式。
+
+比方说如果用Jira配置了LDAP，Jira就会链接LDAP服务器查找特定的人，验证账号密码是否正确。
+
+关于查询我需要再说一下，LDAP查询有一种filter方式，可以通过特定的语法筛出想要的东西。当然了语法是什么不重要。

@@ -46,6 +46,10 @@ build_middleware_stack 是 app的别名. 它会生成实例`@app`
 这个build 最后会返回 YourProject::Application.routes，也就是 rails middleware 这个指令输出的最后一个所谓的中间件
 
 # 中间件
+1. 写中间件
+https://ieftimov.com/post/writing-rails-middleware/
+2. 参考openstreetmap config/initializers/cors.rb
+
 可以通过下述任意一种方法向中间件栈里添加中间件： https://ruby-china.github.io/rails-guides/rails_on_rack.html
 
     config.middleware.use(new_middleware, args)：在中间件栈的末尾添加一个中间件。
