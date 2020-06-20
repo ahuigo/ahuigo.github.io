@@ -1,12 +1,11 @@
 ---
 layout: page
-title:	test
+title: 压测工具
 category: blog
 description: 
 ---
 # Preface
-
-性能/压力测试的内涵：
+性能/压力测试的分类：
 
 	基准/基线测试 base line testing / benchmark testing
 	负载测试 load testing
@@ -22,7 +21,14 @@ description:
 	服务器资源：从系统角度
 	吞吐量：从业务角度
 
-推荐的测试工具：
+
+# stress testing(压力测试)
+压力测试的工具有
+
+    ab/siege/wrk/webbench: web server
+    sysbench: mysql,mssql(TPS, Transactions Per Second)
+
+有很多不错的压测工作
 - boom
 https://github.com/rakyll/boom
 HTTP(S) load generator, ApacheBench (ab) replacement, written in Go
@@ -38,13 +44,6 @@ Fast multi-core TCP and WebSockets load generator.
 - gor
 https://github.com/buger/gor
 HTTP traffic replay in real-time. Replay traffic from production to staging and dev environments.
-
-# stress testing(压力测试)
-
-压力测试的工具有
-
-ab/siege/wrk/webbench: web server
-sysbench: mysql,mssql(TPS, Transactions Per Second)
 
 压力测试的指标
 
@@ -88,7 +87,7 @@ https://github.com/machinezone/tcpkali
 Fast multi-core TCP and WebSockets load generator.
 
 ## tcpcopy 压测
-或者用 gor
+或者用 gor:
 gor 已经上线的 远程api 回调 ,调试的时候直接把流量复制到本地方便测试
 
 ## siege
@@ -137,7 +136,7 @@ Refer: [tcp-ip](/p/tcp-ip)
 	sysctl net.ipv4.tcp_tw_recycle=1 # 表示开启TCP连接中TIME-WAIT sockets的快速回收
 
 ## vegeta(golang版本)
-压测工具
+vegeta 是golang 写的压测工具
 
 ## ab ApacheBench 
 

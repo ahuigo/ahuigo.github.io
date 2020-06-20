@@ -1,7 +1,7 @@
 # AHUIGO 的笔记
 - 2018-10-04 [python virtualenv](/b/py/py-test-virtualenv) 
 - 2018-09-28 [wireshark](/b/net/net-sniffer-wireshark) 
-- 2020-06-16 [python thread 线程笔记](/b/py/py-thread) 
+- 2018-09-20 [python thread 线程笔记](/b/py/py-thread) 
 - 2020-06-09 [tcpdump](/b/net/net-tcpdump) 
 - 2018-09-27 [数据库CAP 理论 与事务](/b/arch/arch-cap) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 

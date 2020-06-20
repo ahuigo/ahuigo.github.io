@@ -2,6 +2,7 @@
 layout: page
 title: python thread 线程笔记
 category: blog
+date: 2018-09-20
 description:
 ---
 # threading

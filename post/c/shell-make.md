@@ -278,4 +278,4 @@ patsubst 函数用于模式匹配的替换，格式如下。
 
     filename = a.js
     min: 
-        echo $(filename:.js=.min.js)
+        echo $(filename:.js=.min.js )
