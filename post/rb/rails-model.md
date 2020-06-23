@@ -36,7 +36,6 @@ private: true
       puts "o: #{o.inspect}"
     end
 
-
 ### where
     .where('name LIKE :name OR email LIKE :name OR postcode LIKE :name', :name => t)
 

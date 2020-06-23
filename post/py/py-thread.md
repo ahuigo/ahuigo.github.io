@@ -114,16 +114,16 @@ mutex:
 
 在c语言里面就是用的futex
 
-## close thread: via thread.Event
-via a threadsafe threading.Event():
-1. 利用e.wait() until e.set():
+## 关闭 thread的方法: thread.Event
+可以通过threading.Event() 以线程安全的方式关闭线程:
+1.利用e.wait() until e.set():
 
     e = threading.Event()
     while not e.wait(0.5): # wait 会阻塞0.5秒
         time.sleep(1)
     print('end')
 
-2. 利用e.is_set() until e.clear():
+2.利用e.is_set() until e.clear():
 
     e = threading.Event()
     e.set()
@@ -139,7 +139,7 @@ via a threadsafe threading.Event():
     e.clear()
     thread.join()
 
-3. close via thread attr:
+3.close via thread attr:
 
     def loop():
         t = threading.currentThread()

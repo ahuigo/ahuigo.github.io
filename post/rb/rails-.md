@@ -65,10 +65,15 @@ get/set session:
 ## response
       response.headers["WWW-Authenticate"] = "Basic realm=\"#{realm}\""
       render :plain => errormessage, :status => :unauthorized  #401
+      render :plain => errormessage, :status => 401   #401
 
 json
 
-    render :json => data
+    render :json => data, :status=>202
+
+tmpl:
+
+    render(:file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false)
 
 ### redirect
 redirect
