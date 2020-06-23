@@ -63,17 +63,6 @@ Python的threading模块有个current_thread()函数，它永远返回当前线�
 threading.current_thread().ident
 threading.current_thread().name
 
-## 变量的线程不安全
-因为有些操作的字节码 不是原子性的
-
-    n = 1
-    def foo:
-        global n
-        n+=1 # 不是原子的
-
-    import dis
-    dis..(foo) //多个字节码，不是原子的
-
 ## lock thread
 如果线程要修改全局变量，为防collision 冲突，可以加lock
 1. Rlock(),允许多重嵌套锁，
@@ -151,8 +140,8 @@ mutex:
     thread = threading.Thread(target=loop, args=(running,))
     thread.do_run = False
 
-## thread isAlive
-thread.start() 后为true
+## 线程状态 isAlive
+thread.start() 后isAlive为true
 
     thread.isAlive()
 
@@ -267,14 +256,47 @@ sleep 线程级的，只会停止当前线程: 在waiter sleep时，worken继续
         worker().start()
         waiter().start()
 
+# Stop Thread
+参考：
+https://stackoverflow.com/questions/38857379/stopping-processes-in-threadpool-in-python
+
+    procs = []  # this is not a Pool
+    for _ in range(4):
+        p = mp.Process(target=some_long_task_from_library, args=(1000,))
+        p.start()
+        procs.append(p)
+    mp.active_children()   # this joins all the started processes, and runs them.
+
+当异常发生时，停止所有的线程
+
+    try:
+        do_other_stuff_for_a_bit()
+    except MyException as exc:
+        print(exc)
+        print("Now stopping all processes...")
+        for p in procs:
+            p.terminate()
+    print("The rest of the process will continue")
 
 # share variable
+## 共享变量的方式
 1. 通过thread attr:
     t = Thread(...)
     t.a = 2;
     threading.current_thread().a
 2. 通过dict[thread_key]
 3. 通过queue
+
+## 一个线程不安全的case
+因为有些操作的字节码 不是原子性的
+
+    n = 1
+    def foo:
+        global n
+        n+=1 # 不是原子的
+
+    import dis
+    dis..(foo) //多个字节码，不是原子的
 
 
 ## ThreadLocal
