@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [shell color](/b/c/shell-color) 
 - 2018-10-04 [python virtualenv](/b/py/py-test-virtualenv) 
 - 2018-09-28 [wireshark](/b/net/net-sniffer-wireshark) 
 - 2018-09-20 [python thread 线程笔记](/b/py/py-thread) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [Postgre 安装\配置\管理](/b/db/pg-ddl-install) 
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
 - 2016-09-27 [golang pkg 开发包](/b/go/go-pkg-dev) 
-- 2018-09-27 [系统调用](/b/go/go-os) 

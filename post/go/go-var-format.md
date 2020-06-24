@@ -3,7 +3,15 @@ title: go str html
 date: 2020-03-31
 private: true
 ---
-# go print
+# print tool
+- fmt.Println : space, with newline
+- fmt.Print : without newline
+- fmt.Printf : format
+
+另外还有，内置的标准错误输出(print to stderr):
+1. print      prints all arguments; formatting of arguments is implementation-specific
+2. println    like print but prints spaces between arguments and a newline at the end
+
 ## println, print
 stderr
 
@@ -25,6 +33,7 @@ any type:
 	fmt.Printf("%v %v %v %q\n", i, f, b, s)
         0 0 false ""
 
+## Print raw,type
 https://gobyexample.com/string-formatting
 
     %T type
@@ -38,16 +47,7 @@ https://gobyexample.com/string-formatting
     var slice=[]int{0}
     fmt.Printf("%p", slice)
 
-# fmt
-## .Sprint any type
-    i := 23
-    s := fmt.Sprint("[age:", i, "]") 
-        // s will be "[age:23]"
-
-    s := fmt.Sprint("[age:",true, i,[]int{4,5},  "]") 
-        [age:true 23 [4 5]]
-
-
+# fmt print
 ## Print string
 > see go-fmt
 1. `printf` is equivalent to writing `fprintf(stdout, ...)` and writes formatted text to `standard output stream`
@@ -65,51 +65,6 @@ quoted string as go syntax
     fmt.Printf("%+q\n", "中\x00sample")
     //"\u4e2d\x00sample"
 
-#  text/template and html/template. 
-html/template is for generating HTML output safe against code injection. 
-
-template + data:
-
-    const emailTmpl = `Hi {{.Name}}!
-    Your account is ready, your user name is: {{.UserName}}
-
-    You have the following roles assigned:
-    {{range $i, $r := .Roles}}{{if $i}}, {{end}}{{.}}{{end}}
-    `
-
-    data := map[string]interface{}{
-        "Name":     "Bob",
-        "UserName": "bob92",
-        "Roles":    []string{"dbteam", "uiteam", "tester"},
-    }
-
- Executing the template and getting the result as string:
-
-    t := template.Must(template.New("email").Parse(emailTmpl))
-    buf := &bytes.Buffer{}
-    if err := t.Execute(buf, data); err != nil {
-        panic(err)
-    }
-    s := buf.String()
-
-write to `os.Stdout`
-
-    t := template.Must(template.New("email").Parse(emailTmpl))
-    if err := t.Execute(os.Stdout, data); err != nil {
-        panic(err)
-    }
-
-full example: go-lib/str/format.go
-
-# fmt
-## print tool
-- fmt.Println : space, with newline
-- fmt.Print : without newline
-- fmt.Printf : format
-
-标准错误输出(print to stderr):
-1. print      prints all arguments; formatting of arguments is implementation-specific
-2. println    like print but prints spaces between arguments and a newline at the end
 
 ## Printf
 
@@ -182,6 +137,15 @@ Other flags:
 	0	pad with leading zeros rather than spaces;(e.g. '003')
 		for numbers, this moves the padding after the sign
 
+# fmt Scan
+## .Sprint any type
+    i := 23
+    s := fmt.Sprint("[age:", i, "]") 
+        // s will be "[age:23]"
+
+    s := fmt.Sprint("[age:",true, i,[]int{4,5},  "]") 
+        [age:true 23 [4 5]]
+
 ## Scanf, parse format
 ## Scanln
 
@@ -195,3 +159,40 @@ Other flags:
   var i byte = 1
   var s:= fmt.Sprintf("%d",i)
   fmt.Print(s)
+
+# String format
+##  text/template and html/template. 
+html/template is for generating HTML output safe against code injection. 
+
+template + data:
+
+    const emailTmpl = `Hi {{.Name}}!
+    Your account is ready, your user name is: {{.UserName}}
+
+    You have the following roles assigned:
+    {{range $i, $r := .Roles}}{{if $i}}, {{end}}{{.}}{{end}}
+    `
+
+    data := map[string]interface{}{
+        "Name":     "Bob",
+        "UserName": "bob92",
+        "Roles":    []string{"dbteam", "uiteam", "tester"},
+    }
+
+ Executing the template and getting the result as string:
+
+    t := template.Must(template.New("email").Parse(emailTmpl))
+    buf := &bytes.Buffer{}
+    if err := t.Execute(buf, data); err != nil {
+        panic(err)
+    }
+    s := buf.String()
+
+write to `os.Stdout`
+
+    t := template.Must(template.New("email").Parse(emailTmpl))
+    if err := t.Execute(os.Stdout, data); err != nil {
+        panic(err)
+    }
+
+full example: go-lib/str/format.go

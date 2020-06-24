@@ -22,7 +22,7 @@ http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
     print(bcolors.WARNING + "Warning: xxxx" + bcolors.ENDC)
     for i in range(120): print(f'\033[{i}m'+f'中国{i}'+'\033[0m')    
 
-## color codes
+## color codes 语法
 
     "\033"+color_code
 
@@ -32,6 +32,7 @@ http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
     RESET_SEQ = "\033[0m"
 
 ### mix color codes
+混合color 语法
 
     "\033[1;33m"
     "\033[1;33;45m"
