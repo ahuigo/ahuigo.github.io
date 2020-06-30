@@ -11,6 +11,24 @@ date: 2018-03-01
 
 # 条件和循环
 
+## 多层循环平铺 product
+
+    list1 = range(1,3)
+    list2 = range(4,6)
+    list3 = range(7,9)
+    for item1 in list1:
+        for item2 in list2:
+            for item3 in list3:
+                print(item1+item2+item3)
+
+作者：王炳明 链接：https://zhuanlan.zhihu.com/p/148843667
+
+    list1 = range(1,3)
+    list2 = range(4,6)
+    list3 = range(7,9)
+    for item1,item2,item3 in product(list1, list2, list3):
+        print(item1+item2+item3)
+
 ## try finnaly
 
     try:

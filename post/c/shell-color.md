@@ -22,6 +22,10 @@ http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
     print(bcolors.WARNING + "Warning: xxxx" + bcolors.ENDC)
     for i in range(120): print(f'\033[{i}m'+f'中国{i}'+'\033[0m')    
 
+## js color
+    console.log('%c str1 %c str2', 'css1','css2');
+    console.log('%c haha! ', 'background: #222; color: #bada55');
+
 ## color codes 语法
 
     "\033"+color_code

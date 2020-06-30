@@ -138,6 +138,45 @@ Refer: [tcp-ip](/p/tcp-ip)
 ## vegeta(golang版本)
 vegeta 是golang 写的压测工具
 
+### 固定请求
+
+    jq -ncM '{method: "POST", url: "http://baidu.com/", body: {key:"IDLE"} | @base64 }' \
+    | vegeta attack -format=json -rate=6000 -duration=60s > result.data-collection.6000qps.60s.bin;
+
+vegeta attack 参数：
+
+    -format 接收请求信息的格式，这里使用 jq 输出的 json
+    -rate 每秒请求数
+    -duration 压测持续时间。0代表一直执行。
+    > 输出文件是二进制格式。
+
+### 变化请求
+
+    jq -ncM 'while(true; .+1) | {method: "POST", url: "http://dev-data-collection-inner.hdmap.momenta.works:32000/api/v1/gps", body: {"box_id":("stress-test-"+(.|tostring)),"unix_time":1549878773321,"lon":116.1824618,"lat":39.8726543,"alt":37.5,"fix_quality":4,"sate_num":12,"hdop":0.9,"status":"IDLE","image_status":"IDLE"} | @base64 }' | vegeta attack -format=json -rate=6000 -lazy -duration=60s > result.data-collection.6000qps.60s.gen.bin;
+
+    vegeta report result.data-collection.6000qps.60s.gen.bin | head -n 10;
+
+以上脚本的解释：
+
+jq：
+
+while(true; .+1) 生成自增ID
+("stress-test-"+(.|tostring)) 将整数ID转为string并加上前缀
+vegeta report：
+
+分析attack的二进制输出，生成报告。
+head -n 10 报告会输出大量的去重后的错误响应，只看前10行即可。
+
+
+vegeta plot result.key.200qps.60s.bin > result.key.200qps.60s.html
+vegeta plot：
+
+生成 html 格式的折线图，使用浏览器打开文件。
+
+横轴是压测时刻，从0到duration。纵轴是滑窗内的平均响应时间，滑窗大小可以在左下角的小输入框里修改。
+
+用鼠标点击并拖动可以选择一个时间区间，放大局部。再双击即可返回。
+
 ## ab ApacheBench 
 
     yum install httpd-tools

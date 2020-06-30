@@ -23,6 +23,9 @@ map
         "k2":"b",
     })
 
+### prettify json
+    data, _ := json.MarshalIndent("hahaha", "", "    ")
+
 ### encode stdout
     enc := json.NewEncoder(os.Stdout)
     d := map[string]int{"apple": 5, "lettuce": 7}

@@ -66,8 +66,11 @@ parse query via cgi
 
 ## post
 ### form
+    //require 'net/http'
+
     uri = URI('https://bearer.sh')
     response = Net::HTTP.post_form(uri, 'q' => 'Bearer')
+    response = Net::HTTP.post_form(uri, {q:'Bearer'})
     puts response.code, response.body
 
 # Faraday

@@ -16,6 +16,9 @@ Ruby支持的数据类型包括基本的Number、String、Ranges、Symbols，以
     '0.3'.to_r  # 3/10
     '1.1e5'.to_c  # 复数：(110000.0+0i)
 
+    def true?(obj)
+        obj.to_s.downcase == "true"
+    end
 
 ## 类型检测
 通用meta 信息

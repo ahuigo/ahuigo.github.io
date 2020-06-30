@@ -51,6 +51,8 @@ until
 1. 条件以右括号结尾,*左括号可省略*;
 2. 每个条件判断语句块都以一对分号结尾";;"
 
+e.g.
+
 	case "$string" in
 		(*$SUBSTRING*) echo "$string matches";;
 		(*)            echo "$string does not match substring";;

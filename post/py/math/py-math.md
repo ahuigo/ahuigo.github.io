@@ -99,7 +99,6 @@ https://docs.python.org/3.2/library/math.html
     math.log10(x)¶
     math.sqrt(x)¶
 
-
 ## math operator
 
 	print x**2; # x^2

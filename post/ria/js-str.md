@@ -35,7 +35,7 @@ raw 只解析 `$`
     '3'
 
 ### charcode(unicode)
-length/slice/substr/都是基于字符的
+length/slice/substr/都是基于字符的
 
 	'中'.charAt(0) str[pos=0]
         '中'
@@ -92,9 +92,10 @@ str vs base64 buffer
 
 str vs base64 string
 
-    ### node only
+    ### node only: b64encode
     >     Buffer.from('a').toString('base64')
     'YQ=='
+    ### node only: b64decode
     >     Buffer.from('YQ==', 'base64').toString()
     'a'
     ### base64(chrome only) 没有buffer 概念

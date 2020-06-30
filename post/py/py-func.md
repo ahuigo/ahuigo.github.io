@@ -808,6 +808,15 @@ functools.partial就是帮助我们创建一个偏函数的，不需要我们自
 	args = (10, 5, 6, 7)
 	max(*args)
 
+# atexit
+    import atexit
+    atexit.register(func)
+
+atexit 用于退出前执行finally func. 以下情况除外：
+1. 未处理的信号
+2. 调用`os._exit()`
+3. python 内部错误
+
 # lru_cache
 函数名+args为缓存的键值,只缓存最近使用的maxsize 条
 
@@ -822,3 +831,8 @@ functools.partial就是帮助我们创建一个偏函数的，不需要我们自
 
     >>> fib.cache_info()
     CacheInfo(hits=28, misses=16, maxsize=None, currsize=16)
+
+说明
+
+    @functools.lru_cache(maxsize=None, typed=False)
+    typed：若为 True，则不同参数类型的调用将分别缓存。

@@ -67,6 +67,12 @@ clean 命令清：
         rm -r $GOPATH/pkg/mod
 
 ## install
+安装本地包/远程包
+
+    go install .
+    go install github.com/ahuigo/xxx
+
+其它命令
 
 	run         compile and run Go program (no bin)
 	build       compile packages and dependencies(with bin)

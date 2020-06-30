@@ -8,28 +8,7 @@ private:
 ## Specify Makefile
     -f makefile2
 
-## env
-As MadScientist pointed out, you can export individual variables with:
-
-    export MY_VAR = foo  # Available for all targets
-
-Or export variables for a specific target (target-specific variables):
-
-    my-target: export MY_VAR_1 = foo
-    my-target: export MY_VAR_2 = bar
-    my-target: export MY_VAR_3 = baz
-
-    my-target: dependency_1 dependency_2
-        echo do something
-
-You can also specify the `.EXPORT_ALL_VARIABLES` target to EXPORT ALL THE THINGS!!!:(不用加`export`前缀)
-
-    .EXPORT_ALL_VARIABLES:
-    MY_VAR_1 = foo
-    MY_VAR_2 = bar
-    MY_VAR_3 = baz
-
-## variable
+# variable
 ### 定义变量
 变量定义时`=`两边可以有空格，这一点不像shell 那样严格
 
@@ -56,13 +35,37 @@ e.g:
         echo $(x)
         echo ${x}
 
-读取环境变量时，要用`$$`转义，否则make 会解析`$`
+读取环境变量时，要用`$$`转义，否则make 会解析`$` 为自己的变量
 
     echo $$HOME
 
+make 变量有make 的语法，不是由shell 语法，
+
+    LDFLAGS += -X "main.Version=$(shell git rev-parse HEAD)"
+    GO := GO111MODULE=on go
 
 ### 环境变量 variable in shell
-需要一个`$$`转义：
+As MadScientist pointed out, you can export individual variables with:
+
+    export MY_VAR = foo  # Available for all targets
+
+Or export variables for a specific target (target-specific variables):
+
+    my-target: export MY_VAR_1 = foo
+    my-target: export MY_VAR_2 = bar
+    my-target: export MY_VAR_3 = baz
+
+    my-target: dependency_1 dependency_2
+        echo do something
+
+You can also specify the `.EXPORT_ALL_VARIABLES` target to EXPORT ALL THE THINGS!!!:(不用加`export`前缀)
+
+    .EXPORT_ALL_VARIABLES:
+    MY_VAR_1 = foo
+    MY_VAR_2 = bar
+    MY_VAR_3 = baz
+
+使用环境变量需要一个`$$`转义：
 
     main:
         echo $$PATH

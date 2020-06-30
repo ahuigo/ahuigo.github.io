@@ -13,27 +13,26 @@ Go语言主要是通过两个包完成的。一个是os包，一个是syscall包
 ## os.env 环境变量
  包括:
 
-  os.Setenv(k, v)
-  os.Getenv(k) string
-  range os.Environ()
+    os.Setenv(k, v)
+    os.Getenv(k) string
+    range os.Environ()
 
-  _, isExist := os.LookupEnv(key)
+    _, isExist := os.LookupEnv(key)
 
 例子
 
-  import "os"
-  import "strings"
+    import "os"
+    import "strings"
 
-  func main() {
-      os.Setenv("WEB", "http://coolshell.cn") //设置环境变量
-      println(os.Getenv("WEB")) //读出来
+    func main() {
+        os.Setenv("WEB", "http://coolshell.cn") //设置环境变量
+        println(os.Getenv("WEB")) //读出来
 
-      for _, env := range os.Environ() { //穷举环境变量
-          e := strings.Split(env, "=")
-          println(e[0], "=", e[1])
-      }
-  }
-  a_
+        for _, env := range os.Environ() { //穷举环境变量
+            e := strings.Split(env, "=")
+            println(e[0], "=", e[1])
+        }
+    }
 
 ## shell args
 

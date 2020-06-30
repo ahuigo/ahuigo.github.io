@@ -6,6 +6,84 @@ private: true
 # Advanced python requests
 https://findwork.dev/blog/advanced-usage-python-requests-timeouts-retries-hooks/#retry-on-failure
 
+## session cookie
+### Quick Answer
+
+    import requests
+    s = requests.session()
+    # Note that domain keyword parameter is the only optional parameter here
+    cookie_obj = requests.cookies.create_cookie(domain='www.domain.com',name='COOKIE_NAME',value='the cookie works')
+    s.cookies.set_cookie(cookie_obj)
+
+or:
+
+    my_cookie = {
+        "version":0,
+        "name":'COOKIE_NAME',
+        "value":'true',
+        "port":None,
+        # "port_specified":False,
+        "domain":'www.mydomain.com',
+        # "domain_specified":False,
+        # "domain_initial_dot":False,
+        "path":'/',
+        # "path_specified":True,
+        "secure":False,
+        "expires":None,
+        "rest":{},
+        "rfc2109":False
+    }
+
+    s = requests.Session()
+    s.cookies.set(**my_cookie)
+
+### Adding a custom cookie to requests session
+
+    >>> import requests
+    >>> s = requests.session()
+    >>> required_args = {
+            'name':'COOKIE_NAME',
+            'value':'the cookie works'
+        }
+    >>> optional_args = {
+        'version':0,
+        'port':None,
+    #NOTE: If domain is a blank string or not supplied this creates a
+    # "super cookie" that is supplied to all domains.
+        'domain':'www.domain.com',
+        'path':'/',
+        'secure':False,
+        'expires':None,
+        'discard':True,
+        'comment':None,
+        'comment_url':None,
+        'rest':{'HttpOnly': None},
+        'rfc2109':False
+    }
+    >>> my_cookie = requests.cookies.create_cookie(**required_args,**optional_args)
+    # Counter-intuitively, set_cookie _adds_ the cookie to your session object,
+    #  keeping existing cookies in place
+    >>> s.cookies.set_cookie(my_cookie)
+    >>> s.cookies
+
+### Bonus: Lets add a super cookie then delete it
+
+    >>> my_super_cookie = requests.cookies.create_cookie('super','cookie')
+    >>> s.cookies.set_cookie(my_super_cookie)
+
+### delete cookie
+delete by name
+
+    >> s.cookies.set(name="id_token",value="hahah2", domain='httpbin.org')
+    >> del s.cookies['id_token']
+
+delete all
+
+    >>> s.cookies.clear()
+    >>> s.cookies.keys()
+    []
+
+
 ## retry
 
     from requests.adapters import HTTPAdapter

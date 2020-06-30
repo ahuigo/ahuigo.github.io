@@ -10,6 +10,10 @@ conda：跨平台，Python 二进制包管理工具。官网
 Curdling：管理 Python 包的命令行工具。官网
 wheel：Python 分发的新标准，意在取代 eggs。官网
 
+## 查看包路径
+
+    python -c "print('\n'.join(__import__('pkg').file))"
+
 # pip
 
     wget https://bootstrap.pypa.io/get-pip.py -O - | python3
