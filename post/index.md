@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-10-04 [vim-style](/b/vim/vim-style) 
 - 2016-09-27 [go 的变量](/b/go/go-var) 
 - 2018-09-27 [map](/b/go/go-var-map) 
 - 2018-09-27 [make](/b/go/go-var-make) 
@@ -38,4 +39,3 @@
 - 2019-02-14 [查找数组中的第K大的值](/b/algorithm/sort-topk-kth) 
 - 2018-09-26 [动态规划(Dynamic programing, DP)](/b/algorithm/algo-dp) 
 - 2018-10-04 [浏览器同源政策及其规避方法](/b/ria/js-cors) 
-- 2018-09-27 [社保及养老保险](/b/life/life-pension) 

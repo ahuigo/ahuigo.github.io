@@ -21,6 +21,13 @@ carriage return:
 	"显示回车(Carriage Return)
 	:e ++ff=unix
 
+## input carriage return
+    linux/mac: ctrl-v ctrl-m
+    On Windows Use: ctrl-q ctrl-m
+
+Ctrl-V tells vi that the next character typed should be inserted literally 
+ctrl-m is the keystroke for a carriage return
+
 ## expand tabl
 
     :set expandtab
