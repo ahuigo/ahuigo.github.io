@@ -55,7 +55,7 @@ import flag:
     fmt.Println("port:", *port)
     fmt.Println("debug:", *debug)
 
-## exec, 执行命令行
+## exec shell, 执行命令行
 下面是一个比较简单的示例
 
   package main
@@ -93,6 +93,38 @@ import flag:
       }
       fmt.Printf("in all caps: %q\n", out.String())
   }
+
+### pty pipe
+pty is pseudo-terminals, 基于cmd.Stdin/Stdout的封装
+
+    import (
+        "github.com/creack/pty"
+        "io"
+        "os"
+        "os/exec"
+    )
+
+    func main() {
+        c := exec.Command("grep", "--color=auto", "bar")
+        f, err := pty.Start(c)
+        if err != nil {
+            panic(err)
+        }
+
+        go func() {
+            f.Write([]byte("foo\n"))
+            f.Write([]byte("bar\n"))
+            f.Write([]byte("baz\n"))
+            f.Write([]byte{4}) // EOT
+        }()
+        io.Copy(os.Stdout, f)
+    }
+
+pty的关闭
+
+    f.Close()
+
+pty 启动bash: go-lib/shell/bash.go
 
 # runtime
 

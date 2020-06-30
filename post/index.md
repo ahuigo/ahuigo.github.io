@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2016-09-27 [go 的变量](/b/go/go-var) 
+- 2018-09-27 [map](/b/go/go-var-map) 
+- 2018-09-27 [make](/b/go/go-var-make) 
 - 2018-09-27 [shell color](/b/c/shell-color) 
 - 2018-10-04 [python virtualenv](/b/py/py-test-virtualenv) 
 - 2018-09-28 [wireshark](/b/net/net-sniffer-wireshark) 
@@ -36,6 +39,3 @@
 - 2018-09-26 [动态规划(Dynamic programing, DP)](/b/algorithm/algo-dp) 
 - 2018-10-04 [浏览器同源政策及其规避方法](/b/ria/js-cors) 
 - 2018-09-27 [社保及养老保险](/b/life/life-pension) 
-- 2018-09-27 [Postgre 安装\配置\管理](/b/db/pg-ddl-install) 
-- 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
-- 2016-09-27 [golang pkg 开发包](/b/go/go-pkg-dev) 
