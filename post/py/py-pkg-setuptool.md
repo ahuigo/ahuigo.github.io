@@ -47,7 +47,54 @@ setuptools 与 disutils
 	)
 ```
 1. 如果写的是命令，那么将命令文件直接放到: scripts = ['fileset']
+1. import foo 依赖的是: `packages= ['foo']` 或`py_modules=["foo"]`
 2. 如果存在依赖：install_requires = [],  tests_require=[ 'pytest', ],
+
+### pkg包文件
+默认打包时不会包含所有文件，我们需要通过`packags`指定包含哪些文件。
+
+    packages = ['foo'] 
+    import foo      # Distutils 会查询 `foo/__init__.py`
+
+怎么为包含文件指定源目录src ？find `foo` in `src`
+
+    package_dir={"":"src"}
+    packages = ['foo'] 指 Distutils 会查询 `src/foo/__init__.py`
+
+find the `foo.bar` package in `lib/bar` directory, 
+
+    package_dir = {'foo': 'lib'}
+    packages = ['foo.bar','foo'] # lib/bar.py lib/__init__.py
+
+默认find the `foo.bar` package in root `.` directory, 
+
+    package_dir={"":"."}
+    packages = ['foo.bar'] # foo/bar.py 
+
+包含所有：
+
+    packages = ["."]
+    import user # 如果 ./user.py 存在的话
+
+#### 包含module
+> package_dir 依然有效
+除了packages , 我们可以包含module
+list all modules rather than listing packages
+
+    # 包含mod1.py pkg/mod2.py pkg/__init__.py
+    py_modules = ['mod1', 'pkg.mod2'] 
+
+#### 包含静态数据
+
+    /proj/
+        setup.py
+        aiohttp/
+            user.png
+            ...
+
+如果想包含项目中静态数据：
+
+    include_package_data=True,
 
 ### test
 如果要使用setup.py 的test 命令, 使用配置依赖： setup_requires=[ 'pytest-runner', ],

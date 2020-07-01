@@ -6,7 +6,7 @@ private:
 # Response
 ## error
 
-    // 不用这个： 没有body
+    // 给Error 中间件 传 c.Errors.Errors() 
     c.AbortWithError(http.StatusBadRequest, errors.New("no task_id"))
     // 请用这个： 有body
     c.String(http.StatusBadRequest, "no task_id")
@@ -79,9 +79,9 @@ Issuing a Router redirect, use `HandleContext` like below.
 		c.DataFromReader(http.StatusOK, contentLength, contentType, reader, extraHeaders)
 	})
 
-## Cookie
+## cookie
 
-	ctx.SetCookie("key", fmt.Sprintf("%v", idt), 86400, "", cookieDomain, false, false)
+	ctx.SetCookie("key", "value", 86400, "ahuigo.com", "", false, false)
 
 ## Html
 

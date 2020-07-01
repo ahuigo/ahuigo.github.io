@@ -11,6 +11,16 @@ private: true
 
 # 存值
 
+## 初值
+    <Form initialValues={{ type: defaultType }} onFinish={onFinish} form={form}>
+
+或：
+
+    const [form] = Form.useForm();
+    useEffect(() => {
+        form.setFieldsValue({ type: defaultType });
+    }, []);
+
 ## fields 存值
 Store Form Data into Upper Component
 

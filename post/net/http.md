@@ -109,6 +109,12 @@ nginx:
 		}
 	}
 
+用max-age设置有效期更简单：
+
+    //子域名也可以用sub.ahuigo.com
+    Set-Cookie: id_token=value; Path=/; Domain=ahuigo.com; Max-Age=86400
+    Set-Cookie: id_token=; Path=/; Domain=ahuigo.com; Max-Age=0
+
 # Method
 1. GET 幂等(safe methods): 是安全的, 所以GET返回的内容可以被浏览器、Cache服务器缓存，
 2. POST 非幂等(idempotent methods): 前端全部不能缓存

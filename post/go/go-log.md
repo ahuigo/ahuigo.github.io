@@ -7,6 +7,7 @@ Refer: https://studygolang.com/articles/17394
 
 ## Sugar Logger
 sugar log 支持任意的类型(基于reflect实现类型检测)
+
 ### Info/Error
     loggerS:= zap.NewExample().Sugar()
     loggerS.Info(obj1, obj2, ...) //中间无空格

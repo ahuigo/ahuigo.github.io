@@ -5,6 +5,7 @@ date: 2018-09-28
 # Preface
 
 ## package vs module
+import pkg/modules 时，引入的object type 是`module`，但它们不同点是
 1. `pkg/__init__.py` is package, 优先级高 包含多个module
 2. mod.py is module, 优先级低
 

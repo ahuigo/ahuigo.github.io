@@ -53,7 +53,7 @@ https://gin-gonic.com/docs/examples/using-middleware/
 
             if true {
                 c.JSON(http.StatusUnauthorized, gin.H{"message": "hey", "status": http.StatusOK})
-                c.Abort()
+                c.Abort() //暂停冒泡
                 return //没有return 的话，gonic 会继续执行after request
             }
 
@@ -75,9 +75,38 @@ https://gin-gonic.com/docs/examples/using-middleware/
         r.Use(Logger())
     }
 
-Abort+JSON
+Abort(禁止冒泡)+JSON
 
     AbortWithStatusJSON(code int, jsonObj interface{})
+
+## middleware catch exception
+我们写一个自动捕获异常信息的中件件
+
+    func Error() gin.HandlerFunc {
+        return func(c *gin.Context) {
+            defer func() {
+                if r := recover(); r != nil {
+                    c.String(
+                        http.StatusInternalServerError,
+                        fmt.Sprintf("%v", r)+"\n"+string(debug.Stack()),
+                    )
+                    c.Abort()
+                }
+            }()
+            c.Next()
+
+            if messages := c.Errors.Errors(); len(messages) > 0 && c.Writer.Size() == 0 {
+                bodyError := struct {
+                    Message string `json:"message"`
+                }{Message: strings.Join(messages, "\n")}
+                if body, err := json.Marshal(bodyError); err != nil {
+                    logging.GetLogger("").Error(err.Error())
+                } else {
+                    c.Writer.Write(body)
+                }
+            }
+        }
+    }
 
 ## inside a middleware
 you **SHOULD NOT** use the original context inside it, 因为context 会变（无锁）

@@ -68,6 +68,31 @@ The `zero` value of a map is `nil`. A `nil` map has no keys, nor can keys be add
   fmt.Println(m==nil);      //false
   fmt.Printf("%#v\n", m)    // map[string]int{}
 
+## make map address 扩容
+map 只能用于：`regular addressable value`类型(即：非复杂类型和指针)的扩容：
+https://stackoverflow.com/questions/32751537/why-do-i-get-a-cannot-assign-error-when-setting-value-to-a-struct-as-a-value-i
+
+应该用：`map[string]*MyStruct`参与赋值
+
+cannot assign to struct field p["HM"].age in map
+
+    package main
+
+    import "fmt"
+    type Person struct {
+        name string
+        age int
+    }
+
+    type People map[string]Person
+
+    func main() {
+        p := make(People)
+        p["HM"] = Person{"Hank McNamara", 39}
+        p["HM"].age = p["HM"].age + 1
+        fmt.Printf("age: %d\n", p["HM"].age)
+    }
+
 ## add
     m["new_key"] = 1
 

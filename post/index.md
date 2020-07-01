@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-09-28 [py-import](/b/py/py-import) 
+- 2020-07-01 [About Http](/b/net/http) 
 - 2018-10-04 [vim-style](/b/vim/vim-style) 
 - 2016-09-27 [go 的变量](/b/go/go-var) 
 - 2018-09-27 [map](/b/go/go-var-map) 
@@ -37,5 +39,3 @@
 - 2019-01-06 [lua module](/b/lua/lua-module) 
 - 2018-09-28 [net-dns](/b/net/net-dns) 
 - 2019-02-14 [查找数组中的第K大的值](/b/algorithm/sort-topk-kth) 
-- 2018-09-26 [动态规划(Dynamic programing, DP)](/b/algorithm/algo-dp) 
-- 2018-10-04 [浏览器同源政策及其规避方法](/b/ria/js-cors) 
