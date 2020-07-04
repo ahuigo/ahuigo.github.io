@@ -3,7 +3,13 @@ title: antd design
 date: 2020-05-28
 private: true
 ---
-# 引入 antd
+# antd layout
+默认表单是右对齐的，可以改成全局左对齐
+
+    .ant-form-item-label {
+        text-align: left;
+    }
+
 # antd theme
 多种主题：https://github.com/ant-design/ant-design/tree/master/components/style/themes
 定制theme: https://ant.design/docs/react/customize-theme

@@ -125,7 +125,7 @@ Or turn off history expandsion:
         0t0n0rabc'"
 
 #### 无引号`$''`
-`\t\n\r` 转义为特殊字符，`\'\"` 转义为字面字符
+`\t\n\r` 转义为特殊字符，`\'` `\"` `$` 转义为字面字符
 
     # Press Ctrl-v + Tab
     cut -f2 -d'   ' infile

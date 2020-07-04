@@ -21,6 +21,10 @@ private: true
         form.setFieldsValue({ type: defaultType });
     }, []);
 
+或
+
+    <Select defaultValue={86400} >
+
 ## fields 存值
 Store Form Data into Upper Component
 
@@ -64,7 +68,11 @@ Store Form Data into Upper Component
         );
     };
 
-
+## required 值
+    <Form.Item 
+        label="密码" name="password" 
+        rules={[{ required: true, message: 'input password !' }]}
+    >
 
 # 更新field
 ## 手动更新field
@@ -146,3 +154,20 @@ Item: 用setFieldsValue
         <label for="female">女</label>
         </p>
     </fieldset>
+
+# layout
+labelCol, wrapperCol 分别控制label/Item 的宽度
+
+    const layout = {
+        labelCol: { span: 8 },
+        wrapperCol: { span: 16 },
+    };
+    const tailLayout = {
+        wrapperCol: { offset: 8, span: 16 },
+    };
+
+    <Form {...layout} >
+      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+        <Checkbox>Remember me</Checkbox>
+      </Form.Item>
+    </Form>

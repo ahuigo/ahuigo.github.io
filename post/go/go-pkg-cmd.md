@@ -40,6 +40,8 @@ go fmt 命令主要是用来帮你格式化所写好的代码文件。
 
 ## go get
 go get分成了两步操作：第一步是下载源码包，第二步是执行go install。
+1. go get -d library #只下载
+1. go install library #只安装，不下载
 
 ## go install
 go install 命令在内部实际上分成了两步操作：

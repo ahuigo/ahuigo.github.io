@@ -1,0 +1,8 @@
+From alpine:latest
+WORKDIR /app/
+#RUN apk add --no-cache bash 
+RUN echo $'#!/bin/sh\n''echo foo:$FOO' > echo.sh && cat echo.sh && chmod a+x echo.sh 
+RUN echo $'#!/bin/sh\n''a=$FOO;unset FOO;FOO=$a exec sh -c "$@"' > run.sh  && chmod a+x run.sh && cat run.sh
+#USER daemon
+#ENTRYPOINT ["sh", "-c", "exec ./echo.sh && unset FOO && echo sleep && sleep 60"]
+ENTRYPOINT ["./run.sh", "./echo.sh && unset FOO && sleep 60"]

@@ -10,12 +10,25 @@ description:
 	Cmd+del delete all session
 	Shift+Cmd+P Mac OS proxy
 
-## tools
+## Map Remote/Local
+### Map Remote 
+Map Remote 是将指定的网络请求重定向到另一个网址
+![](/img/net/proxy/charles-map-remote1.png)
 
-	Shift+Cmd+w map rule
-	Shift+Cmd+M map remote
+### Map Local
+Map Local 是将指定的网络请求重定向到本地文件
 
-### Rewrite
+![](/img/net/proxy/charles-map-local1.png)
+## Rewrite
+菜单入口：
+
+    Tools->Rewrite
+	Opt+Cmd+R 
+
+### rewrite 请求
+rewrite request 可代替map remote, 比如我们来改写host/ip
+![](/img/net/proxy/charles-rewrite.host0.png)
+
 ![proxy-charles-2.png](/img/proxy-charles-2.png)
 
     host: 不支持wildcard, 只支持regex/plain
@@ -25,8 +38,14 @@ description:
         ->
         name: other_key, value: other_value
 
-## mac os x
-1. 开启Web Proxy(http/https)
+### rewrite 响应
+修改status: 将`200`(不能用`*` `.*`)替换成`401`
+net/proxy/charles-rewrite-response-status0
+![](/img/net/proxy/charles-rewrite-response-status.png)
+
+## proxy 功能
+mac os x
+1. 开启Web Proxy(http/https) 就可让代理生效
 2. 针对safari system proxy, 一定要在network 中关闭auto proxy configuration 才能抓取国内的域名/ip
 
 ## SSL

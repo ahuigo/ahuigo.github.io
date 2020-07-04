@@ -245,6 +245,7 @@ ENV 同名变量会覆盖 ARG
 
 ### ENTRYPOINT CMD
 > https://docs.docker.com/engine/reference/builder/#cmd
+
 #### cmd
 The CMD instruction has three forms:
 
@@ -272,13 +273,21 @@ vs entrypoint:
 There can only be one `CMD` instruction in a Dockerfile. If you list more than one CMD then **only the last CMD will take effect**
 
     CMD ["sh", "-c", "pwd && ls -la"]
+    ENTRYPOINT ["sh", "-c", "pwd && whoami"]
 
-(docker-compose.yml)
+注意参数中的`$` 不会被Docker shell解析, 只是字面量:
+
+    ENTRYPOINT ["echo", "$FOO"]
+    # 建议使用
+    ENTRYPOINT ["sh", "-c", "echo $FOO"]
+
+docker-compose.yml 的写法
 
     command: bash -c "
         python manage.py migrate
         && python manage.py runserver 0.0.0.0:8000
     "
+
 
 #### with shell env variable
     # wrong
@@ -286,13 +295,18 @@ There can only be one `CMD` instruction in a Dockerfile. If you list more than o
     # ok
     CMD ["sh", "-c", "django-admin startproject $PROJECTNAME"]
 
-#### with entrypoint
+#### cmd+entrypoint
+参考： a/docerk/docker-cmd, 两个命令是组合关系
 实际启动的命令为ENTRYPOINT + CMD
 
-    CMD ["test.py"]
-    ENTRYPOINT ["python3"]
+    CMD ["sh", "-c", "echo EXEC-CMD1 && whoami"]
+    # 覆盖CMD1
+    CMD ["sh", "-c", "echo EXEC-CMD2 && whoami"]
+    # ENTRYPOINT + CMD 组合
+    # ENTRYPOINT ["echo"]
+    ENTRYPOINT ["sh", "-c", "echo ENTRYPOINT: && whoami && pwd"]
 
-#### 覆盖ENTRY
+#### 覆盖entrypoint
 
     --entrypoint="sh"
     docker run --rm -it --entrypoint=sh image:0.0.2

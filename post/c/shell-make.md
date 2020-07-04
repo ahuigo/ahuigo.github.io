@@ -9,6 +9,17 @@ private:
     -f makefile2
 
 # variable
+### argv 变量
+传变量的方法为
+
+    $ make test FLAG=debug
+
+然后
+
+    FLAG?=default_value
+    test:
+        echo $(FLAG)
+
 ### 定义变量
 变量定义时`=`两边可以有空格，这一点不像shell 那样严格
 
@@ -130,30 +141,7 @@ $(CC) 指向当前使用的编译器
         @[ -d dest ] || mkdir dest
         cp $< $@
 
-## argv
-传变量的方法为
 
-    $ make test FLAG=debug
-
-然后
-
-    FLAG?=default_value
-    test:
-        echo $(FLAG)
-
-image example
-
-    version?=0.0.2
-    image:
-        echoraw $(version)
-        docker image build -t slim_nginx:$(version) .
-        docker tag slim_nginx:$(version) registry.docker.com/slim_nginx/slim_nginx:$(version)
-
-    push:
-        docker push registry.docker.com/slim_nginx/slim_nginx:$(version)
-
-    test:
-        echo $(version)
 
 # 执行指令
 

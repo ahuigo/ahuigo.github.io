@@ -292,6 +292,12 @@ deque:
 	...
 	1 ['k2', 'v2']
 
+# php like array func
+## array_flip
+    result = {k:None for k in arr)
+    result = dict((v,k) for k,v in trans.items())
+    result = dict(zip(trans.values(), trans.keys()))
+
 # .sort .reverse ... inplace like js
 
 	.count(value) -> integer -- return number of occurrences of value

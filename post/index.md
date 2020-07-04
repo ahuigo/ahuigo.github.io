@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2020-07-04 [proxy 之charles](/b/net/proxy/proxy-charles) 
 - 2018-09-28 [py-import](/b/py/py-import) 
 - 2020-07-01 [About Http](/b/net/http) 
 - 2018-10-04 [vim-style](/b/vim/vim-style) 
@@ -38,4 +39,3 @@
 - 2019-02-05 [Lua 的变量](/b/lua/lua-var) 
 - 2019-01-06 [lua module](/b/lua/lua-module) 
 - 2018-09-28 [net-dns](/b/net/net-dns) 
-- 2019-02-14 [查找数组中的第K大的值](/b/algorithm/sort-topk-kth) 

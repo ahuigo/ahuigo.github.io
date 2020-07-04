@@ -115,6 +115,11 @@ items:
     > let merged = Object.assign({}, {a:2}, {a:3},)
     { a: 3 }
 
+update const obj
+
+    const obj = {a:1}
+    Object.assign(obj, {b:11})
+
 ## Property 属性
 property  list
 

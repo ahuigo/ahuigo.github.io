@@ -75,21 +75,14 @@ The zero value is:
     var f float64
     var b bool
 
-## Short variable declarations
-Inside a function, the `:=` short assignment statement can be used in place of `a var declaration with implicit type`.
->Outside a function, every statement begins with a keyword (var, func, and so on) and so the `:= construct` is not available.
+## Short variable declarations :=
+the `:=` short assignment statement can be used in place of `a var declaration with implicit type`.
 
-	package main
-
-	import "fmt"
-
-	func main() {
-		var i, j int = 1, 2
-		k := 3
-		c, python, java := true, false, "no!"
-
-		fmt.Println(i, j, k, c, python, java)
-	}
+    var i, j int = 1, 2
+    # 类型推导
+    var i1, j1 = 1, 2
+    k := 3
+    c, python, java := true, false, "no!"
 
 ## pointer
 
@@ -121,29 +114,6 @@ Go's basic types are
 	float32 float64
 
 	complex64 complex128
-
-The `int, uint, and uintptr` types are usually `32 bits wide` on 32-bit systems and `64 bits wide` on 64-bit systems.
-When you need an integer value you should use `int` unless you have a specific reason to use a sized or unsigned integer type.
-
-	package main
-
-	import (
-		"fmt"
-		"math/cmplx"
-	)
-
-	var (
-		ToBe   bool       = false
-		MaxInt uint64     = 1<<64 - 1
-		z      complex128 = cmplx.Sqrt(-5 + 12i)
-	)
-
-	func main() {
-		const f = "%T(%v)\n"
-		fmt.Printf(f, ToBe, ToBe)
-		fmt.Printf(f, MaxInt, MaxInt)
-		fmt.Printf(f, z, z)
-	}
 
 ## Type match
 	type T int

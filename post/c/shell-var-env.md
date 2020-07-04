@@ -18,6 +18,12 @@ date: 2018-10-08
         -n remove the export property from each NAME
         -p display a list of all exported variables and functions
 
+export -n FOO 相当于
+
+    _FOO=$FOO
+    unset FOO
+    FOO=$_FOO
+
 ## readonly
 
 	x=6
