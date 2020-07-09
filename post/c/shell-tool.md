@@ -56,6 +56,11 @@ diff dir
 	zip -e -P <password> test [file ...]
 	unzip -x test.zip -d dir
 
+## unrar
+    rar x archive.rar path/to/extract/to 
+## tar
+    tar xzvf a.tar -C dir
+
 ## stat
 stat：文件信息
 

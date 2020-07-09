@@ -115,12 +115,17 @@ Go's basic types are
 
 	complex64 complex128
 
+## type length
+    fmt.Println("sizeof int8:", unsafe.Sizeof(i2))
+
 ## Type match
+type 不是别名，是新类型. 不过可以进行类型转换
+
 	type T int
 	var i int = 1
 	var j T= 1
 	println(i+j) //error!!!!
-
+	println(i+int(j)) //ok
 
 ## Get Type
 

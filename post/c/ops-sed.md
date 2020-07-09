@@ -11,16 +11,25 @@ grep 与sed 同样是以按行匹配，不过sed 不仅能按行匹配，还能�
 
 ## mac linux sed
 
+
+### in-place
+修改文件要用`-i`
+
+    -i extension (mac sed)
+    -i[SUFFIX], --in-place[=SUFFIX] (gsed)
+        edit files in place (makes backup if SUFFIX supplied)
+
 mac 使用的是BSD sed, `-i` 参数后必须跟一个扩展名, 如果想直接修改原文件，则扩展名用空字符串:
 
 	sed -i '.ori' $'/^PATH=/c\\\n sth.' a.txt #> a.txt.ori (注意bash的string不直接支持\n, 只能使用$'string\n' , 不是$"string\n"哈, $"string\n"与 "string\n"没有分别) $'\\\n' 会被bash 解析为'\n', '\n' 又被sed 解析为换行
 	sed -i '' "/^PATH=/ c\\
 	sth." a.txt #> a.txt
 
-而linux下(gnu sed)则简单多了: `\\\n `等空白不影响
+而linux下(gnu sed)`-i`与参数要合并,同时`\\\n`,` `,`\\`等换行、空白符、转义符会被忽略
 
 	gsed $'/^PATH=/c\\\n sth.' a.txt > a.txt.ori
 	gsed -i $'/^PATH=/c\\\n sth.' a.txt #> a.txt
+	gsed -i.ori $'/^PATH=/c\\\n sth.' a.txt #> a.txt
 
 ## sed 基本格式
 sed 命令行基本格式为:

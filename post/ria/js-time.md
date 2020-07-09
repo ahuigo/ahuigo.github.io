@@ -30,6 +30,11 @@ moment 一般，date-fns 更好
 	moment("20111031", "YYYYMMDD").fromNow(); // 6 years ago
 	moment().subtract(10, 'days').calendar(); // 12/22/2017
 
+## moment zone
+
+    moment(new Date).utcOffset(480).format('YYYY-MM-DDT00:00:00'),
+    moment(new Date).utcOffset(480).format() //rfc3339- YYYY-MM-DDT00:00:00+08:00
+
 # date-fns
 
 # timer

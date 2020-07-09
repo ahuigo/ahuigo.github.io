@@ -67,6 +67,12 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
     let something;
 
+## 泛类型
+    export declare type RangeValue<DateType> = [EventValue<DateType>, EventValue<DateType>]
+
+    import * as X from 'rc-picker/lib/interface.d';
+    type DatePickerTypes = X.RangeValue<moment.Moment>;
+
 ## 联合类型
 
     let age: string | number;

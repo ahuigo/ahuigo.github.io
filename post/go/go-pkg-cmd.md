@@ -48,6 +48,11 @@ go install 命令在内部实际上分成了两步操作：
 第一步是生成结果文件(可执行文件或者.a包)，
 第二步会把编译好的结果移到 $GOPATH/pkg 或者 $GOPATH/bin。
 
+下面两个命令等价
+
+    go install
+    go install .
+
 ## go test
 参考go help testflag
 

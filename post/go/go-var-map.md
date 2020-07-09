@@ -68,14 +68,13 @@ The `zero` value of a map is `nil`. A `nil` map has no keys, nor can keys be add
   fmt.Println(m==nil);      //false
   fmt.Printf("%#v\n", m)    // map[string]int{}
 
-## make map address 扩容
-map 只能用于：`regular addressable value`类型(即：非复杂类型和指针)的扩容：
+## map index address
+map 只用于：`regular addressable value`类型
 https://stackoverflow.com/questions/32751537/why-do-i-get-a-cannot-assign-error-when-setting-value-to-a-struct-as-a-value-i
-
-应该用：`map[string]*MyStruct`参与赋值
 
 cannot assign to struct field p["HM"].age in map
 
+    //go-lib/map/map-index-address.go
     package main
 
     import "fmt"
@@ -89,9 +88,20 @@ cannot assign to struct field p["HM"].age in map
     func main() {
         p := make(People)
         p["HM"] = Person{"Hank McNamara", 39}
+
+        // cannot assign to field p["HM"].age in map
         p["HM"].age = p["HM"].age + 1
+        // 可以用: p["HM"] = p["HM"].incrementAge()
         fmt.Printf("age: %d\n", p["HM"].age)
     }
+
+go `=`赋值只能用于addressable, 很可惜`p["HM"] is not addressable`.
+
+    Each left-hand side operand must be addressable, a map index expression
+
+方法是用index address:
+1. 用：`map[string]*MyStruct`参与赋值
+2. `p["HM"] = p["HM"].incrementAge()`
 
 ## add
     m["new_key"] = 1

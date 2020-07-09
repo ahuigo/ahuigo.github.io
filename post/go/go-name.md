@@ -12,6 +12,8 @@ https://zhuanlan.zhihu.com/p/63250689
 4. 结构体命名规则：结构体名应该是名词或名词短语，如Custome、WikiPage、Account、AddressParser，
 5. 包名命名规则：包名应该为小写单词，不要使用下划线或者混合大小写`net/util`
 
+## 常量
+    const todayNews = "Hello"
 
 ## 包名
 包名应该为小写单词，不要使用下划线或者混合大小写。

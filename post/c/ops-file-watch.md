@@ -9,12 +9,29 @@ private: true
 - fswatch (osx)
 
 # fswatch(osx)
+help: 
+
+    $ fswatch -h
+    fswatch [OPTION] ... path ...
+    -L, --follow-links    Follow symbolic links.
+    -o, --one-per-batch   Print a single message with the number of change events.
+    -r, --recursive       Recurse subdirectories.(default)
+    -x, --event-flags     Print the event flags.
+    -n, --numeric         Print the numeric value of the event flag
+
+watch dir recursive
 
     brew install fswatch
-    fswatch -o -r ~/path/to/watch | xargs -n1 -I{} nginx -s reload
+    fswatch -r ~/path/to/watch | xargs -n1 -I{} nginx -s reload
         -I{} 表示不加参数
-    fswatch -o -r ~/path/to/watch | xargs -n1 sh -c 'nginx -s reload'
+    fswatch -r ~/path/to/watch | xargs -n1 sh -c 'nginx -s reload'
         sh -c 会忽略多余参数
+
+watch changed evnent name and files
+
+    $ fswatch  -xr  . 
+    a.txt Updated IsFile
+    .git/index.lock Created Removed IsFile
 
 杀进程：
 
@@ -34,16 +51,6 @@ reload + detect
         echo "start nginx"
         nginx -p $PWD -c nginx.conf & echo $! > ngx.pid;
     fi 
-
-
-help: 
-
-    $ fswatch -h
-    fswatch [OPTION] ... path ...
-    -L, --follow-links    Follow symbolic links.
-    -o, --one-per-batch   Print a single message with the number of change events.
-    -r, --recursive       Recurse subdirectories.(default)
-    -x, --event-flags     Print the event flags.
 
 
 # inotify

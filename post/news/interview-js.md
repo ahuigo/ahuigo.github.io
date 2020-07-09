@@ -5,15 +5,19 @@ private:
 ---
 # 面试
 
+## shell操作
+过滤出正则
+## http网络/socket 
+
 ## 求矩形相交的面积
 请用任意语言实现矩形相交面积的计算：
 
-    var rect1 = [10, 10, 200,300]
-    var rect2 = [50, 50, 200,300]
+    var rect1 = [10, 10, 30,30]
+    var rect2 = [20, 20, 30,30]
     function getIntersectArea(rect1, rect2){
-
+        // 返回相交面积 或异常
     }
-
+    getIntersectArea(rect1,rect2) == 100 //true
 
 ## 写一个排序
 假设Andy和Doris想在晚餐时选择一家餐厅，并且他们都有一个表示最喜爱餐厅的列表，每个餐厅的名字用字符串表示。

@@ -50,14 +50,6 @@ export PYTHONPATH=.
 # docker
 alias drmi='docker rmi $( docker images --filter "dangling=true" -q --no-trunc)'
 
-# go
-# goenv
-export GODEV=local
-export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
-[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.12.9/libexec
-export GO111MODULE=on 
-export GOPATH=~/go
-export PATH=$PATH:$GOPATH/bin
 
 # brew
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
@@ -165,7 +157,16 @@ alias yarn=tyarn
 [ -f ~/.private ] && source ~/.private
 [ -f ~/.local.rc ] && source ~/.local.rc
 
+# golang
+export GODEV=local
+export GO111MODULE=on 
+export GOPATH=~/go
+export PATH=$PATH:$GOPATH/bin
+[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.14/libexec
+alias go12='export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec; ln -sf /usr/local/opt/go@1.12/bin/go /usr/local/bin/go'
+alias go14='export GOROOT=/usr/local/Cellar/go/1.14/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# Load RVM into a shell session *as a function*
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 

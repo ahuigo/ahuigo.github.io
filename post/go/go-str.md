@@ -259,11 +259,14 @@ trim 字符串
 
     strings.TrimSuffix("abc,", "ing")
     strings.TrimPrefix("abc,", "pre")
-
+## slice
+    s[:5]
 ## copy string
-它不像slice 引用, 而是传值
+赋值时它不像slice 引用, 而是传值
 
-    s1=s[:]
+    # 等价
+    s1:=s
+    s1:=s[:]
 
  Copy returns the number of elements copied, which will be the minimum of len(src) and len(dst).
 
@@ -274,10 +277,6 @@ trim 字符串
     p[4]='c'
     copy(p,src)
     fmt.Println((p), len(p))
-
-
-
-
 
 ## in stirng, contain
     import "strings"

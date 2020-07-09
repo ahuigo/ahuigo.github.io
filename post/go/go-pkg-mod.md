@@ -27,6 +27,12 @@ go get 使用的目录是 $GOROOT/src/github.com/
 go mod 使用的目录是 $GOROOT/pkg/mod/github.com/
 
 ## go.mod
+### 查看所用的go.mod
+go在运行时，会在上层目录中查找go.mod 
+
+    go env | grep MOD
+    GO111MODULE="on"
+    GOMOD="/Users/ahui/www/go.mod"
 ### go.mod中的module与package
 module 定义全局命名空间. 里面可以有很多package
 

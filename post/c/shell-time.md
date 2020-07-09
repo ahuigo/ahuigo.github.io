@@ -25,7 +25,9 @@ date: 2012-07-08
 2. 对我们日常所使用的时间工具而言，UTC和GMT时间没有区别。
 
 ## ISO8601
+> moment.defaultFormat is the ISO8601 format YYYY-MM-DDTHH:mm:ssZ
 [ISO8601](https://en.wikipedia.org/wiki/ISO_8601):
+
 
     new Date("2016-01-01 11:13:00Z");      +0区
     new Date("2016-01-01T11:13:00Z");      +0区
@@ -39,8 +41,8 @@ date: 2012-07-08
 	new Date("October 13, 1975 11:13:00");  +8区(默认)
 
 ### rfc3339
-    RFC3339     = "2006-01-02T15:04:05Z07:00"
-    RFC3339Nano = "2006-01-02T15:04:05.999999999Z07:00"
+    RFC3339     = "2006-01-02T15:04:05+07:00"
+    RFC3339Nano = "2006-01-02T15:04:05.999999999+07:00"
 
 postgre:
 

@@ -8,7 +8,12 @@ date: 2018-09-27
 extinfo 
 
     import "path/filepath"
-    fileext := filepath.Ext(filename)
+    fileext :=copy filepath.Ext(filename)
+
+dir + file:
+
+    dir := filepath.Dir(path)
+    dir, file := filepath.Split(path)
 
 abs
 
@@ -41,7 +46,7 @@ abs
         fmt.Println(exPath)
     }
 
-### working copy: 
+### Getwd: 
 func Getwd() (pwd string, err error)
 
     import (

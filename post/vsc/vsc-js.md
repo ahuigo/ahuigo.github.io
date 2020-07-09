@@ -3,7 +3,13 @@ title: Js Module for vscocde
 date: 2019-05-22
 private:
 ---
-# module
+# node version
+launch.json
+
+    "runtimeVersion":"7.10.1"
+
+# ts module
+# js module
 ## React config
 ### auto import
 .env
@@ -103,8 +109,8 @@ build\webpack.base.conf.js
         }
     }
 
-# type declare
-Is see that `JSDoc style type annotations` work in VSCode:
+# js type declare
+I see that `JSDoc style type annotations` work in VSCode:
 
     import * as Foo from "Foo"
     /** @type {FOO.bar} */

@@ -156,6 +156,7 @@ Item: 用setFieldsValue
     </fieldset>
 
 # layout
+## 列宽度
 labelCol, wrapperCol 分别控制label/Item 的宽度
 
     const layout = {

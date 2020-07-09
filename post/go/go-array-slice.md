@@ -226,7 +226,7 @@ The `range` form the `for loop iterates` over a `array, slice, string or map`, o
 		fmt.Printf("index=%d, %d\n", i, v)
 	}
 
-> range is not reference!
+> range is not reference! range 会复制对象
 
 ### skip range index
 You can skip the index or value by assigning to _.

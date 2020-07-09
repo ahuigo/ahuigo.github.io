@@ -329,7 +329,9 @@ disown的用法如下。
 	$ disown
 
 ## nohup 命令
-还有比disown更方便的命令，就是nohup。
+还有比disown更方便的命令，就是nohup。 nohup 的用途就是让提交的命令忽略 hangup 信号
+>当用户注销（logout）或者网络断开时，终端会收到Linux HUP信号（hangup）信号从而关闭其所有子进程。因此，我们的解决办法就有两种途径：要么让进程忽略Linux HUP信号，要么让进程运行在新的会话里从而成为不属于此终端的子进程。
+
 nohup命令不会自动把进程变为"后台任务"，所以必须加上`&`符号
 
 	$ nohup node server.js 2>&1 &
@@ -343,6 +345,31 @@ nohup命令对server.js进程做了三件事。
 nohup 默认会将 1+2 pipe append to nohup.out， 所以不需要加
 
 	>> nohup.out 2>&1
+
+### setsid
+> 参考： https://www.cnblogs.com/JohnABC/p/4828724.html
+nohup无疑能通过忽略Linux HUP信号 信号来使我们的进程避免中途被中断，但如果我们换个角度思考，如果我们的进程不属于接受Linux HUP信号的终端的子进程，那么自然也就不会受到Linux HUP信号的影响了。setsid 就能帮助我们做到这一点。
+
+    man setsid: runs a program in a new session. 
+
+setsid 示例
+
+    [root@pvcent107 ~]# setsid ping www.ibm.com
+    [root@pvcent107 ~]# ps -ef |grep www.ibm.com
+    root     31094     1  0 07:28 ?        00:00:00 ping www.ibm.com
+    root     31102 29217  0 07:29 pts/4    00:00:00 grep www.ibm.com
+
+值得注意的是，上例中我们的进程 ID(PID)为31094，而它的父 ID（PPID）为1（即为 init 进程 ID），并不是当前终端的进程 ID。请将此例与nohup 例中的父 ID 做比较。
+
+### &
+当我们将"&"也放入“()”内之后，我们就会发现所提交的作业并不在作业列表中，也就是说，是无法通过jobs来查看的。让我们来看看为什么这样就能躲过Linux HUP信号的影响吧。
+
+    [root@pvcent107 ~]# (ping www.ibm.com &)
+    [root@pvcent107 ~]# ps -ef |grep www.ibm.com
+    root     16270     1  0 14:13 pts/4    00:00:00 ping www.ibm.com
+    root     16278 15362  0 14:13 pts/4    00:00:00 grep www.ibm.com
+
+从上例中可以看出，新提交的进程的父 ID（PPID）为1（init 进程的 PID），并不是当前终端的进程 ID。因此并不属于当前终端的子进程，从而也就不会受到当前终端的Linux HUP信号的影响了。
 
 ## redirect outputs of a running process
 

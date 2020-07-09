@@ -4,6 +4,17 @@ date: 2019-09-21
 ---
 # Go Signal
 
+查看信号
+
+    $ man signal
+    No    Name         Default Action       Description
+    2     SIGINT       terminate process    interrupt program
+    9     SIGKILL      terminate process    kill program
+    15    SIGTERM      terminate process    software termination signal
+    19    SIGCONT      discard signal       continue after stop
+    20    SIGCHLD      discard signal       child status has changed
+    28    SIGWINCH     discard signal       Window size change
+
 ## signal.Notify
     import (
         "context"
