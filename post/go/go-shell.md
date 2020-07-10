@@ -75,7 +75,11 @@ cmd *exec.Cmd:
 
     var cmd *exec.Cmd = exec.Command("cat", args...)
 
-## cmd 进程管理
+## set cmd
+	cmd.SysProcAttr = &syscall.SysProcAttr{}
+	cmd.SysProcAttr.Setsid = true
+
+## kill cmd 进程管理
 它有很多方法: go doc os/exec Cmd
 
 kill cmd

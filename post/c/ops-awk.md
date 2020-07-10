@@ -104,9 +104,36 @@ will print all but two first columns:
 	myarray[1]="jim"
 	myarray['name']="Ye"
 
+## init
+
+    gawk 'BEGIN{arr[1]="name"; for(k in arr)print arr[k]}'
+
+## push, pop, unshift
+
+    function push(A,B) { A[length(A)+1] = B }
+
+实现unshift 比较复杂: https://github.com/xfix/awk-plus-plus
+
+    function unshift(arr, value, array) {
+        clone(array, arr)
+        empty(arr)
+        push(arr, value)
+        for (i = 1; i <= len(array); i++) {
+            push(arr, array[i])
+        }
+    }
+    function empty(array) {
+        split("", array)
+    }
+    function clone(ret, array, key) {
+        for (key in array) {
+            ret[key] = array[key]
+        }
+    }
 ## delete
 
 	delete arr[1]
+
 
 ## in_array
 In array:
@@ -167,8 +194,8 @@ sort via shell:
 
 ## for-in
 
-	for ( x in myarray ) {
-	for (x in myarray) { # wrong!
+	for ( x in myarray ) { # ok
+	for (x in myarray) { # wrong!(无空白)
 		print myarray[x]
 		//continue; break;
 	}
@@ -198,6 +225,11 @@ sort via shell:
 	exit
 	break
 	continue
+
+## while
+
+  while (n in a) n++
+  if (n in a) n++
 
 # Math
 () 用于数学计算:
@@ -288,7 +320,8 @@ awk 中的位置都是从1开始的
 
 	tolower(str)
 	toupper(str)
-	split(s,a,fs)：在fs上将s分成序列a
+	split(s,arr,fs)：在fs上将s分成序列arr
+	split("name,age,gender",arr,",")：在fs上将s分成序列arr
 
 ### strpad
 start from 1
@@ -328,6 +361,10 @@ Example
 
 	var=var $2
 	varA="string" varB		$2
+
+以空格分隔输出
+
+    print varA,varB
 
 ### Split
 
@@ -491,7 +528,7 @@ Comparision Operators:
 	$ awk 'NR!=1{a[$6]++;} END {for (i in a) print i ", " a[i];}' netstat.txt
 
 # Split File
-> split -l<line_count> -a <suffix_num> -d prefix
+> shell 原生命令`split -l<line_count> -a <suffix_num> -d prefix`
 
 按第6列拆分文件:
 

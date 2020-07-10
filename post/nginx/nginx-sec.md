@@ -52,7 +52,7 @@ For proxy `proxy_set_header X-Forwarded-For $remote_addr;`
     rate=size
         限速，单位r/s（second), r/m(minute)
 
-limit_req 启用限速区
+limit_req 启用限速区: 比如某个条件(如每个ip)最多同时允许4个请求(burst=4)
     
     Syntax:	limit_req zone=name [burst=number] [nodelay | delay=number];
     Context:	http, server, location

@@ -13,6 +13,17 @@ date: 2018-09-27
 1. new 负责分配内存，new(T) 返回`*T` 指向一个零值 T 的指针
 2. make 负责初始化值，make(T) 返回初始化后的 T ，而非指针
 
+make channel with no buffer size: 0
+
+	ch := make(chan bool)  //buffer size:0
+    ch<- true //block
+
+make channel with buffer size: 1
+
+	ch := make(chan bool)  //buffer size:1
+    ch<- true //not block
+    ch<- true //block
+
 ## new: *T
 new 的作用是:为其分配零值内存, 初始化一个指向类型的指针 `(*T)`，
 `someInt := new(int)` 相当于:
@@ -42,7 +53,7 @@ new 返回Pointer(数组就是指针)
     m := make(map[int]int)
     m := make(map[string]int)
 
-static size
+static size(默认是buffer size为0)
 
     slice := make([]int, 3)
         []int{0, 0, 0}

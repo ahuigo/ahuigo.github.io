@@ -500,7 +500,7 @@ Specify the number of records to skip before starting to return the records
     //// SELECT * FROM users; (users2)
 
 ### Count
-Get how many records for a model
+Return how many records for a model
 
     err := db.Where("name = ?", "jinzhu").Or("name = ?", "jinzhu 2").Find(&users).Count(&count)
     //// SELECT * from USERS WHERE name = 'jinzhu' OR name = 'jinzhu 2'; (users)
@@ -582,6 +582,8 @@ Specify Joins conditions
     db.Limit(10).Find(&users1).Limit(-1).Find(&users2)
     //// SELECT * FROM users LIMIT 10; (users1)
     //// SELECT * FROM users; (users2)
+
+    db.Where(User{id:1}).Find(&users)
 
 ### Scan(&rows row var)
 Scan results into another struct.

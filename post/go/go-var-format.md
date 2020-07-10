@@ -167,10 +167,9 @@ html/template is for generating HTML output safe against code injection.
 template + data:
 
     const emailTmpl = `Hi {{.Name}}!
-    Your account is ready, your user name is: {{.UserName}}
-
-    You have the following roles assigned:
-    {{range $i, $r := .Roles}}{{if $i}}, {{end}}{{.}}{{end}}
+        Your account is ready, your user name is: {{.UserName}}
+        You have the following roles assigned:
+        {{range $i, $r := .Roles}}{{if $i}}, {{end}}{{.}}{{end}}
     `
 
     data := map[string]interface{}{

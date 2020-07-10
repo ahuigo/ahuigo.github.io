@@ -24,7 +24,7 @@
 - 2018-09-26 [二叉查找树和红黑树](/b/algorithm/tree-binary-search-tree) 
 - 2018-10-04 [py-test](/b/py/py-test) 
 - 2018-09-28 [flask route request response](/b/py/flask/2.flask-route) 
-- 2020-05-24 [nginx security](/b/nginx/nginx-sec) 
+- 2020-07-10 [nginx security](/b/nginx/nginx-sec) 
 - 2018-09-27 [Golang：Array and slice](/b/go/go-array-slice) 
 - 2018-09-27 [Golang func](/b/go/16.go-func) 
 - 2018-10-04 [php str](/b/php/php-str) 

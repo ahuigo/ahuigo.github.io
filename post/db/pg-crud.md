@@ -102,6 +102,11 @@ INSERT INTO table (id, field, field2)
 
     select 'abc'
 
+### offset
+
+    page=0
+    limit 10 offset 10*page
+
 ### not in
 https://stackoverflow.com/questions/19363481/select-rows-which-are-not-present-in-other-table
 
