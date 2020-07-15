@@ -66,7 +66,6 @@ click 之于argparse/argv, 相当于requests 之于urllib
 
 ## enum args
     from enum import Enum
-
     class Color(Enum):
         red = 'red'
         blue = 'blue'
@@ -75,8 +74,8 @@ click 之于argparse/argv, 相当于requests 之于urllib
         def __str__(self):
             return self.value
 
-    parser.add_argument('color', type=Color, choices=list(Color))
-    parser.add_argument('color', type=str, choices=('red','blue'))
+    parser.add_argument('--color', type=Color, choices=list(Color))
+    parser.add_argument('--color', type=str, choices=('red','blue'))
 
 ## positional args
 

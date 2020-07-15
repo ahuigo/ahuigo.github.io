@@ -4,6 +4,7 @@ private:
 date: 2019-05-06
 ---
 # go http request
+	"net/http"
 
 ## 注意close body
 如果body既没有被完全读取，连接不会释放

@@ -162,10 +162,10 @@ len 限制了slice 读写，用reslice 创建新的slice 以便在cap 范围内�
     strings.Join(s[:], ",")
 
 ## copy
-slice 和 array 类型不同, 是按引用传值, 需要转一下array[:] (这点与python一样，py array 也是引用值)
+slice 和 array 类型不同, slice是按引用传值, 需要转一下slice[:] (go array是按值传值)
 
 ### reference copy
-a,b 本身value是指针
+slice/array 本身value是指针(按引用传值)
 
     a := []int{1,2,3}
     b := make([]int,2) 
@@ -250,6 +250,36 @@ Since a slice doesn't make a copy of the underlying array. To decrease memory  m
         copy(c, b)
         return c
     }
+
+# operation
+## push and pop
+## delete
+via copy Truncate
+
+    a := []string{"A", "B", "C", "D", "E"}
+    i := 2
+
+    a[i] = a[len(a)-1] // Copy last element to index i.
+                // copy(a[i:], a[i+1:]) // slow
+    a[len(a)-1] = ""   // Erase last element (write zero value).
+    a = a[:len(a)-1]   // Truncate slice.
+
+via append: 
+
+    func remove(items []string, item string) []string {
+        newitems := []string{}
+
+        for _, v := range items {
+            if v != item {
+                newitems = append(newitems, v)
+            }
+        }
+        return newitems
+    }
+
+### remove by index
+
+    s = append(s[:index], s[index+1:]...)
 
 # copy and deepcopy
 https://flaviocopes.com/go-copying-structs/

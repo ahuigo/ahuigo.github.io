@@ -198,9 +198,10 @@ describe table and sequence:
     \dt # with table_squence
     \dt [<table>]
 
-show create table:
+show create table(只能用命令行):
 
     pg_dump -st tablename dbname
+    pg_dump -st tablename -h host -U username dbname
 
 ### create
 

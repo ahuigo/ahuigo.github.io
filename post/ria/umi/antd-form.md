@@ -172,3 +172,15 @@ labelCol, wrapperCol 分别控制label/Item 的宽度
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
     </Form>
+
+## Input Row
+    <Input.Group size="large">
+      <Row gutter={8}>
+        <Col span={5}>
+          <Input defaultValue="0571" />
+        </Col>
+        <Col span={8}>
+          <Input defaultValue="26888888" />
+        </Col>
+      </Row>
+    </Input.Group>

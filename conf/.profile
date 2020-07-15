@@ -162,9 +162,10 @@ export GODEV=local
 export GO111MODULE=on 
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
-[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.14/libexec
+[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
 alias go12='export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec; ln -sf /usr/local/opt/go@1.12/bin/go /usr/local/bin/go'
 alias go14='export GOROOT=/usr/local/Cellar/go/1.14/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
+
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"

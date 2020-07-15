@@ -30,8 +30,6 @@ Detect Ajax(php 为例)：
         'X-Requested-With': 'XMLHttpRequest',
       },
     )
-
-
 # fetch
 ## request
         fetch('http://localhost:5001').then(response=>response.json()).then(json=>{

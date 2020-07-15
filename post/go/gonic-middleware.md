@@ -79,6 +79,11 @@ Abort(禁止冒泡)+JSON
 
     AbortWithStatusJSON(code int, jsonObj interface{})
 
+
+注意：middleware 是洋葱模型
+1. 如果middleware 没有c.Next() 它会隐式调用c.Next
+2. 如果调用c.Abort() 会阻止捕获、不会阻止冒泡
+
 ## middleware catch exception
 我们写一个自动捕获异常信息的中件件
 
@@ -109,7 +114,8 @@ Abort(禁止冒泡)+JSON
     }
 
 ## inside a middleware
-you **SHOULD NOT** use the original context inside it, 因为context 会变（无锁）
+> https://gin-gonic.com/docs/examples/goroutines-inside-a-middleware/
+you **SHOULD NOT** use the original context inside it, 因为context 会被copy（无锁）
 
     func main() {
         r := gin.Default()

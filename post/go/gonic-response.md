@@ -8,12 +8,15 @@ private:
 
     // 给Error 中间件 传 c.Errors.Errors() 
     c.AbortWithError(http.StatusBadRequest, errors.New("no task_id"))
-    // 请用这个： 有body
-    c.String(http.StatusBadRequest, "no task_id")
-    c.String(http.StatusBadRequest, err.Error())
+
+默认不输出errors, 不过middleware 可以冒泡得到errors
+
+    messages := c.Errors.Errors()
 
 ## string
     c.String(http.StatusOK, name)
+    c.String(http.StatusBadRequest, "no task_id")
+    c.String(http.StatusBadRequest, err.Error())
 
 ## JSON
     // gin.H is a shortcut for map[string]interface{}

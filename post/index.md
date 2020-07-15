@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-10-04 [ssl(https)](/b/nginx/nginx-ssl) 
+- 2016-06-19 [Start Golang](/b/go/0.go-book) 
 - 2018-09-27 [系统调用](/b/go/go-shell) 
 - 2018-09-27 [filepath](/b/go/go-file) 
 - 2019-03-25 [Golang notes: argv](/b/go/go-argv) 
@@ -37,5 +39,3 @@
 - 2018-10-04 [nginx location](/b/nginx/nginx-router) 
 - 2020-05-11 [2](/b/nginx/a.) 
 - 2018-09-27 [brew](/b/mac/mac-brew) 
-- 2014-03-05 [Shell 编程](/b/c/shell-cmd) 
-- 2020-05-20 [install](/b/nginx/nginx-install) 

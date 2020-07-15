@@ -209,6 +209,10 @@ struct method 是一个值：
     //如果定义为 struct{User User} 那么使用c.age就是非法
     c.age == c.User.age  //true
 
+assgin embedded
+
+    c.User == User{age:15}
+
 不能同时嵌⼊入某⼀一类型和其指针类型，因为它们名字相同会有冲突
 
     type Manager struct {

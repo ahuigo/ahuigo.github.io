@@ -21,7 +21,6 @@ date: 2018-10-04
 
 		#ssl_session_cache    shared:SSL:1m;
 		#ssl_session_timeout  5m;
-
 	}
 
 Refer to [](/p/net/net-ssl) and [nginx_https]

@@ -21,6 +21,7 @@ map
     bytes1 := json.Marshal(map[string]interface{}{
         "a":1,
         "k2":"b",
+        "time": time.Now(), // 默认rfc3339 "2020-07-15T17:05:05+08:00"
     })
 
 ### prettify json

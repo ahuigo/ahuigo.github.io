@@ -28,6 +28,8 @@ private:
 设置表名：
 
     db.Table(name string) *DB
+    db.Table("users")
+    db.Model(&User{})
 
 ### 全局禁用表名复数
     // 全局禁用表名复数
@@ -111,119 +113,6 @@ If you want to update a field’s value in BeforeCreate hook, you can use scope.
 ## INSERT + update
     Set("gorm:insert_option", "ON CONFLICT (user_id, date) DO UPDATE SET completion = excluded.completion").Create(&user)
 
-# Update(Save)
-    func (s *DB) Save(value interface{}) *DB
-    Save update value in database, if the value doesn't have primary key, will insert it
-
-## Update All Fields
-`Save` will include all fields when perform the Updating SQL, even it is not changed
-
-    db.First(&user)
-    user.Name = "jinzhu 2"
-    user.Age = 100
-    db.Save(&user)
-
-## Update Changed Fields
-If you only want to update changed Fields, you could use `Update`, `Updates`
-
-    // Update single attribute if it is changed
-    db.Model(&user).Update("name", "hello")
-    //// UPDATE users SET name='hello', updated_at='2013-11-17 21:34:10' WHERE id=111;
-
-    // Update single attribute with combined conditions
-    db.Model(&user).Where("active = ?", true).Update("name", "hello")
-    //// UPDATE users SET name='hello', updated_at='2013-11-17 21:34:10' WHERE id=111 AND active=true;
-
-### update data struct
-
-    // Update multiple attributes with `struct`, will only update those changed & non blank fields
-    db.Model(&user).Updates(User{Name: "hello", Age: 18})
-    //// UPDATE users SET name='hello', age=18, updated_at = '2013-11-17 21:34:10' WHERE id = 111;
-
-    // WARNING when update with struct, GORM will only update those fields that with non blank value
-    // For below Update, nothing will be updated as "", 0, false are blank values of their types
-    db.Model(&user).Updates(User{Name: "", Age: 0, Actived: false})
-
-### update interface
-
-    // Update multiple attributes with `map`, will only update those changed fields
-    db.Model(&user).Updates(map[string]interface{}{"name": "hello", "age": 18, "actived": false})
-    //// UPDATE users SET name='hello', age=18, actived=false, updated_at='2013-11-17 21:34:10' WHERE id=111;
-
-## Update Selected Fields
-If you only want to update or ignore some fields when updating, you could use `Select`, `Omit`
-
-    ```go
-    db.Model(&user).Select("name").Updates(map[string]interface{}{"name": "hello", "age": 18, "actived": false})
-    //// UPDATE users SET name='hello', updated_at='2013-11-17 21:34:10' WHERE id=111;
-
-    db.Model(&user).Omit("name").Updates(map[string]interface{}{"name": "hello", "age": 18, "actived": false})
-    //// UPDATE users SET age=18, actived=false, updated_at='2013-11-17 21:34:10' WHERE id=111;
-    ```
-
-## Update Columns w/o Hooks
-Above updating operations will perform the model's `BeforeUpdate`, `AfterUpdate` method, update its `UpdatedAt` timestamp, save its `Associations` when updating, if you don't want to call them, you could use `UpdateColumn`, `UpdateColumns`
-
-    ```go
-    // Update single attribute, similar with `Update`
-    db.Model(&user).UpdateColumn("name", "hello")
-    //// UPDATE users SET name='hello' WHERE id = 111;
-
-    // Update multiple attributes, similar with `Updates`
-    db.Model(&user).UpdateColumns(User{Name: "hello", Age: 18})
-    //// UPDATE users SET name='hello', age=18 WHERE id = 111;
-    ```
-
-## Batch Updates
-Hooks won't run when do batch updates
-
-    ```go
-    db.Table("users").Where("id IN (?)", []int{10, 11}).Updates(map[string]interface{}{"name": "hello", "age": 18})
-    //// UPDATE users SET name='hello', age=18 WHERE id IN (10, 11);
-
-    // Update with struct only works with none zero values, or use map[string]interface{}
-    db.Model(User{}).Updates(User{Name: "hello", Age: 18})
-    //// UPDATE users SET name='hello', age=18;
-
-    // Get updated records count with `RowsAffected`
-    db.Model(User{}).Updates(User{Name: "hello", Age: 18}).RowsAffected
-    ```
-
-## Update with SQL Expression
-
-    ```go
-    DB.Model(&product).Update("price", gorm.Expr("price * ? + ?", 2, 100))
-    //// UPDATE "products" SET "price" = price * '2' + '100', "updated_at" = '2013-11-17 21:34:10' WHERE "id" = '2';
-
-    DB.Model(&product).Updates(map[string]interface{}{"price": gorm.Expr("price * ? + ?", 2, 100)})
-    //// UPDATE "products" SET "price" = price * '2' + '100', "updated_at" = '2013-11-17 21:34:10' WHERE "id" = '2';
-
-    DB.Model(&product).UpdateColumn("quantity", gorm.Expr("quantity - ?", 1))
-    //// UPDATE "products" SET "quantity" = quantity - 1 WHERE "id" = '2';
-
-    DB.Model(&product).Where("quantity > 1").UpdateColumn("quantity", gorm.Expr("quantity - ?", 1))
-    //// UPDATE "products" SET "quantity" = quantity - 1 WHERE "id" = '2' AND quantity > 1;
-    ```
-
-## Change Values In Hooks
-If you want to change updating values in hooks using `BeforeUpdate`, `BeforeSave`, you could use `scope.SetColumn`, for example:
-
-    ```go
-    func (user *User) BeforeSave(scope *gorm.Scope) (err error) {
-        if pw, err := bcrypt.GenerateFromPassword(user.Password, 0); err == nil {
-            scope.SetColumn("EncryptedPassword", pw)
-        }
-    }
-    ```
-
-## Extra Updating option
-
-    ```go
-    // Add extra SQL option for updating SQL
-    db.Model(&user).Set("gorm:update_option", "OPTION (OPTIMIZE FOR UNKNOWN)").Update("name", "hello")
-    //// UPDATE users SET name='hello', updated_at = '2013-11-17 21:34:10' WHERE id=111 OPTION (OPTIMIZE FOR UNKNOWN);
-    ```
-
 # Read 
 ## Where
 Plain SQL
@@ -254,6 +143,11 @@ Plain SQL
     // BETWEEN
     db.Where("created_at BETWEEN ? AND ?", lastWeek, today).Find(&users)
 
+### Multiple where
+
+    // Time
+    db.Where("updated_at > ?", lastWeek)
+    .Where("created_at > ?", lastYear).Find(&users)
 ### Struct & Map & slice
 
     // Struct
@@ -514,6 +408,8 @@ Return how many records for a model
 
 NOTE When use Count in a query chain, it has to be the last one, as it will overwrite SELECT columns
 
+    db.Table("users").Offset(40).Limit(20).Find(&users).Offset(-1).Count(&total)
+    db.Model(&User{}).Offset(40).Limit(20).Find(&users).Offset(-1).Count(&total)
 ### Group & Having
 
     rows, err := db.Table("orders").Select("date(created_at) as date, sum(amount) as total").Group("date(created_at)").Rows()
@@ -630,19 +526,30 @@ Query single column from a model as a map, if you want to query multiple columns
     db.Select("name, age").Find(&users)
 
 # Update
+## Specify Primary Key(不能用`Model(&User{}).Save(&user)`)
+
+    db.Model(User{ID:1}).Updates(User{Name: "hello", Age: 18}).RowsAffected
+    db.Model(User{}).Updates(User{ID:1, Name: "hello", Age: 18}).RowsAffected
+
+默认更新全部
+
+    db.Model(User{}).Updates(User{Name: "hello", Age: 18}).RowsAffected //all
+
 ## Save 更新所有字段
+Save 会根据primary_key 自动创建/更新record
 Save会更新所有字段，即使你没有赋值
 
     db.First(&user)
 
     user.Name = "jinzhu 2"
     user.Age = 100
-    db.Save(&user)
+    db.Save(&user) //user 必须有一个primary_key 可以不必是ID
     //// UPDATE users SET name='jinzhu 2', age=100, birthday='2016-01-01', updated_at = '2013-11-17 21:34:10' WHERE id=111;
 
 ## Update 更新修改字段
-如果你只希望更新指定字段，可以使用Update或者Updates
+如果你只希望更新指定字段，可以使用Update或者Updates (Update 的底层是Updates)
 
+    ```go
     // Update single attribute if it is changed
     db.Model(&user).Update("name", "hello")
     //// UPDATE users SET name='hello', updated_at='2013-11-17 21:34:10' WHERE id=111;
@@ -658,25 +565,39 @@ Save会更新所有字段，即使你没有赋值
     // Update multiple attributes with `struct`, will only update those changed & non blank fields
     db.Model(&user).Updates(User{Name: "hello", Age: 18})
     //// UPDATE users SET name='hello', age=18, updated_at = '2013-11-17 21:34:10' WHERE id = 111;
+    ```
 
-// WARNING when update with struct, GORM will only update those fields that with non blank value
+WARNING when update with struct, GORM will only update those fields that with non blank value
 
+    ```go
     // For below Update, nothing will be updated as "", 0, false are blank values of their types
     db.Model(&user).Updates(User{Name: "", Age: 0, Actived: false})
+    ```
+
+### update interface
+
+    user:=User{ID:1} //where id=1
+
+    // Update multiple attributes with `map`, will only update those changed fields
+    db.Model(&user).Updates(map[string]interface{}{"name": "hello", "age": 18, "actived": false})
+    //// UPDATE users SET name='hello', age=18, actived=false, updated_at='2013-11-17 21:34:10' WHERE id=111;
+
 
 ## Update Selected Fields
-If you only want to update or ignore some fields when updating, you could use Select, Omit
+If you only want to update or ignore some fields when updating, you could use `Select`, `Omit`
 
+    ```go
     db.Model(&user).Select("name").Updates(map[string]interface{}{"name": "hello", "age": 18, "actived": false})
     //// UPDATE users SET name='hello', updated_at='2013-11-17 21:34:10' WHERE id=111;
 
     db.Model(&user).Omit("name").Updates(map[string]interface{}{"name": "hello", "age": 18, "actived": false})
     //// UPDATE users SET age=18, actived=false, updated_at='2013-11-17 21:34:10' WHERE id=111;
+    ```
 
 ## Update Columns w/o Hooks
-Above updating operations will perform the model’s `BeforeUpdate, AfterUpdate` method, update its `UpdatedAt timestamp`, save its `Associations` when updating, 
-if you don’t want to call them, you could use `UpdateColumn, UpdateColumns`
+Above updating operations will perform the model's `BeforeUpdate`, `AfterUpdate` method, update its `UpdatedAt` timestamp, save its `Associations` when updating, if you don't want to call them, you could use `UpdateColumn`, `UpdateColumns`
 
+    ```go
     // Update single attribute, similar with `Update`
     db.Model(&user).UpdateColumn("name", "hello")
     //// UPDATE users SET name='hello' WHERE id = 111;
@@ -684,10 +605,12 @@ if you don’t want to call them, you could use `UpdateColumn, UpdateColumns`
     // Update multiple attributes, similar with `Updates`
     db.Model(&user).UpdateColumns(User{Name: "hello", Age: 18})
     //// UPDATE users SET name='hello', age=18 WHERE id = 111;
+    ```
 
 ## Batch Updates
 Note: Hooks won’t run when do batch updates
 
+    ```go
     db.Table("users").Where("id IN (?)", []int{10, 11}).Updates(map[string]interface{}{"name": "hello", "age": 18})
     //// UPDATE users SET name='hello', age=18 WHERE id IN (10, 11);
 
@@ -695,13 +618,13 @@ Note: Hooks won’t run when do batch updates
     db.Model(User{}).Updates(User{Name: "hello", Age: 18})
     //// UPDATE users SET name='hello', age=18;
 
-Get updated records count with `RowsAffected`
-
+    // Get updated records count with `RowsAffected`
     db.Model(User{}).Updates(User{Name: "hello", Age: 18}).RowsAffected
+    ```
 
-batch muliple arrays?
+## Update with Raw SQL Expression
 
-## Update with SQL Expression
+    ```go
     DB.Model(&product).Update("price", gorm.Expr("price * ? + ?", 2, 100))
     //// UPDATE "products" SET "price" = price * '2' + '100', "updated_at" = '2013-11-17 21:34:10' WHERE "id" = '2';
 
@@ -713,21 +636,27 @@ batch muliple arrays?
 
     DB.Model(&product).Where("quantity > 1").UpdateColumn("quantity", gorm.Expr("quantity - ?", 1))
     //// UPDATE "products" SET "quantity" = quantity - 1 WHERE "id" = '2' AND quantity > 1;
+    ```
 
 ## Change Values In Hooks
-If you want to change updating values in hooks using BeforeUpdate, BeforeSave, you could use scope.SetColumn, for example:
+If you want to change updating values in hooks using `BeforeUpdate`, `BeforeSave`, you could use `scope.SetColumn`, for example:
 
+    ```go
     func (user *User) BeforeSave(scope *gorm.Scope) (err error) {
         if pw, err := bcrypt.GenerateFromPassword(user.Password, 0); err == nil {
             scope.SetColumn("EncryptedPassword", pw)
         }
     }
+    ```
 
 ## Extra Updating option
 
+    ```go
     // Add extra SQL option for updating SQL
     db.Model(&user).Set("gorm:update_option", "OPTION (OPTIMIZE FOR UNKNOWN)").Update("name", "hello")
-    //// UPDATE users SET name='hello', updated_at = '2013-11-17 21:34:10' WHERE id=111 OPTION (OPTIMIZE FOR UNKNOWN)
+    //// UPDATE users SET name='hello', updated_at = '2013-11-17 21:34:10' WHERE id=111 OPTION (OPTIMIZE FOR UNKNOWN);
+    ```
+
 
  # Delete
  ## 删除记录

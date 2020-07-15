@@ -8,10 +8,17 @@ date: 2019-04-22
 ## debug mode
  - using env:	export GIN_MODE=release
  - using code:	gin.SetMode(gin.ReleaseMode)
+三种mode: 
+
+    release, test, debug
+
+check mode
+
+    gin.IsDebugging()
 
 ## router log 
 
-    [GIN-debug] POST   /foo                      --> main.main.func1 (3 handlers)
+    [GIN-debug] POST   /foo               --> main.main.func1 (3 handlers)
 
 custom it:
 
