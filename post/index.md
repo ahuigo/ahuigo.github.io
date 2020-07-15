@@ -1,5 +1,5 @@
 # AHUIGO 的笔记
-- 2018-10-04 [ssl(https)](/b/nginx/nginx-ssl) 
+- 2018-10-04 [nginx的ssl配置](/b/nginx/nginx-ssl) 
 - 2016-06-19 [Start Golang](/b/go/0.go-book) 
 - 2018-09-27 [系统调用](/b/go/go-shell) 
 - 2018-09-27 [filepath](/b/go/go-file) 

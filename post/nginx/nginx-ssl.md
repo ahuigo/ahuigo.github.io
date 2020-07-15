@@ -1,8 +1,9 @@
 ---
-title: ssl(https)
+title: nginx的ssl配置
 date: 2018-10-04
 ---
-# ssl(https)
+# nginx ssl配置
+参考[](/p/net/net-ssl) and [nginx_https]
 
 	server {
 		listen 80;
@@ -23,14 +24,14 @@ date: 2018-10-04
 		#ssl_session_timeout  5m;
 	}
 
-Refer to [](/p/net/net-ssl) and [nginx_https]
 
-安全建议：( Refer: https://www.linux.cn/article-5374-1.html)
-
+安全建议：https://www.linux.cn/article-5374-1.html
 1. 不要使用存在安全缺陷的SSLv3 及以下协议, 并设置更强壮的加密套件（cipher suite）来尽可能启用前向安全性(Forward Secrecy)
 2. 禁用SSL 压缩来隐低CRIME 攻击
 
 > 免费获得非商业证书见: http://www.startssl.com/
 
-- [https]
+# References
+- [nginx_https]
+
 [nginx_https]: http://nginx.org/cn/docs/http/configuring_https_servers.html

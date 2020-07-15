@@ -28,6 +28,10 @@ private:
         IgnoreMe     int     `gorm:"-"` // ignore this field
     }
 
+默认值：
+
+	Desc string `gorm:"not null;default:''" `
+
 go 读取 null column时，默认：
 
     string ""
