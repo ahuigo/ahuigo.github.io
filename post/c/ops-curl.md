@@ -67,13 +67,20 @@ modify host for https:
 
     -o, --output
         -o /dev/null 
-
-# post form
+# request Data
+## post form
 post 默认是:application/x-www-form-urlencoded, 则不是multipart
 
     curl https://httpbin.org/post -d 'a=1'
 
-# upload
+## send array
+    application/x-www-form-urlencoded、multipart/form-data 、text/plain
+
+post/get:
+
+    curl host -d 'key=v1&key=v2'
+
+## upload
 form 不要自己设置content-type(boundary 因为要自动算)
 
 	curl 'http://localhost:8000/up.php'  -F 'pic=@img/a.png'

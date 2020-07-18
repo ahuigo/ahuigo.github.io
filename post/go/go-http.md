@@ -44,16 +44,16 @@ date: 2019-05-06
 
 ### post form
 #### post urlencoded
-	resp, err := http.Post("http://127.0.0.1:5000/header.php", "application/x-www-form-urlencoded",
+	resp, err := http.Post(
+        "http://127.0.0.1:5000/header.php", "application/x-www-form-urlencoded",
 		strings.NewReader("username=admin&password=pass"))
         
 #### url.Values
 urlencoded:
 
-    pn := fmt.Println
     resp, _ := http.PostForm("https://httpbin.org/post", url.Values{"key": {"Value"}, "id": {"123"}})
     body, _:= ioutil.ReadAll(resp.Body)
-    pn(string(body))
+    println(string(body))
 
 其中的url.Values 是map[string][]string (https://golang.org/pkg/net/url/#Values)
 
@@ -78,7 +78,9 @@ For control over HTTP client headers, redirect policy, and other settings, creat
 
 client.Do
 
-    req, err := http.NewRequest("POST", "http://example.com", nil) //body io.Reader=nil
+    req, err := http.NewRequest(
+        "POST", "http://example.com",
+         nil) //body io.Reader=nil
 	req.Header.Set("Content-Type", "application/json") //覆盖
     resp, _ := client.Do(req)
 

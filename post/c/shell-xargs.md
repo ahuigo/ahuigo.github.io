@@ -44,6 +44,13 @@ eval is a shell builtin command, not a standalone executable. Thus, xargs can't 
 	sh -c "$cmd" '2nd,3rd,.. args is ignored'
 
 ## 分割符
+    -L number
+        Call utility for every number non-empty lines read. 
+        The -L and -n options are mutually-exclusive; the last one given will be used.
+    -n number
+        默认 -n 5000
+        Call utility for every number non-empty token from standard input.
+
 默认是spaces/newlines 做分割的
 
     $ echo "one two three\nabc" | xargs -p -n1 echo
@@ -52,13 +59,13 @@ eval is a shell builtin command, not a standalone executable. Thus, xargs can't 
     echo three?...
     echo abc?...
 
-默认是按行分割
+按行分割
 
     $ echo "one two three\nabc" | xargs  -p -L1 echo
     echo one two three?...
     echo abc?...
 
-按null 分割
+按null 分割(不分)
 
 	 -0      Change xargs to expect NUL (``\0'') characters as separators, instead of spaces and newlines.  This is expected to be used in concert with the -print0 function in find(1).
 

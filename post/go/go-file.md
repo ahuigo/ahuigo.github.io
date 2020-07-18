@@ -1,5 +1,5 @@
 ---
-title: filepath
+title: golang 的filepath api
 date: 2018-09-27
 ---
 # dirpath

@@ -20,6 +20,7 @@ description:
 1. table 容器
 1. inline-[block|flex|...] 行内级
 
+
 ## box
 box 的 horizonal 水平居中
 居中的前提是要先设置盒子的大小:
@@ -61,6 +62,12 @@ https://css-tricks.com/almanac/properties/t/table-layout/
     td{    
         height: 14px; white-space: nowrap; 
         width="pixels|%"
+    }
+
+td 内容有时会撑大单元格，可以加word-break: 
+
+    td{
+        overflow-wrap: break-word;
     }
 
 ## ul/li自适应(百分比)

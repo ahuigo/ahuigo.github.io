@@ -4,6 +4,11 @@ date: 2019-07-19
 private:
 ---
 # DDL
+## 初始化db
+比如
+
+  db, err = gorm.Open("postgres", "host=localhost user=role1 dbname=ahuigo sslmode=disable password=")
+
 ## Column Name
 
     `gorm:"column:beast_id"`
@@ -114,6 +119,11 @@ If you want to update a field’s value in BeforeCreate hook, you can use scope.
     Set("gorm:insert_option", "ON CONFLICT (user_id, date) DO UPDATE SET completion = excluded.completion").Create(&user)
 
 # Read 
+对于Count来说，先设置表名
+
+    db = db.Model(&User{})
+    db.Where(&query).Count(&total)
+
 ## Where
 Plain SQL
 
@@ -148,6 +158,18 @@ Plain SQL
     // Time
     db.Where("updated_at > ?", lastWeek)
     .Where("created_at > ?", lastYear).Find(&users)
+
+### Chain 链
+    db = db.Model(&user)
+        .Where("username like ?", "%"+username+"%")
+	    .Where(&user)
+
+上面的带where条件的db，可以重复使用
+
+    db.Count(&total)
+    db.Find(&users).Error
+    db.Offset((page - 1) * size).Limit(size).Find(&users).Error
+
 ### Struct & Map & slice
 
     // Struct

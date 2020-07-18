@@ -4,6 +4,8 @@ date: 2019-11-07
 private: 
 ---
 # docker makefile
+这个makefile 
+```makefile
 version?=0.3.0
 image:
 	echoraw $(version)
@@ -17,3 +19,4 @@ push:
 test-docker:
 	echo $(version)
 	docker run --rm --dns=100.127.255.5 -e ENV_MODE=dev -v `pwd`/packages:/tmp/data registry.ahuigo.com/ahuigo/blog:${version}
+```

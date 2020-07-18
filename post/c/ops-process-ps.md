@@ -144,13 +144,13 @@ Example
 	 \_ php-fpm: pool www       459152  7732  3304
 	 \_ php-fpm: pool www       459152  7732  3304
 
-### command
+### 打印指令
 print command name (not path)
 
 	ps c
 		Show the true command name. not from argv
 
-### info note
+### 字段说明
 
 	USER: 行程拥有者
 	PID: pid
@@ -172,8 +172,11 @@ print command name (not path)
 #### MEM
 rss 是进程占用的物理内存，但是所有进程加起来的rss 会超过物理内存（因为进程间有很多内存是共享的, 比如共享库）
 
-	RSS: 占用的记忆体大小
-	VSZ: 占用的虚拟记忆体大小
+	RSS: 常驻内存——程序+共享库(不同进程会重复计算共享库大小)+部分堆栈内存(另外部分堆栈内存是在交换区VSZ)
+        在 top 命令里对应的是 REZ
+    PSS: 实际使用的物理内存（共享库按照进程数等比例划分）
+    USS - Unique Set Size: 进程独自占用的内存（不包括共享库占用）
+	VSZ: 虚拟内存大小
 
 	rss       RSS    resident set size, the non-swapped physical memory that a task has used (in kiloBytes). (alias rssize, rsz).
 	vsz       VSZ    virtual memory size of the process in KiB (1024-byte units).(alias vsize)

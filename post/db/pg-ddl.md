@@ -201,7 +201,8 @@ describe table and sequence:
 show create table(只能用命令行):
 
     pg_dump -st tablename dbname
-    pg_dump -st tablename -h host -U username dbname
+    pg_dump -st tablename dbname -h host -U username -p port 
+
 
 ### create
 
@@ -213,6 +214,10 @@ show create table(只能用命令行):
         location varchar(25) check (location in ('north', 'south', 'west', 'east',  'northwest')),
         install_date date
     );
+
+#### 修改autoincrement id
+
+    ALTER SEQUENCE oauth_tokens_id_seq RESTART WITH 94
 
 #### create view table
 	create view t_view as

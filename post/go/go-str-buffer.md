@@ -102,15 +102,13 @@ e.g.读取一行(包括分隔符)
 # io.Reader interface
 除了bytes Buffer, 还有strings reader, 它们都实现了io.Reader interface
 
-
     bytes.NewReader(jsonBytes) // *bytes.Reader
     bytes.NewBuffer(jsonBytes) // *bytes.Buffer
     strings.NewReader(json) // *strings.Reader
+
     var s *strings.Reader = strings.NewReader("username=admin&password=pass"))
 
 ## convert map to io.Reader
-
-
 
 # todo
 Go 中 io 包的使用方法

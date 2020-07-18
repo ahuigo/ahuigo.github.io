@@ -5,9 +5,7 @@ private: true
 ---
 # Umi form 表单
 
-    <Form
-        layout="inline" ...
-    >
+    <Form layout="inline" ... >
 
 # 存值
 

@@ -21,29 +21,30 @@ private: true
 # set req
 ## Set header
 ### 全局与局部header
-``` go
-req := requests.Requests()
-req.Header.Set("accept-encoding", "gzip, deflate, br")
-resp,_ := req.Get("http://go.xiulian.net.cn",requests.Header{"Referer":"http://www.jeapedu.com"})
-println(resp.Text())
-
-```
+    ``` go
+    req := requests.Requests()
+    req.Header.Set("accept-encoding", "gzip, deflate, br")
+    resp,_ := req.Get("http://go.xiulian.net.cn",requests.Header{"Referer":"http://www.jeapedu.com"})
+    println(resp.Text())
+    ```
 
 ### multiple header argv
-``` go
-h := requests.Header{
-  "Referer":         "http://www.jeapedu.com",
-  "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-}
-h2 := requests.Header{
-  ...
-  ...
-}
-h3,h4 ....
-// two or more headers ...
-resp,_ = req.Get("http://go.xiulian.net.cn",h,h2,h3,h4)
-```
+    ``` go
+    h := requests.Header{
+        "Referer": "http://www.jeapedu.com",
+    }
+    h2 := requests.Header{ ... }
+    // two or more headers ...
+    resp,_ = req.Get("http://go.xiulian.net.cn",h,h2,h3,h4)
+    ```
+## set cookie
+	cookie1 := http.Cookie{Name: "cookie_name", Value: "cookie_value"}
+    req.SetCookie(&cookie1)
+    req.SetCookie(&cookie2)
 
+Note 每次请求后会自动请理req和/Client的 cookie
+
+    req.ClearCookies()
 
 ## Set params
     p := requests.Params{
@@ -51,8 +52,6 @@ resp,_ = req.Get("http://go.xiulian.net.cn",h,h2,h3,h4)
     "name":  "file",
     }
     resp,_ := req.Get("http://www.cpython.org", p)
-
-
 
 ## Auth
     req := requests.Requests()

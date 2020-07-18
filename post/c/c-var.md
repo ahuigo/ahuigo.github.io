@@ -202,7 +202,7 @@ indent 用于格式化c 代码
 
 -kr选项表示K&R风格,-i8表示缩进8个空格的长度
 
-# dic
+# 名词
 
 	%: percent sign
 	; : simicolon
