@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2020-05-08 [Niz 键盘的配置](/b/mac/keyboard) 
 - 2018-09-27 [go routines](/b/go/go-routines) 
 - 2020-07-18 [go routines 与原子](/b/go/go-routines-atom) 
 - 2018-09-27 [Golang Interfaces](/b/go/16.go-interface) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [Systemd](/b/c/service/init-systemd) 
 - 2018-09-27 [Systemd 日志管理](/b/c/service/init-systemd-log) 
 - 2020-05-29 [nginx 的变量类型](/b/nginx/nginx-var-env-str) 
-- 2020-05-11 [nginx 的变量类型](/b/nginx/nginx-var) 

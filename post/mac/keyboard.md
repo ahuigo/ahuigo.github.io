@@ -1,7 +1,6 @@
 ---
-title: 键盘
+title: Niz 键盘的配置
 date: 2020-05-08
-private: true
 ---
 # 键盘
 看上两款键盘:
@@ -71,6 +70,10 @@ niz好像所有的按键都可以定制
 
 比如，我想将`esc` 映射到``` `~```，就如下图这样，点ESC键，录制``` ` ```, 然后写入配置成功，就表示完成
 ![](/img/mac/keyboard-niz-custom-esc.png)
+
+atom68缺少一个左Fn 不太方便，于是我通过`程控键`改了下按键：
+1. 将左`ctrl&Caps` 映射为右FN
+2. 将`右Alt`映射为ctrl/caps: `非FN` 时为`CapsLock`,`Fn`时为`Catl&Caps`交换键
 
 # F1-F12
 ## mac F1-F12
