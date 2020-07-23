@@ -70,17 +70,23 @@ egg-view-nunjucks 等 View 插件会自动对 Form 进行注入
 利用:
     x.126.com.xxx.com
 
-## SameSite
+## SameSite 与csrf
+sameSite同站指: 
+1. 我们在www.bank.com, bank.com 等页面 访问其它子域名如image.bank.com 被视为samesite. 
+2. 如果是第三方网站hack.com 访问image.bank.com 就是非同站。
 
-    Set-Cookie: sess=abc123; path=/; SameSite
+如果不限制cookie samesite 就存在风险
+1. hack.com 诱导用户提交post 表单发password.bank.com
+1. hack.com 内嵌image.bank.com 图片，用户bank追踪用户。
 
-SameSite 分两种:
-1. SameSite=Strict  A站，直接点击facebook.com 没有cookie
-2. SameSite=Lax,  GET、HEAD、OPTIONS 和 TRACE 跨域带cookie, POST 跨域不带cookie
+Sameite 可以限制三方请求带cookie
 
+    Set-Cookie: sess=abc123; path=/; Domain=bank.com; SameSite
 
-# url 钓鱼
-由于是从可信的站点跳转出去的，用户会比较信任
+SameSite 分三种:
+1. SameSite=Strict  在第三方站放一个github.com 的链接，点击跳github.com 永远是是未登录
+2. SameSite=Lax,(chrome 新版默认值)  GET请求都会带cookie, 其它都不带cookie
+3. SameSite=None,  全允许带cookie. 这种模式必须同时设置Secure属性（Cookie 只能通过 HTTPS 协议发送）
 
 
 # app

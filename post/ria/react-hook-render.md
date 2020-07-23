@@ -12,14 +12,13 @@ private: true
 1.useState:
 
     const forceUpdate: () => void = React.useState()[1].bind(null, {}) 
-    //相当于
-    const [,forceUpdate] = React.useState()
-    const forceUpdate: () => void = setUpdate.bind(null, {}) 
-
 
 2.useReducer
 
     const forceUpdate = React.useReducer(() => ({}), {})[1] as () => void
+    const forceUpdate = React.useReducer(() => ({}))[1]
+
+
 
 > useState 内部调用的是useReduce, 源码：https://github.com/facebook/react/blob/16.8.6/packages/react-dom/src/server/ReactPartialRendererHooks.js#L254
 

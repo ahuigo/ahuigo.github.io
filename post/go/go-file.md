@@ -19,7 +19,7 @@ abs
 
     filepath.Abs(exec.LookPath(os.Args[0]))。
 
-## glob
+## glob match
     import (
         "fmt"
         "path/filepath"

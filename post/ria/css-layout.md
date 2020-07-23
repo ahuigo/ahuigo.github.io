@@ -58,7 +58,9 @@ https://css-tricks.com/almanac/properties/t/table-layout/
 
 ### row
     .topics tr { line-height: 14px; }
-### td
+### td 换行
+可以采用：
+
     td{    
         height: 14px; white-space: nowrap; 
         width="pixels|%"
@@ -69,6 +71,9 @@ td 内容有时会撑大单元格，可以加word-break:
     td{
         overflow-wrap: break-word;
     }
+
+#### td 等宽度
+    <table style={table-layout: fixed;}>
 
 ## ul/li自适应(百分比)
 ### 下拉菜单列表

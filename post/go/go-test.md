@@ -109,7 +109,7 @@ Error/Fatal 都会导致bench 不被执行
 ## bench test rule
 1.go test不会默认执行压力测试的函数，如果要执行压力测试需要带上参数`-test.bench`，语法:
 
-    go test -test.bench="Benchmark_*"    表示测试全部的压力测试函数
+    go test -test.bench="Benchmark_*"    #表示匹配所有的`Benchmark_`或`Benchmark`打头的压力测试函数
 
 2.XXX可以是任意字母数字的组合，但是首字母不能是小写字母
 

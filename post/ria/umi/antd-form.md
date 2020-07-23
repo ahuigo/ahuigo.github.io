@@ -23,7 +23,7 @@ private: true
 
     <Select defaultValue={86400} >
 
-## fields 存值
+## OnFilesChange 存值
 Store Form Data into Upper Component
 
     // const initFields = Object.entries(def).map((item) => ({name:item[0],value:item[1]}))
@@ -46,8 +46,8 @@ Store Form Data into Upper Component
       </Form.Item>
     </Form>
 
-## formInstance 存值
-可以通过formInstance, 建立Input 与form 之间的数据响应
+## getFieldDecorator 存值
+ 建立Input 与form 之间的数据响应
 
     const LoginForm = () => {
         const form = Form.useform({
@@ -66,11 +66,17 @@ Store Form Data into Upper Component
         );
     };
 
+
 ## required 值
     <Form.Item 
         label="密码" name="password" 
-        rules={[{ required: true, message: 'input password !' }]}
+        rules={[{ required: true, message: 'input password !', type:'string' }]}
     >
+
+# 取值
+
+    form.getFildValue("key")
+    form.getFildsValue()
 
 # 更新field
 ## 手动更新field
@@ -81,16 +87,6 @@ Item: 用setFieldsValue
         value={form.getFieldValue('name')}
     >
 
-## via decorator item
-    {getFieldDecorator('labels', {
-        rules: [
-            {
-                required: true,
-                message: '请选择标签',
-                type: 'array',
-            },
-        ],
-    })(<Input/>)
 
 ## via Form.Item
 

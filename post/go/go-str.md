@@ -247,6 +247,8 @@ example:
 	}
 
 # String function
+## replace
+    ReplaceAll(s, old, new string) string
 ## trim
 trim 字符集
 

@@ -69,7 +69,7 @@ private: true
         <div style="background:blue">center</div>
     </div>
 
-## flex center(inner center)
+## flex center(内部内容居中)
 ### flex container: item center
 one: flex 
 

@@ -371,7 +371,7 @@ pthread_mutex_init 对Mutex 做初始化，参数attr 用于设定Mutex 属性�
 
 可以看到，unlock 只有一个操作，可汇编码为单条指令，它是原子性的(单个cpu 时钟内，就能执行一条完成的汇编命令)
 但是lock，包含两个操作：一个是对mutex 的状态判断，一个是对mutex 状态设置。这两个操作, 有因果关系，必须合并为一个原子操作才能避免多个线程同时加锁成功。
-其实，大多数汇编指令都提供了swap 或者 exchange 指令，这个指令就可以实现将:状态判断和状态设置 合并为一个原子操作。以x86 的xchg 实现lock 和 unlock:
+其实，大多数汇编指令都提供了swap 或者 exchange CAS 指令，这个指令就可以实现将:状态判断和状态设置 合并为一个原子操作。以x86 的xchg 实现lock 和 unlock:
 
 	lock:
 		movb $0, %al;

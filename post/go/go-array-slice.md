@@ -226,7 +226,13 @@ The `range` form the `for loop iterates` over a `array, slice, string or map`, o
 		fmt.Printf("index=%d, %d\n", i, v)
 	}
 
-> range is not reference! range 会复制对象
+注意range is not reference! range 会复制对象. 除非使用指针
+
+    // go-lib/array/range-copy-pointer.go
+    roles := Roles{&Role{[]string{"ahui"}}}
+    for _, role:= range roles{
+        fmt.Printf("%p,%p\n", role,roles[0])
+    }
 
 ### skip range index
 You can skip the index or value by assigning to _.

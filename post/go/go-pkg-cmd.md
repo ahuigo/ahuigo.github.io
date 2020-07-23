@@ -21,15 +21,23 @@ go build的时候会选择性地编译以系统名结尾的文件（Linux、Darw
 ## go clean
 go clean 命令是用来移除当前源码包里面编译生成的文件，这些文件包括
 
+    二进制binary文件
+        DIR(.exe) 由 go build 产生
+        DIR.test(.exe) 由 go test -c 产生
+        MAINFILE(.exe) 由 go build MAINFILE.go产生
     _obj/ 旧的object目录，由Makefiles遗留
     _test/ 旧的test目录，由Makefiles遗留
     _testmain.go 旧的gotest文件，由Makefiles遗留
     test.out 旧的test记录，由Makefiles遗留
     build.out 旧的test记录，由Makefiles遗留
     *.[568ao] object文件，由Makefiles遗留
-    DIR(.exe) 由 go build 产生
-    DIR.test(.exe) 由 go test -c 产生
-    MAINFILE(.exe) 由 go build MAINFILE.go产生
+
+比如
+
+    ## print
+    go clean -i -n github.com/ahuigo/arun
+    ## do run
+    go clean -i github.com/ahuigo/arun
 
 ## go fmt
 go fmt 命令主要是用来帮你格式化所写好的代码文件。

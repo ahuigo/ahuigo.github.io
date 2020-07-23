@@ -55,7 +55,7 @@ Creat: 创建真正的record
 NewRecord: check if value's primary key is blank(check v.ID, 不会insert 数据)
 
     p := Product{Code: "L1217", Price: 17}
-    fmt.Printf("%#v\n", db.NewRecord(p))    // => 主键为空返回`true`
+    fmt.Printf("%#v\n", db.NewRecord(p))    // => 主键为空, 则返回`true`
     if db.NewRecord(p){
         fmt.Printf("%#v\n", p.ID)
         db.Create(&p)                           // 返回 DB
