@@ -5,7 +5,7 @@ category: blog
 description: 
 date: 2018-09-27
 ---
-# lsof
+# lsof: list open file
 [/p/linux-process-lsof](/p/linux-process-lsof)
 
 List Open File. 比如查看所有打开file descriptor
@@ -16,6 +16,60 @@ List Open File. 比如查看所有打开file descriptor
 
 	-n  inhibits  the conversion of network numbers to host names for network files.
 	-P  inhibits  the conversion of port numbers to port names for network files.
+
+### 显示fd
+>参考：https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/lsof.html
+lsof 输出有一列是fd
+
+    $ sleep 130 >& 1.txt & 
+    [4] 48020
+    $ lsof -p $!          
+    COMMAND   PID USER   FD   TYPE DEVICE  SIZE/OFF      NODE NAME
+    sleep   48020 ahui    0u   CHR   16,3 0t6282450     13225 /dev/ttys003
+    sleep   48020 ahui    1w   REG    1,4         0  33995271 /Users/a/1.txt
+    sleep   48020 ahui    2w   REG    1,4         0  33995271 /Users/a/1.txt
+    sleep   48020 ahui    6u   CHR   16,3 0t6282450     13225 /dev/ttys003
+
+FD：文件描述符，应用程序通过文件描述符识别该文件。如cwd、txt, 1w等:
+
+    （1）cwd：表示current work dirctory，即：应用程序的当前工作目录，这是该应用程序启动的目录，除非它本身对这个目录进行更改
+    （2）txt ：该类型的文件是程序代码，如应用程序二进制文件本身或共享库，如上列表中显示的 /sbin/init 程序
+    （3）lnn：library references (AIX);
+    （4）er：FD information error (see NAME column);
+    （5）jld：jail directory (FreeBSD);
+    （6）ltx：shared library text (code and data);
+    （7）mxx ：hex memory-mapped type number xx.
+    （8）m86：DOS Merge mapped file;
+    （9）mem：memory-mapped file;
+    （10）mmap：memory-mapped device;
+    （11）pd：parent directory;
+    （12）rtd：root directory;
+    （13）tr：kernel trace file (OpenBSD);
+    （14）v86  VP/ix mapped file;
+    （15）0：表示标准输入
+    （16）1：表示标准输出
+    （17）2：表示标准错误
+
+一般在标准输出、标准错误、标准输入后还跟着文件状态模式：r、w、u等
+
+    （1）u：表示该文件被打开并处于读取/写入模式
+    （2）r：表示该文件被打开并处于只读模式
+    （3）w：表示该文件被打开并处于
+    （4）空格：表示该文件的状态模式为unknow，且没有锁定
+    （5）-：表示该文件的状态模式为unknow，且被锁定
+
+同时在文件状态模式后面，还跟着相关的锁
+
+    （1）N：for a Solaris NFS lock of unknown type;
+    （2）r：for read lock on part of the file;
+    （3）R：for a read lock on the entire file;
+    （4）w：for a write lock on part of the file;（文件的部分写锁）
+    （5）W：for a write lock on the entire file;（整个文件的写锁）
+    （6）u：for a read and write lock of any length;
+    （7）U：for a lock of unknown type;
+    （8）x：for an SCO OpenServer Xenix lock on part      of the file;
+    （9）X：for an SCO OpenServer Xenix lock on the      entire file;
+    （10）space：if there is no lock.
 
 ## via socket
 Find original owning process of a Linux socket
@@ -35,6 +89,7 @@ Find original owning process of a Linux socket
 		selects -U(socket) that belong to processes owned by user‘‘foo’’.
 
 ## via fd
+通过fd 查找打开的文件
 
 	$ strace -p <pid> -f
 	poll([{fd=5, events=POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND}], 1, 1000) = 0 (Timeout)
@@ -96,7 +151,8 @@ find all listen port
 
 	$lsof +d mydir1/
 
-# /proc(procfs File System)
+# 系统相关
+## /proc(procfs File System)
 /proc (or procfs) is a pseudo-file system that it is dynamically generated after each reboot. It is used to access kernel information.
 
     /proc/PID/cmdline : process arguments
@@ -107,7 +163,7 @@ find all listen port
     /proc/PID/status : basic information about a process including its run state and memory usage.
     /proc/PID/task : hard links to any tasks that have been started by this (the parent) process.
 
-# List File Descriptors in Kernel Memory
+## List File Descriptors in Kernel Memory
 
     $ sysctl fs.file-nr
     fs.file-nr = 1020	0	70000
@@ -125,14 +181,13 @@ find out the system-wide maximum number of file handles:
     $ sysctl fs.file-max
     fs.file-max = 70000
 
-# find process
+# find process by file
 
 	lsof file 查看文件被哪些进程使用
 	fuser -m -u file
 		-m 显示pid
 		-u 显示owner
 		-k kill 占用的进程
-
 
 # References
 - [c-debug-tool]

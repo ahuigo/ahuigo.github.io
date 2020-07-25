@@ -8,6 +8,7 @@ private:
 ## shell操作
 过滤出正则
 ## http网络/socket 
+tcp/udp 网络
 
 ## 求矩形相交的面积
 请用任意语言实现矩形相交面积的计算：
@@ -30,7 +31,7 @@ private:
     ["Shogun", "Tapioca Express", "Burger King", "KFC"]
     ["KFC", "Shogun", "Burger King"]
     输出: ["Shogun"]
-    解释: 他们共同喜爱且具有最小索引和的餐厅是“Shogun”，它有最小的索引和1(0+1)。
+    解释: 两数组中的值相同 且 具有`最小索引和`的是“Shogun”，它有最小的索引和1(0+1)。
 
 代码：
 

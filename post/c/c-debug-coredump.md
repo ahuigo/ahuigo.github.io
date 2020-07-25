@@ -26,18 +26,29 @@ then we know a signal like SIGQUIT(3), SIGILL(4), SIGTRAP(5) and others could oc
 	$ gcc coredump.c -o core-dump-file
 	$ ./core-dump-file
 
-OSX 的coredump 默认在：` /cores/core.pid` , 但是得Enable core-dump-file
+还有一种生成方式, 给一个coredump 信号
 
-	$ ulimit -c
-	> 0
-	$ ulimit -c unlimited
-	$ ulimit -c
-	> unlimited
+    sleep 100 &
+    killall -SIGSEGV sleep
+
+使用lldb/gdb 分析coredump
 
 	$ lldb ./core-dump-file /cores/core.19504
+	$ lldb -c /cores/core.19504
+
+OSX 的coredump 默认在：` /cores/core.pid` ;
+程序crash 相关plain text信息存在`/Library/Logs/DiagnosticReports` (system-wide) and `~/Library/Logs/DiagnosticReports` (user). 
+
+    # 也可以通过system.log 查找crash 日志, coredump 位置（我是没找到）
+    tail -f /var/log/system.log | grep crash
+
+要激活coredump  只需要取消core file size 的限制
+
+	ulimit -c 0
+    touch /cores/test && rm /cores/test # 确保有写入权限
+    defaults write com.apple.finder AppleShowAllFiles TRUE
 
 # 什么是Core：
-
 
 ## Core Dump时会生成何种文件：
 Core Dump时，会生成诸如 `core.进程号` 的文件。
@@ -77,11 +88,22 @@ Linux下，有一些设置，标明了resources available to the shell and to pr
 	%h - insert hostname where the coredump happened into filename  添加主机名
 	%e - insert coredumping executable name into filename  添加命令名
 
-### Core文件输出在何处：
-`/proc/sys/kernel/core_pattern` 可以控制core文件保存位置和文件名格式。
+### 查看coredump 配置
+
+    $ sysctl -a | grep core
+    kern.corefile: /cores/core.%P
+    kern.coredump: 1
+
+注意，文件夹必须可写
+
+    chmod a+w /cores
+
+### 设定core文件输出路径()
+`/proc/sys/kernel/core_pattern` 可以控制core文件保存位置和文件名格式(
 可通过以下命令修改此文件：
 
-	echo "/corefile/core-%e-%p-%t" > core_pattern，可以将core文件统一生成到/corefile目录下，产生的文件名为core-命令名-pid-时间戳
+    echo "/cores/core_%e_%t" > /proc/sys/kernel/core_pattern
+	echo "/cores/core-%e-%p-%t" > core_pattern，可以将core文件统一生成到/corefile目录下，产生的文件名为core-命令名-pid-时间戳
 	echo "core" > core_pattern  # 生成 core.pid，存放到当前目录
 
 centos6:

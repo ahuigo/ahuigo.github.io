@@ -98,10 +98,25 @@ Via FormData and file:
 ### blob as blob:url
 比如给链接增加下载功能
 
+    // text
     link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
 
+    // blob
     var blob = new Blob(['content'], { type: 'text/csv;charset=utf-8;' });
     link.setAttribute("href", URL.createObjectURL(blob));
+
+封装一下：
+
+    static downloadText(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+  }
 
 ### blob as base64
     var reader = new FileReader();

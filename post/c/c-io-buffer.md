@@ -6,8 +6,11 @@ description:
 date: 2018-09-27
 ---
 # Preface
-
 在标准I/O库中提供缓冲的主要目的就是减少系统函数read和write的调用，从而能够减少系统CPU时间。标准I/O库的缓冲主要分为3种：全缓冲、行缓冲和不缓冲。
+
+    全缓冲 _IO_FULL_BUF
+    行缓冲 _IO_LINE_BUF
+    无缓冲 _IO_UNBUFFERED
 
 # 1、全缓冲
 全缓冲就是当输入或输出时，当缓冲区被填满了之后，才会进行实际的I/O操作。下面是一个将”hello world!“写入log.txt文件的程序，演示了这一个过程。log.txt是空文件，长度为0。

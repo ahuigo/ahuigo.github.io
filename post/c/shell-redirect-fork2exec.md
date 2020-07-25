@@ -7,12 +7,22 @@ description:
 # Preface
 多进程的的内容包括进程控制, 进程通信, 进程本身的结构.
 
-# 重定向
+# 标准管道输入输出
+
+	#with stdout(cmd get double stdout); stdout pipe to cmd
+	echo abc | tee /dev/stdout | cmd
+	#with tty(screen)
+	echo abc | tee /dev/tty | cmd
+
 标准输入输出:
 
     /dev/stdin -> /dev/fd/0
     /dev/stdout -> /dev/fd/1
     /dev/stderr -> /dev/fd/2
+
+# 重定向
+## 查看进程重定向的文件
+通过proc:
 
     # sleep 130 >& 1.txt &
     [2] 19598
@@ -20,6 +30,16 @@ description:
     lrwx------ 1 root root 64 May 20 19:34 0 -> /dev/pts/1
     l-wx------ 1 root root 64 May 20 19:34 1 -> /root/1.txt
     l-wx------ 1 root root 64 May 20 19:34 2 -> /root/1.txt
+
+通过lsof:
+
+    $ sleep 130 >& 1.txt & 
+    [2] 46720
+    $ lsof -p 46720       
+    COMMAND   PID USER   FD   TYPE DEVICE  SIZE/OFF                NODE NAME
+    sleep   46720 ahui    0u   CHR   16,3 0t6198048               13225 /dev/ttys003
+    sleep   46720 ahui    1w   REG    1,4         0            33994299 /Users/ahui/test/1.txt
+    sleep   46720 ahui    2w   REG    1,4         0            33994299 /Users/ahui/test/1.txt
 
 ## 重定向语法
 ### 重定向：

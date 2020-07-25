@@ -36,6 +36,9 @@ go run 与 go build 都可以编译源码，只是go build 可生成二进制文
 
     $ go tool compile -help
 
+#### build assemble
+    go tool compile -S file.go > file.S
+
 #### print optimization decisions
 f you want to print optimization decisions for all packages including dependencies can use this command instead:
 

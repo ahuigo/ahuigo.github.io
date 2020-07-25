@@ -407,6 +407,12 @@ or
 	gdb> attach 123
 	(lldb) process attach --pid 123
 	(lldb) attach -p 123
+    (lldb) attach 123
+
+释放方法
+
+    (lldb) detach
+    Process 123 detached
 
 ### pname Attach to a process named "a.out"
 	gdb> attach a.out
@@ -543,6 +549,16 @@ gdb 参数：
 		x hex(default)
 		d decimal
 		b binary
+
+### expr 表达式计算
+
+    (lldb) expr long long * $limit = (long long *)malloc(16)
+    (lldb) expr $limit[0] = 0x7fffffffffffffff
+    (long long) $0 = 9223372036854775807
+    (lldb) expr $limit[1] = 0x7fffffffffffffff
+    (long long) $1 = 9223372036854775807
+    (lldb) expr (int)setrlimit(4, $limit)
+    (int) $2 = 0
 
 ### show via address (x,memory read)
 相当于show pointer

@@ -24,7 +24,7 @@ pattern 可以是
 	BEGIN
 	END
 
-其中
+其中BEGIN, END表示
 
 	BEGIN{ 这里面放的是执行前的语句 } #BEGIN不需要读取file文件
 	END {这里面放的是处理完所有的行后要执行的语句 }
