@@ -1,9 +1,12 @@
-conf1:
+.PHONY: config
+config:
 	echo ln ~/.config
 	ln -s `pwd`/config/* ~/.config/
-init:
-	ln -s `pwd`/.gitconfig .git/config
-	ln -s `pwd`/tool/pre-commit .git/hooks/pre-commit
+
+.PHONY: conf
+conf:
+	ln -s `pwd`/conf/.gitconfig ~/
+	ln -s `pwd`/tool/pre-commit ~/.git/hooks/pre-commit
 echo:
 	echo abc
 
