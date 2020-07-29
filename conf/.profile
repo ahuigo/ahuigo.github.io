@@ -161,6 +161,7 @@ alias yarn=tyarn
 export GODEV=local
 export GO111MODULE=on 
 export GOPATH=~/go
+export GOPROXY="https://goproxy.io"
 export PATH=$PATH:$GOPATH/bin
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
 [[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.14.3/libexec
