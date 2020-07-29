@@ -36,16 +36,6 @@ Detect Ajax(php 为例)：
             vm.products=json.products
         })
 
-### fetch with cookie
-credential 发送include cookie时，allow-origin 不能是`*`
-
-    fetch(url, {
-        credentials: "same-origin" //default
-        credentials: "include", // send cookie, use "omit" if not send cookie
-        mode: 'cors', //or "same-origin"
-    }).then(...).then(..).catch(...);
-    fetch(url).then(async r=> console.log(await r.text()))
-
 ### fetch post
 
     options:
@@ -71,11 +61,22 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
 
     credentials: "same-origin"
 
-为了让浏览器发送包含凭据的请求（即跨域源），要:
+为了让浏览器发送包含凭据Cookie 的请求（即跨域源），要:
 
     credentials : "include"
 
 当设置成include时，服务器返回的`Access-Control-Allow-Origin` 不能为`*`
+
+### cors with cookie
+credential 发送include cookie时，allow-origin 不能是`*`
+
+    fetch(url, {
+        credentials: "same-origin" //default
+        credentials: "include", // send cookie, use "omit" if not send cookie
+        mode: 'cors', //or "same-origin"
+    }).then(...).then(..).catch(...);
+    fetch(url).then(async r=> console.log(await r.text()))
+
 
 ### headers
 #### x-www-urlencode
@@ -103,7 +104,9 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
         body: searchParams
     })
 
-### cancel
+### cancel request
+参考： https://github.com/umijs/umi-request#use-cancel-token
+
     const controller = new AbortController()
     const signal = controller.signal
 
@@ -117,13 +120,11 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
 
     function beginFetching() {
         console.log('Now fetching');
-        var urlToFetch = "https://httpbin.org/delay/3";
-
-        fetch(urlToFetch, {
+        var url= "https://httpbin.org/delay/3";
+        fetch(url, {
                 method: 'get',
                 signal: signal,
-            })
-            .then(function(response) {
+            }) .then(function(response) {
                 console.log(`Fetch complete. (Not aborted)`);
             }).catch(function(err) {
                 console.error(` Err: ${err}`);

@@ -259,6 +259,11 @@ To remove any default value, use:
 
     ALTER TABLE products ALTER COLUMN price DROP DEFAULT;
 
+### add/del column
+    ALTER TABLE player drop id;
+    ALTER TABLE player drop column id;
+    ALTER TABLE player ADD COLUMN id SERIAL PRIMARY KEY;
+
 ### autoincrement
 删除id, 再重建
 

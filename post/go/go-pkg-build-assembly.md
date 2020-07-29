@@ -19,4 +19,3 @@ private: true
 
     go tool objdump executable > disassembly
 
-

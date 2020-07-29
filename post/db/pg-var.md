@@ -43,6 +43,11 @@ Null 列的缺点:
     select name::text::jsonb
     select 1::real
 
+空数组
+
+    array[]::varchar[]
+    '{}'::text[]
+
 ### Cast Convert
 
 	CAST(expr AS type)

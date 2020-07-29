@@ -130,12 +130,9 @@ String set
 
 ### ENUM
 
-	ENUM("str1",...., "str65535")
-	//如果声明了NOT NULL, 则默认第一个，否则默认NULL
-
-### SET
-SET 可以指定预定值中的一个或者多个值
-
-
-	set("str1","str2", ....)
-	insert table values('str1,str2,..')
+	//如果声明了NOT NULL, 则默认使用第一个
+    CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy');
+    CREATE TABLE person (
+        name text,
+        current_mood mood
+    );

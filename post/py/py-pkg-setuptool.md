@@ -50,6 +50,18 @@ setuptools 与 disutils
 1. import foo 依赖的是: `packages= ['foo']` 或`py_modules=["foo"]`
 2. 如果存在依赖：install_requires = [],  tests_require=[ 'pytest', ],
 
+### 命名
+在setup 中的命名
+
+    name = 'xlparser_py',
+    packages = ['xlparser'],
+    # or py_modules = ['xlparser'],
+
+对应实际使用时的命名为：
+
+    pip install xlparser_py
+    import xlparser
+
 ### pkg包文件
 默认打包时不会包含所有文件，我们需要通过`packags`指定包含哪些文件。
 

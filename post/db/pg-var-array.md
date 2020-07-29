@@ -10,12 +10,21 @@ private:
     CREATE TABLE contacts (
         id serial PRIMARY KEY,
         name VARCHAR (100),
-        phones TEXT []
+        phones INT []
+        names TEXT []
     );
 
     select array[1,2];
     select array['a','b'];
     select array['a',1]; # error
+
+### empty array
+    ALTER TABLE users add friends text[] DEFAULT array[]::varchar[];
+
+转换
+
+    array[]::varchar[]
+    '{}'::text[]
 
 ## insert array
     INSERT INTO contacts (name, phones) VALUES (

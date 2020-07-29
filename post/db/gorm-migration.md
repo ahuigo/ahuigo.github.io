@@ -31,6 +31,8 @@ private:
 默认值：
 
 	Desc string `gorm:"not null;default:''" `
+	Desc string `gorm:"not null;default:'{}'" `
+	Desc string `gorm:"not null;default:array[]::varchar[]" `
 
 go 读取 null column时，默认：
 
