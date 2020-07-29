@@ -24,12 +24,12 @@ homebrew主要分两部分：git repo（位于GitHub）和二进制bottles（位
 继续执行：brew install go, 据说，你可能会遇到签名问题
 
 #### brew cask path
-==> Homebrew-cask Staging Location:
-/opt/homebrew-cask/Caskroom
-==> Homebrew-cask Cached Downloads:
-/Library/Caches/Homebrew
-/Library/Caches/Homebrew/Casks
-~/Library/Caches/Homebrew/Cask
+    ==> Homebrew-cask Staging Location:
+    /opt/homebrew-cask/Caskroom
+    ==> Homebrew-cask Cached Downloads:
+    /Library/Caches/Homebrew
+    /Library/Caches/Homebrew/Casks
+    ~/Library/Caches/Homebrew/Cask
 
 
 ### brew 使用curl 下载
