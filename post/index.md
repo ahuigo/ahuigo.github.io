@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2020-08-02 [Mac shortcuts](/b/mac/mac-shortcuts) 
 - 2020-07-18 [go routines 与原子](/b/go/go-atom-string) 
 - 2018-09-27 [c-io-buffer](/b/c/c-io-buffer) 
 - 2018-09-27 [c-debug-gdb](/b/c/c-debug-gdb) 
@@ -38,4 +39,3 @@
 - 2018-10-04 [py-test](/b/py/py-test) 
 - 2018-09-28 [flask route request response](/b/py/flask/2.flask-route) 
 - 2018-10-06 [nginx security](/b/nginx/nginx-sec) 
-- 2018-09-27 [Golang：Array and slice](/b/go/go-array-slice) 

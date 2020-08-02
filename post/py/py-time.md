@@ -19,8 +19,25 @@ time 提供基本的时间，sleep
 	time.sleep(random.random())
 
 ## timeit
+指定次数
 
-### with Timer context
+    >>> timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)
+    0.3018611848820001
+
+多条初始语句
+
+    >>> timeit.timeit('text.find(char)', setup='text = "sample string"; char = "g"')
+    1.7246671520006203
+
+多次测试：
+
+    >>> t = timeit.Timer('char in text', setup='text = "sample string"; char = "g"')
+    >>> t.timeit()
+    0.3955516149999312
+    >>> t.repeat()
+    [0.40183617287970225, 0.37027556854118704, 0.38344867356679524, 0.3712595970846668, 0.37866875250654886]
+
+### 自定义 Timer context
 
     import time
     class Timer:

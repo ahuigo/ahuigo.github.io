@@ -70,24 +70,9 @@ Test Commands
 
 
 # Vscode go debug
-## hot reload
-https://github.com/cosmtrek/air
-有了Hot Reload 功能, 就可以方便Go source 代码修改后，实时重新编译并加载。这方面比较方便的工具是air
-
-配置文件 .air.conf, 在里面写好你好触发的编译命令和可执行文件：
-
-    cmd = "rm ./tmp/main;go build -o ./tmp/main cmd/main.go"
-    bin = "tmp/main"
-    cmd = "echo re run"
-    bin = "/usr/bin/env go run cmd/main.go -port 8081"
-
-或
-
-    full_bin = "MONGODB_HOST=127.0.0.1:27017 MONGODB_USER=test MONGODB_PASSWORD=test REDIS_ADDR=127.0.0.1 GIN_MODE=debug go run *.go"
-
-执行:
-
-    $ air -c .air.conf
+## arun
+    $ go get github.com/ahuigo/arun
+    $ arun go run main.go
 
 ## delve 版本太低 
 vscode有可能提示delve 版本太低，可以升级下
@@ -133,4 +118,3 @@ vscode有可能提示delve 版本太低，可以升级下
 
     如果断点设置在server 启动阶段，则每次启动server 才能触发断点。
     如果断点设置在 请求响应阶段（比如service），则发送请求后才能触发断点。
-

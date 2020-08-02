@@ -139,7 +139,6 @@ StringIO顾名思义就是在内存中读写str。
 
 ### init: as file object
 
-
 	>>> from PIL import Image
 	>>> from io import StringIO
 	>>> i = Image.open(StringIO('Hello!\nHi!\nGoodbye!')) # open(filename/file-object/Path)

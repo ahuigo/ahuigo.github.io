@@ -54,18 +54,7 @@ priority:
     TAB Auto-complete a name
     Ctrl-t  Transpose/drag  char. before the cursor ↷ over the character at the cursor
 
-### comment
-Comment your command
-
-	alt+#
-	ctrl+a # <enter>
-
 ### 定位
-
-#### 窗口定位(gnome)
-
-	ALT+NUM #tab 切换(会占用[readline])
-	ALT-CTRL-T #新建terminal window
 
 #### 光标定位
 
@@ -84,8 +73,8 @@ Comment your command
 
 #### Edit  Cmd Batched
 
+    $ export EDITOR=vim
 	<Ctrl-x><Ctrl-e> # Open a temporary editor, which is sepeciafied by $EDITOR
-
 
 ### 复制/粘贴(copy & paste)
 

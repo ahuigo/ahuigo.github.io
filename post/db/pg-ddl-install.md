@@ -15,6 +15,14 @@ mac:
 
     brew install postgresql
 
+    # 初始化数据库（默认role `whoami`）
+    initdb --locale=C -E UTF-8 /usr/local/var/postgres
+    
+    # run
+    brew services start postgresql
+
+    $ psql -U `whoami` postgres
+
 ## auth
 see db-user.md
 
@@ -50,6 +58,7 @@ see db-user.md
         # 关闭开机启动 是rm plist
         alias pg-stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
         MM
+
 
 然后登录：
 
