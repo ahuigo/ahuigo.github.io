@@ -203,7 +203,7 @@ If no content, reurn `empty slice`
 
 ## join
 
-  strings.Join([]string{"a","b"}, ",")
+    strings.Join([]string{"a","b"}, ",")
 
 # strconv
 
@@ -220,8 +220,8 @@ If no content, reurn `empty slice`
    
 ## io.Copy Reader
 
-		io.Copy(os.Stdout, &r)
-			实际调用r.Read(buf []byte)
+    io.Copy(os.Stdout, &r)
+        实际调用r.Read(buf []byte)
 
 example:
 

@@ -30,6 +30,11 @@ key:int
     m1 := map[string]int{"one": 1, "two": 2, "three": 3}
     fmt.Println(m1) //输出 map[two:2 three:3 one:1] (顺序在运行时可能不一样)
 
+key 可以是变量
+
+    key = "age"
+    m1 := map[string]int{key: 20}
+
 key:interface
 
     map[string]interface{}{

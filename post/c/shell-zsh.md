@@ -251,10 +251,6 @@ zsh号称终极shell, 配合iTerm2(terminal)会更加的方便. 本小节参考�
 ## open tab
 profiles -> General -> Working Directory
 
-## readline
-iterm2 下默认option + f/b 不是指向esc+f/b 的，导致这两个快捷键不能按单词移动光标。
-
-所以需要按`Cmd+,`, 然后在keys 中将这两个快捷键绑定到 `esc+f/b`
 
 ## window(tabs)
 
@@ -289,13 +285,11 @@ iterm2 下默认option + f/b 不是指向esc+f/b 的，导致这两个快捷键�
 	在链接上按住cmd+单击 直接打开url
 
 # zsh
-
-
 ## nocorrect
 
 	unsetopt correct
 
-## Hotkey
+## Readline Hotkey
 If u like for Ctrl+U to be bound to backward-kill-line rather than kill-whole-line, so add this to your `.zshrc`:
 
     bindkey \^U backward-kill-line
@@ -311,6 +305,11 @@ Also you can add a shortcuts in `preference -> keys`:
 	shortcuts: alt+f/alt+right_arrow
 	action: send escape sequence
 	ESC+: f
+
+### iter2 readline
+iterm2 下默认option + f/b 不是指向esc+f/b 的，导致这两个快捷键不能按单词移动光标。
+
+变通的方法是：按`Cmd+,`, 然后在keys 中将这两个快捷键绑定到 `esc+f/b`
 
 ## 光标移动
 
