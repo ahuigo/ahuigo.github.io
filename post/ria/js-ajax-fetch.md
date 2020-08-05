@@ -56,6 +56,18 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
 
     JSON.stringify(data); //默认： text/plain
 
+example
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-requested-with': 'XMLHttpRequest',
+            "Accept": "application/json", 
+        },
+        credentials: "include",
+        body:  JSON.stringify({a:1}),
+    })
+
 ### cors
 默认(跨域名)是不发送cookie的：
 
@@ -67,7 +79,9 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
 
 当设置成include时，服务器返回的`Access-Control-Allow-Origin` 不能为`*`
 
-### cors with cookie
+
+
+#### cors with cookie
 credential 发送include cookie时，allow-origin 不能是`*`
 
     fetch(url, {
@@ -77,6 +91,10 @@ credential 发送include cookie时，allow-origin 不能是`*`
     }).then(...).then(..).catch(...);
     fetch(url).then(async r=> console.log(await r.text()))
 
+记住，
+1. 最新的chrome 非同域的话，即使加了`credentials:"include"` 也不能发送cookie.
+除非设置: `SameSite=None`和`Secure`
+2. 跨子域名，不受影响
 
 ### headers
 #### x-www-urlencode

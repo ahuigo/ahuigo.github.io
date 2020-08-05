@@ -283,6 +283,3 @@ trim 字符串
 ## in stirng, contain
     import "strings"
     strings.Contains("something", "some") // true
-
-
-

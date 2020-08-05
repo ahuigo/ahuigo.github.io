@@ -248,11 +248,20 @@ Only the cmd start from `!` could be printed, here are some bad usages:
 # iTerm2
 zsh号称终极shell, 配合iTerm2(terminal)会更加的方便. 本小节参考了池建强的[终极shell]
 
-## open tab
+## 导入导出配置
+1. If you have a look at `Preferences -> General`
+2. you will notice at the bottom of the panel, there is a setting `Load preferences from a custom folder or URL:`. 
+3. There is a button next to it `Save settings to Folder`.
+
+
+## 快捷键配置
+注意，建议把　profile=>keys 选项卡中的`Option` 按键设置成`ESC+`
+![](/img/mac/iterm2-shortcut.png)
+
+## 新建tab默认打开当前的工作区
 profiles -> General -> Working Directory
 
-
-## window(tabs)
+## window(tabs) 快捷键
 
 	Cmd-W close current tab
 	cmd-Num	Goto tab No. as Num.
