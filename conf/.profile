@@ -154,8 +154,6 @@ alias yarn=tyarn
 # z.lua
 #eval "$(lua ~/conf/z.lua --init zsh)"
 
-[ -f ~/.private ] && source ~/.private
-[ -f ~/.local.rc ] && source ~/.local.rc
 
 # golang
 export GODEV=local
@@ -174,3 +172,6 @@ alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local
 export PATH="$PATH:$HOME/.rvm/bin"
 # Load RVM into a shell session *as a function*
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
+
+[ -f ~/.private ] && source ~/.private
+[ -f ~/.local.rc ] && source ~/.local.rc

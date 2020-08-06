@@ -115,8 +115,37 @@ If you want to update a field’s value in BeforeCreate hook, you can use scope.
     db.Set("gorm:insert_option", "ON CONFLICT").Create(&product)
     // INSERT INTO products (name, code) VALUES ("name", "code") ON CONFLICT;
 
-## INSERT + update
-    Set("gorm:insert_option", "ON CONFLICT (user_id, date) DO UPDATE SET completion = excluded.completion").Create(&user)
+## upsert: INSERT + update
+    db.Set("gorm:insert_option", "ON CONFLICT (user_id, date) DO UPDATE SET completion = excluded.completion").Create(&user)
+
+    db.Set("gorm:insert_option", "ON CONFLICT").Create(&product)
+
+或者
+
+    import "gorm.io/gorm/clause"
+
+    // Do nothing on conflict
+    DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&user)
+
+    // Update columns to default value on `id` conflict
+    DB.Clauses(clause.OnConflict{
+        Columns:   []clause.Column{{Name: "id"}},
+        DoUpdates: clause.Assignments(map[string]interface{}{"role": "user"}),
+    }).Create(&users)
+    // MERGE INTO "users" USING *** WHEN NOT MATCHED THEN INSERT *** WHEN MATCHED THEN UPDATE SET ***; SQL Server
+    // INSERT INTO `users` *** ON DUPLICATE KEY UPDATE ***; MySQL
+
+Update columns to new value on `id` conflict
+
+    DB.Clauses(clause.OnConflict{
+        Columns:   []clause.Column{{Name: "id"}},
+        DoUpdates: clause.AssignmentColumns([]string{"name", "age"}),
+    }).Create(&users)
+    // MERGE INTO "users" USING *** WHEN NOT MATCHED THEN INSERT *** WHEN MATCHED THEN UPDATE SET "name"="excluded"."name"; SQL Server
+    // INSERT INTO "users" *** ON CONFLICT ("id") DO UPDATE SET "name"="excluded"."name", "age"="excluded"."age"; PostgreSQL
+    // INSERT INTO `users` *** ON DUPLICATE KEY UPDATE `name`=VALUES(name),`age=VALUES(age); MySQL
+
+
 
 # Read 
 对于Count来说，先设置表名
@@ -491,7 +520,15 @@ Specify Joins conditions
     db.Last(&user)
     //// SELECT * FROM users ORDER BY id DESC LIMIT 1;
 
-### Find(&rows) Find(&row) 可以带where
+### Find(&rows) Find(&row)都可以，还可以带where
+    // 拿单条记录
+    db.Find(&User{})
+    //// SELECT * FROM users;
+
+    // Note bug: 以下这条语句相当于是where(比较奇耙)
+    db.Find(&User{id:1})
+    //// SELECT * FROM users where id=1;
+
     // 拿到所有的记录
     db.Find(&users)
     //// SELECT * FROM users;

@@ -280,6 +280,6 @@ trim 字符串
     copy(p,src)
     fmt.Println((p), len(p))
 
-## in stirng, contain
+## in stirng, contain, include
     import "strings"
     strings.Contains("something", "some") // true

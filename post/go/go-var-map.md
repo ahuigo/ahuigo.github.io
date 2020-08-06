@@ -65,13 +65,20 @@ init with variable key:
 ## nil map(不能扩容)
 The `zero` value of a map is `nil`. A `nil` map has no keys, nor can keys be added.
 
-  var m map[string]int
-  fmt.Println(m==nil);      //true
-  fmt.Printf("%#v\n", m)    //map[string]int(nil)
+    var m map[string]int
+    fmt.Println(m==nil);      //true
+    fmt.Printf("%#v\n", m)    //map[string]int(nil)
 
-  m=make(map[string]int)
-  fmt.Println(m==nil);      //false
-  fmt.Printf("%#v\n", m)    // map[string]int{}
+    m=make(map[string]int)
+    fmt.Println(m==nil);      //false
+    fmt.Printf("%#v\n", m)    // map[string]int{}
+
+下面这种形参，也是nil map
+
+    func f()(m map[string]int){
+        m["a"] = 1
+        return
+    }
 
 ## map index address
 map 只用于：`regular addressable value`类型
@@ -114,6 +121,7 @@ go `=`赋值只能用于addressable, 很可惜`p["HM"] is not addressable`.
 ## get
 
     elem := m[key] //key 不存在，默认是0
+    map[string][]string{}["no_key"] //默认是[]string{}
 
 ### test
 

@@ -101,6 +101,17 @@ A nil slice has a length and capacity of 0 and has `no underlying array`(no poin
         fmt.Println(s, len(s), cap(s))
     }
 
+无论是nil 还是非nil, 它们的len/cap都是0
+
+    var s []int
+    s=[]int(nil)
+    fmt.Println(s, len(s), cap(s))
+
+nil slice 是可以append的
+
+    // ok
+    s := append([]int(nil), 1)
+
 ### slice of the init array :
 
     s := []int{1,2,3,8:100} //len=9,cap=9
