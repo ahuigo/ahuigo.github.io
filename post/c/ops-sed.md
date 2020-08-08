@@ -94,6 +94,10 @@ example:
 	# -r 与-i 不能合并！sed 不能合并参数的！
 	sed -i -r 's/.{5}//' file
 
+指替换所有文件：
+
+    find ./ -type f -exec sed -i -e 's/apple/orange/g' {} \;
+
 ### 引用
 
 	//&引用search

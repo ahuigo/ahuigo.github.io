@@ -36,6 +36,13 @@ Detect Ajax(php 为例)：
             vm.products=json.products
         })
 
+with query
+
+    var url = new URL('https://sl.se')
+    var params = {lat:35.696233, long:139.570431} // or:
+    url.search = new URLSearchParams(params).toString();
+    fetch(url)
+
 ### fetch post
 
     options:

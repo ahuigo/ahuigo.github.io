@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-10-02 [Go Sync.Pool](/b/go/go-sync-pool) 
 - 2019-01-06 [设置系统的PATH](/b/c/ops-init-path) 
 - 2020-08-02 [Mac shortcuts](/b/mac/mac-shortcuts) 
 - 2020-07-18 [go routines 与原子](/b/go/go-atom-string) 
@@ -38,4 +39,3 @@
 - 2017-09-26 [跳跃表](/b/algorithm/tree-skiplist) 
 - 2018-09-26 [二叉查找树和红黑树](/b/algorithm/tree-binary-search-tree) 
 - 2018-10-04 [py-test](/b/py/py-test) 
-- 2018-09-28 [flask route request response](/b/py/flask/2.flask-route) 

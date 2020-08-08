@@ -15,6 +15,10 @@ description:
 	xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	xhr.send("xuehui1=1&xuehui2=2");
 
+with cors:
+
+    xhr.withCredentials = true;
+
 ## listener
 所有的e.target 指向xhr
 
@@ -107,3 +111,4 @@ http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
 		res = x.response;
 		console.log(res);//json
 	}
+    x.send("xuehui1=1&xuehui2=2");

@@ -56,6 +56,14 @@ flex 容器有主轴，侧轴之分
         flex-wrap:wrap-reverse;伸缩容器多行显示，但是伸缩项目每一行的排列顺序由下到上依次排列。
     [flex-flow]属性为flex-direction（主轴方向）和flex-wrap（侧轴方向）的缩写，两个属性决定了伸缩容器的主轴与侧轴。
         flex-flow:flex-direction;默认值为row  nowrap；
+
+### flex-wrap
+控制item 的wrap
+https://css-tricks.com/almanac/properties/f/flex-wrap/
+
+    nowrap (default): single-line (overflow)
+    wrap: multi-lines, direction is defined by flex-direction
+    wrap-reverse: multi-lines, opposite to direction defined by flex-direction
     
 ### box对齐:
 justify-content 用于定义`伸缩项目`在`主轴(横轴)`上面的的对齐方式

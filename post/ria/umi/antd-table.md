@@ -23,4 +23,20 @@ private: true
     />
 
 ## row key
-        rowKey={(row: any, i) => `key${i}`}
+    rowKey={(row: any, i) => `key${i}`}
+
+## 宽度自适应
+
+      <Table
+        bordered
+        // scroll={{ y: 1000 }}
+        scroll={{ x: 'max-content' }}
+        ...
+
+同时column 设置宽度
+
+
+    {
+      title: '资源',
+      dataIndex: 'resources',
+      width: '300px',

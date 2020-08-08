@@ -11,6 +11,15 @@ private: true
         addEventListener(type: string, listener: (ev: MouseEvent) => any, useCapture?: boolean): void;
     }
 
+### Form
+    HTMLTextAreaElement
+    HTMLInputElement
+
+### event
+    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    };
+
+
 ## import types from modules
     import moment from "moment"
     import * as X from 'rc-picker/lib/interface.d';

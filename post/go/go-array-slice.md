@@ -56,7 +56,7 @@ The type `[n]T` is an array of `n` values of type `T`
 	fmt.Println(pf)
 	fmt.Println(pfArr)
 
-## in_array
+## in array
     func arrayIndex(a string, list []string) (int) {
         for i, b := range list {
             if b == a {
@@ -65,6 +65,15 @@ The type `[n]T` is an array of `n` values of type `T`
         }
         return -1
     }
+
+用funk 代替：
+
+
+    funk.Contains([]string{"foo", "bar"}, "bar") // true
+
+    // slice of Foo ptr
+    funk.Contains([]*Foo{f}, f) // true
+    funk.Contains([]*Foo{f}, nil) // false
 
 # Slices
 slice 中的array 是C++隐式引用array:
