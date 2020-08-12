@@ -625,13 +625,17 @@ Save会更新所有字段，即使你没有赋值
     db.Model(&user).Updates(User{Name: "hello", Age: 18})
     //// UPDATE users SET name='hello', age=18, updated_at = '2013-11-17 21:34:10' WHERE id = 111;
     ```
-
+### 默认只更新struct 有值字段
 WARNING when update with struct, GORM will only update those fields that with non blank value
 
     ```go
     // For below Update, nothing will be updated as "", 0, false are blank values of their types
     db.Model(&user).Updates(User{Name: "", Age: 0, Actived: false})
     ```
+
+需要额外更新
+
+    db.Model(&user).Updates(User{Name: "", Age: 0, Actived: false}).Updates("age", 0).Error
 
 ### update interface
 

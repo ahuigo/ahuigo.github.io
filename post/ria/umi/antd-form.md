@@ -47,6 +47,8 @@ Store Form Data into Upper Component
     </Form>
 
 ## getFieldDecorator 存值
+> 推荐用v4的form.Item 代替 getFieldDecorator: https://ant.design/components/form/v3
+
  建立Input 与form 之间的数据响应
 
     const LoginForm = () => {

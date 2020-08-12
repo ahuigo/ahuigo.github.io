@@ -230,6 +230,12 @@ len(src)>len(dst) 会被golang 截断
 
     copy(slice[len(s):], data)
 
+### concat merge slice
+merge a and b:
+
+    x := []int{}
+    x = append(a,b...)
+
 ### append cap allocate
 If the backing array of `s` is too small to fit all the given values, a bigger array will be allocated(double cap).
 

@@ -22,6 +22,10 @@ private: true
         dataSource={data}
     />
 
+## no pagination
+    pagination={false} 
+
+
 ## row key
     rowKey={(row: any, i) => `key${i}`}
 

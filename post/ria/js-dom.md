@@ -136,7 +136,7 @@ device-width(jquery)
 窗口内宽/高
 
 	window.innerWidth, window.innerHeight;
-	//Same to
+	//Same as
 	document.documentElement.clientWidth, document.documentElement.clientHeight
 	897,731
 
@@ -190,6 +190,24 @@ div 的长宽度:
 元素切换到可视区：
 
 	ele.scrollIntoView()
+
+滑动到底部(div 必须是overflow:scroll):
+
+    // 滚动偏移=总长-clientHight
+    div.scrollTop = div.scrollHeight - div.clientHeight;
+
+##### scroll 底部检测
+document　到底部检测:
+
+    window.scrollY+document.body.clientHeight >= document.documentElement.scrollHeight
+
+    //或（等价）
+    window.scrollY + window.innerHeight
+    >= document.documentElement.scrollHeight
+
+div(overflow:scroll; height:100px) 底部检测
+
+    div.scrollTop + div.clientHeight >=div.scrollHeight 
 
 ##### 元素的滚动偏移(overflow: auto)
 所有元素默认0: 页面滚动不影响它。不是本身的偏移，而是其内部元素偏
