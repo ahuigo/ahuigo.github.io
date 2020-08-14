@@ -13,6 +13,25 @@ date: 2018-09-27
 	find . -name .DS_Store -exec rm {} +
 	//du -d 1
 
+# 输出控制
+    #-print 将查找到的文件输出到标准输出
+    #-false 将查找到的文件输出到标准输出
+    #-exec   command {} \;   将查到的文件执行command操作
+    #-ok command {} \; 和-exec相同，但是在操作前要询用户
+
+## print
+
+    # 默认会输出./demo
+    $ find . -path ./demo -prune  -o  -name '*'
+    ./demo
+
+    # 有了-print, 默认就不输出了
+    $ find . -path ./demo -prune  -o  -name '*' -print
+
+    # 全部加print 才能全部输出
+    $ find . -path ./demo -prune -print -o  -name '*' -print
+    ./demo
+
 # depth
 
 	find . -maxdepth 1 -name '*' -inum 1324 -exec rm {} \;
@@ -24,7 +43,7 @@ case insensitive
 
 	-iname '*abc*'
 
-# -perm
+# -perm 属性过滤
 
 	754(rwxr-xr--) a.txt
 	find . -perm 755 # 755 == 754 false
@@ -41,10 +60,6 @@ case insensitive
 
 ## atime
 最近第7天被访问过的所有文件:
-
-	find . -atime 7 -type f -print
-
-最近7天内被访问过的所有文件:
 
 	find . -atime -7 -type f -print
 
@@ -131,16 +146,16 @@ For example:
 	-path './[dir1|dir2]/*'
 
 ## exclude path
-`-prune` stops find from descending into a directory.
+`-prune` stops find from descending into a directory(只包括目录名).
 
 	# -prune does not exclude the directory itself but its contents. So you should use `-print` to print
 	find . -path ./dir -prune -o -name '*.txt' -print
-	find . -name dirname -prune -o -name '*.txt' -print
 
     # prune multiple directories
 	find . \( -path ./dir1 -o -path ./dir2 \) -prune -o -name '*.txt' -print
+
+    # prune with not expression
     find . -type f ! -path '*/.svn*' ! -path '*/.git*'
-    # prune with not
 	find . ! \( \(-path ./dir1 -o path ./dir2 \) -prune \) -name \*.txt
 
 Just specifying `-not -path` cannot stop find from descending into the skipped directory, so `-not -path` will work but it is not the best method:

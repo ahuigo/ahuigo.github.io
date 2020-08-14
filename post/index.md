@@ -17,7 +17,7 @@
 - 2018-10-04 [ssl(https)](/b/nginx/nginx-ssl) 
 - 2016-06-19 [Start Golang](/b/go/0.go-book) 
 - 2018-09-27 [系统调用](/b/go/go-shell) 
-- 2018-09-27 [golang 的filepath api](/b/go/go-file) 
+- 2018-09-27 [golang 的file api](/b/go/go-file) 
 - 2019-03-25 [Golang notes: argv](/b/go/go-argv) 
 - 2018-09-27 [go expression](/b/go/8.go-expr) 
 - 2020-01-20 [proxy 之charles](/b/net/proxy/proxy-charles) 

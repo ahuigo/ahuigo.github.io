@@ -46,14 +46,14 @@ select first phone number(不是从0开始)
 
 ## where array
 
-### in array
+### value in array
     where code in ('1','2')
     where code=any(ARRAY['1','2'])
 
 ### array.include
 0.利用index
 
-    where phone[1]='(408)-589-58423'
+    where phones[1]='(408)-589-58423'
 
 1.利用ANY(in array)
 

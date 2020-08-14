@@ -1,8 +1,8 @@
 ---
-title: golang 的filepath api
+title: golang 的file api
 date: 2018-09-27
 ---
-# dirpath
+# Directory Api
 
 ## pathinfo
 extinfo 
@@ -63,7 +63,7 @@ func Getwd() (pwd string, err error)
         fmt.Println(pwd)
     }
 
-# file
+# File Api
 
 ## open
     f, err := os.Open("/tmp/dat")
