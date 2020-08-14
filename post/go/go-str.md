@@ -1,7 +1,6 @@
 ---
 title: golang string
 date: 2018-09-27
-private:
 ---
 # rune vs byte
 
@@ -280,6 +279,6 @@ trim 字符串
     copy(p,src)
     fmt.Println((p), len(p))
 
-## in stirng, contain, include
+## in stirng, contains, include
     import "strings"
     strings.Contains("something", "some") // true
