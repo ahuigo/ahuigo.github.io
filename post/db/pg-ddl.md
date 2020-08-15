@@ -203,7 +203,6 @@ show create table(只能用命令行):
     pg_dump -st tablename dbname
     pg_dump -st tablename dbname -h host -U username -p port 
 
-
 ### create
 
     $ psql -f init.sql
@@ -214,10 +213,6 @@ show create table(只能用命令行):
         location varchar(25) check (location in ('north', 'south', 'west', 'east',  'northwest')),
         install_date date
     );
-
-#### 修改autoincrement id
-
-    ALTER SEQUENCE oauth_tokens_id_seq RESTART WITH 94
 
 #### create view table
 	create view t_view as
@@ -250,7 +245,7 @@ ALTER TABLE table_name `<action>`:
     constraint:
         ADD CONSTRAINT constraint_name constraint_definition
 
-### default
+### default value
 To set a new default for a column, use a command like:
 
     ALTER TABLE products ALTER COLUMN price SET DEFAULT 7.77;
@@ -275,3 +270,18 @@ To remove any default value, use:
     create sequence player_id_seq;
     alter table player alter playerid set default nextval('player_id_seq');
     Select setval('player_id_seq', 2000051 ); --set to the highest current value of playerID
+
+#### 修改autoincrement id
+id seq　一般保存在`<table>_id_seq`中，可以通过`\d`查看
+
+    select last_value from oauth_nonces_id_seq;
+    SELECT nextval('oauth_nonces_id_seq'::regclass)
+
+    # nextval 必须先执行、或者insert语句执行后，才可以调用 currval
+    select currval('oauth_nonces_id_seq');
+
+下面的语句等价
+
+    SELECT setval('users_id_seq', 94, true);  
+    ALTER SEQUENCE users_id_seq RESTART WITH 94
+
