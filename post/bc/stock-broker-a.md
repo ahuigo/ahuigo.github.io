@@ -3,7 +3,11 @@ title: A股券商名单
 date: 2020-08-15
 private: true
 ---
-# A股券商名单
+# 券商
+A券商评级:
+http://www.kaihu.la/956.html
+
+A股券商名单
 https://www.sac.net.cn/hysj/zqgsyjpm/201904/P020190404633589070389.pdf
 
 我不知道老巴是不是真的说过如果只有一个指标，他只看ROE这话。

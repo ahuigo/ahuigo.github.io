@@ -406,13 +406,19 @@ add as column
 ### T 转置
     df.T
 
-### 聚合运算
+### 聚合运算apply
 f.apply 是一个row/column 的聚合函数
 
     >>> df.apply(lambda x:x['index1'] >=2)
     col1    False
     col2     Truek
     >>> df.apply(lambda x:x['col1'] >=2, axis=1)
+
+### 聚合运算rolling_apply
+
+    # 计算close收盘价的5日均线和20日均线
+    data['MA_' + str(5)] = pd.rolling_apply(data['close'], 5,np.mean)
+    data['MA_' + str(20)] = pd.rolling_apply(data['close'], 20,np.mean)
 
 ### 比较df
 
@@ -454,6 +460,51 @@ f.apply 是一个row/column 的聚合函数
 ### sort df
     df.sort_values(by=['col1', 'col2'], ascending=False)
     df.sort_values(['job','count'],ascending=False).groupby('job').head(3)
+
+按索引排序
+
+    # axis=0 跨行（down），axis=1跨列(across)　axis=0是默认值
+    df.sort_index(axis=1, ascending=False)
+
+按索引排序例子
+
+    >>> df = pd.DataFrame([[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], \
+    ... columns=["col1", "col2", "col3", "col4"])
+    >>> df
+    col1  col2  col3  col4
+    0     1     1     1     1
+    1     2     2     2     2
+    2     3     3     3     3
+    >>> df.mean(axis=1)
+    0    1.0
+    1    2.0
+    2    3.0
+    >>> df.mean(axis=0)
+    col1    2.0
+    col2    2.0
+    col3    2.0
+    col4    2.0
+
+### shift
+从头部移入一行空行
+
+    >>> df
+    col1  col2  col3  col4
+    0     1     1     1     1
+    1     2     2     2     2
+    2     3     3     3     3
+
+    >>> df.pct_change()     # 计算价格增长百分比
+    col1  col2  col3  col4
+    0   NaN   NaN   NaN   NaN
+    1   1.0   1.0   1.0   1.0
+    2   0.5   0.5   0.5   0.5
+
+    >>> df/df.shift(1)-1    # 计算价格增长百分比
+    col1  col2  col3  col4
+    0   NaN   NaN   NaN   NaN
+    1   1.0   1.0   1.0   1.0
+    2   0.5   0.5   0.5   0.5
 
 ### update value
 #### update column
@@ -570,7 +621,7 @@ revert index to column
 
     df.reset_index(inplace=True, drop=True)
 
-## Add
+## df 添加数据
 ### concat series/df as df
 concat column:
 
@@ -614,10 +665,16 @@ init:
     0  1  1  31
     1  2  2  32
 
+
 合并on原基准是多列：
 
     left_on=['col1','col2']
     right_on=['col1','col2']
+
+### append df column
+还可以df1.join　将df2的列，合并到df1
+
+    In [31]: df1.join(df2)
 
 ### append df row
     >>> df1.append(df2)
@@ -656,9 +713,9 @@ list,series,dict as row
 
 ## Drop
 ### Drop columns
-immutable
+immutable(非原地修改)
 
-    # 等价 axis 必须是1(代表二维column)
+    # 等价 axis 必须是1(代表跨列across)
     >>> df.drop(['B', 'C'], axis=1)
         A   D
     0  0   3
@@ -670,6 +727,11 @@ immutable
     1  4   7
     2  8  11
 
+原地修改
+
+    del df['open']          # 原地修改
+    df.drop('open',axis=1)  # 非原地修改
+
 drop duplicate columns: 通过filter expr 办到
 
     df = df.loc[:,~df.columns.duplicated()]
@@ -678,6 +740,14 @@ drop duplicate columns: 通过filter expr 办到
 Drop a row by index.(不存在的index会报错)
 
     >>> df.drop(['index1','index2'])
+
+### dropna
+剔除所有包含缺失值的行数据
+
+    df2.dropna(how='any')
+    # 填充缺失值
+    df2.fillna(value=154)
+
 
 ## for loop
 todo 怎样在循环体中修改值最好呢？

@@ -128,6 +128,8 @@ Item: 用setFieldsValue
     <Input
         placeholder="Basic usage"
         defaultValue="ahui"
+        maxLength={25} {/*无效*/}
+        style={{ width: "300px" }} 
         ref={(node: any) => {
             node.select()
             node.input.select()
