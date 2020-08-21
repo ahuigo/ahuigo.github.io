@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-09-27 [Redis](/b/db/redis-) 
+- 2018-09-27 [ops-crontab](/b/c/ops-crontab) 
 - 2018-09-27 [golang string](/b/go/go-str) 
 - 2019-10-02 [Go Sync.Pool](/b/go/go-sync-pool) 
 - 2019-01-06 [设置系统的PATH](/b/c/ops-init-path) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2018-12-29 [mysql 索引](/b/db/mysql-index) 
 - 2018-09-27 [Shell 变量的数据类型](/b/c/shell-var) 
-- 2017-09-26 [跳跃表](/b/algorithm/tree-skiplist) 
-- 2018-09-26 [二叉查找树和红黑树](/b/algorithm/tree-binary-search-tree) 

@@ -8,3 +8,7 @@ private: true
         okText="提交"
         cancelText="取消"
     >
+
+top: 
+
+    <Modal style={{ top: '0px' }}

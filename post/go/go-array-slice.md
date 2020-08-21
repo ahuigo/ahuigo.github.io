@@ -121,9 +121,18 @@ nil slice 是可以append的
     // ok
     s := append([]int(nil), 1)
 
-### slice of the init array :
+### init slice:
 
     s := []int{1,2,3,8:100} //len=9,cap=9
+### init nil slice:
+
+    []string(nil)
+
+    //或者
+    type struct A{
+       names []string 
+    }
+    A{}.names == nil
 
 ### make slice:
 
@@ -131,6 +140,9 @@ nil slice 是可以append的
     fmt.Println(s2, len(s2), cap(s2))   //len=6,cap=8
     s3 := make([]int, 6)
     fmt.Println(s3, len(s3), cap(s3))   //len=6=cap
+
+make 不能生成nil slice
+
     make([]int) //error
 
 ### slice structs:

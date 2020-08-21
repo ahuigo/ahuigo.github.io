@@ -7,6 +7,13 @@ private: true
 
     <Form layout="inline" ... >
 
+# 取值
+
+    form  = use
+    form.getFieldValue("key")
+    form.getFieldsValue()
+    const data = form.getFieldsValue();
+
 # 存值
 
 ## 初值
@@ -23,7 +30,7 @@ private: true
 
     <Select defaultValue={86400} >
 
-## OnFilesChange 存值
+## OnFieldsChange 写值
 Store Form Data into Upper Component
 
     // const initFields = Object.entries(def).map((item) => ({name:item[0],value:item[1]}))
@@ -46,48 +53,16 @@ Store Form Data into Upper Component
       </Form.Item>
     </Form>
 
-## getFieldDecorator 存值
-> 推荐用v4的form.Item 代替 getFieldDecorator: https://ant.design/components/form/v3
 
- 建立Input 与form 之间的数据响应
-
-    const LoginForm = () => {
-        const form = Form.useform({
-            onValuesChange: () => console.log('Value changes'),
-        });
-        useEffect(()=>{
-            form.setFieldsValue({username:'hilo'})
-        })
-        const { getFieldDecorator, validateFields } = form;
-        return (
-            <Form onSubmit={handleSubmit}>
-                <Form.Item>
-                    {getFieldDecorator('userName')(<Input placeholder="Username" />)}
-                </Form.Item>
-            </Form>
-        );
-    };
-
-
-## required 值
-    <Form.Item 
-        label="密码" name="password" 
-        rules={[{ required: true, message: 'input password !', type:'string' }]}
-    >
-
-# 取值
-
-    form.getFildValue("key")
-    form.getFildsValue()
-
-# 更新field
-## 手动更新field
+## 更新field
 Item: 用setFieldsValue
 
     <input 
         onChange={(e)=>form.setFieldsValue({name:e.target.value}}}
         value={form.getFieldValue('name')}
     >
+
+    setFields([{name:"age", value:1}])
 
 
 ## via Form.Item
@@ -121,6 +96,36 @@ Item: 用setFieldsValue
 还可以通过 form 得到data
 
     const data = form.getFieldsValue()
+
+
+## getFieldDecorator 存取值
+> 推荐用v4的form.Item 代替 getFieldDecorator: https://ant.design/components/form/v3
+
+ 建立Input 与form 之间的数据响应
+
+    const LoginForm = () => {
+        const form = Form.useform({
+            onValuesChange: () => console.log('Value changes'),
+        });
+        useEffect(()=>{
+            form.setFieldsValue({username:'hilo'})
+        })
+        const { getFieldDecorator, validateFields } = form;
+        return (
+            <Form onSubmit={handleSubmit}>
+                <Form.Item>
+                    {getFieldDecorator('userName')(<Input placeholder="Username" />)}
+                </Form.Item>
+            </Form>
+        );
+    };
+
+
+## required 值
+    <Form.Item 
+        label="密码" name="password" 
+        rules={[{ required: true, message: 'input password !', type:'string' }]}
+    >
 
 # Input
 自动激活

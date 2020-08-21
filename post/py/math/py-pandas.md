@@ -288,9 +288,21 @@ export xlsx
 ### export format(dict/json)
     # 按列
     df.to_dict()
+        pd.DataFrame.from_dict(data)
     df.to_json()
+        pd.read_json(json)
     # 按行
     df.to_dict('record') 
+
+example: 
+
+    >> data = {'col_1': [3, 2, 1, 0], 'col_2': ['a', 'b', 'c', 'd']}
+    >> pd.DataFrame.from_dict(data)
+        col_1 col_2
+    0      3     a
+    1      2     b
+    2      1     c
+    3      0     d
 
 ## Read df 读取
 ### Read length
@@ -420,6 +432,10 @@ f.apply 是一个row/column 的聚合函数
     data['MA_' + str(5)] = pd.rolling_apply(data['close'], 5,np.mean)
     data['MA_' + str(20)] = pd.rolling_apply(data['close'], 20,np.mean)
 
+计算季度利润:
+
+
+
 ### 比较df
 
     In [438]: df>df2
@@ -493,6 +509,31 @@ f.apply 是一个row/column 的聚合函数
     0     1     1     1     1
     1     2     2     2     2
     2     3     3     3     3
+    >>> df.shift(1)
+        0    1    2    3
+    0  NaN  NaN  NaN  NaN
+    1  1.0  1.0  1.0  1.0
+    2  2.0  2.0  2.0  2.0
+
+series.shift: 
+
+    >>> df[0]
+    0    1
+    1    2
+    2    3
+    Name: 0, dtype: int64
+    >>> df[0].shift(1)
+    0    NaN
+    1    1.0
+    2    2.0
+
+计算价格增长百分比
+
+    >>> df/df.shift(1)-1    # 计算价格增长百分比
+    col1  col2  col3  col4
+    0   NaN   NaN   NaN   NaN
+    1   1.0   1.0   1.0   1.0
+    2   0.5   0.5   0.5   0.5
 
     >>> df.pct_change()     # 计算价格增长百分比
     col1  col2  col3  col4
@@ -500,11 +541,10 @@ f.apply 是一个row/column 的聚合函数
     1   1.0   1.0   1.0   1.0
     2   0.5   0.5   0.5   0.5
 
-    >>> df/df.shift(1)-1    # 计算价格增长百分比
-    col1  col2  col3  col4
-    0   NaN   NaN   NaN   NaN
-    1   1.0   1.0   1.0   1.0
-    2   0.5   0.5   0.5   0.5
+
+如果想计算按列之环比：
+
+    df.pct_change(axis='columns')
 
 ### update value
 #### update column
@@ -561,6 +601,9 @@ check is nan
     True
 
 ## Raname column/index
+### change column type
+    df['A']= df['A'].apply(lambda x: float(x))
+
 ### change column order
     > cols = df.columns.tolist()
     > cols = cols[-1:] + cols[:-1]
@@ -617,9 +660,18 @@ revert index to column
     df.index=range(len(df.index))
     df.index=range(len(df))
 
+或者通过insert:
+
+    df.insert(0, 'ann_date', df.index)
+    df.index = range(len(df))
+
 如果不想再插入index
 
     df.reset_index(inplace=True, drop=True)
+
+### move column to first
+    col = df.pop("ann_date")
+    df.insert(0, col.name, col)
 
 ## df 添加数据
 ### concat series/df as df
@@ -771,6 +823,7 @@ for col_name key only
         df.loc[index,'col'] = v  # work
     for i in range(len(df)):
         row = df.iloc[i]:
+        row['col']=v #work
 
 ## Index Type
 ### BaseIndex

@@ -282,3 +282,6 @@ trim 字符串
 ## in stirng, contains, include
     import "strings"
     strings.Contains("something", "some") // true
+
+## startsWith
+    strings.HasPrefix(myString, "Hello") 
