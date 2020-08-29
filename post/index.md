@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2019-06-20 [Postgre SQL function](/b/db/pgsql-function) 
 - 2018-09-27 [Redis](/b/db/redis-) 
 - 2018-09-27 [ops-crontab](/b/c/ops-crontab) 
 - 2018-09-27 [golang string](/b/go/go-str) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [数据库CAP 理论 与事务](/b/arch/arch-cap) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
 - 2018-12-29 [mysql 索引](/b/db/mysql-index) 
-- 2018-09-27 [Shell 变量的数据类型](/b/c/shell-var) 

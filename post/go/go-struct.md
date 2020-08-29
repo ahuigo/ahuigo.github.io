@@ -241,6 +241,16 @@ User继承 Model 所有属性， 包括gorm.Model.ID、方法
 
 e.g: go-lib/object/inherit.go
 
+### 继承chains
+    type User struct {
+        gorm.Model
+        ID int
+    }
+    // 可以不等价
+    user.ID=1
+    user.Model.ID=2
+    pf("%#v,%#v\n", user, user.ID==user.Model.ID)
+
 ### interface 
 interface 是通用类型，可以是指针、 非指针类型
 

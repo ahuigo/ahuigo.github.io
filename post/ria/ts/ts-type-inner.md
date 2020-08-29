@@ -35,3 +35,8 @@ private: true
     type ViewProps = React.ComponentProps<typeof View>
     type InputProps = React.ComponentProps<'input'>
 
+## event
+### onClick
+    event: React.MouseEvent<HTMLSpanElement, MouseEvent>
+### onChange
+    e: React.ChangeEvent<HTMLInputElement>

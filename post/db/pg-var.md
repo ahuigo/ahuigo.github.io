@@ -7,10 +7,6 @@ date: 2018-09-27
 private:
 ---
 # define var
-## Define var and assign
-    DECLARE vSite varchar DEFAULT 'TechOnTheNet.com';
-    DECLARE vSite varchar := 'TechOnTheNet.com';
-    vSite := 'CheckYourMath.com';
 
 ## define type
 

@@ -69,7 +69,7 @@ see db-user.md
     ps aux| grep postgres
 
 ## login 
-第一次默认安装后只有一个role： postgres, 只登录这个role
+第一次默认安装后只有一个role： postgres(或者当前用户名), 只登录这个role
 
     sudo -u postgres -i
     psql

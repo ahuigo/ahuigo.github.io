@@ -125,7 +125,7 @@ filter via keys
     s[['k1','k2']]
 
 #### via iloc,loc
-via index
+via index(slice)
 
     s.iloc[0]
     s.iloc[0:2]
@@ -257,6 +257,9 @@ via row: record/series
     pd.DataFrame([{'col1':1},{'col2':2}], index=['index1','index2'])
     pd.DataFrame([s1,s2], index=['index1','index2'])  
 
+    # index 默认是0,1
+    pd.DataFrame([{'col1':1},{'col2':2}])
+
 via numpy narray
 
     pd.DataFrame(numpy.random.randint(100, size=(1,2)))
@@ -345,6 +348,7 @@ filter row: via index/key
     # via row index
     df[0:3]
     df.iloc[0:3]
+    df.iloc[[0,1,2,3]]
 
     # via row key
     df['row0':'row3']
@@ -370,12 +374,12 @@ filter row:
     df[df.col1>1]
     df[df.col1>df.col2]
 
-    # axis=1 取column 项
     df[df.apply(lambda x: 'ST' in x['col1'], axis=1)]
 
 filter column
 
-    df.loc[:,df.apply(lambda x:x['index1'] < 2)]
+    df.loc[:,['col1','col2']]
+    df.loc[:,df.apply(lambda col:col['index1'] < 2)]
 
 #### filter df
 不是真的过滤，未被过滤的值，被设置NaN
@@ -418,8 +422,11 @@ add as column
 ### T 转置
     df.T
 
-### 聚合运算apply
-f.apply 是一个row/column 的聚合函数
+### 聚合运算apply(map函数)
+    df.apply(lambda col:print(col))
+    df.apply(lambda row:print(row), axis=1)
+
+f.apply 是一个row/column 的聚合map函数
 
     >>> df.apply(lambda x:x['index1'] >=2)
     col1    False
@@ -433,8 +440,6 @@ f.apply 是一个row/column 的聚合函数
     data['MA_' + str(20)] = pd.rolling_apply(data['close'], 20,np.mean)
 
 计算季度利润:
-
-
 
 ### 比较df
 
@@ -824,6 +829,25 @@ for col_name key only
     for i in range(len(df)):
         row = df.iloc[i]:
         row['col']=v #work
+
+### loop with modify 
+modify 正确的做法是
+
+    for index, row in df.iterrows():
+        df.at[index, 'col'] = y
+
+    for i in len(df):
+        df.iat[i, colj] = y
+
+iat with column name
+
+    df['col'].iat(i) = y
+
+### loop with modify col
+也可以利用map
+
+    df["age"] = df['age'].apply(lambda x: int(x))
+    df["age"] = df.apply(lambda row: int(row['age']), axis=1)
 
 ## Index Type
 ### BaseIndex

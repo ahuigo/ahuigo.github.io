@@ -274,14 +274,28 @@ To remove any default value, use:
 #### 修改autoincrement id
 id seq　一般保存在`<table>_id_seq`中，可以通过`\d`查看
 
-    select last_value from oauth_nonces_id_seq;
-    SELECT nextval('oauth_nonces_id_seq'::regclass)
+    select last_value from oauth_tokens_id_seq;
+    SELECT nextval('oauth_tokens_id_seq'::regclass)
 
     # nextval 必须先执行、或者insert语句执行后，才可以调用 currval
-    select currval('oauth_nonces_id_seq');
+    select currval('oauth_tokens_id_seq');
 
 下面的语句等价
 
     SELECT setval('users_id_seq', 94, true);  
     ALTER SEQUENCE users_id_seq RESTART WITH 94
 
+setval 用法：
+
+    SELECT setval('foo', 42);           Next nextval will return 43
+    SELECT setval('foo', 42, true);     Same as above
+    SELECT setval('foo', 42, false);    Next nextval will return 42
+
+一键完成:
+
+    do $$ 
+    declare
+        mid  integer:= (select max(id) from oauth_tokens);
+    begin 
+        PERFORM setval('oauth_tokens_id_seq', mid);
+    end $$;

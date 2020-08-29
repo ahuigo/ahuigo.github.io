@@ -14,7 +14,11 @@ private: true
     form.getFieldsValue()
     const data = form.getFieldsValue();
 
-# 存值
+# 写值
+## forceRender
+写值不会触发update, 除非手动：
+
+    const forceUpdate = React.useReducer(() => ({}))[1];
 
 ## 初值
     <Form initialValues={{ type: defaultType }} onFinish={onFinish} form={form}>
@@ -54,7 +58,7 @@ Store Form Data into Upper Component
     </Form>
 
 
-## 更新field
+## 手动更新field
 Item: 用setFieldsValue
 
     <input 
@@ -181,6 +185,8 @@ labelCol, wrapperCol 分别控制label/Item 的宽度
     </Form>
 
 ## Input Row
+https://ant.design/components/input/
+
     <Input.Group size="large">
       <Row gutter={8}>
         <Col span={5}>
@@ -190,4 +196,11 @@ labelCol, wrapperCol 分别控制label/Item 的宽度
           <Input defaultValue="26888888" />
         </Col>
       </Row>
+    </Input.Group>
+
+compact:
+
+    <Input.Group compact>
+      <Input style={{ width: '20%' }} defaultValue="0571" />
+      <Input.Search style={{ width: '30%' }} defaultValue="26888888" />
     </Input.Group>
