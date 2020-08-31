@@ -80,7 +80,14 @@ atom68缺少一个左Fn 不太方便，于是我通过`程控键`改了下按键
 karabiner 
 
 # Karabiner 定制快捷键
-## 基本按键
+![](/img/shell/keyboard/karabiner-keyboard-list.png)
+
+## log
+/var/log/karabiner/grabber.log
+/var/log/karabiner/observer.log
+~/.local/share/karabiner/log/console_user_server.log
+
+## 基本按键配置
 https://ke-complex-modifications.pqrs.org/
 
     "modifiers.mandatory": 
@@ -96,7 +103,6 @@ https://ke-complex-modifications.pqrs.org/
         open_bracket
         close_bracket
         ` grave_accent_and_tilde
-
 
 假如我要定义一个ctrl+k 向前删除到行末：
 
@@ -120,9 +126,14 @@ https://ke-complex-modifications.pqrs.org/
           ]
         }
 
+注意：经过以上修改后，对于mac osx内置键盘而言，我们还要交换大小与ctrl
+![](/img/shell/keyboard/karabiner-readline1.png)
+
 ## ctrl+u/w
-你可以设置ctrl+w/u 映射到`option/cmd+DeleteBackward`. 此时iterm会失效. 
-解决方案如下：
+你可以设置`ctrl+w` 映射到`option+DeleteBackward`. 此时iterm2会失效. 
+你可以设置`ctrl+u` 映射到`cmd+DeleteBackward`. 此时iterm2会失效. 
+
+解决方案下面细说
 
 ### ctrl+w: option 映射esc
 ctrl+w解决方法是option发送真正的escape：
@@ -137,8 +148,9 @@ https://apple.stackexchange.com/questions/89981/remapping-keys-in-iterm2
 2. 在iterm 修改keys. 将`cmd+backspace`映射到`0x15`
 
 ![](/img/shell/keyboard/iterm-keys-map.png)
-
 ## app 绑定
+如果我们想让karabiner keys只应用于某个app 怎么办呢？
+
 首先找到app 的bundle identifier
 
     $ osascript -e 'id of app "chrome"'

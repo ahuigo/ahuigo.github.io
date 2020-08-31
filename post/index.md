@@ -9,7 +9,7 @@
 - 2020-07-18 [go routines 与原子](/b/go/go-atom-string) 
 - 2018-09-27 [c-io-buffer](/b/c/c-io-buffer) 
 - 2018-09-27 [c-debug-gdb](/b/c/c-debug-gdb) 
-- 2018-10-06 [coredump](/b/c/c-debug-coredump) 
+- 2020-08-31 [coredump](/b/c/c-debug-coredump) 
 - 2020-07-22 [vscode markdown-preview-enhanced example](/b/vsc/vsc-markdown) 
 - 2018-10-04 [security-web](/b/sec/security-web) 
 - 2018-09-27 [go-test](/b/go/go-test) 
