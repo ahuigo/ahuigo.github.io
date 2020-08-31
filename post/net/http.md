@@ -43,6 +43,7 @@ range 这个header 头，主要是用于分段下载
 每个非空的数据块之前，会有一个16进制的数值，表示这个块的长度。最后是一个大小为0的块，就表示本次回应的数据发送完了。下面是一个例子。
 
     sock.write('HTTP/1.1 200 OK\r\n');
+    sock.write('Content-Disposition: attachment; filename="output.xml"')
     sock.write('Transfer-Encoding: chunked\r\n');
     sock.write('\r\n');
 
