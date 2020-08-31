@@ -26,7 +26,7 @@
 - 2018-09-27 [go expression](/b/go/8.go-expr) 
 - 2020-01-20 [proxy 之charles](/b/net/proxy/proxy-charles) 
 - 2018-09-28 [py-import](/b/py/py-import) 
-- 2019-10-04 [About Http](/b/net/http) 
+- 2020-08-31 [About Http](/b/net/http) 
 - 2018-10-04 [vim-style](/b/vim/vim-style) 
 - 2016-09-27 [go 的变量](/b/go/go-var) 
 - 2018-09-27 [map](/b/go/go-var-map) 

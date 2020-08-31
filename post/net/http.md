@@ -42,23 +42,18 @@ range 这个header 头，主要是用于分段下载
 
 每个非空的数据块之前，会有一个16进制的数值，表示这个块的长度。最后是一个大小为0的块，就表示本次回应的数据发送完了。下面是一个例子。
 
-	HTTP/1.1 200 OK
-	Content-Type: text/plain
-	Transfer-Encoding: chunked
+    sock.write('HTTP/1.1 200 OK\r\n');
+    sock.write('Transfer-Encoding: chunked\r\n');
+    sock.write('\r\n');
 
-	25
-	This is the data in the first chunk
+    sock.write('b\r\n');
+    sock.write('01234567890\r\n');
 
-	1C
-	and this is the second one
+    sock.write('5\r\n');
+    sock.write('12345\r\n');
 
-	3
-	con
-
-	8
-	sequence
-
-	0
+    sock.write('0\r\n');
+    sock.write('\r\n');
 
 ## http/2
 为解决 Head-of-line blocking, 诞生了[Http/2](/p/net/http2)(SPDY 协议的改进)
