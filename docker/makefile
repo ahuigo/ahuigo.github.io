@@ -13,3 +13,10 @@ run:
 	docker run --rm --name $(image_name) $(image_name)
 run1:
 	docker run --rm -p 8005:8000 -p 3000:3000 $(image_name):$(version)
+
+
+jre-test-build:
+	docker build -t jre-test -f dockerfile-jre-test .
+jre-test:
+	docker run --rm --entrypoint="/bin/sh" --name jre-test jre-test
+

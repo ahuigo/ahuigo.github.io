@@ -37,6 +37,20 @@ Note: 断言不是类型转换
     }
 
 ## 获取类型
+### Parameters
+    function foo(a: number) {
+    return true;
+    }
+    type p = Parameters<typeof foo>[0];
+
+返回
+
+    function foo(a: number, b: string) {
+        return true;
+    }
+    type p = ParametersWithNames<typeof foo>;
+    // p = { a: number, b: string }
+
 ### typeof 获取数据类型
     const data = {
         value: 123,
@@ -243,6 +257,10 @@ Constructs a type with a set of properties K of type T. This utility can be used
         home: { title: 'home' },
     };
 
+Dict:
+
+    Record<string, string>
+
 ## `Pick<T,K>`
 Constructs a type by picking the set of properties K from T.
 
@@ -259,6 +277,29 @@ Constructs a type by picking the set of properties K from T.
         completed: false,
     };
 
+## 子类型
+> https://stackoverflow.com/questions/27875483/typescript-reference-subtype-of-type-definition-interface
+比如：
+
+    interface ExerciseData {
+        id : number;
+        name : string;
+        vocabulary : {
+            from : string;
+            to : string;
+        }[];
+    }
+
+获取子类型
+
+    type vocabulary = ExerciseData['vocabulary'][]; // Array<{from: string, to: string}>
+
+    type from = ExerciseData['vocabulary'][number]['from']; // string
+
+also:
+
+    type fieldKey = 'id' | 'name';
+    type fieldTypes = ExerciseData[fieldKey]; // number | string
 ## Exclude
     type T0 = Exclude<"a" | "b" | "c", "a">;  // "b" | "c"
     type T1 = Exclude<"a" | "b" | "c", "a" | "b">;  // "c"

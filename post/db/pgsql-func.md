@@ -43,3 +43,33 @@ http://www.postgres.cn/docs/9.3/plpgsql-structure.html
             last_name, 
             payment;
     end $$;
+
+## notice
+
+    raise notice '% % % has been paid % USD', counter, first_name, last_name, payment;
+
+# execute
+    DO $$
+    DECLARE r record;
+    BEGIN
+        FOR r IN SELECT table_name 
+                    FROM information_schema.tables
+                    WHERE table_catalog = 'public'
+        LOOP
+            EXECUTE format('UPDATE %I SET id = 10 WHERE id = 15', r.table_name);
+        END LOOP;
+    END $$;
+
+核心:
+
+    EXECUTE 'UPDATE ' || quote_ident(r.table_name) || 'SET ...
+
+# echo & format
+
+    do $$ 
+    declare
+        first_name varchar(50) := 'John';
+        str varchar(100) := format('ahui' 'Im %I', first_name);
+    begin 
+        raise notice 'Value: %', str;
+    end $$;

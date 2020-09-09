@@ -21,11 +21,19 @@ postgre 不支持\ 转义
     select 'a:'||'b'||1.2 as bb;    //"a:b1.2"
     select concat('a:','b', 1.2); // "a:b1.2"
     select concat(key1,key2)
-	select 'My' 'S' 'OL'
-		MySQL
 
 	select 'My''S';like vim 
 		My'S
+
+只适用于select :
+
+	select 'My' 'S' 'OL'
+		MySQL
+
+concat hex:
+
+	select concat(0x31,2);
+	| 12             |
 
 join:
 

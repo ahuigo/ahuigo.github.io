@@ -38,4 +38,4 @@
 - 2019-03-08 [tcpdump](/b/net/net-tcpdump) 
 - 2018-09-27 [数据库CAP 理论 与事务](/b/arch/arch-cap) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
-- 2018-12-29 [mysql 索引](/b/db/mysql-index) 
+- 2020-09-09 [mysql 索引](/b/db/mysql-index) 

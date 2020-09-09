@@ -158,7 +158,7 @@ PK vs UK:
 
 1. Null: PK is not null but UK allows nulls(Note: By Default), so UK may not be unique.
 1. Unique: There can only be one and only one PK on a table but there can be multiple UK's
-1. Clustered index: PK creates a `Clustered index` and UK creates a `Non Clustered Index`.
+1. Clustered index(聚焦索引): PK creates a `Clustered index` and UK creates a `Non Clustered Index`.
 1. Candidate: UK may not be candidate key(Because it may be not unique)
 
 *Clustered Index* 就是数据内容本身是stored in order, 因为是有序的，所以范围查询(id>100, group by, etc.)、倒序查询都非常的高效
@@ -166,6 +166,9 @@ PK vs UK:
 1. 聚簇索引主键相邻的数据在物理上也相邻，如果主键不是自增，而是随机的，那么频繁的插入会使 innodb 频繁地移动磁盘块，而影响写入性能。
 2. 一般用自增id, 如果用uuid(`select uuid()`) ：一是uuid 太大了浪费索引空间；二是uuid 不连续，插入删除数据时索引操作慢。
    1. uuid 适合数据离散化便于发布集群
+
+聚集索引，叶子节点存储行记录，InnoDB索引和记录是存储在一起的(存储有序)。(比如:id)
+普通索引，叶子节点存储了主键的值。指向pk(id), 相当于指针
 
 ## UNIQUE(UK)
 Either UK or PK is a column or group of columns that can identify a uniqueness in a row.

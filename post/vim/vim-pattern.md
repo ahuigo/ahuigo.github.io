@@ -47,6 +47,7 @@ Character classes
 	\_. any character including a newline
 	\_x	where x is any of the characters above: character
 			class with end-of-line included
+    \%x1b
 
 ## atom
 

@@ -158,5 +158,9 @@ WriteString
 	func main() {
 		s := strings.NewReader("Lbh penpxrq gur pbqr!")
 		r := rot13Reader{s}
-		io.Copy(os.Stdout, &r)
+		io.Copy(os.Stdout, &r) //write to os.Stdout
 	}
+
+### Copy buffer
+    var b bytes.Buffer
+    io.Copy(os.Stdout, &b)

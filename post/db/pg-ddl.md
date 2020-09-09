@@ -295,7 +295,10 @@ setval 用法：
 
     do $$ 
     declare
-        mid  integer:= (select max(id) from oauth_tokens);
+        name  varchar:= "oauth_tokens"
     begin 
-        PERFORM setval('oauth_tokens_id_seq', mid);
+        PERFORM setval('oauth_tokens_id_seq',(select max(id) from oauth_tokens));
     end $$;
+
+    // method2
+    select setval('oauth_tokens_id_seq', (select max(id) from oauth_tokens)+1);

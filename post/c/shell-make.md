@@ -152,6 +152,24 @@ $(CC) 指向当前使用的编译器
 
     make init install
 
+## 闭关回声@
+正常情况下，make会打印每条命令，然后再执行，这就叫做回声（echoing）。
+
+我们可以关闭它
+
+    test:
+        @echo TODO
+
+## 忽略错误
+默认make 执行语句时，如果有错误就结束执行。
+
+如果候忽略错误, 就加`-`
+
+    test:
+        -mkdir -p dir1/dir2
+        @-mkdir -p dir1/dir2
+        echo "ok"
+
 ## 指令目标
 如果当前目录有文件叫做clean，那么这个命令`make clean`不会执行。因为Make发现clean文件已经存在，就认为没有必要重新构建了
 

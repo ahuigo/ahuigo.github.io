@@ -12,3 +12,19 @@ private: true
 top: 
 
     <Modal style={{ top: '0px' }}
+
+按钮属性
+
+    <Modal
+          title="Basic Modal"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+
+          okButtonProps={{ disabled: true }}
+          cancelButtonProps={{ disabled: true }}
+        >
+
+隐藏按钮
+
+      footer={null}

@@ -30,6 +30,7 @@ map 命令语法：
 
 map 命令按使用模式切分为：
 
+    map 是默认的map-vno 三种模式
     n	Normal
     v	Visual and Select
     s	Select

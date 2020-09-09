@@ -165,7 +165,13 @@ Item: 用setFieldsValue
 # layout
 
 ## form class
+no wrap
+
     <Form className="flex" >
+
+## Input width
+    <Input style={{ width: '20%' }} defaultValue="0571" />
+
 
 ## 列宽度
 labelCol, wrapperCol 分别控制label/Item 的宽度

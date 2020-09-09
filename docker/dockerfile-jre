@@ -1,0 +1,12 @@
+# 1. 自行安装
+RUN apk update \
+&& apk upgrade \
+&& apk add --no-cache bash \
+&& apk add --no-cache --virtual=build-dependencies unzip \
+&& apk add --no-cache curl \
+&& apk add --no-cache openjdk8-jre
+
+# 2.500M From openjdk:latest
+# 3.200M FROM openjdk:12-alpine
+# 4.40M FROM gcr.io/distroless/java
+

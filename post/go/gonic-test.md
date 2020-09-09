@@ -58,11 +58,23 @@ Test for code example above:
         return
     }
 
+
+
+
 ## mock request
 
+    w := httptest.NewRecorder()
+    context, _ := gin.CreateTestContext(w)
+
+    // init request
     req, _ := http.NewRequest("GET", "/ping", nil)
-    cookie := http.Cookie{Name: "id_token", Value: ""}
+
+    // Cookie
+    cookie := http.Cookie{Name: "token", Value: "xxx"}
     req.AddCookie(&cookie)
 
-    context,engine := gin.CreateTestContext(w)
-    c.Request = req
+    // add request
+    context.Request = req
+
+    // 请求controller
+    router.Controller.GetIndex(context)
