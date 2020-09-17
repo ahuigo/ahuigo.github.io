@@ -68,13 +68,13 @@ e.g.
     pg_dump help
 ### backup
 
-    # only schema
+    # only schema(-s)
     pg_dump -U db_username -s  -f [filename.sql] [db_name]
-    # only data
+    # only data(-a)
     pg_dump -U db_username -a  -f [filename.sql] [db_name]
-    # spcify table
+    # spcify table(-t)
     pg_dump -U db_username -t table_name -a  -f [filename.sql] [db_name]
-    # data+schema
+    # data+schema(null)
     pg_dump                      -f [filename.sql] [db_name]
 
     -F format
@@ -168,7 +168,8 @@ create:
 
 drop db:
 
-    > drop database yunzhi100
+    $ dropdb -h host -p 5432 $dbname -U username
+    > drop database <dbname>
 
 rename db:
 
@@ -183,7 +184,6 @@ list db:
 
     \c database_name
         \connect database_name
-    SELECT current_database();
 
 ### current database
 

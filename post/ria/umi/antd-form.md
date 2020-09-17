@@ -130,7 +130,15 @@ Item: 用setFieldsValue
         label="密码" name="password" 
         rules={[{ required: true, message: 'input password !', type:'string' }]}
     >
-
+# select
+## filter
+          <Select
+            showSearch
+            mode="multiple"
+            style={{ width: '100%' }}
+            placeholder="选择域"
+            filterOption={true}
+            // onSearch={searchDomains}
 # Input
 自动激活
 

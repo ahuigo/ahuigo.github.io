@@ -5,22 +5,97 @@ private:
 ---
 # 面试
 
-## shell操作
-过滤出正则
-## http网络/socket 
-tcp/udp 网络
+## ajax/fetch 了解
+ajax 与fetch 是用来做什么的？区别是什么？
+什么是跨域？
+
+## dom 操作
+请写一个dom 操作函数，实现在前端弹出一个消息的揭示:
+1. 不能用alert
+2. 提示字体为红色
+3. 提示信息全局居中
+
+请补全代码：
+
+    funct notice(msg){
+        ....
+    }
+
+    notice("你的操作是非法的")
+
+## Promise
+写一个sleep 函数
+
+    function sleep(seconds){
+        //请补全
+    }
+
+    (async function(){
+        await sleep(5);
+        console.log('5 seconds eslaped.');
+    })()
+
+## 你了解几种排序算法？
+你了解几种排序算法？
+请写一段编排序程序(不限语言)
+
+     unsorted_array = [ 7, 8, 9, 4, 3, 2, 1, 6, 5 ]
 
 ## 求矩形相交的面积
 请用任意语言实现矩形相交面积的计算：
 
-    var rect1 = [10, 10, 30,30]
-    var rect2 = [20, 20, 30,30]
+    var rect1 = {
+        x_left:10, 
+        y_bottom:10, 
+        x_right:30, 
+        y_top:30
+    }
+    var rect2 = {
+        x_left:20, 
+        y_bottom:20, 
+        x_right:30, 
+        y_top:30
+    }
     function getIntersectArea(rect1, rect2){
         // 返回相交面积 或异常
     }
     getIntersectArea(rect1,rect2) == 100 //true
 
-## 写一个排序
+## 两向量的投影
+在平面中有两个向量，为了判断向量是否平行, 请补全以下代码
+
+    vector1 = [1,2]
+    vector2 = [-1,2]
+    function isVectorParalell(vector1,vector2):boolean {
+
+    }
+
+两向量的夹角是(数学求角公式是什么)?
+
+## shell操作知识
+有一个非常大的ip日志文件ip.log，格式为： ip,host,time
+
+    $ cat ip.log
+    192.168.1.1,momenta.ai,2020-07-06 T00:00:00
+    192.168.1.2,baidu.com,2020-07-06 T00:00:01
+    192.168.1.2,baidu.com,2020-07-06 T00:00:01
+
+1. 请找出指定ip（比如192.168.1.2） 对应的host
+2. 请找出访问数量最多的ip
+
+## 正则知识
+用户的邮箱形式如：
+
+    Lily@gmail.com
+    zhang1@qq.com
+    liu1@momenta.works
+
+请写一个正则检查一下用户输入的邮箱是否合法.
+
+## 老鼠试毒
+1000瓶药水，1瓶有毒药，服用后一小时毒发，毒药可以无限稀释，那么一小时内用几只小白鼠能够找出毒药？
+
+## 求最小索引和
 假设Andy和Doris想在晚餐时选择一家餐厅，并且他们都有一个表示最喜爱餐厅的列表，每个餐厅的名字用字符串表示。
 
 你需要帮助他们用最少的索引和找出他们共同喜爱的餐厅。 如果答案不止一个，则输出所有答案并且不考虑顺序。 你可以假设总是存在一个答案。
@@ -36,17 +111,3 @@ tcp/udp 网络
 代码：
 
     请实现代码
-
-## 老鼠试毒
-1000瓶药水，1瓶有毒药，服用后一小时毒发，毒药可以无限稀释，那么一小时内用几只小白鼠能够找出毒药？
-
-## 两向量的投影
-在平面中有两个向量，为了判断向量是否平行, 请补全以下代码
-
-    vector1 = [1,2]
-    vector2 = [-1,2]
-    function isVectorParalell(vector1,vector2):boolean {
-
-    }
-
-能否判断两向量的夹角?

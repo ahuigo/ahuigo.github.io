@@ -30,8 +30,6 @@ Mac OSX Image 不可以修改路径：
     # do something
     fi
 
-## build history
-    docker image history --no-trunc image_name > image_history
 
 ## list image layer
 
@@ -43,8 +41,8 @@ Mac OSX Image 不可以修改路径：
 
 ### dockerfile of image
 
-    docker history --no-truc image_id
-
+    docker history --no-truc image_id:version
+    docker image history --no-trunc image_name > image_history
 
 ## rm image
 

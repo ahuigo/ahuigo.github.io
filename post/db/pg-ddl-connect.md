@@ -3,8 +3,8 @@ title: postgresql connect
 date: 2020-07-30
 private: true
 ---
-# postgresql connect
-postgresql 有时报:
+# postgresql 中断connect
+postgresql drop db有时报:
 
     ERROR:  database "pilot" is being accessed by other users
     DETAIL:  There is 1 other session using the database.
@@ -13,19 +13,17 @@ postgresql 有时报:
 
 You can prevent future connections:
 
-    REVOKE CONNECT ON DATABASE thedb FROM public;
+    REVOKE CONNECT ON DATABASE <thedb> FROM public;
     (and possibly other users/roles; see \l+ in psql)
 
 You can then terminate all connections to this db except your own:
 
-    SELECT pid, pg_terminate_backend(pid) 
-    FROM pg_stat_activity 
-    WHERE datname = current_database() AND pid <> pg_backend_pid();
+    SELECT pid, pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = current_database() AND pid <> pg_backend_pid();
 
 You'll now be able to drop the DB.
 
-    drop database <db>
+    drop database <thedb>
 
 After you're done dropping the database, restore the access
 
-    GRANT CONNECT ON DATABASE thedb TO public;
+    GRANT CONNECT ON DATABASE <thedb> TO public;

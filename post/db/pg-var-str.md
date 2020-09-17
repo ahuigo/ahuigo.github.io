@@ -16,6 +16,11 @@ postgre 不支持\ 转义
     select 'ahui''s blog'; 
     select 'a''b' # 不支持 ’a\'b' 
 
+多行：
+
+    select 'a'
+    'b';
+
 # str func
 ### concat
     select 'a:'||'b'||1.2 as bb;    //"a:b1.2"

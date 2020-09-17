@@ -46,6 +46,20 @@ http://www.postgres.cn/docs/9.3/plpgsql-structure.html
             payment;
     end $$;
 
+## execute dnamic command
+
+    EXECUTE 'SELECT count(*) FROM '
+        || quote_ident(tabname)
+        || ' WHERE inserted_by = $1 AND inserted <= $2'
+    INTO c
+    USING checked_user, checked_date;
+
+A cleaner approach is to use format()'s %I specification for table or column names (strings separated by a newline are concatenated):
+
+    EXECUTE format('SELECT count(*) FROM %I '
+        'WHERE inserted_by = $1 AND inserted <= $2', tabname)
+        INTO c
+        USING checked_user, checked_date;
 
 ## select 语句
 在begin/end 内，select 必须输出保存
