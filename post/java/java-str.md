@@ -5,7 +5,7 @@ private:
 ---
 # Java define
 ## char
-注意char类型使用单引号'，且仅有一个字符，要和双引号"的字符串类型区分开
+注意char类型使用单引号`'`，且仅有一个字符，要和双引号`"`的字符串类型区分开
 
         char a = 'A';
         char zh = '中';
@@ -49,7 +49,7 @@ private:
 
 ### byte2str
 
-## strhex
+## str2hex
     public static String toHexString(String s) {
         StringBuilder str = new StringBuilder();
         var ba = s.getBytes();

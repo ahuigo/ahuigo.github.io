@@ -107,7 +107,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
     }
     a(undefined,3); //1,3
 
-## Destructuring, unpacking
+## 解构 Destructuring, unpacking
 ### destruct bind arguments
     f.bind(null,...arguments)()
     f.bind(null,...[1,2,3])()
@@ -125,10 +125,13 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
     //default
     var [a = 1] = [];
 
-析构 dict:
+#### 析构 dict:
+    //剩余参数
+    {...dict} ;
 
-    {...dict} ; //剩余参数
     let {name, age, pass, ...rest} = {name:'ahui',pass:'pass',age:10}; //不存在就是undefined
+
+    // 别名与默认值
     var {id:uid} = {id:1}; // uid=id
     var {uid=0} = {}
 

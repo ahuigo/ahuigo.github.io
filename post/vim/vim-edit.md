@@ -2,6 +2,24 @@
 title: Vim Edit
 date: 2019-05-29
 ---
+# vim的编辑模式
+vim 支持的模式很多：
+1. normal 正常模式（大部分时间都是处于这个模式），这个模式下支持丰富的[光标移动命令如hjkl wbe](/p/vim/vim-motion)
+2. edit mode: 这个模式下，才能做代码编辑。
+    1. 进入edit mode的方法
+        1. `i`光标前插入, `I`行首插入
+        1. `a`光标后插入, `A`行尾插入
+        1. `o`下一行插入, `O`下一行插入
+    1. 退出edit mode的方法有几种:
+        1. `ctrl+c` 强制退出到normal 正常模式
+        1. `Esc` 普通退出到normal 正常模式
+    1. 推荐配置edit mode版的readline 快捷键: ctrl+f/b, ctrl+a/e,  ctrl+u/k ....
+3. visual mode: 这个其实是选择模式
+    1. `v`: 常规选择
+    1. `V`: 多行选择
+    1. `Ctrl+v`: 多列选择
+4. command mode: 指令mode
+
 # 复制/删除/粘贴(copy/del/paste)
 
 ## del 删除
@@ -29,32 +47,33 @@ date: 2019-05-29
 	:2d q "删除第二行，并保存到寄存器。
 
 ### dt,df,ct,cf
+d系列与c系列两大删除命令,　与t、f两大字符转命令，结合后非常强大：
 
-    To delete forward up to character 'X' type dtX
-    To delete forward through character 'X' type dfX
-    To delete backward up to character 'X' type dTX
-    To delete backward through character 'X' type dFX
+1. To delete forward up to character 'X' type: `dtX`
+1. To delete forward through character 'X' type: `dfX`
+1. To delete backward up to character 'X' type: `dTX`
+1. To delete backward through character 'X' type: `dFX`
 
 ## copy & paste
 
 ### Copy
-1. 删除(del)本身带复制
+常见的有两种复制方法
+1. 删除(del命令)本身就是删除的同时带复制
 1. 通过y复制
 
 在v模式也可使用y复制
 
-	yw
-	"ayw 指定寄存器
-	Y=yy
-	"Ayw ”大写的寄存器实现追加数据
+1. `yw`  "复制当前词(复制到普通寄存器)
+1. `"*yw` "复制当前词(复制到系统寄存器`*`, 这是系统粘贴板)
+1. `"Ayw` "复制当前词(复制到系统寄存器A)
+1. `Y`或 `yy` "复制一行
+1. :%y+ " Copy whole text
 
-    :%y+ " Copy all text
-
-查看寄存器
+查看复制到寄存器的内容
 
 	:reg
 
-### paste
+### paste 粘贴
 
 	p 在光标后粘贴
 	P 大写在光标前粘贴

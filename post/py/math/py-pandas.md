@@ -125,7 +125,7 @@ filter via keys
     s[['k1','k2']]
 
 #### via iloc,loc
-via index
+via index(slice)
 
     s.iloc[0]
     s.iloc[0:2]
@@ -257,6 +257,9 @@ via row: record/series
     pd.DataFrame([{'col1':1},{'col2':2}], index=['index1','index2'])
     pd.DataFrame([s1,s2], index=['index1','index2'])  
 
+    # index 默认是0,1
+    pd.DataFrame([{'col1':1},{'col2':2}])
+
 via numpy narray
 
     pd.DataFrame(numpy.random.randint(100, size=(1,2)))
@@ -288,9 +291,21 @@ export xlsx
 ### export format(dict/json)
     # 按列
     df.to_dict()
+        pd.DataFrame.from_dict(data)
     df.to_json()
+        pd.read_json(json)
     # 按行
     df.to_dict('record') 
+
+example: 
+
+    >> data = {'col_1': [3, 2, 1, 0], 'col_2': ['a', 'b', 'c', 'd']}
+    >> pd.DataFrame.from_dict(data)
+        col_1 col_2
+    0      3     a
+    1      2     b
+    2      1     c
+    3      0     d
 
 ## Read df 读取
 ### Read length
@@ -333,6 +348,7 @@ filter row: via index/key
     # via row index
     df[0:3]
     df.iloc[0:3]
+    df.iloc[[0,1,2,3]]
 
     # via row key
     df['row0':'row3']
@@ -358,12 +374,12 @@ filter row:
     df[df.col1>1]
     df[df.col1>df.col2]
 
-    # axis=1 取column 项
     df[df.apply(lambda x: 'ST' in x['col1'], axis=1)]
 
 filter column
 
-    df.loc[:,df.apply(lambda x:x['index1'] < 2)]
+    df.loc[:,['col1','col2']]
+    df.loc[:,df.apply(lambda col:col['index1'] < 2)]
 
 #### filter df
 不是真的过滤，未被过滤的值，被设置NaN
@@ -406,13 +422,24 @@ add as column
 ### T 转置
     df.T
 
-### 聚合运算
-f.apply 是一个row/column 的聚合函数
+### 聚合运算apply(map函数)
+    df.apply(lambda col:print(col))
+    df.apply(lambda row:print(row), axis=1)
+
+f.apply 是一个row/column 的聚合map函数
 
     >>> df.apply(lambda x:x['index1'] >=2)
     col1    False
     col2     Truek
     >>> df.apply(lambda x:x['col1'] >=2, axis=1)
+
+### 聚合运算rolling_apply
+
+    # 计算close收盘价的5日均线和20日均线
+    data['MA_' + str(5)] = pd.rolling_apply(data['close'], 5,np.mean)
+    data['MA_' + str(20)] = pd.rolling_apply(data['close'], 20,np.mean)
+
+计算季度利润:
 
 ### 比较df
 
@@ -454,6 +481,75 @@ f.apply 是一个row/column 的聚合函数
 ### sort df
     df.sort_values(by=['col1', 'col2'], ascending=False)
     df.sort_values(['job','count'],ascending=False).groupby('job').head(3)
+
+按索引排序
+
+    # axis=0 跨行（down），axis=1跨列(across)　axis=0是默认值
+    df.sort_index(axis=1, ascending=False)
+
+按索引排序例子
+
+    >>> df = pd.DataFrame([[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], \
+    ... columns=["col1", "col2", "col3", "col4"])
+    >>> df
+    col1  col2  col3  col4
+    0     1     1     1     1
+    1     2     2     2     2
+    2     3     3     3     3
+    >>> df.mean(axis=1)
+    0    1.0
+    1    2.0
+    2    3.0
+    >>> df.mean(axis=0)
+    col1    2.0
+    col2    2.0
+    col3    2.0
+    col4    2.0
+
+### shift
+从头部移入一行空行
+
+    >>> df
+    col1  col2  col3  col4
+    0     1     1     1     1
+    1     2     2     2     2
+    2     3     3     3     3
+    >>> df.shift(1)
+        0    1    2    3
+    0  NaN  NaN  NaN  NaN
+    1  1.0  1.0  1.0  1.0
+    2  2.0  2.0  2.0  2.0
+
+series.shift: 
+
+    >>> df[0]
+    0    1
+    1    2
+    2    3
+    Name: 0, dtype: int64
+    >>> df[0].shift(1)
+    0    NaN
+    1    1.0
+    2    2.0
+
+计算价格增长百分比
+
+    >>> df/df.shift(1)-1    # 计算价格增长百分比
+    col1  col2  col3  col4
+    0   NaN   NaN   NaN   NaN
+    1   1.0   1.0   1.0   1.0
+    2   0.5   0.5   0.5   0.5
+
+    >>> df.pct_change()     # 计算价格增长百分比
+    col1  col2  col3  col4
+    0   NaN   NaN   NaN   NaN
+    1   1.0   1.0   1.0   1.0
+    2   0.5   0.5   0.5   0.5
+
+
+如果想计算按列之环比：
+
+    df.pct_change(axis='columns')
 
 ### update value
 #### update column
@@ -510,6 +606,9 @@ check is nan
     True
 
 ## Raname column/index
+### change column type
+    df['A']= df['A'].apply(lambda x: float(x))
+
 ### change column order
     > cols = df.columns.tolist()
     > cols = cols[-1:] + cols[:-1]
@@ -566,11 +665,20 @@ revert index to column
     df.index=range(len(df.index))
     df.index=range(len(df))
 
+或者通过insert:
+
+    df.insert(0, 'ann_date', df.index)
+    df.index = range(len(df))
+
 如果不想再插入index
 
     df.reset_index(inplace=True, drop=True)
 
-## Add
+### move column to first
+    col = df.pop("ann_date")
+    df.insert(0, col.name, col)
+
+## df 添加数据
 ### concat series/df as df
 concat column:
 
@@ -614,10 +722,16 @@ init:
     0  1  1  31
     1  2  2  32
 
+
 合并on原基准是多列：
 
     left_on=['col1','col2']
     right_on=['col1','col2']
+
+### append df column
+还可以df1.join　将df2的列，合并到df1
+
+    In [31]: df1.join(df2)
 
 ### append df row
     >>> df1.append(df2)
@@ -656,9 +770,9 @@ list,series,dict as row
 
 ## Drop
 ### Drop columns
-immutable
+immutable(非原地修改)
 
-    # 等价 axis 必须是1(代表二维column)
+    # 等价 axis 必须是1(代表跨列across)
     >>> df.drop(['B', 'C'], axis=1)
         A   D
     0  0   3
@@ -670,6 +784,11 @@ immutable
     1  4   7
     2  8  11
 
+原地修改
+
+    del df['open']          # 原地修改
+    df.drop('open',axis=1)  # 非原地修改
+
 drop duplicate columns: 通过filter expr 办到
 
     df = df.loc[:,~df.columns.duplicated()]
@@ -678,6 +797,14 @@ drop duplicate columns: 通过filter expr 办到
 Drop a row by index.(不存在的index会报错)
 
     >>> df.drop(['index1','index2'])
+
+### dropna
+剔除所有包含缺失值的行数据
+
+    df2.dropna(how='any')
+    # 填充缺失值
+    df2.fillna(value=154)
+
 
 ## for loop
 todo 怎样在循环体中修改值最好呢？
@@ -701,6 +828,26 @@ for col_name key only
         df.loc[index,'col'] = v  # work
     for i in range(len(df)):
         row = df.iloc[i]:
+        row['col']=v #work
+
+### loop with modify 
+modify 正确的做法是
+
+    for index, row in df.iterrows():
+        df.at[index, 'col'] = y
+
+    for i in len(df):
+        df.iat[i, colj] = y
+
+iat with column name
+
+    df['col'].iat(i) = y
+
+### loop with modify col
+也可以利用map
+
+    df["age"] = df['age'].apply(lambda x: int(x))
+    df["age"] = df.apply(lambda row: int(row['age']), axis=1)
 
 ## Index Type
 ### BaseIndex

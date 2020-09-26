@@ -267,6 +267,14 @@ zcount: log(N)
 	ZCOUNT myzset -inf +inf
 	ZCOUNT myzset (1 3; >1 <=3
 
+### zddd 命令
+    ZADD key [NX|XX] [CH] [INCR] score member [score member ...]
+
+1. XX: Only update elements that already exist. Never add elements.
+1. NX: Don't update already existing elements. Always add new elements.
+1. CH: Count changed elements. By default, ZADD only counts the number of new elements added.
+1. INCR: When this option is specified `ZADD` acts like `ZINCRBY`. Only `one score-element pair` can be specified in this mode.
+
 ### Rem
 sorted sets remove:
 

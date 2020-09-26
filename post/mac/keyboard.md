@@ -7,13 +7,14 @@ date: 2020-05-08
 1. HHKB-Pro2，是一款电脑键盘，重量0.53kg， 长29.4 x 宽11.0 x 高39.9mm 。
 2. Niz Atom68 31.9*11.0
 
-考虑到了hhkb的缺点, 入手了niz plum 
+考虑到了hhkb的以下缺点(最后还是换成了niz)
 
-1. 双桥不支持有线传输hhkb 数据线数据走线不灵活，只有一个方向. NIZ是三个方向
-2. hhkb 官方版是没有锂电池的贵hhkb只有一个60键盘布局。 niz 有66 68 84 87 108(我买的68，但想换成mini 84)
-3. hhkb 只用一个压力位。niz 有35g, 45g可选.
+1. hhkb的双桥不支持有线传输hhkb 数据线数据走线不灵活，只有一个方向. NIZ是三个方向
+2. hhkb 官方版是没有锂电池的
+2. hhkb只有一个60键盘布局。 niz 有66 68 84 87 108各种布局(我买的68)
+3. hhkb 只有一个压力位。niz 有35g, 45g可选.
 4. hhkb 只有6个开关提供定制功能，仅仅是交换Command键和Alt键或者交换Fn键. Niz 可以通过软件定制任意按键、快捷键
-5. hhkb 贵，NIZ 性价比太高了
+5. hhkb 太贵，NIZ 便宜性价比高
 
 ## Office/program1/program2 三种模式
     Office 是固定按键。
@@ -75,12 +76,29 @@ atom68缺少一个左Fn 不太方便，于是我通过`程控键`改了下按键
 1. 将左`ctrl&Caps` 映射为右FN
 2. 将`右Alt`映射为ctrl/caps: `非FN` 时为`CapsLock`,`Fn`时为`Catl&Caps`交换键
 
-# F1-F12
-## mac F1-F12
-karabiner 
+# mac osx 问题
+## key repeate 不生效
+在终端下输入：
+
+    defaults write -g ApplePressAndHoldEnabled -bool false
+
+## 加快按键速度
+keyboard配置建议
+1. key repeat 调到最大
+2. Delay Until Repeat 调到最小
+3. Touchpad 调到最灵敏
 
 # Karabiner 定制快捷键
-## 基本按键
+![](/img/shell/keyboard/karabiner-keyboard-list.png)
+
+## log
+如果karabiner 没有生效，可以查看相关日志
+
+    /var/log/karabiner/grabber.log
+    /var/log/karabiner/observer.log
+    ~/.local/share/karabiner/log/console_user_server.log
+
+## 基本按键配置
 https://ke-complex-modifications.pqrs.org/
 
     "modifiers.mandatory": 
@@ -96,7 +114,6 @@ https://ke-complex-modifications.pqrs.org/
         open_bracket
         close_bracket
         ` grave_accent_and_tilde
-
 
 假如我要定义一个ctrl+k 向前删除到行末：
 
@@ -120,9 +137,14 @@ https://ke-complex-modifications.pqrs.org/
           ]
         }
 
+注意：经过以上修改后，对于mac osx内置键盘而言，我们还要交换大小与ctrl
+![](/img/shell/keyboard/karabiner-readline1.png)
+
 ## ctrl+u/w
-你可以设置ctrl+w/u 映射到`option/cmd+DeleteBackward`. 此时iterm会失效. 
-解决方案如下：
+你可以设置`ctrl+w` 映射到`option+DeleteBackward`. 此时iterm2会失效. 
+你可以设置`ctrl+u` 映射到`cmd+DeleteBackward`. 此时iterm2会失效. 
+
+解决方案下面细说
 
 ### ctrl+w: option 映射esc
 ctrl+w解决方法是option发送真正的escape：
@@ -137,8 +159,9 @@ https://apple.stackexchange.com/questions/89981/remapping-keys-in-iterm2
 2. 在iterm 修改keys. 将`cmd+backspace`映射到`0x15`
 
 ![](/img/shell/keyboard/iterm-keys-map.png)
-
 ## app 绑定
+如果我们想让karabiner keys只应用于某个app 怎么办呢？
+
 首先找到app 的bundle identifier
 
     $ osascript -e 'id of app "chrome"'

@@ -42,6 +42,10 @@ private: true
     req.SetCookie(&cookie1)
     req.SetCookie(&cookie2)
 
+获取cookie
+
+    cookies:=resp.Cookies()    
+
 Note 每次请求后会自动请理req和/Client的 cookie
 
     req.ClearCookies()

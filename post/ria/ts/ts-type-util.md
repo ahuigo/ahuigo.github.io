@@ -16,6 +16,12 @@ Note: 断言不是类型转换
 
     refEl.current as unknown as HTMLDivElement
 
+### as 
+    function ({
+        color = "geekblue", names = []
+    } = {} as TagsProps) {
+    }
+
 ## ts类型别名
 常用于联合类型
 
@@ -31,6 +37,20 @@ Note: 断言不是类型转换
     }
 
 ## 获取类型
+### Parameters
+    function foo(a: number) {
+    return true;
+    }
+    type p = Parameters<typeof foo>[0];
+
+返回
+
+    function foo(a: number, b: string) {
+        return true;
+    }
+    type p = ParametersWithNames<typeof foo>;
+    // p = { a: number, b: string }
+
 ### typeof 获取数据类型
     const data = {
         value: 123,
@@ -101,6 +121,24 @@ https://stackoverflow.com/questions/36015691/obtaining-the-return-type-of-a-func
     type Keys = keyof typeof data
 
 
+### extends keyof
+extends 是扩展的意思
+
+    function prop<T, K extends keyof T>(obj: T, key: K) {
+        return obj[key]; //T[K]
+    }
+    function prop2<T>(obj: T, key: keyof T) {
+        return obj[key]; //T[keyof T]
+    }
+
+    let o = {
+        p1: 0,
+        p2: ''
+    }
+
+    let v = prop(o, 'p1') // is number, K is of type 'p1'
+    let v2 = prop2(o, 'p1') // is number | string, no extra info is captured
+
 ## valueof
 
     Person[keyof Person];
@@ -157,6 +195,53 @@ partial key with `?`
         return { ...todo, ...fieldsToUpdate };
     }
 
+## Merge
+    type Point = {
+        x: number;
+        y: number;
+    };
+    
+    type Label = {
+        name: string;
+    };
+    
+    const thing: Point | Label = {
+        x: 0,
+        y: 0,
+        name: `Lily` 
+    };
+
+## Omit
+删除某keys
+
+    interface Todo {
+        title: string;
+        description: string;
+        completed: boolean;
+    }
+
+    type TodoPreview = Omit<Todo, "description">;
+
+    const todo: TodoPreview = {
+        title: "Clean room",
+        completed: false,
+    };
+
+删除多个keys
+
+    type OmitAB = Omit<Test, "a"|"b">; 
+
+这是等价
+
+    type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+或者：
+
+    // Functionally the same as Exclude, but for strings only.
+    type Diff<T extends string, U extends string> = ({[P in T]: P } & {[P in U]: never } & { [x: string]: never })[T]
+    type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>
+
+
 ## `Record<K,T>`
 Constructs a type with a set of properties K of type T. This utility can be used to map the properties of a type to another type.
 
@@ -171,6 +256,10 @@ Constructs a type with a set of properties K of type T. This utility can be used
         contact: { title: 'contact' },
         home: { title: 'home' },
     };
+
+Dict:
+
+    Record<string, string>
 
 ## `Pick<T,K>`
 Constructs a type by picking the set of properties K from T.
@@ -188,6 +277,29 @@ Constructs a type by picking the set of properties K from T.
         completed: false,
     };
 
+## 子类型
+> https://stackoverflow.com/questions/27875483/typescript-reference-subtype-of-type-definition-interface
+比如：
+
+    interface ExerciseData {
+        id : number;
+        name : string;
+        vocabulary : {
+            from : string;
+            to : string;
+        }[];
+    }
+
+获取子类型
+
+    type vocabulary = ExerciseData['vocabulary'][]; // Array<{from: string, to: string}>
+
+    type from = ExerciseData['vocabulary'][number]['from']; // string
+
+also:
+
+    type fieldKey = 'id' | 'name';
+    type fieldTypes = ExerciseData[fieldKey]; // number | string
 ## Exclude
     type T0 = Exclude<"a" | "b" | "c", "a">;  // "b" | "c"
     type T1 = Exclude<"a" | "b" | "c", "a" | "b">;  // "c"

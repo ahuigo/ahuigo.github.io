@@ -70,6 +70,17 @@ js 对四字节utf8 的unicode 支持不好
 	name='ahui'
 	`Hello, ${name}`
 
+### base64
+domString 是16bit的, atob 只能处理`0x00-0xff`字符，处理utf8字符，需要先转成单字节字符。
+
+    function utf8_to_b64( str ) {
+        return window.btoa(unescape(encodeURIComponent( str )));
+    }
+
+    function b64_to_utf8( str ) {
+        return decodeURIComponent(escape(window.atob( str )));
+    }
+
 ### buffer
 see py-str-struct: like bytes
 

@@ -3,6 +3,12 @@ title: Go regex
 date: 2019-10-02
 private:
 ---
+# Go wildcard
+    import "path/filepath"
+
+    fmt.Println(filepath.Match(`/home/*`, "/home/ahuigo"))
+
+
 # Go regex
 go-lib/str/regex.go
 

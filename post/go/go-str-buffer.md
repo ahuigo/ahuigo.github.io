@@ -25,7 +25,7 @@ buffer 是slice结构，可以自动扩容，也可以指定始容量
     var buf bytes.Buffer
     buf := &bytes.Buffer{}
 
-## convert buffer
+## convert buffer to other
     buf.Bytes()
     buf.String()
 
@@ -98,6 +98,12 @@ e.g.读取一行(包括分隔符)
    buf := bytes.NewBufferString("hello world")
    buf.WriteTo(file)
    //或者使用写入，fmt.Fprintf(file,buf.String())
+
+### read to stdout
+参考 go file
+
+    var b bytes.Buffer
+    io.Copy(os.Stdout, &b)
 
 # io.Reader interface
 除了bytes Buffer, 还有strings reader, 它们都实现了io.Reader interface

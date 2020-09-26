@@ -156,6 +156,18 @@ type definition 是新类型:
         *imported.Thing
     }
 
+只有复合类型可以通过形参匹配：
+
+    type StringArray []string
+
+    func main(){
+        var i StringArray = []string{"a"}
+        fmt.Printf("%T\n", i)
+        func(j []string){
+            fmt.Printf("%T\n", j)
+        }(i)
+    }
+
 ### interface convert
 
     type MyInt int

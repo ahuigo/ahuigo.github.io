@@ -1,7 +1,6 @@
 ---
 title: golang string
 date: 2018-09-27
-private:
 ---
 # rune vs byte
 
@@ -203,7 +202,7 @@ If no content, reurn `empty slice`
 
 ## join
 
-  strings.Join([]string{"a","b"}, ",")
+    strings.Join([]string{"a","b"}, ",")
 
 # strconv
 
@@ -220,8 +219,8 @@ If no content, reurn `empty slice`
    
 ## io.Copy Reader
 
-		io.Copy(os.Stdout, &r)
-			实际调用r.Read(buf []byte)
+    io.Copy(os.Stdout, &r)
+        实际调用r.Read(buf []byte)
 
 example:
 
@@ -280,9 +279,9 @@ trim 字符串
     copy(p,src)
     fmt.Println((p), len(p))
 
-## in stirng, contain
+## in stirng, contains, include
     import "strings"
     strings.Contains("something", "some") // true
 
-
-
+## startsWith
+    strings.HasPrefix(myString, "Hello") 

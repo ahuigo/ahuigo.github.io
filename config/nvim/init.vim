@@ -10,8 +10,8 @@ set laststatus=2
 """""""""""""""""""""""""""""""""""
 " Same as vscode's function: vwS'
 """""""""""""""""""""""""""""""""""
-vnoremap " di"<esc>pa"<esc>
-vnoremap ' di'<esc>pa'<esc>
+"vnoremap " di"<esc>pa"<esc>
+"vnoremap ' di'<esc>pa'<esc>
 vnoremap ( di(<esc>pa)<esc>
 vnoremap [ di[<esc>pa]<esc>
 vnoremap { di{<esc>pa}<esc>
@@ -57,10 +57,6 @@ endfunction
 nnoremap <F1> :let @/ = ""<CR>
 nnoremap  \w :%s/\s\+$//e<CR>
 
-""""""""""""""""""
-" close & write
-"""""""""""""""""""""
-nnoremap <C-q> :qa<CR>
 
 """""""""""""""""""""""""""""""""""
 " provide hjkl movements when wrap
@@ -144,8 +140,13 @@ noremap <c-l> :bn<cr>
 "noremap <F9> :execute "0r _posts/test.md"<CR>
 "inoremap <D-V> <ESC>:r!pasteImg.py '%:t:r'<CR>
 "inoremap <D-V> <ESC>:r!pasteImg.py '%'<CR>
-"clipboard
+
+""""""""""""""""""
 " config iTerm2 keys: Esc+Ac, Esc+As, Esc+Aa
+" close & write & clipboard copy paste
+"""""""""""""""""""""
+" Quit
+nnoremap <C-q> :qa<CR>
 " Copy
 vnoremap <M-A>c "+y
 " Save

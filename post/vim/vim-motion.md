@@ -7,34 +7,30 @@ description:
 # Motion, Movement
 Movement 移动光标、字符，Vim 最核心的功能操作
 
-    基本 hjkl
-    单词 
-        小单词wbe
+vim 下的光标移动
+
+    按字符移动 hjkl
+    按单词移动 
+        小单词: wbe (不含符号)
             w: word forward
             b: word backward
             e: end of word
-        大单词WBE​
-    行
-        行头: 
+        大单词: WBE​(含符号)
+    行内移动
+        行首: 
             0
             ^
         行尾: $
         跳行：
             100G
             :100
-    块
-        句 (    )
-        段 {    }    
-        章节section 或{"
-             [[   ]]
-        章节section 或}"
-            [] ][
-        匹配()
+    按块移动
+        句子: (    )
+        段落: {    }    
+        小括号: ()
             [(	])
-            	go to [count] previous unmatched '()'.
-        匹配{}
+        花括号： {}
             [{	]}
-                go to [count] next unmatched '{}}'.
 
     页
         页内移动： H:Home M:middle L:Last 
@@ -45,13 +41,15 @@ Movement 移动光标、字符，Vim 最核心的功能操作
         首行: gg
         尾行: G
     匹配移动：
-        % * #
-        f{char}
-            fx  跳到下一个字符x
-            ;   向前跳
-            ,   向后跳
-        F{char}
-            Fx  跳到上一个字符x
+        匹配括号对：%
+        匹配当前词：* #
+        匹配字符：
+            f{char}
+                fx  跳到下一个字符x
+                ;   向前跳
+                ,   向后跳
+            F{char}
+                Fx  跳到上一个字符x
     easymothtion：需要插件支持, vscode 也可以开启easymotion
         跳char
             <leader><leader>f
@@ -75,7 +73,7 @@ Movement 移动光标、字符，Vim 最核心的功能操作
     cnoremap <C-a> <Home>
     cnoremap <C-e> <End>
 
-ps:如果要实现跨行移动,需要在`.vimrc`指定相应键：
+ps:如果要实现跨行移动,需要在`.vimrc`指定wrap：
 
     set whichwrap=b,s,<,>,[,]
 

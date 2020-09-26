@@ -225,6 +225,18 @@ or :
 
 > 注意# tail -n +2, 用的+ 号哦
 
+#### Shell 进程替换有两种写法
+一种用来产生标准输出
+
+    <(commands)
+    $ read < <(echo "some sth.")
+    $ echo $REPLY
+
+另一种用来接受标准输入
+
+    >(commands)
+    echo "some sth." > >(cat)
+
 ### pipe stdout while keeping it on screen
 
 	#with Process Substitution

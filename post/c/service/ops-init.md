@@ -14,7 +14,6 @@ init指linux 系统运行级runlevel 0~6. 可在/etc/inittab中指定:
 
 	id:3:initdefault:
 
-
 ### rc.d
 运行级对应的要启动的脚本目录rcN.d(其下的脚本链接到../init.d/):
 

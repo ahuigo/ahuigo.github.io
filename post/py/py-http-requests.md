@@ -7,7 +7,22 @@ private: true
 https://findwork.dev/blog/advanced-usage-python-requests-timeouts-retries-hooks/#retry-on-failure
 
 ## session cookie
-### Quick Answer
+### save cookie
+
+    import requests, pickle
+    session = requests.session()
+
+    with open('somefile', 'wb') as f:
+        pickle.dump(session.cookies, f)
+
+Loading is then:
+
+    session = requests.session()  # or an existing session
+
+    with open('somefile', 'rb') as f:
+        session.cookies.update(pickle.load(f))
+
+### set cookie
 
     import requests
     s = requests.session()

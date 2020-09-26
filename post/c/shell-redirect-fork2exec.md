@@ -95,13 +95,13 @@ description:
 ## 输出重定向
 本质是 `fd=open(file, w+[append]); [1-n]->fd`
 
-  command-line1 [1-n]>file
-  command-line1 [1-n]>>file
+    command-line1 [1-n]>file
+    command-line1 [1-n]>>file
 
 将标准出、标准错误导向/dev/null
 
-  cmd &>/dev/null
-  cmd >&/dev/null
+    cmd &>/dev/null
+    cmd >&/dev/null
 
 ## 绑定重定向
 `&[n]` 代表是已经存在的文件描述符，`&1` 代表输出 `&2`代表错误输出 `&-`代表关闭与它绑定的描述符
@@ -115,28 +115,28 @@ description:
 
 eg:
 
-  $ exec 6>&1
-  #将fd 6绑定 1指向的文件
+    $ exec 6>&1
+    #将fd 6绑定 1指向的文件
 
-  $ ls  /dev/fd/
-  0  1  2  3  6
-  #出现文件描述符6
+    $ ls  /dev/fd/
+    0  1  2  3  6
+    #出现文件描述符6
 
-  $ exec 1>suc.txt
-  #将接下来所有命令标准输出，绑定到suc.txt文件（输出到该文件）
+    $ exec 1>suc.txt
+    #将接下来所有命令标准输出，绑定到suc.txt文件（输出到该文件）
 
-  $ ls -al
-  #执行命令，发现什么都不返回了，因为标准输出已经输出到suc.txt文件了
+    $ ls -al
+    #执行命令，发现什么都不返回了，因为标准输出已经输出到suc.txt文件了
 
-  $ exec 1>&6
-  #恢复标准输出
+    $ exec 1>&6
+    #恢复标准输出
 
 
-  $ exec 6>&-
-  #关闭fd 6描述符
+    $ exec 6>&-
+    #关闭fd 6描述符
 
-  $ ls /dev/fd/
-  0  1  2  3
+    $ ls /dev/fd/
+    0  1  2  3
 
 分析:
 

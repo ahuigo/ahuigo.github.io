@@ -125,9 +125,7 @@ fork 子进程调试, 对于lldb 来说需要先断点，然后用新的*lldb* �
 原因：
 进程数到达最大值.ulimit -a可以查看当前系统的所有限制值，linux一般默认是1024
 
-解决方法：
-
-  在/etc/security/limits.conf最后增加：
+解决方法： 在/etc/security/limits.conf最后增加：
 
 	* soft nofile 65535
 	* hard nofile 65535
@@ -149,6 +147,21 @@ fork 子进程调试, 对于lldb 来说需要先断点，然后用新的*lldb* �
 	* soft nproc 102400
 
 	* hard nproc 102400
+
+### vfork
+     vfork -- create a new process without copying the address space
+
+vfork创建的子进程与父进程共享数据段(pcb),而且由vfork()创建的子进程将先于父进程运行. 
+
+vfork()保证子进程先运行，在她调用`exec或_exit`之后父进程才可能被调度运行
+
+    fork() 子进程拷贝父进程的数据段，代码段.
+    vfork() 子进程与父进程共享数据段.|
+
+    fork() 父子进程的执行次序不确定.
+    vfork():保证子进程先运行，
+
+> shell中的exec 命令就间先执行vfork，再执行exec
 
 ## exec
 fork 创建子进程后，一般需要调用exec 执行其实程序, exec 的作用是用其它程序的*用户空间代码*和*数据区* 来覆写 新当前进程的代码区和数据区(PCB中的进程号等等都不变).

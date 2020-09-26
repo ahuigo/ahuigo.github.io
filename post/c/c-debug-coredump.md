@@ -75,7 +75,7 @@ Linux下，有一些设置，标明了resources available to the shell and to pr
 ## core文件的名称和生成路径
 若系统生成的core文件不带其它任何扩展名称，则全部命名为core。新的core文件生成将覆盖原来的core文件 。
 
-	/proc/sys/kernel/core_uses_pid 可以控制产生的core文件的文件名中是否添加pid作为扩展，如果添加则文件内容为1，否则为0
+	＃　可以控制产生的core文件的文件名中是否添加pid作为扩展，如果添加则文件内容为1，否则为0
 	echo "1" >/proc/sys/kernel/core_uses_pid
 
 以下是参数列表:

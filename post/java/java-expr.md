@@ -49,7 +49,20 @@ switch表达式是作为Java 12的预览特性（Preview Language Features）实
     }
 
 # break continue
-不支持
+不支持以下语法
 
     break 2;
     continue 2;
+
+但是支持
+
+    outerloop:
+    for (int i=0; i < 5; i++) {
+        for (int j=0; j < 5; j++) {
+            if (i * j > 6) {
+                System.out.println("Breaking");
+                break outerloop;
+            }
+            System.out.println(i + " " + j);
+        }
+    }

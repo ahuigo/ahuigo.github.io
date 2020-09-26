@@ -13,19 +13,6 @@ date: 2018-10-04
 
 ## Timer
 
-### time single
-    from redis import Redis
-    rdb = Redis()
-
-    with timeit.Timer() as t:
-        rdb.lpush("foo", "bar")
-    print("=> elasped lpush: %s s" % t.secs)
-
-py:
-
-    In [1]: %%timeit
-
-### time repeat
 ### timeit
 使用time with context
 

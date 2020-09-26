@@ -54,18 +54,7 @@ priority:
     TAB Auto-complete a name
     Ctrl-t  Transpose/drag  char. before the cursor ↷ over the character at the cursor
 
-### comment
-Comment your command
-
-	alt+#
-	ctrl+a # <enter>
-
 ### 定位
-
-#### 窗口定位(gnome)
-
-	ALT+NUM #tab 切换(会占用[readline])
-	ALT-CTRL-T #新建terminal window
 
 #### 光标定位
 
@@ -84,8 +73,8 @@ Comment your command
 
 #### Edit  Cmd Batched
 
+    $ export EDITOR=vim
 	<Ctrl-x><Ctrl-e> # Open a temporary editor, which is sepeciafied by $EDITOR
-
 
 ### 复制/粘贴(copy & paste)
 
@@ -259,15 +248,20 @@ Only the cmd start from `!` could be printed, here are some bad usages:
 # iTerm2
 zsh号称终极shell, 配合iTerm2(terminal)会更加的方便. 本小节参考了池建强的[终极shell]
 
-## open tab
+## 导入导出配置
+1. If you have a look at `Preferences -> General`
+2. you will notice at the bottom of the panel, there is a setting `Load preferences from a custom folder or URL:`. 
+3. There is a button next to it `Save settings to Folder`.
+
+
+## 快捷键配置
+注意，建议把　profile=>keys 选项卡中的`Option` 按键设置成`ESC+`
+![](/img/mac/iterm2-shortcut.png)
+
+## 新建tab默认打开当前的工作区
 profiles -> General -> Working Directory
 
-## readline
-iterm2 下默认option + f/b 不是指向esc+f/b 的，导致这两个快捷键不能按单词移动光标。
-
-所以需要按`Cmd+,`, 然后在keys 中将这两个快捷键绑定到 `esc+f/b`
-
-## window(tabs)
+## window(tabs) 快捷键
 
 	Cmd-W close current tab
 	cmd-Num	Goto tab No. as Num.
@@ -300,13 +294,11 @@ iterm2 下默认option + f/b 不是指向esc+f/b 的，导致这两个快捷键�
 	在链接上按住cmd+单击 直接打开url
 
 # zsh
-
-
 ## nocorrect
 
 	unsetopt correct
 
-## Hotkey
+## Readline Hotkey
 If u like for Ctrl+U to be bound to backward-kill-line rather than kill-whole-line, so add this to your `.zshrc`:
 
     bindkey \^U backward-kill-line
@@ -322,6 +314,11 @@ Also you can add a shortcuts in `preference -> keys`:
 	shortcuts: alt+f/alt+right_arrow
 	action: send escape sequence
 	ESC+: f
+
+### iter2 readline
+iterm2 下默认option + f/b 不是指向esc+f/b 的，导致这两个快捷键不能按单词移动光标。
+
+变通的方法是：按`Cmd+,`, 然后在keys 中将这两个快捷键绑定到 `esc+f/b`
 
 ## 光标移动
 

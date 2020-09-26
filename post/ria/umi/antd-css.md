@@ -10,6 +10,24 @@ private: true
         text-align: left;
     }
 
+## override classes
+antd's style:
+
+    .ant-btn { ... }
+
+局部修改:
+
+    .my-btn.ant-btn { ... }
+    <Button className="my-btn"/>
+
+全局修改:
+
+    .project { .ant-btn{...} }
+
+    <div className="project">
+        <Button className="my-btn"/>
+    </div>
+
 # antd theme
 多种主题：https://github.com/ant-design/ant-design/tree/master/components/style/themes
 定制theme: https://ant.design/docs/react/customize-theme

@@ -2,7 +2,97 @@
 title: Golang 的结构体
 date: 2019-03-24
 ---
-# Golang Notes: struct
+# 定义
+## init 
+init 时必须包含全部字段
+
+     n0 := Node{0,1,nil,nil}
+     n0 := Node{0,1,nil,nil,}
+     n0 := Node{0,1} //error: too few args
+
+否则用key:value 形式就不用包含全部字段了
+
+     n1 := Node{}       //default: id:0,data:nil,next:nil
+     n2 := Node{
+        id:   2,
+        data: nil,
+        next: &n1,
+    }
+    fmt.Println(n1,n2)
+
+### init nil
+    var a *Node
+    a == nil //true
+
+但是这个nil 是有类型的nil：
+
+    (*main.Node)(nil)
+
+## define:
+
+    type Node struct {
+        _    int
+        id   int
+        data *byte
+        next *Node
+    }
+
+Node 是结构体名，不是数据，不能访问的：
+
+    //非法
+    Node.id
+
+## 用类型名作为属性名
+
+    type A struct { int }
+    var a=A{}
+    a.int = 1
+    fmt.Println(a)
+
+### struct with tag
+可定义字段标签，⽤用反射读取。标签是类型的组成部分, 是不同的类型
+
+    func main() {
+        type D struct {
+            s string `tag3`
+            x   int `tag2`
+        }
+        var d D
+        fmt.Printf("%#v\n", d)
+    }
+
+再来个例子
+
+    type A struct {
+        Body struct {
+            Status string `Flag`
+        }
+    }
+    A{struct{Status string `Flag`}{}}.Body.Status
+    A{struct{Status string `Flag`}{"str"}}.Body.Status
+
+
+### null struct
+null struct 不占用空间，用来实现set
+
+    var null struct{}
+    set := make(map[string]struct{})
+    set["a"] = null
+
+### 匿名struct
+    var attr = struct {
+        perm  int
+        owner int
+    }{2, 0755}
+# 传值、访问、指针
+## access
+
+	v := Vertex{1, 2}
+	v.X = 4
+	&v.X = 4
+	Vertex{1, 2}.X
+
+## 按值传递
 struct 是值类型，slice 是引用类型(指针), 以下赋值方法是按值的
 
     type A struct{x int; b string}
@@ -11,20 +101,6 @@ struct 是值类型，slice 是引用类型(指针), 以下赋值方法是按值
     fmt.Printf("%p,%p\n", &a,&b)  //not same
     b = a                           //按值传递
     fmt.Printf("%p,%p\n", &a,&b)  //not same
-
-## 特殊定义
-
-    type A struct { int }
-    var a=A{}
-    a.int = 1
-    fmt.Println(a)
-
-## access
-
-	v := Vertex{1, 2}
-	v.X = 4
-	&v.X = 4
-	Vertex{1, 2}.X
 
 ## pointer to structs
 struct pointer:
@@ -73,85 +149,12 @@ partial copy struct
     }
 
 ## compare struct
+结构体是可以直接比较的: (但是 time类型不能比较，见go-lib/time/time-compare.go)
 
     a := User{"ahui"}
     b := User{"ahui2"}
     fmt.Printf("%v", a==b) //true
 
-## init 
-init 时必须包含全部字段
-
-     n0 := Node{0,1,nil,nil}
-     n0 := Node{0,1,nil,nil,}
-     n0 := Node{0,1} //error: too few args
-
-否则用key:value 形式就不用包含全部字段了
-
-     n1 := Node{}       //default: id:0,data:nil,next:nil
-     n2 := Node{
-        id:   2,
-        data: nil,
-        next: &n1,
-    }
-    fmt.Println(n1,n2)
-
-### init nil
-    var a *Node
-    a == nil //true
-
-但是这个nil 是有类型的nil：
-
-    (*main.Node)(nil)
-
-## define:
-
-    type Node struct {
-        _    int
-        id   int
-        data *byte
-        next *Node
-    }
-
-不要直接访问：
-
-    //非法
-    Node.id
-
-### struct with tag
-可定义字段标签，⽤用反射读取。标签是类型的组成部分, 是不同的类型
-
-    func main() {
-        type D struct {
-            s string `tag3`
-            x   int `tag2`
-        }
-        var d D
-        fmt.Printf("%#v\n", d)
-    }
-
-再来个例子
-
-    type A struct {
-        Body struct {
-            Status string `Flag`
-        }
-    }
-    A{struct{Status string `Flag`}{}}.Body.Status
-    A{struct{Status string `Flag`}{"str"}}.Body.Status
-
-
-### null struct
-null struct 不占用空间，用来实现set
-
-    var null struct{}
-    set := make(map[string]struct{})
-    set["a"] = null
-
-### 匿名struct
-    var attr = struct {
-        perm  int
-        owner int
-    }{2, 0755}
 
 ## 面向对象
 go struct 仅支持封装，没有继承、多态
@@ -237,6 +240,16 @@ User继承 Model 所有属性， 包括gorm.Model.ID、方法
     pf("%#v,%#v\n", user, user.ID==user.Model.ID)
 
 e.g: go-lib/object/inherit.go
+
+### 继承chains
+    type User struct {
+        gorm.Model
+        ID int
+    }
+    // 可以不等价
+    user.ID=1
+    user.Model.ID=2
+    pf("%#v,%#v\n", user, user.ID==user.Model.ID)
 
 ### interface 
 interface 是通用类型，可以是指针、 非指针类型

@@ -43,13 +43,16 @@ password method 使用独立的帐号，使用ROLE管理
         \W prompt enter password
 
 ## user login
+### 通过cmd
 Non interactive password:
 
 1. vim ~/.pgpass:
     `hostname:port:database:username:password`
     支持通配符`hostname:port:*:username:password`
 2. PGPASSWORD=pass1234 psql -U MyUsername myDatabaseName
-3. URI: https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
+
+### 通过URI
+URI: https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
 
 pg:
 
@@ -60,7 +63,9 @@ pg:
     psql postgresql://user@localhost
     psql postgresql://user:secret@localhost
     psql postgresql://other@localhost/otherdb?connect_timeout=10&application_name=myapp
-    psql postgresql://host1:123,host2:456/somedb?target_session_attrs=any&application_name=myapp
+    psql 'postgresql://host1:123,host2:456/somedb?target_session_attrs=any&application_name=myapp'
+
+    psql 'postgres://ahuigo.com:5432/dbname?sslmode=disable'
 
 ## create role/user
 两种
@@ -71,6 +76,7 @@ pg:
 
 `create user` 默认带login 权限(唯一区别):
 
+    # create 默认带login
     create user demo_role
     # give ability to login in
     CREATE ROLE demo_role WITH LOGIN;

@@ -43,3 +43,38 @@ Test for code example above:
         assert.Equal(t, 200, w.Code)
         assert.Equal(t, "pong", w.Body.String())
     }
+
+# mock context
+
+    w := httptest.NewRecorder()
+    context,engine := gin.CreateTestContext(w)
+
+## mock test context
+    func CreateTestContext(w http.ResponseWriter) (c *Context, r *Engine) {
+        r = New()
+        c = r.allocateContext()
+        c.reset()
+        c.writermem.reset(w)
+        return
+    }
+
+
+
+
+## mock request
+
+    w := httptest.NewRecorder()
+    context, _ := gin.CreateTestContext(w)
+
+    // init request
+    req, _ := http.NewRequest("GET", "/ping", nil)
+
+    // Cookie
+    cookie := http.Cookie{Name: "token", Value: "xxx"}
+    req.AddCookie(&cookie)
+
+    // add request
+    context.Request = req
+
+    // 请求controller
+    router.Controller.GetIndex(context)

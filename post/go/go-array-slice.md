@@ -56,7 +56,7 @@ The type `[n]T` is an array of `n` values of type `T`
 	fmt.Println(pf)
 	fmt.Println(pfArr)
 
-## in_array
+## in array
     func arrayIndex(a string, list []string) (int) {
         for i, b := range list {
             if b == a {
@@ -65,6 +65,15 @@ The type `[n]T` is an array of `n` values of type `T`
         }
         return -1
     }
+
+用funk 代替：
+
+
+    funk.Contains([]string{"foo", "bar"}, "bar") // true
+
+    // slice of Foo ptr
+    funk.Contains([]*Foo{f}, f) // true
+    funk.Contains([]*Foo{f}, nil) // false
 
 # Slices
 slice 中的array 是C++隐式引用array:
@@ -101,9 +110,29 @@ A nil slice has a length and capacity of 0 and has `no underlying array`(no poin
         fmt.Println(s, len(s), cap(s))
     }
 
-### slice of the init array :
+无论是nil 还是非nil, 它们的len/cap都是0
+
+    var s []int
+    s=[]int(nil)
+    fmt.Println(s, len(s), cap(s))
+
+nil slice 是可以append的
+
+    // ok
+    s := append([]int(nil), 1)
+
+### init slice:
 
     s := []int{1,2,3,8:100} //len=9,cap=9
+### init nil slice:
+
+    []string(nil)
+
+    //或者
+    type struct A{
+       names []string 
+    }
+    A{}.names == nil
 
 ### make slice:
 
@@ -111,6 +140,9 @@ A nil slice has a length and capacity of 0 and has `no underlying array`(no poin
     fmt.Println(s2, len(s2), cap(s2))   //len=6,cap=8
     s3 := make([]int, 6)
     fmt.Println(s3, len(s3), cap(s3))   //len=6=cap
+
+make 不能生成nil slice
+
     make([]int) //error
 
 ### slice structs:
@@ -209,6 +241,12 @@ len(src)>len(dst) 会被golang 截断
 如果不分配空间就用:
 
     copy(slice[len(s):], data)
+
+### concat merge slice
+merge a and b:
+
+    x := []int{}
+    x = append(a,b...)
 
 ### append cap allocate
 If the backing array of `s` is too small to fit all the given values, a bigger array will be allocated(double cap).

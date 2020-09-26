@@ -68,13 +68,13 @@ e.g.
     pg_dump help
 ### backup
 
-    # only schema
+    # only schema(-s)
     pg_dump -U db_username -s  -f [filename.sql] [db_name]
-    # only data
+    # only data(-a)
     pg_dump -U db_username -a  -f [filename.sql] [db_name]
-    # spcify table
+    # spcify table(-t)
     pg_dump -U db_username -t table_name -a  -f [filename.sql] [db_name]
-    # data+schema
+    # data+schema(null)
     pg_dump                      -f [filename.sql] [db_name]
 
     -F format
@@ -168,7 +168,8 @@ create:
 
 drop db:
 
-    > drop database yunzhi100
+    $ dropdb -h host -p 5432 $dbname -U username
+    > drop database <dbname>
 
 rename db:
 
@@ -183,7 +184,6 @@ list db:
 
     \c database_name
         \connect database_name
-    SELECT current_database();
 
 ### current database
 
@@ -203,7 +203,6 @@ show create table(只能用命令行):
     pg_dump -st tablename dbname
     pg_dump -st tablename dbname -h host -U username -p port 
 
-
 ### create
 
     $ psql -f init.sql
@@ -214,10 +213,6 @@ show create table(只能用命令行):
         location varchar(25) check (location in ('north', 'south', 'west', 'east',  'northwest')),
         install_date date
     );
-
-#### 修改autoincrement id
-
-    ALTER SEQUENCE oauth_tokens_id_seq RESTART WITH 94
 
 #### create view table
 	create view t_view as
@@ -250,7 +245,7 @@ ALTER TABLE table_name `<action>`:
     constraint:
         ADD CONSTRAINT constraint_name constraint_definition
 
-### default
+### default value
 To set a new default for a column, use a command like:
 
     ALTER TABLE products ALTER COLUMN price SET DEFAULT 7.77;
@@ -275,3 +270,35 @@ To remove any default value, use:
     create sequence player_id_seq;
     alter table player alter playerid set default nextval('player_id_seq');
     Select setval('player_id_seq', 2000051 ); --set to the highest current value of playerID
+
+#### 修改autoincrement id
+id seq　一般保存在`<table>_id_seq`中，可以通过`\d`查看
+
+    select last_value from oauth_tokens_id_seq;
+    SELECT nextval('oauth_tokens_id_seq'::regclass)
+
+    # nextval 必须先执行、或者insert语句执行后，才可以调用 currval
+    select currval('oauth_tokens_id_seq');
+
+下面的语句等价
+
+    SELECT setval('users_id_seq', 94, true);  
+    ALTER SEQUENCE users_id_seq RESTART WITH 94
+
+setval 用法：
+
+    SELECT setval('foo', 42);           Next nextval will return 43
+    SELECT setval('foo', 42, true);     Same as above
+    SELECT setval('foo', 42, false);    Next nextval will return 42
+
+一键完成:
+
+    do $$ 
+    declare
+        name  varchar:= "oauth_tokens"
+    begin 
+        PERFORM setval('oauth_tokens_id_seq',(select max(id) from oauth_tokens));
+    end $$;
+
+    // method2
+    select setval('oauth_tokens_id_seq', (select max(id) from oauth_tokens)+1);

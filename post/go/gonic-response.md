@@ -257,3 +257,18 @@ example for custom autocert manager.
 
         log.Fatal(autotls.RunWithManager(r, &m))
     }
+
+# 高级
+## shell pipe to response
+    func (c *gin.Context){
+        // var stdout bytes.Buffer
+        var stderr bytes.Buffer
+        command = exec.Command("sh", "-c", "echo begin && sleep 3 && cmd-not-existed||echo ok")
+        command.Stdout = c.Writer
+        command.Stderr = &stderr
+        err := command.Run()
+        if err != nil {
+            c.AbortWithError(http.StatusBadRequest, err)
+            return
+        }
+    }

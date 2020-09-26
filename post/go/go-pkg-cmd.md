@@ -18,6 +18,20 @@ go build的时候会选择性地编译以系统名结尾的文件（Linux、Darw
     array_windows.go 
     array_freebsd.go
 
+## go generate
+运行go generate时，它将扫描与当前包相关的源代码文件，找出所有包含"//go:generate"的特殊注释, 执行相应的shell, 比如
+
+    //go:generate swagger generate spec -o router/server/swagger/files/swagger.json
+
+go generate命令格式：
+
+    go generate [-run regexp] [-n] [-v] [-x] [build flags] [file.go... | packages]
+
+    -run 正则表达式匹配命令行，仅执行匹配的命令
+    -v 输出被处理的包名和源文件名
+    -n 显示不执行命令
+    -x 显示并执行命令
+
 ## go clean
 go clean 命令是用来移除当前源码包里面编译生成的文件，这些文件包括
 

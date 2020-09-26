@@ -13,18 +13,20 @@ private:
     block profile、traces等
 
 ### go profiling常用的分析工具
-我了解的有以下工具
-1. via `go test` 基准测试文件：例如使用命令`go test . -bench=. -cpuprofile prof.cpu` 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。(有点类似php的xhprof 的调用关系图，调用关系复杂就不直观了)
+我了解的有以下几种工具
+1. `go test` 基准测试文件：比如使用命令`go test . -bench=. -cpuprofile prof.cpu` 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。(有点类似php的xhprof 的调用关系图，调用关系复杂就不直观了)
 
-2. via `import _ net/http/pprof`：如果我们的应用是一个web服务，我们可以在http服务启动的代码文件(eg: main.go)添加 import _ net/http/pprof，这样我们的服务 便能自动开启profile功能，有助于我们直接分析采样结果。
+2. `import _ net/http/pprof`：如果我们的应用是一个web服务，我们可以在http服务启动的代码文件(eg: main.go)添加 import _ net/http/pprof，这样我们的服务 便能自动开启profile功能，有助于我们直接分析采样结果。
 
-3. 通过在代码里面调用 `runtime.StartCPUProfile`或者`runtime.WriteHeapProfile`
-4. via `pkg/profile` 见下文
+3. `runtime` 工具：通过在代码里面调用 `runtime.StartCPUProfile`或者`runtime.WriteHeapProfile` 生成分析工具
+4. 官方的`pkg/profile` 这个下文细说
 
 更多调试的使用，可以阅读The Go Blog的 Profiling Go Programs
 
 ## go profiler 工具
-参考：https://wjp2013.github.io/go/go-tools-basic/
+本节参考：https://wjp2013.github.io/go/go-tools-basic/
+
+准备下要分析的代码:
 
     import (
         "time"
@@ -56,14 +58,18 @@ private:
     go tool pprof --pdf cpu cpu.pprof > cpu.pdf
 
 ## go-torch 火焰
-### install
-首先，我们要配置FlameGraph的脚本 FlameGraph 是profile数据的可视化层工具
+火焰图是一个非常直观的查找性能瓶颈点
+
+### 安装go-torch
+go-torch 输出的数据可以用FlameGraph 脚本实现可视化(FlameGraph 是profile数据的可视化层工具)
+
+我们先配置FlameGraph的脚本
 
     git clone https://github.com/brendangregg/FlameGraph.git
     cp flamegraph.pl ~/bin
+    # 查看帮助命令
     flamegraph.pl -h
     USAGE: /usr/local/bin/flamegraph.pl [options] infile > outfile.svg
-
 
 安装go-torch很简单(用于go-torch展示profile的输出)
 
@@ -77,7 +83,7 @@ private:
 1. 下载demo [地址1](https://github.com/domac/playflame/tree/slow) / [地址2](https://github.com/ahuigo/playflame/tree/slow) 
 2. 运行server 端：$ go run main.go -printStats
 
-### pprof profile 生成调用关系图
+### pprof profile 生成调用关系图(不直观)
 接下来我们用go-wrk （或者ab、siege）压测advanced 接口
 
     go-wrk  -n=100000 -c=500  http://localhost:9090/advance

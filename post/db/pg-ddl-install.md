@@ -15,6 +15,14 @@ mac:
 
     brew install postgresql
 
+    # 初始化数据库（默认role `whoami`）
+    initdb --locale=C -E UTF-8 /usr/local/var/postgres
+    
+    # run
+    brew services start postgresql
+
+    $ psql -U `whoami` postgres
+
 ## auth
 see db-user.md
 
@@ -51,6 +59,7 @@ see db-user.md
         alias pg-stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
         MM
 
+
 然后登录：
 
     psql -U role1 ahuigo
@@ -60,7 +69,7 @@ see db-user.md
     ps aux| grep postgres
 
 ## login 
-第一次默认安装后只有一个role： postgres, 只登录这个role
+第一次默认安装后只有一个role： postgres(或者当前用户名), 只登录这个role
 
     sudo -u postgres -i
     psql

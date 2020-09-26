@@ -63,7 +63,7 @@ import flag:
   import "fmt"
 
     cmd := exec.Command("ping", "127.0.0.1")
-    out, err := cmd.Output()
+    out, err := cmd.Output() //不含stderr
 
     if err!=nil {
         println("Command Error!", err.Error())
@@ -74,6 +74,9 @@ import flag:
 cmd *exec.Cmd:
 
     var cmd *exec.Cmd = exec.Command("cat", args...)
+
+## execute multiple commands
+    cmd := exec.Command("/bin/sh", "-c", "command1; command2; command3; ...")
 
 ## set cmd
 	cmd.SysProcAttr = &syscall.SysProcAttr{}
@@ -94,6 +97,53 @@ wait cmd
 	state, _ = cmd.Process.Wait()
     // cmd封装了上面的Wait
     err = cmd.Wait()
+
+## stdout vs stderr
+### stdout to null
+    stdout := os.Stdout
+    defer func() { os.Stdout = stdout }()
+    os.Stdout = os.NewFile(0, os.DevNull)
+
+### stdout vs stderr
+
+    func Shellout() (error, string, string) {
+        var stdout bytes.Buffer
+        var stderr bytes.Buffer
+        cmd := exec.Command("sh", "-c", "cmd-not-existed||echo ok")
+        cmd.Stdout = &stdout
+        cmd.Stderr = &stderr
+        err := cmd.Run()    //Run 是阻塞的
+        return err, stdout.String(), stderr.String()
+    }
+
+### pipe
+    package main
+
+    import (
+        "bytes"
+        "io"
+        "os"
+        "os/exec"
+    )
+
+    func main() {
+        c1 := exec.Command("ls")
+        c2 := exec.Command("wc", "-l")
+
+        r, w := io.Pipe() 
+        c1.Stdout = w
+        c2.Stdin = r
+
+        var b2 bytes.Buffer
+        c2.Stdout = &b2
+
+        c1.Start()
+        c2.Start()
+        c1.Wait()
+        w.Close()
+        c2.Wait()
+        io.Copy(os.Stdout, &b2)
+    }
 
 ## exec with pipe
 in-out:

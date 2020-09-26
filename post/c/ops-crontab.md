@@ -6,10 +6,17 @@ description:
 date: 2018-09-27
 ---
 # Preface
+    man 5 crontab
 
 # example
 
 	0 * * * * php a.php >> /dev/null 2>&1
+
+    minute        0-59
+    hour          0-23
+    day of month  1-31
+    month         1-12 (or names, see below)
+    day of week   0-7 (0 or 7 is Sun, or use names)
 
 # flock
 火丁笔记， 任务加锁
