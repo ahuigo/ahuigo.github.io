@@ -61,6 +61,8 @@ ajax 与fetch 是用来做什么的？区别是什么？
     }
     getIntersectArea(rect1,rect2) == 100 //true
 
+![](/img/news/interview-js.png)
+
 ## 两向量的投影
 在平面中有两个向量，为了判断向量是否平行, 请补全以下代码
 

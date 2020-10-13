@@ -4,7 +4,9 @@ date: 2020-07-25
 private: true
 ---
 # go dlv 
-# 产生coredump
+# coredump
+## 产生coredump
+> go-lib/go-debug/coredump
 golang 如果想产生coredump, 必须开环境GOTRACEBACK
 
     $ GOTRACEBACK=crash ./hello

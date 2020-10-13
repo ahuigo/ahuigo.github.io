@@ -43,7 +43,7 @@ github.com/ahuigo/go-lib/gotest
 
 ### test mode
 两种test mode:
-#### 1.directory mode
+#### 1.directory mode(不会递归)
 执行当前diretory下所有的`_test.go` 是(必须有go.mod, module名不限定)
 这种模式下 caching is disabled.
 
@@ -51,18 +51,24 @@ github.com/ahuigo/go-lib/gotest
     $ go test  -v
 
 #### 2.package list mode(带cached):
-执行测试 module/文件夹/文件
+带cached 的单元测试中，fmt.Println　或者logger(实时输出) 会被禁用, 有两种方法
+
+1. 加上`-v` `go test -v`, 让fmt/logger 实时输出
+1. t.Log() t.Logf() 缓存输出
+
+执行测试 module、文件夹、文件:
 
     // test module 
     go test <module1>; # 文件夹下go.mod 中module 必须名为module1
 
     // test directory(与test module 本质就是directory)
-    go test .; 
-    go test ./..; //
+    go test .; #ok
+    go test ./..; # ok
+    go test ./service; #合法
+    go test service; #不合法
 
     // test file
     go test math_test.go //no ok
-
 
 In package list mode ，successful package test result will be cached and reused, 
 如果想禁止cache ，就用-count=1
