@@ -134,6 +134,14 @@ brew tap allows you to add more Github repos to the list of formulae that brew t
 	brew cask install virtualbox
 	brew cask install virtualbox-extension-pack
 
+## brew link
+    brew link <name>
+    brew unlink <name>
+
+## brew clean
+    brew clean formula
+    brew clean
+
 ## brew upgrade
 find all outdated packages:
 

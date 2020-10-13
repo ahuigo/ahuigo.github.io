@@ -1,11 +1,12 @@
 # AHUIGO 的笔记
+- 2018-09-28 [社保](/b/life/life-shebao) 
 - 2019-06-20 [Postgre SQL function](/b/db/pgsql-function) 
 - 2018-09-27 [Redis](/b/db/redis-) 
 - 2018-09-27 [ops-crontab](/b/c/ops-crontab) 
 - 2018-09-27 [golang string](/b/go/go-str) 
 - 2019-10-02 [Go Sync.Pool](/b/go/go-sync-pool) 
 - 2019-01-06 [设置系统的PATH](/b/c/ops-init-path) 
-- 2020-08-02 [Mac shortcuts](/b/mac/mac-shortcuts) 
+- 2019-08-18 [Mac shortcuts](/b/mac/mac-shortcuts) 
 - 2020-07-18 [go routines 与原子](/b/go/go-atom-string) 
 - 2018-09-27 [c-io-buffer](/b/c/c-io-buffer) 
 - 2018-09-27 [c-debug-gdb](/b/c/c-debug-gdb) 
@@ -38,4 +39,3 @@
 - 2019-03-08 [tcpdump](/b/net/net-tcpdump) 
 - 2018-09-27 [数据库CAP 理论 与事务](/b/arch/arch-cap) 
 - 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
-- 2020-09-09 [mysql 索引](/b/db/mysql-index) 
