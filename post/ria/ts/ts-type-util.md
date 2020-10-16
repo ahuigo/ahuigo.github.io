@@ -277,6 +277,10 @@ Constructs a type by picking the set of properties K from T.
         completed: false,
     };
 
+### Pick Except
+
+    Pick<T, K> & {k:string}
+
 ## 子类型
 > https://stackoverflow.com/questions/27875483/typescript-reference-subtype-of-type-definition-interface
 比如：

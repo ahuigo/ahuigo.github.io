@@ -24,7 +24,7 @@ title:	js dom file
 
 使用append()方法时
 1. 可以通过第三个可选参数设置发送请求的头 `Content-Disposition` 指定文件名。
-2. 如果不指定文件名将使用名字“`blob`”
+2. 如果不指定文件名, 将使用名字“`blob`”
 
 ## formnode
 Via FormData and formnode:
@@ -43,6 +43,13 @@ Via FormData and formnode:
     fd.append('a',2)
     fd.get('a') // 只能得到一个a, 实际有多个, new FormData(formnode)其实也是多个
     fd.get('files[]') // 只能得到一个file
+
+### object to formData
+    function getFormData(object) {
+        const formData = new FormData();
+        Object.keys(object).forEach(key => formData.append(key, object[key]));
+        return formData;
+    }
 
 ## file
 Via FormData and file:
@@ -163,6 +170,48 @@ file is blob, split file to small blob
     blob = blobSlice(file, start, end)
     fileReader.readAsBinaryString(blob_or_file);
 
+# Blob
+
+    blob = new Blob(['str'], {type : 'application/json'});
+    blob.slice(start, end)
+
+## blob2file
+    function blob2file(blobData) {
+        const fd = new FormData();
+        fd.set('a', blobData);
+        return fd.get('a');//name:blob, type:''
+    }
+
+# File
+File 是继承blob的 
+
+## 生成临时file
+
+    file = new File(['str'],'a.png', {type : 'image/png'});
+    file = new File(['str'], 'a.txt' );
+    file = new File([myBlob], "name");
+
+
+## FileReader
+
+    reader = new FileReader()
+    reader.onload = function(evt) {
+        xhr.send(evt.target.result);
+        console.log(reader.result) //readerAsText
+        console.log(new Uint8Array(reader.result)); // readAsArrayBuffer
+    };
+
+    reader.readAsBinaryString(file);
+    reader.readAsDataURL(file); //data:;base64,YQ==
+    reader.readAsText(file)
+    reader.readAsArrayBuffer(file)
+
+## FileReaderSync
+该接口只在workers里可用,因为在主线程里进行同步I/O操作可能会阻塞用户界面
+http://jsfiddle.net/bgrins/7DjCP/
+
+    r = new FileReaderSync().readAsDataURL(data)
+
 # chunk upload
 [js-lib/ajax/](js-lib/upload/)
 
@@ -196,43 +245,3 @@ file is blob, split file to small blob
 	fseek($f, $_POST['chunk']*$_POST['chunk_size']);
 	$chunk = fopen($_FILES['file']['tmp_name'], 'r');
 	stream_copy_to_stream($chunk, $f);
-
-# Blob
-
-    blob = new Blob(['str'], {type : 'application/json'});
-    blob.slice(start, end)
-
-## blob2file
-    function blob2file(blobData) {
-        const fd = new FormData();
-        fd.set('a', blobData);
-        return fd.get('a');//name:blob, type:''
-    }
-
-# File
-File 基于blob
-
-    file = new File(['str'],'a.png', {type : 'image/png'});
-    file = new File(['str'], 'a.txt' );
-    file = new File([myBlob], "name");
-
-
-## FileReader
-
-    reader = new FileReader()
-    reader.onload = function(evt) {
-        xhr.send(evt.target.result);
-        console.log(reader.result) //readerAsText
-        console.log(new Uint8Array(reader.result)); // readAsArrayBuffer
-    };
-
-    reader.readAsBinaryString(file);
-    reader.readAsDataURL(file); //data:;base64,YQ==
-    reader.readAsText(file)
-    reader.readAsArrayBuffer(file)
-
-## FileReaderSync
-该接口只在workers里可用,因为在主线程里进行同步I/O操作可能会阻塞用户界面
-http://jsfiddle.net/bgrins/7DjCP/
-
-    r = new FileReaderSync().readAsDataURL(data)

@@ -169,6 +169,7 @@ If you want, you can send strings to be received as files:
 #### post file stream(bytes):
 
     files = {'file': b'io.BytesIO().getvalue()'}
+    # post_params在前，files在后
     requests.post(url, data=post_params, files=files)
 
 ### post data
