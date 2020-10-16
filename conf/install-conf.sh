@@ -4,6 +4,11 @@ git clone https://github.com/ahuigo/a ~/www/a
 ln -s ~/www/a/conf/.profile ~/
 ln -s ~/www/a/conf/.gitconfig ~/
 
+# config
+ln -s ~/www/a/config/nvim ~/.config/
+ln -s ~/www/a/config/karabiner/assets/complex_modifications/* ~/.config/karabiner/assets/complex_modifications/
+
+
 ## profile
 cat <<'MM' >> ~/.zshrc
 alias p='python3'
