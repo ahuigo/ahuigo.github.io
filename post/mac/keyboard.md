@@ -140,6 +140,12 @@ https://ke-complex-modifications.pqrs.org/
 注意：经过以上修改后，对于mac osx内置键盘而言，我们还要交换大小与ctrl
 ![](/img/shell/keyboard/karabiner-readline1.png)
 
+对于mac键盘，交换ctrl 与caps-lock
+![](/img/shell/keyboard/karabiner-mac-layout.png)
+
+对于外置键盘，交换command 与option
+![](/img/shell/keyboard/karabiner-ecs68-layout.png)
+
 ## ctrl+u/w
 你可以设置`ctrl+w` 映射到`option+DeleteBackward`. 此时iterm2会失效. 
 你可以设置`ctrl+u` 映射到`cmd+DeleteBackward`. 此时iterm2会失效. 
@@ -156,9 +162,13 @@ ctrl+w解决方法是option发送真正的escape：
 https://apple.stackexchange.com/questions/89981/remapping-keys-in-iterm2
 
 1. 利用appstore 的免费软件(key codes). 找到`ctrl+u`实际代码是`0x15`
-2. 在iterm 修改keys. 将`cmd+backspace`映射到`0x15`
+2. 在iterm 修改 `iTerm2 > Preferences >Keys`. 将`cmd+backspace`映射到`0x15`
 
 ![](/img/shell/keyboard/iterm-keys-map.png)
+
+## vim 快捷键
+![](/img/vim/shortcut-iterm-conf.png)
+
 ## app 绑定
 如果我们想让karabiner keys只应用于某个app 怎么办呢？
 

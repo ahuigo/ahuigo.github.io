@@ -7,7 +7,8 @@ private: true
 > refer1:livereload https://medium.com/@hananrok/debugging-hot-reloading-go-app-within-docker-container-b44d2929e8bd
 > refer2:vscode https://bloggie.io/@_ChristineOo/debugging-go-with-delve-and-vscode
 > vscode+go debug: https://github.com/Microsoft/vscode-go/wiki/Debugging-Go-code-using-VS-Code
-code example: go-lib/debug/docker/main.go
+
+code example: go-lib/go-debug/remote-dlv/main.go
 
 ## 利用ionotify+目录挂载实现livereload
 首先将当前的源码映射到一个目录，如/build 或/app/src：
@@ -93,5 +94,3 @@ Delve is full featured debugging tool for Go.
 2. 启动docker 或 docker-compose 或者纯dlv
 3. vscode: F5启用 Debug: start
 4. 访问8080 服务
-
-# delve
