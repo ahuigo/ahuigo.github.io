@@ -1,7 +1,8 @@
 .PHONY: config
 config:
 	echo ln ~/.config
-	ln -s `pwd`/config/* ~/.config/
+	#ln -s `pwd`/config/* ~/.config/
+	sh conf/install-conf.sh
 
 .PHONY: conf
 conf:
