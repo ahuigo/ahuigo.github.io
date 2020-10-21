@@ -72,12 +72,22 @@ Via FormData and file:
 
 ### file.attr
 
-    fileInput.value; //可以判断是束有文件( 假路径)
+    fileInput.value; //可以判断是束有文件( 假路径)
 	file = document.getElementById('fileToUpload').files[0];
 	file.size bytes 数
 	file.webkitRelativePath: 文件路径
 	file.name: filename
 	ifle.type: image/png ....
+
+### file as string
+    var fr=new FileReader(); 
+    fr.onload=function(){ 
+       console.log(fr.result); 
+    } 
+        
+    fr.readAsText(this.files[0]);
+    fr.readAsArrayBuffer //替代旧的readAsBinaryString
+    fr.readAsDataURL
 
 ## blob
 
@@ -191,6 +201,17 @@ File 是继承blob的
     file = new File(['str'], 'a.txt' );
     file = new File([myBlob], "name");
 
+或
+
+    var parts = [
+        new Blob(['myblob'], {type: 'text/plain'}),
+        'string',
+        new Uint16Array([33])
+    ];
+    var file = new File(parts, 'sample.txt', {
+        lastModified: new Date(0), // optional - default = now
+        type: "overide/mimetype" // optional - default = ''
+    });
 
 ## FileReader
 

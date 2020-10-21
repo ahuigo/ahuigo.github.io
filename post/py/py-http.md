@@ -197,8 +197,8 @@ If you want, you can send strings to be received as files:
 代理
 
     proxies = {
-      "http": "http://10.10.1.10:3128",
-      "https": "http://10.10.1.10:1080", //necessary
+      "http": "http://127.0.0.1:8888",
+      "https": "http://127.0.0.1:8888", #necessary
     }
 
     requests.get("http://example.org", proxies=proxies, verify=False)
@@ -224,6 +224,10 @@ You can pass verify the path to a CA_BUNDLE file or directory with certificates 
 
 
     >>> requests.get('https://github.com', verify='/path/to/charles.pem')
+
+也可以忽略ssl_verify
+
+    >>> requests.get('https://kennethreitz.com', verify=False)
 
 ### SOCKS
 除了基本的 HTTP 代理，Request 还支持 SOCKS 协议的代理。这是一个可选功能，若要使用， 你需要安装第三方库。

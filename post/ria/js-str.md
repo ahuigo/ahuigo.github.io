@@ -306,6 +306,13 @@ Create RegExp：test, exec
 	new RegExp("^str$",'igm')
 	new RegExp("(^|&)str$",'igm')
 
+### raw string as regex
+    RegExp.escape = function(string) {
+        return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+    };
+    var hostname = 'makandra.com';
+    new RegExp(RegExp.escape(hostname));
+
 ### unicode
 
 	/\u1321/.test('\u1321');//true

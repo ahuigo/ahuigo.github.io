@@ -12,7 +12,7 @@ https://web.dev/file-system-access/
     let fileHandle;
     butOpenFile.addEventListener('click', async () => {
         [fileHandle] = await window.showOpenFilePicker();
-        const file = await fileHandle.getFile();
+        const file = await fileHandle.getFile(); // new File
         const contents = await file.text();
         textArea.value = contents;
     });
@@ -58,7 +58,7 @@ recursive:
             for await (const entry of subdirHandle.values()) {
                 console.log(entry.kind, entry.name);
                 if(entry.kind=="file"){
-                    console.log(await entry.getFile()).text();
+                    console.log(await (await entry.getFile()).text());
                 }
             }
         }

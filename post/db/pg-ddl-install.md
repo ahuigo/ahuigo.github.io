@@ -71,12 +71,13 @@ see db-user.md
 ## login 
 第一次默认安装后只有一个role： postgres(或者当前用户名), 只登录这个role
 
-    sudo -u postgres -i
-    psql
+    $ sudo -u `whoami` -i 
+    $ psql
 
 或者：
 
     psql -U postgres postgres
+    psql -U `whoami` postgres
 
 ## path
 ### log

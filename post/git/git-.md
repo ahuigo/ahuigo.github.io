@@ -215,6 +215,16 @@ If you want to also remove *directories*, run
 	git commit --amend -m 'new messages' --author 'ahuigo'
 
 ## git revert
+    C1->C2->C3->B2C3->C5->C6->C7->HEAD
+      |-B2->B2/
+
+git revert -m1 B2C3 创建了新分支: `HEAD-(B2-C3)`
+git revert -m2 B2C3 创建了新分支: `HEAD-(C3-C2)`
+
+    C1->C2->C3->C4->C5->C6->C7->HEAD
+
+git revert C3 会创建新分支: `HEAD-(C3-C2)`
+
 恢复到HEAD 之前的提交:
 
 	git revert HEAD //Creat a new commit to drop HEAD's modifies. '

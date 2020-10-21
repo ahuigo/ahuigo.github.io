@@ -77,7 +77,7 @@ pg:
 `create user` 默认带login 权限(唯一区别):
 
     # create 默认带login
-    create user demo_role
+    create user demo_role;
     # give ability to login in
     CREATE ROLE demo_role WITH LOGIN;
 
