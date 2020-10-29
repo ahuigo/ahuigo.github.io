@@ -44,17 +44,17 @@ ajax 与fetch 是用来做什么的？区别是什么？
 ## 求矩形相交的面积
 请用任意语言实现矩形相交面积的计算：
 
-    var rect1 = {
-        x_left:10, 
-        y_bottom:10, 
-        x_right:30, 
-        y_top:30
+    var rectA = {
+        left:10, 
+        bottom:10, 
+        right:30, 
+        top:30
     }
-    var rect2 = {
-        x_left:20, 
-        y_bottom:20, 
-        x_right:30, 
-        y_top:30
+    var rectB = {
+        left:20, 
+        bottom:20, 
+        right:30, 
+        top:30
     }
     function getIntersectArea(rect1, rect2){
         // 返回相交面积 或异常

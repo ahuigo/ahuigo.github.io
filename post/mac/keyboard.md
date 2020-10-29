@@ -77,10 +77,12 @@ atom68缺少一个左Fn 不太方便，于是我通过`程控键`改了下按键
 2. 将`右Alt`映射为ctrl/caps: `非FN` 时为`CapsLock`,`Fn`时为`Catl&Caps`交换键
 
 # mac osx 问题
-## key repeate 不生效
+## key repeat 不生效
 在终端下输入：
 
     defaults write -g ApplePressAndHoldEnabled -bool false
+    $ defaults get -g ApplePressAndHoldEnabled
+    0 
 
 ## 加快按键速度
 keyboard配置建议
