@@ -665,6 +665,80 @@ Note:
 
 [tcp-ip.key](/doc/tcp-ip.key)
 
+
+## somaxconn & tcp_max_syn_backlog
+> 本节参考https://cjting.me/2019/08/28/tcp-queue/
+在上图中，Server 需要两个队列，分别存储 SYN_RCVD 状态的连接和 ESTABLISHED 状态的连接，这就是半连接队列和全连接队列 
+Client 也有一个SYN_SEND 队列
+
+这两个队列有长度限制.
+1. 全连接队列的大小, 为 min(backlog, somaxconn)。其中 
+    1. backlog 为调用 listen 函数时传递的参数，
+    2. 而 somaxconn 是一个系统参数，位置为 /proc/sys/net/core/somaxconn，默认值为 128。
+2. 半连接队列参考：[Linux 诡异的半连接队列长度](https://www.cnblogs.com/zengkefu/p/5606696.html)
+
+总体来说，半连接队列的长度由以下过程确定：
+
+    backlog = min(somaxconn, backlog)
+    nr_table_entries = backlog
+    nr_table_entries = min(backlog, sysctl_max_syn_backlog) 
+    nr_table_entries = max(nr_table_entries, 8)
+    // roundup_pow_of_two: 将参数向上取整到最小的 2^n
+    // 注意这里存在一个 +1
+    nr_table_entries = roundup_pow_of_two(nr_table_entries + 1)
+    max_qlen_log = max(3, log2(nr_table_entries))
+    max_queue_length = 2^max_qlen_log
+
+有一点绕，不过运算都很简单，半连接队列的长度实际上由三个参数决定：
+
+    listen 时传入的 backlog
+    /proc/sys/net/ipv4/tcp_max_syn_backlog，默认为 1024
+    /proc/sys/net/core/somaxconn，默认为 128
+
+我们假设 listen 传入的 backlog = 511，其他配置都是默认值，我们来计算一下半连接队列的具体长度。
+
+    backlog = min(128, 511) = 128
+    nr_table_entries = 128
+    nr_table_entries = min(128, 1024) = 128
+    nr_table_entries = max(128, 8) = 128
+    nr_table_entries = roundup_pow_of_two(129) = 256
+    max_qlen_log = max(3, 8) = 8
+    max_queue_length = 2^8 = 256
+
+最后算出，半连接队列的长度为 256。
+
+如果理解了半连接队列的长度决定机制，我们就可以理解为什么 Nginx, Redis 都把自己的 listen backlog 参数设置为 511 了，因为内核计算过程中有一个奇怪的 +1 操作。
+
+现在队列的长度已经确定了，那么队列如果满了的话会怎么样呢？
+
+先来看半连接队列，这里就涉及到一个著名的攻击，SYN Flood 攻击。
+
+## 压测: Cannot assign requested address.
+如果压测的时候出现大量的`[error] socket: 2001824064 address is unavailable.: Cannot assign requested address`
+
+1. 客户机端口不够了: Cannot assign requested address.
+2. server 连接数限制： read: connection reset by peer
+
+第一个问题，查看linux支持的客户端连接端口范围, 也就是28232个端口(如果不够，再加)：
+cat /proc/sys/net/ipv4/ip_local_port_range
+32768 - 61000
+
+另外，由于每次连接都在很短的时间内结束，导致很多的TIME_WAIT，以至于用光了可用的端口号，所以新的连接没办法绑定端口，所以 要改客户端机器的配置
+
+解决方法：
+1. 调低端口TIME_WAIT释放后的等待时间， 默认为60s， 修改为15~30s
+    echo 30 > /proc/sys/net/ipv4/tcp_fin_timeout
+2. 修改tcp/ip协议配置， 通过配置/proc/sys/net/ipv4/tcp_tw_resue, 默认为0， 修改为1， 释放TIME_WAIT端口给新连接使用。
+    echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse
+3. 修改tcp/ip协议配置，快速回收socket资源， 默认为0， 修改为1.
+    echo 1 > /proc/sys/net/ipv4/tcp_tw_recycle
+
+在/etc/sysctl.conf里加, 或者在命令行：
+
+	sysctl net.ipv4.tcp_timestamps=1 # 开启对于TCP时间戳的支持,若该项设置为0，则下面两项设置 不起作用
+	sysctl net.ipv4.tcp_tw_reuse=1 # 表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；
+	sysctl net.ipv4.tcp_tw_recycle=1 # 表示开启TCP连接中TIME-WAIT sockets的快速回收( removed from Linux 4.12)
+
 ## 为什么要有2MSL的 TIME_WAIT, 不直接进入CLOSED：
 如果网络不稳定时，2MSL能保证Server 尽量网络不好时处在LAST_ACK状态：
 
@@ -768,17 +842,6 @@ LVS 做负载均衡(一种NAT)，当请求到达 LVS 后，它修改地址数据
 复盘：
 SYN_RECV队列已经超过了tcp_max_syn_backlog的长度，导致后续的请求直接被丢弃，客户端无法收到任何响应直到请求超时。
 通过设置syn_cookie的值/或者增加tcp_max_syn_backlog，使得在半连接队列满时仍然可以响应请求。
-
-# Config
-如果压测的时候出现大量的`[error] socket: 2001824064 address is unavailable.: Cannot assign requested address`
-
-客户端频繁的连服务器，由于每次连接都在很短的时间内结束，导致很多的TIME_WAIT，以至于用光了可用的端口号，所以新的连接没办法绑定端口，所以 要改客户端机器的配置
-
-在/etc/sysctl.conf里加, 或者在命令行：
-
-	sysctl net.ipv4.tcp_timestamps=1 # 开启对于TCP时间戳的支持,若该项设置为0，则下面两项设置 不起作用
-	sysctl net.ipv4.tcp_tw_reuse=1 # 表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；
-	sysctl net.ipv4.tcp_tw_recycle=1 # 表示开启TCP连接中TIME-WAIT sockets的快速回收( removed from Linux 4.12)
 
 # 参考
 - 本文图文均参考[TCP/IP 协议]
