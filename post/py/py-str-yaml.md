@@ -12,10 +12,8 @@ private:
     ```
     >>> import yaml
     >>> a=yaml.load(open('a.conf'))
-    Traceback (most recent call last):
-    File "<stdin>", line 1, in <module>
-    FileNotFoundError: [Errno 2] No such file or directory: 'a.conf'
-    >>> a=yaml.load(open('a.conf'))
+    conf = yaml.load(open(sys.argv[1]), Loader=yaml.FullLoader)
+
     ```
 
 ## load str
@@ -23,7 +21,8 @@ private:
     xata: adf
     ''')
 
-
 ## dump
 
     yaml.dump(obj)
+    yaml.dump(obj, default_flow_style=True)
+    yaml.dump(obj, Dumper=yaml.CDumper)

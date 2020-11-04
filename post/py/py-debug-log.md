@@ -10,7 +10,7 @@ https://docs.python.org/3.4/howto/logging.html
 
     import logging
     import sys
-    formatmsg='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s'
+    formatmsg='%(asctime)s:%(levelname)s:%(pathname)s:%(lineno)s:%(message)s'
     logging.basicConfig(format=formatmsg, filename='mvp.log', level=logging.DEBUG)
 
     # logger and stramHanler
@@ -123,7 +123,7 @@ logging file path(default by current path):
     %(threadName)s
     %(process)d
 
-    %(pathname)s
+    %(pathname)s full file path
     %(module)s
 
 ### format date
