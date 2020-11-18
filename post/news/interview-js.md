@@ -48,6 +48,7 @@ private:
 
 ## http
 1. http与tcp 区别是什么？
+2. http请求头Content-Type 有哪些？发送文件时用什么头？
 1. 有什么工具可以抓包查看http 请求
 
 ## 以下代码结果是什么？为什么？
