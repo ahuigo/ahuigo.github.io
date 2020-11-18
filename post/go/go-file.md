@@ -63,6 +63,11 @@ func Getwd() (pwd string, err error)
         fmt.Println(pwd)
     }
 
+### path exists
+    if _, err := os.Stat("/path/to/whatever"); os.IsNotExist(err) {
+        // path/to/whatever does not exist
+    }
+
 # File Api
 
 ## open

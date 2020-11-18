@@ -80,13 +80,18 @@ In package list mode ，successful package test result will be cached and reused
 2. `go test <pkg>`  is okay.
 3. `go test whatever_test.go` is not okay: `undefined: xxxx` 
 
-To select which tests to run use the 
+指定文件、路径
+
+    $ go test foo_test.go foo.go
+    $ go test ./service
+
+指定函数
 
     -run <regexp> 
-    -run <regexp> flag (interpreted as `.*<regexp>.*` match function)
-    $ go test -run Say # from within the package's directory
-    $ go test -run Say my/package/import/path # from anywhere
-
+         flag (interpreted as `.*<regexp>.*` match function)
+    $ go test -run TestSubset #指定函数名
+    $ go test -run 'TestSubset*' #指定函数名
+    $ go test ./service -run TestSubset 
 
 ### test log
 

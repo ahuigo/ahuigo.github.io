@@ -7,6 +7,7 @@ date: 2018-09-27
 2. a slice is a dynamically-sized. `[]T` 
 3. slice assign/pass-arguments is Reference, point to original slice but not array
 
+## define array slice
 array:
 
     [N]Type

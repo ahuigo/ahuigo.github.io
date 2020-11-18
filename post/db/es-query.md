@@ -86,6 +86,59 @@ The API response returns the top 10 documents matching the query in the hits.hit
         }
       }
 
+## 查value
+where type="SUCCESS"
+
+    "bool": {
+      "must": [{
+          "term": {
+            "type": "SUCCESS"
+          }
+        },
+        {
+          "range": {
+            "msgSubmissionTime": {
+              "gte": "now-2m",
+              "lt": "now"
+            }
+          }
+        }
+      ]
+    }
+
+## range 查询
+    "query": {
+        "range": {
+            "age": {
+                "gte": 10,
+                "lte": 20,
+                "boost": 2.0
+            }
+        }
+    }
+
+### range time
+    "range": {
+      "timestamp": {
+        "time_zone": "+08:00",        
+        "gte": "2020-01-01T00:00:00", 
+        "lte": "now"                  
+      }
+    }
+
+date 可以math计算，参考：https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#date-math
+
+    "range": {
+      "timestamp": {
+        "gte": "now-1d",
+        "gte": "now-1h",
+        "gte": "now-1m", //minutes
+        "lt": "now/d"
+      }
+    }
+
+
+## and or 逻辑
 或逻辑
 
     "query": {

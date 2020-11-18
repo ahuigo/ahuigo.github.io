@@ -263,7 +263,7 @@ http://resources.jointjs.com/demos
 4. gliffy https://www.gliffy.com
 5. lucidchart 画连线特别方便
 6. 百度脑图 速度非常快
-7. 代码图： https://mermaid-js.github.io/mermaid-live-editor
+7. 代码图： https://mermaid-js.github.io/mermaid/#/sequenceDiagram?id=activations
 
 ### client app
 - yEd diagram app

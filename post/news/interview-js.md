@@ -3,37 +3,73 @@ title: 面试
 date: 2019-10-29
 private: 
 ---
-# 面试
+# 前端基础笔试题
+以下题型，至少选3题并完成。
 
-## ajax/fetch 了解
-ajax 与fetch 是用来做什么的？区别是什么？
-什么是跨域？
+## dom/css 操作
+请写一个dom 操作函数，实现在前端弹出一个消息提示框：
+![](/img/news/js-interview-css-center.png)
 
-## dom 操作
-请写一个dom 操作函数，实现在前端弹出一个消息的揭示:
-1. 不能用alert
-2. 提示字体为红色
-3. 提示信息全局居中
+要求：
+1. 消息框要屏幕居中(无论鼠标如何滚动，都居中显示)
+2. 消息框要带黑色框，框内的文字要上下左右居中
+3. 请备注你所用到的css 属性的含义
 
 请补全代码：
 
-    funct notice(msg){
+    function notice(msg){
         ....
     }
 
-    notice("你的操作是非法的")
+    notice("屏幕居中消息")
 
-## Promise
-写一个sleep 函数
+## Promise 
+用js写一个sleep 延时函数
 
     function sleep(seconds){
         //请补全
     }
 
     (async function(){
+        console.log('begin....');
         await sleep(5);
         console.log('5 seconds eslaped.');
     })()
+
+## 什么是冒泡事件、捕获事件？
+请示例说明
+
+## http
+1. http与tcp 区别是什么？
+1. 有什么工具可以抓包查看http 请求
+
+
+## 以下代码结果是什么？为什么？
+　　var name = "The Window";
+
+　　var object = {
+　　　　name : "My Object",
+
+　　　　getNameFunc : function(){
+　　　　　　return function(){
+　　　　　　　　return this.name;
+　　　　　　};
+
+　　　　}
+
+　　};
+
+　　alert(object.getNameFunc()());
+
+## 能否给Array 加一个uniq 方法?
+
+    console.log([1,2,3,3].uniq()) // [1,2,3]
+
+## cookie 与 session 有什么区别？
+
+# 加试
+## 前端性能优化方案
+请列举一下你了解掌握的性能优化方案有哪些？
 
 ## 你了解几种排序算法？
 你了解几种排序算法？
@@ -82,7 +118,6 @@ ajax 与fetch 是用来做什么的？区别是什么？
     192.168.1.2,baidu.com,2020-07-06 T00:00:01
     192.168.1.2,baidu.com,2020-07-06 T00:00:01
 
-1. 请找出指定ip（比如192.168.1.2） 对应的host
 2. 请找出访问数量最多的ip
 
 ## 正则知识
@@ -95,7 +130,8 @@ ajax 与fetch 是用来做什么的？区别是什么？
 请写一个正则检查一下用户输入的邮箱是否合法.
 
 ## 老鼠试毒
-1000瓶药水，1瓶有毒药，服用后一小时毒发，毒药可以无限稀释，那么一小时内用几只小白鼠能够找出毒药？
+1000瓶药水，1瓶有毒药，服用后一小时毒发，毒药可以无限混合稀释。
+那么一小时内用几只小白鼠能够找出毒药？
 
 ## 求最小索引和
 假设Andy和Doris想在晚餐时选择一家餐厅，并且他们都有一个表示最喜爱餐厅的列表，每个餐厅的名字用字符串表示。

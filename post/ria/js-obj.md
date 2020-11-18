@@ -1,6 +1,6 @@
 ---
 layout: page
-title:	js notes
+title:	js obj
 category: blog
 description:
 ---

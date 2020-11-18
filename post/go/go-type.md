@@ -22,7 +22,7 @@ go-lib/type/type-func.go
     }
 
     func main(){
-        // //它是一个类型，可接受并初始化为函数
+        // //它是一个类型，可接受并初始化为函数, 类型于 i = int(data)
         option := optionFunc(func(name string) {
             fmt.Printf("option.name=%v\n", name)
         })
