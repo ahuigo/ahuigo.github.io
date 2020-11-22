@@ -37,10 +37,10 @@ private:
     notice("屏幕居中消息")
 
 ## React 考查
+请说说什么是useRef？useState?
+请说说什么是useEffect？ 
 请说说什么是useReducer？
-请说说什么是useRef？
-请说说什么是useEffect？
-举例说明useState
+请说说你用过的其它Reac函数？
 
 ## Promise 
 用js写一个sleep 延时函数
