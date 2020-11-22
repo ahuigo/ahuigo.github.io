@@ -17,6 +17,10 @@ http://initd.org/psycopg/docs/cursor.html
         row = cursor.fetchone()
         row[0],row['id'] 都可以
 
+Another connection:
+
+    conn = psycopg2.connect("dbname=test user=postgres password=secret")
+
 ## cursor
 postgre 是用cusor 去执行+缓存数据
 

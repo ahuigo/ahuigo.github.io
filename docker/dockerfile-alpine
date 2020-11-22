@@ -1,5 +1,7 @@
 From alpine:latest
 WORKDIR /app/
+ARG name=who
+RUN echo "name: $name"
 RUN apk add --no-cache bash && mkdir tmp && echo yxh > tmp/a.txt && cat tmp/a.txt
 USER daemon
 CMD ["sh", "-c", "echo EXEC-CMD1 && whoami"]
