@@ -44,4 +44,6 @@ directory:
 
     workspaceFolder
 
+# cwd
+    "cwd": "${workspaceFolder}",
 

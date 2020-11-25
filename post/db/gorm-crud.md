@@ -580,7 +580,7 @@ Scan results into another struct.
         names = append(names, name)
     }
 
-### Pluck
+### Pluck list
 Query single column from a model as a map, if you want to query multiple columns, you should use Scan instead
 
     var ages []int64

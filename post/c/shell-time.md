@@ -139,6 +139,11 @@ docker alpine 还要安装tzdata
 
     apk add --no-cache tzdata
 
+scratch:
+
+    COPY --from=build-env /usr/share/zoneinfo /usr/share/zoneinfo
+    ENV TZ=Asia/Shanghai
+
 ## 局部
 
     echo 'export TZ=Asia/Shanghai' >> ~/.profile

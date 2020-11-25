@@ -40,6 +40,7 @@ export EDITOR="nvim"
 alias vi='nvim'
 alias ts='ts-node'
 alias vim='nvim'
+alias gpass='openssl rand -base64 10'
 alias cp='cp -i'
 alias svnst='svn st'
 alias l='ls -lah'

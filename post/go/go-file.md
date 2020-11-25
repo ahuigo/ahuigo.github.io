@@ -31,7 +31,7 @@ abs
         //output: false <nil>
 
 ## os path
-### execute path
+### path ext
 
     import (
         "fmt"
@@ -67,6 +67,10 @@ func Getwd() (pwd string, err error)
     if _, err := os.Stat("/path/to/whatever"); os.IsNotExist(err) {
         // path/to/whatever does not exist
     }
+
+### mkdir
+    err = os.Mkdir(path, mode)
+
 
 # File Api
 
