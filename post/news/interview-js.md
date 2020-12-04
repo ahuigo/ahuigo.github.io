@@ -12,7 +12,7 @@ private:
 
 ## dom/css 操作: 消息居中
 1.请给下面的html代码加上css，让消息提示框居中显示：
-![](/img/news/js-interview-css-center.png)
+![](../../img/news/js-interview-css-center.png)
 
     <div class="msg">
         <h3>屏幕居中消息</h3>
@@ -106,7 +106,7 @@ private:
 
 ## 新冠状病毒
 1000人中有1人带有病毒，我们需要对这1000人抽血，并用试剂盒 找出这名病毒携带者。
-1. 试剂盒有限，我们可以将任意人次的血混合后检测（混合稀释不降低检测效果）
+1. 我们可以将任意人次的血混合后检测（混合稀释不降低检测效果），血可稀释，可无限次使用，永不过期
 2. 每盒试剂盒验血，要1天才出结果, 试剂盒不可重复使用
 
 你可以在几天? 用几盒试剂盒? 找出这名病毒携带者？
@@ -149,6 +149,6 @@ private:
     }
     getIntersectArea(rectA,rectB) == 6 //true
 
-![](/img/news/interview-js.png)
+![](../../img/news/interview-js.png)
 
 扩展：如果是三维空间，两长方体的相交体积怎么计算（简答）？

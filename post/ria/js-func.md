@@ -118,6 +118,7 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
     var [x, y, z] = ['hello', 'JavaScript', 'ES6'];
     let [, , z] = ['hello', 'JavaScript', 'ES6']; // 忽略前两个元素，只对z赋值第三个元素
     var [x, y, ...z] = ['hello', 'JavaScript', 'ES6','ES7']; #a,b,c, *arg
+    var {a,...other} = {a:1,b:2,c:3}
 
     [...Array(5).keys()]; //0,1,2,3,4,5
     Array.from({length: 5}, (x,i) => i);

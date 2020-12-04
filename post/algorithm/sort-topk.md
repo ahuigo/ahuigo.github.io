@@ -3,7 +3,7 @@ title: BFPRT 算法
 date: 2018-09-26
 ---
 # Topk 算法之BFPRT算法
-基于最大/小堆的TopK 算法复杂度为 $O(n\log n)$
+基于最大/小堆的TopK 算法复杂度为 $O(n\log k)$
 
 其实还有O(n)的算法 —— BFPRT 基于减治法，采用类似二分法的快排分区减低复杂度。
 

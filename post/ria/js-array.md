@@ -210,14 +210,6 @@ for string
 ## index in arr/obj
 是用：`index in arr`, 不是`value in arr`(这与python 不同)
 
-	Array.prototype.inArray = function(needle) {
-        var length = this.length;
-        for(var i = 0; i < length; i++) {
-            if(this[i] == needle) return true;
-        }
-        return false;
-    }
-
 ## is_array
 不要用`typeof []==='object'`
 
@@ -341,6 +333,11 @@ wm 适合记录对象额外信息， 比如标记对象状态，对象呗回收�
 
     wm[obj1] = ...
     wm[obj2] = ...
+
+## 交集：
+
+    var merged = new Set([...set1, ...set2, ...set3])
+    var merged = new Map([...map1, ...map2, ...map3])
 
 ## Set
 Set中自动被过滤：

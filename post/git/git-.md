@@ -844,6 +844,15 @@ git cherry-pick命令"复制"一个提交节点并在当前分支做一次完全
 
     $ git cherry-pick 2c33a
 
+To cherry-pick all the commits from commit A to commit B (where A is older than B), run:
+
+    git cherry-pick A^..B
+
+If you want to ignore A itself, run:
+
+    git cherry-pick A..B
+
+
 # git hub
 hub is a command-line wrapper for git that makes you better at GitHub.
 https://hub.github.com/
