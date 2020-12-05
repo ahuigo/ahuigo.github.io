@@ -4,7 +4,9 @@ date: 2019-05-16
 private:
 ---
 # 安装
-- Minikube 是一种可以让您在本地轻松运行Kubernetes 的工具。 Minikube 在笔记本电脑上的虚拟机（VM）中运行单节点Kubernetes 集群，供那些希望尝试Kubernetes 或进行日常开发的用户使用。
+- Minikube 是一种可以让您在本地轻松运行Kubernetes 的工具。 
+    - Minikube 在笔记本电脑上的虚拟机（VM）中运行单节点Kubernetes 集群，供那些希望尝试Kubernetes 或进行日常开发的用户使用。
+- Kind 是一个使用 Docker 容器“节点”运行本地 Kubernetes 集群的工具。
 
 ## install minikube
 

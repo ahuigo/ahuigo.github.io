@@ -5,12 +5,17 @@ private: true
 ---
 # React portal
 
-Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。
+Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点, 并且让事件冒泡到父节点的优秀的方案。
 
     // 它的本质就是AppendCom to container
     ReactDOM.createPortal(child, container)
 
 第一个参数（child）是任何可渲染的 React 子元素，例如一个元素，字符串或 fragment。第二个参数（container）是一个 DOM 元素。
+
+注意：portal 作为React.Element 需要内嵌入ReactDOM, render 则不用
+
+    {ReactDOM.createPortal(child, container)}
+    ReactDOM.render(child, container)
 
 ## 实现一个AppendChild
 BodyEnd

@@ -16,6 +16,11 @@ Note: 断言不是类型转换
 
     refEl.current as unknown as HTMLDivElement
 
+### not null!
+
+    const [rangePickerValue, setRangePickerValue] = useState<RangeValue<Moment>>(getTimeInitRange());
+    const [start_time, end_time] = rangePickerValue!;
+
 ### as 
     function ({
         color = "geekblue", names = []
@@ -35,6 +40,90 @@ Note: 断言不是类型转换
             return n();
         }
     }
+
+## initial type
+Way 0: dangerous
+
+    let category = <Category>{ };
+
+Way 1: Convert your interface to a class
+
+    export class Category {
+        name: string;
+        description: string;
+    }
+    const category: Category = new Category();
+
+Way 2: Extend your interface as a class
+
+    export class CategoryObject implements Category {
+    }
+    const category: Category = new CategoryObject();
+
+Way 3: Fully specify your object, matching the interface
+
+    const category: Category = {
+        name: 'My Category',
+        description: 'My Description',
+    };
+
+Way 4: Make the properties optional
+
+    export interface Category {
+        name?: string;
+        description?: string;
+    }
+    const category: Category = {};
+
+Way 5: Change your variable's type to use Partial`<T>`
+
+    export interface Category {
+        name: string;
+        description: string;
+    }
+
+    const category: Partial<Category> = {};
+
+## InvertType
+https://stackoverflow.com/questions/56415826/is-it-possible-to-precisely-type-invert-in-typescript
+
+    const o = {
+        a: 'x',
+        b: 'y',
+    } as const;
+
+    type AllValues<T extends Record<PropertyKey, PropertyKey>> = {
+        [P in keyof T]: { key: P, value: T[P] }
+    }[keyof T]
+
+    type InvertResult<T extends Record<PropertyKey, PropertyKey>> = {
+        [P in AllValues<T>['value']]: Extract<AllValues<T>, { value: P }>['key']
+    }
+
+    function invert<
+        T extends Record<PropertyKey, PropertyKey>
+    >(obj: T): InvertResult<T>{
+        var ret = <InvertResult<T>> {};
+        for(var key in obj){
+            ret[obj[key]] = key;
+        }
+        return ret;
+    };
+
+    let s = invert(o);  // type is { x: "a"; y: "b"; }
+    console.log(s)
+
+## return type based on value of argument
+    type Fruit = "apple" | "orange"
+
+    function doSomething(foo: "apple"): string;
+    function doSomething(foo: "orange"): string[];
+    function doSomething(foo: Fruit): string | string[] {
+        if (foo == "apple") return "hello";
+        else return ["hello", "world"];
+    }
+
+    let orange: string[] = doSomething("orange");
 
 ## 获取类型
 ### Parameters
@@ -122,13 +211,13 @@ https://stackoverflow.com/questions/36015691/obtaining-the-return-type-of-a-func
 
 
 ### extends keyof
-extends 是扩展的意思
+"K extends keyof T"说明这个类型值必须为T类型属性的子元素或子集，
 
     function prop<T, K extends keyof T>(obj: T, key: K) {
         return obj[key]; //T[K]
     }
     function prop2<T>(obj: T, key: keyof T) {
-        return obj[key]; //T[keyof T]
+        return obj[key]; //T[keyof T] //error
     }
 
     let o = {
@@ -138,6 +227,17 @@ extends 是扩展的意思
 
     let v = prop(o, 'p1') // is number, K is of type 'p1'
     let v2 = prop2(o, 'p1') // is number | string, no extra info is captured
+
+再来一个例子
+
+    interface Lengthwise {
+        length: number;
+    }
+
+    function loggingIdentity<T extends Lengthwise>(arg: T): T {
+        console.log(arg.length);  // Now we know it has a .length property, so no more error
+        return arg;
+    }
 
 ## valueof
 
@@ -277,6 +377,10 @@ Constructs a type by picking the set of properties K from T.
         completed: false,
     };
 
+### Pick Except
+
+    Pick<T, K> & {k:string}
+
 ## 子类型
 > https://stackoverflow.com/questions/27875483/typescript-reference-subtype-of-type-definition-interface
 比如：
@@ -307,7 +411,8 @@ also:
 
 ## Extract
     type T0 = Extract<"a" | "b" | "c", "a" | "f">;  // "a"
-    type T1 = Extract<string | number | (() => void), Function>;  // () => void
+    type T1 = Extract<"a" | "b" | "c", "a" | "c">;  // "a"|"c"
+    type T2 = Extract<string | number | (() => void), Function>;  // () => void
 
 ## NonNullable
     type T0 = NonNullable<string | number | undefined>;  // string | number

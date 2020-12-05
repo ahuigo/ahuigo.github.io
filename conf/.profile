@@ -7,6 +7,9 @@ stty start undef
 stty stop undef
 bindkey \^U backward-kill-line
 alias md='mkdir'
+setopt share_history
+defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
+defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 
 ###############
 #export
@@ -35,7 +38,9 @@ ulimit -n 1000
 # alias
 export EDITOR="nvim"
 alias vi='nvim'
+alias ts='ts-node'
 alias vim='nvim'
+alias gpass='openssl rand -base64 10'
 alias cp='cp -i'
 alias svnst='svn st'
 alias l='ls -lah'
@@ -166,6 +171,7 @@ export PATH=$PATH:$GOPATH/bin
 export GONOSUMDB=gitlab.momenta.works/hdmap-workflow/mauth
 alias go12='export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec; ln -sf /usr/local/opt/go@1.12/bin/go /usr/local/bin/go'
 alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
+alias go15='export GOROOT=/usr/local/Cellar/go/1.15.5/libexec; ln -sf /usr/local/opt/go@1.15/bin/go /usr/local/bin/go'
 
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.

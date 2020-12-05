@@ -25,11 +25,13 @@ Note that the app at http://ip_of_the_app:7180/ will now receive the request wit
         proxy_set_header HOST $host;
     }
 
-also
+代理时, 记得传递header: host, real-ip,...：
 
+	proxy_set_header Host $http_host; # 127.0.0.1:8589
+	# proxy_set_header Host $host; # 127.0.0.1
+	proxy_set_header X-Real-IP  $remote_addr;
+	proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Referer $http_referer;
-    proxy_set_header X-Forwarded-For $remote_addr;
-    proxy_set_header X-Forwarded-Proto $scheme;
 
 ## proxy_redirect
 此指令用于修改代理server 返回的301/302响应头地址. 
@@ -127,14 +129,6 @@ You can get around this by installing `dnsmasq` and setting your resolver to 127
 	sudo yum install dnsmasq -y;
 	service dnsmasq start;
 	sudo chkconfig --level 235 dnsmasq on
-
-## proxy set header
-代理时, 记得传递header: host, real-ip,...：
-
-	proxy_set_header Host $http_host; # 127.0.0.1:8589
-	# proxy_set_header Host $host; # 127.0.0.1
-	proxy_set_header X-Real-IP  $remote_addr;
-	proxy_set_header X-Forwarded-For $remote_addr;
 
 ## cookie
 为了规则proxy回返的set-cookie: host=localhost 域名.

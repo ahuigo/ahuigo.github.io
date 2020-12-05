@@ -99,3 +99,7 @@ Add antd/dist/antd.css at the top of src/App.css.
     @import '~antd/lib/style/themes/default.less';
     @import '~antd/dist/antd.less'; // Import Ant Design styles by less entry
     @import 'your-theme-file.less'; // variables to override above
+
+# 组件
+
+    <Card bodyStyle={}>

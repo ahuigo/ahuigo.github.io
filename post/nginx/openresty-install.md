@@ -3,7 +3,21 @@ title: openresty install
 date: 2020-05-19
 private: true
 ---
-# openresty install
+# brew 安装
+    brew tap openresty/brew
+    brew untap homebrew/nginx
+
+    # 二选一
+    brew install openresty
+    brew install openresty-debug
+    brew services start openresty/brew/openresty
+
+conf:
+
+    openresty -h 
+    /usr/local/etc/openresty/nginx.conf
+
+# 源码安装
 ## 预编译
 安装到：/usr/local/opt/openresty
 
@@ -13,7 +27,7 @@ private: true
 1. 方法1：下载openssl 源码, 用 `--with-openssl=OPENSSL_SOURCE_DIR`
 2. 方法2： 或者用brew 下载安装openssl 源码
 
-方法2：
+其中方法2：
 
     $ brew install openssl
     $ brew link --force openssl

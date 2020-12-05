@@ -1,6 +1,6 @@
 ---
 layout: page
-title:	js notes
+title:	js obj
 category: blog
 description:
 ---
@@ -43,6 +43,24 @@ Array:
     let a = {
         [ city + 'population' ]: 350000
     };
+
+### define property
+    Object.defineProperties(object1, {
+        property1: {
+            value: 42,
+            writable: true,
+            configurable: true,
+        },
+        property2: {
+            get: function(){},
+        }
+    });
+
+e.g.
+
+    Object.defineProperties(Array.prototype, {
+        unique: {enumerable:true}
+    })
 
 ### clone
     const newobj = {...original, prop: newOne}

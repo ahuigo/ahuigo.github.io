@@ -188,10 +188,10 @@ endsWith
     [...Array(2)].map(()=>'value'); //['value', 'value']
 
 ### .trim()
-trim space only
+trim 所有的空白符
 
-	' a '.trim()
-	' a '.trimStart()
+	' a \t'.trim()
+	' a \t'.trimStart()
 	' a '.trimEnd()
 
 replace strip 字符集
@@ -305,6 +305,13 @@ Create RegExp：test, exec
 	new RegExp("str",'igm')
 	new RegExp("^str$",'igm')
 	new RegExp("(^|&)str$",'igm')
+
+### raw string as regex
+    RegExp.escape = function(string) {
+        return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+    };
+    var hostname = 'makandra.com';
+    new RegExp(RegExp.escape(hostname));
 
 ### unicode
 

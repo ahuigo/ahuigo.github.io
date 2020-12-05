@@ -101,8 +101,8 @@ IIS的做法是生成一个可以转移的.pfx文件，并加以密码保护。
 
 Certificate type:
 
-1. request one from a `certificate authority` like Let’s Encrypt, Comodo, etc. 
-2. generate a `self-signed certificate` on the command line.
+1. CA: request one from a `certificate authority` like Let’s Encrypt, Comodo, etc. 
+2. self signed: generate a `self-signed certificate` on the command line.
 
 
 # Self-Signed Certificate
@@ -149,6 +149,16 @@ AES, Blowfish, Camellia, SEED, CAST-128, DES, IDEA, RC2, RC4, RC5, Triple DES, G
 
 对于`Common Name = *.weibo.cn`, chrome 匹配`a.wiki.cn`, 但是不会认匹配`a.b.wiki.cn`, safari 则都匹配
 
+有了这些证书后，就可以
+
+    server {
+        server_name YOUR_DOMAINNAME_HERE;
+        listen 443 ssl;
+        ssl_certificate /usr/local/nginx/conf/33iq.crt;
+        ssl_certificate_key /usr/local/nginx/conf/33iq_nopass.key;
+        # 若ssl_certificate_key使用33iq.key，则每次启动Nginx服务器都要求输入key的密码。
+    }
+
 ### pem
 If you like to use that certificate for an Apache web server you need to put the private key (.key) and the certificate (.crt) into the same file and call it apache.pem.
 
@@ -174,7 +184,9 @@ the only question that really needed an answer was Common Name (CN). The answer 
     Common Name (e.g. server FQDN or YOUR name) []:dev.deliciousbrains.com
 
 ## 3.With Subject Alternative Name (SAN)
-> RFC 2818 describes two methods to match a domain name against a certificate – using the available names within the subjectAlternativeName extension, or, in the absence of a SAN extension, falling back to the commonName(dprecated, i.e. android browser/IoT(Internet of Thing)). 
+RFC 2818 describes two methods to match a domain name against a certificate
+1. using the available names within the subjectAlternativeName extension
+2. or, in the absence of a SAN extension, falling back to the commonName(dprecated, i.e. android browser/IoT(Internet of Thing)). 
 
 So now the domain name must be defined in the `Subject Alternative Name (SAN)` section (i.e. `extension`) of the certificate:
 
@@ -289,11 +301,59 @@ Step: https://deliciousbrains.com/ssl-certificate-authority-for-local-https-deve
     # gen root certificate
     openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem
 
-## install to key chain
-import CA
-0. import CA.pem to key chain
-1. trust all
+### Adding the Root Certificate to macOS Keychain
+#### Via the CLI
+    sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" myCA.pem
+#### Via the UI
+Open the macOS Keychain app
 
+1. Go to File > Import Items…
+1. Select your private key file (i.e. myCA.pem)
+1. Search for whatever you answered as the Common Name name above
+2. Double click on your root certificate in the list
+3. Expand the Trust section
+4. Change the When using this certificate: select box to “Always Trust”
+![](/img/net/net-ssl-ca/trust-keychain.png)
+
+### Adding the Root Certificate to iOS
+following these steps:
+
+1. Email the root certificate to yourself so you can access it on your iOS device
+1. Click on the attachment in the email on your iOS device
+1. Go to the settings app and click ‘Profile Downloaded’ near the top
+1. Click install in the top right
+1. Once installed, hit close and go back to the main Settings page
+1. Go to “General” > “About”
+1. Scroll to the bottom and click on “Certificate Trust Settings”
+1. Enable your root certificate under “ENABLE FULL TRUST FOR ROOT CERTIFICATES”
+![](/img/net/net-ssl-ca/import-ca-ios.png)
+
+## Creating CA-Signed Certificates for Your Dev Sites
+> Now that we’re a CA on all our devices, we can sign certificates for any new dev sites that need HTTPS. 
+
+First, we create a private key:
+
+    openssl genrsa -out dev.deliciousbrains.com.key 2048
+
+Then we create a CSR:
+
+    openssl req -new -key dev.deliciousbrains.com.key -out dev.deliciousbrains.com.csr
+
+Create a config file((`dev.deliciousbrains.com.ext`) It define the Subject Alternative Name (SAN) extension 
+
+    authorityKeyIdentifier=keyid,issuer
+    basicConstraints=CA:FALSE
+    keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+    subjectAltName = @alt_names
+
+    [alt_names]
+    DNS.1 = dev.deliciousbrains.com
+
+ run the command to create the certificate( signing with the root certificate and private key.)
+
+    openssl x509 -req -in dev.deliciousbrains.com.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial -out dev.deliciousbrains.com.crt -days 825 -sha256 -extfile dev.deliciousbrains.com.ext
+
+## nginx conf
 Use signed crt:
 
 	server {
@@ -303,6 +363,7 @@ Use signed crt:
         ssl_certificate_key /Users/hilojack/ssl/s/localhost.key; #cert.key
     }
 
+# 另一个CA example
 ## Creating CA-Signed Certificates 
 private key
 

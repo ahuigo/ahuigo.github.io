@@ -13,8 +13,8 @@ date: 2019-05-06
         Fruits []string `json:"fruits"`
     }
     //等价
-    bytes1 := json.Marshal(response2{})
-    bytes1 := json.Marshal(&response2{})
+    bytes1,err := json.Marshal(response2{})
+    bytes1, err := json.Marshal(&response2{})
 
 map
 
@@ -37,6 +37,7 @@ map
 https://gobyexample.com/json
 
     type Resp struct {
+        // 必须为大写，才能使用unmarshal
         Name            string              `json:"name"`
         Description     string              `json:"description"`
         Fruits []string `json:"fruits"`

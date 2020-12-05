@@ -219,6 +219,10 @@ python 内存中string 全部是以unicode编码的，而bytes则可以任何特
     >>> print(str('abc-1*中国'.encode()))
     b'abc-1*\xe4\xb8\xad\xe5\x9b\xbd'
 
+### gbk2utf8
+
+    s.encode('latin-1').decode('gbk').encode('utf-8')
+
 ### unicode
 以下三个等价, 且都是 class str
 

@@ -1,7 +1,11 @@
+init:
+	git remote add gitee https://gitee.com/ahuigo/all.git
+
 .PHONY: config
 config:
 	echo ln ~/.config
-	ln -s `pwd`/config/* ~/.config/
+	#ln -s `pwd`/config/* ~/.config/
+	sh conf/install-conf.sh
 
 .PHONY: conf
 conf:

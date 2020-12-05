@@ -163,6 +163,7 @@ help:
 create:
 
     $ createdb test1
+    $ createdb -h pg.ahuigo.com -U postgres users_dev -p 5432
     > CREATE DATABASE ahuigo;
     > CREATE DATABASE yuzhi100 OWNER myuser;
 

@@ -94,7 +94,9 @@ one: flex
         background:rgba(128,128,128, 0.5);
         top: 0;
         left:0;
-    "><img src="/a/img//eng/eng-tense-and-auxiliary-verbs.png" alt=""></div>
+    ">
+        <h1 style="background:lightblue;border:3px solid;padding:3px">居中消息</h1>
+    </div>
 
 ### flex+margin:auto 居中 
     <div style="

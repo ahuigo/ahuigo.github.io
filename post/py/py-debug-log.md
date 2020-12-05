@@ -2,7 +2,7 @@
 title: py-debug-log
 date: 2018-09-28
 ---
-# Preface
+# logging example
 - logging
 https://docs.python.org/3.4/howto/logging.html
 
@@ -10,7 +10,7 @@ https://docs.python.org/3.4/howto/logging.html
 
     import logging
     import sys
-    formatmsg='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(message)s'
+    formatmsg='%(asctime)s:%(levelname)s:%(pathname)s:%(lineno)s:%(message)s'
     logging.basicConfig(format=formatmsg, filename='mvp.log', level=logging.DEBUG)
 
     # logger and stramHanler
@@ -123,7 +123,7 @@ logging file path(default by current path):
     %(threadName)s
     %(process)d
 
-    %(pathname)s
+    %(pathname)s full file path
     %(module)s
 
 ### format date
@@ -208,7 +208,7 @@ getLogger 是单态的
     ```python
     >> b=logging.getLogger('b')
     <Logger b (WARNING)>
-    >>> b.setLevel(20)
+    >>> b.setLevel(20) # INFO
     >>> c=logging.getLogger('b.c')
     <Logger b.c (INFO)>
     ```
@@ -349,36 +349,37 @@ configure code  example:
     logger.error('error message')
 
 ### config log with dictConfig()
+> https://docs.python.org/3/howto/logging.html#configuring-logging
 in YAML format for the new dictionary-based approach:
 
     version: 1
     formatters:
-    simple:
-        format: 'simple:%(name)s - %(levelname)s - %(message)s'
+        simple:
+            format: 'simple:%(name)s - %(levelname)s - %(message)s'
     handlers:
-    console:
-        class: logging.StreamHandler
-        level: DEBUG
-        formatter: simple
-        stream: ext://sys.stdout
-    file:
-        class : logging.handlers.RotatingFileHandler
-        formatter: simple
-        filename: logconfig.log
-        maxBytes: 10240
-        backupCount: 3
+        console:
+            class: logging.StreamHandler
+            level: DEBUG
+            formatter: simple
+            stream: ext://sys.stdout
+        file:
+            class : logging.handlers.RotatingFileHandler
+            formatter: simple
+            filename: logconfig.log
+            maxBytes: 10240
+            backupCount: 3
     loggers:
-    simpleExample:
-        level: DEBUG
-        handlers: [console]
-        propagate: yes
-    simpleExample.a:
-        level: DEBUG
-        handlers: [console]
-        propagate: yes
-    root:
-    level: DEBUG
-    handlers: [console]
+        simpleExample:
+            level: DEBUG
+            handlers: [console]
+            propagate: yes
+        simpleExample.a:
+            level: DEBUG
+            handlers: [console]
+            propagate: yes
+        root:
+            level: DEBUG
+            handlers: [console]
 
 code:
 
@@ -432,6 +433,7 @@ args=(sys.stdout,)
 format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
 datefmt=
 '''
+
 with open('logging.conf', 'w') as f:
     f.write(confstr)
 
@@ -454,4 +456,4 @@ The class names referenced in config files need to be:
 
 ## log flow
 The flow of log event information in loggers and handlers is illustrated in the following diagram
-![python-log-flow](/py/py-log-flow.png)
+![python-log-flow](/img/py/py-log-flow.png)

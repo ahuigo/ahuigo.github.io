@@ -84,6 +84,18 @@ df 的聚合是以column 为group 的
     0    4.5
     1    2.0
 
+### 集合运算
+    if 'value' in s
+    In [3]: s.isin(['a'])
+    Out[3]: 
+    0    True
+    1    False
+    2    False
+    dtype: bool
+
+    In [4]: s[s.isin(['a'])].empty
+    Out[4]: False
+
 ### 比较运算
     > df.col1>df.col2
     > df.col1>1
@@ -367,12 +379,18 @@ filter column: axis=1
     df.loc[:,['col1','col2']]
 
 ##### filter func
-filter row:
+filter rows:
 
     # via column_value
     df.loc[df['column_name'] == some_value]
+    df.loc[df['column_name'] != some_value]
+    df.loc[df['column_name'].isin(some_values)]
     df[df.col1>1]
     df[df.col1>df.col2]
+    df[df.年度==2022]
+    df.query('年度==2022')
+    df.query('name=="ahuigo"')
+
 
     df[df.apply(lambda x: 'ST' in x['col1'], axis=1)]
 

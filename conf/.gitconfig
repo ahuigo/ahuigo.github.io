@@ -41,3 +41,5 @@
 	options = --highlight --line-numbers
 [branch]
 	autoSetupMerge = always
+[pull]
+	rebase = false

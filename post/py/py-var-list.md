@@ -316,6 +316,7 @@ deque:
     >>> sorted(a.items(), key=lambda x:x[1])
     [(4, 1), (1, 2), (3, 3), (2, 4)]
 
+### sort cmp
 python3 没有cmp. 利用python 的magic`__gt__,__eq__,...` 实现cmp:
 
     key=functools.cmp_to_key(compare)

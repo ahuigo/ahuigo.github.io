@@ -14,7 +14,7 @@ private: true
     <tr><td>1</td><td>2</td> <td>3</td><td>4</td></tr>
     </table>'''
 
-    l = pd.read_html(html)
-    print(l) # [   a  b  c  d 0  1  2  3  4]
-    print(type(l)) # list
+    table_list = pd.read_html(html)
+    df = table_list[0]
+    print(df)
 

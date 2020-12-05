@@ -28,6 +28,42 @@ React.cloneElement() 几乎等同于：
 
     <element.type {...element.props} {...props}>{children}</element.type
 
+# dom 类型
+> https://stackoverflow.com/questions/58123398/when-to-use-jsx-element-vs-reactnode-vs-reactelement 解释得很清楚
+A ReactElement is an object with a type and props.
+
+    interface ReactElement<P = any, T extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>> {
+        type: T;
+        props: P;
+        key: Key | null;
+    }
+
+A ReactNode is a ReactElement, a ReactFragment, a string, a number or an array of ReactNodes, or null, or undefined, or a boolean:
+
+    type ReactText = string | number;
+    type ReactChild = ReactElement | ReactText;
+
+    interface ReactNodeArray extends Array<ReactNode> {}
+    type ReactFragment = {} | ReactNodeArray;
+
+    type ReactNode = ReactChild | ReactFragment | ReactPortal | boolean | null | undefined;
+
+JSX.Element is a ReactElement, with the generic type for props and type being any. 
+
+    declare global {
+        namespace JSX {
+            interface Element extends React.ReactElement<any, any> { }
+        }
+    }
+
+By example:
+
+    <p> // <- ReactElement = JSX.Element
+        <Custom> // <- ReactElement = JSX.Element
+            {true && "test"} // <- ReactNode
+        </Custom>
+    </p>
+
 # Replace DOM(render)
     import React from 'react';
     import ReactDOM from 'react-dom';
@@ -49,7 +85,6 @@ App.tsx
     import { Provider } from 'react-redux';
 
     function App(props:any) {
-
         useEffect(() => {
             const store = window.g_app._store; // how to get the store in umi??
             const subAppContainer = document.createElement('div')

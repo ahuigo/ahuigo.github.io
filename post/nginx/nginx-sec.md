@@ -79,3 +79,6 @@ nodelay不延迟请求
         limit_req zone=perip burst=5 nodelay;
         limit_req zone=perserver burst=10;
     }
+
+## 限制连接数
+    limit_req_conn 用来限制同一时间连接数，即并发限制

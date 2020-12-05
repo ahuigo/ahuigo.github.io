@@ -41,7 +41,7 @@ Mac OSX Image 不可以修改路径：
 
 ### dockerfile of image
 
-    docker history --no-truc image_id:version
+    docker history --no-trunc image_id:version
     docker image history --no-trunc image_name > image_history
 
 ## rm image
@@ -217,6 +217,13 @@ ARG 改变ENV
     ARG arg1=arg1
     ENV env1=${arg1} env2=env2
     ENV env3=$arg1
+
+An ARG declared before a FROM is outside of a build stage, so it can’t be used in any instruction after a FROM. 如果想将变量传给from里面，需要在from后再定义ARG
+
+    ARG VERSION=latest
+    FROM busybox:$VERSION
+    ARG VERSION
+    RUN echo $VERSION > image_version
 
 #### ENV
 两种用法

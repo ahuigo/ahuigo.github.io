@@ -43,7 +43,7 @@ github.com/ahuigo/go-lib/gotest
 
 ### test mode
 两种test mode:
-#### 1.directory mode
+#### 1.directory mode(不会递归)
 执行当前diretory下所有的`_test.go` 是(必须有go.mod, module名不限定)
 这种模式下 caching is disabled.
 
@@ -51,18 +51,24 @@ github.com/ahuigo/go-lib/gotest
     $ go test  -v
 
 #### 2.package list mode(带cached):
-执行测试 module/文件夹/文件
+带cached 的单元测试中，fmt.Println　或者logger(实时输出) 会被禁用, 有两种方法
+
+1. 加上`-v` `go test -v`, 让fmt/logger 实时输出
+1. t.Log() t.Logf() 缓存输出
+
+执行测试 module、文件夹、文件:
 
     // test module 
     go test <module1>; # 文件夹下go.mod 中module 必须名为module1
 
     // test directory(与test module 本质就是directory)
-    go test .; 
-    go test ./..; //
+    go test .; #ok
+    go test ./..; # ok
+    go test ./service; #合法
+    go test service; #不合法
 
     // test file
     go test math_test.go //no ok
-
 
 In package list mode ，successful package test result will be cached and reused, 
 如果想禁止cache ，就用-count=1
@@ -74,13 +80,18 @@ In package list mode ，successful package test result will be cached and reused
 2. `go test <pkg>`  is okay.
 3. `go test whatever_test.go` is not okay: `undefined: xxxx` 
 
-To select which tests to run use the 
+指定文件、路径
+
+    $ go test foo_test.go foo.go
+    $ go test ./service
+
+指定函数
 
     -run <regexp> 
-    -run <regexp> flag (interpreted as `.*<regexp>.*` match function)
-    $ go test -run Say # from within the package's directory
-    $ go test -run Say my/package/import/path # from anywhere
-
+         flag (interpreted as `.*<regexp>.*` match function)
+    $ go test -run TestSubset #指定函数名
+    $ go test -run 'TestSubset*' #指定函数名
+    $ go test ./service -run TestSubset 
 
 ### test log
 

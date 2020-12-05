@@ -20,7 +20,7 @@ private:
     <td>1</td>
     </>
 
-如果带key, 就不能省略`React.Fragment`, 且目前`key` 是唯一可以传递给 Fragment 的属性
+如果组件带key, 就不能省略`React.Fragment`, 且目前`key` 是唯一可以传递给 Fragment 的属性
 
     {props.items.map(item => (
         <React.Fragment key={item.id}>

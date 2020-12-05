@@ -24,7 +24,7 @@ date: 2018-10-04
 
 响应返回:
 
-    Access-Control-Allow-Origin: http://api.bob.com
+    Access-Control-Allow-Origin: http://api.bob.com:8001
     Access-Control-Allow-Credentials: true
     Access-Control-Expose-Headers: FooBar
 	Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS; 可选
@@ -99,6 +99,7 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
 上面的HTTP回应中，关键的是Access-Control-Allow-Origin字段，表示http://api.bob.com可以请求数据。该字段也可以设为星号，表示同意任意跨源请求。
 
     Access-Control-Allow-Origin: *
+    Access-Control-Allow-Origin: http://m:8001
 
 服务器回应的其他CORS相关字段如下。
 
@@ -120,12 +121,12 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
 下面是"预检"请求之后，浏览器的正常CORS请求。
 
     PUT /cors HTTP/1.1
-    Origin: http://api.bob.com
+    Origin: http://api.bob.com:8001
     Host: api.alice.com
 
 下面是服务器正常的回应。
 
-    Access-Control-Allow-Origin: http://api.bob.com
+    Access-Control-Allow-Origin: http://api.bob.com:8001
     Content-Type: text/html; charset=utf-8
 
 ### Apache & nginx

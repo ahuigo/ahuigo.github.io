@@ -47,6 +47,11 @@ private:
         return "prefix_" + defaultTableName;
     }
 
+# Array
+
+    Ages  pq.Int64Array   `json:"ages" form:"ages" gorm:"type:integer[]"`
+    Names  pq.StringArray   `json:"names" form:"names" gorm:"not null;default:array[]::varchar[];type:text[]"`
+
 # Create 创建记录
 
 ## Creat/newRecord
@@ -181,6 +186,11 @@ Plain SQL
 
     // BETWEEN
     db.Where("created_at BETWEEN ? AND ?", lastWeek, today).Find(&users)
+
+### where array
+
+    db.Where("name in (?)", []string{"a","b"})
+    db.Where(fmt.Sprintf("name in (%d)", []string{"a","b"}))
 
 ### Multiple where
 
@@ -570,7 +580,7 @@ Scan results into another struct.
         names = append(names, name)
     }
 
-### Pluck
+### Pluck list
 Query single column from a model as a map, if you want to query multiple columns, you should use Scan instead
 
     var ages []int64

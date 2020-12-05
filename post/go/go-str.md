@@ -23,6 +23,10 @@ date: 2018-09-27
 
     rune('a') == 'a' == int32('a') == 97
 
+### slice utf8
+    s = "中国" 
+    fmt.Println(string([]rune(s)[0:1])) 
+
 ## byte(chr/ord)
 byte 其实是int8
 

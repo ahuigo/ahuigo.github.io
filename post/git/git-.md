@@ -215,6 +215,16 @@ If you want to also remove *directories*, run
 	git commit --amend -m 'new messages' --author 'ahuigo'
 
 ## git revert
+    C1->C2->C3->B2C3->C5->C6->C7->HEAD
+      |-B2->B2/
+
+git revert -m1 B2C3 创建了新分支: `HEAD-(B2-C3)`
+git revert -m2 B2C3 创建了新分支: `HEAD-(C3-C2)`
+
+    C1->C2->C3->C4->C5->C6->C7->HEAD
+
+git revert C3 会创建新分支: `HEAD-(C3-C2)`
+
 恢复到HEAD 之前的提交:
 
 	git revert HEAD //Creat a new commit to drop HEAD's modifies. '
@@ -833,6 +843,15 @@ If u want to restart rebasing and do not want any current file patch
 git cherry-pick命令"复制"一个提交节点并在当前分支做一次完全一样的新提交。
 
     $ git cherry-pick 2c33a
+
+To cherry-pick all the commits from commit A to commit B (where A is older than B), run:
+
+    git cherry-pick A^..B
+
+If you want to ignore A itself, run:
+
+    git cherry-pick A..B
+
 
 # git hub
 hub is a command-line wrapper for git that makes you better at GitHub.

@@ -198,6 +198,11 @@ usage:
     :g/insert into/y A "复制所有带insert into的行到寄存器A中
     :g/^/m 0 "倒序
 
+cmd:
+
+    :g/{pattern}/d  删除一行
+    :g/{pattern}/m 0
+
 与:g对应的还有个反向的:v, 相当于`:g!` 不匹配的行才执行cmd
 
     :[range]v[global]/{pattern}/[cmd]
