@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2020-12-06 [租房网](/b/idea/idea-house) 
 - 2018-09-28 [社保](/b/life/life-shebao) 
 - 2019-06-20 [Postgre SQL function](/b/db/pgsql-function) 
 - 2018-09-27 [Redis](/b/db/redis-) 
@@ -38,4 +39,3 @@
 - 2019-03-05 [python thread 线程笔记](/b/py/py-thread) 
 - 2019-03-08 [tcpdump](/b/net/net-tcpdump) 
 - 2018-09-27 [数据库CAP 理论 与事务](/b/arch/arch-cap) 
-- 2018-09-27 [grep & ag 的使用](/b/c/shell-grep) 
