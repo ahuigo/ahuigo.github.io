@@ -66,6 +66,11 @@ e.g.
 # import export
 ## pg_dump
     pg_dump help
+### copy
+you should use the -a flag to import data only, else you may see weird errors like "Out of memory":
+
+    pg_dump -a -t my_table my_db | psql target_db
+
 ### backup
 
     # only schema(-s)

@@ -11,7 +11,9 @@ date: 2018-09-27
 1. 企业与知乎合作点评与反馈, 也就是企业Tag 接口
 5. 群通知
 
-# 滑雪网站
+# 语言：
+deno 生态发展计划
+c sharp 生态发展计划 vs java/kotlin
 
 # 全职工作的团队
 http://deepdevelop.com/

@@ -128,7 +128,7 @@ https://stackoverflow.com/questions/56415826/is-it-possible-to-precisely-type-in
 ## 获取类型
 ### Parameters
     function foo(a: number) {
-    return true;
+        return true;
     }
     type p = Parameters<typeof foo>[0];
 
@@ -139,6 +139,8 @@ https://stackoverflow.com/questions/56415826/is-it-possible-to-precisely-type-in
     }
     type p = ParametersWithNames<typeof foo>;
     // p = { a: number, b: string }
+    type p = Parameters<typeof foo>;
+    // p = [number, strin]
 
 ### typeof 获取数据类型
     const data = {
@@ -228,7 +230,7 @@ https://stackoverflow.com/questions/36015691/obtaining-the-return-type-of-a-func
     let v = prop(o, 'p1') // is number, K is of type 'p1'
     let v2 = prop2(o, 'p1') // is number | string, no extra info is captured
 
-再来一个例子
+再来一个例子 extends 继承
 
     interface Lengthwise {
         length: number;

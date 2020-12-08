@@ -1,0 +1,24 @@
+FROM golang:1.14.12-alpine3.12 AS build-env
+
+RUN apk update && apk add git && apk --no-cache add tzdata && apk --no-cache add ca-certificates
+
+ENV GOPROXY="https://artifactory.momenta.works/artifactory/api/go/go"
+
+RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger && go get -u github.com/gobuffalo/packr/packr
+
+
+WORKDIR /go
+
+RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
+
+ENV PATH=/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+ENV GOPATH=/go
+
+ENV GOLANG_VERSION=1.14.12
+
+RUN  test -e /etc/nsswitch.conf  && echo 'hosts: files dns' > /etc/nsswitch.conf
+
+RUN apk add --no-cache   ca-certificates
+
+CMD ["/bin/sh"]

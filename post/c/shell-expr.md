@@ -362,7 +362,7 @@ shell 没有三元运算符：不过可以这样
 	$[[ expr ]]		syntax error
 	${{ }}			syntax error
 
-## ((expr)) , $((expr)) and $[expr]
+## 双括号((expr)) , $((expr)) and $[expr]
 
 	((expr))	 以常用数学符号做计算, 计算的结果只能用于条件判断
 	$((expr))	 用于取值,	以常用数学符号做计算 $((i--)) i值会减小
@@ -377,3 +377,9 @@ shell 没有三元运算符：不过可以这样
 	echo $((3+3))
 	x=$(($a+3))
 	x=$[$a+3]
+
+e.g.
+
+    for i in {0..99}; do
+        echo a$((i*5000))
+    done

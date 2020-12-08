@@ -91,6 +91,11 @@ background+gui:
     3. 而getoutput 它需要获取到stdout+stderr, 强制等待任务结束
 1. print output: errno = os.system('ls -ls &')
 
+### getstatusoutput
+    cmd = f'psql -h host -U postgres {DBNAME} -p {PORT} -c "REINDEX table {TBNAME}" >/dev/null || echo "error" '
+    print(cmd)
+    code, out = subprocess.getstatusoutput(cmd)
+
 ### subprocess.check_output
 
     import subprocess
