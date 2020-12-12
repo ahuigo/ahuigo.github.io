@@ -2,6 +2,24 @@
 title: Niz 键盘的配置
 date: 2020-05-08
 ---
+# mac osx 加快按键速度
+## key repeat 不生效
+在终端下输入：
+
+    defaults write -g ApplePressAndHoldEnabled -bool false
+    $ defaults get -g ApplePressAndHoldEnabled
+    0 
+
+## 加快按键速度
+keyboard配置建议
+1. key repeat 调到最大
+2. Delay Until Repeat 调到最小
+    1. System Preferences, click Keyboard, then click Keyboard. Drag the Delay Until Repeat
+3. Touchpad 调到最灵敏
+4. select Accessibility.
+In the left sidebar, select Mouse & Trackpad.
+To adjust your mouse or trackpad's double-click speed, adjust the slider shown below.
+
 # 键盘
 看上两款键盘:
 1. HHKB-Pro2，是一款电脑键盘，重量0.53kg， 长29.4 x 宽11.0 x 高39.9mm 。
@@ -75,20 +93,6 @@ niz好像所有的按键都可以定制
 atom68缺少一个左Fn 不太方便，于是我通过`程控键`改了下按键：
 1. 将左`ctrl&Caps` 映射为右FN
 2. 将`右Alt`映射为ctrl/caps: `非FN` 时为`CapsLock`,`Fn`时为`Catl&Caps`交换键
-
-# mac osx 问题
-## key repeat 不生效
-在终端下输入：
-
-    defaults write -g ApplePressAndHoldEnabled -bool false
-    $ defaults get -g ApplePressAndHoldEnabled
-    0 
-
-## 加快按键速度
-keyboard配置建议
-1. key repeat 调到最大
-2. Delay Until Repeat 调到最小
-3. Touchpad 调到最灵敏
 
 # Karabiner 定制快捷键
 ![](/img/shell/keyboard/karabiner-keyboard-list.png)

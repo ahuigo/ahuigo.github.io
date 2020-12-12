@@ -1,13 +1,9 @@
 import subprocess
 import re
 
-PORT = 5444
 PORT = 5432
-TABLENAME = 'task_checks'
-DBNAME = 'muniu_prod'
-TABLENAME = 'normal_keys'
-TABLENAME = 'sensitive_keys'
-DBNAME = 'data_collection_prod'
+TABLENAME = 'table_name'
+DBNAME = 'dbname'
 def getBadIdViaVacuum():
     print("ViaVacuum analyze ....")
     cmd = f'psql -h prod-pg.hdmap.mmtdev.com -U postgres  {DBNAME} -p {PORT} -c "VACUUM analyze {TABLENAME}"'

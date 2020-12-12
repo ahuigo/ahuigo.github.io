@@ -269,15 +269,17 @@ change state if props change
     };
 
 # Hook API
-1. useCallback Hook 允许你在`重新渲染之间`保持对相同的回调引用
-1. useMemo Hook 使得控制`具体子节点何时更新`变得更容易，减少了对纯组件的需要。
+1. useCallback: 缓存函数
+1. useMemo Hook, 缓存值
 2. useReducer Hook 减少了`对深层传递回调`的依赖，正如下面解释的那样
 
 ## useCallback
-    useCallback(fn, deps) 相当于 useMemo(() => fn, deps)。
+    cachedFn = useCallback(fn, deps) 
+    cachedValue = useMemo(() => fn, deps) // value = fn()
 
 useCallback Hook 允许你在重新渲染之间保持对相同的回调引用以使得 shouldComponentUpdate 继续工作：
 
+    const memoizedResult = doSomething(a, b);
     // 除非 `a` 或 `b` 改变，否则不会变
     const memoizedCallback = useCallback(() => {
         doSomething(a, b);

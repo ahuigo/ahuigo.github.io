@@ -134,6 +134,7 @@ show merged files
 ## diff name only
 
 	git diff-index --cached --name-only --diff-filter=ACMR HEAD
+	git diff-index --name-only --diff-filter=ACMR HEAD
 
 ## merge-base
 

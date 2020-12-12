@@ -72,6 +72,7 @@ This table can be used to store `per-request Lua context data` (as with the Ngin
     print()               #与ngx.print()方法有区别，print()相当于ngx.log()???
 
 # lua api
+![](/img/openresty/nginx-http-life.png)
 ![](/img/openresty/lua-api.png)
 
     init_by_lua     (master?)

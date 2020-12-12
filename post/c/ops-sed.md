@@ -80,6 +80,7 @@ pattern:
 ## s字符串替换
 
 	$ sed -i "s/pattern/replace/" a.txt //第一行，只匹配一次
+	$ sed -i "s#pattern#replace#g" a.txt //第一行，只匹配一次
 	$ sed -i "s/pattern/replace/g" a.txt
 	$ sed -i "s#pattern#replace#g" a.txt
 	$ sed -i "n,ms/pattern/replace/g" a.txt //指定行

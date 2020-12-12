@@ -26,6 +26,14 @@ Note: 断言不是类型转换
         color = "geekblue", names = []
     } = {} as TagsProps) {
     }
+### extract type
+    interface I2 {
+        y: { c: I1 },
+        z: any,
+    }
+
+    let myVar: I2['y'];
+
 
 ## ts类型别名
 常用于联合类型
@@ -209,26 +217,27 @@ https://stackoverflow.com/questions/36015691/obtaining-the-return-type-of-a-func
 ### keyof data
 
     const data = {K:1}
-    type Keys = keyof typeof data
+    type Keys = keyof typeof data 
 
 
 ### extends keyof
-"K extends keyof T"说明这个类型值必须为T类型属性的子元素或子集，
+"K extends keyof T"说明这个类型值必须为T类型属性的子元素或子集, `K` 与`T[K]`必须是关联的
 
     function prop<T, K extends keyof T>(obj: T, key: K) {
         return obj[key]; //T[K]
     }
-    function prop2<T>(obj: T, key: keyof T) {
-        return obj[key]; //T[keyof T] //error
+    function prop2<T>(obj: T, key: keyof T, value: T[K]) {
+        return obj[key]; //T[keyof T] 
+            //error, 不能是 T["name"|"age"]
+            //只能是 T[extends "name"|"age"]
     }
 
     let o = {
-        p1: 0,
-        p2: ''
+        age: 0,
+        name: 'hilo'
     }
 
-    let v = prop(o, 'p1') // is number, K is of type 'p1'
-    let v2 = prop2(o, 'p1') // is number | string, no extra info is captured
+    let v = prop(o, 'name', 'ahui') // K is of type 'name'
 
 再来一个例子 extends 继承
 

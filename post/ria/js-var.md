@@ -170,6 +170,9 @@ string
 
     if (typeof myVar === 'string' || myVar instanceof String)
 
+## via obj.constructor.name
+    a.constructor.name
+
 ## via Object.prototype.toString(all)
 用于判断对像类别更统一
 
