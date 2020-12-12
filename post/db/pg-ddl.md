@@ -154,6 +154,22 @@ full path
     \copy (Select * From foo) To '/tmp/test.csv' With CSV
     \copy (select * from my_table limit 10) TO '~/Downloads/export.csv' CSV HEADER
 
+## import data
+    psql dbname < tracks.sql
+    DETAIL:  Key (id)=(25344571) already exists.
+
+此时可以建立临时表，利用临时表去重后再导入数据
+
+    # create tmp_table (基于旧表)
+    CREATE TEMP TABLE tmp_table AS SELECT * FROM tracks;
+    # import data
+    COPY tmp_table (name, email) FROM stdin DELIMITER ' ' CSV;
+    # clear table
+    TRUNCATE tracks;
+    # import unique data
+    INSERT INTO tracks
+        SELECT DISTINCT ON (email) * FROM tmp_table
+        ORDER BY email, subscription_status;
 
 # help
 `\h CREATE ROLE`
@@ -219,6 +235,10 @@ show create table(只能用命令行):
         location varchar(25) check (location in ('north', 'south', 'west', 'east',  'northwest')),
         install_date date
     );
+
+#### copy table struture
+    CREATE TEMP TABLE tmp_table AS SELECT * FROM tracks;
+    CREATE TABLE tmp_table AS SELECT * FROM tracks;
 
 #### create view table
 	create view t_view as

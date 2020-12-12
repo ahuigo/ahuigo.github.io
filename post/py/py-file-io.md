@@ -42,6 +42,14 @@ python [完全关闭buffer](http://jaseywang.me/2015/04/01/stdio-%E7%9A%84-buffe
 4. 将其 stream 关联到 pseudo terminal(pty) 上，script 命令可以做这事情的: `script -q -c "command1" /dev/null | command2`
 或者通过 socat 这个工具实现，
 
+使用buffer
+
+    # no buffer
+    sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
+    # any buffer 
+    sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', -1)
+    sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', buffering=-1)
+
 
 ## pipe buffer
 再来看个跟 pipe 相关的问题， 这个命令常常回车之后没有反应:
