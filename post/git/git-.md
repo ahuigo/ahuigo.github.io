@@ -100,45 +100,6 @@ with go get （git config 有点问题）:
 
     HTTP_PROXY=socks5://127.0.0.1:1080 go get  github.com/gin-gonic/gin
 
-### 多用户下的SSH
-参阅：[Multiple SSH Keys](https://gist.github.com/jexchan/2351996)
-1. https://developer.github.com/guides/using-ssh-agent-forwarding/#your-key-must-be-available-to-ssh-agent
-
-a. Ensure ssh-agent is enabled:
-
-	# start the ssh-agent in the background
-	$ eval "$(ssh-agent -s)"
-	Agent pid 59566
-
-b. Add these two keys as following
-
-	$ ssh-add ~/.ssh/id_rsa_activehacker
-    # macOSX
-    ssh-add -K ~/.ssh/<private_key_file>
-
-You can check that your key is visible to ssh-agent by running the following command:
-
-	ssh-add -L
-
-you can delete all cached keys before
-
-	$ ssh-add -D
-
-c. Config `private rsa` and the fake `host` to be replaced and the realhost `HostName` in `~/.ssh/config`:
-
-    #jexchan account
-    Host github.com-ahuigo
-        HostName github.com
-        User git
-        IdentityFile ~/.ssh/id_rsa_ahuigo
-    Host *
-        UseKeychain yes
-
-Config the fake `host` to be replaced , `name`, `email` in `.git/config`
-
-    [remote "origin"]
-        url = git@github.com-ahuigo:ahuigo/a.git
-
 ## git status
 
 	git status -s

@@ -275,7 +275,7 @@ change state if props change
 
 ## useCallback
     cachedFn = useCallback(fn, deps) 
-    cachedValue = useMemo(() => fn, deps) // value = fn()
+    cachedValue = useMemo(fn, deps) // value = fn()
 
 useCallback Hook 允许你在重新渲染之间保持对相同的回调引用以使得 shouldComponentUpdate 继续工作：
 

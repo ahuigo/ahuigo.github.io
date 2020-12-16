@@ -107,6 +107,7 @@ From remote to local
 
 ## non interactive login
 
+
 ### 利用公私钥作验证(e.g.:RSA)
 原理： 当ssh登录时,ssh程序会发送私钥去和服务器上的公钥做匹配.如果匹配成功就可以登录了
 
@@ -119,26 +120,25 @@ From remote to local
 	//or
 	$ ssh-keygen -t rsa -P "passwd" -f ~/.ssh/id_rsa -C 'x@qq.com'
 
-	# 或者将其它人的pub 导入ssh server
-	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-	# 改变权限，必须
+2.通过scp 或者ssh-copy-id 把公钥pub 传到远程
+
+	#将pub 导入remote ssh server
+    ssh-copy-id -p port -i ~/.ssh/id_rsa.pub root@192.168.12.10
+    # 或
+	scp ~/.ssh/id_rsa.pub user@host:/home/user/.ssh/authorized_keys
+	#或者手动copy：
+	cat ~/.ssh/id_rsa.pub | ssh user@machine "mkdir ~/.ssh; cat >> ~/.ssh/authorized_keys"
+
+	# 改变remote 权限，必须
 	chmod 700 ~/.ssh
 	chmod 600 ~/.ssh/authorized_keys
 	chmod 600 -R ~/.ssh/* # 非必须
-
-2.通过scp 或者ssh-copy-id 把公钥pub 传到远程
-
-	$ scp .ssh/id_rsa.pub [-P 22] username@hostname:/home/username/.ssh/authorized_keys
-	#或者用这个自动将`-i id_rsa` 对应的公钥(.ssh/id_rsa.pub) 传到远程服务器(~/.ssh/authorized_keys)
-	ssh-copy-id [-i [~/.ssh/id_rsa ]] -P 22 [user@]hostname # 这个不是通用的命令，mac 下就没有
-	#或者手动copy：
-	cat ~/.ssh/id_rsa.pub | ssh user@machine "mkdir ~/.ssh; cat >> ~/.ssh/authorized_keys"
 
 小结: 其实你可以一步到位：
 
 	ssh-keygen -t rsa; ssh-copy-id user@host;
 
-> authorized_keys 644，.ssh 700
+
 
 #### 检验
 
@@ -152,6 +152,39 @@ From remote to local
 可参考：
 http://www.cnblogs.com/weafer/archive/2011/06/10/2077852.html
 http://www.chinaunix.net/old_jh/4/343905.html
+
+### sshagent
+如果有多个密钥，比如github, 就需要将密钥加入到ssh agent 客户端缓存代理
+
+这个缓存代理, 将偿试不同的密钥
+
+    # 启动agent
+	eval "$(ssh-agent -s)"
+    # 关闭
+    ssh-agent -k
+    # 加入密钥
+    ssh-add ~/.ssh/other_id_rsa
+    # list
+    ssh-add -l
+    # you can delete all cached keys before
+	ssh-add -D
+
+如果想每个host 指定使用哪个密钥
+参阅：[Multiple SSH Keys](https://gist.github.com/jexchan/2351996)
+1. https://developer.github.com/guides/using-ssh-agent-forwarding/#your-key-must-be-available-to-ssh-agent
+
+    #jexchan account
+    Host github.com-ahuigo
+        HostName github.com
+        User git
+        IdentityFile ~/.ssh/id_rsa_ahuigo
+    Host *
+        UseKeychain yes
+
+Config the fake `host` to be replaced , `name`, `email` in `.git/config`
+
+    [remote "origin"]
+        url = git@github.com-ahuigo:ahuigo/a.git
 
 ### rsync
 rsync 是一个同步命令，它是通过ssh 来下的，如果同步时不想输入密码:

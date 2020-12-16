@@ -132,13 +132,18 @@ Item: 用setFieldsValue
     >
 # select
 ## filter
-          <Select
-            showSearch
-            mode="multiple"
-            style={{ width: '100%' }}
-            placeholder="选择域"
-            filterOption={true}
-            // onSearch={searchDomains}
+
+    <Select
+        showSearch
+        optionFilterProp="children"
+        onSearch={onSearch}
+        filterOption={(input, option) =>  
+        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 
+        || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+    >
+        {person.map(p => <Option value={p.username}>{p.displayName}</Option>)}
+    </Select>
 # Input
 自动激活
 
