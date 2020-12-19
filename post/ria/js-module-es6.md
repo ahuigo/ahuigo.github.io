@@ -59,6 +59,11 @@ module `this` is `{}`, not `global===window`
 - export 定义值
 - import 引入
 
+e.g. 
+
+    export { default as puppeteer } from './puppeteer-web.js';
+    export { default as runChrome } from './proc-chrome.js';
+
 ## export
 profile.js
 

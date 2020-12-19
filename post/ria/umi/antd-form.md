@@ -131,15 +131,21 @@ Item: 用setFieldsValue
         rules={[{ required: true, message: 'input password !', type:'string' }]}
     >
 # select
+## allowClear
+    <Select allowClear>
+
 ## filter
+filter key and value "children"
 
     <Select
         showSearch
         optionFilterProp="children"
+
         onSearch={onSearch}
+        // 自定义搜索函数
         filterOption={(input, option) =>  
-        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 
-        || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 
+            || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
     >
         {person.map(p => <Option value={p.username}>{p.displayName}</Option>)}

@@ -137,6 +137,10 @@ Refer: [tcp-ip](/p/tcp-ip)
 ## vegeta(golang版本)
 vegeta 是golang 写的压测工具
 
+### 简单get
+
+    echo "GET http://host.com" | vegeta attack  -rate=10000  -duration=10s |vegeta report
+
 ### 固定请求
 
     jq -ncM '{method: "POST", url: "http://baidu.com/", body: {key:"IDLE"} | @base64 }' \
@@ -156,25 +160,19 @@ vegeta attack 参数：
     vegeta report result.data-collection.6000qps.60s.gen.bin | head -n 10;
 
 以上脚本的解释：
-
 jq：
 
-while(true; .+1) 生成自增ID
-("stress-test-"+(.|tostring)) 将整数ID转为string并加上前缀
-vegeta report：
+    while(true; .+1) 生成自增ID
+    ("stress-test-"+(.|tostring)) 将整数ID转为string并加上前缀
 
-分析attack的二进制输出，生成报告。
-head -n 10 报告会输出大量的去重后的错误响应，只看前10行即可。
+vegeta report： 分析attack的二进制输出，生成报告。
 
 
-vegeta plot result.key.200qps.60s.bin > result.key.200qps.60s.html
-vegeta plot：
+vegeta plot： 生成 html 格式的折线图，使用浏览器打开文件。
 
-生成 html 格式的折线图，使用浏览器打开文件。
+    vegeta plot result.key.200qps.60s.bin > result.key.200qps.60s.html
 
 横轴是压测时刻，从0到duration。纵轴是滑窗内的平均响应时间，滑窗大小可以在左下角的小输入框里修改。
-
-用鼠标点击并拖动可以选择一个时间区间，放大局部。再双击即可返回。
 
 ## ab ApacheBench 
 
