@@ -104,6 +104,14 @@ Example:
 		echo $a;
 	done
 
+## function return
+    function myfunc() {
+        echo -n "$myresult 1"
+    }
+
+    result=$(myfunc)   # or result=`myfunc`
+    echo $result
+
 ## ignore function and alias
 Runs COMMAND with ARGS ignoring shell functions. you can type:
 

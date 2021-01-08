@@ -3,6 +3,7 @@ title: python's super,type, object
 date: 2018-10-04
 ---
 # type vs object
+> https://mp.weixin.qq.com/s/z4JBWFo-epH5NsQJUw7qaQ
 type 即代表class 本身, 他继承: type-object
 1. type: root instance: __class__, type(obj) === obj.__class__,
 	`self.__class__` 不一定是`__class__`, 也可能是subclass(参考下面super的例子)
@@ -10,6 +11,14 @@ type 即代表class 本身, 他继承: type-object
 
     >>> print(type(object));
     <class 'type'>
+    >>> object.__class__
+    <class 'type'>
+    >>> type.__base__
+    <class 'object'>
+
+
+所有对象的根类型是type(`type(obj)`), 所有对象都继承自object 
+![](/img/py/type/type-class-difference.png)
 
 一般来说:
 
@@ -20,7 +29,7 @@ type 即代表class 本身, 他继承: type-object
     >>> issubclass(int, int)
     True
 
-*从class实例关系来说*, 所有class(包括type) 的 root metaclass: type
+*从class 继承关系来说*, 所有class(包括type) 的 root metaclass: type
 
     >>> isinstance(1, type)
     False

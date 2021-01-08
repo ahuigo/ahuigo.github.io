@@ -5,6 +5,26 @@ date: 2018-10-04
 # http_proxy
 The ngx_http_proxy_module module allows passing requests to another server.
 
+## proxy header
+
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+
+    #proxy_http_version 1.0;
+    proxy_set_header Host            $host;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    #proxy_pass http://localhost:8001/;
+
+## proxy with ssl
+https://docs.nginx.com/nginx/admin-guide/security-controls/securing-http-traffic-upstream/
+
+    location /upstream {
+        proxy_pass                https://backend.example.com;
+        proxy_ssl_certificate     /etc/nginx/client.pem;
+        proxy_ssl_certificate_key /etc/nginx/client.key;
+    }
+
 ## proxy_pass
 proxy_pass 指令语法:
 

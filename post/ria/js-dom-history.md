@@ -41,8 +41,9 @@ popstate 触发条件：browser.back()或 hashchange
 hashchange 触发条件：hashchange
 
     //window.onpopstate
-    window.addEventListener('popstate', function(e) {     
-　　　　anchorClick(location.pathname); 	
+    history.pushState(obj, 'title', '#hashchange')
+    window.addEventListener('popstate', function(obj) {     
+        alert(JSON.stringify(obj)); //obj 就是pushState 传的obj
  　　});
 
 Note: 调用history.pushState/replaceState 不会trigger event

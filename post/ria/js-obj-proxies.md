@@ -2,23 +2,90 @@
 title: 用js proxies 继承别的对象
 date: 2018-10-04
 ---
-# 用js proxies 继承别的对象
-Proxies enable creation of objects with the full range of behaviors available to host objects. 
-Can be used for interception, object virtualization, logging/profiling, etc
+# Observe object
 
-Proxying a normal object
+## Object.observe
 
-    var target = {};
-    var handler = {
-      get: function (receiver, name) {
-        return `Hello, ${name}!`;
+    var obj = {
+        foo: 0,
+        bar: 1
+    };
+
+    Object.observe(obj, function(changes) {
+        console.log(changes);
+    });
+
+    obj.baz = 2;
+    // [{name: 'baz', object: <obj>, type: 'add'}]
+
+    obj.foo = 'hello';
+    // [{name: 'foo', object: <obj>, type: 'update', oldValue: 0}]
+
+    delete obj.baz;
+    // [{name: 'baz', object: <obj>, type: 'delete', oldValue: 2}]
+
+# proxy
+## get
+
+    const target = {
+        message1: "hello",
+        message2: "everyone"
+    };
+
+    const handler3 = {
+    get: function (target, prop, receiver) {
+        if (prop === "message2") {
+            return "world";
+        }
+        return target[prop];
+    },
+    };
+
+    const proxy3 = new Proxy(target, handler3);
+    console.log(proxy3.message1); // hello
+    console.log(proxy3.message2); // world
+
+get 与 in 的区别
+
+    const handler = {
+      get: function(obj, prop) {
+        return prop in obj ?
+          obj[prop] :
+          37;
       }
     };
 
-    var p = new Proxy(target, handler);
-    p.world === "Hello, world!";
+    const p = new Proxy({}, handler);
+    console.log('c' in p, p.c);
+    //  false, 37
 
-Proxying a function object
+## set validator
+    let validator = {
+      set: function(obj, prop, value) {
+        if (prop === 'age') {
+          if (!Number.isInteger(value)) {
+            throw new TypeError('The age is not an integer');
+          }
+          if (value > 200) {
+            throw new RangeError('The age seems invalid');
+          }
+        }
+
+        // The default behavior to store the value
+        obj[prop] = value;
+
+        // Indicate success
+        return true;
+      }
+    };
+
+    const person = new Proxy({}, validator);
+
+    person.age = 100;
+    console.log(person.age); // 100
+    person.age = 'young';    // Throws an exception
+
+## extend a function apply
 
     var target = function () { return "I am the target"; };
     var handler = {
@@ -30,6 +97,48 @@ Proxying a function object
     var p = new Proxy(target, handler);
     p() === "I am the proxy";
 
+## Extend constructor
+This example uses the construct and apply handlers.
+
+    function extend(sup, base) {
+      var descriptor = Object.getOwnPropertyDescriptor(
+        base.prototype, 'constructor'
+      );
+      base.prototype = Object.create(sup.prototype);
+      var handler = {
+        construct: function(target, args) {
+          var obj = Object.create(base.prototype);
+          this.apply(target, obj, args);
+          return obj;
+        },
+        apply: function(target, that, args) {
+          sup.apply(that, args);
+          base.apply(that, args);
+        }
+      };
+      var proxy = new Proxy(base, handler);
+      descriptor.value = proxy;
+      Object.defineProperty(base.prototype, 'constructor', descriptor);
+      return proxy;
+    }
+
+    var Person = function(name) {
+      this.name = name;
+    };
+
+    var Boy = extend(Person, function(name, age) {
+      this.age = age;
+    });
+
+    Boy.prototype.gender = 'M';
+
+    var Peter = new Boy('Peter', 13);
+
+    console.log(Peter.gender);  // "M"
+    console.log(Peter.name);    // "Peter"
+    console.log(Peter.age);     // 13
+
+# todo
 There are traps available for all of the runtime-level meta-operations:
 
     var handler =

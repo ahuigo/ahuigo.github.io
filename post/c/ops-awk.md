@@ -55,6 +55,10 @@ Example
 
 	seq 10|gawk '/start_pattern/,/end_pattern/{print}'
 
+### line
+    ls -l | awk 'NR>=122 && NR<=129 { print }'
+    ls -l | awk 'NR==1{ print }'
+
 # Variable
 
 ## Inner Variables
@@ -371,6 +375,18 @@ Example
 	n=split("Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec",mymonths,",")
 	调用 split() 时，第一个自变量包含要切开文字字符串或字符串变量。在第二个自变量中，应该指定 split() 将填入片段部分的数组名称。在第三个元素中，指定用于切开字符串的分隔符。split() 返回时，它将返回分割的字符串元素的数量。split() 将每一个片段赋值给下标从 1 开始的数组，因此以下代码：
 	print mymonths[1],mymonths[n]
+
+example:
+
+    $ gawk 'END{ var=FILENAME; n=split(var,a,/\//); print a[n]}' ./migrate.sh
+    migrate.sh
+
+    awk ' function basename(file, a, n) {
+        n = split(file, a, "/")
+        return a[n]
+    }
+    {print FILENAME, basename(FILENAME)}' /path/to/file
+
 
 ### 简短注释
 调用 `length($0)、sub($0) 或 gsub($0)` 时，可以去掉最后一个自变量`$0`。要打印文件中每一行的长度，使用以下 awk 脚本：

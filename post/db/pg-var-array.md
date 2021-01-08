@@ -10,7 +10,8 @@ private:
     CREATE TABLE contacts (
         id serial PRIMARY KEY,
         name VARCHAR (100),
-        phones INT []
+        phone INT,
+        phones INT [],
         names TEXT []
     );
 
@@ -44,11 +45,16 @@ select first phone number(不是从0开始)
     > SELECT phones FROM contacts;
     {(408)-589-5842",(408)-589-58423}
 
-## where array
+## where array column
 
 ### value in array
     where code in ('1','2')
     where code=any(ARRAY['1','2'])
+
+array columen
+
+    where '182'=ANY(names);
+    where 182=ANY(phones);
 
 ### array.include
 0.利用index
@@ -58,7 +64,13 @@ select first phone number(不是从0开始)
 1.利用ANY(in array)
 
     WHERE '(408)-589-5555' = ANY (phones);
-    WHERE phone = ANY (phones);
+    WHERE id = ANY (ARRAY[1,2,3]);
+
+2.全不包含:
+
+    # 不要使用：SELECT NOT value_variable = ANY('{1,2,3}'::int[])
+    SELECT id != ALL('{1,2,3}'::int[])
+    SELECT NOT value_variable = ANY('{1,2,3}'::int[])
 
 2.利用交集：
 

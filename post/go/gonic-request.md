@@ -295,6 +295,12 @@ Request   *http.Request
     c.ClientIP()
     c.Request.UserAgent()
 
+headers
+
+    origin := c.Request.Header.Get("Origin")
+    origin := c.Request.Header.Get("Referer")
+
+
 response info
 
     c.Writer.Status()

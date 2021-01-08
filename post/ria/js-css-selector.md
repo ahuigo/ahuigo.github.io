@@ -38,6 +38,20 @@ checked, checkbox
 	$(':checkbox')
 	$('input:checked')
 
+## fitler multiple attribute
+
+    document.querySelector('input[placeholder="Enter a title"][type="text"]')
+
+## filter innerText
+use XPATH:
+
+    //div[text()="Hello World"]
+    //div[contains(., 'Hello')]
+
+example:
+
+    div = document.evaluate("//div[contains(., 'Hello')]", document, null, XPathResult.ANY_TYPE, null ).iterateNext()
+
 ## table even row
 
     #customers tr:nth-child(even){background-color: #f2f2f2;}

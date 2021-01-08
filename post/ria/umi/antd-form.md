@@ -131,6 +131,8 @@ Item: 用setFieldsValue
         rules={[{ required: true, message: 'input password !', type:'string' }]}
     >
 # select
+## multiple
+    <Select mode="multiple">
 ## allowClear
     <Select allowClear>
 

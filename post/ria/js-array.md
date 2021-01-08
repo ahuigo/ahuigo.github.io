@@ -350,11 +350,15 @@ Set crud:
     s.add(4);
     s.delete(3);
     s.has(4)
+    s.forEach
 
 ### 交集
     union=new Set([...a,...b]);
     intersect=new Set([...a].filter(x=>b.has(x)))
     diff=new Set([...a].filter(x=>!b.has(x)));
+
+### forEach
+只支持 forEach 不支持map
 
 ## map/reduce/any:some/all:every
 迭代方法: all:every, any:some, filter, map/forEach

@@ -84,7 +84,25 @@ Issuing a Router redirect, use `HandleContext` like below.
 
 ## cookie
 
+	ctx.SetSameSite(http.SameSiteLaxMode)
 	ctx.SetCookie("key", "value", 86400, "ahuigo.com", "", false, false)
+
+### custom cookie
+	idTokenCookieStr := fmt.Sprintf("id_token=%s; Domain=%s; Max-Age=%d; SameSite=None", url.QueryEscape(res["id_token"].(string)), cookieDomain, timeout)
+	ctx.Writer.Header().Add("Set-Cookie", idTokenCookieStr)
+
+或
+
+	ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{
+		Name:     "id_token2",
+		Value:    url.QueryEscape(res["id_token"].(string)),
+		MaxAge:   timeout,
+		Path:     "",
+		Domain:   cookieDomain,
+		SameSite: 3,
+		Secure:   true,
+		HttpOnly: false,
+	}).String())
 
 ## Html
 

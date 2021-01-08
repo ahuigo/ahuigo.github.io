@@ -38,7 +38,6 @@ ulimit -n 1000
 # alias
 export EDITOR="nvim"
 alias vi='nvim'
-alias ts='ts-node'
 alias vim='nvim'
 alias gpass='openssl rand -base64 10'
 alias cp='cp -i'
@@ -72,6 +71,33 @@ alias gitup='git submodule init && git submodule update'
 alias ga.='git add .'
 function lllllllllzrmv(){
     mv $2 $1;
+}
+
+#alias ts='ts-node'
+function ts () {
+	cwd_dir=$(pwd)
+    tsc $1 && node --inspect ${1/.ts/.js} $@
+    cd $cwd_dir
+}
+
+function current_repo() {
+    echo -n `git remote -v | gawk 'NR==1{n=split($2,arr,"/"); print arr[n]}'`
+}
+function devops() {
+	cwd_dir=$(pwd)
+    repo=`current_repo` 
+    from=`current_branch` 
+    cd /Users/ahui/www/auto-devops/
+    tsc devops.ts && node --inspect devops.js repo=$repo from=$from $@
+    cd $cwd_dir
+}
+function devops2() {
+	cwd_dir=$(pwd)
+    repo=`current_repo` 
+    from=`current_branch` 
+    cd /Users/ahui/www/auto-devops/
+    tsc devops2.ts && node --inspect devops2.js repo=$repo from=$from $@
+    cd $cwd_dir
 }
 
 function gcap(){

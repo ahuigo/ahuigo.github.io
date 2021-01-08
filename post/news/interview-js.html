@@ -1,0 +1,30 @@
+<head>
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  const Calculator=()=>{
+    const [a, setA] = React.useState(0)
+    return <div>
+        <h1>计算器</h1>
+        <input name="a" onChange={()=>{}} value={a}/>
+        <select>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input name="b" />
+        <button>=</button>
+        <span>???</span>
+    </div>
+  }
+  ReactDOM.render(
+    <Calculator/>,
+    document.getElementById('root')
+  );
+</script>
+</body>

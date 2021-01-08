@@ -71,7 +71,7 @@ egg-view-nunjucks 等 View 插件会自动对 Form 进行注入
     x.126.com.xxx.com
 
 ## SameSite 与csrf
-sameSite同站指: 
+sameSite 同站指: 
 1. 我们在www.bank.com, bank.com 等页面 访问其它子域名如image.bank.com 被视为samesite. 
 2. 如果是第三方网站hack.com 访问image.bank.com 就是非同站。
 
@@ -87,6 +87,18 @@ SameSite 分三种:
 1. SameSite=Strict  在第三方站放一个github.com 的链接，点击跳github.com 永远是是未登录
 2. SameSite=Lax,(chrome 新版默认值)  GET请求都会带cookie, 其它都不带cookie
 3. SameSite=None,  全允许带cookie. 这种模式必须同时设置Secure属性（Cookie 只能通过 HTTPS 协议发送）
+
+### cookie 与 SameSite=Lax
+cookie SameSite=Lax: 
+
+    必须 login.ahuigo.com 与 setCookie 的 Domain 相同（端口不一样也可以,只要是共同的二级三级域名）
+
+cookie SameSite=Lax时
+other.com 访问ajax: login.ahuigo.com 不能种cookie. (除非设计SameSite=None +Secure)
+
+    https://stackoverflow.com/questions/14221722/set-cookie-on-browser-with-ajax-request-via-cors
+
+    I had a similiar problem, and it turned out that the browser settings were blocking third-party cookies (Chrome > Settings > Advanced Settings > Privacy > Content Settings > Block third-party cookies and site data). Unblocking solved the problem!
 
 
 # app
