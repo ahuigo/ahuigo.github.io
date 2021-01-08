@@ -50,6 +50,12 @@ vim 下的光标移动
                 ,   向后跳
             F{char}
                 Fx  跳到上一个字符x
+            t{char}
+                tx  跳到下一个字符x前
+            t{char}
+                tx  跳到下一个字符x前
+            T{char}
+                Tx  跳到上一个字符x后
     easymothtion：需要插件支持, vscode 也可以开启easymotion
         跳char
             <leader><leader>f
@@ -67,7 +73,7 @@ vim 下的光标移动
 
     H:Home M:middle L:Last J:Concat Line K:Manual
 
-#### move cursor in insert mode / insert模式下的hjkl
+#### insert模式下光标移动:hjkl
 建议做一个键映射
 
     cnoremap <C-a> <Home>
@@ -87,7 +93,7 @@ ps:如果要实现跨行移动,需要在`.vimrc`指定wrap：
     [ 在 Insert 或 Replace 模式下按左方向键。
     ] 在 Insert 或 Replace 模式下按右方向键。
 
-### move cursor by word 按单词移动光标
+### 按单词移动光标(word)
 
     w 下一词首 b上一词首 e下一词尾
     WBE 大写则表示将特殊符号（非空白）也作为单词的一部分

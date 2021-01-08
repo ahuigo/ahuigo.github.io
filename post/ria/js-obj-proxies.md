@@ -4,25 +4,6 @@ date: 2018-10-04
 ---
 # Observe object
 
-## Object.observe
-
-    var obj = {
-        foo: 0,
-        bar: 1
-    };
-
-    Object.observe(obj, function(changes) {
-        console.log(changes);
-    });
-
-    obj.baz = 2;
-    // [{name: 'baz', object: <obj>, type: 'add'}]
-
-    obj.foo = 'hello';
-    // [{name: 'foo', object: <obj>, type: 'update', oldValue: 0}]
-
-    delete obj.baz;
-    // [{name: 'baz', object: <obj>, type: 'delete', oldValue: 2}]
 
 # proxy
 ## get
@@ -66,12 +47,8 @@ get 与 in 的区别
           if (!Number.isInteger(value)) {
             throw new TypeError('The age is not an integer');
           }
-          if (value > 200) {
-            throw new RangeError('The age seems invalid');
-          }
         }
 
-        // The default behavior to store the value
         obj[prop] = value;
 
         // Indicate success
