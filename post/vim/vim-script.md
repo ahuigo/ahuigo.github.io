@@ -11,7 +11,10 @@ date: 2018-10-04
 
 ## startuptime
 
+    # 记录所有指令、脚本执行过程与时间
     vim --startuptime time.log
+
+    # 不加载.vimrc 配置
     vim -u NONE
 
 ## verbose
