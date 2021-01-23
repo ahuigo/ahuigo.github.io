@@ -265,6 +265,7 @@ The `range` form the `for loop iterates` over a `array, slice, string or map`, o
 		fmt.Printf("index=%d, %d\n", i, v)
 	}
 
+
 注意range is not reference! range 会复制对象. 除非使用指针
 
     // go-lib/array/range-copy-pointer.go
@@ -278,6 +279,10 @@ You can skip the index or value by assigning to _.
 
     for _, v := range [2]int{1,2} {
         fmt.Printf("2**%d = %d\n", _, v)
+    }
+    // range sequence
+    for i := range [5]int{} {
+        fmt.Println(i)
     }
 
 skip value:

@@ -10,6 +10,7 @@ title: Js 字符串大全
 
 	'好' === '\u597D' // true
 	'好' === '\u{597D}' // true (js only)
+    '\u597D'.length==1 // true
 
 Note: '\x87' 并不是单字节字符！它不是合法utf8, 会被转成合法的utf8 `\xc2\x87`
 
@@ -141,6 +142,29 @@ repeat(alloc)
 
     > Buffer.alloc(5, 15)
     <Buffer 0f 0f 0f 0f 0f>
+
+#### array buffer
+`Buffer.alloc` 是在node下才有
+
+    function toArrayBuffer(buf) {
+        var ab = new ArrayBuffer(buf.length);
+        var view = new Uint8Array(ab);
+        for (var i = 0; i < buf.length; ++i) {
+            view[i] = buf[i];
+        }
+        return ab;
+    }
+
+From ArrayBuffer to Buffer:
+
+    function toBuffer(ab) {
+        var buf = Buffer.alloc(ab.byteLength);
+        var view = new Uint8Array(ab);
+        for (var i = 0; i < buf.length; ++i) {
+            buf[i] = view[i];
+        }
+        return buf;
+    }
 
 ## 字符串是不可变的
     var s = 'Test';

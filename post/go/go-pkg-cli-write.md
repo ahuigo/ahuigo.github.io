@@ -63,3 +63,7 @@ https://github.com/ahuigo/go-cli-demo.git
 注意： go.mod 需要限制module 名为：
 
     module github.com/ahuigo/go-cli-demo
+
+另一个例子：
+
+    go get -v -u github.com/go-swagger/go-swagger/cmd/swagger 

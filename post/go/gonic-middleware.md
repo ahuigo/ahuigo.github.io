@@ -43,6 +43,13 @@ https://gin-gonic.com/docs/examples/using-middleware/
         r.Run(":8080")
     }
 
+## middleware order
+由于middleware 在get后，所以只控制POST，不控制GET
+
+    osmDomain.GET("/get", func1)
+    osmDomain.Use(middleware.Auth())
+    osmDomain.POST("/post", func2)
+
 ## custom abort middleWare
     func Logger() gin.HandlerFunc {
         return func(c *gin.Context) {

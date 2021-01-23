@@ -5,6 +5,15 @@ category: blog
 description: 
 date: 2018-09-27
 ---
+# install win10
+## 提示“Units specified don't exist. SHSUCDX can't install.”
+错误原因:虚拟光驱被分配在SATA控制器下面。
+
+1.将端口数改为1(原来是2)，因为SATA控制器下面减少了一个虚拟光驱接口。
+![](/img/c/ops/vm/install-win10-sata-num.png)
+2.新建一个IDE控制器，并添加一个虚拟光驱+win10.iso(可开启 Use Host I/O cache)
+
+
 # 网络
 
 ## Vitual Machine share network

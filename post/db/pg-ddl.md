@@ -66,10 +66,27 @@ e.g.
 # import export
 ## pg_dump
     pg_dump help
-### copy
-you should use the -a flag to import data only, else you may see weird errors like "Out of memory":
 
-    pg_dump -a -t my_table my_db | psql target_db
+### backup binary
+tar 包更大
+
+    pg_dump -Fc database_name_here > database.bak # compressed binary format
+    pg_dump -Ft database_name_here > database.tar # tarball
+
+Restore if database exists:
+
+    pg_restore -Fc database.bak # restore compressed binary format
+    pg_restore -Ft database.tar # restore tarball
+
+Restore auto create database(-C)：
+
+    # 指定-d any_db 是用于初始化连接db
+    pg_restore -d any_db -Fc -C database.bak # restore compressed binary format
+    pg_restore -d any_db -Ft -C database.tar # restore tarball
+
+Restore to db1
+
+    pg_restore -d db1 -Fc -C database.bak
 
 ### backup
 
@@ -220,10 +237,12 @@ describe table and sequence:
     \dt # with table_squence
     \dt [<table>]
 
-show create table(只能用命令行):
+show create table(只能用命令行): 利用pgdump  输出
 
     pg_dump -st tablename dbname
     pg_dump -st tablename dbname -h host -U username -p port 
+
+    # 说明：-s 代理scheme only, -t 指定table
 
 ### create
 

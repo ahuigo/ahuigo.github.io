@@ -7,6 +7,35 @@ private:
 Ruby支持的数据类型包括基本的Number、String、Ranges、Symbols，以及true、false和nil这几个特殊值，
 同时还有两种重要的数据结构——Array和Hash
 
+## define
+I think of `%w()` as a "word array" 
+
+    # bad
+    STATES = ['draft', 'open', 'closed']
+
+    # good
+    STATES = %w(draft open closed)
+    STATES = %w[draft open closed]
+
+`%Q()`:` %() (or %[] or %{}` gives a double quoted string.
+
+    > %Q(a\tb c)
+    => "a\tb c"
+
+`%q()`:`%w` gives a single quoted string.
+
+    > %q(a\tb c)
+    => "a\\tb c"
+
+There are other `%` literals:
+
+    %r() is another way to write a regular expression.
+    %q() is another way to write a single-quoted string (and can be multi-line, which is useful)
+    %Q() gives a double-quoted string
+    %x() is a shell command
+    %i() gives an array of symbols (Ruby >= 2.0.0)
+    %s() turns foo into a symbol (:foo)
+
 ## 类型转化
     var.to_s
     var.to_i #int

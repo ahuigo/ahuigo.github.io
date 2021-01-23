@@ -73,7 +73,15 @@ Delete all images
     e218edb10161：容器ID
     ahuigo/ubuntu:v2:指定要创建的目标镜像名
 
+change cmd
+
+    $ docker commit --change='CMD ["apachectl", "-DFOREGROUND"]' -c "EXPOSE 80" c3f279d17e0a  svendowideit/testimage:version4
+
+
 ## 通过容器导出tar
+save 会带commit meta 信息
+export 不会带commit meta 信息
+
 ### image: save to load
 image to image.tar
 
@@ -89,7 +97,7 @@ image.tar to image
     docker load -i fedora.tar
         # Load an image from a tar archive or STDIN
 
-### container to image: export to import
+### container to image: export+import
 container(可以是exited statush)
 container to tar
 
@@ -98,10 +106,12 @@ container to tar
 
 containter.tar to image: Import the contents from a tarball to create a filesystem image
 
+    # 语法
     docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]
-        docker import container.tar 
-        docker import container.tar reop:v0.0.1
-        cat ubuntu_export.tar | sudo docker import - ubuntu:18.04
+    # 例子
+    docker import container.tar 
+    docker import container.tar reop:v0.0.1
+    cat ubuntu_export.tar | sudo docker import - ubuntu:18.04
 
 import 类似 commit:
 docker import理解为将外部文件复制进来形成只有一层文件系统的镜像，而docker commit则是将当前的改动提交为一层文件系统，然后叠加到原有镜像之上。
@@ -231,6 +241,7 @@ An ARG declared before a FROM is outside of a build stage, so it can’t be used
     ENV foo /bar
     ENV foo=/bar
     RUN echo "foo: ${foo}"
+    # or ADD . ${foo}
 
 ENV 同名变量会覆盖 ARG
 

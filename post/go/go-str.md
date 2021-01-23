@@ -125,6 +125,10 @@ string 本身为指针（值不可修改），
     "12\x00\u2318"
     "中" == "\xe4\xb8\xad"
 
+反引号用来创建原生的字符串字面量，literal string
+
+    `\d`
+
 ### here doc str
 
     str := `\n\r\b\\` //literal
@@ -252,6 +256,13 @@ example:
 # String function
 ## replace
     ReplaceAll(s, old, new string) string
+    // If n < 0, there is no limit on the number of replacements.
+    func Replace(s, old, new string, n int) string
+
+## prefix
+    strings.HasPrefix("abc,", "pre")
+    strings.HasSuffix("abc,", "pre")
+
 ## trim
 trim 字符集
 

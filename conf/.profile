@@ -17,8 +17,7 @@ export ENV_MODE=dev
 export LC_ALL='en_US.UTF-8'
 export LANG='en_US.UTF-8'
 export CLICOLOR="xterm-color"
-export PATH=/usr/local/opt/python/libexec/bin:$PATH:$HOME/www/a/bin:~/bin
-export PATH=/usr/local/Cellar/openresty/1.15.8.3_1/nginx/sbin:$PATH
+export PATH=$PATH:$HOME/www/a/bin:~/bin
 export GNUTERM=qt
 export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'$'\n$ '
 #export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
@@ -90,6 +89,16 @@ function devops() {
     cd /Users/ahui/www/auto-devops/
     tsc devops.ts && node --inspect devops.js repo=$repo from=$from $@
     cd $cwd_dir
+}
+function goclean() {
+    if [[ -z $1 ]]; then
+        return
+    fi
+    echo "\$1=$1"
+    echo 'xsudo rm -rf ~/go/pkg/mod/gitlab.momenta.works/hdmap-workflow/'$1@\*
+    sudo rm -rf ~/go/pkg/mod/gitlab.momenta.works/hdmap-workflow/$1@*
+    echo 'xrm -rf ~/go/pkg/mod/cache/download/gitlab.momenta.works/hdmap-workflow/'$1
+    rm -rf ~/go/pkg/mod/cache/download/gitlab.momenta.works/hdmap-workflow/"$1"
 }
 function devops2() {
 	cwd_dir=$(pwd)
@@ -191,19 +200,16 @@ export GODEV=local
 export GO111MODULE=on 
 export GOPATH=~/go
 export GOPROXY="https://goproxy.io"
+export GOSUMDB=off
 export PATH=$PATH:$GOPATH/bin
-[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
-#[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.14.3/libexec
+#[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
+[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
 export GONOSUMDB=gitlab.momenta.works/hdmap-workflow/mauth
 alias go12='export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec; ln -sf /usr/local/opt/go@1.12/bin/go /usr/local/bin/go'
 alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
-alias go15='export GOROOT=/usr/local/Cellar/go/1.15.5/libexec; ln -sf /usr/local/opt/go@1.15/bin/go /usr/local/bin/go'
+alias go15='export GOROOT=/usr/local/Cellar/go/1.15.6/libexec; ln -sf /usr/local/opt/go@1.15/bin/go /usr/local/bin/go'
 
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-# Load RVM into a shell session *as a function*
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
 
 [ -f ~/.private ] && source ~/.private
 [ -f ~/.local.rc ] && source ~/.local.rc

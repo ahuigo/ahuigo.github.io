@@ -4,7 +4,7 @@ date: 2019-04-15
 private:
 ---
 # shell pg
-
+    psql -U ahui db2 -c 'select * from ahui;'
 
 ## execute sql file
 

@@ -8,7 +8,17 @@ priority:
 
 # Loop
 
+    for i in `seq 1 5`;
+    for i in {1..5};
+
+## loop break
+
+    for i in `seq 1 100`; do
+        echo $i | grep 3 && echo yes && break
+    done
+
 ## for
+`seq 1 5`:
 
 	for a in "$*" ; do echo "$a "; done
 	for a in "$@" ; do echo "$a "; done # equal to for a ;do ... done
@@ -305,8 +315,10 @@ shell 没有三元运算符：不过可以这样
 ### test string, 字符串测试
 
 	=	相等
+        [[ $a = "" ]] && echo yes
 	== 与= 相同(-1: Do not use "==". It is only valid in a limited set of shells, zsh do not support it)
 	!= 不相等
+        [[ $a != "" ]] && echo yes
 
 	<	按ascii比较
 		if [[ "$a" < "$b" ]]
