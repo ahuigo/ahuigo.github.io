@@ -28,6 +28,22 @@ private:
 2. 点击`=`等号，输出计算结果
 3. 要求代码可执行并输出正确的结果
 
+样例：
+![](../../img/news/js-interview-calc.png)
+
+模板：
+
+        <input  value={1} onChange={cal}/>
+        <select>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input value={3} onChange={cal}/>
+        <button onClick={cal}>=</button>
+        <input value="?" />
+
 ## 实现一个js函数
 能用js 实现这样一个js 函数吗
 
@@ -48,11 +64,8 @@ private:
         console.log('5 seconds eslaped.');
     })()
 
-## 请写代码举例说明一下this 作用域
-请写代码Case 举例说明一下this 作用域分哪几种情形
-
 ## 闭包是什么？
-闭包是什么？请用代码举例说明一下（请保持代码简练）
+闭包是什么？请用代码举例说明
 
 ## 给Array 加一个uniq 方法
 给Array 加一个uniq 去重方法, 请补全代码

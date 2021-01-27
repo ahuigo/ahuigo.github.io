@@ -150,3 +150,16 @@ you **SHOULD NOT** use the original context inside it, 因为context 会被copy�
         // Listen and serve on 0.0.0.0:8080
         r.Run(":8080")
     }
+
+## 跳过middleware
+通过新的group 跳过middleware
+
+	e := gin.New()
+	r := e.Group("") //它跳过.CORS
+    e.Use(middleware.CORS())
+
+或者延后绑定router
+
+    r.GET("/list", GetList)
+    r.Use(middleware.Auth())
+    r.POST("", AddItem)

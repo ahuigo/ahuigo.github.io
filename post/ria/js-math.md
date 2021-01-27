@@ -75,6 +75,10 @@ parseInt
     +'123.6' 123.6
 
 ## random
+0~1
+
+    Math.random()
+
 随机字符
 
     Math.random().toString(36).substring(2) // 11位

@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-10-04 [JS Math](/b/ria/js-math) 
 - 2015-03-15 [Js 字符串大全](/b/ria/js-str) 
 - 2018-09-27 [Golang：Array and slice](/b/go/go-array-slice) 
 - 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
@@ -38,4 +39,3 @@
 - 2018-10-04 [vim-style](/b/vim/vim-style) 
 - 2016-09-27 [go 的变量](/b/go/go-var) 
 - 2018-09-27 [map](/b/go/go-var-map) 
-- 2018-09-27 [make](/b/go/go-var-make) 

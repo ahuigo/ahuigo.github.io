@@ -86,6 +86,54 @@ The API response returns the top 10 documents matching the query in the hits.hit
         }
       }
 
+种类
+
+    match,  分词模糊匹配
+    multi_match: 指定多字段
+    match_all, 查询所有文档
+    match_phrase, 短语匹配，必须匹配所有的分词并保证各个分词的相对位置不变(相当于strings.include)
+
+### match_phrase
+短语查询,slop定义的是关键词之间隔多少未知单词
+
+    GET /library/books/_search 
+    {
+        "query":{
+            "match_phrase" :{
+                "query":"Elasticsearch,distributed",
+                "slop":2                                 #表示Elasticsearch和distributed之间隔多少单词
+            }
+        }
+    }
+### multi_match
+查询title和preview这两个字段都包含Elasticsearch关键词的文档
+
+    GET /library/books/_search 
+    {
+        "query":{
+            "multi_match":{
+                "query":"Elasticsearch"
+                "fields":["title","preview"]
+            }
+        }
+    }
+
+### match_all
+通过match_all过滤出所有字段,然后通过partial在过滤出包含preview的字段和排除title,price的字段
+
+    GET /library/books/_search 
+    {
+        "partial_fields":{
+            "partial":{
+                "include":["preview"],         #包含preview字段的文档
+                "exclude":["title,price"]　　　 #排除title,price字段
+            },
+        "query":{
+            "match_all":[]
+        }
+        }
+    }
+
 ## 查value
 where type="SUCCESS"
 

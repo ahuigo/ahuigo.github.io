@@ -109,6 +109,7 @@ go.mod 存在时，如果cache-hash 目录不存在，go run 会自动下载更�
     )
     replace (
         mytest v0.0.0 => ../mytest
+        github.com/ugorji/go v1.1.4 => github.com/ugorji/go v0.0.0-20181204163529-d75b2dcb6bc8
     )
 
 2.本地包mytest 的限制(非本地包则没有这个限制)：
@@ -124,6 +125,8 @@ go.mod 存在时，如果cache-hash 目录不存在，go run 会自动下载更�
 由于同步依赖ugorji/go/codec 不同的两个版本，可以指定一个唯一版本. go.mod增加
 
     replace github.com/ugorji/go => github.com/ugorji/go/codec v1.1.7
+    // 或
+    replace github.com/ugorji/go v1.1.4 => github.com/ugorji/go v0.0.0-20181204163529-d75b2dcb6bc8
 
 ## debug
 ### mod error

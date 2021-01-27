@@ -6,6 +6,7 @@ private: true
 # css center
 ## screen center
 ### screen center:translate 
+无遮蔽
 `transform: translate(-50%, -50%);`偏移的是容器本身的height/width
 
     <style> 
@@ -22,6 +23,7 @@ private: true
     </div>
 
 ### screen center:inner relative
+无遮蔽
 利用fixed + 内层relative top/left 修正
 `top: -250px;	`
 `top: -50%;	//基于父元素position width/height, 父元素的初始值必须有`
@@ -37,6 +39,7 @@ private: true
 	</div>
 
 ### screen center:margin
+无遮蔽
 利用fixed + margin修正(margin = -width/2):
 ` margin-top: -50px;	//不可以用百分比`
 
@@ -52,7 +55,7 @@ private: true
 	"></div>
 
 ### 遮蔽层
-如果是用flex遮蔽层, 实现item center：
+如果是用flex遮蔽层(缺点), 实现item center：
 
     <div class="flex-container" style="
         display: flex;

@@ -171,6 +171,8 @@ also:
     })
 
 ### Dlimiter
+设定模板变量的分割符
+
 	r := gin.Default()
 	r.Delims("{[{", "}]}")
 	r.LoadHTMLGlob("/path/to/templates")
