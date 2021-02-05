@@ -33,7 +33,7 @@ dummper style
     yaml.dump(obj, Dumper=yaml.CDumper)
 
 
-### dump with newline
+### dump and preserve linebreak
 为增强yaml可读性, yaml.dump 时保留换行，我们可以定义add_representer：
 
     import sys
