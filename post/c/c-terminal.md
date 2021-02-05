@@ -173,7 +173,7 @@ Linux 同时支持以下两种伪终端，目前的标准倾向于SYS V 的伪�
 [信号](/p/linux-c-signal) 所说的"shell 可以同时运行一个前端进程和多个后台进程" 是不准确的。实际上，shell 分前后台控制的不是进程，而是作业(job) 或者 进程组(Process Group). 一个前台作业可以有多个进程组成，一个后台作业也可以有多个进程组成。shell 可以有一个前台作业，和多个后台作业, 这称为作业控制(job control). 例如启动一个后台作业和一个前台作业（5个进程）
 
 	$ proc1 | proc2 &
-	$ proc3 | proc3 | proc4
+	$ proc3 | proc4 | proc5
 
 proc1 和 proc2 属于同一个进程组， proc3/proc4/proc5 属于同一个前台进程组。这些进程组的控制端终端都是shell，它们属于同一个session。 当用户按下Ctrl-C 时，内核会向前台进程组中的所有进程发送SIGINT 信号。 各进程、进程组 与session 的关系:
 ![](/img/linux-c-job-session.png)

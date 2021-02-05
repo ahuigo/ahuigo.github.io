@@ -20,7 +20,6 @@ private:
 要求：
 1. 消息框要屏幕居中(无论鼠标如何滚动，都居中显示)
 2. 文字也要居中
-3. 请备注一下你所用到的css 属性的含义
 
 ## React、vue或原生js 写一个计算器
 写一个简单的 四则运算计算器：
@@ -33,16 +32,21 @@ private:
 
 模板：
 
-        <input  value={1} onChange={cal}/>
+        <input  value="1" />
         <select>
             <option value="+">+</option>
             <option value="-">-</option>
             <option value="*">*</option>
             <option value="/">/</option>
         </select>
-        <input value={3} onChange={cal}/>
-        <button onClick={cal}>=</button>
+        <input value="3"/>
+        <button>=</button>
         <input value="?" />
+
+可以将代码写到codepen.io
+
+1. react: https://codepen.io/ahuigo/pen/dyObJqQ?editors=1111
+1. vue: https://codepen.io/whitelynx/pen/pgwRJZ
 
 ## 实现一个js函数
 能用js 实现这样一个js 函数吗
@@ -59,10 +63,14 @@ private:
     }
 
     (async function(){
-        console.log('begin....');
+        console.log('Begin....');
         await sleep(5);
-        console.log('5 seconds eslaped.');
+        console.log('5 seconds elapsed.');
     })()
+
+进一步, 请修改实现，给出满足以下要求的示例：
+1. 如果调用参数不正确，比如调用 sleep(-1)，请抛出 Exception 异常信息，
+2. 调用方能捕获此异常，并用console.log 输出异常信息
 
 ## 闭包是什么？
 闭包是什么？请用代码举例说明
@@ -82,7 +90,7 @@ private:
 
     vector1 = [1,2]
     vector2 = [-1,2]
-    function isVectorParalell(vector1,vector2):boolean {
+    function isVectorParalell(vector1,vector2){
 
     }
 

@@ -4,6 +4,23 @@ date: 2020-11-04
 private: true
 ---
 # go type
+## type 定义的是新类型
+这是不行的
+
+    type MyInt int
+    func test2(i MyInt){
+        fmt.Printf("%T\n", i)
+    }
+
+    func main(){
+        var i int= 1
+        test2(i)
+    }
+
+除非转类型：
+
+    test2(MyInt(i))
+
 ## type func
 go-lib/type/type-func.go
 

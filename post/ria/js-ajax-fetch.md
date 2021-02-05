@@ -98,9 +98,8 @@ credential 发送include cookie时，allow-origin 不能是`*`
     }).then(...).then(..).catch(...);
     fetch(url).then(async r=> console.log(await r.text()))
 
-记住，
-1. 最新的chrome 非同域的话，即使加了`credentials:"include"` 也不能发送cookie.
-除非设置: `SameSite=None`和`Secure`
+注意:
+1. 最新的chrome 对于https网站, 跨域名ajax请求，即使加了`credentials:"include"` 也不能发送cookie. 除非设置: `Set-Cookie: flavor=choco; SameSite=None; Secure`
 2. 跨子域名，不受影响
 
 ### headers

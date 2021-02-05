@@ -75,19 +75,30 @@ cmd *exec.Cmd:
 
     var cmd *exec.Cmd = exec.Command("cat", args...)
 
-## execute multiple commands
+## build multiple commands
     cmd := exec.Command("/bin/sh", "-c", "command1; command2; command3; ...")
 
-## set cmd
-	cmd.SysProcAttr = &syscall.SysProcAttr{}
-	cmd.SysProcAttr.Setsid = true
+## exec command
+阻塞
 
-## kill cmd 进程管理
+    out, err := cmd.Output()
+    err := cmd.Run()
+
+非阻塞
+
+    err := cmd.Start()
+	err = cmd.Wait()
+
+### kill cmd 进程管理
 它有很多方法: go doc os/exec Cmd
 
 kill cmd
 
 	pid int:= cmd.Process.Pid
+    err := cmd.Process.Kill();
+
+通过 -pid (pgid) kill 孙子进程：go-lib/process/kill-grandchild
+
     err = syscall.Kill(-pid, syscall.SIGINT)
 	err = syscall.Kill(-pid, syscall.SIGKILL)
 
@@ -97,6 +108,21 @@ wait cmd
 	state, _ = cmd.Process.Wait()
     // cmd封装了上面的Wait
     err = cmd.Wait()
+
+kill if timeout: https://stackoverflow.com/questions/11886531/terminating-a-process-started-with-os-exec-in-golang
+
+    ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+    defer cancel()
+
+    if err := exec.CommandContext(ctx, "sleep", "5").Run(); err != nil {
+        // This will fail after 100 milliseconds. The 5 second sleep
+        // will be interrupted.
+    }
+    err := ctx.Err()    // err = DeadLineExceeded{} 
+
+## set cmd
+	cmd.SysProcAttr = &syscall.SysProcAttr{}
+	cmd.SysProcAttr.Setsid = true
 
 ## stdout vs stderr
 ### stdout to null

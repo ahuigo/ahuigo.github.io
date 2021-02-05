@@ -1,4 +1,8 @@
 # AHUIGO 的笔记
+- 2019-03-24 [Golang 的结构体](/b/go/go-struct) 
+- 2019-09-21 [Go Signal](/b/go/go-ipc-signal) 
+- 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
+- 2021-02-05 [linux c 终端、作业与守护进程](/b/c/c-terminal) 
 - 2018-10-04 [JS Math](/b/ria/js-math) 
 - 2015-03-15 [Js 字符串大全](/b/ria/js-str) 
 - 2018-09-27 [Golang：Array and slice](/b/go/go-array-slice) 
@@ -35,7 +39,3 @@
 - 2018-09-27 [go expression](/b/go/8.go-expr) 
 - 2020-01-20 [proxy 之charles](/b/net/proxy/proxy-charles) 
 - 2018-09-28 [py-import](/b/py/py-import) 
-- 2020-08-31 [About Http](/b/net/http) 
-- 2018-10-04 [vim-style](/b/vim/vim-style) 
-- 2016-09-27 [go 的变量](/b/go/go-var) 
-- 2018-09-27 [map](/b/go/go-var-map) 

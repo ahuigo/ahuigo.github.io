@@ -212,6 +212,8 @@ struct method 是一个值：
     //如果定义为 struct{User User} 那么使用c.age就是非法
     c.age == c.User.age  //true
 
+    Task{Model:model.Model{ID:task.ID}}
+
 assgin embedded
 
     c.User == User{age:15}

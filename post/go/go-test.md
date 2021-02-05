@@ -6,7 +6,7 @@ date: 2018-09-27
 Go has a lightweight test framework composed of the go test command and the testing package.
 
 1. test framework composed of the `go test` command and the `testing` package.
-2. file with a name ending in `_test.go` that contains functions named `Test_XXX` with signature `func (t *testing.T)`
+2. file with a name ending in `_test.go` that contains functions named `TestXXX` with signature `func (t *testing.T)`
 3. if the function calls a failure function such as `t.Error or t.Fail`
 
 ## go test help
@@ -30,7 +30,9 @@ Go has a lightweight test framework composed of the go test command and the test
 ## unit test
 github.com/ahuigo/go-lib/gotest
 
-    package gotest
+go test 会执行Test 打头的函数
+
+    package any_package_name
     import "testing"
 
     func TestReverse(t *testing.T) {
@@ -41,20 +43,43 @@ github.com/ahuigo/go-lib/gotest
         }
     }
 
+可以再包装一下：
+
+    func assertEqual(t *testing.T, a interface{}, b interface{}, message string) {
+        if a == b {
+            return
+        }
+        if len(message) == 0 {
+            message = fmt.Sprintf("%v != %v", a, b)
+        }
+        t.Fatal(message)
+    }
+
+    func TestSimple(t *testing.T) {
+        a := 42
+        assertEqual(t, a, 43, "some error")
+    }
+
 ### test mode
 两种test mode:
 #### 1.directory mode(不会递归)
 执行当前diretory下所有的`_test.go` 是(必须有go.mod, module名不限定)
+
 这种模式下 caching is disabled.
 
     $ go test 
     $ go test  -v
 
 #### 2.package list mode(带cached):
-带cached 的单元测试中，fmt.Println　或者logger(实时输出) 会被禁用, 有两种方法
+这种模式下要指定pkg目录：
 
-1. 加上`-v` `go test -v`, 让fmt/logger 实时输出
-1. t.Log() t.Logf() 缓存输出
+    go test -v -timeout 1m ./service
+
+带cached 的单元测试中，fmt.Println　或者logger(实时输出) 会被禁用, 有几种方法
+
+1. 加上`-v` `go test -v`, 让fmt/logger 实时输出cache
+1. 利用t.Log() t.Logf() 输出信息
+3. 加上`-count=1` 禁用cache
 
 执行测试 module、文件夹、文件:
 
@@ -90,8 +115,12 @@ In package list mode ，successful package test result will be cached and reused
     -run <regexp> 
          flag (interpreted as `.*<regexp>.*` match function)
     $ go test -run TestSubset #指定函数名
-    $ go test -run 'TestSubset*' #指定函数名
-    $ go test ./service -run TestSubset 
+    $ go test -run '^TestSubset$' #指定函数名
+    $ go test -run TestSubset  ./service 
+
+### test timeout 
+
+    $ go test -timeout 30s -run ^TestSimple$   #用
 
 ### test log
 

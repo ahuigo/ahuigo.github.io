@@ -43,8 +43,10 @@ ps工具标识进程的5种状态码:
 		-L, the NLWP (number of threads) and LWP (thread ID) columns will be added
 	-T Show threads, possibly with SPID column
 	-L Show threads, possibly with LWP and NLWP columns
+    -A  Display other users' processes, including those without controlling terminals. 
 	-a,a
-		other users' processes
+        Display other users' processes, skip without controlling terminals. unless the -x option is also specified
+        一般 ax 一起用
 	-x,x
 		include processes which do not have a controlling terminal.
 	-U userlist
@@ -53,6 +55,10 @@ ps工具标识进程的5种状态码:
 		Select by effective user ID (EUID) or name
 	u
 		Display user-oriented format
+        ps aux
+    -j,j
+       Print information associated with the following keywords: user, pid, ppid, pgid, sess, jobc, state, tt, time, and command.
+       ps ajx
 
 ## header
 

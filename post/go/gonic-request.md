@@ -226,6 +226,10 @@ Test it with:
 
 
 #### via multiparForm()
+    curl -X POST http://localhost:8080/upload \
+        -F "upload[]=@/Users/appleboy/test2.zip" \
+        -H "Content-Type: multipart/form-data"
+
 
     form, _ := c.MultipartForm()
     fmt.Printf("Value: %#v\n", form.Value["bucket"])
@@ -236,9 +240,6 @@ Test it with:
 			// Upload the file to specific dst.
 			// c.SaveUploadedFile(file, dst)
 		}
-    curl -X POST http://localhost:8080/upload \
-        -F "upload[]=@/Users/appleboy/test2.zip" \
-    -H "Content-Type: multipart/form-data"
 
 #### single FromFile
 
@@ -278,6 +279,31 @@ https://github.com/gin-gonic/gin/pull/857/files
 
     func (c *Context) GetRawData() ([]byte, error) {
         return ioutil.ReadAll(c.Request.Body)
+
+
+## Read Body
+https://github.com/gin-gonic/gin/issues/961
+
+    func RequestLogger() gin.HandlerFunc {
+        return func(c *gin.Context) {
+            buf, _ := ioutil.ReadAll(c.Request.Body)
+            rdr1 := ioutil.NopCloser(bytes.NewBuffer(buf))
+            rdr2 := ioutil.NopCloser(bytes.NewBuffer(buf)) //We have to create a new Buffer, because rdr1 will be read.
+
+            fmt.Println(readBody(rdr1)) // Print request body
+
+            c.Request.Body = rdr2
+            c.Next()
+        }
+    }
+
+    func readBody(reader io.Reader) string {
+        buf := new(bytes.Buffer)
+        buf.ReadFrom(reader)
+
+        s := buf.String()
+        return s
+    }
 
 # Request Info
 

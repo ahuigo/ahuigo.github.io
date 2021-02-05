@@ -20,3 +20,5 @@ private: true
     func main(){
         log.Println("3. main")
     }
+
+注意不能写if 等 non-declaration statement outside function body

@@ -50,6 +50,8 @@ Test for code example above:
     context,engine := gin.CreateTestContext(w)
 
 ## mock test context
+gin.CreateTestContext
+
     func CreateTestContext(w http.ResponseWriter) (c *Context, r *Engine) {
         r = New()
         c = r.allocateContext()
@@ -57,8 +59,6 @@ Test for code example above:
         c.writermem.reset(w)
         return
     }
-
-
 
 
 ## mock request
@@ -78,3 +78,7 @@ Test for code example above:
 
     // 请求controller
     router.Controller.GetIndex(context)
+
+
+    // test response
+    assert.Equal(t, "pong", w.Body.String())

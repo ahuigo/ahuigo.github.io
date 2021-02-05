@@ -32,3 +32,7 @@ date: 2019-09-21
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 	log.Println("Shutdown Server ...")
+
+参考示例：go-lib/process/signal-terminate_test.go
+
+    kill -TERM <pid>

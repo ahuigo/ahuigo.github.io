@@ -115,6 +115,7 @@ read:
 ## write
 
 ### writeFile
+with bytes
 
     d1 := []byte("hello\ngo\n")
     err := ioutil.WriteFile("/tmp/dat1", d1, 0644)
@@ -159,7 +160,7 @@ WriteString
 			return n, err
 	}
 
-使用：
+使用(多此一举)：
 
     _, err = io.Copy(out, &file)
     _, err = io.Copy(io.stdout, &file)
