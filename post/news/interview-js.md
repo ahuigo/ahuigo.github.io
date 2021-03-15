@@ -1,5 +1,5 @@
 ---
-title: Momenta 前端面试题
+title: 前端面试题
 date: 2019-11-19
 private: 
 ---
@@ -8,6 +8,16 @@ private:
 1. 时间有限，所有的题都是选答题。请选择最能反映你的经验、能力的问题作答。
 2. 请把答案写到牛客网的代码区、或注释中。本题集题号，与牛客网题号不需要一一对应
 3. 所有题使用js/ts 语言作答，也可用伪代码。尽量写出实际可执行的代码。
+
+## tips
+一会儿发笔试题, 提示：
+1. 本试题可谷歌相关的语法题, 题目将涉及promise使用、编写四则计算器页面、React或Vue使用（自选）等
+2. 请准备好可上网电脑
+3. 笔试链接等下发：进入答题区后开始计时，限45分钟，请注意好时间哈
+https://www.showmebug.com/exams/CDNOYA 请复制此链接到PC端浏览器（推荐谷歌）参加在线笔试
+
+## todo
+https://www.jianshu.com/p/23adccda99f0
 
 ## dom/css 操作: 消息居中
 1.请给下面的html代码加上css，让消息提示框居中显示：
@@ -83,7 +93,12 @@ private:
     };
     console.log([1,2,3,3].uniq()) //output: [1,2,3]
 
-能解释一下为什么是用Array.prototype.uniq 而不是 Array.uniq 吗？
+## 找出数组中重复的值
+给定一个Array，请返回数组中重复的值
+
+    function duplicatedValues(array){
+        //请补全代码
+    }
 
 ## 两向量的平行
 在平面中有两个向量，判断向量是否平行, 请补全以下代码

@@ -288,6 +288,7 @@ or:
 
 	>>> extra = {'city': 'Beijing', 'job': 'Engineer'}
 	>>> person('Jack', 24, **extra)
+	>>> person('Jack', **{'age':24, 'city': 'Beijing', 'job': 'Engineer'})
 	name: Jack age: 24 other: {'city': 'Beijing', 'job': 'Engineer'}
 
 ## named kw args

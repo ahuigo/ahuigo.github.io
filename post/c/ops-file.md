@@ -76,6 +76,8 @@ ulimit 命令设置或报告用户进程资源极限，如 `/etc/security/limits
 	rss = 65536
 	stack = 65536
 	nofiles = 2000
+    noproc 是代表最大进程数 
+
 
 ## ulimit 语法
 

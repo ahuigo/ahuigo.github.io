@@ -69,8 +69,24 @@ func Getwd() (pwd string, err error)
     }
 
 ### mkdir
-    err = os.Mkdir(path, mode)
+    err = os.Mkdir(path, os.ModeDir)
 
+## tmp
+### tempFile
+    file, err := ioutil.TempFile("dir", "prefix")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer os.Remove(file.Name())
+
+    fmt.Println(file.Name()) // For example "dir/prefix054003078"
+
+### tempDir
+    dir, err := ioutil.TempDir("dir", "prefix")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer os.RemoveAll(dir)
 
 # File Api
 

@@ -7,8 +7,19 @@ date: 2018-09-27
 0. git-scm 教程
 1. 廖老师的文章在本地建一个git server http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000
 
-## ssh git
+## 1.create git user
+
+    sudo adduser git
+
+## 2.创建证书登录
 需要收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pub文件，把所有公钥导入到`/home/git/.ssh/authorized_keys`文件里，一行一个。
+
+在用户的local 机器上创建id_rsa.pub
+
+    $ ssh-keygen -t rsa
+
+
+
 
 	$ git clone git@127.0.0.1:/Users/hilojack/www/bat.git
 

@@ -5,16 +5,54 @@ date: 2018-10-04
 # type vs object
 > https://mp.weixin.qq.com/s/z4JBWFo-epH5NsQJUw7qaQ
 type 即代表class 本身, 他继承: type-object
-1. type: root instance: __class__, type(obj) === obj.__class__,
-	`self.__class__` 不一定是`__class__`, 也可能是subclass(参考下面super的例子)
-1. object: root subclass: mro
+1.object: 是继承根 root subclass: MRO根, 所有类型的父类
+
+    >>> type.__mro__
+    (<class 'type'>, <class 'object'>)
+    >>> object.__mro__
+    (<class 'object'>,)
+
+	>>> isinstance(1, object)
+	>>> isinstance(int, object)
+	>>> isinstance(type, object)
+	>>> isinstance(object, object)
+	True
+
+    >>> isinstance(1, type)
+    False
+    >>> isinstance(int, type)
+    True
+    >>> isinstance(type, type)
+    True
+    >>> isinstance(object, type)
+    True
+    >>> object.__class__
+    >>> type.__class__
+    <class 'type'>
+
+1.type只是普通类型的父类, object才是所有类型的父类
+
+    >>> int.__class__
+    Out[42]: type
+    In [54]: X.__class__
+    Out[54]: type
+    In [53]: X.__mro__
+    Out[53]: (__main__.X, object)
+
+    >>> issubclass(int, type)   #true
+    >>> issubclass(X, type)   #False
+
+    >>> issubclass(int, object) # true
+    >>> issubclass(X, object)   # true
+
+type() 获取的不是父类，而是实例化前的类:
 
     >>> print(type(object));
     <class 'type'>
     >>> object.__class__
-    <class 'type'>
+    <class 'type'>              
     >>> type.__base__
-    <class 'object'>
+    <class 'object'> 
 
 
 所有对象的根类型是type(`type(obj)`), 所有对象都继承自object 
@@ -29,29 +67,6 @@ type 即代表class 本身, 他继承: type-object
     >>> issubclass(int, int)
     True
 
-*从class 继承关系来说*, 所有class(包括type) 的 root metaclass: type
-
-    >>> isinstance(1, type)
-    False
-    >>> isinstance(int, type)
-    True
-    >>> isinstance(type, type)
-    True
-    >>> isinstance(object, type)
-    True
-
-    >>> object.__class__
-    >>> type.__class__
-    <class 'type'>
-
-
-*从object实例关系来说*, 所有class/object 的 root class: object
-
-	>>> isinstance(1, object)
-	>>> isinstance(int, object)
-	>>> isinstance(type, object)
-	>>> isinstance(object, object)
-	True
 
 特别，实例没有继承关系:
 ```
@@ -62,21 +77,6 @@ isinstance(C, B) # True
 isinstance(C, A) # False
 ```
 
-*从继承关系* MRO来说，所有class继承的根是(root inheritance): object
-
-    >>> type.__mro__
-    (<class 'type'>, <class 'object'>)
-    >>> object.__mro__
-    (<class 'object'>,)
-
-    >>> issubclass(type, object)
-    >>> issubclass(int, object)
-    True
-
-    >>> issubclass(object, type)
-    False
-    >>> issubclass(int, type)
-    False
 
 ## 判断None 要用is
 The operators `is` and `is not` test for object identity
@@ -236,56 +236,54 @@ super(c, obj_or_type) 将返回一个从 MRO 中 c 之后的类中查找方法�
 
 示例: https://rhettinger.wordpress.com/2011/05/26/super-considered-super/
 
-```python
-class Root:
-    def draw(self):
-        # the delegation chain stops here
-        assert not hasattr(super(), 'draw')
-		# or pass
+    class Root:
+        def draw(self):
+            # the delegation chain stops here
+            assert not hasattr(super(), 'draw')
+            # or pass
 
-class Shape(Root):
-    def __init__(self, shapename, **kwds):
-        self.shapename = shapename
-        super().__init__(**kwds)
-    def draw(self):
-        print('Drawing.  Setting shape to:', self.shapename)
-        super().draw()
+    class Shape(Root):
+        def __init__(self, shapename, **kwds):
+            self.shapename = shapename
+            super().__init__(**kwds)
+        def draw(self):
+            print('Drawing.  Setting shape to:', self.shapename)
+            super().draw()
 
-class ColoredShape(Shape):
-    def __init__(self, color, **kwds):
-        self.color = color
-        super().__init__(**kwds)
-    def draw(self):
-        print('Drawing.  Setting color to:', self.color)
-        super().draw()
+    class ColoredShape(Shape):
+        def __init__(self, color, **kwds):
+            self.color = color
+            super().__init__(**kwds)
+        def draw(self):
+            print('Drawing.  Setting color to:', self.color)
+            super().draw()
 
-class Moveable:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-    def draw(self):
-        print('Drawing at position:', self.x, self.y)
+    class Moveable:
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+        def draw(self):
+            print('Drawing at position:', self.x, self.y)
 
-class MoveableAdapter(Root):
-    def __init__(self, x, y, **kwds):
-        self.movable = Moveable(x, y)
-        super().__init__(**kwds)
-    def draw(self):
-        self.movable.draw()
-        super().draw()
+    class MoveableAdapter(Root):
+        def __init__(self, x, y, **kwds):
+            self.movable = Moveable(x, y)
+            super().__init__(**kwds)
+        def draw(self):
+            self.movable.draw()
+            super().draw()
 
-class MovableColoredShape(ColoredShape, MoveableAdapter):
-    pass
+    class MovableColoredShape(ColoredShape, MoveableAdapter):
+        pass
 
-MovableColoredShape(color='red', shapename='triangle',
-                    x=10, y=20).draw()
-```
+    MovableColoredShape(color='red', shapename='triangle',
+                        x=10, y=20).draw()
+
 output:
-```
-Drawing.  Setting color to: red
-Drawing.  Setting shape to: triangle
-Drawing at position: 10 20
-```
+
+    Drawing.  Setting color to: red
+    Drawing.  Setting shape to: triangle
+    Drawing at position: 10 20
 
 ### bound and unbound with super
 类似js 的bind this概念
@@ -306,4 +304,3 @@ Drawing at position: 10 20
     >>> print super(C, D).__repr__
     <unbound method D.__repr__>
     B.__repr__(D,...)
-    ```

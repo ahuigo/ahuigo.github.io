@@ -48,11 +48,49 @@ OSX 的coredump 默认在：` /cores/core.pid` ;
     touch /cores/test && rm /cores/test # 确保有写入权限
     defaults write com.apple.finder AppleShowAllFiles TRUE
 
-# 什么是Core：
+## coredump path (mac)
+By default, crashes are reported into `.crash` files which can be found in
+1. /Library/Logs/DiagnosticReports (system-wide) 
+2. and ~/Library/Logs/DiagnosticReports (user). 
 
-## Core Dump时会生成何种文件：
-Core Dump时，会生成诸如 `core.进程号` 的文件。
+These files can be opened by using Console app, in User or System Reports. The .crash files are in plain text format 
 
+## config coredump env(mac)
+1.make sure that /cores directory has write permissions for the current user 
+
+    $ touch /cores/test && rm /cores/test
+    touch: /cores/test: Permission denied(!!!!)
+    $ sudo chmod o+rwx /cores  
+
+2.In addition, make sure that you don't have any limits on core file sizes by:
+
+    ulimit -c unlimited
+
+3.The name of the core dump file is in format: `core.PID`.
+If the directory is hidden, you can show the hidden files by:
+
+    defaults write com.apple.finder AppleShowAllFiles TRUE
+
+4.You can test that by the following commands:(mac 已经失效了, 请稳步golang-coredump)
+
+    $ ulimit -c unlimited
+    $ sleep 100 &
+    $ killall -SIGSEGV sleep # Then press Enter few times till below message is shown
+    [1]+  Segmentation fault: 11  (core dumped) sleep 100
+    $ ls /cores
+    core.13652
+    $ lldb -c /cores/core.*
+    (lldb) target create --core "/cores/core.13652"
+    Core file '/cores/core.13652' (x86_64) was loaded.
+    (lldb) bt
+    * thread #1, stop reason = signal SIGSTOP
+    * frame #0: 0x00007fffa7d13fde libsystem_kernel.dylib`__semwait_signal + 10
+        frame #1: 0x00007fffa7c9ab92 libsystem_c.dylib`nanosleep + 199
+        frame #2: 0x000000010c090002 sleep`rpl_nanosleep + 128
+        sleep 100 &
+        killall -SIGSEGV sleep
+
+# coredump on linux
 ## 为何有时程序Down了，却没生成 Core文件。
 Linux下，有一些设置，标明了resources available to the shell and to processes。 可以使用#ulimit -a  来看这些设置。
 从这里可以看出，如果 -c 是显示：`core file size  (blocks, -c)`  如果这个值为0，则无法生成core文件。所以可以使用：
@@ -63,11 +101,8 @@ Linux下，有一些设置，标明了resources available to the shell and to pr
 
 如果程序出错时生成Core 文件，则会显示Segmentation fault (core dumped) 。
 
-
-# create core
+## create core
 程序自己产生segmentfault, 或者手动产生
-
-## 如何让一个正常的程序down:
 
 	#kill -s SIGSEGV pid
 	kill -s SEGV pid
@@ -158,12 +193,12 @@ And finally restart abrtd.service*:
 但是有的情况下，比如缓冲区溢出等错误可能导致堆栈被破坏，经常会出现某个变量的值被修改成乱七八糟的，然后程序用这个大小去申请内存就可能导致程序比平常时多占用很多内存。
 
 # 用gdb查看core文件:
-
 下面我们可以在发生运行时信号引起的错误时发生core dump了. 发生core dump之后, 用gdb进行查看core文件的内容, 以定位文件中引发core dump的行.
 
 	gdb <exec file> <core file>
 	gdb ./test test.core
-	"在进入gdb后, 用bt命令查看backtrace以检查发生程序运行到哪里, 来定位core dump的文件->行.
+
+在进入gdb后, 用bt命令查看backtrace以检查发生程序运行到哪里, 来定位core dump的文件->行.
 
 ## 如何使用Core文件：
 在Linux下，使用：
@@ -176,60 +211,3 @@ And finally restart abrtd.service*:
 	(gdb) where
 	或者输入 bt。
 	(gdb) bt
-
-# PHP Core
-http://www.laruence.com/2011/06/23/2057.html
-https://rtcamp.com/tutorials/php/core-dump-php5-fpm/
-
-## config
-First you need to enable core dumps in linux
-
-	su -
-	echo '/tmp/core-%e.%p' > /proc/sys/kernel/core_pattern
-	echo 0 > /proc/sys/kernel/core_uses_pid
-	ulimit -c unlimited
-
-allown fpm coredump(默认的好像):
-
-	echo 'rlimit_core = unlimited' >> /etc/php-fpm.d/www.conf
-	service php-fpm restart
-
-## use core
-php 在编译时应该开启debug
-
-先通过php-cli 或者 fpm 产生coredump:
-
-	$ php test.php
-	Segmentation fault (core dumped)
-
-调试 php/fpm coredump:
-
-    $ gdb [exec file] [core file]
-	$ gdb php core.31656
-	$ gdb php-fpm core-fpm.31663
-
-fpm coredump example:
-
-	$ sudo gdb /usr/sbin/php5-fpm /tmp/core-php-fpm.31656
-	(gdb) bt
-	#0  0x000000000061eea1 in gc_zval_possible_root ()
-	#1  0x00000000005f6c1f in zend_cleanup_internal_class_data ()
-	#2  0x0000000000605839 in zend_cleanup_internal_classes ()
-	#3  0x00000000005f4b0b in shutdown_executor ()
-	#4  0x00000000005ffd52 in zend_deactivate ()
-	#5  0x00000000005a356c in php_request_shutdown ()
-	#6  0x00000000006b1819 in main ()
-
-我们看看, Core发生在PHP的什么函数中, 在PHP中, 对于FCALL_* Opcode的handler来说, execute_data代表了当前函数调用的一个State, 这个State中包含了信息:
-
-	(gdb)f 1
-	#1  0x00000000006ea263 in zend_do_fcall_common_helper_SPEC (execute_data=0x7fbf400210) at /home/laruence/package/php-5.2.14/Zend/zend_vm_execute.h:234
-	234               zend_execute(EG(active_op_array) TSRMLS_CC);
-	(gdb) p execute_data->function_state.function->common->function_name
-	$3 = 0x2a95b65a78 "recurse"
-	(gdb) p execute_data->function_state.function->op_array->filename
-	$4 = 0x2a95b632a0 "/home/laruence/test.php"
-	(gdb) p execute_data->function_state.function->op_array->line_start
-	$5 = 2
-
-现在我们得到, 在调用的PHP函数是recurse, 这个函数定义在/home/laruence/test.php的第二行

@@ -39,6 +39,7 @@ ps工具标识进程的5种状态码:
 
 	-e, -A
 		Select all processes.  Identical to -e.
+    a   show other users' processes as well as your own
 	-f     Do full-format listing.
 		-L, the NLWP (number of threads) and LWP (thread ID) columns will be added
 	-T Show threads, possibly with SPID column

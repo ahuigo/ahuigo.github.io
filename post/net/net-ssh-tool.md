@@ -124,7 +124,7 @@ From remote to local
 
 	#将pub 导入remote ssh server
     ssh-copy-id -p port -i ~/.ssh/id_rsa.pub root@192.168.12.10
-    # 或
+    # 或直接覆盖(warning)
 	scp ~/.ssh/id_rsa.pub user@host:/home/user/.ssh/authorized_keys
 	#或者手动copy：
 	cat ~/.ssh/id_rsa.pub | ssh user@machine "mkdir ~/.ssh; cat >> ~/.ssh/authorized_keys"
@@ -137,8 +137,6 @@ From remote to local
 小结: 其实你可以一步到位：
 
 	ssh-keygen -t rsa; ssh-copy-id user@host;
-
-
 
 #### 检验
 

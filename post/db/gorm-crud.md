@@ -47,10 +47,28 @@ private:
         return "prefix_" + defaultTableName;
     }
 
-# Array
+# 定义model
+## Array
 
     Ages  pq.Int64Array   `json:"ages" form:"ages" gorm:"type:integer[]"`
     Names  pq.StringArray   `json:"names" form:"names" gorm:"not null;default:array[]::varchar[];type:text[]"`
+
+
+# DDL
+## 查fields
+    mainObj interface{} := Model.User{}
+	mainScope := db.NewScope(mainObj)
+	mainFields := mainScope.Fields()
+	fieldNames := make([]string, 0, len(mainFields))
+    tableName = mainScope.QuotedTableName()
+	for i := range mainFields {
+		// If primary key has blank value (0 for int, "" for string, nil for interface ...), skip it.
+		// If field is ignore field, skip it.
+		if (mainFields[i].IsPrimaryKey && mainFields[i].IsBlank) || (mainFields[i].IsIgnored) || (mainFields[i].TagSettings["SAVE_ASSOCIATIONS"] == "false") {
+			continue
+		}
+		fieldNames = append(fieldNames, mainScope.Quote(mainFields[i].DBName)) //filed
+	}
 
 # Create 创建记录
 

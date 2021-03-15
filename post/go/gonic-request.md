@@ -201,6 +201,7 @@ Test it with:
     curl  "https://httpbin.org/post"  -F 'file=@a.txt' -F 'key=value'
 
 #### via bind
+c.SaveUploadedFile(file, dst+"/a.txt") 会覆盖旧文件
 
     //https://github.com/gin-gonic/examples/blob/master/file-binding/main.go
     type BindFile struct {
@@ -217,7 +218,7 @@ Test it with:
         return
     }
     // Save uploaded file
-    file := bindFile.File
+    file := bindFile.File //FileHeader
     dst := filepath.Base(file.Filename)
     if err := c.SaveUploadedFile(file, dst); err != nil {
         c.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
@@ -236,26 +237,37 @@ Test it with:
     files := form.File["upload[]"]
 
     for _, file := range files {
-        log.Println(file.Filename)
+        log.Println(file.Filename) //含扩展名
 			// Upload the file to specific dst.
 			// c.SaveUploadedFile(file, dst)
 		}
 
 #### single FromFile
 
-    // single file
-    file, _ := c.FormFile("file")
-    log.Println(file.Filename)
+single file:
 
-#### open file
+    file File
+    file, header , err := c.Request.FormFile("upload")
+    out, err := os.Create("./tmp/"+header.Filename)
+    defer out.Close()
+    _, err = io.Copy(out, file)
+
+single fileHeader
+
+    fileHeader, err := c.FormFile("file")
+    log.Println(fileHeader.Filename) //含扩展名
+
+    fileHeader *multipart.FileHeader
+        .Size
+        .Filename
+        .content, 
+        .tmpfile 
+
+##### open file
 fileHeader
 
     // getFileHeader
     fileHeader := c.FormFile("upload")
-    fileHeader *FileHeader
-        .content, 
-        .Filename
-        *multipart.FileHeader
 
     //fp = fileHeader.Open()
     func (fh *FileHeader) Open() (File, error) {
@@ -266,13 +278,6 @@ fileHeader
         return os.Open(fh.tmpfile)
     }
 
-file:
-
-    file File
-    file, header , err := c.Request.FormFile("upload")
-    out, err := os.Create("./tmp/"+header.Filename+".png")
-    defer out.Close()
-    _, err = io.Copy(out, file)
 
 ### Body Stream
 https://github.com/gin-gonic/gin/pull/857/files

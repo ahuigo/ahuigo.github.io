@@ -108,6 +108,7 @@ Should you want pass arguments to the timeout function, you can give them in the
 
     datetime.datetime.now().date()
     datetime.date.today()
+    date(d.year d.month d.day)
 
 ## range time
 

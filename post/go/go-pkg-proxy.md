@@ -22,3 +22,6 @@ via HTTP_PROXY
     $ export GONOSUMDB="github.com/mycompany/*,github.com/secret/*"
     # 或
     $ export GOSUMDB=off
+
+    # Dockerfile
+    ENV GOSUMDB=off

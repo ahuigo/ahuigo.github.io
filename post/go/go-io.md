@@ -4,8 +4,26 @@ date: 2021-02-03
 private: true
 ---
 # reader closer
+
+# io.Reader
+    type Reader interface {
+        Read(p []byte) (n int, err error)
+    }
+## string reader
+
+    strings.NewReader(s)
+
+## bytes reader
+    var stderr bytes.Buffer
+    cmd := exec.Command("cat")
+
+    cmd.Stdin = bytes.NewBuffer([]byte("hi"))
+    cmd.Stdout = os.Stdout
+	cmd.Stderr = &stderr
+    cmd.Run()
+
 ## teeReader
-teeReader 模仿的是shell tee 命令
+teeReader 相当于是shell tee 命令
 
     package main
 

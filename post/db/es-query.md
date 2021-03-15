@@ -130,7 +130,7 @@ The API response returns the top 10 documents matching the query in the hits.hit
             },
         "query":{
             "match_all":[]
-        }
+            }
         }
     }
 
@@ -153,6 +153,9 @@ where type="SUCCESS"
         }
       ]
     }
+
+### 查时间
+query="StartTime>='2021-03-02T16:52:50+08:00' and User='ahuigo' and CloseTime=missing"
 
 ## range 查询
     "query": {

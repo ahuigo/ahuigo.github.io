@@ -96,12 +96,33 @@ df 的聚合是以column 为group 的
     In [4]: s[s.isin(['a'])].empty
     Out[4]: False
 
+### 合并
+append:
+
+    >>> a=pd.Series({'a':1,'b':2})
+    >>> b=pd.Series({'b':3})
+    >>> a.append(b)
+    a     1
+    b     2
+    b     3
+    >>> a.append(b).to_dict()
+    {'a': 1, 'b': 3, 'a1': 1}
+
+    >>> a.append(b,ignore_index=True)
+    0    1
+    1    2
+    3    3
+
 ### 比较运算
     > df.col1>df.col2
     > df.col1>1
     index1    False
     index2    False
     dtype: bool
+
+### drop
+    s.drop(labels=['B', 'C'])
+    A  0
 
 ## Read Series 读取
 ### index/keys()
@@ -173,6 +194,7 @@ update via series
 
 update via dict
 
+    # note:不存在的key不会更新
     >>> s.update(pd.Series({'key':'value'}))
     # error
     >>> s.update(({'key':'value'}))
@@ -249,7 +271,7 @@ null 与 NaN 是一个意思
     pd.isna(v)
     pd.isnull(np.NaN)
 
-series/df 也支持
+series/df 支持元素级别的isnull
 
     series.isnull()
     df.isnull()
@@ -292,9 +314,10 @@ import xlsx
 
 import json:
 
+    pd.read_json(_) #to_json()
     pd.read_json(_, orient='split') #to_json(orient='split')
     pd.read_json(_, orient='index')  #to_json(orient='index')
-    pd.read_json(_, orient='records') #to_json(orient='record')
+    pd.read_json(_, orient='records') #to_json(orient='records')
 
 export xlsx
 

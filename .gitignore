@@ -42,3 +42,4 @@ go.sum
 /img/2020-05-30-12-41-18.png
 /img/open-web.png
 /slide.html
+*.rdb

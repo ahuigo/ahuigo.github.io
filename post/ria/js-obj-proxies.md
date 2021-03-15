@@ -2,8 +2,53 @@
 title: 用js proxies 继承别的对象
 date: 2018-10-04
 ---
-# Observe object
+# object set/get
 
+## obj set 
+
+    var person = {
+        firstName: "John",
+        lastName : "Doe",
+        language : "",
+        set lang(lang) {
+            this.language = lang;
+        }
+    };
+
+    // Set an object property using a setter:
+    person.lang = "en";
+
+## obj get
+
+    const obj = {
+        log: ['a', 'b', 'c'],
+        get latest() {
+            if (this.log.length === 0) {
+            return undefined;
+            }
+            return this.log[this.log.length - 1];
+        }
+    };
+
+    console.log(obj.latest);
+
+## object define
+
+    var o = {}
+    Object.defineProperty(o, 'b', {
+        get() { 
+            return this._b; 
+        },
+        set(newValue) { 
+            console.log(newValue)
+            this._b = newValue; 
+        },
+        enumerable: true,
+        configurable: true
+    });
+
+    o.b = 38
+    console.log(o.b)
 
 # proxy
 ## get

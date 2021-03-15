@@ -40,3 +40,50 @@ private: true
     event: React.MouseEvent<HTMLSpanElement, MouseEvent>
 ### onChange
     e: React.ChangeEvent<HTMLInputElement>
+
+
+# global type for window
+指定typing文件： tsconfig.json
+
+    "compilerOptions": {
+        "typeRoots": [
+            "./node_modules/@types",
+            "./some-custom-lib"
+        ]
+    }
+
+然后在项目中写typing, 如umi项目中的src/typings.d.ts
+
+    declare module '*.css';
+    declare module '*.less';
+    declare module '*.scss';
+    declare module '*.sass';
+    declare module '*.svg';
+    declare module 'omit.js';
+
+    // google analytics interface
+    type GAFieldsObject = {
+    eventCategory: string;
+    eventAction: string;
+    eventLabel?: string;
+    eventValue?: number;
+    nonInteraction?: boolean;
+    };
+
+    interface Window {
+        ga: (
+            command: 'send',
+            hitType: 'event' | 'pageview',
+            fieldsObject: GAFieldsObject | string,
+        ) => void;
+        reloadAuthorized: () => void;
+    }
+
+    declare let ga: () => void;
+    declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
+
+    interface Date {
+        format(form?: string): string;
+        diff(d: Date): number;
+        startOf(diff: number, unit: 's' | 'm' | 'd' | 'w' | 'M'): Date;
+    }

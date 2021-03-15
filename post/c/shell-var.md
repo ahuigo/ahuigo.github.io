@@ -361,6 +361,7 @@ padding num
     # 这两个等价
 	var=(1 2 3)
 	var=(1, 2, 3)
+	var=('1' '2' '3')
 
     # 5个参数(包含,)
 	var=(1 , 2 , 3)
@@ -461,6 +462,13 @@ With Bash4.3, it only creates a reference to the original array, it doesn't copy
 
 参数可以省略为 `for i in "$@"`, 这在使用脚本参数时特别有用
 
+zsh 只能用变量
+
+    lw=(1 2 3)
+
+    for i in $lw;
+        do echo $i;
+    done
 ### in_array
 shell 参数不支持array传递. 只能变通实现[in_array](http://stackoverflow.com/questions/5788249/shell-script-function-and-for-loop)了
 

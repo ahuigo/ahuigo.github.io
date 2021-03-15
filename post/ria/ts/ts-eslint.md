@@ -157,6 +157,11 @@ https://eslint.org/docs/user-guide/configuring#configuring-rules
 
 此时执行 npm run eslint 即会检查 src 目录下的所有 .ts 后缀的文件。
 
+## 修复error
+
+    eslint --fix file.tsx file2.tsx
+    eslint --fix dir
+
 # vscode 配置
 ## 在 VSCode 中集成 ESLint 检查
 在编辑器中集成 ESLint 检查，可以在开发过程中就发现错误，甚至可以在保存时自动修复错误，极大的增加了开发效率。

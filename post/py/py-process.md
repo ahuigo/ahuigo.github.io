@@ -6,6 +6,7 @@ description:
 date: 2018-10-04
 ---
 # Preface
+## shell
 - sh: sh之于subprocess， 相当于requests 对于urllib2
 	1. sh.ls("-l", "/tmp", color="never")
 	2. sh.ifconfig("en0")
@@ -29,25 +30,23 @@ Example
 		print('I (%s) just created a child process (%s).' % (os.getpid(), pid))
 
 ## fork api:
-```
-p = Process(target=run_proc, args=('test',))
-	p.start() .join() .terminate()
-	p.exitcode = 0
-multiprocessing.Pool(4).apply_async(func_task, args).get() # 直接调用get()会阻塞，不需要pool.join()
-    pool = Pool(4)
-	pool.close() pool.join()
+    from multiprocessing import Process
 
-```
+    p = Process(target=run_proc, args=('test',))
+        p.start() .join() .terminate()
+        p.exitcode = 0
+    multiprocessing.Pool(4).apply_async(func_task, args).get() # 直接调用get()会阻塞，不需要pool.join()
+        pool = Pool(4)
+        pool.close() pool.join()
+
 thread 类似
-```
-t = threading.Thread(target=loop, name='LoopThread')
-	t.start() t.join()
 
-async_result = multiprocessing.pool.ThreadPool(processes=1).apply_async(foo, ('world', 'foo')) # tuple of args for foo
-	print(async_result.get()) # 阻塞
-	pool.close() .join() # 等待所有线程结束
-```
+    t = threading.Thread(target=loop, name='LoopThread')
+        t.start() t.join()
 
+    async_result = multiprocessing.pool.ThreadPool(processes=1).apply_async(foo, ('world', 'foo')) # tuple of args for foo
+        print(async_result.get()) # 阻塞
+        pool.close() .join() # 等待所有线程结束
 
 # multiprocessing.Process(func)跨平台
 fork 与子程序func 是分离的, 父进程同步子进程比较麻烦
@@ -58,6 +57,8 @@ multiprocessing.Process(func) 则可以直接传func:
 2. child.join() 等待子进程结束后再继续往下运行，通常用于进程间的同步
 4. child.terminate() 或者直接结束
 4. child.exitcode 正常是0
+
+example
 
 	from multiprocessing import Process
 	import os
@@ -80,6 +81,16 @@ multiprocessing.Process(func) 则可以直接传func:
 	Process will start.
 	Run child process test (929)...
 	Process end.
+
+## kill
+
+    p = Process(target=run_proc, args=('test',))
+    p.start()
+    if hasattr(p, 'kill'):
+        p.kill()
+    else:
+        os.kill(p.pid, signal.SIGTERM)
+
 
 ## daemon
 daemon vs nodaemon:(process 默认是noDaemon(children process), pool 默认是daemon)

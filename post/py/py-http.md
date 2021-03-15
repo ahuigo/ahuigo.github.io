@@ -14,7 +14,7 @@ urllib2 is deprecated, use requests instead , except: `urllib.parse.urlsplit/url
 .status .reason getheaders() read()
 
     from urllib import request
-    with request.urlopen('https://api.douban.com/v2/book/2129650') as f:
+    with request.urlopen('https://www.baidu.com') as f:
         data = f.read()
         print('Status:', f.status, f.reason) # 200 OK
         for k, v in f.getheaders():

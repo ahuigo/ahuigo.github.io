@@ -286,4 +286,6 @@ function! Pipe2Shell(args)
 endfunction
 command! -nargs=+ -complete=command Pipe2Shell call Pipe2Shell(<q-args>)
 
+set ts=4 sw=4 softtabstop=4 nu autoindent
+
 " vim: set ts=2 sw=2 tw=80 noet :

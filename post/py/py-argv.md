@@ -52,6 +52,18 @@ click 之于argparse/argv, 相当于requests 之于urllib
     parser.add_argument("-n", "--name", default="ahui", help="your name")
     parser.parse_args()
 
+## with pytest
+    import argparse
+    def parse_args(args):
+        parser = argparse.ArgumentParser(...)
+        parser.add_argument("-n", "--name", default="ahui", help="your name")
+        return parser.parse_args(args)
+
+    def test_parser(self):
+        parser = parse_args(['-l', '-m'])
+    
+    
+
 ## description and help
 
     parser = argparse.ArgumentParser(description="calculate X to the power of Y")
@@ -76,6 +88,15 @@ click 之于argparse/argv, 相当于requests 之于urllib
 
     parser.add_argument('--color', type=Color, choices=list(Color))
     parser.add_argument('--color', type=str, choices=('red','blue'))
+
+## unknown args
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-n", "--name", default="ahui", help="your name")
+    parser.add_argument('integers', nargs='+',)
+    #args = parser.parse_args()
+    args, unknown = parser.parse_known_args(["-unknown",'other'])
+    print(args, unknown)
 
 ## positional args
 

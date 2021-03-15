@@ -300,3 +300,4 @@ trim 字符串
 
 ## startsWith
     strings.HasPrefix(myString, "Hello") 
+    strings.HasSufffix(myString, ".png") 

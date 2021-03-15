@@ -11,3 +11,6 @@ The latest docker supports setting ulimits through the command line and the API.
 So, for your nofile, an example would be:
 
      --ulimit nofile=262144:262144
+
+# cpu and memory
+    docker run --cpus=1 --memory=100M 

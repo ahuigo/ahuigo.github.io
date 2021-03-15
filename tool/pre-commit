@@ -9,8 +9,10 @@ from collections import OrderedDict
 from glob import glob
 
 print("Exec python:",sys.executable)
+print("current_path:", os.getcwd())
 
 ROOT = "/b"
+WWW_PATH = os.getenv('HOME')+'/www'
 PAGE_TPL = open("page.html").read()
 errors = []
 log = print
@@ -22,7 +24,7 @@ def basename(path):
 
 
 def getPostPath(path):
-    return f"{ROOT[1:]}/{path[5:-3]}.html"
+    return WWW_PATH + '/' + f"{ROOT[1:]}/{path[5:-3]}.html"
 
 
 def getPostUrl(path):
@@ -162,6 +164,7 @@ updated: {blog['updated']}
             f'<pre id="markdown" v-pre>{html.escape(md)}</pre>',
         )
 
+    print("cwd:", os.getcwd())
     open(post_path, "w").write(render_md)
 
 
