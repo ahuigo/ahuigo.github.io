@@ -93,7 +93,7 @@ go test 会执行Test 打头的函数
     go test service; #不合法
 
     // test file
-    go test math_test.go //no ok
+    go test -v math_test.go //ok
 
 In package list mode ，successful package test result will be cached and reused, 
 如果想禁止cache ，就用-count=1

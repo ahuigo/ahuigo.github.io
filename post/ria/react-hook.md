@@ -269,7 +269,7 @@ change state if props change
     };
 
 # Hook API
-1. useCallback: 缓存函数
+1. useCallback: 缓存函数(not run function)
 1. useMemo Hook, 缓存值
 2. useReducer Hook 减少了`对深层传递回调`的依赖，正如下面解释的那样
 

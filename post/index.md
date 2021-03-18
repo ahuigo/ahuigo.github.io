@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-09-27 [go-test](/b/go/go-test) 
+- 2021-03-18 [压测工具](/b/c/ops-benchmark) 
 - 2017-08-09 [Python 字符处理](/b/py/py-str) 
 - 2018-10-04 [python's super,type, object](/b/py/py-obj-type-super) 
 - 2018-09-28 [py-argv](/b/py/py-argv) 
@@ -37,5 +39,3 @@
 - 2018-09-27 [c-io-buffer](/b/c/c-io-buffer) 
 - 2018-09-27 [c-debug-gdb](/b/c/c-debug-gdb) 
 - 2021-03-16 [coredump](/b/c/c-debug-coredump) 
-- 2020-07-22 [vscode markdown-preview-enhanced example](/b/vsc/vsc-markdown) 
-- 2018-10-04 [security-web](/b/sec/security-web) 

@@ -4,6 +4,9 @@ date: 2018-09-28
 private:
 ---
 # ssh proxy
+参考：
+SSH 有关密钥和私钥 的那些事儿: https://www.iteye.com/blog/purplefairy-xxshi-2267874
+SSH 密钥及私钥: https://telcruel.gitee.io/2019/09/21/SSH/
 
     man ssh
     -f Rquests ssh to go to background just before command execution.

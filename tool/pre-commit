@@ -179,6 +179,7 @@ def genIndexPages(index_blogs):
     files_num = len(index_blogs)
     SIZE = 40
     page_urls = []
+    os.mkdir("post/p")
     page_files = []
     for i in range(0, files_num, SIZE):
         n = i // SIZE
