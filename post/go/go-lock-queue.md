@@ -11,4 +11,4 @@ private: true
     MPE
 
 相关代码：
-1. go-lib/goroutine/cas/atom-cas.go
+1. go-lib/lock/cas/atom-cas.go

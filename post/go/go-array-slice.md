@@ -104,8 +104,6 @@ cap 是可扩容的最大容量: cap = max-low
 A nil slice has a length and capacity of 0 and has `no underlying array`(no pointer):
 但是常量 []int{}==nil 不成立，常量不是空指针nil
 
-    var s []int;
-
     var s []int
     if s == nil {
         fmt.Println(s, len(s), cap(s))
@@ -113,8 +111,7 @@ A nil slice has a length and capacity of 0 and has `no underlying array`(no poin
 
 无论是nil 还是非nil, 它们的len/cap都是0
 
-    var s []int
-    s=[]int(nil)
+    var s []int // 相当于s=[]int(nil)
     fmt.Println(s, len(s), cap(s))
 
 nil slice 是可以append的
@@ -175,6 +172,13 @@ Slice is reference:
 	b[0] = 100
 	fmt.Println(a,b);# [100 2 3] [100 2 3]
 
+在func 中也如此
+
+	var a = []int{1,2,3}
+    func (l []int){
+        l[0]=100
+    }(a)
+    println(a[0])
 
 ## reslice
 len 限制了slice 读写，用reslice 创建新的slice 以便在cap 范围内读写：
@@ -250,13 +254,13 @@ merge a and b:
     x = append(a,b...)
 
 ### append cap allocate
-If the backing array of `s` is too small to fit all the given values, a bigger array will be allocated(double cap).
+If the backing array of `s` is too small to fit all the given values, a bigger array will be allocated(`double cap`).
 
 The returned slice will point to the newly allocated array.
 
     var a = [3]int{1,2,3}
     b := a[:];  # cap(b)=3
-    b = append(b,4,5);  # newcap(b)= 2cap(b) = 6 
+    b = append(b,4,5);  # newcap(b)= 2*cap(b) = 6 
 
 ## range loop slice and array
 The `range` form the `for loop iterates` over a `array, slice, string or map`, or values received on a channel.
@@ -264,7 +268,6 @@ The `range` form the `for loop iterates` over a `array, slice, string or map`, o
     for i, v := range [2]int{1,2} {
 		fmt.Printf("index=%d, %d\n", i, v)
 	}
-
 
 注意range is not reference! range 会复制对象. 除非使用指针
 

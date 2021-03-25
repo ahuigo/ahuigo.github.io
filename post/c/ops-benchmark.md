@@ -137,47 +137,21 @@ Refer: [tcp-ip](/p/tcp-ip)
 ## vegeta(golang版本)
 vegeta 是golang 写的压测工具
 
-    go get -u github.com/tsenart/vegeta
+    go get  github.com/tsenart/vegeta
 
-### 简单get
+### 构造get/post 请求
 
     echo "GET http://host.com" | vegeta attack  -rate=10000  -duration=10s |vegeta report
     echo "GET http://host.com" | vegeta attack  -rate=10000  -duration=10s > result.bin
 
 header:
 
-    jq -ncM '{method: "GET", url: "http://goku", body: "Punch!" | @base64, header: {"Content-Type": ["text/plain"]}}' |
+    jq -ncM '{method: "GET", url: "http://m:8099", header: {"Content-Type": ["text/plain"]}}' |
     vegeta attack -format=json -rate=100 | vegeta encode
 
-vegeta attack 参数：
+必须通过base64传body json
 
-    -format 接收请求信息的格式，这里使用json
-    -rate 每秒请求数
-    -duration 压测持续时间。0代表一直执行。
-    > 输出文件是二进制格式。
-
-
-### post请求
-    jq -ncM '{method: "POST", url: "http://baidu.com/", body: {key:"IDLE"} | @json }'
-
-    jq -ncM '{method: "POST", url: "http://baidu.com/", body: {key:"IDLE"} | @base64 }' \
-    | vegeta attack -format=json -rate=6000 -duration=60s > result.data-collection.6000qps.60s.bin;
-
-    jq -ncM '{method: "GET", url: "http://goku", body: "Punch!" | @base64, header: {"Content-Type": ["text/plain"]}}' |
-    vegeta attack -format=json -rate=100 | vegeta encode
-
-以上jq脚本的解释：
-
-    -n 没有stdin input
-    -c 压缩到一行
-    -M 去掉高亮彩色
-    {key:"IDLE"} | @base64  // base64编码
-
-### 变化请求
-
-    jq -ncM 'while(true; .+1) | {method: "POST", url: "http://dev-data-collection-inner.hdmap.momenta.works:32000/api/v1/gps", body: {"box_id":("stress-test-"+(.|tostring)),"unix_time":1549878773321,"lon":116.1824618,"lat":39.8726543,"alt":37.5,"fix_quality":4,"sate_num":12,"hdop":0.9,"status":"IDLE","image_status":"IDLE"} | @base64 }' | vegeta attack -format=json -rate=6000 -lazy -duration=60s > result.data-collection.6000qps.60s.gen.bin;
-
-    vegeta report result.data-collection.6000qps.60s.gen.bin | head -n 10;
+    jq -ncM '{method: "GET", url: "http://m:8099", body: {a:{b:[1,2]}} | @base64, header: {"Content-Type": ["application/json"]}}' | vegeta attack -format=json -rate=100 | vegeta encode
 
 以上jq脚本的解释：
 
@@ -187,6 +161,23 @@ vegeta attack 参数：
 
     while(true; .+1) 生成自增ID
     ("stress-test-"+(.|tostring)) 将整数ID转为string并加上前缀
+
+### vegeta attack
+vegeta attack 参数：
+
+    -format 接收请求信息的格式，如上例用这里使用json 请求格式
+    -rate 每秒请求数
+    -duration 压测持续时间。0代表一直执行。
+    > 输出文件是二进制格式。
+
+    jq -ncM '{method: "GET", url: "http://goku", body: "Punch!" | @base64, header: {"Content-Type": ["text/plain"]}}' |
+    vegeta attack -format=json -rate=100 | vegeta encode
+
+### 变化请求
+
+    jq -ncM 'while(true; .+1) | {method: "POST", url: "http://m:8099/api/gps", body: {"id":("id-"+(.|tostring)),"status":"IDLE"} | @base64 }' | vegeta attack -format=json -rate=6000 -lazy -duration=60s > result.data-collection.6000qps.60s.gen.bin;
+
+    vegeta report result.data-collection.6000qps.60s.gen.bin | head -n 10;
 
 vegeta report： 分析attack的二进制输出，生成报告。
 

@@ -286,7 +286,7 @@ https://github.com/gin-gonic/gin/pull/857/files
         return ioutil.ReadAll(c.Request.Body)
 
 
-## Read Body
+## Read Raw Body
 https://github.com/gin-gonic/gin/issues/961
 
     func RequestLogger() gin.HandlerFunc {
@@ -347,17 +347,6 @@ response info
         cookie = "NotSet"
         c.SetCookie("gin_cookie", "test", 3600, "/", "localhost", false, true)
     }
-
-## proxy
-
-	ketoURL, _ := url.Parse("http://keto.com/base")
-	ketoProxy := httputil.NewSingleHostReverseProxy(ketoURL)
-	ketoHandler := func(c *gin.Context) {
-		c.Request.Host = ketoURL.Host
-		ketoProxy.ServeHTTP(c.Writer, c.Request)
-	}
-    // 转发的地址是：http://keto.com/base/engines/acp/ory/xxx/xxx
-	e.Any("engines/acp/ory/:flavor/:resouces", ketoHandler)
 
 # Custom validators
 It is also possible to register custom validators. See the example code.

@@ -255,6 +255,10 @@ show create table(只能用命令行): 利用pgdump  输出
         install_date date
     );
 
+#### show create table
+
+    pg_dump -st tablename dbname
+
 #### copy table struture
     CREATE TEMP TABLE tmp_table AS SELECT * FROM tracks;
     CREATE TABLE tmp_table AS SELECT * FROM tracks;

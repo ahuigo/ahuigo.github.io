@@ -56,8 +56,14 @@ https://css-tricks.com/almanac/properties/t/table-layout/
 
     table-layout: fixed; //等宽效果: 
 
+### border
+    table{
+        border-collapse: collapse
+    }
+
 ### row
     .topics tr { line-height: 14px; }
+
 ### td 换行
 可以采用：
 

@@ -16,7 +16,7 @@ date: 2020-07-18
 
 怀疑是string 非原子操作导致，于是写了一个case
 
-    // go-lib/goroutine/race-string.go
+    // go-lib/lock/atom/race-string.go
     const (
         FIRST  = "WHAT THE"
         SECOND = "F*CK"

@@ -69,6 +69,7 @@ INSERT INTO table (id, field, field2)
        SELECT 3, 'C', 'Z'
        WHERE NOT EXISTS (SELECT 1 FROM table WHERE id=3);
 2. insert + onconflict do update
+eg:
 
     INSERT INTO the_table (id, column_1, column_2) VALUES (1, 'A', 'X'), (2, 'B', 'Y'), (3, 'C', 'Z')
     ON CONFLICT (id) 

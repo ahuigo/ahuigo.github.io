@@ -18,3 +18,10 @@ date: 2019-01-23
     x.go:3		0x10501c9		483b6110		CMPQ 0x10(CX), SP
     x.go:3		0x10501cd		7634			JBE 0x1050203
     ...
+
+参考：go-lib/lock/queue/queue.go
+
+    $ go build -o queue queue.go
+    $ go tool objdump -s .New queue
+    $ go tool objdump -s New queue
+    $ go tool objdump -s .Queue.PushTailCAS queue

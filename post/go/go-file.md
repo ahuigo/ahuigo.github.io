@@ -70,6 +70,7 @@ func Getwd() (pwd string, err error)
 
 ### mkdir
     err = os.Mkdir(path, os.ModeDir)
+	os.Mkdir("tmp", 0700)
 
 ## tmp
 ### tempFile
@@ -110,7 +111,6 @@ read:
 
     "io/ioutil"
     content, err := ioutil.ReadFile(filename)
-
 
 ### ReadAtLeast
 

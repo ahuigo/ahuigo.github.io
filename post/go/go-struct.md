@@ -102,6 +102,21 @@ struct 是值类型，slice 是引用类型(指针), 以下赋值方法是按值
     b = a                           //按值传递
     fmt.Printf("%p,%p\n", &a,&b)  //not same
 
+按值传递: 不会改变q
+
+    func (q Queue) Push(n Message) {
+        q.db[q.tail] = n
+    }
+
+按值传递: 
+
+    func (q *Queue) Push(n Message) {
+        q.db[q.tail] = n
+    }
+
+
+
+
 ## pointer to structs
 struct pointer:
 

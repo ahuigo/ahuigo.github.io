@@ -81,7 +81,7 @@ tshark比较新是wireshark的命令行版。 它和tcpdump 都是基于libpcap�
 如果想知道我们可以通过哪几个网卡抓包，可以使用-D参数，如：
 
     $ tcpdump -D
-	0.lo 127.0.0.1
+	0.lo0 127.0.0.1
     1.en0
     2.awdl0
     3.bridge0

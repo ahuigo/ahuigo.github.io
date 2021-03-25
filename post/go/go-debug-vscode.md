@@ -88,9 +88,15 @@ Delve is full featured debugging tool for Go.
         }
       ]
     }
-
+### 单步
 启动项目执行断点
 1. vscode: main.go 加断点
 2. 启动docker 或 docker-compose 或者纯dlv
 3. vscode: F5启用 Debug: start
 4. 访问8080 服务
+
+切换到Debug Console: 可执行函数调用，输出变量值
+    > string("abc")
+    "abc"
+    > string(string(output))
+    "hello"

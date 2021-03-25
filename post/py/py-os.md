@@ -31,7 +31,7 @@ print(sys.executable)
 
 # psutil
 
-## cup
+## cpu
 
 	>>> multiprocessing.cpu_count()
     >>> psutil.cpu_count() # CPU逻辑数量
@@ -51,7 +51,14 @@ print(sys.executable)
     [14.0, 4.0, 4.0, 4.0]
     [12.0, 3.0, 4.0, 3.0]
 
-获取内存信息
+### 获取内存信息
+进程占用内存/cpu
+
+    import os, psutil; 
+    print('常驻内存',psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2, "M")
+
+    mem_percent = 100 - psutil.virtual_memory().available * 100 / psutil.virtual_memory().total
+
 
 使用psutil获取物理内存和交换内存信息，分别使用：
 
@@ -63,7 +70,7 @@ print(sys.executable)
     返回的是字节为单位的整数，可以看到，总内存大小是8589934592 = 8 GB，已用7201386496 = 6.7 GB，使用了66.6%。
     而交换区大小是1073741824 = 1 GB。
 
-获取磁盘信息
+### 获取磁盘信息
 可以通过psutil获取磁盘分区、磁盘使用率和磁盘IO信息：
 
     >>> psutil.disk_partitions() # 磁盘分区信息

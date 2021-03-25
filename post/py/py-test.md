@@ -34,10 +34,7 @@ name rule:
         method/func: test* 一般还是test_*
     directory: test*, 一般写tests
 
-/conftest.py:
-    用于命令行配置
-
-inifile: setup.cfg
+用于命令行配置: vi setup.cfg
 
     [tool:pytest]
     minversion = 3.0
