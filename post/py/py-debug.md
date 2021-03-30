@@ -43,6 +43,24 @@ Python 代码调试技巧: \
     https://www.ibm.com/developerworks/cn/linux/l-cn-pythondebugger/
 
 # 异常
+## 异常信息处理
+### 异常的callstack
+callstack 要利用到traceback
+
+    except:
+        import traceback
+        print('异常的call stack:', traceback.format_exc()) 
+
+
+### 异常信息叠加
+可以把异常信息放到第二个参数
+
+    try:
+        raise Exception("msg1")
+    except Exception as err:
+        raise Exception("get upload url failed", err.args)
+        reise e
+
 ## Exception对象
 
     e = Exception(obj1, obj2)
@@ -60,22 +78,6 @@ Python 代码调试技巧: \
     except Exception as e:
         print(e.args, e.errors, str(e))
         a = e
-
-### 异常信息叠加
-可以把异常信息放到第二个参数
-
-    try:
-        raise Exception("msg1")
-    except Exception as err:
-        raise Exception("get upload url failed", err.args)
-        reise e
-
-### callstack
-callstack 要利用到traceback
-
-    except:
-        import traceback
-        print('call stack:', traceback.format_exc()) 
 
     
 ## global exception

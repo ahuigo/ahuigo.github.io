@@ -64,7 +64,6 @@ vim 下的光标移动
             <leader><leader>w
             <leader><leader>b
 
-
 ### 按字符移动光标hjkl
 
     几乎所有的移动都可以在前面加数字——实现重复的动作
