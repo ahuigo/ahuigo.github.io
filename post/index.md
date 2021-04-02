@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-10-04 [js-var](/b/ria/js-var) 
 - 2021-04-02 [Git 命令大全](/b/git/git-) 
 - 2021-04-02 [linux 下的Fork 与 Exec](/b/c/shell-redirect-fork2exec) 
 - 2021-04-02 [Shell IO及文件操作](/b/c/shell-io-file) 
@@ -38,4 +39,3 @@
 - 2018-09-27 [Golang：Array and slice](/b/go/go-array-slice) 
 - 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
 - 2021-01-23 [shell 表达式](/b/c/shell-expr) 
-- 2018-09-27 [全屏](/b/c/ops-virtualbox) 
