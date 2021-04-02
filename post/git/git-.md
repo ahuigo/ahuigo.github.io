@@ -792,6 +792,8 @@ Vim's operation:
 If u have conflict files:
 
 	git mergetool //resolve conficts
+    git checkout --ours -- <filename>
+    git checkout --theirs -- <filename>
 	git add -u
 	git rebase --continue //It will commit automatic.
 

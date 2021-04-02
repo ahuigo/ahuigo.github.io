@@ -25,6 +25,20 @@ od 支持更丰富的格式化输出
 	-A base
 		Specify the input address base.  base may be one of d, o, x or n, which specify decimal, octal, hexadecimal addresses or no address, respectively.
 
+e.g.
+
+    # 以字符显示(size=1)
+    $ od -c a.log
+    0000000    1  \n   2  \n
+
+    # 十六进制展示(size=1)
+    $ od -t xC a.log
+    0000000    31  0a  32  0a
+
+    # 两排
+    $ od -t xCc a.log
+    0000000 31  0a  32  0a
+            1   \n   2  \n
 
 # I/O Redirection 重定向
 
