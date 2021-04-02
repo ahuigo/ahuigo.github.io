@@ -1,5 +1,7 @@
 # AHUIGO 的笔记
-- 2021-03-30 [vim-motion](/b/vim/vim-motion) 
+- 2021-04-02 [mac user manager](/b/mac/mac-user) 
+- 2018-09-27 [tool](/b/c/ops-user) 
+- 2021-04-02 [vim-motion](/b/vim/vim-motion) 
 - 2018-09-28 [py-debug](/b/py/py-debug) 
 - 2018-03-03 [css 布局](/b/ria/css-layout) 
 - 2018-10-04 [py-test](/b/py/py-test) 
@@ -37,5 +39,3 @@
 - 2021-01-23 [shell 表达式](/b/c/shell-expr) 
 - 2018-09-27 [全屏](/b/c/ops-virtualbox) 
 - 2019-06-15 [linux os](/b/c/linux-os) 
-- 2020-12-06 [租房网](/b/idea/idea-house) 
-- 2018-09-28 [社保](/b/life/life-shebao) 

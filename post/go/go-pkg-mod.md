@@ -21,6 +21,15 @@ module 的出现主要是为了解决以下问题：
 
 而 module 的出现，可以让我们将 go 代码放到任何地方。
 
+## 指令
+    go mod tidy //拉取缺少的模块，移除不用的模块。
+    go mod download //下载依赖包
+    go mod vendor //将依赖复制到vendor下
+    go mod verify //校验依赖
+    go list -m -json all //依赖详情
+    go mod graph //打印模块依赖图
+    go mod why //解释为什么需要依赖
+
 # go mod 核心
 ## go mod path
 go get 使用的目录是 $GOROOT/src/github.com/
@@ -56,11 +65,6 @@ package 定义局部命名空间, 依赖于路径查找：
 
     import godemo_any "github.com/ahuigo/go-lib/godemo" 
 
-如果文件夹与package名`不同名`. 就用默认用文件夹名 作包名:
-
-    // package godemo
-    import godemo "github.com/ahuigo/go-lib/godemo" 
-
 如果文件夹下`多个包名`, 会报error
 
     // ahuigo/go-lib/godemo/fault1.go 用 package godemo1
@@ -80,9 +84,9 @@ package 定义局部命名空间, 依赖于路径查找：
         github.com/jinzhu/now v0.0.0-20181116074157-8ec929ed50c3 // indirect
     )
 
-go.mod 存在时，如果cache-hash 目录不存在，go run 会自动下载更新
+项目中依赖A, A依赖A1、A2, 但是A的go.mod 只记录了A1, 则A2是间接引入
 
-    //indirect 是间接引入
+    A2 //indirect 是间接引入
 
 ## go.mod init
 使用步骤：
@@ -134,8 +138,6 @@ go: cannot find main module; see 'go help modules'"，因为没有找到go.mod�
 
     $ cd project;
     $ go mod init project-name
-
-
 
 # 语义导入版本控制
 语义导入版本控制 （Semantic Import Versioning），是使用 module 必须要遵循的一些规定。

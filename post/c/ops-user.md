@@ -25,7 +25,8 @@ id：用户/组身份信息
 # usermod(group)
 User Modifier
 
-    usermod -aG docker,mysql ahui # add group
+    # add group to user "ahui"
+    usermod -aG sudo,docker,mysql ahui # add group
 	usermod -l new-name old-name
 	usermod -u new-uid loginname
 	usermod -d /home/new-home name

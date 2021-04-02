@@ -17,7 +17,7 @@ private: true
         [...children]
     )
 
-# CloneElement
+## CloneElement
     React.cloneElement(
       element,
       [props],
@@ -30,6 +30,7 @@ React.cloneElement() 几乎等同于：
 
 # dom 类型
 > https://stackoverflow.com/questions/58123398/when-to-use-jsx-element-vs-reactnode-vs-reactelement 解释得很清楚
+## ReactElement
 A ReactElement is an object with a type and props.
 
     interface ReactElement<P = any, T extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>> {
@@ -38,16 +39,7 @@ A ReactElement is an object with a type and props.
         key: Key | null;
     }
 
-A ReactNode is a ReactElement, a ReactFragment, a string, a number or an array of ReactNodes, or null, or undefined, or a boolean:
-
-    type ReactText = string | number;
-    type ReactChild = ReactElement | ReactText;
-
-    interface ReactNodeArray extends Array<ReactNode> {}
-    type ReactFragment = {} | ReactNodeArray;
-
-    type ReactNode = ReactChild | ReactFragment | ReactPortal | boolean | null | undefined;
-
+## JSX.Element
 JSX.Element is a ReactElement, with the generic type for props and type being any. 
 
     declare global {
@@ -63,6 +55,17 @@ By example:
             {true && "test"} // <- ReactNode
         </Custom>
     </p>
+
+## ReactNode(超集)
+A ReactNode is a ReactElement, a ReactFragment, a string, a number or an array of ReactNodes, or null, or undefined, or a boolean:
+
+    type ReactText = string | number;
+    type ReactChild = ReactElement | ReactText;
+
+    interface ReactNodeArray extends Array<ReactNode> {}
+    type ReactFragment = {} | ReactNodeArray;
+
+    type ReactNode = ReactChild | ReactFragment | ReactPortal | boolean | null | undefined;
 
 # Replace DOM(render)
     import React from 'react';
