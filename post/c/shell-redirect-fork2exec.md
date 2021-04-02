@@ -53,6 +53,7 @@ description:
         zsh: command not found: xxxxxxx
 
 ### 叠加重定
+`&>`与`>&`相同都是stdout+err叠加
 下面的语法全等价, 都是重定向err+stdout到a.txt
 
     >& a.txt
@@ -61,20 +62,30 @@ description:
     &>a.txt
     # 可以记忆为`&` 代表err,  `>`代表stdtout
 
-感觉应该尽量使用`>&`：
+    lsof -p 1134
+    0u     CHR    /dev/ttys002
+    1w     REG    t.txt
+    2w     REG    t.txt
 
-    # out+err
+可多次重定向
+
+    $ go run err.go 1>1.txt 1>11.txt 2>2.txt 2>3.txt &
+
+`num2>&num1`代表num2叠加到 num1 指向的文件
+
+    # err 叠加到1: stdout+err
     ( echo ass; xxxxxxx) 2>&1 | tee stdout.txt
 
-    # 两次stdout
+    # stdout 叠加到1: stdout+stdout
     ( echo ass; xxxxxxx) >&1 | tee stdout.txt
+    ( echo ass; xxxxxxx) 1>&1 | tee stdout.txt
 
-`&>`与`>&`相同，`2&>` 非常特殊
+`num&>` 是很很殊的用法，表示队和error重定向外，num 也要重定向到文件
 
-    # out+err 到文件1 (stdout screen关闭)
+    # 1+err 重定向到文件1 
     ( echo ass; xxxxxxx) &>1 
 
-    # 语法问题
+    # 2+err(双error) 叠加到文件1 
     ( echo ass; xxxxxxx) 2&>1
 
 参考下面的exec
@@ -147,8 +158,10 @@ eg:
 
 如果`exec 1>suc.txt`, 怎么恢复呢?  因为标准输出的文件描述符还有: `2`,`/dev/tty`, 所以:
 
-  exec 1>&2
-  exec 1>/dev/tty
+    # 恢复方法1
+    exec 1>&2
+    # 恢复方法2
+    exec 1>/dev/tty
 
 # exec
 虽然exec和source都是在父进程中直接执行，但exec这个与source有很大的区别，source是执行shell脚本，而且执行后会返回以前的shell。而exec的执行不会返回以前的shell了，而是直接把以前登陆shell作为一个程序看待，在其上进行复制。
@@ -206,7 +219,7 @@ exec命令示例
 利用wait 等待所有的子进程，利用 read -u9 阻塞等待pipe
 
     # Author: cloud@txthinking.com
-    max_process=54
+        max_process=5
     fd=/tmp/google-hosts.fd
     mkfifo $fd
     exec 9<>$fd
@@ -217,20 +230,21 @@ exec命令示例
     done >&9
 
     n=0
-    for((i=$first;i<$last;i++))
+    for((i=0;i<20;i++))
     do
         {
+            echo "inner n="$n 
             read -u9
             {
-                out=$(./getssl.sh $i)
-                echo -e "$out"
-                echo -e "$out" >> $output
+                date
                 echo >&9
             }
         }&
         n=$(($n+1))
+        echo "n="$n $(($max_process*2))
         if [ $(($n%$(($max_process*2)))) -eq 0 ]
         then
+            echo "wait n="$n $(($max_process*2))
             wait
         fi
     done

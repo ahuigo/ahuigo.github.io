@@ -1,5 +1,5 @@
 # AHUIGO 的笔记
-- 2021-03-30 [vim-motion](/b/vim/vim-motion) 
+- 2018-10-06 [vim-motion](/b/vim/vim-motion) 
 - 2018-09-28 [py-debug](/b/py/py-debug) 
 - 2018-03-03 [css 布局](/b/ria/css-layout) 
 - 2018-10-04 [py-test](/b/py/py-test) 
@@ -29,7 +29,7 @@
 - 2019-03-24 [Golang 的结构体](/b/go/go-struct) 
 - 2019-09-21 [Go Signal](/b/go/go-ipc-signal) 
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
-- 2021-02-05 [linux c 终端、作业与守护进程](/b/c/c-terminal) 
+- 2018-10-06 [linux c 终端、作业与守护进程](/b/c/c-terminal) 
 - 2018-10-04 [JS Math](/b/ria/js-math) 
 - 2015-03-15 [Js 字符串大全](/b/ria/js-str) 
 - 2018-09-27 [Golang：Array and slice](/b/go/go-array-slice) 
