@@ -55,7 +55,7 @@ make 变量有make 的语法，不是由shell 语法，
     LDFLAGS += -X "main.Version=$(shell git rev-parse HEAD)"
     GO := GO111MODULE=on go
 
-### 环境变量 variable in shell
+### 环境变量, shell 变量
 As MadScientist pointed out, you can export individual variables with:
 
     export MY_VAR = foo  # Available for all targets
@@ -83,13 +83,51 @@ You can also specify the `.EXPORT_ALL_VARIABLES` target to EXPORT ALL THE THINGS
 
 > 注意：shell 之间是不同的进程
 
-### 内置变量
+### 内置变量（Implicit Variables）
+比如 $(CC) 指向当前使用的编译器，$(MAKE) 指向当前使用的Make工具。
+
+make默认了一些[缺省内置常量](http://akaedu.github.io/book/ch22s03.html)
+
+	AR 		静态库打包命令的名字，缺省值是ar。
+	ARFLAGS 静态库打包命令的选项，缺省值是rv。
+	AS		汇编器的名字，缺省值是as。
+	ASFLAGS 汇编器的选项，没有定义。
+	CC 		C编译器的名字，缺省值是cc。
+	CFLAGS 	C编译器的选项，没有定义。
+	LD 		链接器的名字，缺省值是ld。
+	TARGET_ARCH 和目标平台相关的命令行选项，没有定义。
+	OUTPUT_OPTION 输出的命令行选项，缺省值是-o $@。
+
+	LINK.o 	把.o文件链接在一起的命令行，缺省值是$(CC) $(LDFLAGS) $(TARGET_ARCH)。
+
+	LINK.c 	把.c文件链接在一起的命令行，缺省值是$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)。
+
+	COMPILE.c 	编译.c文件的命令行，缺省值是$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c。
+
 $(CC) 指向当前使用的编译器
 
     output:
         $(CC) -o output input.c
 
 ### 自动变量（Automatic Variables）
+在makefile 有一些Automatic 的变量
+
+	$@，表示规则中的目标。
+	$^，表示规则中的所有前置条件，组成一个列表，以空格分隔。
+	$<，表示规则中的第一个条件。
+	$?，表示规则中所有比目标新的条件，组成一个列表，以空格分隔。
+	$$, 当前进程id
+	% 用于匹配target/require 的通配符
+	$*, 表示%所匹配的字符串
+	$(@D) 和 $(@F) 分别指向 $@ 的目录名和文件名。
+		比如，$@是 src/input.c，那么$(@D) 的值为 src ，$(@F) 的值为 input.c。
+	$(<D) 和 $(<F) 分别指向 $< 的目录名和文件名。
+
+makefile 中的编译命令可以是这样
+
+	main: main.o stack.o maze.o
+		gcc $^ -o $@
+
 #### $@ 指代当前目标
 
     a.txt b.txt: 
@@ -135,13 +173,9 @@ $(CC) 指向当前使用的编译器
 #### `$(<D) 和 $(<F)`
 `$(<D) 和 $(<F)` 分别指向 `$<` 的目录名和文件名。
 
-
-
     dest/%.txt: src/%.txt
         @[ -d dest ] || mkdir dest
         cp $< $@
-
-
 
 # 执行指令
 
@@ -159,6 +193,16 @@ $(CC) 指向当前使用的编译器
 
     test:
         @echo TODO
+
+## 失败继续
+默认命令失败时，会停止。如果在命令前加`-` 就继续下一条command
+
+Example: clean 清除编译文件 这一target 不需要条件。
+
+	clean:
+		@echo "cleanning project"
+		-rm main *.o
+		@echo "clean completed"
 
 ## 忽略错误
 默认make 执行语句时，如果有错误就结束执行。
@@ -187,7 +231,7 @@ $(CC) 指向当前使用的编译器
     all:
     > echo Hello, world
 
-## 命令间变量不会共享
+## 命令间变量不会共享, ONESHELL
 除非把命令写成一行：
 
     var-kept:
@@ -209,6 +253,15 @@ $(CC) 指向当前使用的编译器
 
     f.o: f.c
     g.o: g.c
+
+## prerequisites 前置条件
+前置条件通常是一组文件名，之间用空格分隔。
+它指定了"目标"是否重新构建的判断标准：
+	只要有一个前置文件不存在，或者有过更新（前置文件的last-modification时间戳比目标的时间戳新），"目标"就需要重新构建。
+
+	result.txt: source.txt
+		cp source.txt result.txt
+
 
 # 判断和循环
 Makefile使用 Bash 语法，完成判断和循环。
@@ -288,3 +341,90 @@ patsubst 函数用于模式匹配的替换，格式如下。
     filename = a.js
     min: 
         echo $(filename:.js=.min.js )
+
+# 依赖处理
+## 隐含规则和模式规则
+默认情况下我们不需要为*.o 编写规则：
+
+	stack.o: stack.c
+		gcc -c stack.c
+
+因为，对于任何的*.o 有隐含规则：
+
+	# default
+	OUTPUT_OPTION = -o $@
+
+	# default
+	CC = cc
+
+	# default
+	COMPILE.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+
+	%.o: %.c
+		$(COMPILE.c) $(OUTPUT_OPTION) $<
+
+## wildcard 通配符
+
+	* ? []
+
+## make Example
+将CofferScript脚本转为JavaScript脚本。
+
+	source_files := $(wildcard lib/*.coffee)
+	build_files  := $(source_files:lib/%.coffee=build/%.js)
+
+	build/%.js: lib/%.coffee
+		coffee -co $(dir $@) $<
+
+	coffee: $(build_files)
+
+执行
+
+	$ make coffee
+
+
+
+## 自动处理头文件依赖
+有时我们会忘记在makefile 中更新新加的头文件，这些条件可以通过`gcc -M` 自动生成包含头文件的 requirement 。
+
+比如我们在a.c 中新加了`#include "stack.h"`
+
+	> gcc -M a.c -Ilib
+	a.o: a.c /usr/include/stdio.h /usr/include/sys/cdefs.h \
+		lib/stack.h \
+		.....
+	> gcc -MM a.c -Ilib
+	a.o: a.c lib/stack.h
+
+通常会用`include` 包含并触发更新头文件依赖关系。比如：
+
+	SOURCE = main.c other.c
+	include $(SOURCE:.c=.d)
+	%.d: %.c
+		set -e; rm -f $@; \
+		$(CC) -MM $(CPPFLAGS) $< > $@.$$$$; \
+		sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+		rm -f $@.$$$$
+
+以上规则中的命令因为有反斜线转义行，所以是一条命令, 只创建一个shell：
+
+- `include $(SOURCE:.c=.d) ` 相当于 `include main.d other.d` 两子规则.
+- 当main.d 或者 other.d 规则不存在时，会触发`%d: %c` 规则 并创建 *.d 规则
+- `$(CC) -MM $(CPPFLAGS) $< > $@.$$$$;` 用于创建新的头文件依赖关系，这四个`$` 被make 解析为两个，shell 再解析为进程号。
+- `sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; ` 用于将"main.o :" 替换为 "main.o main.d:", 目标文件和头文件依赖的：requirement 是相同的。`$*`代表% 所匹配的字符串。
+
+如果我们不想在requirement 中包含系统的头，此时可以用`gcc -MM`
+
+# make 命令行
+
+	-n
+		Print each command, but not excute command.
+	-C dir
+		Change to directory dir before reading the makefiles or doing anything else.
+		所有的工作都以dir 作基根目录
+
+	VAR=value
+		Eg. `make CPPFLAGS=-g`, 在make 命令行中定义变量
+
+# 参考
+Refer to: http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html
