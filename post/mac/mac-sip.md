@@ -5,8 +5,13 @@ category: blog
 description: 
 date: 2018-09-27
 ---
-# Preface
-# References
+# mac 文件保护临时关闭
+/usr/include 目录是不可写的，可临时打开 
+1. 关机重启，按 `command + r` 键进入 recovery 模式，在工具中选择命令行，键入 `csrutil disable`,提示成功后，键入reboot 重启
+2. 在进行写入操作
+3. 写完之后再进入 recovery 模式键入 `csrutil enable`,成功后reboot 重启
+
+# mac 文件保护限制
 http://havee.me/mac/2015-10/system-integrity-protection-on-el-capitan.html
 http://www.jianshu.com/p/0572336a0771
 

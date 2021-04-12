@@ -34,7 +34,7 @@
 - 2015-03-15 [Js 字符串大全](/b/ria/js-str) 
 - 2018-09-27 [Golang：Array and slice](/b/go/go-array-slice) 
 - 2016-09-27 [Shell 工具集合](/b/c/shell-tool) 
-- 2021-01-23 [shell 表达式](/b/c/shell-expr) 
+- 2021-04-12 [shell 表达式](/b/c/shell-expr) 
 - 2018-09-27 [全屏](/b/c/ops-virtualbox) 
 - 2019-06-15 [linux os](/b/c/linux-os) 
 - 2020-12-06 [租房网](/b/idea/idea-house) 

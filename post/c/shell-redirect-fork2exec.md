@@ -53,7 +53,7 @@ description:
         zsh: command not found: xxxxxxx
 
 ### 叠加重定
-`&>`与`>&`相同都是stdout+err叠加
+`>&` `&>`让stdout+err叠加到别的文件
 下面的语法全等价, 都是重定向err+stdout到a.txt
 
     >& a.txt
@@ -67,11 +67,30 @@ description:
     1w     REG    t.txt
     2w     REG    t.txt
 
+独立的`>&`非法，`>&1`是重复叠加1指向的文件（重复输出）   `2>&2`, `num2>&num1` 同理
+ 
+    go run err.go >&1 | wc -l
+
 可多次重定向
 
     $ go run err.go 1>1.txt 1>11.txt 2>2.txt 2>3.txt &
+    
+注意顺序 
 
-`num2>&num1`代表num2叠加到 num1 指向的文件
+    # dup(a.txt, 1) dup(1,2)
+    $ go run err.go >a.txt 2>&1
+    $ cat a.txt
+    msg!!!!
+    error!
+
+    # dup(1,2) dup(a.txt, 1)
+    $ go run err.go 2>&1 >a.txt
+    error!
+    $ cat a.txt
+    msg!!!!
+        
+
+`num2>&num1` `num2>& num1` (`1>& num1`等价 `>& num1`)代表 dup2(num1,num2) (重复输出)
 
     # err 叠加到1: stdout+err
     ( echo ass; xxxxxxx) 2>&1 | tee stdout.txt
@@ -80,7 +99,7 @@ description:
     ( echo ass; xxxxxxx) >&1 | tee stdout.txt
     ( echo ass; xxxxxxx) 1>&1 | tee stdout.txt
 
-`num&>` 是很很殊的用法，表示队和error重定向外，num 也要重定向到文件
+`num&>` 是很很殊的用法，表示num和error叠加重定向到文件
 
     # 1+err 重定向到文件1 
     ( echo ass; xxxxxxx) &>1 
@@ -102,6 +121,10 @@ description:
 
   cat 0<a.txt
   cat <a.txt
+
+本质是 `fd=open(file, rw); 5->fd`
+
+  cat 5<>a.txt
 
 ## 输出重定向
 本质是 `fd=open(file, w+[append]); [1-n]->fd`
