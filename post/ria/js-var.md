@@ -108,7 +108,6 @@ false == 0
 	typeof null; "object"
 	typeof undefined; "undefined"
 
-
 # Compare
 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Equality_comparisons_and_sameness
 

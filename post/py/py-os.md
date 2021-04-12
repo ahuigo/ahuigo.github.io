@@ -51,16 +51,22 @@ print(sys.executable)
     [14.0, 4.0, 4.0, 4.0]
     [12.0, 3.0, 4.0, 3.0]
 
-### 获取内存信息
-进程占用内存/cpu
+### 当前内存/cpu信息
 
-    import os, psutil; 
-    print('常驻内存',psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2, "M")
+进程占用
 
-    mem_percent = 100 - psutil.virtual_memory().available * 100 / psutil.virtual_memory().total
+    p = psutil.Process(os.getpid())
+    process_mem=p.memory_info().rss / 1024 ** 2
+    process_cpu_percent=p.cpu_percent()
 
+os 占用mem/cpu
 
-使用psutil获取物理内存和交换内存信息，分别使用：
+    os_mem_used=psutil.virtual_memory().used / 1024 ** 2
+    os_mem_percent=psutil.virtual_memory().percent
+    os_mem_percent = 100 - psutil.virtual_memory().available / psutil.virtual_memory().total * 100 
+    os_cpu_percent=psutil.cpu_percent()
+
+os物理内存和交换内存信息，分别使用：
 
     >>> psutil.virtual_memory()
     svmem(total=8589934592, available=2866520064, percent=66.6, used=7201386496, free=216178688, active=3342192640, inactive=2650341376, wired=1208852480)

@@ -4,9 +4,11 @@ title:	mac user manager
 category: blog
 description: 
 ---
-
 # Preface
 mac下没有adduser, 那如何在mac中添加用户/组?
+
+# rename home directory
+https://support.apple.com/en-us/HT201548#:~:text=To%20get%20there%2C%20you%20can,you%20used%20to%20log%20in.
 
 # 命令行操作 
 
