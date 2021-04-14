@@ -259,9 +259,9 @@ Example:
 #### 逻辑测试顺序
 logic order
 
-	{1 or 2} and 3 # 3? 左序为先
-	1 or {2 and 3} # 1? 右序为先
-	true || false && echo yes; # 1? 右序为先
+	{true || false } && echo yes; # 左优先
+	true || { false && echo yes;} # 右优先
+	true || false && echo yes; # 默认左序
 	0 and 1 or 2
 
 shell 逻辑测试符是从左开始以最短的语句为子语句。python/js 都是如此
