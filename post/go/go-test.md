@@ -2,7 +2,7 @@
 title: go-test
 date: 2018-09-27
 ---
-# Preface
+# unittest 
 Go has a lightweight test framework composed of the go test command and the testing package.
 
 1. test framework composed of the `go test` command and the `testing` package.
@@ -26,6 +26,32 @@ Go has a lightweight test framework composed of the go test command and the test
         -bench "Benchmark_*"
         -bench=. ; 表示运行所有基准测试
         -bench=Alloc ; 表示运行所有基准测试: Benchmark_Alloc
+
+## test faq
+### test cwd
+默认go test会改变cwd 到测试文件所在的目录
+
+    package xtesting
+    import (
+      "os"
+      "path"
+      "runtime"
+    )
+
+    func init() {
+      _, filename, _, _ := runtime.Caller(0)
+      dir := path.Join(path.Dir(filename), "..")
+      err := os.Chdir(dir)
+      if err != nil {
+        panic(err)
+      }
+    }
+
+After that, just import the package into any of the test files:
+
+    import (
+        _ "project/xtesting"
+    )
 
 ## unit test
 github.com/ahuigo/go-lib/gotest
@@ -103,12 +129,14 @@ In package list mode ，successful package test result will be cached and reused
 #### test with specify file
 1. `go test` is okay.
 2. `go test <pkg>`  is okay.
-3. `go test whatever_test.go` is not okay: `undefined: xxxx` 
+3. `go test whatever_test.go` is okay
+3. `go test whatever.go` is not okay
 
-指定文件、路径
+指定文件、路径. 如是foo_test.go 依赖foo.go 就要写全:
 
     $ go test foo_test.go foo.go
     $ go test ./service
+    $ go test requests_test.go requests.go
 
 指定函数
 

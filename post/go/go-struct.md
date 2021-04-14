@@ -114,8 +114,10 @@ struct 是值类型，slice 是引用类型(指针), 以下赋值方法是按值
         q.db[q.tail] = n
     }
 
+总结一下:
 
-
+    func (s *MyStruct) pointerMethod() { } // method on pointer
+    func (s MyStruct)  valueMethod()   { } // method on value
 
 ## pointer to structs
 struct pointer:

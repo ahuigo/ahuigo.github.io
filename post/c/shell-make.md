@@ -3,6 +3,25 @@ title: Shell make
 date: 2019-05-06
 private:
 ---
+# Expr
+## Func
+参考 https://www.gnu.org/software/make/manual/html_node/Text-Functions.html
+make 提供了很多func
+
+    ARR:= d/a.go d1/b.go d/c.go d/b.go txt/b.txt
+    t:
+        echo $(filter %.go,$(ARR))
+        echo $(dir $(filter %.go,$(ARR)))
+        echo $(sort $(dir $(filter %.go,$(ARR))))
+
+## loop
+使用原生的shell 的loop
+
+    TEST_DIRS=$(sort $(dir $(filter %.go,$(ARR))))
+	@for dir in $(TEST_DIRS); do \
+		go test -timeout 20m -coverprofile="coverage.log" "$$dir" \
+	done;
+
 # Shell make
 > refer to : http://www.ruanyifeng.com/blog/2015/02/make.html
 ## Specify Makefile
@@ -50,7 +69,7 @@ e.g:
 
     echo $$HOME
 
-make 变量有make 的语法，不是由shell 语法，
+make 变量与shell 变量不同
 
     LDFLAGS += -X "main.Version=$(shell git rev-parse HEAD)"
     GO := GO111MODULE=on go

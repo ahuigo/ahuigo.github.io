@@ -74,6 +74,7 @@ func Getwd() (pwd string, err error)
 
 ## tmp
 ### tempFile
+    // 生成随机的文件名，不会自动Remove
     file, err := ioutil.TempFile("dir", "prefix")
     if err != nil {
         log.Fatal(err)
@@ -94,6 +95,12 @@ func Getwd() (pwd string, err error)
 ## open
     f, err := os.Open("/tmp/dat")
     f.Close()
+
+### file attr
+    // Name就是path/to/file
+    f.Name()
+    (f *File) Stat() (FileInfo, error)
+    (f *File) Sync() error
 
 ## read
 read:
