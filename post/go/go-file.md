@@ -140,8 +140,8 @@ read:
 ### writeFile
 with bytes
 
-    d1 := []byte("hello\ngo\n")
-    err := ioutil.WriteFile("/tmp/dat1", d1, 0644)
+    bytes := []byte("hello\ngo\n")
+    err := ioutil.WriteFile("/tmp/dat1", bytes, 0644)
 
 ### Write
 Write bytes

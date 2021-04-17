@@ -134,7 +134,7 @@ string 本身为指针（值不可修改），
     str := `\n\r\b\\` //literal
 
 ### str format
-see go-str-html.md
+see go-lib/str/format.go
 
 ## loop string
 ### range rune

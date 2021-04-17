@@ -27,7 +27,7 @@ Go has a lightweight test framework composed of the go test command and the test
         -bench=. ; 表示运行所有基准测试
         -bench=Alloc ; 表示运行所有基准测试: Benchmark_Alloc
 
-## test faq
+## faq
 ### test cwd
 默认go test会改变cwd 到测试文件所在的目录
 
@@ -172,6 +172,8 @@ testing.T 提供了几种日志输出方法:
 
 Note:
 Error/Fatal 都会导致bench 不被执行
+
+    t.Fatal(err)
 
 # bench test
 ## bench test rule

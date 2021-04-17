@@ -317,7 +317,7 @@ https://github.com/gin-gonic/gin/issues/961
     r.ForwardedByClientIP = false //默认是true
     func (c *Context) ClientIP() string {
 
-## header
+## request  info
 Request   *http.Request
 
     c.Request.URL.Path = "/test2"
@@ -326,17 +326,16 @@ Request   *http.Request
     c.ClientIP()
     c.Request.UserAgent()
 
-headers
+## headers
 
     origin := c.Request.Header.Get("Origin")
     origin := c.Request.Header.Get("Referer")
-
 
 response info
 
     c.Writer.Status()
 
-## URL
+## request URL
 
     c.Request.URL.Path
     c.Request.URL.RawQuery

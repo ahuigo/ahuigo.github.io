@@ -4,21 +4,21 @@ title:	SSL Certificate Authority(CA)
 category: blog
 description: 
 ---
-# 证书级别
+# 证书概念
+## 证书级别
 http://www.ruanyifeng.com/blog/2016/08/migrate-from-http-to-https.html
 
-# SNI(SSL/TLS Server Name Indication)
+## SNI(SSL/TLS Server Name Indication)
 同一IP地址和端口下不同域名HTTPS请求的需要服务端和客户端均支持SNI（Server Name Indication）https://en.wikipedia.org/wiki/Server_Name_Indication 协议，在HTTPS请求握手开始阶段指定要请求的域名，以便服务端选择使用相应的证书。
 
 1. 服务端Nginx配置支持是TSL1.0及以上版本，均支持SNI协议，
 2. 但若客户端不支持SNI协议，即没有指定要请求的域名，Nginx会优先查找default server中的证书配置，
 3. 若没有找到则会按照配置文件字母序查找对应IP端口上第一个配置有证书的域名的证书做为默认证书使用。
 
-## support
+### support
 
 	java >= 1.7
 	android web >= 4.*
-
 
 ### SNI in Android SDK
 The current situation is the following:
@@ -30,7 +30,7 @@ The current situation is the following:
 
 It is also possible to test the SNI support by making a connection to this URL: https://sni.velox.ch/
 
-## Debug SNI
+### Debug SNI
 SNI should work completely transparently when running on Java 1.7 or newer. No configuration is required. If for whatever reason SSL handshake with SNI enabled server fails you should be able to find out why (and whether or not the SNI extension was properly employed) by turning on SSL debug logging as described here [1] and here [2]
 
 'Debugging SSL/TLS Connections' may look outdated but it can still be useful when troubleshooting SSL related issues.
@@ -39,7 +39,8 @@ SNI should work completely transparently when running on Java 1.7 or newer. No c
 
 [2] http://docs.oracle.com/javase/7/docs/technotes/guides/security/jsse/JSSERefGuide.html#Debug
 
-# debug
+# debug cert
+调试证书
 
 ## ssl 延迟
 
@@ -72,7 +73,7 @@ SNI should work completely transparently when running on Java 1.7 or newer. No c
 		 /OU=ValiCert Class 2 Policy Validation Authority
 		 /CN=http://www.valicert.com//emailAddress=info@valicert.com
 
-# Show Ceritificate Info
+## Show Ceritificate Info
 Show all information about a certificate:
 
 	openssl x509 -noout -text < crt
@@ -89,10 +90,9 @@ info of crt/pem
 
     openssl x509 -noout -text -in server.CA.crt
 
-
 # CA vs Self-Signed
 正常的生产证书：
-1. 在你的服务器上，生成一个CSR文件（SSL证书请求文件，SSL Certificate Signing Request）。
+1. 在你的服务器上，生成一个CSR文件（也叫SSL证书请求文件，SSL Certificate Signing Request）。
 2. 使用CSR文件，购买SSL证书。
 3. 安装SSL证书。
 
@@ -100,10 +100,8 @@ ssl 证书转移:
 IIS的做法是生成一个可以转移的.pfx文件，并加以密码保护。
 
 Certificate type:
-
 1. CA: request one from a `certificate authority` like Let’s Encrypt, Comodo, etc. 
 2. self signed: generate a `self-signed certificate` on the command line.
-
 
 # Self-Signed Certificate
 Refer to: https://deliciousbrains.com/https-locally-without-browser-privacy-errors/
@@ -348,6 +346,7 @@ Create a config file((`dev.deliciousbrains.com.ext`) It define the Subject Alter
 
     [alt_names]
     DNS.1 = dev.deliciousbrains.com
+    DNS.2 = dev2.deliciousbrains.com
 
  run the command to create the certificate( signing with the root certificate and private key.)
 
@@ -362,35 +361,6 @@ Use signed crt:
         ssl_certificate /Users/hilojack/ssl/s/localhost.crt;           
         ssl_certificate_key /Users/hilojack/ssl/s/localhost.key; #cert.key
     }
-
-# 另一个CA example
-## Creating CA-Signed Certificates 
-private key
-
-    openssl genrsa -out localhost.key 2048
-
-### CSR
-Then we create a CSR(Signed Request):
-
-    openssl req -new -key localhost.key -out localhost.csr
-
-### CRT
-Using our CSR, the CA private key, the CA certificate, and a config file to create: `localhost.crt`+`CAcreateserial: myCA.srl`
-
-    openssl x509 -req -in localhost.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial \
-    -out localhost.crt -days 1825 -sha256 -extfile localhost.ext
-
-The config file is needed to define the Subject Alternative Name (SAN) extension`localhost.ext`:
-
-    authorityKeyIdentifier=keyid,issuer
-    basicConstraints=CA:FALSE
-    keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-    subjectAltName = @alt_names
-
-    [alt_names]
-    DNS.1 = localhost
-    DNS.2 = localhost.192.168.1.19.xip.io
-
 
 # Reference
 ## Creating a User Certificate for Authentication/Mail

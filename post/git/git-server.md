@@ -6,22 +6,56 @@ date: 2018-09-27
 方案参考:
 0. git-scm 教程
 1. 廖老师的文章在本地建一个git server http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000
+2. mac参考：https://www.tomdalling.com/blog/software-processes/how-to-set-up-a-secure-git-server-at-home-osx/
 
 ## 1.create git user
 
     sudo adduser git
 
-## 2.创建证书登录
-需要收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pub文件，把所有公钥导入到`/home/git/.ssh/authorized_keys`文件里，一行一个。
+mac 可在UI中添加
 
-在用户的local 机器上创建id_rsa.pub
+## 2. sshd
+1. linux: `systemctl start sshd`
+2. macosx: 打开remote login, 并且Access allow for 设置成only these users: `git` (安全考虑)
 
-    $ ssh-keygen -t rsa
+测试
 
+    ssh git@127.0.0.1
 
+### 配置sshd
+为了安全，我们应该禁用ssh 登录。
+`sudo vim /etc/sshd_config`, mac下是`/etc/ssh/sshd_config`, change the following lines as indicated below.
 
+    Find this line	                        Change it to this
+    #PermitRootLogin prohibit-password      PermitRootLogin no
+    #PasswordAuthentication yes             PasswordAuthentication no
+    #ChallengeResponseAuthentication yes	ChallengeResponseAuthentication no
+    UsePAM yes	                            UsePAM no
 
-	$ git clone git@127.0.0.1:/Users/hilojack/www/bat.git
+我们用id_rsa.pub 登录, 类似
+
+	cat ~/.ssh/id_rsa.pub | ssh user@machine "mkdir /Users/git/.ssh; cat >> /Users/git/.ssh/authorized_keys"
+
+### 配置git server
+如果git 没有PATH执行git 命令：
+
+    ssh git@127.0.0.1
+    echo 'export PATH="$PATH:/usr/local/git/bin/"' >> /Users/git/.bashrc
+
+## create bare git
+git server 端的repo 应该是bare的（整个目录就是.git, 没有任何其它东西）
+
+    git init --bare my_bare_repo.git
+    git clone --bare /wherever/the/existing/repo/is.git
+
+client 端使用：
+
+    git clone ssh://git@mygit.dyndns.org:12345/Users/git/my_repo.git
+    git clone ssh://git@127.0.0.1/Users/git/my_repo.git
+
+faq: 
+1. `git init --bare repo`如果不设置 GIT_DIR， 工作目录默认是当前目录
+2. `ln -s ~/www/c-lib/.git  /Users/git/c-lib` 可行吗
 
 ## 管理公钥
 如果团队很小，把每个人的公钥(*.pub)收集起来放到服务器的`/home/git/.ssh/authorized_keys` 文件里就是可行的。如果团队有几百号人，就没法这么玩了，这时，可以用Gitosis来管理公钥。

@@ -392,7 +392,7 @@ RequestsCookieJar
 
     cookies.set_cookie(cookie)
 
-## Session
+# Session
 > both session and cookie is pickle
 
 Use a session object instead, it'll persist cookies and send them back to the server:
@@ -413,6 +413,10 @@ Use a session object instead, it'll persist cookies and send them back to the se
 
 如果你要手动为会话添加 cookie，就是用 [Cookie utility] 函数 来操纵 Session.cookies。
 [Cookie utility]: http://docs.python-requests.org/zh_CN/latest/api.html#api-cookies
+
+## session auth
+	s = requests.Session()
+	s.auth = ('user', 'pass')
 
 ## Session Cookie
 python 2/3:
