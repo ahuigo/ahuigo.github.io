@@ -43,5 +43,5 @@
 [submodule "demo/fiddle"]
 	url = https://github.com/ahuigo/local-jsfiddle.git
 [remote "local"]
-	url = ssh://git@m/Users/git/a
+	url = ssh://git@local/Users/git/a
 	fetch = +refs/heads/*:refs/remotes/local/*
