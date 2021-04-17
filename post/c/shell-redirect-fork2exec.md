@@ -8,11 +8,13 @@ description:
 多进程的的内容包括进程控制, 进程通信, 进程本身的结构.
 
 # 标准管道输入输出
+with stdout(cmd get double stdout); stdout pipe to cmd
 
-	#with stdout(cmd get double stdout); stdout pipe to cmd
-	echo abc | tee /dev/stdout | cmd
-	#with tty(screen)
-	echo abc | tee /dev/tty | cmd
+	echo abc | tee /dev/stdout | wc -l
+
+with tty(screen)
+
+	echo abc | tee /dev/tty | wc -l
 
 标准输入输出:
 
