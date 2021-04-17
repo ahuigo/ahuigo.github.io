@@ -44,6 +44,8 @@ Example
 		id_rsa.pub/id_rsa
 
 ## SSH Client
+    ssh user@host echo 1 2
+    ssh user@host "echo 1 2"
 ### config
 以下 `~/.ssh/config` 包含了可以避免在特定网络环境中连接被断掉的情况的设置、使用压缩（这对于通过低带宽连接使用 scp 很有用），以及使用一个本地控制文件来开启到同一台服务器的多通道：
 
