@@ -66,21 +66,21 @@ https://www.jianshu.com/p/23adccda99f0
     sum(1,2,3)() //6
 
 ## Promise 
-用js写一个sleep 延时函数
+用js写一个wait 延时函数
 
-    function sleep(seconds){
+    function wait(seconds){
         //请补全
     }
 
     (async function(){
         console.log('Begin....');
-        await sleep(5);
+        await wait(5);
         console.log('5 seconds elapsed.');
     })()
 
-进一步, 请修改实现，给出满足以下要求的示例：
-1. 如果调用参数不正确，比如调用 sleep(-1)，请抛出 Exception 异常信息，
-2. 调用方能捕获此异常，并用console.log 输出异常信息
+补全上面的代码后, 请修改进一步完善实现，给出满足以下要求的示例：
+1. 如果调用参数不正确，比如调用 wait(-1)，请抛出 Exception 异常信息，
+2. 调用方能捕获此上述异常，并用console.log 输出异常信息
 
 ## 闭包是什么？
 闭包是什么？请用代码举例说明

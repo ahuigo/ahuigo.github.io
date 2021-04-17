@@ -3,6 +3,8 @@ title: SSH SERVER 的配置
 date: 2019-06-23
 ---
 # SSH SERVER
+## install and start
+### linux
 OpenSSH Installations under CentOS Linux
 
 	# To install the server and client type:
@@ -13,15 +15,31 @@ Start the service:
 	chkconfig sshd on
 	service sshd start
 
-Or:
-
-	ssh
-		[-D [bind_address:]port] [-e escape_char] [-F configfile]
-		[-L [bind_address:]port:host:hostport]
-
 Make sure port 22 is opened:
 
 	netstat -tulpn | grep :22
+
+### mac osx
+Open Share Settings....
+
+## Change port
+
+1.Config : `$ vi /etc/ssh/sshd_config`, if you wanna support multiple port like 2222
+
+    Port 22
+    Port 2222
+
+2.Config firewall
+
+    firewall-cmd --zone=public --add-port=2222/tcp --permanent
+    # selinux
+    semanage port -a -t ssh_port_t -p tcp 2222
+    firewall-cmd --reload
+
+2.reboot sshd
+
+    service sshd restart
+    systemctl restart sshd
 
 ## Firewall Settings
 

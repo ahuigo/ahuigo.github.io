@@ -11,11 +11,18 @@ priority:
     for i in `seq 1 5`;
     for i in {1..5};
 
-## loop break
+## loop break continue
 
     for i in `seq 1 100`; do
         echo $i | grep 3 && echo yes && break
     done
+
+其它
+
+    continue
+    continue n
+    break
+    break n
 
 ## for
 `seq 1 5`:

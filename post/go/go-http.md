@@ -152,6 +152,11 @@ For control over proxies, TLS configuration, keep-alives, compression, and other
         fmt.Println("cookie:",i, cookie.Name,'=', cookie.Value)
     }
 
+Read sepecified header(大小写不敏感)
+
+    resp.R.Header.Get("location")
+    resp.R.Header.Get("Location")
+
 ## body
     buf := bytes.Buffer{}
 	length, _ := buf.ReadFrom(resp.Body)

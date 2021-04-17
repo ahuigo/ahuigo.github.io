@@ -100,3 +100,9 @@ Delve is full featured debugging tool for Go.
     "abc"
     > string(string(output))
     "hello"
+
+# test
+## test env 配置
+  "go.testEnvVars": {
+        "xx": "yy" //示例
+    }

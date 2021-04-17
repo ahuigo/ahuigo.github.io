@@ -32,7 +32,7 @@ curl 转换器: https://curl.trillworks.com/
     $ curl --trace - https://www.example.com
 
 # header
-curl 默认发送post数据是: application/x-www.form-urlencoded(不同于在form 表单中设置: enctype="multipart/form-data"), 如果是`text/plain`, post 数据就被存放于 HTTP_RAW_POST_DATA.
+curl 默认发送post数据是: application/x-www-form-urlencoded(不同于在form 表单中设置: enctype="multipart/form-data"), 如果是`text/plain`, post 数据就被存放于 HTTP_RAW_POST_DATA.
 
 	#send post as HTTP_RAW_POST_DATA (file_get_contents(php://input)):
 	//$GLOBALS["HTTP_RAW_POST_DATA"];

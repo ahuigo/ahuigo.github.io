@@ -51,43 +51,6 @@ SSH 协议框架 包括三个协议：
 # SSH 协议的可扩展能力
 SSH 协议允许自定义加密算法（如RSA/ DSA）, 客户端定义密钥规则，高层扩展功能性应用协议(扩展大多遵循IANA 规定，特别是消息编码和命名规则)
 
-# OpenSSH
-OpenSSH 是SSH 协议的开源软件包（OpenBSD 子项目），它和OpenSSL 是不一样的。它们有不同的目标、不同的发展团队
-
-程度包括
-
-- ssh
-	rlogin与Telnet的替代方案。
-
-- scp、sftp
-	rcp的替代方案，将文件复制到其他电脑上。
-
-- sshd
-	SSH服务器。
-
-- ssh-keygen
-	产生RSA或DSA密钥，用来认证用。
-
-- ssh-agent、ssh-add
-	帮助用户不需要每次都要输入密钥密码的工具。
-
-- ssh-keyscan
-	扫描一群机器，并纪录其公钥。
-
-
-## ssh-keygen
-on mac osx/linux
-
-	ssh-keygen - authentication key generation, management and conversion
-		-f ~/.ssh/id_rsa
-		-t rsa/dsa
-
-Example
-
-	ssh-keygen -t rsa -C "your_email@example.com"
-	# Generating public/private rsa key pair.
-		id_rsa.pub/id_rsa
-
 # Reference
 - [Secure_Shell]
 

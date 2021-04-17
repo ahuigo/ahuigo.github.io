@@ -34,9 +34,9 @@ kill -l 查看系统定义的信号列表:
 
 这些信号的宏定义位于signal.h, 编号34 以上的是实时信号，34以下的为非实时信号.
 
-1. Ctrl-c会发送SIGINT(这在Python中其实被封装成了KeyboardInterrupt异常)，
+1. Ctrl-c会发送SIGINT(2)(这在Python中其实被封装成了KeyboardInterrupt异常)，
 2. `Ctrl-\`发送SIGQUIT，
-3. kill pid 则是SIGTERM
+3. kill pid 则是SIGTERM(15)
 3. SIGCHLD: 进程退出，向父进程发出SIGCHLD (chldhandler)
 4. SIGTTIN 当后台进程读tty时，tty将发送该信号给相应的进程组，默认行为是暂停进程组中进程的执行
 5. SIGCONT: `kill -SIGCONT PID`: Send a continue signal To continue a stopped process via PID
