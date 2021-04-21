@@ -92,9 +92,9 @@ example
 credential 发送include cookie时，allow-origin 不能是`*`
 
     fetch(url, {
-        credentials: "same-origin" //default
         credentials: "include", // send cookie, use "omit" if not send cookie
         mode: 'cors', //or "same-origin"
+                //credentials: "same-origin" //default
     }).then(...).then(..).catch(...);
     fetch(url).then(async r=> console.log(await r.text()))
 

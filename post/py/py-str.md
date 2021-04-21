@@ -39,6 +39,7 @@ same as js:
 
 ## format
 https://pyformat.info/
+https://realpython.com/python-f-strings/#multiline-f-strings
 
 ### old format
 
@@ -53,14 +54,22 @@ https://pyformat.info/
     x=1; user={'name':'ahui'};
     f'x={x}, user["name"]={user["name"]}, id(user)={id(user)}'
         'x=1, user["name"]=ahui, id(user)=4500547264'
+转义
 
     f'{{"str"}}'
         {"str"}
     '{0}'.format('{')
 
-raw string
+组合
 
-    f'{str!r}'
+    >>> message = (
+    ...     f"Hi {name}. "
+    ...     "You are a {profession}. "
+    ...     "You were in {affiliation}."
+    ... )
+    >>> message = f"Hi {name}. " \
+                "You are a {profession}. " \
+                "You were in {affiliation}."
 
 ### string Template
 

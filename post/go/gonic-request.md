@@ -321,7 +321,7 @@ https://github.com/gin-gonic/gin/issues/961
 Request   *http.Request
 
     c.Request.URL.Path = "/test2"
-    c.Request.Host // host or host:port
+    c.Request.Host // host:port
     c.Request.Method
     c.ClientIP()
     c.Request.UserAgent()

@@ -294,7 +294,7 @@ deque:
 
 # php like array func
 ## array_flip
-    result = {k:None for k in arr)
+    result = {k:None for k in arr}
     result = dict((v,k) for k,v in trans.items())
     result = dict(zip(trans.values(), trans.keys()))
 

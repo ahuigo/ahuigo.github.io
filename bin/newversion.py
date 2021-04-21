@@ -23,5 +23,5 @@ else:
     version = open(versionFile).read().strip()
     v = re.sub(r'(?<=\.)\d+$',incrNum, version)
 
-print(v, end='')
+print(v, end='\n')
 open(versionFile,'w').write(v)

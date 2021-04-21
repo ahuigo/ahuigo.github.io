@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2018-03-03 [python 的list/tuple 笔记](/b/py/py-var-list) 
+- 2018-03-01 [Python 的语法](/b/py/py-expr) 
+- 2021-04-22 [linux c socket 编程](/b/c/c-socket) 
 - 2018-09-28 [net-ssl](/b/net/ssl-proto) 
 - 2018-09-28 [net-ssl-tool](/b/net/ssl-openssl) 
 - 2021-04-17 [SSL Certificate Authority(CA)](/b/net/ssl-ca) 
@@ -36,6 +39,3 @@
 - 2018-09-27 [golang 的file api](/b/go/go-file) 
 - 2018-10-04 [用js proxies 继承别的对象](/b/ria/js-obj-proxies) 
 - 2018-09-28 [py-http](/b/py/py-http) 
-- 2018-09-28 [py-func](/b/py/py-func) 
-- 2018-09-27 [搭建 git server](/b/git/git-server) 
-- 2018-09-27 [Shell 变量的数据类型](/b/c/shell-var) 

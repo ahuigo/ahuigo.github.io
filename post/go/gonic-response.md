@@ -82,6 +82,16 @@ Issuing a Router redirect, use `HandleContext` like below.
 		c.DataFromReader(http.StatusOK, contentLength, contentType, reader, extraHeaders)
 	})
 
+# header
+## header
+    func (c *Context) Header(key, value string) {
+        if value == "" {
+            c.Writer.Header().Del(key)
+            return
+        }
+        c.Writer.Header().Set(key, value)
+    }
+
 ## cookie
 
 	ctx.SetSameSite(http.SameSiteLaxMode)
