@@ -459,12 +459,24 @@ kernel的函式库则位于/lib/modules
 		/lib/ld-linux.so.2 (0xb7f42000)
 
 ## Shared Library Path while excute 程序执行时的享库的执行路径
-依次按以下顺序查找(`man ld.so`)：
+依次按以下顺序查找(`man ld.so`,`man ld`)：
 
 1. LD_LIBRARY_PATH 不建议
 3. (ELF only) Using the directories specified in the DT_RUNPATH dynamic section attribute of the binary if present
 2. /etc/ld.so.cache中查找。这个缓存文件由ldconfig命令读取配置文件/etc/ld.so.conf之后生成.
 3. Using path /lib, and then /usr/lib.
+
+对于mac  来说: `man ld`
+
+    Search paths
+     ld maintains a list of directories to search for a library or framework to use.  
+     The default library search path is /usr/lib then /usr/local/lib.  
+     The -L option will add a new library search path.  
+     The default framework search path is /Library/Frameworks then /System/Library/Frameworks.  
+     (Note: previously, /Network/Library/Frameworks was at the end of the default path.  If you need that functionality, you need to explicitly add -F/Network/Library/Frameworks).  
+     The -F option will add a new framework search path.  
+     The -Z option will remove the standard search paths.  
+     The -syslibroot option will prepend a prefix to all search paths.
 
 ### DT_RUNPATH(不推荐)
 这种方法是将共享库路径，写死到.dynamic段 中。通过参数 ` -Wl,-rpath,/home/akaedu/somedir`表示`-rpath /home/akaedu/somedir` 是由gcc传递给链接器的 选项。可以看到readelf的结果多了一条RPATH 记录:
