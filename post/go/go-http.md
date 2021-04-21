@@ -207,7 +207,7 @@ session cookie维持：要save 再send
         req.AddCookie(cookie[i])
     }
 
-#### store cookieJar
+#### session: store cookieJar
 > go-lib/http/session.go
 会在整个会话期间保持cookie
 
@@ -233,6 +233,8 @@ session cookie维持：要save 再send
 ## server send cookie(http)
 
     func SetCookie(w ResponseWriter, cookie *Cookie)
+
+e.g.
 
     expiration := time.Now().Add(5 * time.Minute)
     cookie := http.Cookie{Name: "myCookie", Value: "Hello World", Expires: expiration}

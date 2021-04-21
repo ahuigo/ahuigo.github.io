@@ -139,6 +139,12 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
 	>>> [m + n for m in 'AB' for n in 'XYZ']
 	['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ']
 
+组合
+
+    matrix = [[1, 2], [3,4], [5,6], [7,8]]
+    transpose = [[row[i] for row in matrix] for i in range(2)]
+    print (transpose)
+
 列出文件
 
 	>>> import os # 导入os模块，模块的概念后面讲到
