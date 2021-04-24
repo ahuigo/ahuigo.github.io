@@ -224,7 +224,7 @@ Example:
 	- [[ expr1 && expr2 ]]
 	- [[ expr1 || expr2 ]]
 
-较[ expr ]  和 test 更通用, 而且不用转义这些特殊符号: < > &&,||
+较[ expr ]  和 test , `[[ ]]`更通用, 而且不用转义这些特殊符号: < > &&,||
 
 	[[ 'a' < 'b' ]] && echo yes
 	[[ 'a' < 'b' && 'a' < 'c' ]] && echo yes

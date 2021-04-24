@@ -192,7 +192,11 @@ More control over the server's behavior is available by creating a custom Server
 ### client req cookie
 
     // Create and Add cookie to request
-	cookie := http.Cookie{Name: "cookie_name", Value: "cookie_value"}
+	cookie := http.Cookie{
+        Name: "cookie_name", 
+        Value: "cookie_value",
+        Domain: "",
+    }
 	req.AddCookie(&cookie)
 
 ### session cookie
@@ -228,6 +232,14 @@ session cookie维持：要save 再send
         SetCookies(u *url.URL, cookies []*Cookie)
         Cookies(u *url.URL) []*Cookie
     }
+
+## response cookie
+toto
+
+	httpreq := resp.req.httpreq
+	client := resp.req.Client
+
+	cookies = client.Jar.Cookies(httpreq.URL)
 
 
 ## server send cookie(http)

@@ -54,7 +54,8 @@ https://realpython.com/python-f-strings/#multiline-f-strings
     x=1; user={'name':'ahui'};
     f'x={x}, user["name"]={user["name"]}, id(user)={id(user)}'
         'x=1, user["name"]=ahui, id(user)=4500547264'
-转义
+
+不转义
 
     f'{{"str"}}'
         {"str"}
