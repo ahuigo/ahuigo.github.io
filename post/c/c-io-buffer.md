@@ -82,4 +82,22 @@ fflush函数根据指定的文件流将缓冲区的内容进行实际的操作�
 	    return 0;
 	}
 
-编译执行上面的程序，结果就比较显而易见了。程序一执行的时候就会输出”hello“，过两秒输出”world“，再过两秒程序就结束了。在C语言中，可以通过setbuf来设定无缓冲模式，只要将第二个参数设置为NULL就可以了；也可以通过setvbuf来设定无缓冲模式，其中_IONBF表示行缓冲，就是IO not buffer的意思。
+编译执行上面的程序，结果就比较显而易见了。程序一执行的时候就会输出”hello“，过两秒输出”world“，再过两秒程序就结束了。
+
+# setbuf
+在C语言中，缓冲设置(参考示例c-lib/cgi/cgi.c)
+可以通过setbuf来设定无缓冲模式，只要将第二个参数设置为NULL就可以了；
+
+        setbuf(cin, (char *)0);
+        // 或setbuf(cin, NULL);
+
+也可以通过setvbuf来设定无缓冲模式
+
+    int setvbuf(FILE *restrict stream,
+         char *restrict buf, int type, size_t size);
+
+the setbuf() function is exactly equivalent to the call:
+
+    setvbuf(stream, buf, buf ? _IOFBF : _IONBF, BUFSIZ);
+
+其中type 表示缓冲模式，如`_IONBF`表示行缓冲，就是IO not buffer的意思。
