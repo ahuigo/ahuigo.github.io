@@ -3,7 +3,7 @@ title: gonic unittest
 date: 2020-05-25
 private: true
 ---
-# gonic unittest
+# test with router.ServeHTTP
 The net/http/httptest package is preferable way for HTTP testing.
 
     package main
@@ -34,17 +34,18 @@ Test for code example above:
     )
 
     func TestPingRoute(t *testing.T) {
-        router := setupRouter()
+        router := createRouter()
 
-        w := httptest.NewRecorder()
+        resp := httptest.NewRecorder()
         req, _ := http.NewRequest("GET", "/ping", nil)
-        router.ServeHTTP(w, req)
+        router.ServeHTTP(resp, req)
 
-        assert.Equal(t, 200, w.Code)
-        assert.Equal(t, "pong", w.Body.String())
+        assert.Equal(t, 200, resp.Code)
+        assert.Equal(t, "pong", resp.Body.String())
     }
 
 # mock context
+不用构建testRouter, 只构建context
 
     w := httptest.NewRecorder()
     context,engine := gin.CreateTestContext(w)
@@ -60,7 +61,6 @@ gin.CreateTestContext
         return
     }
 
-
 ## mock request
 
     w := httptest.NewRecorder()
@@ -68,8 +68,6 @@ gin.CreateTestContext
 
     // init request
     req, _ := http.NewRequest("GET", "/ping", nil)
-
-    // Cookie
     cookie := http.Cookie{Name: "token", Value: "xxx"}
     req.AddCookie(&cookie)
 
@@ -79,6 +77,21 @@ gin.CreateTestContext
     // 请求controller
     router.Controller.GetIndex(context)
 
-
     // test response
     assert.Equal(t, "pong", w.Body.String())
+    println(context.Errors)
+
+实际项目的代码
+
+    func creaetCtx(req)(*http.ResponseWriter, *gonic.Context){
+        w := httptest.NewRecorder()
+        context, _ := gin.CreateTestContext(w)
+        context.Request = req
+        return w,context
+    }
+
+    var data interface{} = map[string]interface{}{"id":1}
+    body, err := json.Marshal(data)
+    req, _ := http.NewRequest("GET", "/api/v1/queue", bytes.NewBuffer(body))
+    w, ctx := createCtx(req)
+	r.monitorAPISrv.StartMonitorSrv(ctx)

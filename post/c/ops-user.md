@@ -22,6 +22,10 @@ id：用户/组身份信息
 	echo '123456' | passwd www --stdin
 	-M no Home Directory
 
+给username 加home directory:
+
+    sudo mkhomedir_helper www
+
 # usermod(group)
 User Modifier
 

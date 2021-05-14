@@ -21,6 +21,11 @@ date: 2018-10-04
     (blog_pyenv) ➜ umi3$ git:(dev) ✗ 
     $ deactivate   
 
+# pyenv(Recommend)
+    brew install pyenv
+    pyenv install --list
+    pyenv local 3.7.2
+
 # virtualenv
 ## install
 

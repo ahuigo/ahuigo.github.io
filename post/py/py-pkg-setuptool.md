@@ -5,8 +5,8 @@ category: blog
 description: 
 date: 2018-10-04
 ---
-# Preface
-https://packaging.python.org/tutorials/packaging-projects/
+# 前言
+本文参考： https://packaging.python.org/tutorials/packaging-projects/
 
 setuptools 与 disutils
 1. distutils 用于包的创建与分发到Python Package Index（PyPI）,
@@ -141,33 +141,6 @@ test 命令使用: setup.cfg （放在setup.py 同级根目录）指定测试命
     graft flaskr/static
     include flaskr/schema.sql
 
-## clean
-    import os
-    from setuptools import setup, Command
-
-    class CleanCommand(Command):
-        """Custom clean command to tidy up the project root."""
-        user_options = []
-        def initialize_options(self):
-            pass
-        def finalize_options(self):
-            pass
-        def run(self):
-            os.system('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info')
-
-    setup(
-        # ... Other setup options
-        cmdclass={
-            'clean': CleanCommand,
-        }
-    )
-
-use:
-
-    $ python setup.py build
-    running build
-    $ python setup.py clean
-
 # Upload to PyPI
 
 ## first register PyPI simply done by typing:
@@ -179,7 +152,7 @@ use:
     3. have the server generate a new password for you (and email it to you), or
     Your selection [default 1]:
 
-Once this is done, `~/.pypirc` file will store the login name and the password. 
+Once this is done, `~/.pypirc `(其中的user/password也用于`~/.pip/pip.conf`) file will store the login name and the password. 
 
     [distutils]
     index-servers =
@@ -224,7 +197,7 @@ use:
     pip install --extra-index-url https://ahuigo.com/api/pypi/simple example_pkg
     pip install --extra-index-url https://ahuigo.com/api/pypi/simple example_pkg==0.0.2
 
-指定源列表： ~/.pip/pip.conf 及下载帐号密码:
+指定源列表： ~/.pip/pip.conf (用于pip)及下载帐号密码:
 
     [global]
     index-url = http://download.zope.org/simple
@@ -239,8 +212,18 @@ use:
 
     pip3 install  --extra-index-url artifactory.ahuigo.com/artifactory/api/pypi/pypi/simple data_warehouse_py
 
+# install
+## Requirements
+    pip freeze > requirements.txt
+    pip install -r requirements.txt
 
-# Config
+## install dev
+
+    pip install -e dir 
+    pip install -e /xxx/xxx
+    pip install -e .
+
+# setup.py 高级
 ## subcommand
 https://stackoverflow.com/questions/1710839/custom-distutils-commands
 有两种`distutils.commmands`,`cmdclass`
@@ -252,7 +235,7 @@ https://stackoverflow.com/questions/1710839/custom-distutils-commands
     },
 
 ### cmdclass
-我们添加一个测试命令为例子吧：
+我们添加一个测试命令为例子吧：
 
     from setuptools.command.test import test as TestCommand
 
@@ -278,6 +261,34 @@ https://stackoverflow.com/questions/1710839/custom-distutils-commands
         def test_main(self):
             assert "Lucy" in sh('echo "Lucy,Artist,16" | xcut -f 1 -t index --no-title')
 
+#### 加一个subcmd子命令：clean
+    import os
+    from setuptools import setup, Command
+
+    class CleanCommand(Command):
+        """Custom clean command to tidy up the project root."""
+        user_options = []
+        def initialize_options(self):
+            pass
+        def finalize_options(self):
+            pass
+        def run(self):
+            os.system('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info')
+
+    setup(
+        # ... Other setup options
+        cmdclass={
+            'clean': CleanCommand,
+        }
+    )
+
+use:
+
+    $ python setup.py build
+    running build
+    $ python setup.py clean
+
+
 ## cli tool
 可以在setup.py 为script 加入口.
 
@@ -297,19 +308,3 @@ https://stackoverflow.com/questions/1710839/custom-distutils-commands
     '''
 
 注意，安装`pip install -e .` 之后的再`uninstall` 不会删除/usr/bin 目录下的fileset
-
-# import obj
-
-    # Install the Q() object in sys.modules so that "import q" gives a callable q.
-    sys.modules['q'] = Q()
-
-# Requirements
-    pip freeze > requirements.txt
-    pip install -r requirements.txt
-
-# install dev
-
-    pip install -e dir 
-    pip install -e /xxx/xxx
-    pip install -e .
-

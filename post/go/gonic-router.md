@@ -109,6 +109,11 @@ try:
 ## shutdown & stop
 https://gin-gonic.com/docs/examples/graceful-restart-or-stop/
 
+    srv := &http.Server{
+        Addr:    ":8080",
+        Handler: router,
+    }
+
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
@@ -116,7 +121,7 @@ https://gin-gonic.com/docs/examples/graceful-restart-or-stop/
 	}
 	// catching ctx.Done(). timeout of 5 seconds.
 	select {
-	case <-ctx.Done():
-		log.Println("timeout of 5 seconds.")
-        log.Println("Server exiting")
+        case <-ctx.Done():
+            log.Println("timeout of 5 seconds.")
+            log.Println("Server exiting")
 	}

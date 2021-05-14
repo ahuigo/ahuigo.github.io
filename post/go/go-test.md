@@ -28,6 +28,13 @@ Go has a lightweight test framework composed of the go test command and the test
         -bench=Alloc ; 表示运行所有基准测试: Benchmark_Alloc
 
 ## faq
+### testcache
+禁用cache 的方法有多个
+
+    go clean -testcache
+    或
+    go test -count=1
+
 ### test cwd
 默认go test会改变cwd 到测试文件所在的目录
 
