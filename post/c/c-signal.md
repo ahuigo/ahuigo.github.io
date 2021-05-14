@@ -270,6 +270,12 @@ sigpending读取当前进程的未决信号集,通过set参数传出。调用成
 
 ![](/img/linux-c-signal-catch.png)
 
+### signal 函数捕获
+signal 示例
+
+    j c-lib
+    gcc -v  process/signal/sig-handler.c -I $SCADDRESS/include/ -L $SCADDRESS/lib/ -lapue
+
 ## sigaction
 sigaction 用于读取与修改指定信号关联的处理动作。成功返回0， 失败返回-1.
 

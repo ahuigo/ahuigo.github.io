@@ -39,3 +39,7 @@ demo: go-lib/link/link-lock.go (线程安全，加锁的)
 参考：两种并发安全链表的实现和对比
 https://www.cnblogs.com/apocelipes/p/9461405.html
 demo: go-lib/link/link-lock-tiny.go (线程安全，加锁的)
+
+# 队列
+无锁队列实现
+https://zhuanlan.zhihu.com/p/24432607

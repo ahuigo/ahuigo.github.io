@@ -13,7 +13,7 @@ https://unix.stackexchange.com/questions/105483/compiling-code-from-apue
 ## make apue
 download http://www.apuebook.com/code3e.html
 
-    $ export SCADDRESS=/Users/hilo/www/c-lib/lib/apue.3e
+    $ export SCADDRESS=/Users/hilojack/www/apue.3e
     $ cd $SCADDRESS && make
 
 ## use apue

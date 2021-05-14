@@ -109,6 +109,7 @@ function devops2() {
     cd $cwd_dir
 }
 
+
 function gcap(){
     ori_dir=$(pwd)
 	git commit -am $1;
