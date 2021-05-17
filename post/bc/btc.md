@@ -24,3 +24,12 @@ https://steemit.com/cn/@daviswu/58k9bj
 
 ## 资讯
 http://www.8btc.com/vc
+
+## 空
+https://filxcoin.com/96810d9
+
+# My wallet
+wallet eth: 
+    0x596810d9fc692660e9a773e9162e6bd453293d30
+hb eth:
+    0xa1b5d64200b8ba6f93426a5b5f4e00fbe9d1230b
