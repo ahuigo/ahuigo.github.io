@@ -260,6 +260,9 @@ User继承 Model 所有属性， 包括gorm.Model.ID、方法
 
 e.g: go-lib/object/inherit.go
 
+### 继承interface
+go-lib/struct/embed-interface.go
+
 ### 继承chains
     type User struct {
         gorm.Model

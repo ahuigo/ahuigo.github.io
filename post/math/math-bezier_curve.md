@@ -22,7 +22,6 @@ https://zh.wikipedia.org/wiki/%E8%B2%9D%E8%8C%B2%E6%9B%B2%E7%B7%9A
 
 ## 实现：
 
-
     function factorial(n, s = 1) {
         while (n > 1) s *= n--;
         return s;
@@ -33,6 +32,10 @@ https://zh.wikipedia.org/wiki/%E8%B2%9D%E8%8C%B2%E6%9B%B2%E7%B7%9A
         while(r<n) s*=++r;
         return s/factorial(n-i)
     }
+    /**
+     * @param nodes，曲线关键点
+     * @param n，曲线虚拟点数
+     **/
     function getBezierCurve3DPoints(nodes, n=100){
         const points = [];
         for(let t=0; t<=1; t+=1/n){
@@ -49,6 +52,7 @@ https://zh.wikipedia.org/wiki/%E8%B2%9D%E8%8C%B2%E6%9B%B2%E7%B7%9A
         return points;
     }
 
+    // test
     const p0 = [0,100,0]
     const p1 = [0,50,0]
     const p2 = [50,0,0]

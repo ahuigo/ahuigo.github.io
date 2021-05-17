@@ -91,6 +91,21 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
     var name:t1 = 'ordinal' as 'number' | 'float' | 'int' | 'ordinal' | 'time'
 
+## 类型预测
+https://stackoverflow.com/questions/40081332/what-does-the-is-keyword-do-in-typescript
+The compiler will think that foo is string in the below-guarded block
+
+    function isString(test: any): test is string{
+        return typeof test === "string";
+    }
+
+    function example(foo: any){
+        if(isString(foo)){
+            console.log("it is a string" + foo);
+            console.log(foo.length); // string function
+        }
+    }
+
 # 对象类型（Object types）。
     Array<string> or string[]
     enum Choose { Wife = 1, Mother = 2} // 选择 妻子 还是 妈妈

@@ -3,6 +3,9 @@ title: linux os
 date: 2019-06-15
 ---
 # Check os Version
+check os:
+
+    lsb_release -a
 
 CISC 复杂指令集
 

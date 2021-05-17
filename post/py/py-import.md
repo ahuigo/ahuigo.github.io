@@ -31,6 +31,14 @@ mod必须要显式引入:
 
 # import
 
+## import 缓存
+import 的包都会缓存到sys.modules
+
+    # Install the Q() object in sys.modules so that "import q" gives a callable q.
+    sys.modules['q'] = Q()
+    # import conf 
+    sys.modules['conf'] = {user:"ahui"}
+
 ## import function
 A目录下必须放`__init__.py`才被被作为pkg 引入import
 

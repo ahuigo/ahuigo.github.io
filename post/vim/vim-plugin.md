@@ -6,6 +6,13 @@ description:
 date: 2018-10-04
 ---
 # Preface
+list all plugins
+
+    " where was an option set  
+    :scriptnames            : list all plugins, _vimrcs loaded (super)  
+    :verbose set history?   : reveals value of history and where set  
+    :function               : list functions  
+    :func SearchCompl       : List particular function
 
 # Plugin Layout
 

@@ -45,7 +45,13 @@ abs
         exPath := filepath.Dir(ex)
         fmt.Println(exPath)
     }
-
+### rename and move
+    Original_Path := "./GeeksforGeeks.txt"
+    New_Path := "./new_folder/gfg.txt"
+    e := os.Rename(Original_Path, New_Path)
+    if e != nil {
+        log.Fatal(e)
+    }
 ### Getwd: 
 func Getwd() (pwd string, err error)
 

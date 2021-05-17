@@ -59,7 +59,7 @@ https://www.jianshu.com/p/23adccda99f0
 1. vue: https://codepen.io/whitelynx/pen/pgwRJZ
 
 ## 实现一个js函数
-能用js 实现这样一个js 函数吗
+请用js 实现这样一个js 函数
 
     sum(1)(2)() //3
     sum(1)(2)(3)() //6

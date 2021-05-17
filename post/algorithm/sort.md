@@ -501,7 +501,7 @@ pivot 也可以不用留出空间
 						}
 					}
 				}
-				arr[i] = val;
+				arr[i] = val; //i==j 最后一定是要空出来的
 			}
 			if(i>1){
 				c.arr = arr;

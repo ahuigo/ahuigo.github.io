@@ -135,12 +135,12 @@ endfunction
 " crontab with no backup
 autocmd filetype crontab setlocal nobackup nowritebackup
 " window
+nnoremap <S-C-H> <C-W>h
+nnoremap <S-C-L> <C-W>l
 noremap <c-h> :bp<cr>
 noremap <c-l> :bn<cr>
 nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
-nnoremap <C-H> <C-W>h
-nnoremap <C-L> <C-W>l
 "noremap <F9> :execute "0r _posts/test.md"<CR>
 "inoremap <D-V> <ESC>:r!pasteImg.py '%:t:r'<CR>
 "inoremap <D-V> <ESC>:r!pasteImg.py '%'<CR>
