@@ -306,3 +306,17 @@ mysql update 多个unique key 时,如果遇到 `duplicate key`, 比如所有的i
 
 	UPDATE <table> set i=-i where id>10; # 先变负，就不存在+1冲突
 	UPDATE <table> set i=1-i where id>10;
+
+
+### update limit
+    UPDATE server_info
+    SET    status = 'active' 
+    WHERE  server_ip = ( SELECT server_ip FROM   server_info WHERE  status = 'standby' LIMIT  1)
+    RETURNING server_ip;
+
+update with lock:
+
+    UPDATE server_info
+    SET    status = 'active' 
+    WHERE  server_ip = ( SELECT server_ip FROM   server_info WHERE  status = 'standby' LIMIT  1 FOR    UPDATE SKIP LOCKED)
+    RETURNING server_ip;

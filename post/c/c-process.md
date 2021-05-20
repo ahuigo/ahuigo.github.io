@@ -203,7 +203,7 @@ exec 一共有6 种函数(成功则执行新程序，失败则会返回-1)：
 	#include <unistd.h>
 	#include <stdlib.h>
 	int main(void) {
-		execlp("ps", "ps", "-o", "pid,ppid,pgrp,session,tpgid,comm", NULL);//第一个ps 表示实际执行的程序，而第二参数ps 会作为ps 程序的第0个参数(mac忽略此参)
+		execlp("ps", "ps", "-o", "pid,ppid,pgrp,session,tpgid,comm", NULL);//第一个ps 表示实际执行的程序，而第二参数ps 会作为ps 程序的第一个参数
 		perror("exec ps");//exec 执行成功的话，这一句以及以下的代码就不会执行了
 		exit(1);
 	}

@@ -59,12 +59,12 @@ date: 2018-10-04
     };
 
     const handler3 = {
-    get: function (target, prop, receiver) {
-        if (prop === "message2") {
-            return "world";
-        }
-        return target[prop];
-    },
+        get: function (target, prop, receiver) {
+            if (prop === "message2") {
+                return "world";
+            }
+            return target[prop];
+        },
     };
 
     const proxy3 = new Proxy(target, handler3);
