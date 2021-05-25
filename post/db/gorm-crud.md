@@ -81,7 +81,7 @@ NewRecord: check if value's primary key is blank(check v.ID, 不会insert 数据
     fmt.Printf("%#v\n", db.NewRecord(p))    // => 主键为空, 则返回`true`
     if db.NewRecord(p){
         fmt.Printf("%#v\n", p.ID)
-        db.Create(&p)                           // 返回 DB
+        err := db.Create(&p).Error
         fmt.Printf("%#v\n", p.ID)               //ID
         fmt.Printf("%#v\n", db.NewRecord(p))    //// => 创建后返回`false`
     } 
@@ -855,8 +855,3 @@ Get query result as `*sql.Row or *sql.Rows`
 
         // do something
     }
-
-# Transaction
-	db := db1.Begin()
-    db.Rollback()
-    db.Commit()
