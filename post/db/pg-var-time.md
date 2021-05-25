@@ -4,14 +4,14 @@ date: 2019-10-03
 private:
 ---
 # Postgre Time
-## 比较时间
+## Compare Time
     select time > '20101013'
     time > '2010-10-13'
     time > '2010-10-13 10:00:00'
     time > '2010-10-13 10:00:00+08'
     time > '20101013 10:00:00+08'
 
-## time type list
+## Time Type
     SELECT typname, typlen FROM pg_type WHERE typname ~ '^date';
     date 
         '2016-06-22',
@@ -22,7 +22,7 @@ private:
     timestamptz
         '2016-06-22 19:10:25-07',
 
-### timestamptz
+### timestamp with timezone
     SET timezone = 'America/New_York';
     SHOW TIMEZONE;
 
@@ -33,7 +33,7 @@ switch timezone
     # 上面的例子，PostgreSQL casts string to timestamptz implicitly
     > SELECT timezone('America/New_York','2016-06-01 00:00'::timestamptz);
     
-### timestamp
+### timestamp without timezone
 timestamp to date:'2018-07-25 10:30:30' to '2018-07-25', 3种方法
 
     SELECT DATE(column_name) FROM table_name;
@@ -57,18 +57,18 @@ get datetime(timestamp)
     2016-06-22 20:44:52.134125-07
 
 
-## delta
+## delta time(plus)
 
-   select date '2001-09-28' + integer '7'
-   select date '2001-09-28' + integer '7' day
-   select date '2001-09-28' + integer '7 day'
-   select created_at + interval '1' day * 7 as deadline
-   select created_at + interval '1' day * day_field as deadline
-   select created_at + interval '1' hour * hour_field as deadline
+    select date '2001-09-28' + integer '7'
+    select date '2001-09-28' + integer '7' day
+    select date '2001-09-28' + integer '7 day'
+    select created_at + interval '1' day * 7 as deadline
+    select created_at + interval '1' day * day_field as deadline
+    select created_at + interval '1' hour * hour_field as deadline
 
-   select created_at + hour_field as deadline //not work
+    select created_at + hour_field as deadline //not work
 
-### delta time
+### get delta time
     select  TIMESTAMP 'yesterday' ;
     select  now() - INTERVAL '1 day' ;
     select (now()-created_at) from task_checks limit 1;
