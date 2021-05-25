@@ -71,3 +71,6 @@ get datetime(timestamp)
 ### delta time
     select  TIMESTAMP 'yesterday' ;
     select  now() - INTERVAL '1 day' ;
+    select (now()-created_at) from task_checks limit 1;
+    --------------------------
+    451 days 18:51:57.959561
