@@ -41,7 +41,7 @@ timestamp to date:'2018-07-25 10:30:30' to '2018-07-25', 3种方法
         SELECT '2018-07-25 10:30:30'::TIMESTAMP::DATE;
     SELECT DATE(SUBSTRING('2018-07-25 10:30:30' FROM 1 FOR 10));
 
-## get time
+## Get time
 get time only, date only
 
     > CURRENT_DATE;
@@ -57,7 +57,7 @@ get datetime(timestamp)
     2016-06-22 20:44:52.134125-07
 
 
-## delta time(plus)
+## Delta time(plus)
 
     select date '2001-09-28' + integer '7'
     select date '2001-09-28' + integer '7' day
@@ -68,7 +68,7 @@ get datetime(timestamp)
 
     select created_at + hour_field as deadline //not work
 
-### get delta time
+### Get delta time
     select  TIMESTAMP 'yesterday' ;
     select  now() - INTERVAL '1 day' ;
     select (now()-created_at) from task_checks limit 1;
