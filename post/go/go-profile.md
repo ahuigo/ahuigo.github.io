@@ -138,8 +138,9 @@ As of Go 1.11, `flamegraph` visualizations are available in go tool pprof direct
     > go tool pprof -http=":8081" [binary] [profile]
     go tool pprof -http=:8081   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
 
-火焰图的y轴表示cpu调用方法的先后，x轴表示在每个采样调用时间内，方法所占的时间百分比，越宽代表占据cpu时间越多. 
 
+火焰图的y轴表示cpu调用方法的先后，x轴表示在每个采样调用时间内，方法所占的时间百分比，越宽代表占据cpu时间越多. 
+![](/img/go/profile/flame-web.png)
 ![](/img/go/profile/flame1.png)
 ![](/img/go/profile/flame2.png)
 
