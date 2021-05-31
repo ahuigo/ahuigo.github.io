@@ -37,6 +37,9 @@ date: 2019-05-06
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
 	req.Header.Set("Content-Type", "application/json")
 
+    //also
+   req, err = http.NewRequest(api.Method, paramURL, strings.Newreader("string"))
+
 #### post map
     values := map[string]string{"username": username, "password": password}
     jsonValue, _ := json.Marshal(values)

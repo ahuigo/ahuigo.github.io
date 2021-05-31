@@ -56,6 +56,8 @@ get datetime(timestamp)
     > SELECT CURRENT_TIMESTAMP; 
     2016-06-22 20:44:52.134125-07
 
+    > select  TIMESTAMP 'yesterday' ;
+
 
 ## Delta time(plus)
 
@@ -69,7 +71,6 @@ get datetime(timestamp)
     select created_at + hour_field as deadline //not work
 
 ### Get delta time
-    select  TIMESTAMP 'yesterday' ;
     select  now() - INTERVAL '1 day' ;
     select (now()-created_at) from task_checks limit 1;
     --------------------------

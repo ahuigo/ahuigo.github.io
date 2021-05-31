@@ -202,7 +202,15 @@ Supported by any database: 利用 group + column=max(column)
     ON y.customer = x.customer AND y.max_total = x.total
     GROUP BY x.customer, x.total
 
+例子2
 
+    # 可以用id in subquery 代替（效率一样）
+    SELECT x.* 
+    FROM task_checks x
+    JOIN (SELECT max(id) as id
+            FROM task_checks p
+            GROUP BY p.workflow_uuid, p.task_name) y
+    ON y.id=x.id limit 1
 
 
 #### partition
@@ -213,9 +221,19 @@ partition:
         SELECT p.id, 
             p.customer, 
             p.total, 
-            ROW_NUMBER() OVER(PARTITION BY p.customer 
-                                    ORDER BY p.total DESC) AS rk
+            ROW_NUMBER() 
+            OVER( PARTITION BY p.customer ORDER BY p.total DESC ) AS rk
         FROM PURCHASES p)
+    SELECT s.*
+    FROM summary s
+    WHERE s.rk = 1
+
+PARTITION BY when multiple columns:
+
+    WITH summary AS (
+        SELECT *, ROW_NUMBER() 
+            OVER( PARTITION BY workflow_uuid,task_name ORDER BY p.id DESC ) AS rk
+        FROM task_checks p)
     SELECT s.*
     FROM summary s
     WHERE s.rk = 1

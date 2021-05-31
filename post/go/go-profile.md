@@ -66,7 +66,7 @@ go-torch 输出的数据可以用FlameGraph 脚本实现可视化(FlameGraph 是
 我们先配置FlameGraph的脚本
 
     git clone https://github.com/brendangregg/FlameGraph.git
-    cp flamegraph.pl ~/bin
+    cp ./FlameGraph/flamegraph.pl ~/bin/
     # 查看帮助命令
     flamegraph.pl -h
     USAGE: /usr/local/bin/flamegraph.pl [options] infile > outfile.svg
@@ -79,14 +79,20 @@ go-torch 输出的数据可以用FlameGraph 脚本实现可视化(FlameGraph 是
     go-torch [options] [binary] <profile source>
 
 ### 调优代码实例
-先准备实例代码：
-1. 下载demo [地址1](https://github.com/domac/playflame/tree/slow) / [地址2](https://github.com/ahuigo/playflame/tree/slow) 
-2. 运行server 端：$ go run main.go -printStats
+先准备实例代码： 下载demo [地址1](https://github.com/domac/playflame/tree/slow) / [备份地址2](https://github.com/ahuigo/playflame/tree/slow) 
+再执行实例.
+
+    git clone https://github.com/ahuigo/playflame
+    cd playflame
+    go run main.go -printStats
 
 ### pprof profile 生成调用关系图(不直观)
+    go get github.com/tsliwowicz/go-wrk  
+    brew install Graphviz
+
 接下来我们用go-wrk （或者ab、siege）压测advanced 接口
 
-    go-wrk  -n=100000 -c=500  http://localhost:9090/advance
+    go-wrk  -d=5 -c=500  http://localhost:9090/advance
 
 在上面的压测过程中，我们再新建一个终端窗口输入以下命令，生成我们的profile文件：
 
@@ -108,19 +114,34 @@ go-torch 输出的数据可以用FlameGraph 脚本实现可视化(FlameGraph 是
 ### Flame 图
 先压测：
 
-    $ go-wrk  -n=100000 -c=500  http://localhost:9090/advance
+    go-wrk  -d=50 -c=500  http://localhost:9090/advance
 
 压测过程中用 go-torch来生成采样报告, 30s后出报告:
 
+    >  go-torch [options] [binary] <profile source>
     $ go-torch -u http://localhost:9090 -t 30
     INFO[08:47:10] Run pprof command: go tool pprof -raw -seconds 30 http://localhost:9090/debug/pprof/profile
     INFO[08:47:41] Writing svg to torch.svg
+
+go-torch is deprecated, use pprof instead
+As of Go 1.11, `flamegraph` visualizations are available in go tool pprof directly!
+
+    $ go tool pprof http://localhost:9090
+    Fetching profile over HTTP from http://localhost:9090/debug/pprof/profile
+    Saved profile in /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
+    Type: cpu
+    Time: May 31, 2021 at 4:50pm (CST)
+    Duration: 30.17s, Total samples = 56.28s (186.54%)
+    Entering interactive mode (type "help" for commands, "o" for options)
+    (pprof)
+
+    > go tool pprof -http=":8081" [binary] [profile]
+    go tool pprof -http=:8081   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
 
 火焰图的y轴表示cpu调用方法的先后，x轴表示在每个采样调用时间内，方法所占的时间百分比，越宽代表占据cpu时间越多. 
 
 ![](/img/go/profile/flame1.png)
 ![](/img/go/profile/flame2.png)
-
 
 ### bench cpu
 我们来压测下stats 这个目录
