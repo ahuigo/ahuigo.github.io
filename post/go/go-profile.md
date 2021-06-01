@@ -5,7 +5,7 @@ private:
 ---
 # Go profile
 
-### Go profiler 指标
+## Go profiler 指标
 使用Go 内置的profiler我们能获取以下的样本信息：
 
     CPU profiles
@@ -23,7 +23,126 @@ private:
 
 更多调试的使用，可以阅读The Go Blog的 Profiling Go Programs
 
-## go profiler 工具
+## go tool pprof分析
+> 参考：https://www.cnblogs.com/upyun/p/8526925.html
+Golang 提供的两个官方包 runtime/pprof，net/http/pprof 能方便的采集程序运行的`堆栈、goroutine、内存分配和占用、io 等信息`的 `.prof` 文件.
+然后可以使用 `go tool pprof` 分析 `.prof` 文件。两个包的作用是一样的，只是使用方式的差异。
+
+### runtime/pprof
+如果程序不是http server, 就用go-lib/gotest/pprof/runtime-pprof.go
+
+运行程序后可以得到 cpu.prof 和 mem.prof 文件，使用 go tool pprof 分析。
+
+    go tool pprof logger cpu.prof
+    go tool pprof logger mem.prof
+
+### net/http/pprof
+> 示例：go-lib/gonic/ginapp/gin-pprof.go
+如果程序为 httpserver 类型， 则只需要导入该包:
+
+    import _ "net/http/pprof"
+
+如果 httpserver 使用 go-gin 包，而不是使用默认的 http 包启动，则需要手动添加 /debug/pprof 对应的 handler: https://github.com/DeanThompson/ginpprof :
+
+    import "github.com/DeanThompson/ginpprof"
+    ...
+    router := gin.Default()
+    ginpprof.Wrap(router)
+    ...
+
+编译运行后访问 http://127.0.0.1:4500/debug/pprof/ 查看采样统计
+
+    count profiles:
+    0     block
+    62    goroutine
+    427   heap
+    0     mutex
+    12    threadcreate
+
+点击对应的 profile 可以查看具体信息，通过浏览器查看的数据不能直观反映程序性能问题，go tool pprof 命令行工具提供了丰富的工具集:
+
+    # 查看 heap 信息
+    go tool pprof http://127.0.0.1:4500/debug/pprof/heap
+
+    # 查看 30s 的 CPU 采样信息
+    go tool pprof http://127.0.0.1:4500/debug/pprof/profile
+
+其他功能使用参见 官方 net/http/pprof 库
+
+#### pprof CPU 分析
+采集 profile 数据之后，可以分析 CPU 热点代码。 先执行压测试
+
+    $ go-wrk  -d=50 -c=50  http://localhost:4500/sleep/5
+    Running 50s test @ http://localhost:4500/sleep/5
+    50 goroutine(s) running concurrently
+
+再执行下面采集 30s 的 profile 数据，30s之后进入终端交互模式，输入 top 指令。
+
+    $ go tool pprof http://127.0.0.1:4500/debug/pprof/profile
+    Fetching profile over HTTP from http://127.0.0.1:4500/debug/pprof/profile
+    Saved profile in /Users/ahui/pprof/pprof.samples.cpu.010.pb.gz
+    Type: cpu
+    Time: Jun 1, 2021 at 4:10pm (CST)
+    Duration: 30s, Total samples = 420ms ( 1.40%)
+    Entering interactive mode (type "help" for commands, "o" for options)
+    (pprof) top
+    Showing nodes accounting for 340ms, 80.95% of 420ms total
+    Showing top 10 nodes out of 114
+        flat  flat%   sum%        cum   cum%
+        90ms 21.43% 21.43%       90ms 21.43%  syscall.syscall
+        60ms 14.29% 35.71%       60ms 14.29%  runtime.kevent
+        60ms 14.29% 50.00%       60ms 14.29%  runtime.nanotime1
+        40ms  9.52% 59.52%       40ms  9.52%  runtime.pthread_cond_wait
+        20ms  4.76% 64.29%      150ms 35.71%  net/http.(*conn).serve
+        20ms  4.76% 69.05%       20ms  4.76%  runtime.rawstring
+        20ms  4.76% 73.81%       20ms  4.76%  syscall.syscall6
+        10ms  2.38% 76.19%       10ms  2.38%  bufio.(*Reader).reset (inline)
+        10ms  2.38% 78.57%       60ms 14.29%  net/textproto.(*Reader).readLineSlice
+        10ms  2.38% 80.95%       10ms  2.38%  runtime.assertI2I2
+
+从统计可以看到 top 操作syscall和io 操作
+
+#### pprof mem 分析
+pprof 支持内存分析，找出内存消耗大的代码
+
+--inuse_space 分析常驻内存
+
+    $ go tool pprof -inuse_space http://127.0.0.1:4500/debug/pprof/heap
+
+--alloc_objects 分析临时内存
+
+    $ go tool pprof -alloc_space http://127.0.0.1:4500/debug/pprof/heap
+    Saved profile in /Users/ahui/pprof/pprof.alloc_objects.alloc_space.inuse_objects.inuse_space.002.pb.gz
+    Type: alloc_space
+    Time: Jun 1, 2021 at 4:14pm (CST)
+    Entering interactive mode (type "help" for commands, "o" for options)
+    (pprof) top
+    Showing nodes accounting for 15.32MB, 79.79% of 19.21MB total
+    Showing top 10 nodes out of 48
+        flat    flat%   sum%        cum   cum%
+        2.50MB  13.02% 13.02%     2.50MB 13.02%  net/http.Header.Clone
+        2.31MB  12.04% 25.06%     2.31MB 12.04%  runtime/pprof.StartCPUProfile
+        2MB     10.44% 35.50%       2MB 10.44%  bufio.NewWriterSize
+        1.50MB  7.81% 43.32%     1.50MB  7.81%  net/textproto.(*Reader).ReadMIMEHeader
+        1.50MB  7.81% 51.13%        2MB 10.41%  context.WithCancel
+        1.50MB  7.81% 58.94%     1.50MB  7.81%  context.WithValue
+        1MB     5.23% 64.16%        1MB  5.23%  bufio.NewReaderSize
+        1MB     5.21% 69.37%        1MB  5.21%  github.com/gin-gonic/gin/render.writeContentType
+        1MB     5.21% 74.58%        3MB 15.62%  net/http.readRequest
+        1MB     5.21% 79.79%        1MB  5.21%  net/http.(*Server).newConn
+    (pprof)
+
+#### go-torch 分析
+上面的分析不直观，可以用go-torch代替。
+
+    # cpu 火焰图
+    go-torch -u http://127.0.0.1:4500 
+    # inuse_space 火焰图
+    go-torch -inuse_space http://127.0.0.1:4500/debug/pprof/heap --colors=mem
+    # alloc_space 火焰图
+    go-torch -alloc_space http://127.0.0.1:4500/debug/pprof/heap --colors=mem
+
+## pkg/profile 工具
 本节参考：https://wjp2013.github.io/go/go-tools-basic/
 
 准备下要分析的代码:
@@ -45,9 +164,7 @@ private:
         stopper := profile.Start(profile.CPUProfile, profile.ProfilePath("."))
 
         defer stopper.Stop()
-
         joinSlice()
-
         time.Sleep(time.Second)
     }
 
@@ -109,7 +226,7 @@ go-torch 输出的数据可以用FlameGraph 脚本实现可视化(FlameGraph 是
 这样我们可以得到一个完整的程序调用性能采样profile的输出,如下图：
 ![](/img/go/profile/pprof-simple.png)
 
-调用图太不直观了，我们需要简单的火焰图
+调用图太不直观了，我们需要简单的火焰图. 下面就介绍下
 
 ### Flame 图
 先压测：
@@ -143,6 +260,9 @@ As of Go 1.11, `flamegraph` visualizations are available in go tool pprof direct
 ![](/img/go/profile/flame-web.png)
 ![](/img/go/profile/flame1.png)
 ![](/img/go/profile/flame2.png)
+
+## 官方的性能分析工具：go test -bench
+源码 https://github.com/ahuigo/playflame/tree/slow/stats
 
 ### bench cpu
 我们来压测下stats 这个目录
@@ -305,6 +425,8 @@ As of Go 1.11, `flamegraph` visualizations are available in go tool pprof direct
         ....
         return buf.String()
     }
+
+## 
 
 # 踩坑记： go 服务内存暴涨
 https://www.v2ex.com/t/666257#reply94
