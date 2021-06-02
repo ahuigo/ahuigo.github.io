@@ -24,7 +24,8 @@ private:
 更多调试的使用，可以阅读The Go Blog的 Profiling Go Programs
 
 ## go tool pprof分析
-> 参考：https://www.cnblogs.com/upyun/p/8526925.html
+> 参考1：https://www.cnblogs.com/upyun/p/8526925.html
+> 参考2：深度解密Go语言之pprof https://segmentfault.com/a/1190000020964967
 Golang 提供的两个官方包 runtime/pprof，net/http/pprof 能方便的采集程序运行的`堆栈、goroutine、内存分配和占用、io 等信息`的 `.prof` 文件.
 然后可以使用 `go tool pprof` 分析 `.prof` 文件。两个包的作用是一样的，只是使用方式的差异。
 
@@ -50,55 +51,83 @@ Golang 提供的两个官方包 runtime/pprof，net/http/pprof 能方便的采�
     ginpprof.Wrap(router)
     ...
 
-编译运行后访问 http://127.0.0.1:4500/debug/pprof/ 查看采样统计
+编译运行后访问 http://localhost:4500/debug/pprof/ 查看采样统计
 
-    count profiles:
-    0     block
-    62    goroutine
-    427   heap
-    0     mutex
-    12    threadcreate
+    count profiles: 
+    0     profile  cpu占用采样
+    4     heap      堆上内存采样
+    4     allocs    内存分配采样
+    0     mutex     锁竞争采样
+    62    goroutine 协程调用栈
+    0     block     阻塞操作采样
+    12    threadcreate 线程创建采样
+    full goroutine stack dump
+
+allocs 和 heap 采样的信息一致，不过前者是所有对象的内存分配，而 heap 则是活跃对象的内存分配。
+
+> The difference between the two is the way the pprof tool reads there at start time. Allocs profile will start pprof in a mode which displays the total number of bytes allocated since the program began (including garbage-collected bytes).
+
+关于 goroutine 的信息有两个链接，`goroutine 和 full goroutine stack dump`，前者是一个汇总的消息，可以查看 goroutines 的总体情况，后者则可以看到每一个 goroutine 的状态。页面具体内容的解读可以参考【大彬】的文章:https://segmentfault.com/a/1190000019222661
 
 点击对应的 profile 可以查看具体信息，通过浏览器查看的数据不能直观反映程序性能问题，go tool pprof 命令行工具提供了丰富的工具集:
 
-    # 查看 heap 信息
-    go tool pprof http://127.0.0.1:4500/debug/pprof/heap
+    # 下载 cpu profile，默认从当前开始收集 30s 的 cpu 使用情况，需要等待 30s
+    go tool pprof http://localhost:4500/debug/pprof/profile
+    # wait 120s
+    go tool pprof http://localhost:4500/debug/pprof/profile?seconds=120     
 
-    # 查看 30s 的 CPU 采样信息
-    go tool pprof http://127.0.0.1:4500/debug/pprof/profile
+    # 下载 heap profile
+    go tool pprof http://localhost:4500/debug/pprof/heap
 
-其他功能使用参见 官方 net/http/pprof 库
+    # 下载 goroutine profile
+    go tool pprof http://localhost:4500/debug/pprof/goroutine
+
+    # 下载 block profile
+    go tool pprof http://localhost:4500/debug/pprof/block
+
+    # 下载 mutex profile
+    go tool pprof http://localhost:4500/debug/pprof/mutex
+
+
+点击 profile 和 trace 则会在后台进行一段时间的数据采样，采样完成后，返回给浏览器一个 profile 文件，之后在本地通过 go tool pprof 工具进行分析:
+
+    go tool pprof ~/Downloads/profile
+
 
 #### pprof CPU 分析
 采集 profile 数据之后，可以分析 CPU 热点代码。 先执行压测试
 
-    $ go-wrk  -d=50 -c=50  http://localhost:4500/sleep/5
-    Running 50s test @ http://localhost:4500/sleep/5
+    $ go-wrk  -d=50 -c=50  http://localhost:4500/cpu/5
+    Running 50s test @ http://localhost:4500/cpu/5
     50 goroutine(s) running concurrently
 
 再执行下面采集 30s 的 profile 数据，30s之后进入终端交互模式，输入 top 指令。
 
-    $ go tool pprof http://127.0.0.1:4500/debug/pprof/profile
-    Fetching profile over HTTP from http://127.0.0.1:4500/debug/pprof/profile
+    $ go tool pprof http://localhost:4500/debug/pprof/profile
+    Fetching profile over HTTP from http://localhost:4500/debug/pprof/profile
     Saved profile in /Users/ahui/pprof/pprof.samples.cpu.010.pb.gz
     Type: cpu
     Time: Jun 1, 2021 at 4:10pm (CST)
     Duration: 30s, Total samples = 420ms ( 1.40%)
     Entering interactive mode (type "help" for commands, "o" for options)
     (pprof) top
-    Showing nodes accounting for 340ms, 80.95% of 420ms total
-    Showing top 10 nodes out of 114
-        flat  flat%   sum%        cum   cum%
-        90ms 21.43% 21.43%       90ms 21.43%  syscall.syscall
-        60ms 14.29% 35.71%       60ms 14.29%  runtime.kevent
-        60ms 14.29% 50.00%       60ms 14.29%  runtime.nanotime1
-        40ms  9.52% 59.52%       40ms  9.52%  runtime.pthread_cond_wait
-        20ms  4.76% 64.29%      150ms 35.71%  net/http.(*conn).serve
-        20ms  4.76% 69.05%       20ms  4.76%  runtime.rawstring
-        20ms  4.76% 73.81%       20ms  4.76%  syscall.syscall6
-        10ms  2.38% 76.19%       10ms  2.38%  bufio.(*Reader).reset (inline)
-        10ms  2.38% 78.57%       60ms 14.29%  net/textproto.(*Reader).readLineSlice
-        10ms  2.38% 80.95%       10ms  2.38%  runtime.assertI2I2
+          flat  flat%   sum%        cum   cum%
+       158.35s 88.75% 88.75%    177.85s 99.67%  ginapp/server.longRun
+        14.03s  7.86% 96.61%     14.03s  7.86%  runtime.asyncPreempt
+         5.47s  3.07% 99.67%      5.47s  3.07%  runtime.walltime1
+             0     0% 99.67%    177.89s 99.70%  ginapp/server.cpuFunc
+             0     0% 99.67%    177.89s 99.70%  github.com/gin-gonic/gin.(*Context).Next
+             0     0% 99.67%    177.89s 99.70%  github.com/gin-gonic/gin.(*Engine).ServeHTTP
+             0     0% 99.67%    177.89s 99.70%  github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+             0     0% 99.67%    178.28s 99.92%  net/http.(*conn).serve
+             0     0% 99.67%    177.89s 99.70%  net/http.serverHandler.ServeHTTP
+             0     0% 99.67%      5.47s  3.07%  runtime.walltime (inline)
+
+解释下：
+
+    flat 是函数自身的cpu 占用
+    sum 累加
+    cum 包含函数调用的时间，比如cpuFunc 就包含了longRun 的时间
 
 从统计可以看到 top 操作syscall和io 操作
 
@@ -107,11 +136,11 @@ pprof 支持内存分析，找出内存消耗大的代码
 
 --inuse_space 分析常驻内存
 
-    $ go tool pprof -inuse_space http://127.0.0.1:4500/debug/pprof/heap
+    $ go tool pprof -inuse_space http://localhost:4500/debug/pprof/heap
 
 --alloc_objects 分析临时内存
 
-    $ go tool pprof -alloc_space http://127.0.0.1:4500/debug/pprof/heap
+    $ go tool pprof -alloc_space http://localhost:4500/debug/pprof/heap
     Saved profile in /Users/ahui/pprof/pprof.alloc_objects.alloc_space.inuse_objects.inuse_space.002.pb.gz
     Type: alloc_space
     Time: Jun 1, 2021 at 4:14pm (CST)
@@ -136,11 +165,11 @@ pprof 支持内存分析，找出内存消耗大的代码
 上面的分析不直观，可以用go-torch代替。
 
     # cpu 火焰图
-    go-torch -u http://127.0.0.1:4500 
+    go-torch -u http://localhost:4500 
     # inuse_space 火焰图
-    go-torch -inuse_space http://127.0.0.1:4500/debug/pprof/heap --colors=mem
+    go-torch -inuse_space http://localhost:4500/debug/pprof/heap --colors=mem
     # alloc_space 火焰图
-    go-torch -alloc_space http://127.0.0.1:4500/debug/pprof/heap --colors=mem
+    go-torch -alloc_space http://localhost:4500/debug/pprof/heap --colors=mem
 
 ## pkg/profile 工具
 本节参考：https://wjp2013.github.io/go/go-tools-basic/
