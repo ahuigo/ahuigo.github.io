@@ -302,13 +302,16 @@ kernel的函式库则位于/lib/modules
 1. LD_LIBRARY_PATH 不建议
 3. (ELF only) Using the directories specified in the DT_RUNPATH dynamic section attribute of the binary if present
 2. /etc/ld.so.cache中查找。这个缓存文件由ldconfig命令读取配置文件/etc/ld.so.conf之后生成.
-3. Using path /lib, and then /usr/lib.
+3. Using path `/usr/lib` then `/usr/local/lib`.
+4. 指定 -L $SCADDRESS/lib/ -lapue
+5. 指定 -F
+     The default framework search path is /Library/Frameworks then /System/Library/Frameworks.  
 
 对于mac  来说: `man ld`
 
     Search paths
      ld maintains a list of directories to search for a library or framework to use.  
-     The default library search path is /usr/lib then /usr/local/lib.  
+     The default library search path is `/usr/lib` then `/usr/local/lib`.  
      The -L option will add a new library search path.  
      The default framework search path is /Library/Frameworks then /System/Library/Frameworks.  
      (Note: previously, /Network/Library/Frameworks was at the end of the default path.  If you need that functionality, you need to explicitly add -F/Network/Library/Frameworks).  

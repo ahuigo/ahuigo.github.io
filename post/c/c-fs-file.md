@@ -99,9 +99,11 @@ linux 中的进程由进程描述符(task_struct, Process Descriptor)描述。�
 
 # open & close
 
+## open
 	#include <fcntl.h>
 	
 	int open(const char *pathname, int flags[, mode_t mode]);
+	int openat(int fd, const char *pathname, int flags[, mode_t mode]);
 	返回值：成功返回新分配的文件描述符fd，出错返回-1并设置errno
 		flags
 			O_RDONLY 只读打开(00)
@@ -112,7 +114,11 @@ linux 中的进程由进程描述符(task_struct, Process Descriptor)描述。�
 			O_CREAT 若此文件不存在则创建它。使用此选项时需要提供第三个参数mode，表示该文件的访问权限。
 			O_EXCL 如果同时指定了O_CREAT，并且文件已存在，则出错返回。
 			O_TRUNC 如果文件已存在，并且以只写或可读可写方式打开，则将其长度截断（Truncate）为0字节。
-			O_NONBLOCK (100)对于设备文件，以O_NONBLOCK方式打开可以做非阻塞I/O（Nonblock I/O），非阻塞I/O在下一节详细讲解。
+			O_NONBLOCK (100)对于设备文件，以O_NONBLOCK方式打开可以做非阻塞I/O（Nonblock I/O），非阻塞I/O在下一节详细讲解。如果字符文件、FIFO、块文件
+            O_SYNC 每次write时等IO完成(等待属性更新)
+            O_DSYNC 每次write时等IO完成(不等待属性更新)
+            O_RSYNC 每次read时等同一文件的write完成
+
 		mode
 			文件权限，与umask 一起使用
 		return:
@@ -124,10 +130,20 @@ linux 中的进程由进程描述符(task_struct, Process Descriptor)描述。�
 	Note:
 		当进程结束时，内核会自动关闭进程“忘记”关闭的td. 但是如果进程是长时运行的，若不手动关闭td, 也会耗用大量的系统资源
 
+openat：
+1. path是绝对路径，忽略fd，跟open 一样
+2. path是相对路径，则fd所在的目录是起始目录(避免TOCTTOU问题：两个文件操作不是原子的，但是又要切换不同的当前目录)
+
 open函数与C标准I/O库的fopen函数有些细微的区别：	
 
 - 以可写的方式fopen一个文件时，如果文件不存在会自动创建，而open一个文件时必须明确指定O_CREAT才会创建文件，否则文件不存在就出错返回。
 - 以w或w+方式fopen一个文件时，如果文件已存在就截断为0字节，而open一个文件时必须明确指定O_TRUNC才会截断文件，否则直接在原来的数据上改写。
+
+## creat
+
+    int creat(const char *path, mode_t mode)
+    // equal to
+    pen(path, o_WRONLY|O_CREAT|O_TRUNC, mode)
 
 ## mode 与 umask
 open的mode参数和当前进程的umask掩码共同决定。
@@ -148,8 +164,13 @@ open的mode参数和当前进程的umask掩码共同决定。
 3. 从网络读，根据不同的传输层协议和内核缓存机制，返回值可能小于请求的字节数
 
 *内核层为该文件记录了读取的位置*
-read 与 c 标准IO中的读最大的差别就是，没有自己的buffer， 比如, fgetc 读取一个字节时：	
-fgetc 可能是调用read 读了1024 个字节到c 标准库的buffer.FILE 结构体记录的文件位置是1，而该文件在内核中的读取位置却移动了1024字节
+1. read 与 c 标准IO中的读最大的差别就是，没有自己的buffer， 比如, fgetc 读取一个字节时：	
+2. fgetc 可能是调用read 读了1024 个字节到c 标准库的buffer.FILE 结构体记录的文件位置是1，而该文件在内核中的读取位置却移动了1024字节
+
+### read 预读与性能
+unix program 3.9提到。
+大多数文件系统会使用预读，如果磁盘块长度是4096 bytes.
+BUFFSIZE 最好设置为4096及以上。
 
 ## write
 
@@ -159,6 +180,38 @@ fgetc 可能是调用read 读了1024 个字节到c 标准库的buffer.FILE 结�
 返回值:	
 1. 对于常规文件来说，返回值等于count
 2. 对于设备和网络文件来说，可能小于count
+
+## sync, fsync, fdatasync
+    #include <unistd.h>
+    int sync(int fd);
+        将块缓冲排到写队列，不等实际磁盘写入
+    int fsync(int fd);
+        等data+attrs(比如更新时间)实际磁盘写入
+    int fdatasync(int fd);
+        只等data实际磁盘写入
+
+## 文件原子操作
+refer: unix advanced program 3.11
+### append atom
+系统调用本身是原子性，但是合在一起就不是了
+
+    // 如果两个进程同时写buf 就会有问题
+    lseek(fd, 0, SEEK_END)
+    write(fd, buf, 100)
+
+原子性的操作是open 文件时使用`O_APPEND`, 每次write前都会把pos移动到最后
+
+    open("/dev/tty", O_RDWR|O_APPEND)
+
+### pread,pwrite
+    #include <unistd.h>
+    ssize_t pread(int fd,void *buf, size_t nbytes, off_t offset)
+        出错返回-1
+    ssize_t pwrite(int fd,void *buf, size_t nbytes, off_t offset)
+        出错返回-1
+
+调用pread相当于先lseek，再read, 中间不可中断或读
+调用pwrite类似
 
 ## 阻塞(Block)
 1. 读写常规文件不会阻塞
@@ -179,10 +232,11 @@ fgetc 可能是调用read 读了1024 个字节到c 标准库的buffer.FILE 结�
 
 	#include <unistd.h>
 	#include <stdlib.h>
+    #define BUFFSIZE 5
 	int main(void) {
 		char buf[10];
 		int n;
-		n = read(STDIN_FILENO, buf, 5);
+		n = read(STDIN_FILENO, buf, BUFFSIZE);
 		write(STDOUT_FILENO, buf, n);
 		return 0;
 	}
@@ -247,7 +301,7 @@ fgetc 可能是调用read 读了1024 个字节到c 标准库的buffer.FILE 结�
 		return 0;
 	}
 
-# lseek 设置读写位置
+## lseek 设置读写位置
 打开一个文件时，内核中为之记录一个读写位置0(APPEND 的初始位置是文件末尾)， 当读取或者写入了多少字节，这个位置就会往后移动多少字节。
 一c 标准I/O 库中的fseek 一样，lseek 可以改变这个位置：
 
@@ -263,105 +317,10 @@ fgetc 可能是调用read 读了1024 个字节到c 标准库的buffer.FILE 结�
 	off_t currpos;
 	currpos = lseek(fd, 0, SEEK_CUR);
 	
-
-lseek 成功时 返回当前偏移, 失败是返回-1, 并且设置errno 为ESPIPE(该设备不支持偏移). 这与fseek 不同，成功是返回0， 失败时返回-1. 需要获取当前偏移时需要用ftell
-
-# fcntl
-> 配合阅读： https://mengkang.net/559.html
-
-前面以read 为例介绍非阻塞I/O时，为何不直接使用STDIN_FILENO 而重新open 一下`/dev/tty` 呢？
-因为我们需要通过open 指定O_NONBLOCK. 	
-
-其实，可以通过fcntl 改变已经打开文件的访问控制属性(descriptor status flags)：读，写，追加，非阻塞...
-
-	#include <unistd.h>
-	#include <fcntl.h>
-	int fcntl(int fd, int cmd);
-	int fcntl(int fd, int cmd, long arg);
-	int fcntl(int fd, int cmd, struct flock *lock);
-		cmd
-			F_GETFL 获取flags
-			F_SGEFL 设置flags
-			其它 设置锁
-
-举几个例子：
-
-	//获取当前文件打开属性
-	int n;
-	int flags;
-	flags = fcntl(STDIN_FILENO, F_GETFL);
-
-	//设置非阻塞
-	flags |= O_NONBLOCK;
-	if (fcntl(STDIN_FILENO, F_SETFL, flags) == -1) {
-		perror("fcntl");
-		exit(1);
-	}
-
-获取文件打开的属性：
-
-
-	if ((val = fcntl(atoi(argv[1]), F_GETFL)) < 0) {
-		printf("fcntl error for fd %d\n", atoi(argv[1]));
-		exit(1);
-	}
-	//O_ACCMODE 值为0x03, 用于获取flag的低2位
-	switch(val & O_ACCMODE) {
-		case O_RDONLY://00
-			printf("read only");
-			break;
-		case O_WRONLY://01
-			printf("write only");
-			break;
-		case O_RDWR: //10 
-			printf("read write");
-			break;
-		default:
-			fputs("invalid access mode\n", stderr);
-			exit(1);
-	}
-	if (val & O_APPEND) //0b1000 
-		printf(", append");
-	if (val & O_NONBLOCK)  //0b100         
-		printf(", nonblocking");
-
-测试：
-
-	$ ./a.out 2 2>>temp.foo
-	write only, append
-	$ ./a.out 5 5<>temp.foo
-	read write
-
-也可以将标准输出、标准错误都重定向到空设备， 这样就看不到消息了。
-
-	$ command > /dev/null 2>&1
-
-# ioctl
-fcntl 设置的*当前进程*如何访问设备或文件的访问控制属性，例如读、写、追加、非阻塞、加锁等	
-而ioctl 设置的是*文件本身*的属性: 如文件的读写权限、串口波特率、检验位、终端大小等
-
-	#include <sys/ioctl.h>
-	int ioctl(int fd, int request, ...);
-	//失败返回-1
-
-ioctl 获取终端大小:
-
-	#include <stdio.h>
-	#include <stdlib.h>
-	#include <unistd.h>
-	#include <sys/ioctl.h>
-	
-	int main(void) {
-		struct winsize size;
-		if (isatty(STDOUT_FILENO) == 0)
-			exit(1);
-		if(ioctl(STDOUT_FILENO, TIOCGWINSZ, &size)<0) {
-			perror("ioctl TIOCGWINSZ error");
-			exit(1);
-		}
-		printf("%d rows, %d columns\n", size.ws_row, size.ws_col);
-		return 0;
-	}
+eg:
+1. lseek 成功时 返回当前偏移, 失败是返回-1, 并且设置errno 为ESPIPE(该设备不支持偏移). 
+    2. 这与fseek 不同，成功是返回0， 失败时返回-1. 需要获取当前偏移时需要用ftell
+3. lseek 如果超出文件长度，将导致空洞
 
 # mmap 将文件与内存映射
 mmap 将文件的一部分直接映射到内存. 内存与文件将实时互同步。
