@@ -5,6 +5,7 @@ category: blog
 description: 
 ---
 # Preface
+
 信号处理的一个经典场景:
 1. shell 启动一个进程
 2. 用户按下ctrl+c 键盘产生一个硬件中断
@@ -33,19 +34,18 @@ kill -l 查看系统定义的信号列表:
 
 这些信号的宏定义位于signal.h, 编号34 以上的是实时信号，34以下的为非实时信号.
 
-1. Ctrl-c发送SIGINT(2)(这在Python中其实被封装成了KeyboardInterrupt异常)，
+1. Ctrl-c会发送SIGINT(2)(这在Python中其实被封装成了KeyboardInterrupt异常)，
 2. `Ctrl-\`发送SIGQUIT，
-3. Ctrl-Z 产生SIGTSTP
-4. kill pid 则是SIGTERM(15)
-5. SIGCHLD: 进程退出，向父进程发出SIGCHLD (chldhandler)
-6. SIGTTIN 当后台进程读tty时，tty将发送该信号给相应的进程组，默认行为是暂停进程组中进程的执行
-7. SIGCONT: `kill -SIGCONT PID`: Send a continue signal To continue a stopped process via PID
-8. SIGHUP: 当tty的另一端挂掉的时候，比如ssh的session断开了，
+3. kill pid 则是SIGTERM(15)
+3. SIGCHLD: 进程退出，向父进程发出SIGCHLD (chldhandler)
+4. SIGTTIN 当后台进程读tty时，tty将发送该信号给相应的进程组，默认行为是暂停进程组中进程的执行
+5. SIGCONT: `kill -SIGCONT PID`: Send a continue signal To continue a stopped process via PID
+6. SIGHUP: 当tty的另一端挂掉的时候，比如ssh的session断开了，
     1. 于是sshd关闭了和ptmx关联的fd，内核将会给和该tty相关的所有进程发送SIGHUP信号，进程收到该信号后的默认行为是退出进程。
     2. see: linux-nohup.md
-9. SIGTSTP: 输入CTRL+Z时，tty收到后就会发送SIGTSTP给前端进程组，其默认行为是将前端进程组放到后端，并且暂停进程组里所有进程的执行。(Terminal Stop)
-10. SIGSTOP: `kill -SIGSTOP pid` cannot be ignored. SIGTSTP might be.
-11. SIGKILL: cannot be ignored
+7. SIGTSTP: 输入CTRL+Z时，tty收到后就会发送SIGTSTP给前端进程组，其默认行为是将前端进程组放到后端，并且暂停进程组里所有进程的执行。(Terminal Stop)
+3. SIGSTOP: `kill -SIGSTOP pid` cannot be ignored. SIGTSTP might be.
+4. SIGKILL: cannot be ignored
 
 其中有些信号是不可被忽略的, 但无论是否可忽略，handler 依然可以执行:
 1. SIGKILL=9和SIGSTOP = 17这种是不可忽略的。这就是为什么程序卡死的时候按Ctrl-z之后再kill比按Ctrl-c好使的原因了。
@@ -189,7 +189,7 @@ sigset_t类型对于每种信号用一个bit表示“有效”或“无效”状
 > Note: 在使用sigset_t 信号集之前，一定要调用sigemptyset/sigfillset 做初始化, 使得信号集处于确定的状态
 
 ## sigprocmask
-调用函数sigprocmask可以读取或更改进程的信号屏蔽字：
+调用函数sigprocmask可以读取或更改进程的信号屏蔽字。
 
 	#include <signal.h>
 	int sigprocmask(int how, const sigset_t *set, sigset_t *oset);
@@ -271,10 +271,9 @@ sigpending读取当前进程的未决信号集,通过set参数传出。调用成
 ![](/img/linux-c-signal-catch.png)
 
 ### signal 函数捕获
-    signal(SIGINT, sig_handler)
-
 signal 示例
 
+    j c-lib
     gcc -v  process/signal/sig-handler.c -I $SCADDRESS/include/ -L $SCADDRESS/lib/ -lapue
 
 ## sigaction

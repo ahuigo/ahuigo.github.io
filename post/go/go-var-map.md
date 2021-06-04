@@ -76,7 +76,7 @@ The `zero` value of a map is `nil`. A `nil` map has no keys, nor can keys be add
 下面这种形参，也是nil map
 
     func f()(m map[string]int){
-        m["a"] = 1
+        m["a"] = 1  //error
         return
     }
 

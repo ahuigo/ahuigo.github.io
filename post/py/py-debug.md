@@ -5,7 +5,8 @@ category: blog
 description: 
 date: 2018-09-28
 ---
-# Preface
+# 调用栈、异常、日志
+1. 调用栈
 1. exception
 2. 调试包括print, assert, 
 3. 使用logging/sentry/q(强烈推荐)
@@ -24,6 +25,9 @@ getframe(0) 是`debug_info`本身，getframe(1) 是caller
             'funcname':sys._getframe(0).f_code.co_name,
             'caller':sys._getframe(1).f_code.co_name,
         }
+
+## 异常捕捉
+参考: py-lib/debug/trace.py 中的sys.settrace
 
 ## interactive
     import sys

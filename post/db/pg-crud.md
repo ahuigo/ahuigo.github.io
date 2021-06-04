@@ -202,7 +202,15 @@ Supported by any database: 利用 group + column=max(column)
     ON y.customer = x.customer AND y.max_total = x.total
     GROUP BY x.customer, x.total
 
+例子2
 
+    # 可以用id in subquery 代替（效率一样）
+    SELECT x.* 
+    FROM task_checks x
+    JOIN (SELECT max(id) as id
+            FROM task_checks p
+            GROUP BY p.workflow_uuid, p.task_name) y
+    ON y.id=x.id limit 1
 
 
 #### partition
@@ -213,9 +221,19 @@ partition:
         SELECT p.id, 
             p.customer, 
             p.total, 
-            ROW_NUMBER() OVER(PARTITION BY p.customer 
-                                    ORDER BY p.total DESC) AS rk
+            ROW_NUMBER() 
+            OVER( PARTITION BY p.customer ORDER BY p.total DESC ) AS rk
         FROM PURCHASES p)
+    SELECT s.*
+    FROM summary s
+    WHERE s.rk = 1
+
+PARTITION BY when multiple columns:
+
+    WITH summary AS (
+        SELECT *, ROW_NUMBER() 
+            OVER( PARTITION BY workflow_uuid,task_name ORDER BY p.id DESC ) AS rk
+        FROM task_checks p)
     SELECT s.*
     FROM summary s
     WHERE s.rk = 1
@@ -306,3 +324,17 @@ mysql update 多个unique key 时,如果遇到 `duplicate key`, 比如所有的i
 
 	UPDATE <table> set i=-i where id>10; # 先变负，就不存在+1冲突
 	UPDATE <table> set i=1-i where id>10;
+
+
+### update limit
+    UPDATE server_info
+    SET    status = 'active' 
+    WHERE  server_ip = ( SELECT server_ip FROM   server_info WHERE  status = 'standby' LIMIT  1)
+    RETURNING server_ip;
+
+update with lock:
+
+    UPDATE server_info
+    SET    status = 'active' 
+    WHERE  server_ip = ( SELECT server_ip FROM   server_info WHERE  status = 'standby' LIMIT  1 FOR    UPDATE SKIP LOCKED)
+    RETURNING server_ip;

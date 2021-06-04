@@ -24,6 +24,10 @@ Mac OSX Image 不可以修改路径：
     docker search httpd
     docker run httpd
 
+搜索镜像：
+
+    docker search debian | grep amd64
+
 ### check image exists
 
     if [[ "$(docker images -q myimage:mytag 2> /dev/null)" == "" ]]; then

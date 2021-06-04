@@ -4,8 +4,8 @@ date: 2021-05-14
 private: true
 ---
 # go link atom
-go 自己的链表：http://xiaorui.cc/archives/2923
-demo： 
+go 提供的链表：http://xiaorui.cc/archives/2923
+demo:
 1. go-lib/link/link-unsafe.go
 
 link基本用法：
@@ -31,7 +31,11 @@ link基本用法：
 
 但是它是线程不安全的list.
 
-想实现纯程安全的link, 则需要加锁。
+想实现纯程安全的link, 则需要加锁: (参考https://github.com/ahuigo/lock_free_ds)
+1. 粗力度锁（coarse-grained lock）
+1. 细力度锁（fine-grained lock）
+1. 无锁（lock-free）
+1. 无锁 + 垃圾回收（lock-free + rcu）
 
 ## 粗粒度锁
 demo: go-lib/link/link-lock.go (线程安全，加锁的)
@@ -41,5 +45,9 @@ https://www.cnblogs.com/apocelipes/p/9461405.html
 demo: go-lib/link/link-lock-tiny.go (线程安全，加锁的)
 
 # 队列
+使用 Go 实现 lock-free 的队列
+https://colobu.com/2020/08/14/lock-free-queue-in-go/
 无锁队列实现
 https://zhuanlan.zhihu.com/p/24432607
+从有锁到无锁（一）：链表
+https://juejin.cn/post/6844903978438754317

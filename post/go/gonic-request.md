@@ -310,6 +310,28 @@ https://github.com/gin-gonic/gin/issues/961
         return s
     }
 
+wrap 一下
+
+    func readBody(req *http.Request) (buf []byte, err error) {
+        buf, _ = ioutil.ReadAll(req.Body)
+        req.Body = ioutil.NopCloser(bytes.NewBuffer(buf))
+        return
+    }
+
+via teeReader
+
+    func readTeeBody(req *http.Request) (body []byte, err error) {
+        buf := &bytes.Buffer{}
+        tea := io.TeeReader(req.Body, buf)
+        body, err = ioutil.ReadAll(tea)
+        if err != nil {
+            return
+        }
+        //req.Body = ioutil.NopCloser(buf)
+        return
+    }
+
+
 # Request Info
 
 ## clientIp

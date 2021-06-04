@@ -78,6 +78,10 @@ func Getwd() (pwd string, err error)
     err = os.Mkdir(path, os.ModeDir)
 	os.Mkdir("tmp", 0700)
 
+recursive:
+
+    os.MkdirAll(folderPath, os.ModePerm)
+
 ## tmp
 ### tempFile
     // 生成随机的文件名，不会自动Remove
@@ -130,16 +134,9 @@ read:
     b3 := make([]byte, 2)
     n3, err := io.ReadAtLeast(f, b3, 2)
 
-### buffer read
-
-    // The `bufio` package implements a buffered
-    // reader that may be useful both for its efficiency
-    // with many small reads and because of the additional
-    // reading methods it provides.
-    r4 := bufio.NewReader(f)
-    b4, err := r4.Peek(5)
-    check(err)
-    fmt.Printf("5 bytes: %s\n", string(b4))
+### buffer read(copy)
+    var b bytes.Buffer
+    io.Copy(os.Stdout, &b)
 
 ## write
 
@@ -179,6 +176,32 @@ WriteString
     w.Flush()
 
 ## Copy
+### copy via io.Copy
+    func copy(src, dst string) (int64, error) {
+        sourceFileStat, err := os.Stat(src)
+        if err != nil {
+                return 0, err
+        }
+
+        if !sourceFileStat.Mode().IsRegular() {
+                return 0, fmt.Errorf("%s is not a regular file", src)
+        }
+
+        source, err := os.Open(src)
+        if err != nil {
+                return 0, err
+        }
+        defer source.Close()
+
+        destination, err := os.Create(dst)
+        if err != nil {
+                return 0, err
+        }
+        defer destination.Close()
+        nBytes, err := io.Copy(destination, source)
+        return nBytes, err
+    }
+### 自定义copy reader 
 定义
 
     type rot13Reader struct {
@@ -199,7 +222,3 @@ WriteString
 		r := rot13Reader{s}
 		io.Copy(os.Stdout, &r) //write to os.Stdout
 	}
-
-### Copy buffer
-    var b bytes.Buffer
-    io.Copy(os.Stdout, &b)

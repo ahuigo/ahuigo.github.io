@@ -1,0 +1,2 @@
+From debian:latest
+RUN apt update && apt install -y procps gcc vim curl wget

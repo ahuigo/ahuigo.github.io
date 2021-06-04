@@ -141,10 +141,10 @@ vegeta 是golang 写的压测工具
 
 ### 构造get/post 请求
 
-    echo "GET http://host.com" | vegeta attack  -rate=10000  -duration=10s |vegeta report
-    echo "GET http://host.com" | vegeta attack  -rate=10000  -duration=10s > result.bin
+    echo "GET http://host.com/api/v1/tasks" | vegeta attack  -rate=10000  -duration=10s |vegeta report
+    echo "GET http://host.com/api/v1/tasks" | vegeta attack  -rate=10000  -duration=10s > result.bin
 
-header:
+header(要加json):
 
     jq -ncM '{method: "GET", url: "http://m:8099", header: {"Content-Type": ["text/plain"]}}' |
     vegeta attack -format=json -rate=100 | vegeta encode

@@ -5,22 +5,6 @@ private:
 ---
 # todo
 Kafka知识点大全 https://zhuanlan.zhihu.com/p/141101733
-# Debug
-ZookeeperConsumerConnector can create message streams at most once
-
-    consumerConnector = kafka.consumer.Consumer.createJavaConsumerConnector(config);
-    consumerConnector.createMessageStreams(topicCountMap, keyDecoder, valueDecoder);// 调用多次
-
-会出现
-
-    kafka.common.MessageStreamsExistException: ZookeeperConsumerConnector can create message streams at most once
-
-# Kafka 介绍
-Kafka是一种分布式，基于发布/订阅的消息系统。
-
-## todo
-Kafka设计解析（二）- Kafka High Availability （上）
-http://www.jasongj.com/2015/04/24/KafkaColumn2/
 
 ## 为何使用消息系统
 
@@ -79,7 +63,65 @@ Kafka是Apache下的一个子项目，是一个高性能跨语言分布式发布
   对于像Hadoop的一样的日志数据和离线分析系统，但又要求实时处理的限制，这是一个可行的解决方案。
 5. Scale out：支持在线水平扩展
 
-# Kafka架构
+# Kafka 概念
+https://www.cnblogs.com/flaming/p/11304278.html
+
+上图中包含了2个Producer（生产者），一个Topic（主题），3个Partition（分区），3个Replica（副本），3个Broker（Kafka实例或节点），一个Consumer Group（消费者组），其中包含3个Consumer（消费者）。下面我们逐一介绍这些概念。
+
+## Producer（生产者）
+生产者，顾名思义，就是生产东西的，也就是发送消息的，生产者每发送一个条消息必须有一个Topic（主题），也可以说是消息的类别，生产者源源不断的向kafka服务器发送消息。
+
+## Topic（主题）
+每一个发送到Kafka的消息都有一个主题，也可叫做一个类别，类似我们传统数据库中的表名一样，比如说发送一个主题为order的消息，那么这个order下边就会有多条关于订单的消息，只不过kafka称之为主题，都是一样的道理。
+
+## Partition（分区）
+消息分区是被分在不同的`Broker`上也就是服务器上，这样我们大量的消息就实现了负载均衡。
+每个Topic可以指定多个分区，但是至少指定一个分区。每个分区存储的数据都是有序的，不同分区间的数据不保证有序性。
+因为如果有了多个分区，消费数据的时候肯定是各个分区独立开始的，有的消费得慢，有的消费得快肯定就不能保证顺序了。
+那么当需要保证消息的顺序消费时，我们可以设置为一个分区，只要一个分区的时候就只能消费这个一个分区，那自然就保证有序了。
+
+## Replica（副本）
+副本就是分区中数据的备份，是Kafka为了防止数据丢失或者服务器宕机采取的保护数据完整性的措施，一般的数据存储软件都应该会有这个功能。
+
+假如我们有3个分区，由于不同分区中存放的是部分数据，所以为了全部数据的完整性，我们就必须备份所有分区。
+这时候我们的一份副本就包括3个分区，每个分区中有一个副本，两份副本就包含6个分区，一个分区两份副本。Kafka做了副本之后同样的会把副本分区放到不同的服务器上，保证负载均衡。讲到这我们就可以看见，这根本就是传统数据库中的主从复制的功能，没错，Kafka会找一个分区作为主分区（leader）来控制消息的读写，其他的（副本）都是从分区（follower），这样的话读写可以通过leader来控制，然后同步到副本上去，保证的数据的完整性。如果有某些服务器宕机，我们可以通过副本恢复数据，也可以暂时用副本中的数据来使用。
+
+PS：这个东西实际跟ElasticSearch中的副本是完全一致的
+
+1.2.5 Broker（实例或节点）
+
+这个就好说了，意思就是Kafka的实例，启动一个Kafka就是一个Broker，多个Brokder构成一个Kafka集群，这就是分布式的体现，服务器多了自然吞吐率效率啥的都上来了。
+
+1.2.6 Consumer Group（消费者组）和 Consumer（消费者）
+
+Consume消费者来读取Kafka中的消息，可以消费任何Topic的数据，多个Consume组成一个消费者组，一般的一个消费者必须有一个组（Group）名，如果没有的话会被分一个默认的组名
+
+## 架构
+1.3 Kafka的架构与设计
+
+一般的来说，一个Kafka集群包含一个或多个的Producer，一个或多个的Broker，一个或多个的Consumer Group，和一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，管理集群在运行过程中负责均衡、故障转移和恢复什么的。Producer使用Push（推送）的方式将消息发布到Broker，Consumer使用Pull（拉取）的方式从Broker获取消息，两者都是主动操作的。
+
+1.3.1 Topic和Partition
+
+Kafka最初设计初衷就是高吞吐率、速度快。所以在对Topic和Partition的设计中，把Topic分成一个或者多个分区，每个Partition在物理磁盘上对应一个文件夹，该文件夹下存储这个Partition的所有消息和索引文件。当我们创建一个Topic是，同时可以指定分区数据，数目越多，吞吐量越大，但是消耗的资源也越多，当我们向Kafka发送消息时，会均衡的将消息分散存储在不同的分区中。在存储的过程中，每条消息都是被顺序写到磁盘上的。（顺序写磁盘的时候比随机写内存的想效率还高，这也是Kafka快的一个原因之一）。
+
+下面是Kafka的写入原理图，可以看出下列消息都是顺序的，消费者消费的时候也是按着顺序来消费的。
+
+
+对于传统的MQ而言，一般经过消费后的消息都会被删除，而Kafka却不会被删除，始终保留着所有的消息，只记录一个消费者消费消息的offset（偏移量）作为标记，可以允许消费者可以自己设置这个offset，从而可以重复消费一些消息。但不删除肯定不行，日积月累，消息势必会越来越多，占用空间也越来越大。Kafka提供了两种策略来删除消息：一是基于时间，二是基于Partition文件的大小，可以通过配置来决定用那种方式。不过现在磁盘那么廉价，空间也很大，隔个一年半载删除一次也不为过。
+
+1.3.2 Producer
+
+生产者发送消息时，会根据Partition的策略来决定存到那个Partition中，一般的默认的策略是Kafka提供的均衡分布的策略，即实现了我们所要的负载均衡。一般的，当我们的消息对顺序没有要求的话那就多设置几个分区，这样就能很好地负载均衡增加吞吐量了。分区的个数可以手动配置，也可以在创建Topic的时候就事先指定。发送消息的时候，需要指定消息的key值，Producer会根据这个key值和Partition的数量来决定这个消息发到哪个分区，可能里边就是一个hash算法。
+
+1.3.3 Consumer Group 和 Consumer
+
+我们知道传统的消息队列有两种传播消息的方式，一种是单播，类似队列的方式，一个消息只被消费一次，消费过了，其他消费者就不能消费了；另一种是多播，类似发布-订阅的模式，一个消息可以被多个消费者同时消费。Kafka通过消费者组的方式来实现这两种方式: 
+1. 在一个Consumer Group中，每一个Topic中的消息只能被这个组中的一个Consumer消费，所以对于设置了多分区的Topic来说，分区的个数和消费者的个数应该是一样的，一个消费者消费一个分区，这样每个消费者就成了单播形式，类似队列的消费形式。所以说，一个消费者组里边的消费者不能多于Topic的分区数，一旦多于，多出来的消费者就不能消费到消息。
+1. 另外，不同的消费者组可以同时消费一个消息，这样就实现了多播，类似发布-订阅的模式。我们可以设置每个组中一个消费者的方式来实现发布-订阅的模式。当我们有多个程序都要对消息进行处理时，我们就可以把他们设置到不同的消费者组中，来实现不同的功能。
+
+好了，以上我们已经对Kafka有了一个初步的认识，接下来就可以来使用了。
+
 
 ## Terminology
 

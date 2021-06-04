@@ -445,5 +445,30 @@ patsubst 函数用于模式匹配的替换，格式如下。
 	VAR=value
 		Eg. `make CPPFLAGS=-g`, 在make 命令行中定义变量
 
+# global env
+ export individual variables with:
+
+    export MY_VAR = foo  # Available for all targets
+
+Or export variables for a specific target (target-specific variables):
+
+    my-target: export MY_VAR_1 = foo
+    my-target: export MY_VAR_2 = bar
+    my-target: export MY_VAR_3 = baz
+
+    my-target: dependency_1 dependency_2
+      echo do something
+
+You can also specify the .EXPORT_ALL_VARIABLES target to—you guessed it!—EXPORT ALL THE THINGS!!!:
+
+    .EXPORT_ALL_VARIABLES:
+
+    MY_VAR_1 = foo
+    MY_VAR_2 = bar
+    MY_VAR_3 = baz
+
+    test:
+      @echo $$MY_VAR_1 $$MY_VAR_2 $$MY_VAR_3
+
 # 参考
 Refer to: http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html

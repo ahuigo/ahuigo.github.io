@@ -35,6 +35,8 @@ go generate命令格式：
 ## go clean
 go clean 命令是用来移除当前源码包里面编译生成的文件，这些文件包括
 
+    go help clean
+
     二进制binary文件
         DIR(.exe) 由 go build 产生
         DIR.test(.exe) 由 go test -c 产生
