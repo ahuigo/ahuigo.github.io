@@ -18,6 +18,9 @@ date: 2019-08-15
     docker start debian-container
     docker exec -it debian-container bash
 
+## change workdir
+    docker exec -w="/root" -it debian bash
+
 ## ctrl+n,ctrl+p 支持
 在bash 才支持，sh不支持
 
