@@ -18,14 +18,15 @@ private: true
 
 build url:
 
-    url.RawQuery = q.Encode()
+    url.RawQuery = query.Encode()
     fmt.Println(url)
+    fmt.Println(url.String())
 
 ### parse query
     query, _:= url.ParseQuery(`x=1&y=2&y=3;z`)
     //map[x:[1] y:[2 3] z:[]]
 
-## urlInfo
+## addQuery
     u, _:= url.Parse("http://bing.com/search?q1=dotnet")
 	u.Scheme = "https"
 	u.Host = "google.com"

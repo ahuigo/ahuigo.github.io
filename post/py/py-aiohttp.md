@@ -4,24 +4,40 @@ date: 2018-09-28
 ---
 # Requests
 Refer to: http://aiohttp.readthedocs.io/en/stable/tutorial.html#aiohttp-tutorial
-```
-import aiohttp
-import asyncio
-import async_timeout
 
-async def fetch(session, url):
-    with async_timeout.timeout(10):
-        async with session.get(url) as response:
-            return await response.text()
+## fetch urls
+via asyncio.run
 
-async def main():
-    async with aiohttp.ClientSession() as session:
-        html = await fetch(session, 'http://python.org')
-        print(html)
+    import asyncio
+    import aiohttp
+    import time
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
-```
+    async def bfetch(urls, json):
+        async def get(url, session, json):
+            try:
+                async with session.get(url=url) as response:
+                    resp = await response.read()
+                    print("Successfully got url {} with resp of length {}.".format(url, len(resp)))
+                    return resp
+            except Exception as e:
+                print("Unable to get url {} due to {}.".format(url, e.__class__))
+
+        async with aiohttp.ClientSession() as session:
+            ret = await asyncio.gather(*[get(url, session, json) for url in urls])
+        print("Finalized all. Return is a list of len {} outputs.".format(len(ret)))
+        return ret
+
+    def fetch(url, json):
+        start = time.time()
+        urls = [url]*10
+        ret = asyncio.run(bfetch(urls, json))
+        end = time.time()
+        print(ret)
+        print("Took {} seconds to pull {} websites.".format(end - start, len(urls)))
+
+
+    fetch('http://m:4500/echo/a', json={1:1})
+
 
 ## options
 

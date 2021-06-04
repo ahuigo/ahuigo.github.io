@@ -158,7 +158,15 @@ If you want to update a field’s value in BeforeCreate hook, you can use scope.
     // MERGE INTO "users" USING *** WHEN NOT MATCHED THEN INSERT *** WHEN MATCHED THEN UPDATE SET ***; SQL Server
     // INSERT INTO `users` *** ON DUPLICATE KEY UPDATE ***; MySQL
 
-Update columns to new value on `id` conflict
+
+    // Use SQL expression
+    db.Clauses(clause.OnConflict{
+      Columns:   []clause.Column{{Name: "id"}},
+      DoUpdates: clause.Assignments(map[string]interface{}{"count": gorm.Expr("GREATEST(count, VALUES(count))")}),
+    }).Create(&users)
+    // INSERT INTO `users` *** ON DUPLICATE KEY UPDATE `count`=GREATEST(count, VALUES(count));
+
+Update specified columns when conflict
 
     DB.Clauses(clause.OnConflict{
         Columns:   []clause.Column{{Name: "id"}},
@@ -169,6 +177,15 @@ Update columns to new value on `id` conflict
     // INSERT INTO `users` *** ON DUPLICATE KEY UPDATE `name`=VALUES(name),`age=VALUES(age); MySQL
 
 
+Update all columns: 
+
+    // Update all columns, except primary keys, to new value on conflict
+    db.Clauses(clause.OnConflict{
+      UpdateAll: true,
+    }).Create(&users)
+    // INSERT INTO "users" *** ON CONFLICT ("id") DO UPDATE SET "name"="excluded"."name", "age"="excluded"."age", ...;
+
+Also checkout FirstOrInit, FirstOrCreate on Advanced Query
 
 # Read 
 对于Count来说，先设置表名

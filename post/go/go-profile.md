@@ -91,8 +91,8 @@ allocs 和 heap 采样的信息一致，不过前者是所有对象的内存分�
 
 点击 profile 和 trace 则会在后台进行一段时间的数据采样，采样完成后，返回给浏览器一个 profile 文件，之后在本地通过 go tool pprof 工具进行分析:
 
-    go tool pprof ~/Downloads/profile
-
+    go tool pprof [-http=":4501"] [binary] <profile
+    go tool pprof -http=:4501   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
 
 #### pprof CPU 分析
 采集 profile 数据之后，可以分析 CPU 热点代码。 先执行压测试
@@ -101,7 +101,7 @@ allocs 和 heap 采样的信息一致，不过前者是所有对象的内存分�
     Running 50s test @ http://localhost:4500/cpu/5
     50 goroutine(s) running concurrently
 
-再执行下面采集 30s 的 profile 数据，30s之后进入终端交互模式，输入 top 指令。
+再执行下面采集 30s 的 profile 数据，30s之后进入终端交互模式，输入 top 指令, `top -cum`。
 
     $ go tool pprof http://localhost:4500/debug/pprof/profile
     Fetching profile over HTTP from http://localhost:4500/debug/pprof/profile
@@ -203,7 +203,7 @@ pprof 支持内存分析，找出内存消耗大的代码
     ./cpu
     go tool pprof --pdf cpu cpu.pprof > cpu.pdf
 
-## go-torch 火焰
+## go-torch 火焰实例
 火焰图是一个非常直观的查找性能瓶颈点
 
 ### 安装go-torch
@@ -281,16 +281,15 @@ As of Go 1.11, `flamegraph` visualizations are available in go tool pprof direct
     Entering interactive mode (type "help" for commands, "o" for options)
     (pprof)
 
-    > go tool pprof -http=":8081" [binary] [profile]
-    go tool pprof -http=:8081   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
-
+    > go tool pprof -http=":4501" [binary] [profile]
+    go tool pprof -http=:4501   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
 
 火焰图的y轴表示cpu调用方法的先后，x轴表示在每个采样调用时间内，方法所占的时间百分比，越宽代表占据cpu时间越多. 
 ![](/img/go/profile/flame-web.png)
 ![](/img/go/profile/flame1.png)
 ![](/img/go/profile/flame2.png)
 
-## 官方的性能分析工具：go test -bench
+## 官方的bench工具：go test -bench
 源码 https://github.com/ahuigo/playflame/tree/slow/stats
 
 ### bench cpu
@@ -455,10 +454,13 @@ As of Go 1.11, `flamegraph` visualizations are available in go tool pprof direct
         return buf.String()
     }
 
-## 
-
-# 踩坑记： go 服务内存暴涨
+# 实例
+## 踩坑记： go 服务内存暴涨
 https://www.v2ex.com/t/666257#reply94
+## futex大量占用cpu 30%
+系统空闲，并没有别的goroutine可供调度，协程调度反复高频出现, Go的scheduler就必须让这个M去sleep，而这个操作是较重的且有锁，最终futex的syscall被调用
+https://zhuanlan.zhihu.com/p/45959147
+
 
 # 参考
 - [Go代码调优利器-火焰图](https://lihaoquan.me/2017/1/1/Profiling-and-Optimizing-Go-using-go-torch.html) 

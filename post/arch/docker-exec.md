@@ -3,6 +3,38 @@ title: Docker exec nsenter
 date: 2019-08-15
 ---
 # Docker exec nsenter
+## exec exited container
+如果想exec 一个exited container, 应该先让它先启动
+
+    docker start  `docker ps -q -l` # restart it in the background
+    docker stop  `docker ps -q -l` # stop
+
+或直接进入shell.
+
+    docker start -i `docker ps -q -l` # restart and enter shell
+
+或：
+
+    docker start debian-container
+    docker exec -it debian-container bash
+
+## ctrl+n,ctrl+p 支持
+在bash 才支持，sh不支持
+
+    docker run --rm -it debian bash
+
+有时需要：
+
+    docker run -ti --detach-keys="ctrl-@" ubuntu:14.04 bash
+
+You can add this to your ~/.docker/config.json file to persist this change:
+
+    {
+        ...
+        "detachKeys": "ctrl-@",
+        ...
+    }
+
 ## nsenter工具进入docker容器
 1. docker exec: 直接执行容器命令
 2. docker attach: 类似exec, 但是多个窗口attach 到一个窗口, 窗口都会同步的显示\阻塞
