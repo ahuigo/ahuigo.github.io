@@ -1,6 +1,7 @@
 body{font-family:"Trebuchet MS",Arial,"Lucida Grande",Verdana,Lucida,Helvetica,sans-serif}
 .share iframe{
     border:0;
+    height:36px;
 }
 #imgview{
     width: 100%;

@@ -202,9 +202,9 @@ Supported by any database: 利用 group + column=max(column)
     ON y.customer = x.customer AND y.max_total = x.total
     GROUP BY x.customer, x.total
 
-例子2
+例子2: 选择最大的id
 
-    # 可以用id in subquery 代替（效率一样）
+    # 例子3：也可以用id in subquery 代替（效率一样）
     SELECT x.* 
     FROM task_checks x
     JOIN (SELECT max(id) as id
@@ -244,7 +244,7 @@ delete and keep top 2 row(order by peg) with group by industry
     DELETE FROM stock where id in 
         (select id  FROM (
             SELECT
-                ROW_NUMBER() OVER (PARTITION BY industry ORDER BY peg) AS r, stock.*
+                ROW_NUMBER() OVER (PARTITION BY industry ORDER BY peg) AS r, id
             FROM
             stock) x WHERE x.r > 2
         )
@@ -252,6 +252,13 @@ delete and keep top 2 row(order by peg) with group by industry
 多维支持
 
     PARTITION BY company, department
+
+如果有多个key:
+
+    DELETE FROM table_name
+    WHERE (key1, key2) IN (
+        SELECT key1, key2 FROM table_name ORDER BY date DESC LIMIT 2
+    );
 
 ### concat rows
 合并为array
