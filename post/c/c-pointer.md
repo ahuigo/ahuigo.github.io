@@ -22,6 +22,10 @@ a是一个指向const int型的指针，a所指向的内存单元不可改写
 	const int *a;
 	int const *a;
 	(*a)++; // 非法
+
+通用类型指针：
+
+    void *buf
 	
 a是一个指向int型的 const指针，*a是可以改写的，但a不允许改写：
 

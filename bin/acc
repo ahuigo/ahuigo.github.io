@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-gcc $1 && ./a.out
+gcc $@ && ./a.out

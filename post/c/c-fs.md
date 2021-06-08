@@ -157,7 +157,7 @@ debugfs 是一个交互式的命令, stat / 可以查看 根目录的inode的信
 对比一下od 查看到的 *根目录的inode 表结构*：
 ![](/img/linux-fs-block-inode-table.png)
 
-上图中，st_mode 体育馆和文件类型和文件权限，最高污染的4表示类型为目录，低位的755表示权限. links=3 表示目录有三个硬连接，分别是根目录上的".",".."和"lost+found"目录下的".."(目录的硬链接只能是"."和".."). blockcount=2 表示两个sector 扇区(512*2=1kb).
+上图中，st_mode 体育馆和文件类型和文件权限，最高位的4表示类型为目录，低位的755表示权限. links=3 表示目录有三个硬连接，分别是根目录上的".",".."和"lost+found"目录下的".."(目录的硬链接只能是"."和".."). blockcount=2 表示两个sector 扇区(512*2=1kb).
 
 根目录的数据块由blocks[0] 指出，也就是block 24, 实际地址是24*0x400 = 0x6000.  如果一个数据块不够，它还会再找一个空闲块，并把空闲块的块号写到block[1]. inode可以存放有限的block标号, 所以一个目录下有多少文件也是有限的(取决于文件名长度等多种因素)
 用od 找到0x6000 开始的目录类型的数据结构：
@@ -195,9 +195,11 @@ debugfs也提供了cd、ls等命令，不需要mount就可以查看这个文件�
 	lost+found
 
 # 数据块寻址
+```
 如果一个文件有多个数据块，这些数据块很可能不是连续存放的，应该如何寻址到每个块呢？根据上面的分析，根目录的数据块是通过其inode中的索引项Blocks[0]找到的，事实上，这样的索引项一共有15个，从Blocks[0]到Blocks[14]，每个索引项占4字节。前12个索引项都表示块编号，例如上面的例子中Blocks[0]字段保存着24，就表示第24个块是该文件的数据块，如果块大小是1KB，这样可以表示从0字节到12KB的文件。如果剩下的三个索引项Blocks[12]到Blocks[14]也是这么用的，就只能表示最大15KB的文件了，这是远远不够的，事实上，剩下的三个索引项都是间接索引。
 
 索引项Blocks[12]所指向的块并非数据块，而是称为间接寻址块（Indirect Block），其中存放的都是类似Blocks[0]这种索引项，再由索引项指向数据块。设块大小是b，那么一个间接寻址块中可以存放b/4个索引项，指向b/4个数据块。所以如果把Blocks[0]到Blocks[12]都用上，最多可以表示b/4+12个数据块，对于块大小是1K的情况，最大可表示268K的文件。如下图所示，注意文件的数据块编号是从0开始的，Blocks[0]指向第0个数据块，Blocks[11]指向第11个数据块，Blocks[12]所指向的间接寻址块的第一个索引项指向第12个数据块，依此类推。
+```
 
 图 数据块的寻址
 
@@ -359,6 +361,11 @@ opendir(3)/readdir(3)/closedir(3)用于遍历目录数据块中的记录。opend
 为了支持不同的文件系统:ext2,ext3,ext4,reiserfs, ntfs,fat... linux 内核在文件系统之上做了一个fs 抽像层，即VFS(Virtual File System, 虚拟文件系统)
 
 ## VFS 在内存中的数据结构
+图1 unix advanced program 3.10:(linux 没有v结点，只有i结点)
+
+![](/img/linux-fs-vfs-unix-3.10-1.png)
+![](/img/linux-fs-vfs-unix-3.10-2.png)
+图2
 ![](/img/linux-fs-vfs.png)
 
 * 文件描述符指向的是file 结构体*
@@ -384,51 +391,6 @@ inode结构体有一个指向super_block结构体的指针。super_block结构�
 inode 值是所属文件系统确定的，必须通过super_block 才能找到inode的确定位置。
 
 file、dentry、inode、super_block这几个结构体组成了VFS的核心概念。对于ext2文件系统来说，在磁盘存储布局上也有inode和超级块的概念，所以很容易和VFS中的概念建立对应关系。而另外一些文件系统格式来自非UNIX系统（例如Windows的FAT32、NTFS），可能没有inode或超级块这样的概念，但为了能mount到Linux系统，也只好在驱动程序中硬凑一下，在Linux下看FAT32和NTFS分区会发现权限位是错的，所有文件都是rwxrwxrwx，因为它们本来就没有inode和权限位的概念，这是硬凑出来的。
-
-## dup 和dup2 函数
-两次open 同一个文件打开的是两个数据相同file 结构体.
-dup(2)/dup2(2) 用于复制现存的文件描述符，使两个文件描述符指向同一个file 结构体。
-file 结构中的f_count（引用计数）加1 变成2 ，其它信息如: File Status Flag，读写位置等都保持不变。
-
-	#include <unistd.h>
-	int dup(int oldfd);
-	int dup2(int oldfd, int newfd);//newfd 指向oldfd 指向的文件
-	//调用成功, 则返回新分配或者指定的文件描述符，失败则返回 -1
-
-dup 返回的新文件描述符一定是该进程未使用的最小文件描述符，这一点和open类似。
-dup2 可以用newfd参数指定新描述符的数值。
-	如果newfd当前已经打开，则自动将其关闭再做dup2操作
-	如果oldfd等于newfd，则dup2直接返回newfd而不用先关闭newfd 再复制
-
-如果返回的值-1，就是错误, for details, refer to  `man dup2`
-
-![](/img/linux-fs-dup.png)
-
-	#include <unistd.h>
-	#include <sys/stat.h>
-	#include <fcntl.h>
-	#include <stdio.h>
-	#include <stdlib.h>
-	#include <string.h>
-
-	int main(void) {
-		int fd, save_fd;
-		char msg[] = "This is a test\n";
-
-		fd = open("somefile", O_RDWR|O_CREAT, S_IRUSR|S_IWUSR);
-		if(fd<0) {
-			perror("open");
-			exit(1);
-		}
-		save_fd = dup(STDOUT_FILENO);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-		write(STDOUT_FILENO, msg, strlen(msg));
-		dup2(save_fd, STDOUT_FILENO);
-		write(STDOUT_FILENO, msg, strlen(msg));
-		close(save_fd);
-		return 0;
-	}
 
 # Reference
 - [linux fs] by 宋劲杉
