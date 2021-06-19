@@ -60,7 +60,7 @@ After that, just import the package into any of the test files:
         _ "project/xtesting"
     )
 
-## unit test
+## unit test 介绍
 github.com/ahuigo/go-lib/gotest
 
 go test 会执行Test 打头的函数
@@ -137,7 +137,7 @@ In package list mode ，successful package test result will be cached and reused
 1. `go test` is okay.
 2. `go test <pkg>`  is okay.
 3. `go test whatever_test.go` is okay
-3. `go test whatever.go` is not okay
+3. `go test whatever.go` is not okay!!!!!
 
 指定文件、路径. 如是foo_test.go 依赖foo.go 就要写全:
 
@@ -181,6 +181,10 @@ Note:
 Error/Fatal 都会导致bench 不被执行
 
     t.Fatal(err)
+
+### isInTest
+
+    strings.HasSuffix(os.Args[0], ".test")
 
 # bench test
 ## bench test rule

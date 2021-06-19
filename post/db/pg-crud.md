@@ -282,6 +282,9 @@ distinct 就是分组，然后按序(order by 取top1)/或随机取一个row
     FROM   purchases
     ORDER  BY customer, total DESC, id;
 
+    # or
+    SELECT DISTINCT ON (customer) * FROM   purchases;
+
 Or shorter (if not as clear) with ordinal numbers of output columns:
 
     # 2:customer 1:id 3:total
@@ -289,6 +292,11 @@ Or shorter (if not as clear) with ordinal numbers of output columns:
         id, customer, total
     FROM   purchases
     ORDER  BY 2, 3 DESC, 1;
+
+如果按有group分组可以替代ON 分组
+
+    select distinct task_id, min(update_time) as update_time from pod_monitors group by task_id having count(*) > 1
+
 
 `distinct on(fieldList)` 必须匹配`order by list`. list与fieldlist 必须要有交集
 `fieldList`中字段顺序不影响分组及结果, `list` 排序则影响顺序
@@ -315,6 +323,32 @@ If total can be NULL (won't hurt either way, but you'll want to match existing i
 ## del
 
     SELECT '{"a":[null,{"b":[3.14]}]}' #- '{a,1,b,0}'
+
+### delete join
+
+    DELETE FROM AAA AS a 
+    USING 
+        BBB AS b,
+        (select * from subtable) AS c
+    WHERE 
+        a.id = b.id 
+    AND a.id = c.id
+    AND a.uid = 12345 
+    AND c.gid = 's434sd4'
+
+### 删除重复（无unique）
+
+    # 检查重复数量
+    select count(1) from (select 1 from pod_monitors group by task_id having count(*) > 1) t;
+
+    # 去重保存
+    \copy (select distinct on(task_id) * from pod_monitors where task_id in (select task_id from pod_monitors group by task_id having count(*) > 1)) to 'staging.csv' csv;
+
+    # 删除
+    delete from pod_monitors where task_id in (select task_id from pod_monitors group by task_id having count(*) > 1);
+
+    # 恢复
+    \copy  pod_monitors from 'staging.csv' csv;
 
 ## update
 

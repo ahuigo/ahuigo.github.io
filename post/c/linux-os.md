@@ -3,6 +3,7 @@ title: linux os
 date: 2019-06-15
 ---
 # Check os Version
+## os
 check os:
 
     lsb_release -a
@@ -32,6 +33,12 @@ RISC 精简指令集主要有三种
     cat /etc/os-release
     lsb_release -a
     hostnamectl
+
+    $ cat /proc/cpuinfo | grep MHz
+    cpu MHz		: 2127.998
+
+## memory
+    free -h
 
 # vim
 
