@@ -42,6 +42,10 @@ SNI should work completely transparently when running on Java 1.7 or newer. No c
 # debug cert
 调试证书
 
+## curl with cert
+    curl -v --cacert /etc/ssl/cert.pem  https://baidu.com
+    curl -v https://baidu.com
+
 ## ssl 延迟
 
     $ curl -w "TCP handshake: %{time_connect}, SSL handshake: %{time_appconnect}\n" -so /dev/null https://www.alipay.com

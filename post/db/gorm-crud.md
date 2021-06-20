@@ -683,9 +683,11 @@ WARNING when update with struct, GORM will only update those fields that with no
     db.Model(&user).Updates(User{Name: "", Age: 0, Actived: false})
     ```
 
-需要额外更新
+如果需要额外更新
 
     db.Model(&user).Updates(User{Name: "", Age: 0, Actived: false}).Updates("age", 0).Error
+
+或者用下面的map interface 或 pointer
 
 ### update interface
 

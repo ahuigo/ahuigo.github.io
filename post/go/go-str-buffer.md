@@ -24,6 +24,7 @@ buffer 是slice结构，可以自动扩容，也可以指定始容量
 
     var buf bytes.Buffer
     buf := &bytes.Buffer{}
+    buf := new(bytes.Buffer)
 
 ## convert buffer to other
     buf.Bytes()

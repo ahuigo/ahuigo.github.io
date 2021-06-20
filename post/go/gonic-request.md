@@ -279,12 +279,6 @@ fileHeader
     }
 
 
-### Body Stream
-https://github.com/gin-gonic/gin/pull/857/files
-
-    func (c *Context) GetRawData() ([]byte, error) {
-        return ioutil.ReadAll(c.Request.Body)
-
 
 ## Read Raw Body
 https://github.com/gin-gonic/gin/issues/961
@@ -330,6 +324,12 @@ via teeReader
         //req.Body = ioutil.NopCloser(buf)
         return
     }
+
+### Body Stream
+https://github.com/gin-gonic/gin/pull/857/files
+
+    func (c *Context) GetRawData() ([]byte, error) {
+        return ioutil.ReadAll(c.Request.Body)
 
 
 # Request Info

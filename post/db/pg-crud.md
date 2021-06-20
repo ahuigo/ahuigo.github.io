@@ -202,9 +202,9 @@ Supported by any database: 利用 group + column=max(column)
     ON y.customer = x.customer AND y.max_total = x.total
     GROUP BY x.customer, x.total
 
-例子2
+例子2: 选择最大的id
 
-    # 可以用id in subquery 代替（效率一样）
+    # 例子3：也可以用id in subquery 代替（效率一样）
     SELECT x.* 
     FROM task_checks x
     JOIN (SELECT max(id) as id
@@ -244,7 +244,7 @@ delete and keep top 2 row(order by peg) with group by industry
     DELETE FROM stock where id in 
         (select id  FROM (
             SELECT
-                ROW_NUMBER() OVER (PARTITION BY industry ORDER BY peg) AS r, stock.*
+                ROW_NUMBER() OVER (PARTITION BY industry ORDER BY peg) AS r, id
             FROM
             stock) x WHERE x.r > 2
         )
@@ -252,6 +252,13 @@ delete and keep top 2 row(order by peg) with group by industry
 多维支持
 
     PARTITION BY company, department
+
+如果有多个key:
+
+    DELETE FROM table_name
+    WHERE (key1, key2) IN (
+        SELECT key1, key2 FROM table_name ORDER BY date DESC LIMIT 2
+    );
 
 ### concat rows
 合并为array
@@ -275,6 +282,9 @@ distinct 就是分组，然后按序(order by 取top1)/或随机取一个row
     FROM   purchases
     ORDER  BY customer, total DESC, id;
 
+    # or
+    SELECT DISTINCT ON (customer) * FROM   purchases;
+
 Or shorter (if not as clear) with ordinal numbers of output columns:
 
     # 2:customer 1:id 3:total
@@ -282,6 +292,11 @@ Or shorter (if not as clear) with ordinal numbers of output columns:
         id, customer, total
     FROM   purchases
     ORDER  BY 2, 3 DESC, 1;
+
+如果按有group分组可以替代ON 分组
+
+    select distinct task_id, min(update_time) as update_time from pod_monitors group by task_id having count(*) > 1
+
 
 `distinct on(fieldList)` 必须匹配`order by list`. list与fieldlist 必须要有交集
 `fieldList`中字段顺序不影响分组及结果, `list` 排序则影响顺序
@@ -308,6 +323,32 @@ If total can be NULL (won't hurt either way, but you'll want to match existing i
 ## del
 
     SELECT '{"a":[null,{"b":[3.14]}]}' #- '{a,1,b,0}'
+
+### delete join
+
+    DELETE FROM AAA AS a 
+    USING 
+        BBB AS b,
+        (select * from subtable) AS c
+    WHERE 
+        a.id = b.id 
+    AND a.id = c.id
+    AND a.uid = 12345 
+    AND c.gid = 's434sd4'
+
+### 删除重复（无unique）
+
+    # 检查重复数量
+    select count(1) from (select 1 from pod_monitors group by task_id having count(*) > 1) t;
+
+    # 去重保存
+    \copy (select distinct on(task_id) * from pod_monitors where task_id in (select task_id from pod_monitors group by task_id having count(*) > 1)) to 'staging.csv' csv;
+
+    # 删除
+    delete from pod_monitors where task_id in (select task_id from pod_monitors group by task_id having count(*) > 1);
+
+    # 恢复
+    \copy  pod_monitors from 'staging.csv' csv;
 
 ## update
 

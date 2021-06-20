@@ -152,24 +152,28 @@ custom-format archive:
     database-name \
     -f table.sql
 
-### export sql 
-relative path 
+### export sql result
+copy sql
 
-    \copy (select * from my_table limit 10) TO './a.csv'; -- 空格分析
-    \copy (select * from my_table limit 10) TO './a.csv' CSV 
+    \copy (select * from my_table limit 10) TO './a.csv'; -- 空格分割
+    \copy (select * from my_table limit 10) TO './a.csv' CSV ; -- CSV 分割
     \copy (select * from my_table limit 10) TO './a.csv' CSV HEADER
-    \copy (select * from my_table limit 10) TO './a.csv' HEADER
+    \copy (select * from my_table limit 10) TO '~/Downloads/export.csv' CSV HEADER;
+    copy (select * from my_table limit 10) TO stdout;
 
-full path
+表：
 
     \COPY products_273 TO '/tmp/products_199.csv' WITH (FORMAT CSV, HEADER);
-
     COPY persons TO 'C:\tmp\persons_db.csv' DELIMITER ',' CSV HEADER;
-
     COPY persons(first_name,last_name,email) TO 'C:\tmp\persons_partial_db.csv' DELIMITER ',' CSV HEADER;
 
-    \copy (Select * From foo) To '/tmp/test.csv' With CSV
-    \copy (select * from my_table limit 10) TO '~/Downloads/export.csv' CSV HEADER
+导入：
+
+    COPY tmp_table (name, email) FROM './a.csv' DELIMITER ' ' CSV;
+
+help: 
+
+    \h copy
 
 ## import data
     psql dbname < tracks.sql
@@ -179,8 +183,11 @@ full path
 
     # create tmp_table (基于旧表)
     CREATE TEMP TABLE tmp_table AS SELECT * FROM tracks;
+
     # import data
     COPY tmp_table (name, email) FROM stdin DELIMITER ' ' CSV;
+    COPY tmp_table (name, email) FROM './a.csv' DELIMITER ' ' CSV;
+
     # clear table
     TRUNCATE tracks;
     # import unique data

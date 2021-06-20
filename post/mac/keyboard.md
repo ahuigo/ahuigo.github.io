@@ -20,7 +20,7 @@ keyboard配置建议
 In the left sidebar, select Mouse & Trackpad.
 To adjust your mouse or trackpad's double-click speed, adjust the slider shown below.
 
-# 键盘
+# Niz键盘上手
 看上两款键盘:
 1. HHKB-Pro2，是一款电脑键盘，重量0.53kg， 长29.4 x 宽11.0 x 高39.9mm 。
 2. Niz Atom68 31.9*11.0
