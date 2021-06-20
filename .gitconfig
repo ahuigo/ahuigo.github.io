@@ -38,7 +38,7 @@
 [submodule "demo/blog"]
 	url = https://github.com/ahuigo/note-blog
 [remote "gitee"]
-	url = https://gitee.com/ahuigo/all.git
+	url = git@gitee.com:ahuigo/all.git
 	fetch = +refs/heads/*:refs/remotes/gitee/*
 [submodule "demo/fiddle"]
 	url = https://github.com/ahuigo/local-jsfiddle.git

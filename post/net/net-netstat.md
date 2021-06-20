@@ -80,10 +80,12 @@ MAC only:
     383 SYNs to LISTEN sockets dropped
 
 ### route
+显示网络接口
 
-	-r 显示路由信息，路由表
+    netstat -ni
 	-i 显示网络接口
-	route (mac不支持用route 显示路由表)
+	-r 显示路由信息，路由表
+	    类似route 命令 (mac不支持用route 显示路由表)
 
 mac only:
 

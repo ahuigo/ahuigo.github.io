@@ -268,6 +268,10 @@ ENV 同名变量会覆盖 ARG
     # copy 到image 的/usr/local/bin
     COPY docker-entrypoint.sh /usr/local/bin/
 
+或者
+
+    docker exec -w="/data" -it bash
+
 ### ENTRYPOINT CMD
 > https://docs.docker.com/engine/reference/builder/#cmd
 

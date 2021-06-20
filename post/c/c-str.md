@@ -39,8 +39,11 @@ String for string array are allocated in stack.
 	int fprintf(FILE *stream, const char *format, ...);
 	//to str
 	int sprintf(char *str, const char *format, ...);
+        无法检查缓冲区溢出, not safe
 	//to n str
 	int snprintf(char *str, size_t size, const char *format, ...);
+         It write at most size-1 of the characters printed into the output
+         string (the size'th character then gets the terminating `\0');
 
 	int vprintf(const char *format, va_list ap);
 	int vfprintf(FILE *stream, const char *format, va_list ap);
@@ -69,7 +72,7 @@ v打头的函数表示的可变参数不是以*...* 传入，而是以*va_list* 
 		va_start(ap, fmt);
 
 		//传入参数的栈指针ap
-		vsnprintf(buf, MAXLINE, fmt, ap);//以ap 栈指针代替...
+		vsnprintf(buf, MAXLINE, fmt, ap);//以ap 栈指针代替...(参考c-func-inf.md)
 
 		fputs(buf, stderr);
 		va_end(ap);//没有什么用 (void)0

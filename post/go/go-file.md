@@ -212,7 +212,7 @@ WriteString
 			return n, err
 	}
 
-使用(多此一举)：
+也可使用(只是多此一举)：
 
     _, err = io.Copy(out, &file)
     _, err = io.Copy(io.stdout, &file)
@@ -222,3 +222,9 @@ WriteString
 		r := rot13Reader{s}
 		io.Copy(os.Stdout, &r) //write to os.Stdout
 	}
+
+
+## stdin, stdout
+
+    io.stdout
+    os.Stdout

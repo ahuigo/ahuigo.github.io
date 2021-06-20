@@ -1,2 +1,7 @@
 From debian:latest
-RUN apt update && apt install -y procps gcc vim curl wget
+RUN apt update && apt install -y procps gcc vim curl wget lsof \
+ man zsh
+
+
+#docker run  --name debian  -p 1500:1500 -it -w="/root" debian:clang bash
+#

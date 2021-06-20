@@ -73,6 +73,9 @@ docker 一运行nginx 就退出。因为nginx 是运行的`nginx -g "daemon on;"
     ##  向容器的主进程发出 SIGKILL 信号
     docker container kill [containID]
 
+### rename container
+    docker rename container debian2 debian
+
 ### rm container
 Stop all running containers: 
 
