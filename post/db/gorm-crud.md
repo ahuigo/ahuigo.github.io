@@ -632,7 +632,9 @@ Query single column from a model as a map, if you want to query multiple columns
 # Update
 ## 默认更新updated_at
 如果有字段，
-    db.Model(&user).Update("name", "hello")
+
+    db.Model(&User{id: 111}).Update("name", "hello")
+    db.Model(&user).Where("id=?",111).Update("name", "hello")
     //// UPDATE users SET name='hello', updated_at='2013-11-17 21:34:10' WHERE id=111;
 
 ## Specify Primary Key(不能用`Model(&User{}).Save(&user)`)

@@ -120,7 +120,7 @@ Abort(禁止冒泡)+JSON
         }
     }
 
-## inside a middleware
+## context inside a middleware
 > https://gin-gonic.com/docs/examples/goroutines-inside-a-middleware/
 you **SHOULD NOT** use the original context inside it, 因为context 会被copy（无锁）
 
@@ -163,3 +163,33 @@ you **SHOULD NOT** use the original context inside it, 因为context 会被copy�
     r.GET("/list", GetList)
     r.Use(middleware.Auth())
     r.POST("", AddItem)
+
+# other
+## Get response body
+go-lib/gonic/middleware/resp-body.go (Refer to https://github.com/gin-gonic/gin/issues/1363)
+
+    /********** responseBodyWriter ******************/
+    type responseBodyWriter struct {
+        gin.ResponseWriter
+        body *bytes.Buffer //cache
+    }
+
+    func (r responseBodyWriter) Write(b []byte) (int, error) {
+        r.body.Write(b)
+        return r.ResponseWriter.Write(b)
+    }
+
+    func (r responseBodyWriter) WriteString(s string) (n int, err error)  {
+        r.body.WriteString(s)
+        return r.ResponseWriter.WriteString(s)
+    }
+
+
+
+    /********** replace responseBodyWriter ******************/
+    func logResponseBody(c *gin.Context) {
+        w := &responseBodyWriter{body: &bytes.Buffer{}, ResponseWriter: c.Writer}
+        c.Writer = w
+        c.Next()
+        fmt.Println("Response body: " + w.body.String())
+    }

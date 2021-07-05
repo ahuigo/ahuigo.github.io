@@ -30,7 +30,7 @@ Golang 提供的两个官方包 runtime/pprof，net/http/pprof 能方便的采�
 然后可以使用 `go tool pprof` 分析 `.prof` 文件。两个包的作用是一样的，只是使用方式的差异。
 
 ### runtime/pprof
-如果程序不是http server, 就用go-lib/gotest/pprof/runtime-pprof.go
+如果程序不是http server, 就用[go-lib/gotest/pprof/runtime-pprof.go](https://github.com/ahuigo/go-lib/blob/master/gotest/pprof/runtime-pprof.go)
 
 运行程序后可以得到 cpu.prof 和 mem.prof 文件，使用 go tool pprof 分析。
 

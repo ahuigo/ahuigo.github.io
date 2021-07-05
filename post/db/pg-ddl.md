@@ -315,6 +315,10 @@ To remove any default value, use:
     ALTER TABLE player drop column id;
     ALTER TABLE player ADD COLUMN id SERIAL PRIMARY KEY;
 
+### alter column
+    \h alter TABLE
+    ALTER TABLE player ALTER [COLUMN] TYPE data_type;
+
 ### autoincrement
 删除id, 再重建
 

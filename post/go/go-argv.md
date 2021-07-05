@@ -38,3 +38,9 @@ shell:
     fork: true
     svar: bar1
     tail: [arg1 arg2]
+
+## custom args
+    func Parse() {
+        // Ignore errors; CommandLine is set for ExitOnError.
+        CommandLine.Parse(os.Args[1:])
+    }

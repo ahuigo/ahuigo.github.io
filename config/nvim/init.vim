@@ -211,7 +211,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'vim-scripts/AutoComplPop'
 
     " snippet: for<C-\>
-    Plug 'drmingdrmer/xptemplate'
+    "Plug 'drmingdrmer/xptemplate'
 	
     " new async grammar check: better than sync 'syntastic' 
     Plug 'neomake/neomake'
@@ -220,19 +220,19 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'davidhalter/jedi-vim'
 
     " ctrlp
-    Plug 'Shougo/denite.nvim'
+    "Plug 'Shougo/denite.nvim'
 
 		" ack
-    Plug 'mileszs/ack.vim'
+    "Plug 'mileszs/ack.vim'
 
 		"autoformat
 		"let g:autoformat_verbosemode=1
-    Plug 'Chiel92/vim-autoformat'
+    "Plug 'Chiel92/vim-autoformat'
 call plug#end()
 
-" When writing a buffer (no delay), and on normal mode changes (after 750ms)
-" call neomake#configure#automake('nw', 500)
-call neomake#configure#automake('w')
+"" When writing a buffer (no delay), and on normal mode changes (after 750ms)
+"" call neomake#configure#automake('nw', 500)
+"call neomake#configure#automake('w')
 
 """"""""""""""""""
 " autoformat
@@ -250,9 +250,9 @@ let g:ackprg = 'ag --vimgrep'
 """"""""""""
 " denite.nvim
 " -----------
-"exec "source ".fnameescape(expand('<sfile>:p:h').'/denite.vim')
-exec "source ".expand('<sfile>:p:h').'/denite.vim'
-nnoremap <C-p> :Denite buffer file/rec<CR>
+""exec "source ".fnameescape(expand('<sfile>:p:h').'/denite.vim')
+"exec "source ".expand('<sfile>:p:h').'/denite.vim'
+"nnoremap <C-p> :Denite buffer file/rec<CR>
 
 """"""""""""
 " python3
