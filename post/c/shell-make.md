@@ -281,6 +281,12 @@ Example: clean 清除编译文件 这一target 不需要条件。
 	result.txt: source.txt
 		cp source.txt result.txt
 
+如果前置条件也是目标的话，也会构建：
+
+    init: 
+        echo init
+    dev: init   #init也是目标
+        echo dev
 
 # 判断和循环
 Makefile使用 Bash 语法，完成判断和循环。
