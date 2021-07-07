@@ -307,27 +307,27 @@ http://www.51know.info/system_base/openssl.html
 http://www.51know.info/system_base/openssl.html
 
 ### RSA
-1. openssl RSA 加解密
+#### openssl RSA 加解密
 RSA是基于数论中大素数的乘积难分解理论上的非对称加密法,使用公私钥的方法进行加解密
 公钥 用于加密，它是向所有人公开的 ; 私钥用于解密，只有密文的接收者持有
 生成一个密钥(私钥)
 
-	  [root@hunterfu ~]# openssl genrsa -out private.key 1024
+    # openssl genrsa -out private.key 1024
 
 注意: 需要注意的是这个文件包含了公钥和密钥两部分，也就是说这个文件即可用来加密也可以用来解密,后面的1024是生成密钥的长度.
 
 通过密钥文件private.key 提取公钥
 
-	  [root@hunterfu ~]# openssl rsa -in private.key -pubout -out pub.key
+    # openssl rsa -in private.key -pubout -out pub.key
 
 使用公钥加密信息
 
-	  [root@hunterfu ~]# echo -n "123456" | openssl rsautl -encrypt -inkey pub.key -pubin >encode.result
+    # echo -n "123456" | openssl rsautl -encrypt -inkey pub.key -pubin >encode.result
 
 使用私钥解密信息
 
-	  [root@hunterfu ~]#cat encode.result | openssl rsautl -decrypt  -inkey private.key
-	  123456
+    #cat encode.result | openssl rsautl -decrypt  -inkey private.key
+    123456
 
 #### PHP RSA
 Refer:
