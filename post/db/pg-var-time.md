@@ -75,3 +75,6 @@ get datetime(timestamp)
     select (now()-created_at) from task_checks limit 1;
     --------------------------
     451 days 18:51:57.959561
+
+### compare delta time
+    where exittime - entrytime > interval '1 hour';
