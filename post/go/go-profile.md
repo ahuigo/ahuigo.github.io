@@ -1,9 +1,9 @@
 ---
-title: Go profile
+title: Go profiler
 date: 2019-08-23
 private:
 ---
-# Go profile
+# Go profiler
 
 ## Go profiler 指标
 使用Go 内置的profiler我们能获取以下的样本信息：
