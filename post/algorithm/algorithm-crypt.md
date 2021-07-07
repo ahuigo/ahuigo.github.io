@@ -351,26 +351,26 @@ DSA只是一种算法，和RSA不同之处在于它不能用作加密和解密�
 
 生成一个密钥(私钥)
 
-	  [root@hunterfu ~]# openssl dsaparam -out dsaparam.pem 1024
-	  [root@hunterfu ~]# openssl gendsa -out privkey.pem dsaparam.pem
+	  # openssl dsaparam -out dsaparam.pem 1024
+	  # openssl gendsa -out privkey.pem dsaparam.pem
 
 生成公钥
 
-	  [root@hunterfu ~]# openssl dsa -in privkey.pem -out pubkey.pem -pubout
-	  [root@hunterfu ~]# rm -fr dsaparam.pem
+	  # openssl dsa -in privkey.pem -out pubkey.pem -pubout
+	  # rm -fr dsaparam.pem
 
 使用私钥签名
 
-	  [root@hunterfu ~]# echo -n "123456" | openssl dgst -dss1 -sign privkey.pem > sign.result
+	  # echo -n "123456" | openssl dgst -dss1 -sign privkey.pem > sign.result
 
 使用公钥验证
 
-	  [root@hunterfu ~]# echo -n "123456"  | openssl dgst -dss1 -verify pubkey.pem -signature sign.result
+	  # echo -n "123456"  | openssl dgst -dss1 -verify pubkey.pem -signature sign.result
 	  Verified OK
 
 至此，一次DSA签名与验证过程完成！
 
-3. 总结及注意事项
+#### 总结及注意事项
 
 注意: 由于信息经过加密或者签名后，都变成不可读模式,为了方便终端查看和传输使用(url提交数据,需要作urlencode操作)，可以使用base64进行编码
 
@@ -379,7 +379,7 @@ DSA只是一种算法，和RSA不同之处在于它不能用作加密和解密�
 
 java中此私钥需要转换下格式才能使用:
 
-	  [root@hunterfu ~]# openssl pkcs8 -topk8 -nocrypt -in private.key -outform PEM -out java_private.key
+	  # openssl pkcs8 -topk8 -nocrypt -in private.key -outform PEM -out java_private.key
 
 # php 支持的加密mode/algorithm
 
