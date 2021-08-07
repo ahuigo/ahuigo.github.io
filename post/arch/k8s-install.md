@@ -3,15 +3,41 @@ title: k8s install
 date: 2019-05-16
 private:
 ---
-# 安装
+
+# 生产环境
+### 容器运行时
+你需要在集群内每个节点上安装一个 容器运行时 以使 Pod 可以运行在上面。本文概述了所涉及的内容并描述了与节点设置相关的任务。
+
+在 Linux 上结合 Kubernetes 使用的几种通用容器运行时的详细信息：
+
+    containerd
+    CRI-O
+    Docker
+
+#### Cgroup 驱动程序
+控制组用来约束分配给进程的资源。
+
+1. 当某个 Linux 系统发行版使用 systemd 作为其初始化系统时，初始化进程会生成并使用一个 root 控制组 (cgroup), 并充当 cgroup 管理器。 Systemd 与 cgroup 集成紧密(systemd 带cgroup 驱动程序)，并将为每个 systemd 单元分配一个 cgroup。 你也可以配置容器运行时和 kubelet 使用 cgroupfs。 连同 systemd 一起使用 cgroupfs 意味着将有两个不同的 cgroup 管理器。
+
+2. 单个 cgroup 管理器将简化分配资源的视图，并且默认情况下将对可用资源和使用 中的资源具有更一致的视图。 当有两个管理器共存于一个系统中时，最终将对这些资源产生两种视图。 在此领域人们已经报告过一些案例，某些节点配置让 kubelet 和 docker 使用 cgroupfs，而节点上运行的其余进程则使用 systemd; 这类节点在资源压力下 会变得不稳定。
+
+3. 更改设置，令容器运行时和 kubelet 使用 systemd 作为 cgroup 驱动，以此使系统更为稳定。 对于 Docker, 设置 native.cgroupdriver=systemd 选项。
+
+# 学习环境安装
 - Minikube 是一种可以让您在本地轻松运行Kubernetes 的工具。 
     - Minikube 在笔记本电脑上的虚拟机（VM）中运行单节点Kubernetes 集群，供那些希望尝试Kubernetes 或进行日常开发的用户使用。
-- Kind 是一个使用 Docker 容器“节点”运行本地 Kubernetes 集群的工具。
+- Kind  让你能够在本地计算机上运行 Kubernetes。 kind 要求你安装并配置好 Docker。
+    - 是一个使用 Docker 容器“节点”运行本地 Kubernetes 集群的工具。与Minikube 类似
+- kubectl 是kubernetes 命令行工具
 
-## install minikube
+## install kubectl minikube
 
     # 命令行k8s客户端
     $ brew install kubectl
+    $ brew link kubernetes-cli
+    # 检查
+    $ kubectl version --client
+
     # install k8s server：
     $ brew install minikube
 
@@ -19,35 +45,111 @@ private:
 
     kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10
 
-## 虚拟引擎
-    # 给 Minikube 使用的虚拟化引擎 hyperkit
-    $ brew install docker-machine-driver-hyperkit 
+## 启动 Minikube (k8s server)
 
-Minikube 默认的虚拟化引擎是 VirtualBox，而 hyperkit 是一个更轻量、性能更好的替代。
-它需要以 root 权限运行，所以安装完要把所有者改为 root:wheel，并把 setuid 权限打开：
-
-    $ sudo chown root:wheel /usr/local/opt/docker-machine-driver-hyperkit/bin/docker-machine-driver-hyperkit
-    $ sudo chmod u+s /usr/local/opt/docker-machine-driver-hyperkit/bin/docker-machine-driver-hyperkit
-
-然后就可以启动 Minikube 了：
-
-    $ minikube start --vm-driver hyperkit
+    $ minikube start
+    🌟  Enabled addons: default-storageclass, storage-provisioner
+    🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 
 如果你在第一次启动 Minikube 时遇到错误或被中断，可以尝试运行 `minikube delete` 把集群删除，重新来过。
 
+## 连接k8s
+参考： https://minikube.sigs.k8s.io/docs/start/
 Minikube 启动时会自动配置 kubectl，把它指向 Minikube 提供的 Kubernetes API 服务。可以用下面的命令确认：
 
     $ kubectl config current-context
     minikube
 
-## 查看nodes
+If you already have kubectl installed, you can now use it to access your shiny new cluster:
+
+    $ kubectl get po -A
+    $ kubectl get pod -A
+    NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
+    kube-system   coredns-558bd4d5db-5f6hg           1/1     Running   0          87s
+    kube-system   etcd-minikube                      1/1     Running   0          92s
+    kube-system   kube-apiserver-minikube            1/1     Running   0          92s
+    kube-system   kube-controller-manager-minikube   1/1     Running   0          92s
+    kube-system   kube-proxy-9fbk4                   1/1     Running   0          87s
+    kube-system   kube-scheduler-minikube            1/1     Running   0          101s
+    kube-system   storage-provisioner                1/1     Running   0          98s
+
+Alternatively, minikube can download the appropriate version of kubectl, if you don’t mind the double-dashes in the command-line:
+
+    minikube kubectl -- get po -A
+
+或者可视化监控
+
+    minikube dashboard
+
+## Deploy applications
+Create a sample deployment and expose it on port 8080:
+
+    kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4
+    kubectl expose deployment hello-minikube --type=NodePort --port=8080
+
+It may take a moment, but your deployment will soon show up when you run:
+
+    kubectl get services hello-minikube
+
+The easiest way to access this service is to let minikube launch a web browser for you:
+
+    minikube service hello-minikube
+
+Alternatively, use kubectl to forward the port:
+
+    kubectl port-forward service/hello-minikube 7080:8080
+
+Tada! Your application is now available at http://localhost:7080/
+
+### LoadBalancer deployments
+To access a LoadBalancer deployment, use the “minikube tunnel” command. Here is an example deployment:
+
+    kubectl create deployment balanced --image=k8s.gcr.io/echoserver:1.4  
+    kubectl expose deployment balanced --type=LoadBalancer --port=8080
+
+In another window, start the tunnel to create a routable IP for the ‘balanced’ deployment:
+
+    minikube tunnel
+
+To find the routable IP, run this command and examine the EXTERNAL-IP column:
+
+    kubectl get services balanced
+
+Your deployment is now available at `<EXTERNAL-IP>:8080`
+
+## Manage your cluster
+Pause Kubernetes without impacting deployed applications:
+
+    minikube pause
+
+Halt the cluster:
+
+    minikube stop
+
+Increase the default memory limit (requires a restart):
+
+    minikube config set memory 16384
+
+Browse the catalog of easily installed Kubernetes services:
+
+    minikube addons list
+
+Create a second cluster running an older Kubernetes release:
+
+    minikube start -p aged --kubernetes-version=v1.16.1
+
+Delete all of the minikube clusters:
+
+    minikube delete --all
+
+### 查看nodes
 作为一个开发和测试的环境，Minikube 会建立一个有一个 node 的集群，用下面的命令可以看到：
 
     $ kubectl get nodes
-    NAME       STATUS    AGE       VERSION
-    minikube   Ready     1h        v1.10.0
+    NAME       STATUS   ROLES                  AGE     VERSION
+    minikube   Ready    control-plane,master   8m14s   v1.21.2
 
-# 部署一个单实例服务
+## todo部署一个单实例服务
 在与 Docker 结合使用时，一个 pod 中可以包含一个或多个 Docker 容器(但除了有紧密耦合的情况下，通常一个 pod 中只有一个容器，这样方便不同的服务各自独立地扩展)
 
 Minikube 自带了 Docker 引擎，所以我们需要重新配置客户端，让 docker 命令行与 Minikube 中的 Docker 进程通讯：
@@ -141,269 +243,3 @@ Service 的作用有点像建立了一个`反向代理和负载均衡器`，负�
 
     $ minikube service k8s-demo-svc --url
     http://192.168.64.4:30050
-
-# 横向扩展、滚动更新、版本回滚
-在这一节，我们来实验一下在一个高可用服务的生产环境会常用到的一些操作。在继续之前，先把刚才部署的 pod 删除（但是保留 service，下面还会用到）：
-
-    $ kubectl delete pod k8s-demo
-    pod "k8s-demo" deleted
-
-在正式环境中我们需要让一个服务不受单个节点故障的影响，并且还要根据负载变化动态调整节点数量，所以不可能像上面一样逐个管理 pod。Kubernetes 的用户通常是用 Deployment 来管理服务的。一个 deployment 可以创建指定数量的 pod 部署到各个 node 上，并可完成更新、回滚等操作。
-
-## deployment.yml
-
-首先我们创建一个定义文件 deployment.yml：
-
-    apiVersion: extensions/v1beta1
-    kind: Deployment
-    metadata:
-      name: k8s-demo-deployment
-    spec:
-      replicas: 10
-      template:
-        metadata:
-          labels:
-            app: k8s-demo
-        spec:
-          containers:
-            - name: k8s-demo-pod
-              image: k8s-demo:0.1
-              ports:
-                - containerPort: 80
-
-注意开始的 
-1. apiVersion 和之前不一样，因为 Deployment API 没有包含在 v1 里，
-2. `replicas: 10` 指定了这个 deployment 要有 10 个 pod，后面的部分和之前的 pod 定义类似。
-
-## create 运行
-提交这个文件，创建一个 deployment：
-
-    $ kubectl create -f deployment.yml
-    deployment "k8s-demo-deployment" created
-
-用下面的命令可以看到这个 deployment 的副本集（replica set），有 10 个 pod 在运行。
-
-    $ kubectl get rs
-    NAME                             DESIRED   CURRENT   READY     AGE
-    k8s-demo-deployment-774878f86f   10        10        10        19s
-
-## apply更新
-假设我们对项目做了一些改动，要发布一个新版本。
-
-    $ echo '<h1>Hello Kubernetes!</h1>' > html/index.html
-    $ docker build -t k8s-demo:0.2 .
-
-然后更新 deployment.yml：
-
-    apiVersion: extensions/v1beta1
-    kind: Deployment
-    metadata:
-      name: k8s-demo-deployment
-    spec:
-      replicas: 10
-      minReadySeconds: 10
-      strategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 1
-          maxSurge: 1
-      template:
-        metadata:
-          labels:
-            app: k8s-demo
-        spec:
-          containers:
-            - name: k8s-demo-pod
-              image: k8s-demo:0.2
-              ports:
-                - containerPort: 80
-这里有几个改动，
-1. 第一个是更新了镜像版本号 image: k8s-demo:0.2，
-3. 更新策略`minReadySeconds: 10` 指在更新了一个 pod 后，需要在它进入正常状态后 10 秒再更新下一个 pod；
-2. `strategy` 部分。
-    1. `maxUnavailable: 1` 指同时处于不可用状态的 pod 不能超过一个；
-    2. `maxSurge: 1` 指多余的 pod 不能超过一个。这样 Kubernetes 就会逐个替换 service 后面的 pod。
-    
-### apply 更新
-运行下面的命令开始更新：
-
-    $ kubectl apply -f deployment.yml --record=true
-    deployment "k8s-demo-deployment" configured
-
-这里的 `--record=true` 让 Kubernetes 把这行命令记到发布历史中备查。这时可以马上运行下面的命令查看各个 pod 的状态：
-
-    $ kubectl get pods
-    NAME                                   READY  STATUS        ...   AGE
-    k8s-demo-deployment-774878f86f-5wnf4   1/1    Running       ...   7m
-    k8s-demo-deployment-774878f86f-6kgjp   0/1    Terminating   ...   7m
-    k8s-demo-deployment-774878f86f-8wpd8   1/1    Running       ...   7m
-    k8s-demo-deployment-774878f86f-hpmc5   1/1    Running       ...   7m
-    k8s-demo-deployment-774878f86f-rd5xw   1/1    Running       ...   7m
-    k8s-demo-deployment-774878f86f-wsztw   1/1    Running       ...   7m
-    k8s-demo-deployment-86dbd79ff6-7xcxg   1/1    Running       ...   14s
-
-## 状态记录rollout status/history
-下面的命令可以显示发布的实时状态：
-
-    $ kubectl rollout status deployment k8s-demo-deployment
-    Waiting for rollout to finish: 1 old replicas are pending termination...
-    Waiting for rollout to finish: 1 old replicas are pending termination...
-    deployment "k8s-demo-deployment" successfully rolled out
-
-由于我输入得比较晚，发布已经快要结束，所以只有三行输出。下面的命令可以查看发布历史，因为第二次发布使用了 `--record=true` 所以可以看到用于发布的命令。
-
-    $ kubectl rollout history deployment k8s-demo-deployment
-    deployments "k8s-demo-deployment"
-    REVISION	CHANGE-CAUSE
-    1		<none>
-    2		kubectl apply --filename=deploy.yml --record=true
-
-## 回滚rollout undo
-设新版发布后，我们发现有严重的 bug，需要马上回滚到上个版本，可以用这个很简单的操作：
-
-    $ kubectl rollout undo deployment k8s-demo-deployment --to-revision=1
-    deployment "k8s-demo-deployment" rolled back
-
-Kubernetes 会按照既定的策略替换各个 pod，与发布新版本类似，只是这次是用老版本替换新版本：
-
-    $ kubectl rollout status deployment k8s-demo-deployment
-    Waiting for rollout to finish: 6 out of 10 new replicas have been updated...
-    Waiting for rollout to finish: 8 out of 10 new replicas have been updated...
-    Waiting for rollout to finish: 1 old replicas are pending termination...
-    deployment "k8s-demo-deployment" successfully rolled out
-
-在回滚结束之后，刷新浏览器就可以确认网页内容又改回了「Hello Docker!」。
-
-# 查看资源状态
-
-    # 使用 kubectl get <resource> 查看集群资源的状态信息
-    # -n , --namespace 指定命名空间: dev/production...
-    # -o wide 输出更加详细的资源信息]
-    # --watch 会自动更新状态改变的部分
-    # -o yaml, -o json 将资源的配置文件输出为 yaml、json 格式 
- 
- 
-## 查看服务信息
-    kubectl get service
-    [root@node4 user1]# kubectl get svc -n kube-system
-    NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE
-    kube-dns               ClusterIP   10.233.0.3      <none>        53/UDP,53/TCP   270d
-    kubernetes-dashboard   ClusterIP   10.233.22.223   <none>        443/TCP         124d
-    
-## 查看ingress信息
-    kubectl get ingress
-
-## 查看pod/node/namespace
-    # 查看集群节点信息
-    kubectl get node
-    
-    # 查看命名空间信息
-    kubectl get namespace
-    
-    # 查看pod信息
-    kubectl get pod
-    kubectl get pod -n dev-namespacs
-
-## 查看服务日志
-
-    kubectl logs <pod-name> -n <namespace>
-    kubectl logs -f node-name -n dev-namespace
-
-
-# 部署、删除、重启资源
-
-## 部署
-将您的配置更改推送到集群。
-
-    这个命令将会把推送的版本与以前的版本进行比较，并应用您所做的更改，但是不会覆盖任何你没有指定的自动更改的属性。
-    kubectl apply -f <config-file>
-
-## edit
-https://k8smeetup.github.io/docs/concepts/cluster-administration/manage-deployment/#kubectl-apply
-或者，您也可以使用 kubectl edit 更新资源：
-
-    $ kubectl edit deployment/my-nginx
-
-这相当于首先 get 资源，在文本编辑器中编辑它，然后用更新的版本 apply 资源：
-
-    $ kubectl get deployment my-nginx -o yaml > /tmp/nginx.yaml
-    $ vi /tmp/nginx.yaml
-    # 编辑并保存文件
-    $ kubectl apply -f /tmp/nginx.yaml
-    deployment "my-nginx" configured
-    $ rm /tmp/nginx.yaml
- 
-## 删除
-### 通过部署文件删除
-kubectl delete -f <config-fiel>
- 
- 
-### 重启pod, 直接删除pod，会自动重启
-    kubectl delete pod <podname> -n <namespace>
-
-进入容器
-
-    #类似于 docker的命令
-    # 如果一个 pod 内有多个 container， 加上 -c <conatainer-name>
-    kubectl exec -ti <pod-name> bash/sh
- 
-### 复制文件或者文件夹
-
-    kubectl cp <source-file-path> <pod-name>:<target-path> -n <namespace>
-
-# dns
-> 参考：CoreDNS系列1：Kubernetes内部域名解析原理、弊端及优化方式
-https://hansedong.github.io/2018/11/20/9/
-
-由于DNS容器往往不具备bash. 所以用
-
-    // 1、找到Dns 容器ID，并打印它的NS ID
-    docker inspect --format "{{.State.Pid}}"  16938de418ac
-    // 2、进入此容器的网络Namespace
-    nsenter -n -t  54438
-    // 3、抓DNS包
-    tcpdump -i eth0 udp dst port 53|grep youku.com
-    // 别的容器发起dns 53 请求(假如dns 容器为172.1.1.1)
-    nslookup  github.com 172.1.1.1
-
-## k8s 的dns 浪费
-Kubernetes 中，域名的全称，必须是 service-name.namespace.svc.cluster.local 这种模式
-
-curl b 请求时：
-
-    // search 内容类似如下（不同的pod，第一个域会有所不同）
-    search default.svc.cluster.local svc.cluster.local cluster.local
-    b.default.svc.cluster.local -> b.svc.cluster.local -> b.cluster.local ，直到找到为止。
-
-`a.b.c.d.e` 有4个点，点数大于ndots 时，才不走search
-
-    apiVersion: v1
-    kind: Pod
-    metadata:
-      namespace: default
-      name: dns-example
-    spec:
-      containers:
-        - name: test
-          image: nginx
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-      dnsPolicy: ClusterFirst
-      nodeName: nodexxxx
-
-## Kube 的4种dnsPolicy:
-### None
-    表示空的DNS设置
-    这种方式一般用于想要自定义 DNS 配置的场景，而且，往往需要和 dnsConfig 配合一起使用达到自定义 DNS 的目的。
-
-### Default
-    有人说 Default 的方式，是使用宿主机的方式，这种说法并不准确。
-    这种方式，其实是，让 kubelet 来决定使用何种 DNS 策略。而 kubelet 默认的方式，就是使用宿主机的 /etc/resolv.conf（可能这就是有人说使用宿主机的DNS策略的方式吧），但是，kubelet 是可以灵活来配置使用什么文件来进行DNS策略的，我们完全可以使用 kubelet 的参数：–resolv-conf=/etc/resolv.conf 来决定你的DNS解析文件地址。
-
-### ClusterFirst
-    这种方式，表示 POD 内的 DNS 使用集群中配置的 DNS 服务，简单来说，就是使用 Kubernetes 中 kubedns 或 coredns 服务进行域名解析。如果解析不成功，才会使用宿主机的 DNS 配置进行解析。
-
-### ClusterFirstWithHostNet
-    在某些场景下，我们的 POD 是用 HOST 模式启动的（HOST模式，是共享宿主机网络的），一旦用 HOST 模式，表示这个 POD 中的所有容器，都要使用宿主机的 /etc/resolv.conf 配置进行DNS查询，但如果你想使用了 HOST 模式，还继续使用 Kubernetes 的DNS服务，那就将 dnsPolicy 设置为 ClusterFirstWithHostNet。

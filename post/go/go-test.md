@@ -95,6 +95,7 @@ go test 会执行Test 打头的函数
 
 ### test mode
 两种test mode:
+
 #### 1.directory mode(不会递归)
 执行当前diretory下所有的`_test.go` 是(必须有go.mod, module名不限定)
 
@@ -133,7 +134,7 @@ In package list mode ，successful package test result will be cached and reused
 
     go test . -count=1;
 
-#### test with specify file
+#### 3. test file and func
 1. `go test` is okay.
 2. `go test <pkg>`  is okay.
 3. `go test whatever_test.go` is okay
@@ -152,6 +153,14 @@ In package list mode ，successful package test result will be cached and reused
     $ go test -run TestSubset #指定函数名
     $ go test -run '^TestSubset$' #指定函数名
     $ go test -run TestSubset  ./service 
+
+
+注意：
+
+    # 会包含*_test.go
+    go run  cmd/samples/recipes/helloworld/*.go
+    # 不会包含*_test.go
+    go run  ./cmd/samples/recipes/helloworld/
 
 ### test timeout 
 
