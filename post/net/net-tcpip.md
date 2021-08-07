@@ -441,9 +441,9 @@ https://jerryc8080.gitbooks.io/understand-tcp-and-udp/chapter1.html
 1. 和UDP 一样，TCP 也有16 位的源端口号和16位的目的端口号
 2. 32位的序号seq: 每发送一个n字节data或一个SYN/FIN 就加n或者1
 3. 32位确认序号ack: 期望收到对方下一个报文段的序号值, 即上面提到的seq+n, seq+1
-4. 4位TCP首部长度, 数据偏移 Offset: (TCP 协议头长度，最长15: 4*15=60 bytes, 如果没有选项字段最短20 bytes),  TCP报文段的*数据起始处* 距离 *TCP报文的起始处* 有多远
+4. 4位TCP首部长度, 数据偏移 Offset: (TCP 协议头长度，最长15: (`4*15=60 bytes`), 如果没有选项字段最短`4*5=20 bytes`),  TCP报文段的*数据起始处* 距离 **TCP报文的起始处** 有多远
 4. Reserved: 6 bit 无用
-5. URG(紧急指针)、ACK、PSH、RST、SYN、FIN是六个控制位
+5. URG(紧急指针)、ACK、PSH、RST、SYN、FIN是六个控制位
 	1. PSH=1(Push)表示该报文段高优先级，接收方 TCP 应该尽快推送给接收应用程序，而不用等到整个 TCP 缓存都填满了后再交付。
 	2. 复位 RST (Reset)严重错误，需要释放并重新建立连接。
 	3. 当 SYN = 1 的时候，表明这是一个请求连接报文段。「同步报文段」。
@@ -454,7 +454,7 @@ https://jerryc8080.gitbooks.io/understand-tcp-and-udp/chapter1.html
 7. 16位紧急指针: URG = 1 时，发送方 TCP 就把紧急数据插入到本报文段数据的最前面，而在紧急数据后面的数据仍是普通数据。
 9. 选项+数据
 
-## TCP头部选项+数据
+## TCP头部选项+数据
 http://book.51cto.com/art/201306/400264.htm
 
 这部分最多包含40字节，因为TCP头部最长是60字节（TCP首部20字节的固定）。
@@ -558,6 +558,9 @@ kind(1byte) + length(1byte) + info(n bytes)
 - 半双工(half-duplex) 的协议在同一时间的，只能是一方向另一方发数据，这样话，就不需要双方各自己维护一套序号了
 
 ### TCP 关闭连接的过程
+close分主动(active close)与被动(passive close)
+
+假如是客户端active close:
 1. 客户端发送段7, FIN，发送序号是1021（0）,ACK 应答显示8011 序号前的段已经收到
 2. 服务端发送段8，ACK 应答说1022 前的段已经收到(客户端关闭连接, 开始处理半连接状态)
 3. 服务端发送段9，FIN, 发送序号是8011(0), ACK 应答说1022 前的序号已经收到

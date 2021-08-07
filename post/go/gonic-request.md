@@ -52,6 +52,9 @@ query('id')
         id, _ := c.GetQuery("id")
 
     _, isDebug := c.GetQuery("id")
+
+default query
+
     page := c.DefaultQuery("page", "0")
 
 ### post one key
