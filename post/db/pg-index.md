@@ -104,7 +104,7 @@ rename index/constraint:
 ### CHECK
 CHECK： 保证列中的值符合指定的条件。
 
-    SALARY  int  CHECK(SALARY > 0),
+    SALARY int  CHECK(SALARY > 0),
 
 ### EXCLUSION 
 排他约束，保证如果将任何两行的指定列或表达式使用指定操作符进行比较，至少其中一个操作符比较将会返回 false 或空值。

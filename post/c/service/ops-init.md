@@ -255,8 +255,24 @@ Task: Restart cron service
 
 background job:
 
-	1. 继承当前 session （对话）的标准输出（stdout）和标准错误（stderr）。因此，后台任务的所有输出依然会同步地在命令行下显示。
-	2. 不再继承当前 session 的标准输入（stdin）。你无法向这个任务输入指令了。如果它试图读取标准输入，就会暂停执行（halt）。
+    1. 标准输出输入问题：
+        1. 继承当前 session （对话）的标准输出（stdout）和标准错误（stderr）。因此，后台任务的所有输出依然会同步地在命令行下显示。
+        2. 不再继承当前 session 的标准输入（stdin）。你无法向这个任务输入指令了。如果它试图读取标准输入，就会暂停执行（halt）或退出。
+        2. 不再继承当前 session 的标准输入（stdout）。如果它试图读取标准输出，就会暂停执行（halt）或退出。
+    2. 进程可能会收到SIGHUP, 而退出
+
+你可以通过以下脚本+ `tail -f a.log`验证：
+
+    import time
+    from datetime import datetime
+
+    f = open("a.log",'w+')
+    while True:
+        s = datetime.now().strftime("%H:%M:%S")
+        f.write(s+"\n")
+        print(s)
+        f.flush()
+        time.sleep(1)
 
 ## SIGHUP signal
 用户退出session 后，会发生：
@@ -344,6 +360,11 @@ nohup命令对server.js进程做了三件事。
 nohup 默认会将 1+2 pipe append to nohup.out， 所以不需要加
 
 	>> nohup.out 2>&1
+
+注意python print 不会写出nohup:
+
+> It looks like you need to flush stdout periodically (e.g. `sys.stdout.flush()`). 
+> In my testing Python doesn't automatically do this even with print until the program exits.
 
 ### setsid
 > 参考： https://www.cnblogs.com/JohnABC/p/4828724.html

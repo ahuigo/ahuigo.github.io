@@ -62,6 +62,25 @@ init with variable key:
     }
     fmt.Printf("%#v\n", m)  //Speak
 
+### multiple map
+
+    taskIdMap = append(taskIdMap, map[int64]workflow.TaskID{
+        eventID: workflow.TaskID{
+            WorkflowID: wfID,
+            RunID:      *event.DecisionTaskFailedEventAttributes.BaseRunId,
+        },
+    })
+
+以上会报：fix warning redundant type from array, slice, or map composite literal (#7106)
+应该修改成：
+
+    taskIdMap = append(taskIdMap, map[int64]workflow.TaskID{
+        eventID: {
+                WorkflowID: wfID,
+                RunID:      *event.DecisionTaskFailedEventAttributes.BaseRunId,
+            },
+        })
+
 ## nil map(不能扩容)
 The `zero` value of a map is `nil`. A `nil` map has no keys, nor can keys be added.
 

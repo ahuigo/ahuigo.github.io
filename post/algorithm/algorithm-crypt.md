@@ -307,27 +307,26 @@ http://www.51know.info/system_base/openssl.html
 http://www.51know.info/system_base/openssl.html
 
 ### RSA
-1. openssl RSA 加解密
+#### openssl RSA 加解密
 RSA是基于数论中大素数的乘积难分解理论上的非对称加密法,使用公私钥的方法进行加解密
 公钥 用于加密，它是向所有人公开的 ; 私钥用于解密，只有密文的接收者持有
-生成一个密钥(私钥)
 
-	  [root@hunterfu ~]# openssl genrsa -out private.key 1024
+生成一个密钥(私钥) 后面的1024是生成密钥的长度.
 
-注意: 需要注意的是这个文件包含了公钥和密钥两部分，也就是说这个文件即可用来加密也可以用来解密,后面的1024是生成密钥的长度.
+    # openssl genrsa -out private.key 1024
 
 通过密钥文件private.key 提取公钥
 
-	  [root@hunterfu ~]# openssl rsa -in private.key -pubout -out pub.key
+    # openssl rsa -in private.key -pubout -out pub.key
 
 使用公钥加密信息
 
-	  [root@hunterfu ~]# echo -n "123456" | openssl rsautl -encrypt -inkey pub.key -pubin >encode.result
+    # echo -n "123456" | openssl rsautl -encrypt -inkey pub.key -pubin >encode.result
 
 使用私钥解密信息
 
-	  [root@hunterfu ~]#cat encode.result | openssl rsautl -decrypt  -inkey private.key
-	  123456
+    #cat encode.result | openssl rsautl -decrypt  -inkey private.key
+    123456
 
 #### PHP RSA
 Refer:
@@ -351,26 +350,26 @@ DSA只是一种算法，和RSA不同之处在于它不能用作加密和解密�
 
 生成一个密钥(私钥)
 
-	  [root@hunterfu ~]# openssl dsaparam -out dsaparam.pem 1024
-	  [root@hunterfu ~]# openssl gendsa -out privkey.pem dsaparam.pem
+	  # openssl dsaparam -out dsaparam.pem 1024
+	  # openssl gendsa -out privkey.pem dsaparam.pem
 
 生成公钥
 
-	  [root@hunterfu ~]# openssl dsa -in privkey.pem -out pubkey.pem -pubout
-	  [root@hunterfu ~]# rm -fr dsaparam.pem
+	  # openssl dsa -in privkey.pem -out pubkey.pem -pubout
+	  # rm -fr dsaparam.pem
 
 使用私钥签名
 
-	  [root@hunterfu ~]# echo -n "123456" | openssl dgst -dss1 -sign privkey.pem > sign.result
+	  # echo -n "123456" | openssl dgst -dss1 -sign privkey.pem > sign.result
 
 使用公钥验证
 
-	  [root@hunterfu ~]# echo -n "123456"  | openssl dgst -dss1 -verify pubkey.pem -signature sign.result
+	  # echo -n "123456"  | openssl dgst -dss1 -verify pubkey.pem -signature sign.result
 	  Verified OK
 
 至此，一次DSA签名与验证过程完成！
 
-3. 总结及注意事项
+#### 总结及注意事项
 
 注意: 由于信息经过加密或者签名后，都变成不可读模式,为了方便终端查看和传输使用(url提交数据,需要作urlencode操作)，可以使用base64进行编码
 
@@ -379,7 +378,7 @@ DSA只是一种算法，和RSA不同之处在于它不能用作加密和解密�
 
 java中此私钥需要转换下格式才能使用:
 
-	  [root@hunterfu ~]# openssl pkcs8 -topk8 -nocrypt -in private.key -outform PEM -out java_private.key
+	  # openssl pkcs8 -topk8 -nocrypt -in private.key -outform PEM -out java_private.key
 
 # php 支持的加密mode/algorithm
 
