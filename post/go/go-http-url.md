@@ -32,6 +32,7 @@ build url:
 	u.Host = "google.com"
 	q := u.Query()
 	q.Set("q", "golang")
+	q.Add("name", "ahui")
 	u.RawQuery = q.Encode()
 
     fmt.Println(u)

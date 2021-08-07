@@ -76,3 +76,7 @@ And you can use tag embeddedPrefix to add prefix to embedded fields’ db name, 
       AuthorEmail string
       Upvotes     int32
     }
+
+## gorm index
+
+    `gorm:"unique_index:uix_user_id;index"`

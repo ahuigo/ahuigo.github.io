@@ -130,7 +130,7 @@ go `=`赋值只能用于addressable, 很可惜`p["HM"] is not addressable`.
 
     Each left-hand side operand must be addressable, a map index expression
 
-方法是用index address:
+2种方法是用index address:
 1. 用：`map[string]*MyStruct`参与赋值
 2. `p["HM"] = p["HM"].incrementAge()`
 

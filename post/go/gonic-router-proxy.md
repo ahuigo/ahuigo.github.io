@@ -7,10 +7,12 @@ private:
 
 ## NewSingleHostReverseProxy
 
+    ketoURL, _ := url.Parse("http://keto.com/base")
+    proxy:= httputil.NewSingleHostReverseProxy(ketoURL)
 	ketoHandler := func(c *gin.Context) {
-        ketoURL, _ := url.Parse("http://keto.com/base")
 		c.Request.Host = ketoURL.Host
-        proxy:= httputil.NewSingleHostReverseProxy(ketoURL)
+        // 如果必要，先移除中间件加的头
+        c.Writer.Header().Del("Access-Control-Allow-Origin")
 		proxy.ServeHTTP(c.Writer, c.Request)
 	}
     // 转发的地址是：http://keto.com/base/engines/acp/ory/xxx/xxx

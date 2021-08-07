@@ -15,7 +15,18 @@ private: true
 
 # read 数据
 ## list all indexes and type
-    curl -s '.../_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'
+    curl -s 'm:9200/_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'
+    curl -s 'user:pass@localhost:9200/_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'
+
+注意：
+
+    .value.mappings | keys 代表 value['mappings'].keys()
+
+## list one index
+一样的
+
+    curl -s 'm:9200/index/_search?'
+    curl -s 'm:9200/index/_doc/_search?'
 
 
 # elastic query 语法
@@ -27,12 +38,17 @@ private: true
     /weather/_doc/_search?q=
     /weather/beijing/_search?q=
 
+查询配置（包括）
+
+    '/{index}/_settings?pretty'
+
 ## query 结构
 两种结构
 
 json 查询
 
     curl -H 'Content-Type: application/json' 'm:9200/index/type/_search' -d '{"query":{"match":{"log":"ahui"}}}' | jq
+    curl -H 'Content-Type: application/json' 'm:49200/cadence-visibility-staging/_search' -d '{"query":{"match":{"_id":"mss_base_workflow:47094f13-44b3-4212-9c2c-ff45db3a523c"}}}'
 
 query结构, 注意AND 是大写
 
@@ -43,10 +59,10 @@ query结构, 注意AND 是大写
 
     $ curl 'localhost:9200/weather/beijing/abc?pretty=true'
     {
-    "_index" : "accounts",
-    "_type" : "person",
-    "_id" : "abc",
-    "found" : false
+        "_index" : "accounts",
+        "_type" : "person",
+        "_id" : "abc",
+        "found" : false
     }
 
 我们主要讨论json 查询
@@ -138,7 +154,8 @@ The API response returns the top 10 documents matching the query in the hits.hit
 where type="SUCCESS"
 
     "bool": {
-      "must": [{
+      "must": [
+          {
           "term": {
             "type": "SUCCESS"
           }
@@ -155,7 +172,27 @@ where type="SUCCESS"
     }
 
 ### 查时间
-query="StartTime>='2021-03-02T16:52:50+08:00' and User='ahuigo' and CloseTime=missing"
+query 查????
+
+    query="StartTime>='2021-03-02T16:52:50+08:00' and User='ahuigo' and CloseTime=missing"
+
+在body：
+
+    curl -H 'Content-Type: application/json' 'm:9200/dev-index/_search' -d '{
+        "from" : 0, "size" : 105,
+        "query": {
+            "bool":{
+                "must":[
+                    {"match":{"log":"MONITOR_LOG_TYPE"}},
+                    {"match":{"kubernetes.container_name":"translog-format-worker"}},
+                    {"range": {
+                        "@timestamp":{"gte":"now-8h"}
+                    }
+                }
+            ]}
+        }
+    '  | jq '.hits.hits[]._source["@timestamp"]'
+
 
 ## range 查询
     "query": {
@@ -200,7 +237,6 @@ date 可以math计算，参考：https://www.elastic.co/guide/en/elasticsearch/r
 
 与逻辑
 
-
     "query": {
         "bool": {
             "must": [
@@ -215,9 +251,15 @@ date 可以math计算，参考：https://www.elastic.co/guide/en/elasticsearch/r
     POST localhost:9200/accounts/person/1 
     {
         "name" : "John",
-        "lastname" : "Doe",
-        "job_description" : "Systems administrator and Linux specialit"
+        "lastname" : "Doe"
     }
+
+
+    curl -X POST -H 'Content-Type: application/json' 'http://m:49200/cadence-visibility-staging/person/1' -d '{
+        "name" : "John",
+        "lastname" : "Doe"
+    }'
+
 ## get
     GET localhost:9200/accounts/person/1 
 
@@ -229,8 +271,7 @@ The result will contain metadata and also the full document (shown in the _sourc
         "_id": "1",
         "_source": {
             "name": "John",
-            "lastname": "Doe",
-            "job_description": "Systems administrator and Linux specialit"
+            "lastname": "Doe"
         }
     }
 
@@ -239,6 +280,6 @@ The result will contain metadata and also the full document (shown in the _sourc
     POST localhost:9200/accounts/person/1/_update
     {
         "doc":{
-            "job_description" : "Systems administrator and Linux specialist"
+            "name" : "Hello John"
         }
     }
