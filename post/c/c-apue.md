@@ -28,6 +28,10 @@ download http://www.apuebook.com/code3e.html
 	ln -s ~/www/apue.3e/lib/libapue.a /usr/local/lib/
 
 # unpv13e
-Unix Network Programming(1) Verion 3
-https://github.com/unpbook/unpv13e
-https://github.com/ahuigo/unix-network-programming-v3
+Unix Network Programming(1) Verion 3: 有两处镜像可用
+1. code1: https://github.com/unpbook/unpv13e
+2. code2: https://github.com/ahuigo/unix-network-programming-v3 (验证可用)
+3. code3: https://github.com/ahuigo/unixCode  有点问题
+
+电子书pdf：
+- git@gitee.com:ahuigo/ebook.git UNIX网络编程_卷1_目录版.pdf
