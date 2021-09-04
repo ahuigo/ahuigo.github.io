@@ -34,8 +34,12 @@ jq 支持管道，比如我们利用管道生成base64
     curl -s https://api.github.com/repos/go-swagger/go-swagger/releases/latest | \
     jq -r '.assets[] | select(.name | contains("'"$(uname | tr '[:upper:]' '[:lower:]')"'_amd64")) | .browser_download_url'
 
-
 note:
 
     $ echo "$(uname | tr '[:upper:]' '[:lower:]')" 
     darwin
+
+### array props
+    curl url | jq '.executions[]|.closeTime'
+    curl url | jq '.executions[].closeTime'
+    curl url | jq '.stus.names[]._source["@timestamp"]'

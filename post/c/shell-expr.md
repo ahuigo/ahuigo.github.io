@@ -96,10 +96,15 @@ case条件 可以是变量、与或非(不能有引号)、简单的通配符(不
 # function
 
 	function fun(){
-		local 变量[=值] #局部变量，shell 没有静态变量
+		#local 变量[=值] #局部变量，shell 没有静态变量
+		local name=ahui
 		echo $1 $2
+        echo $name
 		return 3;
 	}
+
+call function
+
 	fun 2 3
 	echo $? ;#函数返回值
 

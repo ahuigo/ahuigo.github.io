@@ -4,6 +4,8 @@ date: 2018-09-26
 private:
 ---
 # 数据获取
+通用数据
+    https://www.dydata.io/
 查询PE/PB等：
     http://www.licaidashiye.com/tools/value/ad_to_stock_page.php
     http://www.51shiyinglv.com/dist/index.html#/main/index

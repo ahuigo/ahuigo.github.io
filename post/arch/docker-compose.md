@@ -34,29 +34,40 @@ compose 有很多docker 自己的选项
     -T 不分配伪 tty，意味着依赖 tty 的指令将无法运行。
 
 ## service 配置
-当前目录下配置docker-compose.yml 配置
+当前目录下配置docker-compose.yml 配置: a/docker/compose/workpress.yaml
 
-    version: '1.1'
-    service:
-        mysql:
-            image: mysql:5.7
-            environment:
-            - MYSQL_ROOT_PASSWORD=123456
-            - MYSQL_DATABASE=wordpress
-        web:
-            image: wordpress
-            links:
-                - mysql
-            environment:
-                - WORDPRESS_DB_PASSWORD=123456
-            ports:
-                - "127.0.0.3:8080:80"
-            working_dir: /var/www/html
-            volumes:
-                - wordpress:/var/www/html
-                - ./dags:/usr/local/airflow/dags
-            restart: on-failure
+    version: "3.9"
 
+    services:
+      db:
+        image: mysql:5.7
+        volumes:
+          - db_data:/var/lib/mysql
+        restart: always
+        environment:
+          MYSQL_ROOT_PASSWORD: somewordpress
+          MYSQL_DATABASE: wordpress
+          MYSQL_USER: wordpress
+          MYSQL_PASSWORD: wordpress
+
+      wordpress:
+        depends_on:
+          - db
+        image: wordpress:latest
+        working_dir: /var/www/html
+        volumes:
+          - wordpress_data:/var/www/html
+        ports:
+          - "4080:80"
+        restart: always
+        environment:
+          WORDPRESS_DB_HOST: db:3306
+          WORDPRESS_DB_USER: wordpress
+          WORDPRESS_DB_PASSWORD: wordpress
+          WORDPRESS_DB_NAME: wordpress
+    volumes:
+      db_data: {}
+      wordpress_data: {}
 
 参考下：https://github.com/puckel/docker-airflow/blob/master/docker-compose-LocalExecutor.yml
 的配置，command 可以覆盖dockerfile 中的CMD
@@ -178,6 +189,10 @@ multi command:
 
 
 ## exec
+    Usage: exec [options] [-e KEY=VAL...] SERVICE COMMAND [ARGS...]
+
+    docker-compose  -f compose-ginapp.yml  exec web sh
+
 exec with root: 
 
     docker-compose -f docker-compose.yml exec -u root webserver \
@@ -222,7 +237,7 @@ https://docs.docker.com/compose/environment-variables/#set-environment-variables
       web:
         image: 'webapp:v1.5'
 
-环境变量的优化级
+环境变量的优先级
 
     Compose file (.env)
     Shell environment variables
