@@ -4,6 +4,9 @@ date: 2019-10-03
 private:
 ---
 # Response
+## redirect
+    c.Redirect(http.StatusFound, "http://example.com")
+
 ## error
 
     // 给Error 中间件 传 c.Errors.Errors() 

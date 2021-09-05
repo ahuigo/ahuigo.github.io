@@ -136,7 +136,7 @@ ipam 设置
             - subnet: 192.168.0.1/16
 
 ## 配置默认网络
-除自定义网络外，我们也可为默认网络自定义配置。
+除自定义网络外，我们也可为默认网络自定义配置: default
 
     version: '2'
 
@@ -154,6 +154,21 @@ ipam 设置
         driver: custom-driver-1
 
 这样，就可为该应用指定自定义的网络驱动。
+
+## 为网络指定name
+
+    version: "2.1"
+    services:
+        mongodb:
+            image: mongo:4
+            container_name: devops-mongo # 容器名
+            ports:
+                - "27017:27017"
+            networks:
+                - mongo_net
+    networks:
+      mongo_net:
+        name: mongo_net
 
 ## 使用已存在的网络
 一些场景下，我们并不需要创建新的网络，而只需加入已存在的网络，此时可使用external选项。示例：

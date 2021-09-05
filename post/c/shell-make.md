@@ -257,8 +257,7 @@ Example: clean 清除编译文件 这一target 不需要条件。
         export foo=bar; \
         echo "foo=[$$foo]"
 
-或者方法是加上`.ONESHELL:`命令。
-
+或者方法是加上`.ONESHELL:`命令。 (`GNU Make >=3.82`)
 
     .ONESHELL:
     var-kept:

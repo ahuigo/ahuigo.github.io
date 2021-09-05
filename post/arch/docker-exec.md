@@ -22,7 +22,7 @@ date: 2019-08-15
     docker exec -w="/root" -it debian bash
 
 ## ctrl+n,ctrl+p 支持
-在bash 才支持，sh不支持
+在bash 才支持，`sh不支持`
 
     docker run --rm -it debian bash
 
