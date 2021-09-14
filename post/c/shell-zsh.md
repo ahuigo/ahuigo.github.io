@@ -458,6 +458,8 @@ git插件旋转在`.oh-my-zh/plugins/git/git.plugin.zsh`.
 3、osx：tab 增强，quick-look filename 可以直接预览文件，man-preview grep 可以生成 grep手册 的pdf 版本等。
 
 ## PROMPT
+refer: https://www.tweaking4all.com/software/macosx-software/customize-zsh-prompt/
+
 PROMPT PS1
 
 	export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
@@ -466,7 +468,11 @@ PROMPT PS1
 host user ...:
 
 	%n@%m user@hostname
+    %d Current directory
+    %~	Current directory, use “~” if home directory
 	%c 		current working directory
+    %C	Trailing directory of the Current Directory	See also %d and %~. Alternatives %c and %.
+    %?	Show the return code from the previous executed command	
 	${ret_status}
 
 color:

@@ -42,6 +42,9 @@ Lock a user's password. This puts a '!' in front of the encrypted password
 
 	usermod -L username 
 
+## add user to group
+    usermod -a -G examplegroup username
+
 # umask
 设定新建文件的默认权限:
 	for file: 666 - umask

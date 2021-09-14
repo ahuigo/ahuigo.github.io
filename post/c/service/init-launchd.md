@@ -57,6 +57,11 @@ MySQL为例，使用launchctl开机启动:
 如使用brew service可以简化为:
 
     brew services start mysql
+    brew services restart postgresql
+
+log:
+
+    /usr/local/var/log/
 
 ## 常用命令
 

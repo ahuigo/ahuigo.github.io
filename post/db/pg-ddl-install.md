@@ -23,6 +23,9 @@ mac:
 
     $ psql -U `whoami` postgres
 
+    # log
+    tail -f /usr/local/var/log/postgres.log
+
 ## auth
 see db-user.md
 
