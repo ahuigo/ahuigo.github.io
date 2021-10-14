@@ -37,7 +37,10 @@ Test for code example above:
         router := createRouter()
 
         resp := httptest.NewRecorder()
-        req, _ := http.NewRequest("GET", "/ping", nil)
+        // req, _ := http.NewRequest("GET", "/ping", nil)
+        req := requests.BuildRequest("GET", "http://localhost:8080/api/v1/method", requests.Params{
+            "abc": "cc",
+        })
         router.ServeHTTP(resp, req)
 
         assert.Equal(t, 200, resp.Code)

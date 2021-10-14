@@ -1,0 +1,25 @@
+version: "3.9"
+    
+services:
+  db:
+    image: postgres:13.4
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_USER: ahui
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: ahui
+    
+  web:
+    depends_on:
+      - db
+    image: ginapp
+    volumes:
+      - tmp_data:/tmp
+    ports:
+      - "4500:4500"
+    restart: always
+volumes:
+  db_data: {}
+  tmp_data: {}

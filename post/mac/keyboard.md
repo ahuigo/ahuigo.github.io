@@ -9,6 +9,8 @@ date: 2020-05-08
     defaults write -g ApplePressAndHoldEnabled -bool false
     $ defaults get -g ApplePressAndHoldEnabled
     0 
+    ~ defaults write -g InitialKeyRepeat -int 10
+    ~ defaults write -g KeyRepeat -int 1
 
 ## 加快按键速度
 keyboard配置建议

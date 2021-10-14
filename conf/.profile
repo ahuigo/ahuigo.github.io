@@ -19,7 +19,8 @@ export LANG='en_US.UTF-8'
 export CLICOLOR="xterm-color"
 export PATH=$PATH:$HOME/www/a/bin:~/bin:/usr/local/sbin
 export GNUTERM=qt
-export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'$'\n$ '
+export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])'$'\n$ '
+
 #export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
 export PIP_FORMAT=columns
 
