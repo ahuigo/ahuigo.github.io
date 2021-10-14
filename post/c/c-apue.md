@@ -7,15 +7,15 @@ private: true
 - git@gitee.com:ahuigo/ebook.git UNIX网络编程_卷1_目录版.pdf
 
 # unpv1.3e 第一卷
-Unix Network Programming(1) Verion 3: 有两处镜像可用
+Unix Network Programming(1) Verion 3， 相关源码如下
 1. code1: https://github.com/unpbook/unpv13e
-2. code2: https://github.com/ahuigo/unix-network-programming-v3 (debian 验证可用)
+2. code2: https://github.com/ahuigo/unix-network-programming-v3 (debian/mac 验证可用)
 3. code3: https://github.com/ahuigo/unixCode  有点问题
 
 # apue.3e: unix 环境 高级编程（第3卷）
-https://unix.stackexchange.com/questions/105483/compiling-code-from-apue
-
-source: https://github.com/ahuigo/c-lib/tree/apue/lib/apue.3e
+advanced program for unix environment 的相关源码：
+1. https://unix.stackexchange.com/questions/105483/compiling-code-from-apue
+2. https://github.com/ahuigo/c-lib/tree/apue/lib/apue.3e (backup)
 
 ## install command tool 'Command Line Tools' package
 
