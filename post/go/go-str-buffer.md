@@ -7,6 +7,8 @@ private: true
 > go-lib/str/buffer.go
 
 ## initial buffer
+    func NewBuffer(buf []byte) *Buffer { return &Buffer{buf: buf} }
+
 bytes.Buffer是一个缓冲byte类型的缓冲器. 
 
     //等价
@@ -22,7 +24,9 @@ buffer 是slice结构，可以自动扩容，也可以指定始容量
 
 初始化为空：
 
+    // 即可以是结构变量
     var buf bytes.Buffer
+    // 也可以是pointer变量
     buf := &bytes.Buffer{}
     buf := new(bytes.Buffer)
 

@@ -147,7 +147,7 @@ with bytes
     err := ioutil.WriteFile("/tmp/dat1", bytes, 0644)
 
 ### Write
-Write bytes
+#### Write bytes
 
     f, err := os.Create("/tmp/dat2")
     defer f.Close()
@@ -155,7 +155,18 @@ Write bytes
     n2, err := f.Write(d2)
     fmt.Printf("wrote %d bytes\n", n2)
 
-WriteString
+write bytes to stdout
+
+    os.Stdout.Write(bytes[:])
+
+#### Write buffer
+write to stdout with bytes
+
+    f := bufio.NewWriter(os.Stdout)
+    defer f.Flush()
+    f.Write(b)
+
+#### WriteString
 
     // A `WriteString` is also available.
     n3, err := f.WriteString("writes\n")
