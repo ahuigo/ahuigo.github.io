@@ -26,6 +26,12 @@ mac:
     # log
     tail -f /usr/local/var/log/postgres.log
 
+如果遇到：FATAL:  database files are incompatible with server
+
+    brew services stop postgresql
+    brew postgresql-upgrade-database
+    brew services start postgresql
+
 ## auth
 see db-user.md
 

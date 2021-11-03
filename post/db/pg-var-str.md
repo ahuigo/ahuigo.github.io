@@ -4,6 +4,7 @@ date: 2019-06-20
 private:
 ---
 # define string
+## 转义
 1. 字符串，只能用`'` 为边界，双引号`"`是用于关键字的(e.g. table_name)
 
 postgre 不支持\ 转义 
@@ -20,6 +21,17 @@ postgre 不支持\ 转义
 
     select 'a'
     'b';
+
+### 用`$$`转义
+
+    Syntax: $tag$<string_constant>$tag$
+
+    => select $$select * from  where id='11'$$;
+    select * from  where id='11'
+
+    => select $$I'm a string constant that contains a backslash \$$;
+    => SELECT $message$I'm a string constant that contains a backslash \$message$;
+     I'm a string constant that contains a backslash \
 
 # str func
 ### concat

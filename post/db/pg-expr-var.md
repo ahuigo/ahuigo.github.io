@@ -3,7 +3,35 @@ title: Posgtre Var Expression
 date: 2019-06-20
 private:
 ---
-# variable
+# pg var
+Syntax: 
+
+    variable_name data_type [:= expression];
+
+## var define
+example:
+
+    DO $$ 
+    DECLARE
+        counter    INTEGER := 1;
+        first_name VARCHAR(50) := 'John';
+        last_name  VARCHAR(50) := 'Doe';
+        payment    NUMERIC(11,2) := 20.5;
+    BEGIN 
+        RAISE NOTICE '% % % has been paid % USD', counter, first_name, last_name, payment;
+    END $$;
+
+### var init
+    DO $$ 
+    DECLARE
+       created_at time := NOW();
+    BEGIN 
+       RAISE NOTICE '%', created_at;
+       PERFORM pg_sleep(10);
+       RAISE NOTICE '%', created_at;
+    END $$;
+
+# mysql variable
 mysql 变量不区分大小写
 
 	"set variable

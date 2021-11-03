@@ -6,6 +6,9 @@ private: true
 # pg explain
 >参考： PgSQL · 最佳实践 · EXPLAIN 使用浅析 http://mysql.taobao.org/monthly/2018/11/06/
 
+## `explain & explain analyze`
+As you correctly mention, the difference between `explain & explain analyze` is that the former generates the query plan by estimating the cost, while the latter actually executes the query.
+
 ## 背景
 在使用数据库时，经常会有开发者有这样的疑问：“我的表对应字段已经创建了索引，为什么这个SQL 语句执行还是这么慢？” 虽然数据库SQL 执行慢有很多原因，但是对于PostgreSQL DBA 来说，好像有个共识，遇到用户慢SQL优化的问题，先拿EXPLAIN 命令查看下对应的查询计划，从而可以快速定位慢在哪里。这就引出了本文的主角—PostgreSQL 的EXPLAIN 命令。
 

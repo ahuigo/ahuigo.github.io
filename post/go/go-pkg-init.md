@@ -5,6 +5,8 @@ private: true
 ---
 # go init
 
+## init()
+
     package main
     import (
         "log"

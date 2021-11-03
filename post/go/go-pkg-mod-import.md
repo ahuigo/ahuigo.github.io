@@ -1,8 +1,32 @@
 ---
-title: go module
+title: go module and import
 date: 2020-01-01
 private: 
 ---
+# go import
+import same namespace
+
+    import (
+        . "math"
+        "fmt"
+    )
+
+    fmt.Println(Pi)
+
+## Package names vs. package imports
+[import-tips] It has been a common practice in the past to name go package repositories either with go- prefix (like go-bindata or go-iter,…). 
+If you’re using gopkg.in you might also reference some packages with versions:
+
+    gopkg.in/pkg.v3      → github.com/go-pkg/pkg (branch/tag v3, v3.N, or v3.N.M)
+    gopkg.in/user/pkg.v3 → github.com/user/pkg   (branch/tag v3, v3.N, or v3.N.M)
+
+package name is not same as import path,
+If you look at the source code for json-iterator/go, you’ll see that each file has `package jsoniter` 
+
+    import "github.com/json-iterator/go"
+    var json = jsoniter.ConfigCompatibleWithStandardLibrary
+    json.Marshal(&data)
+ 
 # go module
 
 ## module 解决了什么问题？
@@ -30,7 +54,7 @@ module 的出现主要是为了解决以下问题：
     go mod graph //打印模块依赖图
     go mod why //解释为什么需要依赖
 
-# go mod 核心
+# go mod 目录与依赖冲突
 ## go mod path
 go get 使用的目录是 $GOROOT/src/github.com/
 go mod 使用的目录是 $GOROOT/pkg/mod/github.com/
@@ -196,50 +220,7 @@ go get/run/build会在：
 
 其中 v0.0.0 表示 semver 版本号， 20170915032832 表示这个版本的时间。 14c0d48ead0c 表示这次提交的 hash。
 
-# go 包相关的命令
-这一节主要介绍怎么使用 go module，以及墙内用户怎么解决墙外的下载问题。
-
-    Usage: go help mod
-	init        initialize new module in current directory
-	tidy        add missing and remove unused modules
-	vendor      create `vendored` copy directory of dependencies`
-
-    download    download modules to local cache: pkg/mod/cache
-	edit        edit go.mod from tools or scripts
-	graph       print module requirement graph
-	verify      verify dependencies have expected content
-
-
-先看一下官方给的一个例子：
-
-    # 在 $GOPATH 外部创建一个目录
-    $ mkdir -p /tmp/scratchpad/hello
-    $ cd /tmp/scratchpad/hello
-
-    # 初始化 module
-    $ go mod init github.com/you/hello
-    go: creating new go.mod: module github.com/you/hello
-
-    # 依赖 module 写一段代码
-    $ cat <<EOF > hello.go
-    package main
-
-    import (
-        "fmt"
-        "rsc.io/quote"
-    )
-
-    func main() {
-        fmt.Println(quote.Hello())
-    }
-    EOF
-
-    # 编译执行 
-    $ go build 
-    $ ./hello
-    Hello, world.
-
-## 命令清单
+# go mod 包相关的命令
 https://segmentfault.com/a/1190000021854441?
 Refer: https://windmt.com/2018/11/08/first-look-go-modules/
 
@@ -314,11 +295,6 @@ go.mod 中增加了对应的 require:
     运行 go get -u=patch 将会升级到最新的修订版本
     运行 go get package@version 将会升级到指定的版本号 version
 
-## 3.goproxy 的使用
-国内用户在用 golang 的时候麻烦（可以想象一下， 先 git clone， 然后 git checkout v1.1.1， 最后 copy 到 mod/pkg@v1.1.1 下）。
-
-最简单的方式是 export GOPROXY=https://goproxy.io。 设置 go 代理，一切搞定！这样下载的时候都通过 goproxy 来下载。
-
 # 怎么发布不兼容版本？
 根据前文的介绍，如果新版本不能兼容旧版本，那么就要使用新的主版本号和新的导入路径 。
 
@@ -329,4 +305,8 @@ go.mod 中增加了对应的 require:
 3. 在 module 下创建一个 `v2 目录`， 然后将所有文件移动 v2 中，并且修改 `go.mod` 。 同时也需要修改`所有相关的 import 语句`。
 
 # 参考
-浅析 golang module https://zhuanlan.zhihu.com/p/59549613
+- 浅析 golang module https://zhuanlan.zhihu.com/p/59549613
+- [import-tips]
+
+[import-tips]: 
+https://scene-si.org/2018/01/25/go-tips-and-tricks-almost-everything-about-imports/

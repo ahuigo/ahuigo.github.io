@@ -120,6 +120,11 @@ update one array element:
 
     select array_length(string_to_array(name, 'o'), 1) - 1
 
+## split array
+
+    # 2是最后一个(不是从0开始)
+    SELECT split_part('ordno-#-orddt-#-ordamt', '-#-', 2)
+
 ## compamre
 ### is empty array
 array_length() requires two parameters, the second being the dimension of the array:

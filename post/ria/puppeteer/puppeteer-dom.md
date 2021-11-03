@@ -32,6 +32,10 @@ wait until the element is found and will throw an error otherwise.
 
     await page.waitFor('.CL1');
     await page.waitForSelector('.vss');
+    await page.waitForSelector('.vss-PickListDropdown--title-textContainer', {
+        timeout: 20*1000 //20s
+      });
+
 
 ## waitUntil 
 e.g.

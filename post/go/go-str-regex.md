@@ -54,17 +54,20 @@ Example:
 
 ### FindStringSubmatch
 
-    func main() {
-        r := regexp.MustCompile(`^(?P<Year>\d{4})-(?P<Month>\d{2})-(?P<Day>\d{2})$`)
+    // go-lib/str/regex/regex-find.md
+    r := regexp.MustCompile(`^(?P<Year>\d{4})-(?P<Month>\d{2})`)
 
-        res := r.FindStringSubmatch(`2015-05-27`)
-        names := r.SubexpNames()
-        for i, _ := range res {
-            if i != 0 {
-                fmt.Println(names[i], res[i])
-            }
+    res := r.FindStringSubmatch(`2015-05-27`)  // res may be: []string(nil)
+    names := r.SubexpNames()
+
+    result := make(map[string]string)
+    for i, _ := range res {
+        if i != 0 {
+            result[names[i]]=res[i]
         }
     }
+    fmt.Printf("%#v\n", result)
+
 ### FindAllStringSubmatch: array
 
     txt := `2001-01-20

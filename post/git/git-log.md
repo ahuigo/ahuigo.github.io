@@ -4,6 +4,10 @@ title: git 使用之日志、数据恢复
 category: blog
 description:
 ---
+# sort by date
+
+    git log --graph --stat --author-date-order
+
 # 日志过滤
 
 ## by branch
@@ -160,6 +164,10 @@ man: git help log
 		%cn committer name(relative)
         %ai author date
 		%s subject
+
+formate example: 
+
+    git log --graph --stat --pretty=format:"%ad %h by %an, %s" 
 
 create date:
 

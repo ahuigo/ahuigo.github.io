@@ -4,6 +4,7 @@ date: 2021-07-25
 private: true
 ---
 # pg partial index
+## partial index
 要创建符合例子的索引，使用像下面这样的命令：
 
     CREATE INDEX access_log_client_ip_ix ON access_log (client_ip)
@@ -27,7 +28,7 @@ private: true
     CREATE INDEX current_workflow_close_time_ix ON current_workflows(close_time)
     WHERE (close_time < '0001-02-02');
 
-## explain 分析
+### explain 分析
 参考： PgSQL · 最佳实践 · EXPLAIN 使用浅析 http://mysql.taobao.org/monthly/2018/11/06/
 
 未使用索引
@@ -45,3 +46,8 @@ private: true
     ->  Index Scan using current_workflow_close_time_ix on current_workflows  (cost=0.29..8010.40 rows=50083 width=109)
             Index Cond: (close_time < '0001-02-01 00:00:00+08:05:43'::timestamp with time zone)
             Filter: (status = ''::text)
+
+## partial key 
+
+    CREATE INDEX ON current_workflows(close_time) 
+        WHERE (close_time < '0001-02-02');

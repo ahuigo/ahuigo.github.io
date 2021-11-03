@@ -14,3 +14,14 @@ umijs `/src/global.d.ts`
     interface Date {
         format(form?: string): string;
     }
+
+参考, 为避免 devops.ts:53:10 - error TS2339: Property 'page' does not exist on type 'Window & typeof globalThis'.
+
+    interface Window {
+        page: any
+    }
+    declare const window: Window &
+        typeof globalThis & {
+            page: any
+        }
+    window.page = await browser.NewPage()

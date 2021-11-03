@@ -37,7 +37,7 @@ Test for code example above:
         router := createRouter()
 
         resp := httptest.NewRecorder()
-        // req, _ := http.NewRequest("GET", "/ping", nil)
+        // req, _ := http.NewRequest("POST", "/ping", bytes.NewReader(jsonByte))
         req := requests.BuildRequest("GET", "http://localhost:8080/api/v1/method", requests.Params{
             "abc": "cc",
         })

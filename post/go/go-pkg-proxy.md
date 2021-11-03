@@ -4,6 +4,10 @@ date: 2020-04-20
 private: true
 ---
 # proxy
+国内用户在用 golang 的时候麻烦（可以想象一下， 先 git clone， 然后 git checkout v1.1.1， 最后 copy 到 mod/pkg@v1.1.1 下）。
+
+最简单的方式是 export GOPROXY=https://goproxy.io。 设置 go 代理，一切搞定！这样下载的时候都通过 goproxy 来下载。
+
 ## go pkg proxy
 via goproxy
 
