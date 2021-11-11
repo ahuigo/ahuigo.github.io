@@ -5,6 +5,14 @@ date: 2018-09-27
 # Postgre Index
 本文主要围绕postgre 总结一下索引, 参考：[PostgreSQL 9种索引的原理和应用场景](https://yq.aliyun.com/articles/111793)
 
+## performace about index
+concurrently 增加io，不会阻塞insert/update/delete
+
+    create index concurrently
+    reindex concurrently
+
+使用truncate 代替delete 全表
+
 ## 索引数据结构算法
 共9种：
 

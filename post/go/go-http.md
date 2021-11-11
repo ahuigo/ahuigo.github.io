@@ -202,8 +202,8 @@ More control over the server's behavior is available by creating a custom Server
     }
 	req.AddCookie(&cookie)
 
-### session cookie
-session cookie维持：要save 再send
+### resp cookie
+cookie维持：要save 再send
 
     //save cookie
     cookie = resp.Cookies() //save cookies
@@ -215,6 +215,10 @@ session cookie维持：要save 再send
     }
 
 #### session: store cookieJar
+
+    session.Client.Jar.SetCookies(session.httpreq.URL, cookies)
+    cookies := range session.Client.Jar.Cookies(session.httpreq.URL) 
+
 > go-lib/http/session.go
 会在整个会话期间保持cookie
 

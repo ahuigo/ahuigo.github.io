@@ -41,11 +41,12 @@ make 提供了很多func
 
 ### 定义变量
 变量定义时`=`两边可以有空格，这一点不像shell 那样严格
+https://www.gnu.org/software/make/manual/html_node/Setting.html#Setting
 
-    # 在执行时扩展，允许递归扩展。
+    # Variables defined with ‘=’ are recursively expanded variables
     VARIABLE = value
 
-    # 在定义时扩展。
+    # 在定义时扩展, Variables defined with ‘:=’ or ‘::=’ are simply expanded variables;
     VARIABLE := value
 
     # 只有在该变量为空时才设置值。
@@ -67,12 +68,25 @@ e.g:
 
 读取环境变量时，要用`$$`转义，否则make 会解析`$` 为自己的变量
 
-    echo $$HOME
+    echo $$HOME #限环境变量
+    echo $(HOME)
+    echo ${HOME}
 
 make 变量与shell 变量不同
 
     LDFLAGS += -X "main.Version=$(shell git rev-parse HEAD)"
     GO := GO111MODULE=on go
+
+#### shell function
+我们可以执行shell, 其输出值作为变量值
+
+    hash != printf '\043'
+    file_list != find . -name '*.c'
+
+另一种做法
+
+    hash := $(shell printf '\043')
+    file_list := $(shell find . -name "*.c")
 
 ### 环境变量, shell 变量
 As MadScientist pointed out, you can export individual variables with:

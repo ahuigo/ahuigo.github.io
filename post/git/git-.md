@@ -170,7 +170,7 @@ If you want to also remove *directories*, run
 
 # modify
 
-## modify messages
+## modify commit messages
 
 	git commit --amend -m 'new messages'
 	git commit --amend -m 'new messages' --author 'ahuigo'
