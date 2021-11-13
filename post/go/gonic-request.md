@@ -286,20 +286,34 @@ fileHeader
 ## Read Raw Body
 https://github.com/gin-gonic/gin/issues/961
 
-    func RequestLogger() gin.HandlerFunc {
-        return func(c *gin.Context) {
-            buf, _ := ioutil.ReadAll(c.Request.Body)
-            rdr1 := ioutil.NopCloser(bytes.NewBuffer(buf))
-            rdr2 := ioutil.NopCloser(bytes.NewBuffer(buf)) //We have to create a new Buffer, because rdr1 will be read.
+    func BindServer(c *gin.Context) {
+    	//backup
+    	buf, _ := ioutil.ReadAll(c.Request.Body)
+        // revert
+    	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(buf)) // important!!
 
-            fmt.Println(readBody(rdr1)) // Print request body
+        // bind
+    	query := struct {
+    		Name string `json:"name"`
+    	}{}
+    	if err := c.ShouldBind(&query); err != nil {
+    		println("bind error:", err)
+    	}
+    	fmt.Println(1, query)
 
-            c.Request.Body = rdr2
-            c.Next()
-        }
+        // revert
+    	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(buf)) // important!!
+
+    	res := ""
+    	c.String(http.StatusOK, res)
+
     }
 
+另外:
+
     func readBody(reader io.Reader) string {
+        // reader = ioutil.NopCloser(bytes.NewBuffer(buf))
+
         buf := new(bytes.Buffer)
         buf.ReadFrom(reader)
 
@@ -307,26 +321,6 @@ https://github.com/gin-gonic/gin/issues/961
         return s
     }
 
-wrap 一下
-
-    func readBody(req *http.Request) (buf []byte, err error) {
-        buf, _ = ioutil.ReadAll(req.Body)
-        req.Body = ioutil.NopCloser(bytes.NewBuffer(buf))
-        return
-    }
-
-via teeReader
-
-    func readTeeBody(req *http.Request) (body []byte, err error) {
-        buf := &bytes.Buffer{}
-        tea := io.TeeReader(req.Body, buf)
-        body, err = ioutil.ReadAll(tea)
-        if err != nil {
-            return
-        }
-        //req.Body = ioutil.NopCloser(buf)
-        return
-    }
 
 ### Body Stream
 https://github.com/gin-gonic/gin/pull/857/files

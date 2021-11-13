@@ -243,11 +243,11 @@ substr is beginning:
 
     #...%
 	变量配置方式	说明
-    ${path#/private}
+    ${path#prefix}  a=pre-world; echo ${a#pre}
 	${变量#关键词}	若变量内容从头开始的数据符合『关键词』，则将符合的最短数据删除 
 	${变量##关键词}	若变量内容从头开始的数据符合『关键词』，则将符合的最长数据删除 
 
-    ${path%end}
+    ${path%end} 
 	${变量%关键词}	若变量内容从尾向前的数据符合『关键词』，则将符合的最短数据删除
 	${变量%%关键词}	若变量内容从尾向前的数据符合『关键词』，则将符合的最长数据删除
     a='ab--bx-end'
@@ -276,11 +276,12 @@ substr is beginning:
 
 #### var-test 变量测试
 
-	: 判断是否非空/默认判断是否声明
-	- 不存在则设置
-	+ 存在则设置
-	= 结合了- 和 改写原值
-	? 结合了- 和 输出expr到stderr
+	- 不存在则设置默认值expr, 否则用原值
+        :- 不为空值则设置
+	+ 不存在则清空，否则用替换值expr
+        :+ 不为空值则
+	= 在- 的基础上 使用默认值
+	? 在- 的基础上 不存在则产生错误errno=1, expr输出至stderr 
 	变量配置方式	str 没有配置	str 为空字符串	str 已配置为非空字符串
 	var=${str-expr}	var=expr		var=$str		var=$str
 	var=${str:-expr}var=expr		var=expr		var=$str

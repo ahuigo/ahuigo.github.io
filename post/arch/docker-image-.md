@@ -205,13 +205,12 @@ COPY 中, 复制文件夹还是`子内容` , 取决于destination是目录 还�
 ### ARG and ENV
 不同点：
 1. ARG/ENV 都可以在build 阶段定义和使用
-2. arg 可以在build时改变 `docker build --build-arg <varname>=<value>`
-2. 只有ENV 才将环境变量传给容器, 也可用run时改变 `docker run -e APP_ENV=dev <image-在后>`
+2. ARG 可以在build时改变 `docker build --build-arg <varname>=<value>`
+2. ENV 才将环境变量传给容器, 即可用run时改变 `docker run -e APP_ENV=dev <image-在后>`
 
 注意-e 是options　不能放IMAGE后面：
 
     docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
-
 
 #### arg
 只有以下一种用法， `ARG name Lilei`是错误用法
@@ -257,6 +256,17 @@ ENV 同名变量会覆盖 ARG
     COPY ./nginx.conf ${package_path}/nginx.conf
     ENV ENV_MODE=staging \
         TEST=debug
+
+docker run 时传env
+
+    docker run  -e myhost='localhost' -it busybox sh
+    docker run --env-file ./my_env ubuntu bash
+    docker-compose --env-file ./config/.env.dev up 
+
+docker-compose 使用的默认值是env-file 是`.env`, `docker run`不会使用默认env-file
+
+    $ cat ./config.env.dev
+    TAG=v1.5
 
 ### Workdir/COPY
 
