@@ -23,8 +23,8 @@ build url:
     fmt.Println(url.String())
 
 ### parse query
-    query, _:= url.ParseQuery(`x=1&y=2&y=3;z`)
-    //map[x:[1] y:[2 3] z:[]]
+    query, _:= url.ParseQuery(`x=1&y=2&y=3;z;q=a+b;c`)
+    //map[x:[1] y:[2 3] z:[] q:[a b]]
 
 ## addQuery
     u, _:= url.Parse("http://bing.com/search?q1=dotnet")

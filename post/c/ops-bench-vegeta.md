@@ -52,7 +52,7 @@ vegeta attack 参数：
 Note: 
 1. 没有`-lazy`
     1. 如果stdin的请求数不够的话. 会重复请求. `cat a.txt| vegeta ....`
-    2. 会因为read stdin buffer阻塞。（比如: jq -ncM）
+    2. 会因为read stdin buffer阻塞。（比如: jq -ncM while(true; .+1) 是无限的）
 1. 有`-lazy`表示
     1. 如果stdin的请求数不够的话，不会重复请求. 有多少就请求多少: `cat a.txt| vegeta ....`
 

@@ -85,20 +85,20 @@ slice 中的array 是C++隐式引用array:
         uintgo   cap;
     };
 
-len 读写不可以超过len: len = high-low
+len 读写不可以超过len-1: len = high-low
 cap 是可扩容的最大容量: cap = max-low
 
     data := [...]int{0, 1, 2, 3, 4, 5, 6}
     s := data[1:4:5]                      // [low : high : max]; max 默认是len(array)
-    println(len(s), cap(s))
+    println(s, len(s), cap(s))            // [1,2,3] 3 4
 
-             +-low      high-+   +-max
-             |               |   |
+             +-low  high-+   +-max
+             |           |   |
          +---+---+---+---+---+---+---+
     data |  0|  1|  2|  3|  4|  5|  6| 
          +---+---+---+---+---+---+---+ 
-             |<--- len ----->|   |
-             |<----- cap ------->|
+             |<--- len ->|   |
+             |<----- cap --->|
 
 ## create slice
 A nil slice has a length and capacity of 0 and has `no underlying array`(no pointer):

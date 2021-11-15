@@ -311,11 +311,11 @@ https://github.com/gin-gonic/gin/issues/961
 
 另外:
 
-    func readBody(reader io.Reader) string {
+    func readBody(body io.Reader) string {
         // reader = ioutil.NopCloser(bytes.NewBuffer(buf))
 
         buf := new(bytes.Buffer)
-        buf.ReadFrom(reader)
+        buf.ReadFrom(body)
 
         s := buf.String()
         return s
