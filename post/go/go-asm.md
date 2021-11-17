@@ -7,6 +7,18 @@ date: 2019-01-23
 1. Go Assembly 示例 https://colobu.com/goasm/
 2. 英文版：https://www.davidwong.fr/goasm/
 
+# show asm
+    $go tool compile -S int.go |grep new
+## objdump asm
+    $ go tool objdump 
+    usage: go tool objdump [-S] [-gnu] [-s symregexp] binary [start end]
+
+      -S	print Go code alongside assembly
+      -gnu
+        	print GNU assembly next to Go assembly (where supported)
+      -s string
+        	only dump symbols matching this regexp
+
 # hello world
 ## 生成汇编
 参考：https://golang.org/doc/asm

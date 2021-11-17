@@ -78,7 +78,7 @@ module 定义全局命名空间. 里面可以有很多package
     $ cat github.com/ahuigo/go-lib/go.mod: 
     module github.com/ahuigo/go-lib
 
-package 定义局部命名空间, 依赖于路径查找：
+package 定义局部命名空间, 是用于路径查找的：
 
     github.com/ahuigo/go-lib/router/*.go: package router
     github.com/ahuigo/go-lib/model/*.go: package model
@@ -132,6 +132,19 @@ package 定义局部命名空间, 依赖于路径查找：
     // 同时它们都会安装pkg/mod/*. 
     $ go build 
     $ go mod tidy  
+
+## declared required conflict
+The original package `github.com/uber-go/atomic` was renamed to `go.uber.org/atomic` and 
+I getting this error:
+
+    go: github.com/uber-go/atomic: github.com/uber-go/atomic@v1.9.0: parsing go.mod:
+            module declares its path as: go.uber.org/atomic
+                    but was required as: github.com/uber-go/atomic
+
+because cloned version of `original-project` still says `module github.com/uber-go/atomic`. You should use the go.mod replace directive. 
+
+    $ go mod edit -replace github.com/uber-go/atomic=go.uber.org/atomic@v1.9.0
+    replace github.com/uber-go/atomic => go.uber.org/atomic v1.9.0
 
 ## 依赖不同的包
 ### 依赖本地包

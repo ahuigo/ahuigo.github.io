@@ -61,6 +61,8 @@ clean 命令清：
         -r clean recursively dependencies
         -x print remove commands
 
+    $ go clean -irx github.com/ahuigo/go-hello
+
 删除全部mod： 
 
     -modcache remove the entire module download cache
