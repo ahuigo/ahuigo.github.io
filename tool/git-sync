@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+set -ex
+repos=(
+js-lib
+py-lib
+go-lib
+c-lib
+a
+)
+
+opwd=`pwd`
+cd $HOME/www
+for repo in "${repos[@]}"; do
+    echo $repo
+    cd $repo
+    git pull origin master
+    git push origin HEAD
+    cd ..
+done
+cd $opwd
