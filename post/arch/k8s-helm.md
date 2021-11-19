@@ -70,12 +70,33 @@ private: true
             done
           displayName: 'docker build & push image for $(Build.BuildNumber)'
 
+### helm charts
     - stage: dev
       displayName: dev
       dependsOn: build
       condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/dev'))
       jobs:
       - deployment:
-        ....
+        container: release
+        displayName: deploy dev
+        environment: 'map-dev'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - checkout: hdmap-helm-charts
+              - task: HelmDeploy@0
+                inputs:
+                  connectionType: 'Kubernetes Service Connection'
+                  kubernetesServiceConnection: '$(kubernetes)-ack-dev'
+                  namespace: 'dev'
+                  command: 'upgrade'
+                  chartType: 'FilePath'
+                  chartPath: 'template-charts'
+                  releaseName: '$(Build.DefinitionName)'
+                  overrideValues: 'image.tag=$(Build.BuildNumber)'
+                  valueFile: '$(Build.DefinitionName)/values_ack_dev.yaml'
+                  arguments: '--debug'
+                  failOnStderr: false
 
 ## rancher

@@ -69,3 +69,12 @@ nsenter命令抓包:
     -w, --wd[=<dir>]       set the working directory
     -F, --no-fork          do not fork before exec'ing <program>
     -Z, --follow-context   set SELinux context according to --target PID
+
+## sudo root
+to get a root shell inside a running container, 
+
+    docker exec -u root -ti my_airflow_container bash
+
+or to start a new container as root.
+
+    docker run --rm -ti -u root --entrypoint bash puckel/airflow 
