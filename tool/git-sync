@@ -5,6 +5,7 @@ js-lib
 py-lib
 go-lib
 c-lib
+c-lib/unix/unpv13
 a
 )
 
@@ -12,9 +13,8 @@ opwd=`pwd`
 cd $HOME/www
 for repo in "${repos[@]}"; do
     echo $repo
-    cd $repo
+    cd $HOME/www/$repo
     git pull origin master
     git push origin HEAD
-    cd ..
 done
 cd $opwd

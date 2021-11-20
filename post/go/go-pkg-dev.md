@@ -26,7 +26,7 @@ go mod 的包必须上传到repo. (go.mod 不是必须的)
     $ export GO111MODULE=on
     GO111MODULE=off 无模块支持，go 会从 GOPATH 和 vendor 文件夹寻找包。
     GO111MODULE=on 模块支持，go 会忽略 GOPATH 和 vendor 文件夹，只根据 go.mod 下载依赖(没有go.mod 也行)
-    GO111MODULE=auto 在 GOPATH/src 外面且根目录有 go.mod 文件时，开启模块支持。
+    GO111MODULE=auto 在 GOPATH/src 外面且根目录有 go.mod 文件时，开启模块支持。(新老项目共存时，是需要的)
 
 在使用模块的时候，GOPATH 是无意义的，golang 会自动去下载的依赖，然后储存在 GOPATH/pkg/mod 中
 
@@ -210,3 +210,26 @@ j go-lib
     $ cd ~/go/src/hello &&  go install
     $ go install ~/gohome/src/hello
     $ go install ~/gohome/src/hello/ahuix.go
+
+# 包的发布
+## 发版本
+参考github.com/ahuigo/requests， 如果想发布v0.1.0
+
+    git tag v0.1.0
+    git push origin master
+
+## go.mod retract 声明问题版本
+用于声明之前发布的版本如0.2.0是有问题的
+
+    module github.com/ahuigo/hello
+
+    go 1.16
+
+    retract v0.2.0
+
+如果涉及多版本
+
+    retract (
+    v0.1.0
+    v0.2.0
+    )

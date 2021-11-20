@@ -15,7 +15,7 @@ PIL：Python Imaging Library，已经是Python平台事实上的图像处理标�
 
 	$ pip3 install pillow
 
-## hello world
+## 放缩
 来看看最常见的图像缩放操作，只需三四行代码：
 
 	from PIL import Image
@@ -41,7 +41,7 @@ PIL：Python Imaging Library，已经是Python平台事实上的图像处理标�
 	# 应用模糊滤镜:
 	im1 = im.filter(ImageFilter.BLUR)
 	im1.save('blur.jpg', 'jpeg')
-
+## 绘图
 PIL的ImageDraw提供了一系列绘图方法，让我们可以直接绘图。比如要生成字母验证码图片：
 
 	from PIL import Image, ImageDraw, ImageFont, ImageFilter
