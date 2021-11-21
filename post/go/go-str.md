@@ -30,7 +30,7 @@ date: 2018-09-27
 ## byte(chr/ord)
 byte 其实是int8
 
-    fmt.Printf("%T,%T", byte('a'),'a', "abc"[0])
+    fmt.Printf("%T,%T,%T", byte('a'),'a', "abc"[0])
     // uint8, int32, uint8
 
 byte array:
@@ -96,6 +96,13 @@ encode/decode bytes example
         fmt.Printf("%s\n", decoded)
         hex.EncodeToString([]byte("12"))=="3132"
     }
+
+### byte.IndexByte
+
+    path := []byte("AAAA/BBBBBBBBB")
+    sepIndex := bytes.IndexByte(path,'/’)
+
+    dir1 := path[:sepIndex]
 
 # string
 

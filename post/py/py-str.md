@@ -272,11 +272,17 @@ bytes对象b'\xa420'只是一堆比特位而已。define bytes
 1. str 是关编码的unicode: utf8,gbk, 是纯字符串表示: python3 采用unicode
 1. bytes 是无关编码: utf8,gbk, 是纯字符经过编码过后的二进制数据
 
+#### int to byte
+    (0xff).to_bytes(1, byteorder='big') + b'\x00'
+    # b'\xff\x00'
+
 #### byte to int
 以大端读字节：
 
-    seq = b'\xc2\x1d'
-    int.from_bytes(seq, 'big')
+    int.from_bytes(b'\x01\x00', 'big')
+    # 256
+    int.from_bytes(b'\x01\x00', 'little')
+    # 1
 
 字节自增1:
 

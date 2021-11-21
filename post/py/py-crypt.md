@@ -53,6 +53,7 @@ date: 2018-09-28
     console.log(enc, dec)
 
 ### python3 example
+pip3 install pycryptodome
 
     import base64
     from Crypto.Cipher import AES

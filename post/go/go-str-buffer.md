@@ -78,11 +78,12 @@ buf 可以重置，如果buf 是从buffer 池取出来的，就必须重置：[g
 ### read to bytes
 read 数量取决于写入bytes的容量
 
-   s3 := make([]byte,3)
-   buff.Read(s3)     //把buff的内容读入到s3，s3的容量为3，读了3个过来
-   fmt.Println(buff.String()) //lo world
-   fmt.Println(string(s3))   //hel
-   buff.Read(s3) //继续读入3个，原来的被覆盖
+    buff := bytes.NewBufferString("hello world")
+    s3 := make([]byte,3)
+    buff.Read(s3)     //把buff的内容读入到s3，s3的容量为3，读了3个过来
+    fmt.Println(buff.String()) //lo world
+    fmt.Println(string(s3))   //hel
+    buff.Read(s3) //继续读入3个，原来的被覆盖
 
 ### read 一个byte/rune
 

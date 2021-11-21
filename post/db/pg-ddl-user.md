@@ -56,7 +56,7 @@ Non interactive password:
 ### 通过URI
 URI: https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
 
-pg:
+psql: 如果密码用户名有特殊字符，需要用urlencoded 转义
 
     psql postgresql://
     psql postgresql://localhost

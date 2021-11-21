@@ -1,16 +1,17 @@
 ---
 title: 学习下Golang 的反射
 date: 2019-01-07
+private: true
 ---
+# todo
+golang 4.3 反射 教程
+https://draveness.me/golang/docs/part2-foundation/ch04-basic/golang-reflect/
+
 # Relection json 示例
     import "github.com/mitchellh/mapstructure"
 	err := mapstructure.Decode(input, &result)
 
 custom reflection:[go-lib/str/map2struct.go]
-
-# todo
-golang 4.3 反射 教程
-https://draveness.me/golang/docs/part2-foundation/ch04-basic/golang-reflect/
 
 # Golang 的Reflection
 Go 的反射有三个基础概念: Types, Kinds, and Values. 
@@ -20,11 +21,11 @@ Go 的反射有三个基础概念: Types, Kinds, and Values.
 ## reflect.TypeOf
 反射定义
 
+    reflect.TypeOf() 返回的类型是 reflect.Type==*reflect.rtype)
 
-### reflect.TypeOf(reflect.Type==*reflect.rtype)
 你可以通过`refType := reflect.TypeOf(var)`获取变量反射类型(`*reflect.rtype`), 它支持下列方法: (没有`refType.Type()`. 只有`refVal.Type()`)
 1. `refType.Name()`返回 string: `int`,`string`、`Foo`、`Bar`等, 注意 slice 和 pointer  TypeName 是空的
-1. `refType.Kind()`返回 reflect.Kind: `int`,`string`、`struct`、`ptr`等
+1. `refType.Kind()`返回 reflect.Kind: `int`,`string`、`struct`、`slice`,`ptr`等
     1. 用于`switch t.Kind() reflect.struct/reflect.Ptr/reflect.Slice/.Map/.Array`
 
 e.g.
@@ -41,23 +42,26 @@ e.g.
     // slice, reflect.Kind
     pf("%s, %T\n", rt.Kind(),rt.Kind())
 
+### reflect.Type.Kind()
+    var rKind reflect.Kind
+
 Kind 代表类型，利用 Kind 判断Array Slice类型及元素类型
 
     return (value.Kind() == reflect.Array || value.Kind() == reflect.Slice) && value.Type().Elem() == reflect.TypeOf(uint8(0))
 
-判断基本类型
+判断元素基本类型
 
-    value.Type().Elem() == reflect.TypeOf("")
-    value.Type().Elem().Kind() == reflect.String
+    refType.Elem() == reflect.TypeOf("")
+    refType.Elem().Kind() == reflect.String
 
-### refType.Elem
+### reflect.Type.Elem()
 仅限Kind 类为(pointer, map, slice, channel, or array):
-`refType.Elem()`返回包含元素的类型`refType`: 
+`refType.Elem()`返回元素本身的类型`refType`: 
 
     // *reflect.rtype
     // 返回 elem 子类型int
-    rt:=[]int{}
-    pf("%T\n", rt.Elem())
+    rt:=reflect.TypeOf([]int{}).Elem()
+    pf("%v\n", rt.Name())
 
 ### Struct Type:
 1. `refType.NumField()` 返回`int`数量
@@ -106,7 +110,7 @@ The `Elem()` example:
     }
 
     func examiner(t reflect.Type, depth int) {
-        fmt.Println(strings.Repeat("\t", depth), "Type is", t.Name(), "and kind is", t.Kind())
+        fmt.Println(strings.Repeat("\t", depth), "Type:", t.Name(), ",Kind:", t.Kind())
         switch t.Kind() {
         case reflect.Array, reflect.Chan, reflect.Map, reflect.Ptr, reflect.Slice:
             fmt.Println(strings.Repeat("\t", depth+1), "Contained type:")
@@ -125,25 +129,37 @@ The `Elem()` example:
 
 输出结果：https://play.golang.org/p/lZ97yAUHxX
 
-    Type is  and kind is slice
-        Contained type:
-        Type is int and kind is int
-    Type is string and kind is string
-    Type is  and kind is ptr
-        Contained type:
-        Type is string and kind is string
-    Type is Foo and kind is struct
-        Field 1 name is A type is int and kind is int
-            Tag is tag1:"First Tag" tag2:"Second Tag"
-            tag1 is First Tag tag2 is Second Tag
-        Field 2 name is B type is string and kind is string
-    Type is  and kind is ptr
-        Contained type:
-        Type is Foo and kind is struct
-            Field 1 name is A type is int and kind is int
-                Tag is tag1:"First Tag" tag2:"Second Tag"
-                tag1 is First Tag tag2 is Second Tag
-            Field 2 name is B type is string and kind is string
+    Type:  ,Kind: slice
+         Contained type:
+        Type: int ,Kind: int
+    Type: string ,Kind: string
+    Type:  ,Kind: ptr
+         Contained type:
+        Type: string ,Kind: string
+    Type: Foo ,Kind: struct
+         field:1==================%T=reflect.StructField
+         Field 1 name is A type is int and kind is int
+         fieldByName:%T=func(string) (reflect.StructField, bool)
+             f.Tag: tag1:"First Tag" tag2:"Second Tag"
+             tag1: First Tag ,tag2: Second Tag
+         field:2==================%T=reflect.StructField
+         Field 2 name is B type is string and kind is string
+         fieldByName:%T=func(string) (reflect.StructField, bool)
+    Type:  ,Kind: ptr
+         Contained type:
+        Type: Foo ,Kind: struct
+             field:1==================%T=reflect.StructField
+             Field 1 name is A type is int and kind is int
+             fieldByName:%T=func(string) (reflect.StructField, bool)
+                 f.Tag: tag1:"First Tag" tag2:"Second Tag"
+                 tag1: First Tag ,tag2: Second Tag
+             field:2==================%T=reflect.StructField
+             Field 2 name is B type is string and kind is string
+             fieldByName:%T=func(string) (reflect.StructField, bool)
+    Type:  ,Kind: map
+         Contained type:
+        Type:  ,Kind: interface
+
 
 ## reflect.ValueOf
 获取变量反射值的ValueOf: 类型`%T`都是`reflect.Value`
@@ -160,10 +176,7 @@ refVal/refPtrVal 提供的method 与typeOf 类似:
 1. `refVal.Field(i)` 返回`reflect.Value` 类型元素, 而不是`reflect.StructField`
 1. `refVal.FieldByName("name")` 返回`reflect.Value` 
 
-rv.Field example: [go-lib/reflect/ref-value.go]
-
-### rv.Elem()
-仅限Kind 类为(pointer, map, slice, channel, or array):
+rv.Field example: [go-lib/reflect/ref-value-struct_test.go]
 
 ### Set/CanSet(pointer)
 只有`指针(addressable)`+`Elem()` 才能修改值 

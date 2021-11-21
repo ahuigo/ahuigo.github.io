@@ -122,6 +122,7 @@ nil slice 是可以append的
 ### init slice:
 
     s := []int{1,2,3,8:100} //len=9,cap=9
+    s:=make([]int,100)  //len=cap=100
 ### init nil slice:
 
     []string(nil)
@@ -306,6 +307,14 @@ Since a slice doesn't make a copy of the underlying array. To decrease memory  m
 
 # operation
 ## push and pop
+### push
+    append(s,1)
+### pop
+
+    index=len(s)-1
+    ele=s[index]
+    s[index]=nil //For garbage collection
+    s=s[:index]
 ## delete
 via copy Truncate
 
@@ -393,6 +402,3 @@ e.g:
     wilson := Cat{7, "Wilson", []string{"Tom", "Tabata", "Willie"}}
     nikita := Cat{}
     copier.Copy(&nikita, &wilson)
-
-### copier+make
-    nikita.friends = make([]string, len(wilson.friends))  //指针替换

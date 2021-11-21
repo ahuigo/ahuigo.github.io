@@ -238,15 +238,31 @@ The expression T(v) converts the value v to the type T.
     }
     b := []int{ 1,
     2 }
-
-# logic expression
+# expr
+## logic expression
 
     0110 &  1011 = 0010
     0110 |  1011 = 1111
     0110 ^  1011 = 1101
     0110 &^ 1011 = 0100 AND NOT 获取第二个标志位
     ^0101        = 1010
-    println(^1)
+    println(^1) //-2
+
+## compare var
+当我们复杂一个对象时，这个对象可以是内建数据类型，数组，结构体，map……
+1.当我们判断是否是同一个对象时，可以用指针比较
+2.我们在复制结构体的时候，当我们需要比较两个结构体中的数据是否相同时，我们需要使用深度比较，而不是只是简单地做浅度比较。这里需要使用到反射 reflect.DeepEqual() ，下面是几个示例
+
+    import (
+        "fmt"
+        "reflect"
+    )
+    func main() {
+        m1 := map[string]string{"one": "a","two": "b"}
+        m2 := map[string]string{"two": "b", "one": "a"}
+        fmt.Println("m1 == m2:",reflect.DeepEqual(m1, m2))
+        //prints: m1 == m2: true
+    }
 
 # Const
 
