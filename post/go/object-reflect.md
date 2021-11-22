@@ -14,9 +14,52 @@ https://draveness.me/golang/docs/part2-foundation/ch04-basic/golang-reflect/
 custom reflection:[go-lib/str/map2struct.go]
 
 # Golang 的Reflection
+
+## interface 的结构
+参考go-interface.md, 接⼝口对象由接⼝口表 (interface table) 指针和数据指针组成。
+
+    //runtime.h
+    struct itab {
+        InterfaceType*    inter;
+        Type*             type;
+        void (*fun[])(void);
+    };
+
+    struct Iface {
+        tab *itab //保存变量类型（以及方法集） reflect.TypeOf(v) -> reflect.Type
+        data unsafe.Pointer //保存变量值的堆栈指针 reflect.TypeOf(v) -> reflect.Value
+    };
+
+接口表`Itab`存储元数据信息，包括接⼝口类型、动态类型，以及实现接⼝口的⽅方法指针。对于空接口来说`interface{}`, 所有变量都实现了空接口
+
 Go 的反射有三个基础概念: Types, Kinds, and Values. 
 
 1. TypeOf(var):  反射类型. 支持结构名Name()，以及结构类型Kind() 
+1. ValueOf(var):  反射Value. 
+
+## 反射常用方法
+### interface 与 反射对象相互转换
+
+    // go-lib/reflect/ref_convert_test.go
+    // 反射对象 与 interface 对象转化
+	pf := fmt.Printf
+	var i float64 = 3.1
+	var a interface{} = i
+
+	// conver data to reflect object
+	v := reflect.ValueOf(i)
+
+	// convert reflect object to origin interface
+	b := v.Interface()
+	pf("a=b? %v\n", a == b) // true
+
+### 反射修改值
+    // go-lib/reflect/ref_setval_test.go
+	var i float64 = 3.1
+	// 不传指针就不能改变值 reflect.ValueOf(i).SetFloat(7.4)
+	reflect.ValueOf(&i).Elem().SetFloat(7.4)
+	fmt.Printf("%v\n", i)
+
 
 ## reflect.TypeOf
 反射定义
