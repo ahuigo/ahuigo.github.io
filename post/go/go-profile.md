@@ -12,22 +12,17 @@ private:
     Heap profiles
     block profile、traces等
 
-## go profiling常用的分析工具
-我了解的有以下几种工具
-1. `go test` 基准测试文件：比如使用命令`go test . -bench=. -cpuprofile prof.cpu` 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。(有点类似php的xhprof 的调用关系图，调用关系复杂就不直观了)
+## go profiling相关的分析工具
+主要有以下几种工具
+1. `go test` 基准测试文件：比如使用命令`go test . -bench=. -cpuprofile prof.cpu` 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。
+2. `runtime` 工具：通过在代码里面调用 `runtime.StartCPUProfile`或者`runtime.WriteHeapProfile`等能方便的采集程序运行的`堆栈、goroutine、内存分配和占用、io 等信息`并生成 `.prof` 文件.
+3. `net/http/pprof`：用于分析http 服务的性能瓶颈. 其实其内部调用的就是`runtime`
 
-2. `import net/http/pprof`：如果我们的应用是一个web服务，我们可以在http服务启动的代码文件(eg: main.go)添加 import _ net/http/pprof，这样我们的服务 便能自动开启profile功能，有助于我们直接分析采样结果。
-
-3. `runtime` 工具：通过在代码里面调用 `runtime.StartCPUProfile`或者`runtime.WriteHeapProfile` 生成分析工具
-4. `pkg/profile`也是个官方的工具
-
-更多调试的使用，可以阅读The Go Blog的 Profiling Go Programs
+> 更多调试的使用，可以阅读The Go Blog的 Profiling Go Programs
 
 # go tool pprof分析
-> 参考1：https://www.cnblogs.com/upyun/p/8526925.html
-> 参考2：深度解密Go语言之pprof https://segmentfault.com/a/1190000020964967
-Golang 提供的两个官方包 runtime/pprof，net/http/pprof 能方便的采集程序运行的`堆栈、goroutine、内存分配和占用、io 等信息`的 `.prof` 文件.
-然后可以使用 `go tool pprof` 分析 `.prof` 文件。两个包的作用是一样的，只是使用方式的差异。
+> 参考：深度解密Go语言之pprof https://segmentfault.com/a/1190000020964967
+`go tool pprof` 可以实现分析 `.prof` 文件、下载prof并分析. 下面具体总结一下
 
 ## runtime/pprof
 如果程序不是http server, 就用[go-lib/gotest/pprof/runtime-pprof.go](https://github.com/ahuigo/go-lib/blob/master/test/pprof/runtime-pprof.go)
@@ -44,16 +39,34 @@ example:
     (pprof) top
     (pprof) web
 
-分析时可包含源码：
+### 分析时可包含可执行文件
+比如`hello`：
 
-    $ go build -o main runtime-pprof.go
-    $ go tool pprof main cpu.prof
+    $ go build -o hello runtime-pprof.go
+    $ go tool pprof hello cpu.prof
 
+### 将分析输出为 pdf 格式文件：
+
+    go tool pprof --pdf hello cpu.prof > cpu.pprof.pdf
 
 ## net/http/pprof
-> 示例：go-lib/gonic/ginapp/gin-pprof.go
+> 示例：github.com/ahuigo/go-lib/gonic/ginapp/gin-pprof.go
 如果程序为 web 服务， 我们则可借助`net/http/pprof`包 来完成profile 采样:
 
+如果是`http` server, 只需要引入`import _ "net/http/pprof"` 就可监控性能请求
+
+    // src/net/http/pprof/pprof.go
+    func init() {
+        http.Handle("/debug/pprof/", http.HandlerFunc(Index))
+        http.Handle("/debug/pprof/cmdline", http.HandlerFunc(Cmdline))
+        http.Handle("/debug/pprof/profile", http.HandlerFunc(Profile))
+        http.Handle("/debug/pprof/symbol", http.HandlerFunc(Symbol))
+        http.Handle("/debug/pprof/trace", http.HandlerFunc(Trace))
+    }
+
+如果是gonic, 由于它没有使用`http`, 我们要手动注册路由.
+
+### gonic pprof
 以gonic 为例, 我们需要增加几个路由实际回传profile 采样: 
 
     import "net/http/pprof"
@@ -151,13 +164,12 @@ allocs 和 heap 采样的信息一致，不过前者是所有对象的内存分�
              0     0% 99.67%    177.89s 99.70%  net/http.serverHandler.ServeHTTP
              0     0% 99.67%      5.47s  3.07%  runtime.walltime (inline)
 
-解释下：
+解释下： https://stackoverflow.com/questions/32571396/pprof-and-golang-how-to-interpret-a-results
 
     flat 是函数自身的cpu 占用
-    sum 累加
+    sum% 之前累加每一行flat%的累加（见top方法）
     cum 包含函数调用的时间，比如cpuFunc 就包含了longRun 的时间
 
-从统计可以看到 top 操作syscall和io 操作
 #### profile: http 查看火焰图 
 http 用法有:
 
@@ -166,7 +178,7 @@ http 用法有:
     go tool pprof -http=:4501  'http://localhost:9090/debug/pprof/heap?seconds=30'
     go tool pprof -http=:4502 -inuse_space  'http://localhost:9090/debug/pprof/heap?seconds=30'
 
-然后点击: `view->flamegraph` 访问火焰图: `http://localhost:4502/ui/flamegraph`
+然后点击: `view->flamegraph` 访问火焰图: `http://localhost:4501/ui/flamegraph`
 
 #### profile: web 生成调用关系图
 
@@ -225,38 +237,6 @@ go-torch 是一款非官方的profile 分析工具. 功能已经集成到官方�
     go-torch -inuse_space http://localhost:4500/debug/pprof/heap --colors=mem
     # alloc_space 火焰图
     go-torch -alloc_space http://localhost:4500/debug/pprof/heap --colors=mem
-
-## pkg/profile 工具
-本节参考：https://wjp2013.github.io/go/go-tools-basic/
-
-准备下要分析的代码:
-
-    import (
-        "time"
-        "github.com/pkg/profile"
-    )
-
-    func joinSlice() []string {
-        var arr []string
-        for i := 0; i < 10000; i++ {
-            arr = append(arr, "arr")
-        }
-        return arr
-    }
-
-    func main() {
-        stopper := profile.Start(profile.CPUProfile, profile.ProfilePath("."))
-
-        defer stopper.Stop()
-        joinSlice()
-        time.Sleep(time.Second)
-    }
-
-用 go tool 工具链输出 pdf 格式文件：
-
-    go build -o cpu cpu.go
-    ./cpu
-    go tool pprof --pdf cpu cpu.pprof > cpu.pdf
 
 # 官方的bench工具：go test -bench
 源码 https://github.com/ahuigo/playflame/tree/slow/stats
