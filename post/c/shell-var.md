@@ -222,14 +222,14 @@ substr is beginning:
      do something here
     fi
 
-#### substr 截取
+#### substr 截取 slice
 
 	echo ${str:start:length}
 	echo ${str:start} #start 不为负数.否则当作0
 	echo ${str: -1}; #负数前面需要有空格
 	echo ${str:(-1)}; #或者负数用括号. 否则负数不会生效
 
-	echo ${str:0:-1}; #remove last char(bash>4.2)
+	echo ${str:0:-1}; #remove last char(bash>4.2, zsh)
 
 #### trim
 
@@ -242,12 +242,12 @@ substr is beginning:
 支持通配符`*`
 
     #...%
-	变量配置方式	说明
+	变量配置方式(#df)	说明
     ${path#prefix}  a=pre-world; echo ${a#pre}
 	${变量#关键词}	若变量内容从头开始的数据符合『关键词』，则将符合的最短数据删除 
 	${变量##关键词}	若变量内容从头开始的数据符合『关键词』，则将符合的最长数据删除 
 
-    ${path%end} 
+    ${path%end} %dF
 	${变量%关键词}	若变量内容从尾向前的数据符合『关键词』，则将符合的最短数据删除
 	${变量%%关键词}	若变量内容从尾向前的数据符合『关键词』，则将符合的最长数据删除
     a='ab--bx-end'

@@ -711,6 +711,9 @@ Set default pull branch
 	branch.master.remote = origin
 	branch.master.merge = refs/heads/master
 
+    git config branch.master.remote origin
+    git config branch.master.merge refs/heads/master
+
 You can do this with a single command:
 
 	git branch --track master origin/master

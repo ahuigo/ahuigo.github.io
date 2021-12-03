@@ -9,6 +9,7 @@ https://developer.aliyun.com/article/39682
 ## total 优化
 
     SELECT reltuples AS estimate_count FROM pg_class WHERE relname = 'table_name';
+    SELECT reltuples::bigint FROM pg_catalog.pg_class WHERE relname = 'mytable';
 
 创建一个函数，从explain中抽取返回的记录数
 
@@ -42,6 +43,45 @@ PostgreSQL autovacuum进程会根据表的数据量变化比例自动对表进�
     Index Scan using sbtest1_pkey on sbtest1  (cost=0.43..17398.14 rows=102166 width=190)
         Index Cond: ((id >= 100) AND (id <= 100000))
     (2 rows)
+
+### 使用辅助表
+我们创建mytable_count用于记录表的行数，并在mytable修改数据时使用触发器更新mytable_count的值。
+
+    START TRANSACTION;
+    
+    CREATE TABLE mytable_count(c bigint);
+    
+    CREATE FUNCTION mytable_count() RETURNS trigger
+       LANGUAGE plpgsql AS
+    $$BEGIN
+       IF TG_OP = 'INSERT' THEN
+          UPDATE mytable_count SET c = c + 1;
+    
+          RETURN NEW;
+       ELSIF TG_OP = 'DELETE' THEN
+          UPDATE mytable_count SET c = c - 1;
+    
+          RETURN OLD;
+       ELSE
+          UPDATE mytable_count SET c = 0;
+    
+          RETURN NULL;
+       END IF;
+    END;$$;
+    
+    CREATE TRIGGER mytable_count_mod AFTER INSERT OR DELETE ON mytable
+       FOR EACH ROW EXECUTE PROCEDURE mytable_count();
+    
+    -- TRUNCATE triggers must be FOR EACH STATEMENT
+    CREATE TRIGGER mytable_count_trunc AFTER TRUNCATE ON mytable
+       FOR EACH STATEMENT EXECUTE PROCEDURE mytable_count();
+    
+    -- initialize the counter table
+    INSERT INTO mytable_count
+       SELECT count(*) FROM mytable;
+    COMMIT;
+
+我们在单个事务中执行所有操作，以便不会“丢失”任何数据，因为CREATE TRIGGER是SHARE ROW EXCLUSIVE的锁，这可以防止所有并发修改，当然，缺点是所有并发数据修改必须等到SELECT count(*)完成。
 
 ## 游标代替分页
 offset limit 未优化的情况，取前面的记录很快。 取后面的记录，因为前面的记录也要扫描，所以明显变慢。

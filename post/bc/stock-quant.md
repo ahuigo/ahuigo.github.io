@@ -21,6 +21,8 @@ https://github.com/928675268/alphaquant
 https://zhuanlan.zhihu.com/p/28420631
 
 ## 量化网
+微矿Qlib：业内首个AI量化投资开源平台 - 微软亚洲研究院
+
 微宽(比特币): 
 https://wequant.io/
 https://wequant.io/blog/kdj_strategy/

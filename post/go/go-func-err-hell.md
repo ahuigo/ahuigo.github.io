@@ -21,25 +21,26 @@ Error Check  Hell
 ## 函数式方案
 要解决这个事，我们可以用函数式编程的方式，如下代码示例：
 
-func parse(r io.Reader) (*Point, error) {
-    var p Point
-    var err error
-    read := func(data interface{}) {
-        if err != nil {
-            return
+    func parse(r io.Reader) (*Point, error) {
+        var p Point
+        var err error
+        read := func(data interface{}) {
+            if err != nil {
+                return
+            }
+            err = binary.Read(r, binary.BigEndian, data)
         }
-        err = binary.Read(r, binary.BigEndian, data)
+        read(&p.Longitude)
+        read(&p.Latitude)
+        read(&p.Distance)
+        read(&p.ElevationGain)
+        read(&p.ElevationLoss)
+        if err != nil {
+            return &p, err
+        }
+        return &p, nil
     }
-    read(&p.Longitude)
-    read(&p.Latitude)
-    read(&p.Distance)
-    read(&p.ElevationGain)
-    read(&p.ElevationLoss)
-    if err != nil {
-        return &p, err
-    }
-    return &p, nil
-}
+
 上面的代码我们可以看到，我们通过使用Closure 的方式把相同的代码给抽出来重新定义一个函数，这样大量的  if err!=nil 处理的很干净了。但是会带来一个问题，那就是有一个 err 变量和一个内部的函数，感觉不是很干净。
 
 ## 借鉴bufio.Scanner()
@@ -56,18 +57,19 @@ func parse(r io.Reader) (*Point, error) {
 
 上面的代码我们可以看到，scanner在操作底层的I/O的时候，那个for-loop中`没有任何的 if err !=nil `的情况，退出循环后有一个 scanner.Err() 的检查。看来使用了结构体的方式。模仿它，我们可以把我们的代码重构成下面这样：
 
-## 
+### Read 模仿Scanner
 首先，定义一个结构体和一个成员函数
 
-type Reader struct {
-    r   io.Reader
-    err error
-}
-func (r *Reader) read(data interface{}) {
-    if r.err == nil {
-        r.err = binary.Read(r.r, binary.BigEndian, data)
+    type Reader struct {
+        r   io.Reader
+        err error
     }
-}
+    func (r *Reader) read(data interface{}) {
+        if r.err == nil {
+            r.err = binary.Read(r.r, binary.BigEndian, data)
+        }
+    }
+
 然后，我们的代码就可以变成下面这样：
 
     func parse(input io.Reader) (*Point, error) {

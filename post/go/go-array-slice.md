@@ -258,10 +258,11 @@ merge a and b:
 If the backing array of `s` is too small to fit all the given values, a bigger array will be allocated(`double cap`).
 
 The returned slice will point to the newly allocated array.
-
+```
     var a = [3]int{1,2,3}
     b := a[:];  # cap(b)=3
     b = append(b,4,5);  # newcap(b)= 2*cap(b) = 6 
+```
 
 ## range loop slice and array
 The `range` form the `for loop iterates` over a `array, slice, string or map`, or values received on a channel.

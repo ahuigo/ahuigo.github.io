@@ -61,6 +61,7 @@ tshark比较新是wireshark的命令行版。 它和tcpdump 都是基于libpcap�
     tcpdump -i any -p -s 0 -w /sdcard/netCapture.pcap
 
     -C filesize 表示存储文件的最大大小；
+    -c 5 只抓5个
     -s 表示抓取的网络请求返回的大小，0表示抓取整个网络包；
     -w 表示抓取的包保存的文件路径，此时不会在标准输出打印
     -p, --no-promiscuous-mode

@@ -87,7 +87,7 @@ dict + parse_qsl:
     import requests
 
     response = requests.get("http://google.ru")
-    print(curlify.to_curl(response.request), compressed=True)
+    print(curlify.to_curl(response.request, compressed=False))
     # curl -X 'GET' -H 'Accept: */*' -H 'Accept-Encoding: gzip, deflate' -H 'Connection: keep-alive' -H 'User-Agent: python-requests/2.18.4' --compressed 'http://www.google.ru/'
 
 ## Non Block

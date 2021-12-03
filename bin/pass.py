@@ -64,8 +64,6 @@ def decode_c(i):
     c=i.to_bytes(1, byteorder='big')
     return c
 
-
-
 if __name__ == '__main__':
     if '-e' in sys.argv:
         if len(sys.argv)<4:

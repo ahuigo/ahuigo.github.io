@@ -71,3 +71,29 @@ go clean --modcache
     # 设置不走 proxy 的私有仓库，多个用逗号相隔
     go env -w GOPRIVATE=*.corp.example.com
 
+# jfrog
+jfrog-cli 是 artifactory提供的工具，可用来上传、管理各种包
+
+## jfrog syntax
+https://www.jfrog.com/confluence/display/CLI/JFrog+CLI#JFrogCLI-Syntax
+
+    $ jfrog rt go-publish -h  
+    $ jfrog target command-name [global-options] [command-options] arguments
+    target
+        The product on which you wish to execute the command:
+        rt: Artifactory
+        xr: Xray
+        ds: Distribution
+        mc: Mission Control
+
+    command-name
+        The command to execute. Note that you can use either the full command name or its abbreviation.
+
+    global-options
+        A set of global options specifying the product URL and means of authentication. These may be used for all commands
+
+    command-options
+        A set of options corresponding to the command
+
+    arguments
+        A set of arguments corresponding to the command

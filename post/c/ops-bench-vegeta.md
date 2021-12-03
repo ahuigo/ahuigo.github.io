@@ -40,7 +40,7 @@ vegeta attack 参数：
     > 输出文件是二进制格式。
 
     jq -ncM '{method: "GET", url: "http://goku", body: "Punch!" | @base64, header: {"Content-Type": ["text/plain"]}}' |
-    vegeta attack -format=json -rate=100 | vegeta encode
+    vegeta attack -format=json -rate=100 | vegeta report
 
 ### 变化请求
 

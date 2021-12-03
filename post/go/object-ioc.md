@@ -6,8 +6,8 @@ private: true
 # go IoC 控制反转
 反转控制IoC(Inversion of Control，也是依赖与注入)的思想是把控制逻辑与业务逻辑分离，不要在业务逻辑里写控制逻辑，这样会让控制逻辑依赖于业务逻辑
 
-
 ## 业务与控制耦合
+先看一个业务与控制耦合例子：
 我们想给IntSet 加入Undo, 由于IntSet与Undo 混合，Undo不可复用
 
     type UndoableIntSet struct { // Poor style
@@ -51,8 +51,9 @@ private: true
       return nil
     }
 
+### 将Undo 注入到Inset
 然后，我们在我们的IntSet里嵌入 Undo，然后，再在 Add() 和 Delete() 里使用上面的方法，就可以完成功能。
-这个就是控制反转，不再由 控制逻辑 Undo 来依赖业务逻辑 IntSet，而是由业务逻辑 IntSet 来依赖 Undo 。
+这个就是控制反转，不再由 `控制逻辑 Undo` 来依赖`业务逻辑 IntSet`，而是由业务逻辑 IntSet 来依赖 Undo 。
 
     type IntSet struct {
         data map[int]bool

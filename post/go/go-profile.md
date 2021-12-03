@@ -12,38 +12,65 @@ private:
     Heap profiles
     block profile、traces等
 
-### go profiling常用的分析工具
+## go profiling常用的分析工具
 我了解的有以下几种工具
 1. `go test` 基准测试文件：比如使用命令`go test . -bench=. -cpuprofile prof.cpu` 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。(有点类似php的xhprof 的调用关系图，调用关系复杂就不直观了)
 
-2. `import _ net/http/pprof`：如果我们的应用是一个web服务，我们可以在http服务启动的代码文件(eg: main.go)添加 import _ net/http/pprof，这样我们的服务 便能自动开启profile功能，有助于我们直接分析采样结果。
+2. `import net/http/pprof`：如果我们的应用是一个web服务，我们可以在http服务启动的代码文件(eg: main.go)添加 import _ net/http/pprof，这样我们的服务 便能自动开启profile功能，有助于我们直接分析采样结果。
 
 3. `runtime` 工具：通过在代码里面调用 `runtime.StartCPUProfile`或者`runtime.WriteHeapProfile` 生成分析工具
-4. 官方的`pkg/profile` 这个下文细说
+4. `pkg/profile`也是个官方的工具
 
 更多调试的使用，可以阅读The Go Blog的 Profiling Go Programs
 
-## go tool pprof分析
+# go tool pprof分析
 > 参考1：https://www.cnblogs.com/upyun/p/8526925.html
 > 参考2：深度解密Go语言之pprof https://segmentfault.com/a/1190000020964967
 Golang 提供的两个官方包 runtime/pprof，net/http/pprof 能方便的采集程序运行的`堆栈、goroutine、内存分配和占用、io 等信息`的 `.prof` 文件.
 然后可以使用 `go tool pprof` 分析 `.prof` 文件。两个包的作用是一样的，只是使用方式的差异。
 
-### runtime/pprof
-如果程序不是http server, 就用[go-lib/gotest/pprof/runtime-pprof.go](https://github.com/ahuigo/go-lib/blob/master/gotest/pprof/runtime-pprof.go)
+## runtime/pprof
+如果程序不是http server, 就用[go-lib/gotest/pprof/runtime-pprof.go](https://github.com/ahuigo/go-lib/blob/master/test/pprof/runtime-pprof.go)
 
 运行程序后可以得到 cpu.prof 和 mem.prof 文件，使用 go tool pprof 分析。
 
-    go tool pprof logger cpu.prof
-    go tool pprof logger mem.prof
+    go tool pprof [binary] cpu.prof
+    go tool pprof [binary] mem.prof
 
-### net/http/pprof
+example:
+
+    $ go run runtime-pprof.go
+    $ go tool pprof cpu.prof
+    (pprof) top
+    (pprof) web
+
+分析时可包含源码：
+
+    $ go build -o main runtime-pprof.go
+    $ go tool pprof main cpu.prof
+
+
+## net/http/pprof
 > 示例：go-lib/gonic/ginapp/gin-pprof.go
-如果程序为 httpserver 类型， 则只需要导入该包:
+如果程序为 web 服务， 我们则可借助`net/http/pprof`包 来完成profile 采样:
 
-    import _ "net/http/pprof"
+以gonic 为例, 我们需要增加几个路由实际回传profile 采样: 
 
-如果 httpserver 使用 go-gin 包，而不是使用默认的 http 包启动，则需要手动添加 /debug/pprof 对应的 handler: https://github.com/DeanThompson/ginpprof :
+    import "net/http/pprof"
+
+    router := gin.Default()
+	router.Handle("GET", "/debug/pprof/", func(ctx *gin.Context) {
+        pprof.Index(ctx.Writer, ctx.Request)
+    })
+	router.Handle("GET", "/debug/pprof/profile", func(ctx *gin.Context) {
+        pprof.Profile(ctx.Writer, ctx.Request)
+    })
+	router.Handle("GET", "/debug/pprof/heap", func(ctx *gin.Context) {
+        pprof.Handler("heap").ServeHTTP(ctx.Writer, ctx.Request)
+    })
+    ....
+
+实际上 https://github.com/DeanThompson/ginpprof 为我们提供了上述代码的封装：
 
     import "github.com/DeanThompson/ginpprof"
     ...
@@ -94,7 +121,7 @@ allocs 和 heap 采样的信息一致，不过前者是所有对象的内存分�
     go tool pprof [-http=":4501"] [binary] <profile
     go tool pprof -http=:4501   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
 
-#### pprof CPU 分析
+### pprof CPU 分析
 采集 profile 数据之后，可以分析 CPU 热点代码。 先执行压测试
 
     $ go-wrk  -d=50 -c=50  http://localhost:4500/cpu/5
@@ -103,6 +130,7 @@ allocs 和 heap 采样的信息一致，不过前者是所有对象的内存分�
 
 再执行下面采集 30s 的 profile 数据，30s之后进入终端交互模式，输入 top 指令, `top -cum`。
 
+    $ go tool pprof http://localhost:4500 ;# 简写
     $ go tool pprof http://localhost:4500/debug/pprof/profile
     Fetching profile over HTTP from http://localhost:4500/debug/pprof/profile
     Saved profile in /Users/ahui/pprof/pprof.samples.cpu.010.pb.gz
@@ -130,8 +158,26 @@ allocs 和 heap 采样的信息一致，不过前者是所有对象的内存分�
     cum 包含函数调用的时间，比如cpuFunc 就包含了longRun 的时间
 
 从统计可以看到 top 操作syscall和io 操作
+#### profile: http 查看火焰图 
+http 用法有:
 
-#### pprof mem 分析
+    go tool pprof [-http=":4501"] [binary] <profile
+    go tool pprof -http=:4501   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
+    go tool pprof -http=:4501  'http://localhost:9090/debug/pprof/heap?seconds=30'
+    go tool pprof -http=:4502 -inuse_space  'http://localhost:9090/debug/pprof/heap?seconds=30'
+
+然后点击: `view->flamegraph` 访问火焰图: `http://localhost:4502/ui/flamegraph`
+
+#### profile: web 生成调用关系图
+
+    $ go tool pprof --seconds 10 http://localhost:9090/debug/pprof/profile
+    Please wait... (10s)
+    (pprof) web
+
+这样我们可以得到一个完整的程序调用性能采样profile的输出,如下图：
+![](/img/go/profile/pprof-simple.png)
+
+### pprof mem 分析
 pprof 支持内存分析，找出内存消耗大的代码
 
 --inuse_space 分析常驻内存
@@ -161,11 +207,20 @@ pprof 支持内存分析，找出内存消耗大的代码
         1MB     5.21% 79.79%        1MB  5.21%  net/http.(*Server).newConn
     (pprof)
 
-#### go-torch 分析
-上面的分析不直观，可以用go-torch代替。
+### go-torch 火焰图分析
+go-torch 是一款非官方的profile 分析工具. 功能已经集成到官方的`go tool pprof`了
+
+    go get -v github.com/uber/go-torch
+    $ go-torch -h
+    Usage:
+    go-torch [options] [binary] <profile source>
+
+用法示例:
 
     # cpu 火焰图
     go-torch -u http://localhost:4500 
+    go-torch -u http://localhost:9090 -t 30
+
     # inuse_space 火焰图
     go-torch -inuse_space http://localhost:4500/debug/pprof/heap --colors=mem
     # alloc_space 火焰图
@@ -203,99 +258,14 @@ pprof 支持内存分析，找出内存消耗大的代码
     ./cpu
     go tool pprof --pdf cpu cpu.pprof > cpu.pdf
 
-## go-torch 火焰实例
-火焰图是一个非常直观的查找性能瓶颈点
-
-### 安装go-torch
-go-torch 输出的数据可以用FlameGraph 脚本实现可视化(FlameGraph 是profile数据的可视化层工具)
-
-我们先配置FlameGraph的脚本
-
-    git clone https://github.com/brendangregg/FlameGraph.git
-    cp ./FlameGraph/flamegraph.pl ~/bin/
-    # 查看帮助命令
-    flamegraph.pl -h
-    USAGE: /usr/local/bin/flamegraph.pl [options] infile > outfile.svg
-
-安装go-torch很简单(用于go-torch展示profile的输出)
-
-    go get -v github.com/uber/go-torch
-    $ go-torch -h
-    Usage:
-    go-torch [options] [binary] <profile source>
-
-### 调优代码实例
-先准备实例代码： 下载demo [地址1](https://github.com/domac/playflame/tree/slow) / [备份地址2](https://github.com/ahuigo/playflame/tree/slow) 
-再执行实例.
-
-    git clone https://github.com/ahuigo/playflame
-    cd playflame
-    go run main.go -printStats
-
-### pprof profile 生成调用关系图(不直观)
-    go get github.com/tsliwowicz/go-wrk  
-    brew install Graphviz
-
-接下来我们用go-wrk （或者ab、siege）压测advanced 接口
-
-    go-wrk  -d=5 -c=500  http://localhost:9090/advance
-
-在上面的压测过程中，我们再新建一个终端窗口输入以下命令，生成我们的profile文件：
-
-    $ go tool pprof --seconds 10 http://localhost:9090/debug/pprof/profile
-
-命令中，我们设置了10秒的采样时间，当看到(pprof)的时候，我们输入 web, 表示从浏览器打开
-
-    Fetching profile from http://localhost:9090/debug/pprof/profile?seconds=25
-    Please wait... (25s)
-    Saved profile in /Users/ahui/pprof/pprof.localhost:9090.samples.cpu.014.pb.gz
-    Entering interactive mode (type "help" for commands)
-    (pprof) web
-
-这样我们可以得到一个完整的程序调用性能采样profile的输出,如下图：
-![](/img/go/profile/pprof-simple.png)
-
-调用图太不直观了，我们需要简单的火焰图. 下面就介绍下
-
-### Flame 图
-先压测：
-
-    go-wrk  -d=50 -c=500  http://localhost:9090/advance
-
-压测过程中用 go-torch来生成采样报告, 30s后出报告:
-
-    >  go-torch [options] [binary] <profile source>
-    $ go-torch -u http://localhost:9090 -t 30
-    INFO[08:47:10] Run pprof command: go tool pprof -raw -seconds 30 http://localhost:9090/debug/pprof/profile
-    INFO[08:47:41] Writing svg to torch.svg
-
-go-torch is deprecated, use pprof instead
-As of Go 1.11, `flamegraph` visualizations are available in go tool pprof directly!
-
-    $ go tool pprof http://localhost:9090
-    Fetching profile over HTTP from http://localhost:9090/debug/pprof/profile
-    Saved profile in /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
-    Type: cpu
-    Time: May 31, 2021 at 4:50pm (CST)
-    Duration: 30.17s, Total samples = 56.28s (186.54%)
-    Entering interactive mode (type "help" for commands, "o" for options)
-    (pprof)
-
-    > go tool pprof -http=":4501" [binary] [profile]
-    go tool pprof -http=:4501   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
-
-火焰图的y轴表示cpu调用方法的先后，x轴表示在每个采样调用时间内，方法所占的时间百分比，越宽代表占据cpu时间越多. 
-![](/img/go/profile/flame-web.png)
-![](/img/go/profile/flame1.png)
-![](/img/go/profile/flame2.png)
-
-## 官方的bench工具：go test -bench
+# 官方的bench工具：go test -bench
 源码 https://github.com/ahuigo/playflame/tree/slow/stats
 
-### bench cpu
+## bench cpu
 我们来压测下stats 这个目录
 
-    $ cd stats
+    git clone https://github.com/ahuigo/playflame
+    cd playflame/stats
     $ go test -bench . -benchmem -cpuprofile prof.cpu
     BenchmarkAddTagsToName-4   	 1000000	      2138 ns/op	     487 B/op	      18 allocs/op
 
