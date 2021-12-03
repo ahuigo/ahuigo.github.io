@@ -24,6 +24,28 @@ private:
 > 参考：深度解密Go语言之pprof https://segmentfault.com/a/1190000020964967
 `go tool pprof` 可以实现分析 `.prof` 文件、下载prof并分析. 下面具体总结一下
 
+## pprof 用法
+`go tool pprof`的基本用法见:https://github.com/google/pprof
+
+Generate a text report of the profile, sorted by hotness:
+
+    $ pprof -top [main_binary] profile.pb.gz
+        main_binary:  Local path to the main program binary, to enable symbolization
+        profile.pb.gz: Local path to the profile in a compressed protobuf, or
+                    URL to the http service that serves a profile.
+
+Generate a graph in an SVG file, and open it with a web browser:
+
+    pprof -web [main_binary] profile.pb.gz
+
+Run pprof on interactive mode:
+
+    pprof [main_binary] profile.pb.gz
+
+Run pprof via a web interface
+
+    pprof -http=[host]:[port] [main_binary] profile.pb.gz
+
 ## runtime/pprof
 如果程序不是http server, 就用[go-lib/gotest/pprof/runtime-pprof.go](https://github.com/ahuigo/go-lib/blob/master/test/pprof/runtime-pprof.go)
 
