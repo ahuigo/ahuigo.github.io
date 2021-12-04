@@ -292,8 +292,7 @@ http://ip:port/debug/pprof/goroutine?debug=1 可查看阻塞数`goroutine profil
 http://ip:port/debug/pprof/goroutine?debug=2 可查看阻塞原因、阻塞多久:
 
     goroutine 1 [chan receive, 1406 minutes]:
-main.main()
-	/go/src/gitlab.momenta.works/hdmap-workflow/production-management/cmd/main.go:39 +0x29f
+    main.main() /go/src/gitlab.momenta.works/hdmap-workflow/production-management/cmd/main.go:39 +0x29f
 
 # 官方的bench工具：go test -bench
 源码 https://github.com/ahuigo/playflame/tree/slow/stats
