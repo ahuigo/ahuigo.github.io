@@ -14,18 +14,17 @@ private:
 
 ## go profiling相关的分析工具
 主要有以下几种工具
-1. `go test` 基准测试文件：比如使用命令`go test . -bench=. -cpuprofile prof.cpu` 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。
+1. `go test` 基准测试文件：比如使用命令`go test -bench . -cpuprofile prof.cpu` 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。
 2. `runtime` 工具：通过在代码里面调用 `runtime.StartCPUProfile`或者`runtime.WriteHeapProfile`等能方便的采集程序运行的`堆栈、goroutine、内存分配和占用、io 等信息`并生成 `.prof` 文件.
 3. `net/http/pprof`：用于分析http 服务的性能瓶颈. 其实其内部调用的就是`runtime`
 
-> 更多调试的使用，可以阅读The Go Blog的 Profiling Go Programs
+> 更多调试的使用，可以阅读Go Blog的 Profiling Go Programs: https://go.dev/blog/pprof
 
-# go tool pprof分析
-> 参考：深度解密Go语言之pprof https://segmentfault.com/a/1190000020964967
+# go tool pprof 的使用
 `go tool pprof` 可以实现分析 `.prof` 文件、下载prof并分析. 下面具体总结一下
 
-## pprof 用法
-`go tool pprof`的基本用法见:https://github.com/google/pprof
+## pprof 命令的基本用法
+`go tool pprof`的基本用法见:https://github.com/google/pprof， 常用的指令有：
 
 Generate a text report of the profile, sorted by hotness:
 
@@ -46,8 +45,18 @@ Run pprof via a web interface
 
     pprof -http=[host]:[port] [main_binary] profile.pb.gz
 
+### pprof 交互模式指令
+进入pprof 交互模式后，可以执行`top`,`top20`, `list`, `help`等各种指令，具体参考`help`
+
+    $ go tool pprof hello cpu.prof
+    (pprof) list main.main (查看main.main函数)
+    (pprof) list main (查看main.main, runtime.main 函数)
+    (pprof) traces (打印调用栈)
+    (pprof) top20 -cum
+
+
 ## runtime/pprof
-如果程序不是http server, 就用[go-lib/gotest/pprof/runtime-pprof.go](https://github.com/ahuigo/go-lib/blob/master/test/pprof/runtime-pprof.go)
+如果是常规的程序,  需要在代码执行前开启生成`pprof` 文件代码, 可参考:[go-lib/gotest/pprof/runtime-pprof.go](https://github.com/ahuigo/go-lib/blob/master/test/pprof/runtime-pprof.go)
 
 运行程序后可以得到 cpu.prof 和 mem.prof 文件，使用 go tool pprof 分析。
 
@@ -58,14 +67,19 @@ example:
 
     $ go run runtime-pprof.go
     $ go tool pprof cpu.prof
-    (pprof) top
-    (pprof) web
+    (pprof) top 显示耗时最多的top func
+    ......
+    (pprof) web 打开web 界面查看调用关系图、火焰图
 
-### 分析时可包含可执行文件
+### 分析可执行文件源码
 比如`hello`：
 
+    $ go run runtime-pprof.go
     $ go build -o hello runtime-pprof.go
     $ go tool pprof hello cpu.prof
+    (pprof) list main.main (查看main.main函数)
+    (pprof) list main (查看main.main, runtime.main 函数)
+    (pprof) traces (打印调用栈)
 
 ### 将分析输出为 pdf 格式文件：
 
@@ -75,7 +89,7 @@ example:
 > 示例：github.com/ahuigo/go-lib/gonic/ginapp/gin-pprof.go
 如果程序为 web 服务， 我们则可借助`net/http/pprof`包 来完成profile 采样:
 
-如果是`http` server, 只需要引入`import _ "net/http/pprof"` 就可监控性能请求
+如果是`http` server, 只需要引入`import _ "net/http/pprof"` 就可监控性能采样请求
 
     // src/net/http/pprof/pprof.go
     func init() {
@@ -86,10 +100,10 @@ example:
         http.Handle("/debug/pprof/trace", http.HandlerFunc(Trace))
     }
 
-如果是gonic, 由于它没有使用`http`, 我们要手动注册路由.
+如果是gonic, 由于它没有使用`http`, 我们要手动注册路由——监控性能采样请求
 
 ### gonic pprof
-以gonic 为例, 我们需要增加几个路由实际回传profile 采样: 
+以gonic 为例, 我们需要增加几个路由完成profile 采样读取:
 
     import "net/http/pprof"
 
@@ -113,23 +127,19 @@ example:
     ginpprof.Wrap(router)
     ...
 
-编译运行后访问 http://localhost:4500/debug/pprof/ 查看采样统计
+编译运行后访问 http://localhost:4500/debug/pprof/ 查看采样统计指标, 通常重点关注`profile`cpu 与`heap`内存占用这两个指标
 
-    count profiles: 
-    0     profile  cpu占用采样
-    4     heap      堆上内存采样
-    4     allocs    内存分配采样
-    0     mutex     锁竞争采样
-    62    goroutine 协程调用栈
-    0     block     阻塞操作采样
-    12    threadcreate 线程创建采样
-    full goroutine stack dump
+1. profile: CPU profile. 
+2. heap: A sampling of memory allocations of live objects. (**not including gc bytes**)
+3. allocs: A sampling of all past memory allocations (**including garbage-collected bytes**)
+4. block: Stack traces that led to blocking on synchronization primitives
+5. cmdline: The command line invocation of the current program
+6. goroutine: Stack traces of all current goroutines
+7. mutex: Stack traces of holders of contended mutexes
+8. threadcreate: Stack traces that led to the creation of new OS threads
+9. trace: A trace of execution of the current program. 
 
-allocs 和 heap 采样的信息一致，不过前者是所有对象的内存分配，而 heap 则是活跃对象的内存分配。
-
-> The difference between the two is the way the pprof tool reads there at start time. Allocs profile will start pprof in a mode which displays the total number of bytes allocated since the program began (including garbage-collected bytes).
-
-关于 goroutine 的信息有两个链接，`goroutine 和 full goroutine stack dump`，前者是一个汇总的消息，可以查看 goroutines 的总体情况，后者则可以看到每一个 goroutine 的状态。页面具体内容的解读可以参考【大彬】的文章:https://segmentfault.com/a/1190000019222661
+点击`full goroutine stack dump`，可看到所有 goroutine 的调用栈。
 
 点击对应的 profile 可以查看具体信息，通过浏览器查看的数据不能直观反映程序性能问题，go tool pprof 命令行工具提供了丰富的工具集:
 
@@ -150,7 +160,7 @@ allocs 和 heap 采样的信息一致，不过前者是所有对象的内存分�
     # 下载 mutex profile
     go tool pprof http://localhost:4500/debug/pprof/mutex
 
-
+#### http模式分析prof 文件
 点击 profile 和 trace 则会在后台进行一段时间的数据采样，采样完成后，返回给浏览器一个 profile 文件，之后在本地通过 go tool pprof 工具进行分析:
 
     go tool pprof [-http=":4501"] [binary] <profile
@@ -259,6 +269,31 @@ go-torch 是一款非官方的profile 分析工具. 功能已经集成到官方�
     go-torch -inuse_space http://localhost:4500/debug/pprof/heap --colors=mem
     # alloc_space 火焰图
     go-torch -alloc_space http://localhost:4500/debug/pprof/heap --colors=mem
+
+## Memory leak(内存泄露分析)
+参考【大彬】的[实战Go内存泄露]https://segmentfault.com/a/1190000019222661
+主要有两种方法
+
+### 通过pprof -base 对比
+思路是先生成两个时间点的pprof 文件，然后利用`go tool pprof -base`对比两个时间的内在消耗:
+
+    go tool pprof -base app.20210101.001.pb.gz app.20210102.002.pb.gz
+    (pprof) list main  (对比变化)
+    (pprof) top
+
+### 观察goroutine 阻塞
+http://ip:port/debug/pprof/goroutine?debug=1 可查看阻塞数`goroutine profile: total 107`
+
+    goroutine profile: total 107 (当前goroutine阻塞数)
+    40 @ 0x42f7cf 0x42aeda 0x42a4c6 0x4c482b 0x4c563b 0x4c561c 0x527b4f 0x53c9b9 0x6f5797 0x5557bf 0x55591f 0x6f745a 0x6fb02d 0x45cf71 (40个goroutine停止在这个调用栈)
+    #	0x42a4c5	internal/poll.runtime_pollWait+0x55		/usr/local/go/src/runtime/netpoll.go:182
+    #	0x4c482a	internal/poll.(*pollDesc).wait+0x9a		/usr/local/go/src/internal/poll/fd_poll_runtime.go:87
+
+http://ip:port/debug/pprof/goroutine?debug=2 可查看阻塞原因、阻塞多久:
+
+    goroutine 1 [chan receive, 1406 minutes]:
+main.main()
+	/go/src/gitlab.momenta.works/hdmap-workflow/production-management/cmd/main.go:39 +0x29f
 
 # 官方的bench工具：go test -bench
 源码 https://github.com/ahuigo/playflame/tree/slow/stats
