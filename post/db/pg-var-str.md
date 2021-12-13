@@ -111,6 +111,12 @@ Length 不是字节数，而是字符数
 		UNICODE
 			使用ucs2 字符集(又字节?)
 
+## split string
+
+    # 2是最后一个(不是从0开始)
+    SELECT string_to_array('ordno-#-orddt-#-ordamt', '-#-');
+    SELECT split_part('par1-#-par2-#-part3', '-#-', 2);
+
 ## String
 VARCHAR 本来不会存储尾部空白`\0`，而从5.0.3 开始出于兼容性考虑，会跟CHAR一样存储尾部空白。
 

@@ -24,13 +24,17 @@ jsonb 即可以直接使用 json 字符串, 插入取出时自动转换成`::jso
 
 ### 使用
 
-    []->int	 Get JSON array(0, -3)          '[{"a":"foo"},{"b":"bar"},{"c":"baz"}]'::json->2
+    []->int	 Get JSON array(0, -3)          '[{"a":"foo"},{"b":"bar"},{"c":"baz"}]'::json->2  {"c":"baz"}
     {}->'text' Get JSON object field by key   '{"a": {"b":"foo"}}'::json->'a'
     []->>int	as text                     '[1,2,3]'::json->>2	3
     {}->>'text'	as text                     '{"a":1,"b":2}'::json->>'b'	2
     # 多级路径path
     {}[]#>'{k1,k2}' Get JSON object	        '{"a": {"b":{"c": "foo"}}}'::json#>'{a,b}'	{"c": "foo"}
     {}[]#>>'{k1,k2}'Get JSON object as text	'{"a":[1,2,3],"b":[4,5,6]}'::json#>>'{a,2}'	3
+
+example
+
+    select * from rego_data where document->>'id'='mcs:access_catalog_90';
 
 其它：
 

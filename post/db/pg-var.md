@@ -88,7 +88,9 @@ Hive内置的数据类型之间是否可以进行隐式的转换操作:
     COALESCE(variable,0)
     COALESCE(counters->>'bar','0')::int
 
-## all type
+## list all type
+list all data type
+
     SELECT typname, typlen FROM pg_type WHERE typname ~ '^date';
 
 

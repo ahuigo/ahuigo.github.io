@@ -24,5 +24,8 @@ date: 2019-01-29
     1. RL部分首推Deepmind的UCL RL课程
     2. RL进阶 Stanford CS294
 
+## lib
+- https://pyautogui.readthedocs.io/en/latest/ 完成图像定位、鼠标点击等
+
 # 参考
 - 从入门到进阶——全网最优秀的机器学习课程小结 https://zhuanlan.zhihu.com/p/54559893

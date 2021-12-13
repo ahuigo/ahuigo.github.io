@@ -25,7 +25,8 @@ private: true
 
 ## partial time 
 
-    CREATE INDEX current_workflow_close_time_ix ON current_workflows(close_time)
+    CREATE INDEX current_workflow_close_time_ix 
+        ON current_workflows(close_time)
     WHERE (close_time < '0001-02-02');
 
 ### explain 分析
@@ -47,7 +48,35 @@ private: true
             Index Cond: (close_time < '0001-02-01 00:00:00+08:05:43'::timestamp with time zone)
             Filter: (status = ''::text)
 
-## partial key 
+## mutilple partial  index
+index before:
 
-    CREATE INDEX ON current_workflows(close_time) 
-        WHERE (close_time < '0001-02-02');
+    => explain select * from package_tasks where workorder_name='test_union3' and status=9;
+    ------------------------------------------------------------------------------------------------------------
+    Index Scan using idx_package_tasks_workorder_name on package_tasks  (cost=0.56..360.63 rows=19 width=9685)
+        Index Cond: (workorder_name = 'test_union3'::text) // 只会使用name 这个索引
+        Filter: (status = 9)
+
+mutilple partial  index
+
+    => create index on package_tasks(workorder_name,status) where status<10;
+
+
+test index: 完全命中
+
+    => explain select * from package_tasks where workorder_name='test_union3' and status=9;
+    ------------------------------------------------------------------------------------------------------------------
+     Index Scan using package_tasks_workorder_name_status_idx on package_tasks  (cost=0.56..19.99 rows=19 width=9685)
+       Index Cond: ((workorder_name = 'test_union3'::text) AND (status = 9)) #命中部分索引
+
+test index: 因为`status<9` 满足`status<10`, 按理能命中`workorder_name,status` 最左匹配index, 但是使用`workorder_name`单索引效率更高
+
+    muniu_dev=> explain select * from package_tasks where workorder_name='test_union3' and status<9;
+    -------------------------------------------------------------------------------------------------------------
+    Index Scan using idx_package_tasks_workorder_name on package_tasks  (cost=0.56..363.08 rows=409 width=9685)
+        Index Cond: (workorder_name = 'test_union3'::text)
+        Filter: (status < 9)
+
+如果想部分命中: `workorder_name,status`（最左匹配). 除非我们把单索引移除，
+
+    drap INDEX workorder_name_idx

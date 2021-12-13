@@ -123,7 +123,8 @@ update one array element:
 ## split array
 
     # 2是最后一个(不是从0开始)
-    SELECT split_part('ordno-#-orddt-#-ordamt', '-#-', 2)
+    SELECT string_to_array('ordno-#-orddt-#-ordamt', '-#-');
+    SELECT split_part('par1-#-par2-#-part3', '-#-', 2);
 
 ## compamre
 ### is empty array

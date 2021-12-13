@@ -107,3 +107,9 @@ for postgre:
 
 	DOUBLE;
 		//参照c 语言的IEEE 754 double 64位存储 signed: +/- 10^308, unsigned: 0~10^308
+
+# func
+## series 生成器: generate_series
+    INSERT INTO items (n, s)
+        SELECT (random()*1000000)::integer AS n, md5(random()::text) AS s
+    FROM generate_series(1,1000000);

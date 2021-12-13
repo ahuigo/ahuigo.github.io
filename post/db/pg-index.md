@@ -64,6 +64,7 @@ add index(recommended)
         ON table_name (col_name [length],…) [ASC | DESC]
 
     CREATE INDEX ON films ((lower(title)));
+    Drop INDEX index_name
 
 add constraint (好像没有index)
 

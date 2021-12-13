@@ -27,6 +27,7 @@ Note: '\x87' 并不是单字节字符！它不是合法utf8, 会被转成合法�
     ${var}
 	line`
 
+### js raw string
 raw 只解析 `$`
 
     # 适合用于复杂的正则
