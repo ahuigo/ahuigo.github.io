@@ -10,3 +10,7 @@ CMD ["sh", "-c", "echo EXEC-CMD2 && whoami"]
 ENTRYPOINT ["sh", "-c", "echo ENTRYPOINT: && whoami && pwd"]
 # ENTRYPOINT + CMD 组合
 ENTRYPOINT ["echo"]
+
+##################################
+## $ docker run --rm -it cmd
+## sh -c echo EXEC-CMD2 && whoami

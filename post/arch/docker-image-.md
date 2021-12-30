@@ -285,6 +285,8 @@ docker-compose 使用的默认值是env-file 是`.env`, `docker run`不会使用
 ### ENTRYPOINT CMD
 > https://docs.docker.com/engine/reference/builder/#cmd
 
+1. dockerfile中：cmd 如果有多个，只有最后一个生效（entrypoint 也一样）
+2. Command line arguments to `docker run <image>` will be appended after **all elements** in an exec form ENTRYPOINT, and will override all elements specified using `CMD`
 #### cmd
 The CMD instruction has three forms:
 

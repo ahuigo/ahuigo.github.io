@@ -80,6 +80,11 @@ table name 这些则不支持，应该使用:
     from psycopg2 import sql
     cur.execute( sql.SQL("insert into {} values (%s, %s)") .format(sql.Identifier('my_table')), [10, 20])
 
+#### insert id
+    sql_string = "INSERT INTO domes_hundred (name,name_slug,status) VALUES (%s,%s,%s) RETURNING id;"
+    cursor.execute(sql_string, (hundred_name, hundred_slug, status))
+    id = cursor.fetchone()[0]
+
 ### where 数据类型
 postgre 能自动处理Array/Datetime
 

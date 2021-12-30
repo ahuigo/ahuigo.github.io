@@ -184,8 +184,10 @@ Finally you can ask a string if it "contains" a substring:
 Generator is an *iterable* created using a function with a `yield` statement.
 
     def my_gen():
-    ...     for x in range(5):
-    ...             yield x
+        i,j=0,1
+        while True:
+            yield i
+            i,j = j,i+j
 
 ### generator comprehension
 Generator expressions allow the creation of a generator on-the-fly *without a yield keyword*.
@@ -287,6 +289,9 @@ use list comprehension to combine several lists
 
 	from numpy import array
 	array(list_1).flatten().tolist()
+
+### 多维遍历
+    [[v+1 for v in row] for row in rows]
 
 ## dict comprehension
     >>> dict_comp = {x:chr(65+x) for x in range(1, 11)}

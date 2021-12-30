@@ -14,6 +14,8 @@ date: 2018-09-27
 # 语言：
 deno 生态发展计划
 c sharp 生态发展计划 vs java/kotlin
+python:
+    利用input,readline 重写argparse
 
 # 全职工作的团队
 http://deepdevelop.com/

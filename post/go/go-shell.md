@@ -78,6 +78,11 @@ cmd *exec.Cmd:
 ## build multiple commands
     cmd := exec.Command("/bin/sh", "-c", "command1; command2; command3; ...")
 
+### change current working directory
+
+    cmd := exec.Command("myCommand", "arg1", "arg2")
+    cmd.Dir = "/path/to/work/dir"
+
 ## exec command
 阻塞
 
@@ -120,7 +125,9 @@ kill if timeout: https://stackoverflow.com/questions/11886531/terminating-a-proc
     }
     err := ctx.Err()    // err = DeadLineExceeded{} 
 
-## set cmd
+## set cmd attr
+setsid:
+
 	cmd.SysProcAttr = &syscall.SysProcAttr{}
 	cmd.SysProcAttr.Setsid = true
 

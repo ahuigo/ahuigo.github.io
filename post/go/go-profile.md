@@ -224,6 +224,15 @@ http 用法有:
 ### pprof mem 分析
 pprof 支持内存分析，找出内存消耗大的代码
 
+    inuse_space	
+        amount of memory allocated and not released yet
+    inuse_objects
+    	amount of objects allocated and not released yet
+    alloc_space
+    	total amount of memory allocated (regardless of released)
+    alloc_objects
+    	total amount of objects allocated (regardless of released)
+
 --inuse_space 分析常驻内存
 
     $ go tool pprof -inuse_space http://localhost:4500/debug/pprof/heap

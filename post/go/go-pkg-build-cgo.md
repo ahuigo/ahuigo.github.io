@@ -11,6 +11,24 @@ https://johng.cn/cgo-enabled-affect-go-static-compile/
 
     # go build -o server-static-link  -ldflags '-linkmode "external" -extldflags "-static"' server.go
 
+## golang的可移植性
+golang 的可移植性很强，支持大量的os和cpu
+
+    $ go tool dist list
+    android/386
+    android/amd64
+    android/arm
+    android/arm64
+    ...
+
+为何？因为golang 独立实现了runtime. 
+在C语言里面，我们最熟悉的runtime就是libc（C运行时）,它是以动态链接库的形式运行的，libc提供了：
+1. 提供基础库函数调用，比如：strncpy；
+2. 封装syscall，比如：malloc、fread等；
+3. 提供程序启动入口函数，比如：linux下的`__libc_start_main`。
+
+由于libc 这个runtime 参差不齐，很多只支持单线程，不太支持并发，所以golang自己实现了runtime
+
 ## 为什么编译hello.go 巨大
 build的go 程序时会编译时必须带有runtime 运行时。
 
@@ -113,13 +131,16 @@ CGO 开启：默认情况下，Go的runtime环境变量`CGO_ENABLED=1`，即默�
     }
 
 ### disable cgo
-如果想，可以通过disable CGO_ENABLED来编译出纯静态的Go程序：
+如果想避免外部依赖，可以通过disable CGO_ENABLED来编译出纯静态的Go程序：
 
     $ CGO_ENABLED=0 go build -o server_cgo_disabled server.go
 
     $ otool -L server_cgo_disabled
     server_cgo_disabled:
     $ nm server_cgo_disabled |grep " U "
+
+如果你使用build的 `-x -v`选项，你将看到go compiler会重新编译依赖的包的静态版本，包括net、mime/multipart、crypto/tls等，并将编译后的.a(以包为单位)放入临时编译器工作目录($WORK)下，然后再静态连接这些版本。
+
 
 ## internal linking和external linking
 问题来了：`在CGO_ENABLED=1`这个默认值的情况下，是否可以实现纯静态连接呢？答案是可以。

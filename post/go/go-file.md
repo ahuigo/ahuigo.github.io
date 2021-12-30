@@ -69,6 +69,14 @@ func Getwd() (pwd string, err error)
         fmt.Println(pwd)
     }
 
+#### change dir
+    home, _ := os.UserHomeDir()
+    err := os.Chdir(filepath.Join(home, "goproject2"))
+
+#### IsAbs
+	if filepath.IsAbs(rel) {
+		return rel
+	}
 ### path exists
     if _, err := os.Stat("/path/to/whatever"); os.IsNotExist(err) {
         // path/to/whatever does not exist

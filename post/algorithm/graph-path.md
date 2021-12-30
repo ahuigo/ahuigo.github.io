@@ -10,6 +10,8 @@ date: 2019-02-17
     2. 如果连通无向图 G 有2k 个奇顶点，那么它可以用k 笔画成，并且至少要用 k 笔画成
 
 #　最短路径问题
+我们可以用大O符号将该算法的运行时间表示为边数{\displaystyle |E|}|E|和顶点数{\displaystyle |V|}|V|的函数
+
 ## 无权图最短路径：
 ### 单分支DFS：O(E+V) 通用
 时间复杂度O(E+V) 顶点和边只遍历1次. 适合贪心
@@ -71,36 +73,7 @@ BFS：时间复杂度O(V+E) 用队列实现, 得到最优解. 省略
 带负权的图：所有边加上一个常数，变成一个正权图
 
 ### 权重优先(Dijkstra算法)
-如果采用priorityQueue, 插入删除需要`log(V)`，：组合运行时间为 O(`(V + E)log(V))O((V+E)log(V))`
-
-B-C
-![](/img/algo/graph-path-weight.1.png)
-
-C-D-E\
-![](/img/algo/graph-path-weight.2.png)
-
-B-D-E(`B:8 插队`)\
-![](/img/algo/graph-path-weight.3.png)
-
-D-E\
-![](/img/algo/graph-path-weight.4.png)
-<iframe id="embed_dom" name="embed_dom" frameborder="0" style="display:block;width:525px; height:245px;" src="https://www.processon.com/embed/5a4d81b1e4b0849f9004d8a9"></iframe>
-
-#### 实现
-出自[dijkstra] 实现示例
-
-    def dijkstra(aGraph,start):
-        pq = PriorityQueue()
-        start.setDistance(0)
-        pq.buildHeap([(v.getDistance(),v) for v in aGraph])
-        while not pq.isEmpty():
-            currentVert = pq.delMin()
-            for nextVert in currentVert.getConnections():
-                newDist = currentVert.getDistance() + currentVert.getWeight(nextVert)
-                if newDist < nextVert.getDistance():
-                    nextVert.setDistance( newDist )
-                    nextVert.setPred(currentVert)   # record
-                    pq.decreaseKey(nextVert,newDist)
+refer: post/algorithm/graph-path-dijkstra.md
 
 ### 多分支DFS 方案
 伪代码：复杂度是$E^V$
@@ -222,4 +195,3 @@ SCC 算法步骤:
 
 # Refer
 [topological]: https://facert.gitbooks.io/python-data-structure-cn/7.%E5%9B%BE%E5%92%8C%E5%9B%BE%E7%9A%84%E7%AE%97%E6%B3%95/7.15.%E9%80%9A%E7%94%A8%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/
-[dijkstra]: https://facert.gitbooks.io/python-data-structure-cn/7.%E5%9B%BE%E5%92%8C%E5%9B%BE%E7%9A%84%E7%AE%97%E6%B3%95/7.20.Dijkstra%E7%AE%97%E6%B3%95/

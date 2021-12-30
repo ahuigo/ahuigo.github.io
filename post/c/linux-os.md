@@ -7,8 +7,26 @@ date: 2019-06-15
 check os:
 
     lsb_release -a
+    cat /etc/os-release
 
-CISC 复杂指令集
+## 查看CPU支持的指令集
+    cat /proc/cpuinfo
+    gcc -march=native -Q --help=target|grep march
+
+查看CPU信息(硬件架构等)
+
+    # lscpu
+    # arch
+    # uname -m
+    hostnamectl
+
+    $ cat /proc/cpuinfo | grep MHz
+    cpu MHz		: 2127.998
+
+### simple cpu
+核数
+
+### CISC 复杂指令集
 
     X86架构: intel/amd/via
         i386: 或称IA-32 
@@ -21,22 +39,6 @@ RISC 精简指令集主要有三种
     SPARC(Oracle)
     Power PC(IBM)
     
-## 查看CPU支持的指令集
-    cat /proc/cpuinfo
-    gcc -march=native -Q --help=target|grep march
-
-查看CPU信息(硬件架构等)
-
-    # lscpu
-    # arch
-    # uname -m
-    cat /etc/os-release
-    lsb_release -a
-    hostnamectl
-
-    $ cat /proc/cpuinfo | grep MHz
-    cpu MHz		: 2127.998
-
 ## memory
     free -h
 

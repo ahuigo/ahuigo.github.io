@@ -124,6 +124,8 @@ Python内置的enumerate函数可以把一个list变成索引-元素对，这样
 		Statement
 
 # List Comprehensions, 列表生成式
+refer: post/py/py-async-iter.md # data comprehension
+
 列表生成式即List Comprehensions
 
 	>>> [x * x for x in range(1, 11)]
@@ -154,6 +156,12 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
 通常用于二维数组
 
     flatten_matrix = [val for sublist in matrix for val in sublist]
+
+## with if
+    # map
+    [f(x) if condition else g(x) for x in sequence]
+    # if filter
+    [f(x) for x in sequence if condition]
 
 # logic/bit/compare expression
 

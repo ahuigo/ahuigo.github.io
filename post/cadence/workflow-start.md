@@ -4,7 +4,7 @@ date: 2021-12-06
 private: true
 ---
 # cadenceClient
-cmd/samples/common/sample_helper.go 可知道如何构建cadence client
+cmd/samples/common/sample_helper.go 可知道如何构建service client, cadence client  
 
     //  yarpc service client to cadence front service
     cadenceService:='cadence-frontend'
@@ -15,6 +15,8 @@ cmd/samples/common/sample_helper.go 可知道如何构建cadence client
 			cadenceService: {Unary: grpc.NewTransport().NewSingleOutbound(b.hostPort)},
 		},
 	})
+
+    // cadence service client
     cfg := b.dispatcher.ClientConfig(cadenceService)
     service := compatibility.NewThrift2ProtoAdapter(cfg) // cadence/compatibiity/thrift2proto.go
 
