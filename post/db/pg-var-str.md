@@ -142,6 +142,9 @@ VARCHAR 本来不会存储尾部空白`\0`，而从5.0.3 开始出于兼容性�
 			If length is bigger than 255, it will be store as TEXT TYPE
 		BINARY
 			排序时区分大小写(默认不区分)
+    CHARACTER(length)
+        CHAR(length)
+
 
 ## Other
 

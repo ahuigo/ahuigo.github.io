@@ -177,9 +177,9 @@ Once this is done, `~/.pypirc `(其中的user/password也用于`~/.pip/pip.conf`
 ## The next step is to upload your package. 
 create sdist+egg-info
 
-    # egg 格式包
+    # egg 格式包(源码包)
     python3 setup.py sdist 
-    # wheel 格式包
+    # wheel 格式包(build包)
     python3 setup.py bdist_wheel
 
 一键上传, 通过 `-r` 指定源名

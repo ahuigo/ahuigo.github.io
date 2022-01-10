@@ -64,7 +64,7 @@ example
         def teardown_class(cls):
             print('teardown_class: end')
 
-## run test
+# run test
 
     py -m pytest
     py.test               # run all tests below current dir(test_*.py|*_test.py), or *test** directory
@@ -79,6 +79,15 @@ example
                             # but not TestMyClass.test_method_simple
     py.test test_mod.py::test_func # only run tests that match the "node ID",
                        # e.g "test_mod.py::test_func" will select only test_func in test_mod.py
+
+### test file
+
+    pytest test_a.py
+
+
+### verbose output
+    pytest -s
+    -s is equivalent to --capture=no.
 
 ### output
 

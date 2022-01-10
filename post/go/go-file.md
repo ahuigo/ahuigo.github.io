@@ -142,6 +142,12 @@ read:
     b3 := make([]byte, 2)
     n3, err := io.ReadAtLeast(f, b3, 2)
 
+### readline
+	scanner := bufio.NewScanner(f) //f:io.Reader
+	for scanner.Scan() {
+		lineText = scanner.Text()
+	}
+
 ### buffer read(copy)
     var b bytes.Buffer
     io.Copy(os.Stdout, &b)

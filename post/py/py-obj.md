@@ -13,6 +13,16 @@ pythone 一切皆对象: var, class, metaclass
 
 	id(any object)
 
+# Class expression
+class property without assigned
+
+    a=1
+    class A():
+        a
+        print(1)
+
+这里A内部的`a`和`print(1)` 只是表达式
+
 # Class and Object
 
 	class MyStuff(object):

@@ -154,7 +154,7 @@ because cloned version of `original-project` still says `module github.com/uber-
         mytest v0.0.0
     )
     replace (
-        mytest v0.0.0 => ../mytest
+        mytest v0.0.0 => ./mytest
         github.com/ugorji/go v1.1.4 => github.com/ugorji/go v0.0.0-20181204163529-d75b2dcb6bc8
     )
 

@@ -73,6 +73,8 @@ add constraint (好像没有index)
     alter table users add CONSTRAINT uesrs_pkey  UNIQUE(name,id);
     alter table t add CONSTRAINT uesrs_pkey PRIMARY KEY(id)
     alter table t add CONSTRAINT uesrs_pkey UNIQUE (id)
+    # if not exists
+    alter table t DROP CONSTRAINT  IF EXISTS uesrs_pkey;
     column_constraint:
         NOT NULL |
         NULL |

@@ -17,11 +17,11 @@ http://nvie.com/posts/iterators-vs-generators/
     None
 
 ### iterable vs iterator
-区别:
-1. Iterable(能用for的都是): type(obj)->__iter__(), iter(obj)是否真的返回 Iterator, isinstance 其实判断不出来(按协议是应该考虑的). 比如range(3)
-2. Iterator(能用next的都是): type(obj)->__iter__(), type(obj)->__next__() 同时定义,
+区别
+1. Iterable(能用for的都是): `type(obj)->__iter__()`, iter(obj)是否真的返回 Iterator, isinstance 其实判断不出来(按协议是应该考虑的). 比如range(3)
+2. Iterator(能用next的都是): `type(obj)->__iter__(), type(obj)->__next__()` 同时定义
 
-An *iterable* is any object, not necessarily a data structure, that can *return an iterator via iter*:
+An **iterable** is any object, not necessarily a data structure, that can **return an iterator via iter()**:
 ```
     >>> hasattr(str, '__iter__')
     True  
@@ -63,7 +63,7 @@ Python的for循环本质上就是通过不断调用next()函数实现的，例�
 
 实际上完全等价于：
 
-    # 首先获得Iterator对象:
+    # 首先获得 Iterator 对象:
     it = iter([1, 2, 3, 4, 5])
     while True:
         try:
@@ -72,6 +72,13 @@ Python的for循环本质上就是通过不断调用next()函数实现的，例�
         except StopIteration:
             # 遇到StopIteration就退出循环
             break
+
+next 与 for
+
+    b=iter([1,2,3])
+    next(b)
+    # 输出: 2,3
+    for i in b:print(i)
 
 ### 判断iterable/iterator
 

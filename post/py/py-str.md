@@ -88,23 +88,25 @@ https://realpython.com/python-f-strings/#multiline-f-strings
     '{:f}'.format(123.0)
 
 ### value conversion(str & repr)
-```
-class Data0(object):
-    def __repr__(self):
-        return 'räpr'
-class Data1(object):
-    def __str__(self):
-        return 'str'
+    ```python
+    class Data0(object):
+        def __repr__(self):
+            return 'räpr'
+    class Data1(object):
+        def __str__(self):
+            return 'str'
 
-//Old
-'%s %r %a' % (Data0(), Data1())
-//New: !r 代表 repr, !s 代表 str, !a 代表repr
-'{1!s} {0!r} {0!a}'.format(Data0(), Data1())
-```
+    //Old
+    '%s %r %a' % (Data0(), Data1())
+    //New: !r 代表 repr, !s 代表 str, !a 代表repr
+    '{1!s} {0!r} {0!a}'.format(Data0(), Data1())
+    ```
+
 Output
-```
-str räpr r\xe4pr
-```
+
+    ```
+    str räpr r\xe4pr
+    ```
 
 ### Padding and aligning strings
 
