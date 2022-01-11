@@ -127,10 +127,35 @@ In either insert mode or command mode (i.e. on the : line when typing commands),
 > See :help i_CTRL-R and :help c_CTRL-R for more details, and snoop around nearby for more CTRL-R goodness.
 
 # Extra
+## math
 Increment/decrement digit:
 
     <C-a>
     <C-x>
+
+# replace
+## dos unix format
+    :e ++ff=dos
+    :e ff=dos
+    :e ++ff=mac
+    :e ff=mac
+    :e ++ff=unix
+    :e ff=unix
+
+dos2unix
+
+    %s/\r//g
+
+In the syntax `s/foo/bar`, `\r` and `\n` have different meanings, 
+
+    For foo:
+    \r == "carriage return" (CR / ^M)
+    \n == matches "line feed" (LF) on Linux/Mac, and CRLF on Windows
+
+    For bar:
+    \r == produces LF on Linux/Mac, CRLF on Windows
+    \n == "null byte" (NUL / ^@)
+
 
 # insert 插入
 
