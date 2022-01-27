@@ -162,6 +162,15 @@ In package list mode ，successful package test result will be cached and reused
     # 不会包含*_test.go
     go run  ./cmd/samples/recipes/helloworld/
 
+### test output`Example_*`
+
+    //go-lib/test/gotest/output_test.go
+    func Example_assert_output_fail(){
+        fmt.Println("hello world!")
+        // Output:
+        // hello world
+    }
+
 ### test timeout 
 
     $ go test -timeout 30s -run ^TestSimple$   #用

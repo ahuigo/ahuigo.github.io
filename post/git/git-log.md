@@ -187,6 +187,37 @@ create date:
     git log -U5
         like: grep -B5 -A5
 
+
+
+# git grep code
+搜索所有的commit的 code diff
+
+    git log -p --all -S 'search string'
+    git log -p --all -G 'match regular expression'
+    -p,-u,--patch
+        generate patch diff info
+
+搜索所有commit
+
+    git grep -F "keyword" $(git rev-list --all)
+    git grep <regexp> $(git rev-list --all)
+    git rev-list --all | (while read rev; do git grep -e <regexp> $rev; done)
+
+搜索所有local branch 
+
+     git branch  | tr -d \* | sed '/->/d' | xargs git grep <regexp>
+
+Don't forget those settings, if you want them:
+
+    # Allow Extended Regular Expressions
+    git config --global grep.extendRegexp true
+    # Always Include Line Numbers
+    git config --global grep.lineNumber true
+
+alias grep:
+
+    git config --global alias.g "grep --break --heading --line-number"
+
 # git 维护、数据恢复
 
 ## git gc

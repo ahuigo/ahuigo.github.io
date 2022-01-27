@@ -71,6 +71,8 @@ egg-view-nunjucks 等 View 插件会自动对 Form 进行注入
     x.126.com.xxx.com
 
 ## SameSite 与csrf
+todo: https://web.dev/samesite-cookies-explained/
+
 sameSite 同站指: 
 1. 我们在www.bank.com, bank.com 等页面 访问其它子域名如image.bank.com 被视为samesite. 
 2. 如果是第三方网站hack.com 访问image.bank.com 就是非同站。

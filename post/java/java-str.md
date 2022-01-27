@@ -3,7 +3,7 @@ title: Java String
 date: 2019-09-08
 private:
 ---
-# Java define
+# define string
 ## char
 注意char类型使用单引号`'`，且仅有一个字符，要和双引号`"`的字符串类型区分开
 
@@ -24,6 +24,20 @@ private:
     (int)'a'
 
 ## string
+
+### raw string(java>=15)
+raw1:
+
+    String s = """
+    line1 \
+    Or even double-quotes "
+    """
+
+raw2:
+
+    `This uses single backtick`
+    ``This can contain backtick `, see?``
+    ```Can use any number of backticks```
 
 ### null string
     String s1 = null; // s1是null

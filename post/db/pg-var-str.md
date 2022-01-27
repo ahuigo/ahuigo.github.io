@@ -170,3 +170,14 @@ String set
         name text,
         current_mood mood
     );
+
+
+# match string
+
+## regex
+    select regexp_matches(name, 'foo');
+    select pg_typeof(regexp_matches('foo1', 'foo'));// text[]
+
+where regex
+    
+    where name ~ '^\w{2}$'

@@ -114,7 +114,14 @@ You can also specify the `.EXPORT_ALL_VARIABLES` target to EXPORT ALL THE THINGS
     main:
         echo $$PATH
 
-> 注意：shell 之间是不同的进程
+### set shell variables
+由于shell 之间是不同的进程. 正确设置进程的变量的方法是将语句合成一个：
+
+    testapi:
+        id_token=$(shell echo token | cat) ;\
+        echo $$id_token
+
+or use `.ONESHELL` if `make>=3.8.2`
 
 ### 内置变量（Implicit Variables）
 比如 $(CC) 指向当前使用的编译器，$(MAKE) 指向当前使用的Make工具。

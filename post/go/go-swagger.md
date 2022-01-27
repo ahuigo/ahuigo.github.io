@@ -3,7 +3,14 @@ title: go swagger
 date: 2020-07-11
 private: true
 ---
-# go swagger
+# gonic swagger doc
 ## install 
-    brew tap go-swagger/go-swagger
-    brew install go-swagger
+    go get -u github.com/swaggo/swag/cmd/swag
+
+## gonic
+refer to:  git@github.com:swaggo/swag.git
+
+## gen doc
+
+    swag init
+

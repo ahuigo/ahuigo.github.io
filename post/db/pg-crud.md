@@ -103,6 +103,10 @@ eg:
 
     select 'abc'
 
+### custom table
+    select user_id, name
+    from (values (1, 'John Smith')) t(user_id, name)
+
 ### offset
 
     page=0

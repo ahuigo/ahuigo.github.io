@@ -67,14 +67,21 @@ vegeta plot： 生成 html 格式的折线图，使用浏览器打开文件。
 横轴是压测时刻，从0到duration。纵轴是滑窗内的平均响应时间，滑窗大小可以在左下角的小输入框里修改。
 
 
+## debug
+
+### show error body
+如果想查看400 error 返回的body
+
+    echo "GET http://host.com/api/v1/tasks" | vegeta attack  -rate=10000  -duration=10s > output.log
+    grep 400 -A 10 output.log
+
 ## 指标说明
-Requests      [total, rate, throughput]  10, 2.22, 1.33
-Duration      [total, attack, wait]      7.503169051s, 4.502392958s, 3.000776093s
-Latencies     [mean, 50, 95, 99, max]    3.004404443s, 3.00297599s, 3.016054975s, 3.016054975s, 3.016054975s
-Bytes In      [total, mean]              170, 17.00
-Bytes Out     [total, mean]              290, 29.00
-Success       [ratio]                    100.00%
-Status Codes  [code:count]               200:10
-Error Set:
-hdmap-helm-charts$ git:(cicd-template) ✗
-$ jq -ncM 'while(true; .+1) | {method: "GET", header: {"Content-Type": ["application/json"]}, url: "http://0:4500/sleep/3", body: {"name":"wf_yxh1","input":{}} | @base64 }'  | vegeta attack -format=json -rate=2  -duration=5s | vegeta report
+    Requests      [total, rate, throughput]  10, 2.22, 1.33
+    Duration      [total, attack, wait]      7.503169051s, 4.502392958s, 3.000776093s
+    Latencies     [mean, 50, 95, 99, max]    3.004404443s, 3.00297599s, 3.016054975s, 3.016054975s, 3.016054975s
+    Bytes In      [total, mean]              170, 17.00
+    Bytes Out     [total, mean]              290, 29.00
+    Success       [ratio]                    100.00%
+    Status Codes  [code:count]               200:10
+    Error Set:
+    $ jq -ncM 'while(true; .+1) | {method: "GET", header: {"Content-Type": ["application/json"]}, url: "http://0:4500/sleep/3", body: {"name":"wf_yxh1","input":{}} | @base64 }'  | vegeta attack -format=json -rate=2  -duration=5s | vegeta report

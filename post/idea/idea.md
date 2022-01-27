@@ -13,9 +13,24 @@ date: 2018-09-27
 
 # 语言：
 deno 生态发展计划
-c sharp 生态发展计划 vs java/kotlin
-python:
-    利用input,readline 重写argparse
+    - Alephjs  css module
+c sharp 生态计划 vs java/kotlin
+golang
+
+# 工具类
+ssl_ca_certificate_generator
+    nginx support
+readline-arg:
+    利用input,readline 重写argparse (python)
+wtee/rtee: file transfer like rsync/netcat(nc)
+    rtee -l 9999 -o dir [default output dir .]
+    wtee -h 192.168.0.100:9999 
+tcpcapture:
+    go-lib/net/packet
+http request/response modifier like requestly
+simple iptable:
+    simple modify iptable
+    route to http proxy: iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 9090
 
 # 全职工作的团队
 http://deepdevelop.com/
@@ -45,7 +60,7 @@ https://stackoverflow.com/jobs/live-work-anywhere?utm_source=so-owned&utm_medium
     一定要在学习最高效的时间学习; 运行最高效的时间运动; 吃完饭后困, 就做点家务
 8. 集中精力: 排除杂乱的东西(房间-书桌); 远离互联网-qq-微博-手机
 9. 不要同时处理多个任务: 专心做一件事; 遇到问题时就记下, 以后再查!! 不要绕不回来了
-9. 空闲时间: ruanyifeng/收藏的文章/冥想
+9. 空闲时间: 收藏的文章/冥想
 9. 游戏-微博-电视: 节制!!!!!!
 
 ## 习惯
@@ -60,43 +75,22 @@ https://stackoverflow.com/jobs/live-work-anywhere?utm_source=so-owned&utm_medium
 2. 读书时要出声音
 3. 一次读完一段或几段: 不要再重读(除非错了)
 
-#
-## 字典
-## 班级管理
-## markdown 写作
-## 反馈投票
+# job
+## 讲课
+在线 - 麦子学院 - 慕课网
+- golang 视频创作
+- 10倍程序员
+    1. mac book pro
 
-# Push
+## 做一个开源的im
+qq, whats app 的接口是私有的
+
+## Push sdk
 To: weibo/zhihu-live/weixin
 
-# pass
-# 大数据
-
-## 预测金融风险:
-p2p, 基金, 股票
-
-## 统计与预测房价趋势
-
-## 建一个理财网
-预测股票走势图
-
-# 小程序
-
-## 协作
-重点：
-
-    文档共享
-    支持图片、音频、视频、文件附件
-    支持评论系统
-    支持点赞，评论排序
-    支持latex
-    支持git push
-    支持atom
-
-# tool
-## 写作与笔记
-$ wb content
-push to: blog + weixin
+## 写作\公众号
+    wb content
+    push to: blog + weixin
 
 类似为知: 但提供各种接口
 推送到知乎, 微信
@@ -105,38 +99,17 @@ push to: blog + weixin
 神箭手云市场 Saas
 http://www.shenjianshou.cn/index.php?r=market/index
 
-# 中介
+# app
+## 字典
+## 班级管理
+## markdown 写作
+## 反馈投票
 
-## 建一个房主租客联盟网站
-房主：怕遇到不靠谱的租客、工作经常变动的租客
-租客：怕被扣取押金、怕遇到黑中介、怕遇到不靠谱的室友
+# 大数据
+## 预测金融风险:
+p2p, 基金, 股票
 
-ToDo: 利用微信小程序做解决痛点的问题?
+## 统计与预测房价趋势
 
-## 买房
-1. 建个微信, 买房观察
-
-### 如何选房
-https://www.zhihu.com/question/20388137/answer/120895074 : 买改善不买刚需; 买人口密集区-交通
-
-1. 链家在线: 遇到有看房记录的才是在售房源
-
-### 选经纪人
-这时候，你需要记住几点：
-
-1. 大中介的经纪人不见得最靠谱，但是至少出错有中介帮你兜着。
-2. 选经纪人的时候一定要「货比三家」，比如在链家看中一套房源，一定要去至少3家不同的链家门店去找各店经纪人咨询这套房源，交流中就能很轻松的判断出哪个经纪人最靠谱。
-3. 多沟通、多问，跟经纪人建立良好的关系，毕竟他可是这个领域里最专业的人，你能省多少钱完全取决于他想告诉你多少。
-
-### 中介费
-1. 晚砍中介费
-2. 联系上经纪人
-3. 2.2-2.4% 就合理了
-
-# 讲课
-在线 - 麦子学院 - 慕课网
-
-# 做电商
-
-# 做一个开源的im
-qq, whats app 的接口是私有的
+## 建一个理财网
+预测股票走势图

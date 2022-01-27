@@ -5,8 +5,13 @@ private: true
 ---
 # go debug trace
 ## call stack
+    // go-lib/go-debug/trace/trace_test.go
     import(
     "runtime/debug"
     )
     ...    
     debug.PrintStack()
+
+## err trace
+
+    fmt.Printf("%+v\n", err)

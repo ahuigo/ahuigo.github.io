@@ -360,5 +360,11 @@ setval 用法：
         PERFORM setval('oauth_tokens_id_seq',(select max(id) from oauth_tokens));
     end $$;
 
-    // method2
-    select setval('oauth_tokens_id_seq', (select max(id) from oauth_tokens)+1);
+    // method2(推荐)
+    select setval('oauth_tokens_id_seq', (select max(id) from oauth_tokens));
+
+#### add increment id(serial)
+	// alter table mytable add column item_id serial;
+	// 相当于
+	// CREATE SEQUENCE mytable_item_id_seq OWNED BY mytable.item_id;
+	// ALTER TABLE mytable ALTER item_id SET DEFAULT nextval('mytable_item_id_seq');

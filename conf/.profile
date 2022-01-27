@@ -1,3 +1,6 @@
+#####################debug
+# set -x
+
 ############ iterm2 #######
 # key bindings
 #bindkey "\e[1~" beginning-of-line
@@ -11,8 +14,8 @@ setopt share_history
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 
-###############
-#export
+############### system
+ulimit -n 1000
 export ENV_MODE=dev
 export LC_ALL='en_US.UTF-8'
 export LANG='en_US.UTF-8'
@@ -20,22 +23,16 @@ export CLICOLOR="xterm-color"
 export PATH=$(pyenv root)/shims:$PATH:$HOME/www/a/bin:~/bin:/usr/local/sbin
 export GNUTERM=qt
 export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])'$'\n$ '
+# for ssh-host-machine: export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
 
-#export JAVA_HOME="$(/usr/libexec/java_home -v 1.7)"
-export PIP_FORMAT=columns
-
-##############lua
-export LUA_DIR=/usr/local/opt/lua@5.1
-
-#################NVM##############
+################# NVM ##############
 echo "nvm.sh"
 export NVM_DIR="$HOME/.nvm"
 #source $(brew --prefix nvm)/nvm.sh
 [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
 
-ulimit -n 1000
 
-# alias
+# nvim
 export EDITOR="nvim"
 alias vi='nvim'
 alias vim='nvim'
@@ -47,8 +44,9 @@ alias code1='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/c
 
 # python
 alias py='ipython3'
-alias p='python'
+alias p='python3'
 alias p2='python2'
+alias pi='pip3'
 export PYTHONPATH=.
 
 # docker
@@ -213,6 +211,17 @@ export GONOSUMDB=gitlab.momenta.works/hdmap-workflow/mauth
 alias go12='export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec; ln -sf /usr/local/opt/go@1.12/bin/go /usr/local/bin/go'
 alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
 alias go15='export GOROOT=/usr/local/Cellar/go/1.15.6/libexec; ln -sf /usr/local/opt/go@1.15/bin/go /usr/local/bin/go'
+
+
+# java
+export JAVA_HOME="$(/usr/libexec/java_home)"
+# /Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
+export JRE_HOME=$JAVA_HOME
+export PATH=$JAVA_HOME/bin:$PATH
+#export CLASSPATH='.;./openjdk.jdk\lib\dt.jar'
+export CLASSPATH=.:/usr/local/lib/jar:~/jar/json-simple-1.1.jar:/usr/local/lib/jar/java-json.jar
+export CLASSPATH='.:/usr/local/lib/jar/*'
+export CPPFLAGS="-I/usr/local/opt/openjdk/include"
 
 
 

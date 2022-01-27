@@ -9,6 +9,18 @@ private:
 
   db, err = gorm.Open("postgres", "host=localhost user=role1 dbname=ahuigo sslmode=disable password=")
 
+### config connection
+使用连接池
+
+    // SetMaxIdleConns sets the maximum number of connections in the idle connection pool.
+    db.DB().SetMaxIdleConns(10)
+
+    // SetMaxOpenConns sets the maximum number of open connections to the database.
+    db.DB().SetMaxOpenConns(100)
+
+    // SetConnMaxLifetime sets the maximum amount of time a connection may be reused.
+    db.DB().SetConnMaxLifetime(time.Hour)
+
 ## Column Name
 
     `gorm:"column:beast_id"`
