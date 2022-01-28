@@ -19,7 +19,8 @@ golang
 
 # 工具类
 ssl_ca_certificate_generator
-    nginx support
+    1. https://github.com/diafygi/acme-tiny
+    2. local ca
 readline-arg:
     利用input,readline 重写argparse (python)
 wtee/rtee: file transfer like rsync/netcat(nc)

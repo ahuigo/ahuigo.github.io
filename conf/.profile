@@ -1,5 +1,5 @@
 #####################debug
-# set -x
+#set -x
 
 ############ iterm2 #######
 # key bindings
@@ -203,7 +203,7 @@ export GOPATH=~/go
 export GOPROXY=https://goproxy.io,direct
 # 还可以设置不走 proxy 的私有仓库或组，多个用逗号相隔（可选）
 export GOPRIVATE=git.mycompany.com,github.com/my/private
-export GOSUMDB=off
+#export GOSUMDB=off
 export PATH=$PATH:$GOPATH/bin
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
