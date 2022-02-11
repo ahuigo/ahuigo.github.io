@@ -1,4 +1,7 @@
 # AHUIGO 的笔记
+- 2016-09-27 [go 的变量](/b/go/go-var) 
+- 2018-09-27 [golang string](/b/go/go-str) 
+- 2018-09-27 [ops-ftp-rsync](/b/c/ops-ftp-rsync) 
 - 2018-09-28 [net ipv6](/b/net/net-ipv6) 
 - 2018-09-28 [ping](/b/net/net-ip-ping) 
 - 2018-09-28 [get public ip](/b/net/net-ip-conf) 
@@ -36,6 +39,3 @@
 - 2018-09-28 [net-ssl](/b/net/ssl-proto) 
 - 2018-09-28 [net-ssl-tool](/b/net/ssl-openssl) 
 - 2021-04-17 [SSL Certificate Authority(CA)](/b/net/ssl-ca) 
-- 2019-06-23 [SSH SERVER 的配置](/b/net/ssh-server) 
-- 2021-04-17 [Secure Shell(ssh)](/b/net/ssh-proto) 
-- 2018-09-27 [Golang Interfaces](/b/go/16.go-interface) 

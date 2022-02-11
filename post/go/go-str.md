@@ -59,7 +59,7 @@ method 2
 
     import "strings"
 
-    b := make([]byte, 8);//buffer
+    b := make([]byte, 8);
     r := strings.NewReader("0123")
     n, err := r.Read(b) 
         //if err == io.EOF 
@@ -100,7 +100,7 @@ encode/decode bytes example
 ### byte.IndexByte
 
     path := []byte("AAAA/BBBBBBBBB")
-    sepIndex := bytes.IndexByte(path,'/’)
+    sepIndex := bytes.IndexByte(path,'/')
 
     dir1 := path[:sepIndex]
 
@@ -235,7 +235,7 @@ If no content, reurn `empty slice`
 ## io.Copy Reader
 
     io.Copy(os.Stdout, &r)
-        实际调用r.Read(buf []byte)
+        实际调用r.Read(buf []byte) //write to stdout
 
 example:
 

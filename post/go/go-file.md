@@ -31,7 +31,7 @@ abs
         //output: false <nil>
 
 ## os path
-### path ext
+### executable path
 
     import (
         "fmt"
@@ -40,11 +40,12 @@ abs
     )
 
     func main() {
-        ex, err := os.Executable()
+        exPath, err := os.Executable()
         if err != nil { panic(err) }
-        exPath := filepath.Dir(ex)
-        fmt.Println(exPath)
+        exDir := filepath.Dir(exPath)
+        fmt.Println(exDir)
     }
+
 ### rename and move
     Original_Path := "./GeeksforGeeks.txt"
     New_Path := "./new_folder/gfg.txt"
@@ -77,6 +78,11 @@ func Getwd() (pwd string, err error)
 	if filepath.IsAbs(rel) {
 		return rel
 	}
+
+### file stat
+    pathStat, err := os.Stat("/path/to/whatever")
+    pathStat.IsDir()
+
 ### path exists
     if _, err := os.Stat("/path/to/whatever"); os.IsNotExist(err) {
         // path/to/whatever does not exist
@@ -121,15 +127,15 @@ recursive:
     (f *File) Sync() error
 
 ## read
-read:
-
-    b1 := make([]byte, 5)
-    n1, err := f.Read(b1)
-
 ### seek
     o2, err := f.Seek(6, 0)
     // There is no built-in rewind, but `Seek(0, 0)`
     _, err = f.Seek(0, 0)
+
+### read bytes
+
+    b1 := make([]byte, 5)
+    n1, err := f.Read(b1)
 
 
 ### readFile
@@ -142,15 +148,23 @@ read:
     b3 := make([]byte, 2)
     n3, err := io.ReadAtLeast(f, b3, 2)
 
-### readline
+### readline(scanner)
 	scanner := bufio.NewScanner(f) //f:io.Reader
 	for scanner.Scan() {
 		lineText = scanner.Text()
 	}
 
-### buffer read(copy)
-    var b bytes.Buffer
-    io.Copy(os.Stdout, &b)
+### readline(reader)
+   inputReader := bufio.NewReader(os.Stdin)
+   for {
+      str,err := inputReader.ReadString('\n')
+   }
+
+### io.Copy vs copy
+    var b *bytes.Buffer = bytes.NewBuffer([]byte("hi"))
+    io.Copy(os.Stdout, b) // copy b to stdout
+
+    copy(p, []byte("hi"))
 
 ## write
 
@@ -173,8 +187,8 @@ write bytes to stdout
 
     os.Stdout.Write(bytes[:])
 
-#### Write buffer
-write to stdout with bytes
+##### buffer Writer
+wrap stdout with bufio
 
     f := bufio.NewWriter(os.Stdout)
     defer f.Flush()

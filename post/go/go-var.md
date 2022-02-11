@@ -282,7 +282,7 @@ Numeric constants are high-precision values.
 
 	func needInt(x int) int { return x*10 + 1 }
 
-## itoa
+## iota
 iota只能在`const`内部使用, 是一个const行计数器
 
 	const a = iota // a=0
@@ -329,7 +329,7 @@ iota可在表达式中(b=iota也是表达式)
 	const (
 	    s   = "abc"
 			x 						// x = "abc"
-			a1 = 1<<itoa
+			a1 = 1<<iota
 			a2
 			a3
 	)
