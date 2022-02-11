@@ -33,13 +33,26 @@ any type:
 	fmt.Printf("%v %v %v %q\n", i, f, b, s)
         0 0 false ""
 
-## Print raw,type
+# fmt print
+
+## fmt format
 https://gobyexample.com/string-formatting
+
+### Print raw,type
 
     %T type
     %q double-quote strings
     %#v Go syntax representation
     %+v variant will include the struct’s field names. or error trace
+
+### print number
+for number 
+
+    space    prefix non-negative number with a space
+    +    prefix non-negative number with a plus sign
+    -    left-justify within the field
+    0    use zeros, not spaces, to right-justify
+    #    puts the leading 0 for any octal, prefix non-zero hexadecimal with 0x or 0X, prefix non-zero binary with 0b
 
 ### print address
 
@@ -48,14 +61,7 @@ https://gobyexample.com/string-formatting
     var slice=[]int{0}
     fmt.Printf("%p", slice)
 
-# fmt print
-## fomat
 
-    space    prefix non-negative number with a space
-    +    prefix non-negative number with a plus sign
-    -    left-justify within the field
-    0    use zeros, not spaces, to right-justify
-    #    puts the leading 0 for any octal, prefix non-zero hexadecimal with 0x or 0X, prefix non-zero binary with 0b
 ## Print string
 > see go-fmt
 1. `printf` is equivalent to writing `fprintf(stdout, ...)` and writes formatted text to `standard output stream`

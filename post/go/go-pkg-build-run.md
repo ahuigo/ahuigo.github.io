@@ -9,66 +9,6 @@ private: true
 
 go run 与 go build 都可以编译源码，只是go build 可生成二进制文件。 两者有基本相同的参数
 
-## option
-
-### GOOS and GOARCH
-
-    # Mac 下编译 Linux 和 Windows 64位可执行程序
-    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o rebot main.go
-    # linux
-    GOOS=linux GOARCH=amd64 go build -ldflags "-w -s" -o web
-    # windows
-    GOOS=windows GOARCH=amd64 go build -ldflags "-w -s" -o web
-    # mac
-    GOOS=darwin GOARCH=amd64 go build -ldflags "-w -s" -o web
-
-经常用的：
-
-    GOARCH 
-        架构: amd64 x86
-    GOOS 
-        os: linux windows darwin
-    CGO_ENABLED
-        默认开启cgo，会链接动态链接库
-        
-### compile选项
-编译帮助
-
-    $ go tool compile -help
-
-#### build assemble
-    go tool compile -S file.go > file.S
-
-#### print optimization decisions
-f you want to print optimization decisions for all packages including dependencies can use this command instead:
-
-    $ go build -gcflags="all=-m" -o=/tmp/foo .
-
-#### disable optimization and inlining
-the flags `-N` to disable optimizations and `-l` to disable inlining if you need to
-
-    $ go build -gcflags="all=-N -l" -o=/tmp/foo .  # Disable optimizations and inlining
-
-### linker选项: ldflags
-> https://www.digitalocean.com/community/tutorials/using-ldflags-to-set-version-information-for-go-applications
-
-ldflags/gcflags 是linker 链接器选项。可以用于设定静态链接、变量. 选项帮助:
-
-    $ go tool link -help
-
-#### ldflags 控制编译变量
-
-    // go-lib/compile/ldflags-var.go
-    var Version = "development"
-
-    func main() {
-        fmt.Println("Version:\t", Version)
-    }
-
-run:
-
-    go run -ldflags="-X 'main.Version=v1.0.1'" ldflags-var.go
-
 ## run 
 可以直接run (compile and excute) 不产生bin
 
@@ -94,3 +34,88 @@ run:
 
     $ go get -u github.com/gobuffalo/packr/packr
     $ packr build -o /bin/hello ./hello.go
+
+# build option
+
+## GOOS and GOARCH
+
+    # Mac 下编译 Linux 和 Windows 64位可执行程序
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o rebot main.go
+    # linux
+    GOOS=linux GOARCH=amd64 go build -ldflags "-w -s" -o web
+    # windows
+    GOOS=windows GOARCH=amd64 go build -ldflags "-w -s" -o web
+    # mac
+    GOOS=darwin GOARCH=amd64 go build -ldflags "-w -s" -o web
+
+经常用的：
+
+    GOARCH 
+        架构: amd64 x86
+    GOOS 
+        os: linux windows darwin
+    CGO_ENABLED
+        默认开启cgo，会链接动态链接库
+        
+## compile选项
+编译帮助
+
+    $ go tool compile -help
+
+### build assemble
+    go tool compile -S file.go > file.S
+
+### print optimization decisions
+f you want to print optimization decisions for all packages including dependencies can use this command instead:
+
+    $ go build -gcflags="all=-m" -o=/tmp/foo .
+
+### disable optimization and inlining
+the flags `-N` to disable optimizations and `-l` to disable inlining if you need to
+
+    $ go build -gcflags="all=-N -l" -o=/tmp/foo .  # Disable optimizations and inlining
+
+## linker选项: ldflags
+> https://www.digitalocean.com/community/tutorials/using-ldflags-to-set-version-information-for-go-applications
+
+ldflags/gcflags 是linker 链接器选项。可以用于设定静态链接、变量. 选项帮助:
+
+    $ go tool link -help
+
+### ldflags 控制编译变量
+
+    // go-lib/compile/ldflags-var.go
+    var Version = "development"
+
+    func main() {
+        fmt.Println("Version:\t", Version)
+    }
+
+run:
+
+    go run -ldflags="-X 'main.Version=v1.0.1'" ldflags-var.go
+
+
+# build tag
+refer: https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags
+see go-lib/build
+
+    // +build pro
+    go run -tags pro .
+
+    // or关系: pro1 or pro2
+    // +build pro1 pro2
+    go run -tags pro2 .
+
+    // and关系: pro1 and pro2
+    // +build pro1
+    // +build pro2
+    go run -tags "pro1 pro2" .
+
+    // Not disableredis
+    // +build !disableredis
+    go run -tags disableredis
+
+注意还有另一种写法
+
+    //go:build !disableredis

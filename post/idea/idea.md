@@ -22,18 +22,21 @@ ssl_ca_certificate_generator
     1. https://github.com/diafygi/acme-tiny
     2. local ca
 readline-arg:
-    利用input,readline 重写argparse (python)
-wtee/rtee: file transfer like rsync/netcat(nc)
-    rtee -l 9999 -o dir [default output dir .]
-    wtee -h 192.168.0.100:9999 
-tcpcapture:
+    via input,readline 重写argparse (python)
+zero sync file: file transfer like rsync/netcat(nc)
+    zsync -daemon -l 9999 -o dir [default output dir .]
+    zsync -send 192.168.0.100:9999 
+    1. client support both send+recv file
+    2. check file via md5
+    2. session verify via token 
+tcpcapture: sniffer
     go-lib/net/packet
 http request/response modifier like requestly
 simple iptable:
     simple modify iptable
     route to http proxy: iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 9090
 
-# 全职工作的团队
+# 全职团队
 http://deepdevelop.com/
 一早一晚: 自由工作社区
 http://yizaoyiwan.com/discussions/460

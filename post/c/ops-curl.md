@@ -168,6 +168,9 @@ cmd:
 
 	-x, --proxy <[protocol://][user:password@]proxyhost[:port]>
 
+## resolve
+    curl 'https://my.com' --resolve my.com:443:192.168.0.218 --resolve my.com:8:192.168.0.218
+
 # debug
 
 	-v verbose

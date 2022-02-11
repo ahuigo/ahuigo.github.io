@@ -348,6 +348,42 @@ If you wanna change receivers, use pointer pls.
 		fmt.Println(v.Abs())
 	}
 
+### Method values
+> https://go.dev/ref/spec#Method_values
+> go-lib/func/method-value.go
+e.g.
+
+    type T struct {
+        a int
+    }
+    func (tv  T) Mv(a int) int         { return 0 }  // value receiver
+    func (tp *T) Mp(f float32) float32 { return 1 }  // pointer receiver
+
+    var t T
+    var pt *T
+    func makeT() T
+
+method with a pointer receiver using `an addressable value` will automatically take the address of that value
+
+    f := t.Mv; f(7)   // like t.Mv(7)
+    f := pt.Mp; f(7)  // like pt.Mp(7)
+    f := pt.Mv; f(7)  // like (*pt).Mv(7)
+    f := t.Mp; f(7)   // like (&t).Mp(7)
+    f := makeT().Mp   // invalid: result of makeT() is not addressable
+
+pt.Mv 相当于：
+
+    func (t T) MethodX(v0 ParamType0, ...) (ResultType0, ...) {
+        ...
+    }
+
+    // An implicit method of *T is automatically defined as
+    func (pt *T) MethodX(v0 ParamType0, ...) (ResultType0, ...) {
+        return (*pt).MethodX(v0, ...)
+    }
+
+参考：address value: go-var-addressable.md
+
 ### pointer as arg
 `p.Abs()` 和 `(*p).Abs()`等价，是传值还是指针完全看成员方法的定义
 
@@ -360,6 +396,7 @@ If you wanna change receivers, use pointer pls.
     j:=&i
     test(j)
     println(*j)
+
 
 # Errors
 The error type is a built-in interface similar to fmt.Stringer:

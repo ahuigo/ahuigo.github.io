@@ -35,3 +35,4 @@ https://zh.wikipedia.org/wiki/%E8%84%B1%E5%AD%97%E7%AC%A6
 	^	caret 脱字符
 	_	underscore
 	...	ellipsis	ellipsis mark	One happy customer wrote: "This is the best program...that I have ever seen."
+    #   comment sign/Pound sign or pound/Number sign/hash

@@ -209,8 +209,41 @@ The expression T(v) converts the value v to the type T.
     <-chan int(c) // 相当于 <-(chan int(c)) 
     (<-chan int)(c)
 
+### constants convert
+> https://go.dev/ref/spec#Conversions
+1. A constant value `x` can be converted to type `T` if `x` is representable by a value of `T`. 
+2. As a special case, an integer constant x can be explicitly converted to a string type using the same rule as for non-constant x.
 
-## 未命名类型 与 隐式转换
+Converting a constant yields a typed constant as result.
+
+    uint(iota)               // iota value of type uint
+    float32(2.718281828)     // 2.718281828 of type float32
+    complex128(1)            // 1.0 + 0.0i of type complex128
+    float32(0.49999999)      // 0.5 of type float32
+    float64(-1e-1000)        // 0.0 of type float64
+    string('x')              // "x" of type string
+    string(0x266c)           // "♬" of type string
+    MyString("foo" + "bar")  // "foobar" of type MyString
+    string([]byte{49})       // byte '1' of type string
+    (*int)(nil)              // not a constant: nil is not a constant, *int is not a boolean, numeric, or string type
+    int(1.2)                 // illegal: 1.2 cannot be represented as an int
+    string(65.0)             // illegal: 65.0 is not an integer constant
+
+
+### non-constant T(x)
+A non-constant value x can be converted to type T in any of these cases:
+
+1. x is assignable to T.
+1. ignoring struct tags (see below), x's type and T have identical underlying types.
+1. ignoring struct tags (see below), x's type and T are pointer types that are not defined types, and their pointer base types have identical underlying types.
+1. x's type and T are both integer or floating point types.
+1. x's type and T are both complex types.
+1. x is an integer or a slice of bytes or runes and T is a string type.
+1. x is a string and T is a slice of bytes or runes.
+1. x is a slice, T is a pointer to an array, and the slice and array types have identical element types.
+
+
+### 未命名类型 与 隐式转换
 相同声明的未命名类型（array,slice, map 等）才视为同一类型, 未命名类型类型及长度都不确定
 
 目标类型为未命名类型可以隐式转化
