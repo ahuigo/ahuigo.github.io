@@ -11,7 +11,7 @@ date: 2018-09-27
 
 ## rsync client
 
-	rsync option source[source2 ... sourceN] destination
+	rsync [option] source[source2 ... sourceN] destination
 	rsync -avz --timeout=10 --port= --delete ip::module/path dest_path
 	rsync /etc /home /usr/local /media/BigDisk/backup
 
