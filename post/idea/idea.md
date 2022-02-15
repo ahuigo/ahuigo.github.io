@@ -23,7 +23,7 @@ ssl_ca_certificate_generator
     2. local ca
 readline-arg:
     利用input,readline 重写argparse (python)
-wtee/rtee: file transfer like rsync/netcat(nc)
+fsync: file transfer like rsync/netcat(nc)
     rtee -l 9999 -o dir [default output dir .]
     wtee -h 192.168.0.100:9999 
 tcpcapture:

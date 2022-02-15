@@ -15,9 +15,13 @@ dir + file:
     dir := filepath.Dir(path)
     dir, file := filepath.Split(path)
 
-abs
+### abs path
 
     filepath.Abs(exec.LookPath(os.Args[0]))。
+
+### clean path
+	// Make ./name and name equivalent
+	name = filepath.Clean(name)
 
 ## glob match
     import (
