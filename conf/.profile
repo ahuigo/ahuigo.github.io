@@ -194,6 +194,8 @@ alias yarn=tyarn
 # z.lua
 #eval "$(lua ~/conf/z.lua --init zsh)"
 
+# deno
+export PATH=$PATH:~/.deno/bin
 
 # golang
 export GODEV=local

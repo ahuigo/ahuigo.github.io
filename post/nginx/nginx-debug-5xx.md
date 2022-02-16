@@ -116,9 +116,14 @@ NGX_HTTP_NOT_IMPLEMENTED
 ### 502
 NGX_HTTP_BAD_GATEWAY
 
-指向一个未监听的端口
+    1.nginx not running
+    2.指向一个未监听的ip/port
+        fastcgi_pass 127.0.0.1:2300;
+    3.服务没有开：如fpm/golang/nodejs没有开
+    3.服务因为timeout主动关闭了连接：如fpm/golang/nodejs 超时后主动关闭了连接
 
-    fastcgi_pass 127.0.0.1:2300;
+case:
+1. golang 502 https://studygolang.com/articles/30217
 
 ### 503
 NGX_HTTP_SERVICE_UNAVAILABLE

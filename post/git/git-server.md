@@ -32,9 +32,11 @@ mac 可在UI中添加
     #ChallengeResponseAuthentication yes	ChallengeResponseAuthentication no
     UsePAM yes	                            UsePAM no
 
-我们用id_rsa.pub 登录, 类似
+我们用id_rsa.pub 登录, 比如
 
 	cat ~/.ssh/id_rsa.pub | ssh user@machine "mkdir /Users/git/.ssh; cat >> /Users/git/.ssh/authorized_keys"
+
+如果没有authorized_keys, 会出现`Permission denied (publickey).`
 
 ### 配置git server
 如果git 没有PATH执行git 命令：

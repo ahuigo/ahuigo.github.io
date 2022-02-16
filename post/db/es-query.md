@@ -13,6 +13,62 @@ private: true
 
     network.host: 0.0.0.0
 
+## running status
+
+    curl http://localhost:9200/_cluster/health?pretty
+
+# ddl
+## add index
+
+	ES_SCHEMA_FILE=./schema/elasticsearch/v6/visibility/index_template.json
+	curl -X PUT "http://127.0.0.1:9200/_template/cadence-visibility-template" -H 'Content-Type: application/json' -d "@$(ES_SCHEMA_FILE)"
+	curl -X PUT "http://127.0.0.1:9200/cadence-visibility-dev"
+
+## delete index:
+
+    curl -X DELETE "http://127.0.0.1:9200/cadence-visibility-dev"
+
+v7/index_template.json: 
+
+    {
+      "order": 0,
+      "index_patterns": [
+        "cadence-visibility-*"
+      ],
+      "settings": {
+        "index": {
+          "number_of_shards": "5",
+          "number_of_replicas": "0"
+        }
+      },
+      "mappings": {
+        "dynamic": "false",
+        "properties": {
+          "WorkflowID": {
+            "type": "keyword"
+          },
+          "StartTime": {
+            "type": "long"
+          },
+          "CloseStatus": {
+            "type": "integer"
+          },
+          "IsCron": {
+            "type": "boolean"
+          },
+          "Attr": {
+            "properties": {
+              "CadenceChangeVersion":  { "type": "keyword" },
+              "CustomStringField":  { "type": "text" },
+              "BinaryChecksums": { "type": "keyword"},
+              "Passed": { "type": "boolean" }
+            }
+          }
+        }
+      },
+    }
+
+
 # read 数据
 ## list all indexes and type
     curl -s 'm:9200/_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'

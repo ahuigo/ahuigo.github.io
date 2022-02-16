@@ -101,6 +101,75 @@ Delve is full featured debugging tool for Go.
     > string(string(output))
     "hello"
 
+
+# debug simple main package
+配置：
+
+    {
+        "name": "Launch Package",
+        "type": "go",
+        "request": "launch",
+        "mode": "auto",
+        "program": "${fileDirname}"
+    }
+
+F5 运行后vscode自动监听62324：
+
+    dlv dap --check-go-version=false --listen=127.0.0.1:62324 --log-dest=3 /home/user/proj/cmd/server -- arg1 arg2
+
+# dlv remote 
+https://github.com/golang/vscode-go/blob/master/docs/debugging.md#remote-debugging
+
+    dlv debug /path/to/program/ --headless --listen=:12345 # also add as needed: --accept-multiclient --continue
+
+    dlv debug --headless --listen=:12345 --api-version=2 --log main.go -- arg1 arg2
+    dlv debug --headless --listen=:12345 --api-version=2 --log /path/to/package
+
+conf:
+
+    {
+        "name": "Connect to external session",
+        "type": "go",
+        "debugAdapter": "dlv-dap", // `legacy` by default
+        "request": "attach",
+        "mode": "remote",
+        "port": 12345,
+        "host": "127.0.0.1", // can skip for localhost
+        "substitutePath": [
+        { "from": ${workspaceFolder}, "to": "/path/to/remote/workspace" },
+        ...
+        ]
+    }
+
+
+# debug running process
+https://medium.com/average-coder/how-to-debug-a-running-go-app-with-vscode-76e3eac45bd
+
+## 1.run go app
+
+    go build -o /path/to/my-hello-world cmd/main.go
+    /path/to/my-hello-world
+
+## 2.dlv go process
+    dlv attach --headless --listen=:2345 $(pgrep my-hello-world) /path/to/package -- arg1 arg2
+
+## 3.config vscode
+        {
+            "name": "Launch",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "remotePath": "",
+            "port": 2345,
+            "host": "127.0.0.1",
+            // "remotePath": "${workspaceFolder}",
+            "program": "${fileDirname}",
+            "env": {},
+            "args": [],
+            "showLog": false
+        }
+
+
 # test
 ## test env 配置
   "go.testEnvVars": {

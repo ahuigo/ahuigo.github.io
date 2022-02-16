@@ -3,7 +3,7 @@ title: ssh proxy
 date: 2018-09-28
 private:
 ---
-# ssh proxy
+# ssh proxy(port forwarding)
 参考：
 SSH 有关密钥和私钥 的那些事儿: https://www.iteye.com/blog/purplefairy-xxshi-2267874
 SSH 密钥及私钥: https://telcruel.gitee.io/2019/09/21/SSH/
@@ -11,9 +11,7 @@ SSH 密钥及私钥: https://telcruel.gitee.io/2019/09/21/SSH/
     man ssh
     -f Rquests ssh to go to background just before command execution.
 
-## tcp port forwarding
-
-### socks proxy forward
+## socks5 tunnel
 > socks4 不支持 udp 应用, 现在大家都用 socks5 了
 建立一个 socks5, port:1080
 
@@ -28,97 +26,138 @@ SSH 密钥及私钥: https://telcruel.gitee.io/2019/09/21/SSH/
     -C  Requests compression of all data(gzip)
 
 
-### 本地端口转发
-#### ssh over ssh
+## 正向tunnel
+### ssh over ssh
 Tunnelling an ssh connection through an ssh connection:
 
     -L [bind_address:]port:host:hostport
 
-    # if 100.100.100.100 跳板机，2201 端口转发到 192.168.25.100:22
-    me% ssh user@100.100.100.100 -L 2201:192.168.25.100:22
+    # if 100.100.100.100 跳板机，localhost:2201 端口转发到 192.168.25.100:22
+    me% ssh user1@100.100.100.100 -L 2201:192.168.25.100:22
 
-then(本机的密码):
+then:
 
     me% ssh user2@localhost -p 2201
     实际访问% ssh user2@192.168.25.100 -p 22
 
-#### http over ssh
+### http over ssh
+转发2201到远端机的80
 
     me% ssh user@100.100.100.100 -L 2201:baidu.com:80
     # curl localhost:2201
 
-### 远端端口转发：reverse port forward
+## 反向tunnel
+### 反向tunnel
+1.连接外网主机: `85(内网)<->2001(外网)` 建立反向tunnel
 
-    # office to vps
-    ssh -R <local port>:<remote host>:<remote port> <SSH vps-host>
+    ssh -R 20001:localhost:85 root@remote.host
+    或者 autossh -p22 -M 5000 -NR 20001:0.0.0.0:85 root@remote.host # 自动重连
 
-    # vps
-    ssh -p local-port user@localhost
-    curl localhost:local-port
+    # 在内网上
+    nc -l 85
 
-> http://superuser.com/questions/588591/how-to-make-ssh-tunnel-open-to-public
+    # 在remote.host 上测试tunnel
+    nc localhost 20001
 
-For instance, I use this sometimes so that I can create a reverse port 22 (SSH) tunnel so that I can reconnect through SSH to a machine that is behind *a firewall* once I have gone away from that network.
+参数说明:
 
-	-R [bind_address:]port:host:hostport
-    ssh -R 8022:localhost:22 username@my.home.ip.address
-    ssh -gfNTR 8022:localhost:22 username@my.home.ip.address
-        bind_address: default loopback
-            ssh -R '\*:8080:localhost:80' # all interfaces
-            ssh -R 0.0.0.0:8080:localhost:80 # all Ipv4
-            ssh -R "[::]:8080:localhost:80"
-        hostport: 当前机器sshd的端口, 不是vps 的端口
-        
-        -g      Allows remote hosts to connect to local forwarded ports.
-        -f Requests ssh to go to background just before command execution.
-        -N   Do not execute a remote command
-        -T      Disable pseudo-terminal allocation.
+    -M port[:echo_port] # specifies the base monitoring port to use. 用于监听并自动重连
+        echo_port 转认为port+1,
+        if you specify "-M 5000", autossh will send test data on the base monitoring port 2000, and receive it back on the port 5001
 
-This will connect to my home machine and start listening on port 8022 there. Once I get home, I can then connect back to the machine I created the connection from using the following command:
+autossh 自动重连配置参数
 
-    ssh -p 8022 username_company@localhost
+    autossh -M 5000 \
+        -fN -o "PubkeyAuthentication=yes" \
+        -o "StrictHostKeyChecking=false" -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" \
+        -R localhost:20001:localhost:85 \
+        -p 2222 root@remote.host
 
-Remember to use the right username for the machine that you started the tunnel from. It can get confusing. You also have to keep in mind that since you are connecting to the host called localhost, but its really a port going to a different SSH server, you may wind up with a different host key for localhost the next time you connect to localhost. In that case you would need to edit your .ssh/known_hosts file to remove the localhost line. You really should know more about SSH before doing this blindly.
+### http over reverse tunnel
+测试http 20001
 
-As a final exercise, you can keep your reverse port forward open all the time by starting the connection with this loop:
+    # on remote.host
+    curl localhost:20001
+    nc localhost 20001
 
-    # > http://arondight.me/2016/02/17/%E4%BD%BF%E7%94%A8SSH%E5%8F%8D%E5%90%91%E9%9A%A7%E9%81%93%E8%BF%9B%E8%A1%8C%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/
-    while true ; do ssh -R 8022:localhost:22 suso@my.home.ip.address ; sleep 60 ; done
+如果想在外网主机上将80端口时转发内网20001: `80->localhost:20001(外网)->85(内网)`
 
-When bind_address is omitted (as in your example), the port is bound on the loopback interface only. In order to make it bind to all interfaces, use
+    ssh -p 2222 -fNTCL '*:80:localhost:20001' localhost
 
-	-N Do not execute a remote command.
-	#  binds to all interfaces individually
-	ssh -R '\*:8080:localhost:80' -N root@example.com
+     -T      Disable pseudo-terminal allocation.
+     -C      Requests compression of all data(gzip)
+     -L [bind_address:]port:host:hostport
+     -L [bind_address:]port:remote_socket
+     -L local_socket:host:hostport
+     -L local_socket:remote_socket
+             Specifies that connections to the given TCP port or Unix socket on the local (client) host are to be for-
+             warded to the given host and port, or Unix socket, on the remote side.
+测试外网80
 
-	# a general IPv4-only bind
-	ssh -R 0.0.0.0:8080:localhost:80 -N root@example.com
+    curl localhost:80/path
+    nc localhost 80
 
-	# the port is accessible via IPv6 natively
-	# and via IPv4 through IPv4-mapped IPv6 addresses (doesn't work on Windows, OpenBSD).
-	ssh -R "[::]:8080:localhost:80" -N root@example.com
-    
-#### other
+### ssh over reverse tunnel
+
+    # remote.host
+    ssh -p 20001 inner-user@localhost
+
+很可能会失败, 因为：
+1. 20001转发到的是内网的85端口, 而不是22端口
+2. 另外确认有正确的密钥、密码
+
+### 自动重连
+autossh 可以实现重连，不过我们还可以把它写成一个service: http://arondight.me/2016/02/17/%E4%BD%BF%E7%94%A8SSH%E5%8F%8D%E5%90%91%E9%9A%A7%E9%81%93%E8%BF%9B%E8%A1%8C%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/
+
+`vim /lib/systemd/system/autossh.service`，并设置权限为644:
+
+    [Unit]
+    Description=Auto SSH Tunnel
+    After=network-online.target
+    [Service]
+    User=autossh
+    Type=simple
+    ExecStart=/bin/autossh -p 22 -M 6777 -NR '*:6766:localhost:22' usera@a.site -i /home/autossh/.ssh/id_rsa
+    ExecReload=/bin/kill -HUP $MAINPID
+    KillMode=process
+    Restart=always
+    [Install]
+    WantedBy=multi-user.target
+    WantedBy=graphical.target
+
+让network-online.target 生效：
+
+    systemctl enable NetworkManager-wait-online
+
+然后设置该服务自动启动：
+
+    sudo systemctl enable autossh
+    sudo systemctl start autossh
+
+
+
+
+### 反向参数
 
     -w local_tun[:remote_tun]
-    -C 压缩数据传输
-    -f 将 ssh 转到后台运行，即认证之后，ssh 自动以后台运行。不在输出信息
+    -f Requests ssh to go to background just before command execution.
+    -N   Do not execute a remote command
+    -T      Disable pseudo-terminal allocation.
+    -C 压缩数据传输(gzip)
     -n 将 stdio 重定向到 /dev/null，与 -f 配合使用
     -N 不执行脚本或命令，即通知 sshd 不运行设定的 shell 通常与 -f 连用
     -T 不分配 TTY 只做代理用
     -q 安静模式，不输出 错误/警告 信息
+    -g      Allows remote hosts to connect to local forwarded ports.
     
 Note:    
 
 1. 不能使用 VPS (sshd server) 已占用的 22 端口，否则：Warning: remote port forwarding failed for listen port 22
 2. 默认只能通过VPS 本地loopback访问tunnel, 否则你需要开通GatewayPorts
 
-#### bind_address
-By default, the listening socket on the server will be bound to the loopback interface only.  This may be overridden by specifying a bind_address.  An empty bind_address, or the address ‘*’, indicates that the remote socket should listen on all interfaces.  Specifying a remote bind_address will only succeed if the server's GatewayPorts option is enabled (see sshd_config(5)).
-
 #### GatewayPorts
 1. GatewayPorts `-R [bind_address:]port:host:hostport`
-bind_address 参数默认值为空，等价于*:port:host:hostport 并不意味着任何机器，都可以通过 VPS 来访问 内网 机器。
+bind_address 参数默认值为空，等价于`*:port:host:hostport` 并不意味着任何机器，都可以通过 VPS 来访问 内网 机器。
 建立连接后，只能在 VPS ( sshd server ) 本地 访问 「内网」 机器。
 3. 要在办公网的笔记本上通过 VPS 映射的端口来访问 内网 机器，需要启用 VPS sshd 的 GatewayPorts 参数，允许任意请求地址，通过转发的端口访问内网机器。首先在中转机上(eg.aliyun)编辑sshd 的配置文件`/etc/ssh/sshd_config`，将*GatewayPorts* 开关打开：
 
@@ -137,11 +176,41 @@ bind_address 参数默认值为空，等价于*:port:host:hostport 并不意味�
 
     (APP) $ ssh -p 2222 ink@mantou.me    
 
-### autossh
-添加的一个-M 5678参数，负责通过5678端口监视连接状态，连接有问题时就会自动重连，去掉了一个-f参数，因为autossh本身就会在background运行。
 
-    /bin/su -c '/usr/bin/autossh -M 5678 -NR 1234:localhost:2223 user1@123.123.123.123 -p2221' - user1
+#### bind_address
+` -R [bind_address:]port:host:hostport`:
+1. By default, the listening socket on the server will be bound to the loopback interface only.  
+2. An empty bind_address, or the address `*`, indicates that the remote socket should listen on all interfaces. 
 
+Remote server's GatewayPorts option must be  enabled (man sshd_config(5)).
+
+    remote上sshd 的GatewayPorts 开关，并重启sshd
+
+> http://superuser.com/questions/588591/how-to-make-ssh-tunnel-open-to-public
+
+For instance, I use this sometimes so that I can create a reverse port 22 (SSH) tunnel so that I can reconnect through SSH to a machine that is behind *a firewall* once I have gone away from that network.
+
+    ssh -R 8022:localhost:22 username@my.home.ip.address
+    ssh -gfNTR 8022:localhost:22 username@my.home.ip.address
+        bind_address: default loopback
+            ssh -R '\*:8080:localhost:80' # all interfaces
+            ssh -R 0.0.0.0:8080:localhost:80 # all Ipv4
+            ssh -R "[::]:8080:localhost:80"
+        
+
+When bind_address is omitted (as in your example), the port is bound on the loopback interface only. In order to make it bind to all interfaces, use
+
+	-N Do not execute a remote command.
+	#  binds to all interfaces individually
+	ssh -R '\*:8080:localhost:80' -N root@example.com
+
+	# a general IPv4-only bind
+	ssh -R 0.0.0.0:8080:localhost:80 -N root@example.com
+
+	# the port is accessible via IPv6 natively
+	# and via IPv4 through IPv4-mapped IPv6 addresses (doesn't work on Windows, OpenBSD).
+	ssh -R "[::]:8080:localhost:80" -N root@example.com
+    
 ## ssh over socks
 ~/.ssh/config
 

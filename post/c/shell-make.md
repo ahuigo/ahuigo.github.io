@@ -72,10 +72,17 @@ e.g:
     echo $(HOME)
     echo ${HOME}
 
-make 变量与shell 变量不同
+make 变量与shell 变量语法不同
 
     LDFLAGS += -X "main.Version=$(shell git rev-parse HEAD)"
     GO := GO111MODULE=on go
+
+#### Array 变量
+    CMDS =
+    CMDS += init
+    CMDS += start
+
+    all: $(BINS)
 
 #### shell function
 我们可以执行shell, 其输出值作为变量值
