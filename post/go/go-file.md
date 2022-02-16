@@ -155,8 +155,12 @@ Open access:
 
 ### read bytes
 
+    // n1 <= len(b1) 
     b1 := make([]byte, 5)
     n1, err := f.Read(b1)
+
+    // n1 == len(buf) 成立
+    n1, err := io.ReadFull(f, buf)
 
 
 ### readFile
