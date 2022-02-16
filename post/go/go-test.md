@@ -27,7 +27,7 @@ Go has a lightweight test framework composed of the go test command and the test
         -bench=. ; 表示运行所有基准测试
         -bench=Alloc ; 表示运行所有基准测试: Benchmark_Alloc
 
-## faq
+## command faq
 ### testcache
 禁用cache 的方法有多个
 
@@ -60,41 +60,23 @@ After that, just import the package into any of the test files:
         _ "project/xtesting"
     )
 
-## unit test 介绍
-github.com/ahuigo/go-lib/gotest
-
-go test 会执行Test 打头的函数
-
-    package any_package_name
-    import "testing"
-
-    func TestReverse(t *testing.T) {
-        if true{
-            t.Log("ok")
-        }else{
-            t.Errorf("Oh! %q", "some error")
-        }
-    }
-
-可以再包装一下：
-
-    func assertEqual(t *testing.T, a interface{}, b interface{}, message string) {
-        if a == b {
-            return
-        }
-        if len(message) == 0 {
-            message = fmt.Sprintf("%v != %v", a, b)
-        }
-        t.Fatal(message)
-    }
-
-    func TestSimple(t *testing.T) {
-        a := 42
-        assertEqual(t, a, 43, "some error")
-    }
-
 ### test mode
-两种test mode:
+几种test mode:
+
+    # test pkg in current directory (not recursive)
+    go test 
+
+    # test pkg in $GOOOT (not recursive)
+    go test pkg
+
+    # test pkg in path (not recursive)
+    go test ./path/to/pkg
+
+    # specify test file(可能存在依赖问题, 不推荐)
+    go test path/pkg/t1_test.go path/pkg/t2_test.go 
+
+    # specify test file(可能存在依赖问题, recommended)
+    go test -run='^Test1$' ./path/to/pkg
 
 #### 1.directory mode(不会递归)
 执行当前diretory下所有的`_test.go` 是(必须有go.mod, module名不限定)
@@ -161,6 +143,39 @@ In package list mode ，successful package test result will be cached and reused
     go run  cmd/samples/recipes/helloworld/*.go
     # 不会包含*_test.go
     go run  ./cmd/samples/recipes/helloworld/
+
+## unit test 介绍
+github.com/ahuigo/go-lib/gotest
+
+go test 会执行Test 打头的函数
+
+    package any_package_name
+    import "testing"
+
+    func TestReverse(t *testing.T) {
+        if true{
+            t.Log("ok")
+        }else{
+            t.Errorf("Oh! %q", "some error")
+        }
+    }
+
+可以再包装一下：
+
+    func assertEqual(t *testing.T, a interface{}, b interface{}, message string) {
+        if a == b {
+            return
+        }
+        if len(message) == 0 {
+            message = fmt.Sprintf("%v != %v", a, b)
+        }
+        t.Fatal(message)
+    }
+
+    func TestSimple(t *testing.T) {
+        a := 42
+        assertEqual(t, a, 43, "some error")
+    }
 
 ### test output`Example_*`
 
