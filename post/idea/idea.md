@@ -23,9 +23,9 @@ ssl_ca_certificate_generator
     2. local ca
 readline-arg:
     via input,readline 重写argparse (python)
-zero sync file: file transfer like rsync/netcat(nc)
-    zsync -daemon -l 9999 -o dir [default output dir .]
-    zsync -send 192.168.0.100:9999 
+fsync: file transfer like rsync/netcat(nc)
+    fsync -daemon -l 9999 -o dir [default output dir .]
+    fsync -h 192.168.0.100:9999 
     1. client support both send+recv file
     2. check file via md5
     2. session verify via token 

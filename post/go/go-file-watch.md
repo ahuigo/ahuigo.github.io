@@ -1,12 +1,11 @@
 ---
-title: go file watch
+title: golang 下的文件监听
 date: 2020-07-09
-private: true
 ---
 # go file watch
 监听文件变化的方式有几种：
 1. 创建每个文件的fd(file descriptor)监听: 缺点fd 数是有限的
-   1. 如https://github.com/fsnotify/fsnotify.
+   1. 如https://github.com/fsnotify/fsnotify. 看了源码，它要递归所有文件的fd, 放到kequeue 中监听（arun使用的fsnotify）
       1. fork自howeyc/fsnotify, 基于linux kernel 提供的inotify wrapper(纯golang)
 2. 通过FSEvents 监听: less file descriptor usage
     1. rjeczalik/notify: https://www.reddit.com/r/golang/comments/6l87m2/watch_filesystem_for_changes/djrwip3/
@@ -14,6 +13,7 @@ private: true
         2. with less file descriptor usage 
 3. 通过监听文件属性: Name, ModTime, IsDir,etc. (Without using filesystem events)
     1. radovskyb/watcher: https://www.reddit.com/r/golang/comments/54q0c1/watcher_is_a_simple_go_package_for_watching_for/
+        1. https://github.com/radovskyb/watcher
 
 ## inotify
 > refer: https://www.cnblogs.com/sunsky303/p/8117864.html linux实时文件事件监听--inotify

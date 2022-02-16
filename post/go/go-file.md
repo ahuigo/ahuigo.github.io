@@ -15,9 +15,14 @@ dir + file:
     dir := filepath.Dir(path)
     dir, file := filepath.Split(path)
 
-abs
+### abs path
 
-    filepath.Abs(exec.LookPath(os.Args[0]))。
+    path,error := exec.LookPath(alias_path)
+    filepath.Abs(path)
+
+### clean path
+	// Make ./name and name equivalent
+	name = filepath.Clean(name)
 
 ## glob match
     import (
@@ -117,6 +122,16 @@ recursive:
 # File Api
 
 ## open
+read write trunc
+
+    // f, err := os.Create(name)
+    f, err := os.OpenFile(name, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+
+Open access:
+
+    func os.Open(name string) (*File, error) {
+        return OpenFile(name, O_RDONLY, 0)
+    }
     f, err := os.Open("/tmp/dat")
     f.Close()
 

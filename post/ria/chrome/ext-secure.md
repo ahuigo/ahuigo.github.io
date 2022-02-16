@@ -1,5 +1,5 @@
 ---
-title: Chrome Extension 使用
+title: Chrome Extension Secure
 date: 2019-10-06
 private: 
 ---
@@ -11,6 +11,7 @@ private:
 https://www.uriports.com/blog/creating-a-content-security-policy-csp/
 
 ## unsafe-inline 不再有效
+
 新chrome 无效:
 
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'">

@@ -20,7 +20,8 @@ export ENV_MODE=dev
 export LC_ALL='en_US.UTF-8'
 export LANG='en_US.UTF-8'
 export CLICOLOR="xterm-color"
-export PATH=$(pyenv root)/shims:$PATH:$HOME/www/a/bin:~/bin:/usr/local/sbin
+export PATH=$PATH:$HOME/www/a/bin:~/bin:/usr/local/sbin
+#$(pyenv root)/shims:
 export GNUTERM=qt
 export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])'$'\n$ '
 # for ssh-host-machine: export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
