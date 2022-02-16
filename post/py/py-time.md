@@ -282,10 +282,31 @@ parse rfc3339 format:
     # 小时数
     date(2019,12,28)-d1)/timedelta(hours=1)
 
-compare
+### compare
 
     d1<d2
     d1==d2
+
+### isCloseTime
+
+    from dateutil.parser import parse as strptime
+    from datetime import timedelta,datetime
+    def isCloseTime(t1:datetime, t2:datetime, tol=timedelta(microseconds=10)):
+        # 二选1
+        return -tol<t1-t2<tol
+        return abs(t1-t2)<tol
+
+    from dateutil.parser import parse as strptime
+    from datetime import timedelta,datetime
+    t1=strptime('2022-02-16 21:41:33.333929')
+    t2=datetime(2022, 2, 16, 21, 41, 33, 333928)
+    isCloseTime(t1-t2)
+
+
+like math.isclose
+
+    def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
+        return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
 ### begin of hour
 

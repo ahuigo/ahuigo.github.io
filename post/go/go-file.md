@@ -143,7 +143,13 @@ Open access:
 
 ## read
 ### seek
-    o2, err := f.Seek(6, 0)
+    /*
+    0 means relative to the origin of the file, 
+    1 means relative to the current offset, 
+    and 2 means relative to the end.
+    */
+    newoffset, err := f.Seek(6, 0)
+
     // There is no built-in rewind, but `Seek(0, 0)`
     _, err = f.Seek(0, 0)
 
