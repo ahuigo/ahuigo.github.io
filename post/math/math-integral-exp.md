@@ -9,15 +9,12 @@ date: 2018-09-27
 ### 定义
 对于:
 
-  $f(x)=a_nx^n+a_{n-1}x^{n-1}+...+a_1x+a_0$
+$f(x)=a_nx^n+a_{n-1}x^{n-1}+...+a_1x+a_0$
 
 $g(x)=b_mx^m+b_{m-1}x^{m-1}+...+b_1x+b_0$
 
 $g(x)=b_mx^m+b$
 
-```
-abc $a$
-```
 
 若存在多项式
   $h(x)=c_kx^k+c_{k-1}x^{k-1}+...+c_1x+c_0$
@@ -111,7 +108,7 @@ $\frac{1}a+\frac{1}b+\frac{1}c>\sqrt{a}+\sqrt{b}+\sqrt{c}$
 证明:
 1. $\frac{1}a+\frac{1}b+\frac{1}c=ab+bc+ac$
 1. $ab+bc+ac=((ab+bc)+(bc+ac)+(ab+ac))/2$
-1. $>\sqrt{abbc}+\sqrt{abca}+\sqrt{abcc}$
+1. $>\sqrt{abbc}+\sqrt{abca}+\sqrt{abcc}$ 因为 $a^2+b^2>2ab$
 1. $=\sqrt{a}+\sqrt{b}+\sqrt{c}$
 
 ##### eg.1

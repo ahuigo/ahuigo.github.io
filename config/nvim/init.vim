@@ -55,6 +55,7 @@ endfunction
 " search
 """""""""""""""""""""""""""""""""
 nnoremap <F1> :let @/ = ""<CR>
+nnoremap <F3> :w<CR>:!go run %<CR>
 nnoremap  \w :%s/\s\+$//e<CR>
 
 

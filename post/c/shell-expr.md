@@ -6,6 +6,33 @@ priority:
 ---
 # shell 表达式
 
+# multiple commands
+
+## command sequence list
+
+    # ; is for a sequential list
+    sh -c 'echo foo ; echo car' 
+
+    # & is for a asynchronous lists
+    sh -c 'sleep 1 & echo car'
+
+非法的:
+
+    sh -c 'echo foo &; echo car'
+
+## sub commands
+	(cmd1;cmd2) 	以子shell执行命令集
+		(var=notest;echo $var) # 无空格限制
+		arr=(1 2 3) 也用于初始化数组
+
+    sh -c "cmd1;cmd2"
+
+## merge commands
+	{ cmd1;cmd2;}		命令集(在前shell执行, 在bash 中左花括号后必须有一个空格，而cmds中最后一个cmd后必须有分号; zsh 则没有这些限制)
+
+## replace command
+    exec cmd
+
 # Loop
 
     for i in `seq 1 5`;
@@ -368,7 +395,7 @@ shell 没有三元运算符：不过可以这样
 	(cmd1;cmd2) 	以子shell执行命令集
 		(var=notest;echo $var) # 无空格限制
 		arr=(1 2 3) 也用于初始化数组
-	{ cmds;}		命令集(在前shell执行, 在bash 中左花括号后必须有一个空格，而cmds中最后一个cmd后必须有分号; zsh 则没有这些限制)
+	{ cmd1;cmd2;}		命令集(在前shell执行, 在bash 中左花括号后必须有一个空格，而cmds中最后一个cmd后必须有分号; zsh 则没有这些限制)
 		for i in {0..4};do echo $i;done 产生一个for in序列
 		ls {a,b}.sh		通配符(globbing)
 		echo a{p,c,d,b}e # ape ace ade abe

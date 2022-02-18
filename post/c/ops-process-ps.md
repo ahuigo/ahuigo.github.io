@@ -177,13 +177,20 @@ print command name (not path)
 	NI — nice值。负值表示高优先级，正值表示低优先级
 
 #### MEM
-rss 是进程占用的物理内存，但是所有进程加起来的rss 会超过物理内存（因为进程间有很多内存是共享的, 比如共享库）
+参考 [PSS/USS 和 RSS 其实是一回事，吗？](https://changkun.de/blog/posts/pss-uss-rss/)
+- USS: Unique Set Size, the physical memory occupied by the process, does not calculate the memory usage of the shared library.
+- PSS: Proportion Set Size, the actual physical memory used, shared libraries, etc. are allocated proportionally.
+- VSS: Virtual Set Size, virtual memory footprint, including shared libraries.
+- RSS: Resident Set Size, actual physical memory usage, including shared libraries.
 
+rss 是进程占用的物理内存，但是所有进程加起来的rss 会超过物理内存（因为进程间有很多内存是共享的, 比如共享库）
+Generally we have `VSS >= RSS >= PSS >= USS`
+
+    USS - Unique Set Size: 进程独自占用的内存（不包括共享库占用）
+    PSS: 实际使用的物理内存（共享库按照进程数等比例划分）
 	RSS: 常驻内存——程序+共享库(不同进程会重复计算共享库大小)+部分堆栈内存(另外部分堆栈内存是在交换区VSZ)
         在 top 命令里对应的是 REZ
-    PSS: 实际使用的物理内存（共享库按照进程数等比例划分）
-    USS - Unique Set Size: 进程独自占用的内存（不包括共享库占用）
-	VSZ: 虚拟内存大小
+	VSS:(VSZ) virt=swap+rss, 它是申请且未归还的虚拟地址空间
 
 	rss       RSS    resident set size, the non-swapped physical memory that a task has used (in kiloBytes). (alias rssize, rsz).
 	vsz       VSZ    virtual memory size of the process in KiB (1024-byte units).(alias vsize)

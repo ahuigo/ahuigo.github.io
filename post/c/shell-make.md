@@ -261,7 +261,7 @@ Example: clean 清除编译文件 这一target 不需要条件。
         @-mkdir -p dir1/dir2
         echo "ok"
 
-## 指令目标
+## 忽略目标
 如果当前目录有文件叫做clean，那么这个命令`make clean`不会执行。因为Make发现clean文件已经存在，就认为没有必要重新构建了
 
 除非指定`.PHONY`：

@@ -33,14 +33,7 @@ OM(Operation Maintenance) 运维工具
 
 # 自动管理
 配置类工具: Capistrano、Chef、puppet、func、salstack、Ansible、rundeck
-
-## puppet
-puppet是一个开源的软件自动化配置和部署工具，它使用简单且功能强大，正得到了越来越多地关注，现在很多大型IT公司均在使用puppet对集群中的软件进行管理和部署，如google利用puppet管理超过6000台地mac桌面电脑
-
-### start & stop
-
-	service puppet stop
-	service puppet start
+用得最多的应该是ansible, 它基于ssh 不需要安装服务端
 
 ## cfengine
 cfengine（配置引擎）是一种 UNIX 管理工具，其目的是使简单的管理的任务自动化，使困难的任务变得较容易。Cfengine 适用于管理各种环境，从一台主机到上万台主机的机群均可使用。到2.2 版本为止，我们现在所知的用于一般性管理的最大安装机群约为20，000 台。
