@@ -41,6 +41,11 @@ execute commands:
 
 > For about shell typed characters, refer to [shell.md](/shell.md)
 
+# compare expr
+
+    if 'a'=='a'| echom "yes" | endif
+
+
 # control expression
 
 ## loop
@@ -209,6 +214,8 @@ On visual mode, you don not need `g@`:
 `a:var` can not be modified!
 
 	function Varg(...)
+    " all list
+      echom a:
 	  echom a:0
 	  echom a:1
 	  echom a:2
@@ -241,6 +248,41 @@ Result:
 	2
 	b
 	['b', 'c']
+
+## get default arguments
+
+    function! FunctionName(arg1,...)
+        let arg2 = get(a:, 1, "default1")
+        let arg3 = get(a:, 2, "default2")
+        let arg3 = a:3 >= 1 ? a:1 : 0
+
+# eval(execute)
+
+    let g:path_to_source = '~/' . g:file_we_want . '.vim'
+    execute 'source' g:path_to_source
+	exec 'source '.fnameescape('~/.vimrc')
+
+exec normal
+
+    let i = 4
+    execute "normal! " . i . "l"
+
+
+注意:
+
+    " 实际执行的是 echom abc ，abc是未定义的
+    exec 'echom'  "abc"
+
+    " 实际执行的是 echom "abc"
+    exec 'echom'  '"abc"'
+
+
+## python
+
+    :py3 Text2Speech(vim.eval("a:visual"))
+    :py3 vim.eval("expand('<cWORD>')")
+    :py3 vim.command("expand('<cWORD>')")
+
 
 # 脚本文件
 

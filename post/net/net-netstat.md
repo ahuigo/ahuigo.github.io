@@ -7,7 +7,26 @@ date: 2018-09-28
 ---
 # Preface
 - netstat
-- ss 参数形式如netstat
+- ss 参数形式如netstat, 现代化的netstat
+
+# ss
+> for linux
+ss：套接口统计数据(-n 以端口号统计)
+
+    $ netstat -lntp
+    $ ss -lntp
+    ....
+    $ ss -ln
+    RecvQ SendQ LocalAddress:port
+
+参数类似netstat:
+
+	-l listening
+	-a both listening and non-listening socket
+	-n --number
+	-p show process
+	-t tcp
+	-u udp
 
 # netstat
 > http://billie66.github.io/TLCL/book/zh/chap17.html
@@ -133,22 +152,3 @@ Task: Find Out Current Working Directory Of a Process
 	lrwxrwxrwx 1 vivek vivek 0 2010-10-29 12:04 /proc/3813/cwd -> /home/vivek
 	$ pwdx 3813
 	lrwxrwxrwx 1 vivek vivek 0 2010-10-29 12:04 /proc/3813/cwd -> /home/vivek
-
-# ss
-> for linux
-ss：套接口统计数据
-
-    $ netstat -lntp
-    $ ss -lntp
-    ....
-    $ ss -ln
-    RecvQ SendQ LocalAddress:port
-
-参数类似netstat:
-
-	-l listening
-	-a both listening and non-listening socket
-	-n --number
-	-p show process
-	-t tcp
-	-u udp

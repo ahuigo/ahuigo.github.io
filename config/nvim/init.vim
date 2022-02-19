@@ -55,6 +55,7 @@ endfunction
 " search
 """""""""""""""""""""""""""""""""
 nnoremap <F1> :let @/ = ""<CR>
+nnoremap <F3> :w<CR>:!go run %<CR>
 nnoremap  \w :%s/\s\+$//e<CR>
 
 
@@ -287,5 +288,7 @@ endfunction
 command! -nargs=+ -complete=command Pipe2Shell call Pipe2Shell(<q-args>)
 
 set ts=4 sw=4 softtabstop=4 nu autoindent
+
+exec "source ".expand('<sfile>:p:h').'/edit.vim'
 
 " vim: set ts=2 sw=2 tw=80 noet :

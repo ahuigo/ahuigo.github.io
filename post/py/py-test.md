@@ -84,10 +84,9 @@ example
 
     pytest test_a.py
 
-
 ### verbose output
     pytest -s
-    -s is equivalent to --capture=no.
+    -s is equivalent to --capture=no
 
 ### output
 

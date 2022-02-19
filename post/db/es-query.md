@@ -304,8 +304,9 @@ date 可以math计算，参考：https://www.elastic.co/guide/en/elasticsearch/r
 ## sort
     sort=age:desc
 
-# get and update
+# add and update
 ## add
+    POST localhost:9200/<index>/<doctype>[/doctype[/doctype...]]
     POST localhost:9200/accounts/person/1 
     {
         "name" : "John",

@@ -742,6 +742,9 @@ Client 也有一个SYN_SEND 队列
 先来看半连接队列，这里就涉及到一个著名的攻击，SYN Flood 攻击。
 
 ## reset by peer
+The remote server has sent you a RST packet, which indicates an immediate dropping of the connection. This bypasses the normal half-closed state transition(这绕过了关连接状态转换):
+> "Connection reset by peer" is the TCP/IP equivalent of slamming(猛摔) the phone back on the hook. It's more polite than merely not replying, leaving one hanging. But it's not the FIN-ACK expected of the truly polite TCP/IP converseur.
+
 当我们往一个对端已经close的通道写数据的时候，对方的tcp会收到这个报文，并且反馈一个reset报文，tcpdump的结果如下所示,当收到reset报文的时候，继续做select读数据的时候就会抛出Connect reset by peer的异常，从堆栈可以看得出 
 
 当第一次往一个对端已经close的通道写数据的时候会和上面的情况一样，会收到reset报文，当再次往这个socket写数据的时候，就会抛出Broken pipe了 ，根据tcp的约定，当收到reset包的时候，上层必须要做出处理，调用将socket文件描述符进行关闭，其实也意味着pipe会关闭，因此会抛出这个顾名思义的异常

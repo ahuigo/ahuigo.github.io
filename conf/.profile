@@ -92,13 +92,14 @@ function devops() {
 }
 function goclean() {
     if [[ -z $1 ]]; then
+        echo goclean  github.com/ahuigo/arun
         return
     fi
     echo "\$1=$1"
-    echo 'xsudo rm -rf ~/go/pkg/mod/gitlab.momenta.works/hdmap-workflow/'$1@\*
-    sudo rm -rf ~/go/pkg/mod/gitlab.momenta.works/hdmap-workflow/$1@*
-    echo 'xrm -rf ~/go/pkg/mod/cache/download/gitlab.momenta.works/hdmap-workflow/'$1
-    rm -rf ~/go/pkg/mod/cache/download/gitlab.momenta.works/hdmap-workflow/"$1"
+    echo 'sudo rm -rf ~/go/pkg/mod/'$1@\*
+    sudo rm -rf ~/go/pkg/mod/$1@*
+    echo 'rm -rf ~/go/pkg/mod/cache/download/'$1
+    rm -rf ~/go/pkg/mod/cache/download/"$1"
 }
 function devops2() {
 	cwd_dir=$(pwd)
@@ -203,14 +204,17 @@ export GODEV=local
 export GO111MODULE=on 
 export GOPATH=~/go
 # 配置 GOPROXY 环境变量
-export GOPROXY=https://goproxy.io,direct
-# 还可以设置不走 proxy 的私有仓库或组，多个用逗号相隔（可选）
 export GOPRIVATE=git.mycompany.com,github.com/my/private
+export GOPROXY=https://goproxy.io,direct
+export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
+export GONOSUMDB=*.corp.example.com,rsc.io/private
 #export GOSUMDB=off
+
 export PATH=$PATH:$GOPATH/bin
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
-export GONOSUMDB=gitlab.momenta.works/hdmap-workflow/mauth
+#export GONOSUMDB=gitlab.momenta.works/hdmap-workflow/mauth
+export GOPRIVATE='*.internal.mycompany.com'
 alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
 
 # java

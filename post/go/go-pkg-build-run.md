@@ -26,6 +26,7 @@ go run 与 go build 都可以编译源码，只是go build 可生成二进制文
         # 编译当前目录下所有的go
     $ go build  main.go lib1.go lib2.go：
         # 等于: go build -o main main.go lib1.go lib2.go; # lib1 lib2 必须是同一个包的源码
+    $ go build ./包
     $ go build 包
         包名是相对于 src 目录开始算，go build -o main directory/go-project
 
@@ -66,7 +67,7 @@ go run 与 go build 都可以编译源码，只是go build 可生成二进制文
     go tool compile -S file.go > file.S
 
 ### print optimization decisions
-f you want to print optimization decisions for all packages including dependencies can use this command instead:
+if you want to print optimization decisions for all packages including dependencies can use this command instead:
 
     $ go build -gcflags="all=-m" -o=/tmp/foo .
 
@@ -78,23 +79,23 @@ the flags `-N` to disable optimizations and `-l` to disable inlining if you need
 ## linker选项: ldflags
 > https://www.digitalocean.com/community/tutorials/using-ldflags-to-set-version-information-for-go-applications
 
-ldflags/gcflags 是linker 链接器选项。可以用于设定静态链接、变量. 选项帮助:
+ldflags/gcflags 都是linker 链接器选项。可以用于设定静态链接、变量. 选项帮助:
 
     $ go tool link -help
 
 ### ldflags 控制编译变量
 
-    // go-lib/compile/ldflags-var.go
+    // go-lib/build/ldflags-var.go
     var Version = "development"
 
     func main() {
-        fmt.Println("Version:\t", Version)
+        fmt.Println("Version:", Version)
     }
 
 run:
 
-    go run -ldflags="-X 'main.Version=v1.0.1'" ldflags-var.go
-
+    go run -ldflags="-X 'main.Version=注入version'" ldflags-var.go
+        Version:注入version
 
 # build tag
 refer: https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags

@@ -227,6 +227,17 @@ operator
 	echo match(string, search);//return pos(start from 0, like strpos)
 	echo match('abc', 'bc');//1
 
+#### startswith & endswith
+endswith .vim:
+
+    if filname =~ ".vim$"
+        exe 'source' filename
+    endif
+
+    if 'a_test.go' !~ "_test.go$"
+        exe '!go test -v ' filename
+    endif
+
 ### stridx(strpos)
 ### strridx(strpos)
 

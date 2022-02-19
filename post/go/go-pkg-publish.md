@@ -5,8 +5,9 @@ category: blog
 description: 
 date: 2016-09-27
 ---
-# golang write mod package
-> 下面的例子我放在了：https://github.com/ahuigo/go-lib/tree/master/import-local-mod
+# write mod package
+例子我放在了：https://github.com/ahuigo/go-lib/tree/master/import-local-mod
+
 ## write a go cli
 cli 程序的实现说明见：go/go-pkg-cli.md https://github.com/ahuigo/go-cli-demo.git
 
@@ -68,11 +69,15 @@ clean 命令清：
     -modcache remove the entire module download cache
         rm -r $GOPATH/pkg/mod
 
-## install
+# install/get package
 安装本地包/远程包
 
+    # install binary
     go install .
     go install github.com/ahuigo/xxx
+
+    # add dependencies + download + install
+    go get github.com/ahuigo/xxx
 
 其它命令
 
@@ -81,13 +86,53 @@ clean 命令清：
                 生成与file 同名的bin
 	install     compile and install packages and dependencies(with bin)
                 生成与module同名的bin (不会缓存到pkg目录)
-	get         download and install packages and dependencies
-                download pkg+install
+	get         add dependencies to current module and install them
+                go.mod+download+install
         -u      update
         -d      only download
 
 go get 可以用于：download+install 或者只download
 go install 只用于install
+
+### private package:GOSUMDB
+默认通过GOSUMDB 指定服务器对下载包进行签名校验：
+
+    $ go env |ag sum
+    GOSUMDB="sum.golang.org"
+
+如果是install private package, 比如artifactory, 由于没有签名会失败. 可以指定私有库, 避免检查sumdb：
+
+    GOPRIVATE="*.internal.mycompany.com" go install github.com/ahuigo/arun
+    GOPRIVATE="*.internal.mycompany.com,github.com" go install github.com/ahuigo/arun
+
+在`.zshrc`或`.bashrc` 中设定私有
+
+    export GOPRIVATE="*.internal.mycompany.com,github.com" 
+    # for go.sum
+    export GOSUMDB=off
+
+如果使用goproxy.io 应该可以用以下签名（官方的无法连接）: https://goproxy.io/zh/docs/GOSUMDB-env.html
+
+    export GOPROXY=https://goproxy.io,direct
+    export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
+
+### goproxy
+
+    export GOPROXY=https://goproxy.io,direct
+
+The value of GOPROXY is a list
+
+    The list is separated by commas “,” or pipes “|”
+    “off” : it means turn off the feature
+    “direct” : it instructs the tool to download it directly from the code hosting server.
+
+代理服务的endpoint
+
+    https://goproxy.io/github.com/ahuigo/requests/@v/list
+    https://goproxy.io/github.com/ahuigo/requests/@latest
+    https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.info
+    https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.mod
+    https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.zip
 
 # gopath 结构(modulle,package,dir)
 1. module: 是一组package list
@@ -95,10 +140,6 @@ go install 只用于install
 3. 一个目录下只能用一个package: 包名可以和目录名不一样。
 
 ## workspace
-环境变量查看路径配置
-
-    $ go env
-
 可以有多个工作空间, go get 使用第一个
 
     export GOPATH=workspace1;workspace2
@@ -106,6 +147,9 @@ go install 只用于install
 	# 默认的
 	GOROOT=/usr/local/Cellar/go/1.6.2/libexec/
 
+环境变量查看路径配置
+
+    $ go env
 
 每个工作空间组成. 
 
@@ -178,38 +222,6 @@ j go-lib
     }
 
 
-
-# legency(非go mod)
-## write a package(go get)
-下面的例子基于： GO111MODULE=off 
-
-	$ vim $GOPATH/src/A/hello/ahuix.go
-    // 没有 go.mod:如果与目录hello 不同名，则import 时，别名就不能随意指定
-    // 有go.mod: 别名可以随意指定
-    package hello
-    func Test(){
-        println("test by Ahuix")
-    }
-
-直接就可以运行：
-
-    $ cat a.go
-    package main
-    import (
-        anyname "hello"
-    )
-    func main() {
-        anyname.Test()
-    }
-
-    $ GO111MODULE=off go run a.go
-
-下面三个go install 都会生成: $GOPATH/pkg/darwin_amd64/hello.a
- 
-    $ export GO111MODULE=off
-    $ cd ~/go/src/hello &&  go install
-    $ go install ~/gohome/src/hello
-    $ go install ~/gohome/src/hello/ahuix.go
 
 # 包的发布
 ## 发版本

@@ -29,8 +29,15 @@ fsync: file transfer like rsync/netcat(nc)
     1. client support both send+recv file
     2. check file via md5
     2. session verify via token 
-tcpcapture: sniffer
+tcpcapture: 
     go-lib/net/packet
+    1. sniffer
+    2. tcp packet report
+        2. https packet report
+    1. doc: net/tcp-sniffer.md
+        1. https://inc0x0.com/tcp-ip-packets-introduction/tcp-ip-packets-3-manually-create-and-send-raw-tcp-ip-packets/
+memstat/iotop:
+    1. 参考 [PSS/USS 和 RSS 其实是一回事，吗？](https://changkun.de/blog/posts/pss-uss-rss/)
 http request/response modifier like requestly
 simple iptable:
     simple modify iptable

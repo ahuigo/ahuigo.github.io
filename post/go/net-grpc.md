@@ -31,3 +31,6 @@ https://medium.com/swlh/using-grpc-and-protobuf-in-golang-9c218d662db3
 exec
 
     go run main.go
+
+# demo
+github.com/ahuigo/grpc-demo

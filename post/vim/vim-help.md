@@ -17,9 +17,11 @@ date: 2018-10-04
 不同模式下命令的help 用法:
 
 	:h CTRL-L　"normal mode
-	:h g_CTRL-G "normal mode
-	:h c_CTRL-L "ex mode
 	:h CTRL-q "normal mode
+	:h g_CTRL-G "normal mode (g CTRL+G)
+	:h c_CTRL-C "command mode
+	:h c_<Left> "command mode
+	:h c_CTRL-L "command mode
 	:h i_CTRL-R "insert mode
 
 vim中的很多命令都可以结合使用，比如强大的`:g`, 我们先help 看看他的用法。
