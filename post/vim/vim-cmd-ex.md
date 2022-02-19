@@ -5,12 +5,38 @@ category: blog
 description: 
 date: 2018-10-04
 ---
+# modes
+
+    Normal mode (or Command mode)
+        See :help normal-mode.
+
+    Insert mode
+        See :help insert-mode.
+
+    Visual mode
+        See :help visual-mode.
+
+    Select mode
+        Accessible from insert mode with <C-g>.  Similar to visual mode but Rarely used.
+        See :help select-mode.
+
+    Replace mode
+        See :help replace-mode.
+
+    Command-line mode
+        See :help command-line-mode.
+
+    Ex mode
+    	You don't have to keep pressing ":".
+        See :help Ex-mode
+
 # ex mode
 
-    gQ ex mode
+    Q or gQ ex mode
 	gv	reselect previouse area
 
-## history mode
+# command line mode
+## history window 
 :h cmdline-window
 
     q: Ex command-line history

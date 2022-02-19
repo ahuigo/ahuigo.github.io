@@ -23,7 +23,10 @@ date: 2018-09-26
 ## 一般形式
 尾递归的一般形式:
 
+    // t为中间结果
 	int f(n, t){
+        if n==0:
+            return f_tmp2(t)
 		t = f_tmp(n, t);
 		return f(n-1, t);
 	}
@@ -33,18 +36,16 @@ date: 2018-09-26
 	for(i=n; i>0; i--){
 		t = f_tmp(i, t);
 	}
+    f_tmp2(t)
 
-可以看出尾递归 算法必须满足: `f(n, t) = f(n-1, f_tmp(n, t))`.
+可以看出尾递归 算法必须满足: `f(n, t) = f(n-1, f_tmp(n, t))` (当`n>0`).
 
 1. 第一次调用f(n, t): 经过中间计算f_tmp(n, t)后
 2. 第二次调用f(n-1, f_tmp(n,t) ), 与上一次的计算结果关, 没有必要对上次计算做栈保存了.
 
 以阶乘factorial 为例: fact(n) = n*fact(n-1) 不满足尾递归, 可以改成: fact_iter(n, t)(python 不带尾递归优化)
 
-    def fact(n):
-        return fact_iter(n, 1)
-
-    def fact_iter(num, product):
+    def fact_iter(num, product=1):
         if num == 1:
             return product
         return fact_iter(num - 1, num * product)

@@ -87,12 +87,19 @@ nerdtree 是一个非常强大的文件管理插件
 :h filename-modifiers:
 
 	:. reduce file name to current directory
+    :t filename
 	:r root of the file name(without extension)
 	:e extension of file name
 
     :p file full path
 	:% file relative path
     :inoremap <D-V> <ESC>:r!echo '%:t:r'<CR>
+
+expand 前
+
+    :!echo %
+    :!echo %:p
+    :!echo %:h
 
 ### buffer
 Register `%` contains the name of the current file,
