@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2018-09-27 [Golang：Array and slice](/b/go/go-array-slice) 
 - 2020-07-09 [golang 下的文件监听](/b/go/go-file-watch) 
 - 2016-09-27 [go 的变量](/b/go/go-var) 
 - 2018-09-27 [golang string](/b/go/go-str) 
@@ -38,4 +39,3 @@
 - 2018-03-01 [Python 的语法](/b/py/py-expr) 
 - 2019-02-16 [linux c socket 编程](/b/c/c-socket) 
 - 2018-09-28 [net-ssl](/b/net/ssl-proto) 
-- 2018-09-28 [net-ssl-tool](/b/net/ssl-openssl) 

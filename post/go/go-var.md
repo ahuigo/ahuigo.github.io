@@ -60,6 +60,11 @@ A var declaration can include initializers, one per variable.
 		j = 2
 	)
 
+缩写
+
+    var i int,v byte=1,byte(48)
+    i,v:=1,byte(48)
+
 ### Zero values
 Variables declared without an explicit initial value are given their zero value.
 
@@ -68,12 +73,13 @@ The zero value is:
 	0 for numeric types,
 	false for the boolean type, and
 	"" (the empty string) for strings.
-	nil for pointer
+	nil for pointer, slice
 
 
     var i int
     var f float64
     var b bool
+    var s []byte
 
 ## Short variable declarations :=
 the `:=` short assignment statement can be used in place of `a var declaration with implicit type`.

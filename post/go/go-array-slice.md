@@ -264,7 +264,7 @@ The returned slice will point to the newly allocated array.
     b = append(b,4,5);  # newcap(b)= 2*cap(b) = 6 
 ```
 
-## range loop slice and array
+## loop slice and array
 The `range` form the `for loop iterates` over a `array, slice, string or map`, or values received on a channel.
 
     for i, v := range [2]int{1,2} {
