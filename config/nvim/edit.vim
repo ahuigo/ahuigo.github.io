@@ -1,4 +1,4 @@
-echo "my edit.vim"
+"echom "my edit.vim"
 nnoremap <F1> :let @/ = ""<CR>
 nnoremap  \w :%s/\s\+$//e<CR>
 

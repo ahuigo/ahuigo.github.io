@@ -215,10 +215,7 @@ export PATH=$PATH:$GOPATH/bin
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
 #export GONOSUMDB=gitlab.momenta.works/hdmap-workflow/mauth
 export GOPRIVATE='*.internal.mycompany.com'
-alias go12='export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec; ln -sf /usr/local/opt/go@1.12/bin/go /usr/local/bin/go'
 alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
-alias go15='export GOROOT=/usr/local/Cellar/go/1.15.6/libexec; ln -sf /usr/local/opt/go@1.15/bin/go /usr/local/bin/go'
-
 
 # java
 export JAVA_HOME="$(/usr/libexec/java_home)"
