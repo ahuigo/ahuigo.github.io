@@ -29,13 +29,30 @@ fsync: file transfer like rsync/netcat(nc)
     1. client support both send+recv file
     2. check file via md5
     2. session verify via token 
-tcpcapture: 
+tcpstat，tcpcapture: 
     go-lib/net/packet
     1. sniffer
     2. tcp packet report
-        2. https packet report
     1. doc: net/tcp-sniffer.md
         1. https://inc0x0.com/tcp-ip-packets-introduction/tcp-ip-packets-3-manually-create-and-send-raw-tcp-ip-packets/
+    2. https packet report
+httpdump: like fiddler but without proxy
+    1. httpdump -p port (dump body)
+    2. httpdump -web
+        1. alephjs web: 
+            1. list all http req-response
+            2. replay http
+    3. http proxy support
+    3. https proxy support
+    3. support https
+        1. certificate generate
+        1. https packet parse
+gotestdoc:
+    1. 通过comment 生成doc: gotestdoc 
+    /* gotestdoc: md
+        # title
+        test case description
+    */
 memstat/iotop:
     1. 参考 [PSS/USS 和 RSS 其实是一回事，吗？](https://changkun.de/blog/posts/pss-uss-rss/)
 http request/response modifier like requestly
@@ -47,6 +64,8 @@ simple iptable:
 http://deepdevelop.com/
 一早一晚: 自由工作社区
 http://yizaoyiwan.com/discussions/460
+medium.com
+https://medium.com/%E5%86%99%E4%BD%9C%E4%B9%8B%E8%B7%AF/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%A6%82%E4%BD%95%E5%9C%A8medium-com%E4%B8%8A%E9%80%9A%E8%BF%87%E5%86%99%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2%E8%B5%9A%E9%92%B1-6d47d82b03dd
 
 ## Remote Engineer
 contact http://nvie.com/about/

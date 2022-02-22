@@ -22,7 +22,7 @@ if len(sys.argv)==3:
     v = sys.argv[2]
 else:
     version = open(versionFile).read().strip()
-    v = re.sub(r'(?<=\.)\d+$',incrNum, version)
+    v = re.sub(r'(?<=\.)(-)?\d+$',incrNum, version)
 
 print(v, end='\n')
 open(versionFile,'w').write(v)

@@ -48,6 +48,7 @@ RISC 精简指令集主要有三种
     apt-get install vim
 
 # dpkg
+## find file which pckages contain
 
     $ dpkg -s libssl1.0.0
     Version: 1.0.1e-2+deb7u12
@@ -55,3 +56,7 @@ RISC 精简指令集主要有三种
 
     $ dpkg -l | grep libc6
     ii  libc6:i386          
+
+## list installed files
+    dpkg-query -L <package_name>
+    dpkg-deb -c <package_name.deb>

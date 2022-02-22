@@ -253,6 +253,7 @@ next(c) 等价于c.send(None)
     except StopIteration as e:
         print(e.value) # 11
 
+说明在`yield`函数中，`return value` 的值是保存到了 `StopIteration(value)`
 
 # data comprehension
 ## list comprehension
