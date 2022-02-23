@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2022-02-24 [tcpdump udp analysis](/b/net/net-tcpdump-udp) 
+- 2022-02-24 [tcpdump tcp analysis](/b/net/net-tcpdump-tcp) 
 - 2015-11-11 [tcp/ip 协议SYN](/b/net/net-tcp-queue) 
 - 2016-09-27 [golang pkg 开发包](/b/go/go-pkg-publish) 
 - 2022-02-20 [shell 表达式](/b/c/shell-expr) 
@@ -37,5 +39,3 @@
 - 2018-09-28 [py-import](/b/py/py-import) 
 - 2018-09-28 [Python 文件处理](/b/py/py-file) 
 - 2018-09-27 [tool](/b/c/ops-user) 
-- 2013-09-26 [经典排序算法的实现](/b/algorithm/sort) 
-- 2018-09-27 [c-io-buffer](/b/c/c-io-buffer) 

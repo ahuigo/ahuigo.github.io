@@ -24,6 +24,8 @@ function! edit#run()
     let ext = expand('%:e')
     if ext == 'py'
         !python3 %
+    elseif ext == 'js'
+        !node %
     elseif ext == 'go'
         let filepath = expand('%')
         if filepath =~ '_test.go$'
