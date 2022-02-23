@@ -80,6 +80,9 @@ go install 命令在内部实际上分成了两步操作：
 ## go test
 参考go help testflag
 
+## go vet
+vet         report likely mistakes in packages
+
 ## 其他命令
 go fix 用来修复以前老版本的代码到新版本，例如go1之前老版本的代码转化到go1
 

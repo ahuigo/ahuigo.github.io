@@ -6,6 +6,9 @@ description:
 ---
 # Preface
 linux 下有很多用于查看高负载的命令，比如top 用来查看内存/cpu 消耗的，iotop 用来查看io 消耗的。
+# 查看io: iotop
+
+	iotop -o
 
 # top
 top 是一个动态查看进程信息的工具(推荐用`htop`)
@@ -93,10 +96,6 @@ top 是一个动态查看进程信息的工具(推荐用`htop`)
 
 	r 重新安排进程优先级
 		数值越小，级别越高
-
-# 查看io
-
-	iotop -o
 
 # Reference
 - [top]

@@ -43,28 +43,34 @@ or:
 
 ### 替换及重置Homebrew默认源
 
-    #替换brew.git:
     git -C "$(brew --repo)" remote set-url origin https://mirrors.ustc.edu.cn/brew.git
+    git -C "$(brew --repo)/Library/Taps/homebrew/homebrew-core" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
 
-    #替换homebrew-core.git:
-    cd "$(brew --repo)/Library/Taps/homebrew/homebrew-core"
-    git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
+    # 或
+    git -C "$(brew --repo)" remote set-url origin https://mirrors.ustc.edu.cn/brew.git
+    for tap in core cask;do
+        git -C $(brew --repo homebrew/$tap) remote set-url origin https://mirrors.ustc.edu.cn/homebrew-${tap}.git
+    done
+
+    # 或
+    export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.ustc.edu.cn/brew.git"
+    export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.ustc.edu.cn/homebrew-core.git"
+    # 或用二进制预编译包的Bottles镜像
+    export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
 
 切换回官方源：
 
-    # brew 程序本身，Homebrew/Linuxbrew 相同
-    git -C "$(brew --repo)" remote set-url origin https://github.com/Homebrew/brew.git
-
     # 以下针对 mac OS 系统上的 Homebrew
-    git -C "$(brew --repo homebrew/core)" remote set-url origin https://github.com/Homebrew/homebrew-core.git
-    git -C "$(brew --repo homebrew/cask)" remote set-url origin https://github.com/Homebrew/homebrew-cask.git
-    git -C "$(brew --repo homebrew/cask-fonts)" remote set-url origin https://github.com/Homebrew/homebrew-cask-fonts.git
-    git -C "$(brew --repo homebrew/cask-drivers)" remote set-url origin https://github.com/Homebrew/homebrew-cask-drivers.git
+    git -C "$(brew --repo)" remote set-url origin https://github.com/Homebrew/brew.git
+    for tap in core cask;do
+        git -C $(brew --repo homebrew/$tap) remote set-url origin https://github.com/Homebrew/homebrew-${tap}.git
+    done
 
     # 以下针对 Linux 系统上的 Linuxbrew
     git -C "$(brew --repo homebrew/core)" remote set-url origin https://github.com/Homebrew/linuxbrew-core.git
 
-    # 更换后测试工作是否正常
+更换后测试工作是否正常
+
     brew update
 
 ### Homebrew Bottles是Homebrew提供的二进制代码包
