@@ -18,11 +18,15 @@ private:
 
     COPY tablename TO '/tmp/output.csv' DELIMITER ',' CSV HEADER;
     \copy (select name,date_order from purchase_order) to '/home/ankit/Desktop/result.csv' cvs header;
+
 ## pipe to file
     db=>\o out.txt
     db=>\dt
-    db=>\o
+    db=> select * from t
+    db=> select * from t2
 
+    db=>\o out2.txt
+    db=>\o -- 不带参数，表示停止写
 
 
 # pager
