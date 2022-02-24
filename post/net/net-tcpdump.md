@@ -170,6 +170,8 @@ flowdata 是一个binary! 查看的话需要借助`-r`
 	sudo tcpdump -r flowdata
 
 # tcp
+参考`man tcpdump`找到 TCP Packets
+
 分析tcp 包时，不要限制`dst or src`：
 
 	sudo tcpdump -i en5 -n -A host ahuigo.github.io
@@ -279,9 +281,9 @@ port range
     tcpdump portrange 1-1023
     tcpdump -n udp dst portrange 1-1023
 
-filter pcap
+read/save pcap
 
-    tcpdump -Z root -r src.pcap "tcp port 22" -w dst.pcap
+    tcpdump -Z root -r src.pcap "tcp port 4500" -w dst.pcap
 
 我想获取使用ftp端口和ftp数据端口的网络包
 
