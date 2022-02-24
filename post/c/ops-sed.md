@@ -41,10 +41,17 @@ sed 命令行基本格式为:
 
 	/pattern/action
 	range{/pattern/action}
+	s/pattern/replace/g
+	s#pattern#replace#g
 
 example:
 
-    echo abc | gsed 's/a/A/'
+    echo aabc | gsed 's/a/A/'
+    echo aabc | gsed 's/a/A/g'
+
+    # 好像只有s才支持`#` 边界符 
+    echo aabc | gsed 's#a#A#'
+    echo aabc | gsed 's#a#A#g'
 
 # action, 操作码
 

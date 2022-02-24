@@ -139,7 +139,6 @@ Use visual block as object via `:normal`
     map <C-I> >
 
 ## 关于mac的特殊键
-
 mac 会拦截 Alt+字符, 并替换成特殊字符. 比如:<A-p>会被mac 默认的keyboard layout 替换成 π(# map 中我会总结更多的细节)
 
     # 默认的mac keyboard layout下， 该映射无法捕获到<A-p>
@@ -148,6 +147,20 @@ mac 会拦截 Alt+字符, 并替换成特殊字符. 比如:<A-p>会被mac 默认
     :map π <ESC>
 
 另外, mac下的左右shift键盘信号是一致的, 你永远都不能判断左右shift(反正我也不用)
+
+### Command key
+see `:help <D-` for command key or super key
+
+    <D-s>  Command+s
+
+### Alt key
+
+    <M-...>		alt-key or meta-key		*META* *ALT* *<M-*
+    <A-...>		same as <M-...>			*<A-*
+
+### custom key
+    et g:MyAltKey = "<Esc>"
+    execute 'normal! :vnoremap ' . g:MyAltKey . 'c "+y' . "\r"
 
 ## leader
 

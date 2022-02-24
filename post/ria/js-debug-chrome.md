@@ -30,9 +30,12 @@ chrome devtool 的source 选项卡(`cmd+6`) 正好提供了这两个功能
     - chrome 会智能的将filesystem 与localhost 请求绑定(link to filesystem), 
     - 绑定后有一个绿色的标志，这样就不会cache 请求，(127.0.0.1)网络请求就会实时生效。
 1. Overrides
-    - 用于覆盖网络请求: 在`source/page`右键`save for override`或直接`edit`，保存的文件都被存储到overrides 指定目录(`按照域名建立文件夹`). 这种改写是`临时的`
-    - 只能指定一个目录
-    - 断点debug 时，实时修改文件，然后保存后会恢复到第一个断点，不用重新刷新
+    1. 先指定临时目录（只能指定一个目录）: 这个目录是临时目录，用于保存调试overrides 的文件。
+        1. 一般地，如果想覆盖`/js/marked.js`, 就选择打开本地的`js`目录即作为临时目录，又可以查看修改源文件
+    2. 覆盖网络请求: 在`source/page`或`network`中右键`save for override`, 
+        1. 然后直接`edit`此文件
+        2. `command+s`保存的文件都被存储到overrides 指定目录(`按照域名建立文件夹`). 
+    3. 断点debug 时，实时保存文件后，**不用重新刷新**, 代码实时生效
 3. charles/fiddler 用代理 map 请求
 
 ## source map
