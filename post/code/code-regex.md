@@ -156,7 +156,7 @@ ERE,BRE 都不支持：
 
 	(?#comment)	这种类型的分组不对正则表达式的处理产生任何影响，用于提供注释让人阅读
 
-## 断言
+## 断言(环视)
 
 	(?=exp) 也叫零宽度正预测先行断言，它断言自身出现的位置的后面能匹配表达式exp。
 		比如\b\w+(?=ing\b)，匹配以ing结尾的单词的前面部分(除了ing以外的部分)，
@@ -168,8 +168,20 @@ ERE,BRE 都不支持：
 		(?<![a-z])\d{7} 匹配前面不是小写字母的七位数字>
 	(?(exp)yes|no)	把exp当作零宽正向先行断言，如果在这个位置能匹配，使用yes作为此组的表达式；否则使用no
 
-	(?<=exp)word(?=exp)
-	(?<!exp)word(?!exp)    # >
+环视示例
+
+    > 'leftright'.match(/left(?=right)right/) 
+        [ 'leftright', index: 0, input: 'leftright', groups: undefined ]
+    > 'leftright'.match(/left(?<=left)right/) 
+        [ 'leftright', index: 0, input: 'leftright', groups: undefined ]
+    > 'leftright'.match(/left(?<=left)(?=right)right/) 
+    > 'leftright'.match(/left(?=right)(?<=left)right/) 
+        [ 'leftright', index: 0, input: 'leftright', groups: undefined ]
+
+负向环视示例
+
+    > 'leftright'.match(/left(?!right)right/) 
+    null
 
 # 支持情况
 常用命令的支持对wildcard/posix/perl 的支持情况

@@ -5,8 +5,15 @@ category: blog
 description: 
 ---
 # perf
-从2.6.31内核开始，linux内核自带了一个性能分析工具perf，能够进行函数级与指令级的热点查找。
-
-http://blog.csdn.net/zhangskd/article/details/37902159?from=groupmessage&isappinstalled=0
-
+性能领域的大师布伦丹·格雷格（Brendan Gregg）的linux perfformance tool:
 ![](/img/ops/perf-tool.png)
+![](/img/ops/perf-tool.jpeg)
+
+## bpf 工具(Bk package filter)
+- [详细介绍了BPF程序编译生成字节码过程](https://www.cnblogs.com/lfri/p/15402973.html)
+- [https://maao.cloud/2021/03/01/%E7%AC%94%E8%AE%B0-BPF-and-XDP-Reference-Guide-cilium/#LLVM](https://maao.cloud/2021/03/01/%E7%AC%94%E8%AE%B0-BPF-and-XDP-Reference-Guide-cilium/#LLVM)
+- [技术|深入理解 BPF：一个阅读清单 (linux.cn)](https://linux.cn/article-9507-1.html)
+- 最神奇的Linux技术 BPF入门: https://zhuanlan.zhihu.com/p/469860384
+
+### mac bpf example
+go-lib/net/packet/bpf

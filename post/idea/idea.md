@@ -44,9 +44,14 @@ httpdump: like fiddler but without proxy
             2. replay http
     3. http proxy support
     3. https proxy support
-    3. support https
+    3. support https/http2
+        1. 写给工程师：关于证书（certificate）和公钥基础设施（PKI）的一切
+        http://arthurchiao.art/blog/everything-about-pki-zh/
         1. certificate generate
         1. https packet parse
+arun: 
+    1. arun -p 4501 # a shell support command from vim/vscode/
+    2. arun go run .
 gotestdoc:
     1. 通过comment 生成doc: gotestdoc 
     /* gotestdoc: md

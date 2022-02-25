@@ -23,8 +23,8 @@ package-lock.json
 node_modules
 
 # em
-/img/em
-/img/mo
+#/img/em
+#/img/mo
 
 # blog
 post/p/

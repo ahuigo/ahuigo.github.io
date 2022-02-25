@@ -38,6 +38,7 @@ private: true
 Store Form Data into Upper Component
 
     // const initFields = Object.entries(def).map((item) => ({name:item[0],value:item[1]}))
+    // 官方好像自带 setFields
     const [fields, setFields] = useState([{ name: 'username', value: 'Ant' }]);
 
     return <Form
@@ -59,15 +60,16 @@ Store Form Data into Upper Component
 
 
 ## 手动更新field
-Item: 用setFieldsValue
+用 setFieldsValue
 
     <input 
         onChange={(e)=>form.setFieldsValue({name:e.target.value}}}
         value={form.getFieldValue('name')}
     >
 
-    setFields([{name:"age", value:1}])
+或 setFields
 
+    form.setFields([{name:"age", value:1}])
 
 ## via Form.Item
 

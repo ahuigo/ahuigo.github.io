@@ -197,6 +197,9 @@ alias yarn=tyarn
 # z.lua
 #eval "$(lua ~/conf/z.lua --init zsh)"
 
+# app
+export APP_ENV=dev
+
 # deno
 export PATH=$PATH:~/.deno/bin
 
@@ -205,7 +208,7 @@ export GODEV=local
 export GO111MODULE=on 
 export GOPATH=~/go
 # 配置 GOPROXY 环境变量
-export GOPRIVATE=git.mycompany.com,github.com/my/private
+export GOPRIVATE='*.internal.mycompany.com,github.com/ahuigo1,github.com/ahuigo/requests'
 export GOPROXY=https://goproxy.io,direct
 export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 export GONOSUMDB=*.corp.example.com,rsc.io/private
@@ -214,8 +217,6 @@ export GONOSUMDB=*.corp.example.com,rsc.io/private
 export PATH=$PATH:$GOPATH/bin
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
-#export GONOSUMDB=gitlab.momenta.works/hdmap-workflow/mauth
-export GOPRIVATE='*.internal.mycompany.com'
 alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
 
 # java
