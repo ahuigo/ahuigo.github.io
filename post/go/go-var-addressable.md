@@ -44,7 +44,7 @@ We can't take the address of the following values:
         &afunc //func afunc()
     methods (used as function values)
         &t.method()
-    intermediate values(中间值)
+    intermediate values(中间值) 不参与gc引用计数, 调用完会被随时回收
         function calls
             &afunc()
             &afunc().field
