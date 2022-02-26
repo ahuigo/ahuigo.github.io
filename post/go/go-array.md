@@ -264,6 +264,37 @@ The returned slice will point to the newly allocated array.
     b = append(b,4,5);  # newcap(b)= 2*cap(b) = 6 
 ```
 
+## delete slice
+delete `a[i]`: `O(n)`
+
+    a=append(a[:i],a[i+1:]...)
+    # or i+1 往前复制
+    a=a[:i+copy(a[i:],a[i+1:])]
+
+删除后设置为nil 方便内存回收（好像不智能？）
+
+    if i<len(a)-1{
+        copy(a[i:],a[i+1:])
+    }
+    a[len(a)-1]=nil
+    a=a[:len(a)-1]
+
+## filter in place
+
+    i:=0
+    for x in s{
+        if keep(x){
+            s[i]=x
+            i++
+        }
+    }
+    s=s[:i]
+
+## pop push
+
+    s = s[:len(s)-1]
+    s=append(s, x)
+
 ## loop slice and array
 The `range` form the `for loop iterates` over a `array, slice, string or map`, or values received on a channel.
 

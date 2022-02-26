@@ -23,6 +23,10 @@ private: true
         }
     }
 
+除非只迭代下标，就不会copy
+
+        for i:= range roles{
+
 ## 不要对range元素取址
 对range v取址`&v`, 得到相同的`{chain2, 21}`. 
 因为v是栈空间的变量，在整个loop期间会copy　元素`o[i]`到这个变量`v`。

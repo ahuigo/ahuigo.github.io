@@ -228,6 +228,7 @@ Error/Fatal 都会导致bench 不被执行
 2.XXX可以是任意字母数字的组合，但是首字母不能是小写字母
 
     func Benchmark_XXX(b *testing.B) { ... }
+    func BenchmarkXXX(b *testing.B) { ... }
 
 ## write bench 
 
@@ -245,6 +246,8 @@ Error/Fatal 都会导致bench 不被执行
         }
     }
 
+b.N 从 1 开始，如果该用例能够在 1s 内完成，b.N 的值便会增加，再次执行。b.N 的值大概以 1, 2, 3, 5, 10, 20, 30, 50, 100 这样的序列递增
+
 ## 测试bench
 -bench regex
 
@@ -261,15 +264,23 @@ Error/Fatal 都会导致bench 不被执行
 
 2000000000 表示测试的次数，也就是 testing.B 结构中提供给程序使用的 N。“0.33 ns/op”表示每一个操作耗费多少时间（纳秒）。
 
+BenchmarkDivision-4 中的 -4 即 GOMAXPROCS，默认等于 CPU 核数。可以通过 -cpu 参数改变 GOMAXPROCS，-cpu 支持传入一个列表作为参数，例如：
+
+    $ go test -cpu=2,4 .
+
 ### 自定义bench 时间
-通过-benchtime参数可以自定义测试时间，例如：
+通过-benchtime参数可以自定义测试时间，默认是1s, 例如：
 
     $ go test -v -bench=. -benchtime=5ms bench_test.go
     5ms
     5s
 
-### count重复执行
-如果想定义执行5次（实际次数是b.N*5）
+也可以用倍数
+
+    $ go test -bench='Fib$' -benchtime=50x .
+
+### count执行轮数(go test也有)
+如果想定义执行5轮（实际次数是b.N*5）
 
     go test -bench=".*" -count=5
 
@@ -304,7 +315,7 @@ text模式top
 
 更多: 运行 go tool pprof 来得到最完整的列表
 
-### bench memory
+## -benchmem bench memory
 可以 从help 找到memory profile 的说明
 
     go help testflag
@@ -327,5 +338,54 @@ text模式top
     Benchmark_Alloc-4   	20000000	       107 ns/op	      
                             16 B/op	       2 allocs/op
 
-## 参考
-https://studygolang.com/articles/7051
+## ResetTimer 忽略无关的耗时
+    func BenchmarkFib(b *testing.B) {
+        time.Sleep(time.Second * 3) // 模拟耗时准备任务
+        b.ResetTimer() // 重置定时器
+        for n := 0; n < b.N; n++ {
+            fib(30) // run fib(30) b.N times
+        }
+    }
+
+## StopTimer & StartTimer
+还有一种情况，每次函数调用前后需要一些准备工作和清理工作，我们可以使用 StopTimer 暂停计时以及使用 StartTimer 开始计时。
+
+例如，如果测试一个冒泡函数的性能，每次调用冒泡函数前，需要随机生成一个数字序列，这是非常耗时的操作，这种场景下，就需要使用 StopTimer 和 StartTimer 避免将这部分时间计算在内。
+
+    package main
+    
+    import (
+    	"math/rand"
+    	"testing"
+    	"time"
+    )
+    
+    func generateWithCap(n int) []int {
+    	rand.Seed(time.Now().UnixNano())
+    	nums := make([]int, 0, n)
+    	for i := 0; i < n; i++ {
+    		nums = append(nums, rand.Int())
+    	}
+    	return nums
+    }
+    
+    func bubbleSort(nums []int) {
+    	for i := 0; i < len(nums); i++ {
+    		for j := 1; j < len(nums)-i; j++ {
+    			if nums[j] < nums[j-1] {
+    				nums[j], nums[j-1] = nums[j-1], nums[j]
+    			}
+    		}
+    	}
+    }
+    
+    func BenchmarkBubbleSort(b *testing.B) {
+    	for n := 0; n < b.N; n++ {
+    		b.StopTimer()
+    		nums := generateWithCap(10000)
+    		b.StartTimer()
+    		bubbleSort(nums)
+    	}
+    }
+# 参考
+https://geektutu.com/post/hpg-benchmark.html

@@ -30,7 +30,7 @@ lsattr
 	-R ：連同子目錄的資料也一併列出來！ 
 
 # selinux
-Refer to [linux-selinux](/p/linux-selinux)
+Refer to [ops-selinux](/p/ops-selinux)
 
 SELinux / AppArmor is preventing apache httpd from binding to a specific IP/PORT
 

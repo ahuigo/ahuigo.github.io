@@ -94,6 +94,29 @@ eg:
     ON CONFLICT DO NOTHING
 
 ## select 
+    select array[1,2] where true;
+
+### select order
+execut order:
+
+    FROM with JOIN's to get tables
+    WHERE for limit rows from tables
+    SELECT for limit columns
+    GROUP BY for group rows into related groups
+    HAVING for limit resulting groups (不能使用select 中的别名，不过`having sum(cost)>50`不会重复计算)
+    ORDER BY for order results
+
+### is null
+
+    select 1 is null; 
+    where column is null;
+
+IS NULL in PostgreSQL is not value:
+
+    // error
+    select 1 is 1
+
+### 字段引号
 双引号 反引号。表示特殊的字段：
 
     select "abc";
@@ -264,6 +287,11 @@ delete and keep top 2 row(order by peg) with group by industry
         SELECT key1, key2 FROM table_name ORDER BY date DESC LIMIT 2
     );
 
+#### having
+PostgreSQL won't calculate the sum twice
+
+    SELECT  SUM(points) AS total FROM table GROUP BY username HAVING  SUM(points) > 25
+
 ### concat rows
 合并为array
 
@@ -273,6 +301,7 @@ delete and keep top 2 row(order by peg) with group by industry
 合并为字符串：
 
     -- GROUP BY 1 is a positional reference and a shortcut for GROUP BY movie
+    -- The `group by 1` is a positional reference and a shortcut for `GROUP BY movie` in this case.
     SELECT movie, string_agg(actor, ', ') AS actor_list FROM tbl GROUP  BY 1; 
 
 ### DISTINCT

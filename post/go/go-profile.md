@@ -10,12 +10,16 @@ private:
 
     CPU profiles
     Heap profiles
-    block profile、traces等
+    block profile 阻塞分析
+    mutex profiling 锁性能分析
+    traces等
+
 
 ## go profiling相关的分析工具
 主要有以下几种工具
 1. `go test` 基准测试文件：比如使用命令`go test -bench . -cpuprofile prof.cpu` 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。
 2. `runtime` 工具：通过在代码里面调用 `runtime.StartCPUProfile`或者`runtime.WriteHeapProfile`等能方便的采集程序运行的`堆栈、goroutine、内存分配和占用、io 等信息`并生成 `.prof` 文件.
+    1. `pkg/profile` : 封装了 `runtime/pprof` 的接口，使用起来更简单
 3. `net/http/pprof`：用于分析http 服务的性能瓶颈. 其实其内部调用的就是`runtime`
 
 > 更多调试的使用，可以阅读Go Blog的 Profiling Go Programs: https://go.dev/blog/pprof
@@ -33,6 +37,11 @@ Generate a text report of the profile, sorted by hotness:
         profile.pb.gz: Local path to the profile in a compressed protobuf, or
                     URL to the http service that serves a profile.
 
+### pprof 输出形式
+使用 -text 选项可以直接将结果以文本形式打印出来。
+
+    $ go tool pprof -text cpu.pprof
+
 Generate a graph in an SVG file, and open it with a web browser:
 
     pprof -web [main_binary] profile.pb.gz
@@ -45,6 +54,17 @@ Run pprof via a web interface
 
     pprof -http=[host]:[port] [main_binary] profile.pb.gz
 
+pprof 其它输出格式
+
+    $ go tool pprof
+    Output formats (select at most one):
+        -gif             Outputs a graph image in GIF format
+        -dot             Outputs a graph in DOT format
+        -png             Outputs a graph image in PNG format
+        -text            Outputs top entries in text form
+        -tree            Outputs a text rendering of call graph
+        -web             Visualize graph through web browser
+
 ### pprof 交互模式指令
 进入pprof 交互模式后，可以执行`top`,`top20`, `list`, `help`等各种指令，具体参考`help`
 
@@ -52,7 +72,7 @@ Run pprof via a web interface
     (pprof) list main.main (查看main.main函数)
     (pprof) list main (查看main.main, runtime.main 函数)
     (pprof) traces (打印调用栈)
-    (pprof) top20 -cum
+    (pprof) top20 -cum (包含函数调用的时间)
 
 
 ## runtime/pprof
@@ -84,6 +104,30 @@ example:
 ### 将分析输出为 pdf 格式文件：
 
     go tool pprof --pdf hello cpu.prof > cpu.pprof.pdf
+
+## pkg/profile 包
+pkg/profile 是对 runtime/pprof 的封装，更易用一点儿
+
+### 生成mem.pprof
+    import (
+        "github.com/pkg/profile"
+        "math/rand"
+    )
+
+    func main() {
+        defer profile.Start(profile.MemProfile, profile.MemProfileRate(1)).Stop()
+        concat(100)
+    }
+### 生成cpu.pprof
+
+    func main() {
+        defer profile.Start().Stop()
+        concat(100)
+    }
+
+运行后：将生成类似
+
+    cpu profiling ..., /tmp/profile068616584/cpu.pprof
 
 ## net/http/pprof
 > 示例：github.com/ahuigo/go-lib/gonic/ginapp/gin-pprof.go
@@ -177,11 +221,8 @@ example:
 
     $ go tool pprof http://localhost:4500 ;# 简写
     $ go tool pprof http://localhost:4500/debug/pprof/profile
-    Fetching profile over HTTP from http://localhost:4500/debug/pprof/profile
     Saved profile in /Users/ahui/pprof/pprof.samples.cpu.010.pb.gz
     Type: cpu
-    Time: Jun 1, 2021 at 4:10pm (CST)
-    Duration: 30s, Total samples = 420ms ( 1.40%)
     Entering interactive mode (type "help" for commands, "o" for options)
     (pprof) top
           flat  flat%   sum%        cum   cum%
@@ -284,7 +325,7 @@ go-torch 是一款非官方的profile 分析工具. 功能已经集成到官方�
 主要有两种方法
 
 ### 通过pprof -base 对比
-思路是先生成两个时间点的pprof 文件，然后利用`go tool pprof -base`对比两个时间的内在消耗:
+思路是先生成两个时间点的pprof 文件，然后利用`go tool pprof -base`对比两个时间的内存消耗:
 
     go tool pprof -base app.20210101.001.pb.gz app.20210102.002.pb.gz
     (pprof) list main  (对比变化)
@@ -303,20 +344,27 @@ http://ip:port/debug/pprof/goroutine?debug=2 可查看阻塞原因、阻塞多�
     goroutine 1 [chan receive, 1406 minutes]:
     main.main() /go/src/gitlab.momenta.works/hdmap-workflow/production-management/cmd/main.go:39 +0x29f
 
-# 官方的bench工具：go test -bench
+# benchmark 生成profile
 源码 https://github.com/ahuigo/playflame/tree/slow/stats
 
-## bench cpu
-我们来压测下stats 这个目录
+go test -bench 支持几个参数: 
+
+    -cpuprofile=$FILE
+    -memprofile=$FILE, -memprofilerate=N #调整记录速率为原来的 1/N。
+    -blockprofile=$FILE
+
+## bench -cpuprofile
+先生成cpu.pprof
 
     git clone https://github.com/ahuigo/playflame
     cd playflame/stats
-    $ go test -bench . -benchmem -cpuprofile prof.cpu
+    gco slow
+    $ go test -bench . -benchmem -cpuprofile=cpu.pprof
     BenchmarkAddTagsToName-4   	 1000000	      2138 ns/op	     487 B/op	      18 allocs/op
 
-注意2138ns/op ，说明很慢
+分析一下cpu.pprof, 注意2138ns/op ，说明很慢
 
-    $ go tool pprof stats.test  prof.cpu
+    $ go tool pprof stats.test  cpu.pprof
     Entering interactive mode (type "help" for commands, "o" for options)
     (pprof) top10
       flat  flat%   sum%        cum   cum%
@@ -401,7 +449,7 @@ http://ip:port/debug/pprof/goroutine?debug=2 可查看阻塞原因、阻塞多�
 
 注意我们的内存分配次数14allocs/op, 下面我们再优化下mem
 
-### bench mem
+## bench -memprofile
 生成memProfile 
 
     go test -bench . -benchmem -memprofile prof.mem
@@ -451,7 +499,7 @@ http://ip:port/debug/pprof/goroutine?debug=2 可查看阻塞原因、阻塞多�
 1. buffer 优化代替string 拼接：
 2. 进一步，利用buffer 池，减少内存分配
 
-代码参考: go-lib/master/stats/reporter.go
+代码参考: /playflame/stats/reporter.go
 
     var bufPool = sync.Pool{
         New: func() interface{} {
@@ -479,3 +527,4 @@ https://zhuanlan.zhihu.com/p/45959147
 
 # 参考
 - [Go代码调优利器-火焰图](https://lihaoquan.me/2017/1/1/Profiling-and-Optimizing-Go-using-go-torch.html) 
+- [极客兔兔 pprof性能分析]: https://geektutu.com/post/hpg-pprof.html

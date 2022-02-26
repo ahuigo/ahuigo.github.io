@@ -5,15 +5,20 @@ private: true
 ---
 # pg ddl meta
 
-## list all tables
-all索引表 information_schema.table_constraints
+## meta tables
+tables 表
 
-    > select tco.table_name,tco.constraint_name,tco.constraint_type from information_schema.table_constraints tco limit 1000;
-    > select tco.table_name,tco.constraint_name,tco.constraint_type from information_schema.table_constraints tco where tco.table_name='current_workflow'
+    select tab.table_name from information_schema.tables tab limit 10;
+    select tab.table_name,tab.table_schema,table_type from information_schema.tables tab where tab.table_schema='public' group by tab.table_name,tab.table_schema,tab.table_type;
 
-all tables: information_schema.tables
+索引表 table_constraints
 
-    > select tab.table_name,tab.table_schema,table_type from information_schema.tables tab where tab.table_schema='public' group by tab.table_name,tab.table_schema,tab.table_type;
+    select tco.table_name,tco.constraint_name,tco.constraint_type from information_schema.table_constraints tco limit 100;
+    select tco.table_name,tco.constraint_name,tco.constraint_type from information_schema.table_constraints tco where tco.table_name='current_workflows';
+
+key_column_usage 表:
+
+    select kcu.table_name,kcu.column_name from information_schema.key_column_usage kcu limit 10;
 
 ## list all tables with primary key and unique
     select tab.table_schema,

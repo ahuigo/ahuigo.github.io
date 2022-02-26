@@ -171,7 +171,7 @@ Saving your firewall rules can be done as follows:
 
 将备份的规则还原
 
-    iptables-restore iptables.rules
+    iptables-restore < iptables.rules
 
 保存当前规则, 以下三种方法都可以
 
@@ -402,7 +402,7 @@ ftp 默认有两个端口，先用21端口做认证，再用20端口做文件传
     iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
     iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 
-## FORWARD 接口转发
+## FORWARD 接口转发
 iptables forwarding between two interface [closed]
 1. wlan0 (station) - Connected to the internet 
 2. wlan1 (AP) - Other clients connect to it.
@@ -463,19 +463,19 @@ I would like for clients connected to wlan1 to be able to access the internet on
     #      192.168.10.95.55751 > 172.29.88.56.8081
     # netstat -an |grep 55121
     iptables -t nat -A PREROUTING -i eth0 -p tcp -d 192.168.10.100 --dport 81 -j DNAT --to-destination 172.29.88.56:8081
-    # 我们需要将syn中的source变成代理ip（当包返回时，代理ip会根据NAT表将包转发到原来的client)
+    # 我们需要将syn中的source变成代理ip（当包返回时，代理ip会根据NAT表将包转发到原来的client)
     iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to-source 192.168.10.100
     # 也可以精确到-p tcp --to-source 192.168.10.100:81, iptables nat 表项会自己维护tcp 端口关系, 或者ip nat映射
     ```
 
-或者匹配到tcp：
+或者匹配到tcp：
 
     iptables -t nat -A PREROUTING -d 192.168.10.100 -p tcp --dport 81 -j DNAT --to 172.29.88.56:8081
     iptables -t nat -A POSTROUTING -d 172.29.88.56 -p tcp --dport 80 -j SNAT --to-source 192.168.10.100
 
 为什么加`SNAT`：
 1. 在进入路由层面的route之前，重新 *改写源地址*，目标地址不变，并在本机建立NAT表项，
-2. 当数据返回时，根据NAT表将目的地址数据改写为数据发送出去时候的源地址*恢复原地址*，并发送给主机。解决内网用户用同一个公网地址上网的问题。
+2. 当数据返回时，根据NAT表将目的地址数据改写为数据发送出去时候的源地址*恢复原地址*，并发送给主机。解决内网用户用同一个公网地址上网的问题。
 
 需要注意的是，如果你的FORWARD链默认为DROP，上面所有端口转发都必须建立在FORWARD链允许通行的情况下：
 

@@ -277,6 +277,8 @@ show create table(只能用命令行): 利用pgdump  输出
 	create view t_view_alias (seg1, seg2, id) as
 		select s1,s2,t1.id from t1,t2 where t1.id=t2.id order by s2;
 
+### rename table
+    ALTER TABLE table_name RENAME TO new_table_name;
 ### drop
 
     drop TABLE [IF EXISTS ] xxx
