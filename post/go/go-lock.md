@@ -17,11 +17,13 @@ private: true
         }(i)
     }
 
-### 其它RWMutex
-其它mutex 锁
+### 读写锁RWMutex
+sync.RWMutex 特点是：
+2. 读写互斥
+3. 写写互斥
+1. 读之间不互斥
 
-    # 复合锁
-    sync.RWMutex
+它适合读多于写的场景: go-lib/lock/sync/rwlock_test.go
 
 ## goroutine 实现
 https://www.zhihu.com/question/20862617

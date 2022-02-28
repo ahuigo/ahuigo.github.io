@@ -300,8 +300,7 @@ parse rfc3339 format:
     from datetime import timedelta,datetime
     t1=strptime('2022-02-16 21:41:33.333929')
     t2=datetime(2022, 2, 16, 21, 41, 33, 333928)
-    isCloseTime(t1-t2)
-
+    isCloseTime(t1,t2)
 
 like math.isclose
 

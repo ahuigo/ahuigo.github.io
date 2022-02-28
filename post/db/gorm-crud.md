@@ -474,10 +474,10 @@ Specify order when retrieve records from database, set reorder (the second argum
     db.Order("age desc").Order("name").Find(&users)
     //// SELECT * FROM users ORDER BY age desc, name;
 
-    // ReOrder
-    db.Order("age desc").Find(&users1).Order("age", true).Find(&users2)
-    //// SELECT * FROM users ORDER BY age desc; (users1)
-    //// SELECT * FROM users ORDER BY age; (users2)
+    db.Clauses(clause.OrderBy{
+    Expression: clause.Expr{SQL: "FIELD(id,?)", Vars: []interface{}{[]int{1, 2, 3}}, WithoutParentheses: true},
+    }).Find(&User{})
+    // SELECT * FROM users ORDER BY FIELD(id,1,2,3)
 
 ### Limit
 Specify the max number of records to retrieve
