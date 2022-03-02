@@ -3,6 +3,7 @@ layout: page
 title:	Learn Python
 category: blog
 description:
+private: true
 ---
 # Preface
 1. py-start.md

@@ -4,6 +4,8 @@ date: 2021-10-28
 private: true
 ---
 # pg block
+http://www.postgres.cn/docs/9.3/plpgsql-structure.html
+
 Syntax:
 
     [ <<label>> ]
@@ -17,17 +19,20 @@ Syntax:
     END [ label ];
 
 ## do without label
+
+    DO [ LANGUAGE lang_name ] codeblock
+
 Note: The DO statement does not belong to the block. It is used to execute an anonymous block. 
 
     do $$
     declare
        film_count integer;
     begin 
-       select count(*) into film_count
-       from alert_users;
+       select count(*) into film_count from alert_users;
        raise notice 'The number of films: %', film_count;
-    end;
-    $$;
+    end $$;
+
+注意：`$$`相当于`'`, 参考 pg-var-str.md
 
 ## do with label
 
@@ -67,6 +72,21 @@ output:
     NOTICE:  The current value of counter in the subblock is 10
     NOTICE:  The current value of counter in the outer block is 1
     NOTICE:  The current value of counter in the outer block is 1 
+
+# BEGIN END
+
+    DO $$
+    DECLARE myvar integer = 5;
+    BEGIN
+        CREATE TEMP TABLE tmp_table ON COMMIT DROP AS
+            -- put here your query with variables:
+            SELECT * 
+            FROM yourtable
+            WHERE id = myvar;
+    END $$;
+
+    SELECT * FROM tmp_table;
+
 
 # References
 - https://www.geeksforgeeks.org/postgresql-block-structure/

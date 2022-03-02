@@ -93,8 +93,56 @@ list all data type
 
     SELECT typname, typlen FROM pg_type WHERE typname ~ '^date';
 
+特殊的类型
 
-# 数据类型
+    \d pg_type
+    name	Data type name
+    oid	    Owner of the type
+
+
+# `pg_class`
+## 对象标识符OID
+> http://www.postgres.cn/docs/9.4/datatype-oid.html
+PostgreSQL在内部使用对象标识符(OID)作为各种系统表的主键。 
+除此以外oid还有几个别名：regproc, regprocedure, regoper, regoperator, regclass, regtype, regconfig, 和regdictionary。
+
+
+    名字             引用	         描述	            数值例子
+    oid             任意             数字化的对象标识符	564182
+    regproc	        pg_proc	        函数名字	        sum
+    regprocedure	pg_proc	        带参数类型的函数	sum(int4)
+    regoper	        pg_operator	    操作符名	        +
+    regoperator	    pg_operator	    带参数类型的操作符	*(integer,integer) 或 -(NONE,integer)
+    regclass	    pg_class	    关系名	        pg_type
+    regtype	        pg_type	        数据类型名	    integer
+    regconfig	    pg_ts_config	文本搜索配置	english
+    regdictionary	pg_ts_dict	    文本搜索字典	simple
+
+比如regclass 代表关系表的oid
+
+    SELECT * FROM pg_attribute WHERE attrelid = 'mytable'::regclass; //自动转成关系表的oid
+    SELECT * FROM pg_attribute WHERE attrelid = (SELECT oid FROM pg_class WHERE relname = 'mytable');
+
+除了oid, 系统还有
+1. 系统使用的另外一个标识符类型是事务(缩写xact)标识符xid。 它是系统字段xmin和xmax的数据类型。事务标识符是 32 位的量。
+1. 系统需要的第三种标识符类型是命令标识符cid。 它是系统字段cmin和cmax的数据类型。命令标识符也是 32 位的量。
+1. 系统使用的最后一个标识符类型是行标识符tid。 它是系统表字段ctid的数据类型。行 ID 是一对数值(块号，块内的行索引)， 它标识该行在其所在表内的物理位置
+
+### pg_namespace
+列出 namespace的oid
+
+    select * from pg_namespace limit 100;
+        oid |      nspname       | nspowner |                  nspacl
+    --------+--------------------+----------+-------------------------------------------
+        14  | pg_catalog         |       10 | 
+        220 | public             |       10 | 
+
+## 列表所有public的id sequence
+`pg_class.relkind='S'` 代表`id_seq` 
+
+    select pc.oid,nspname,relname from pg_class pc, pg_namespace pn where pc.relnamespace=pn.oid and pc.relkind='S';
+
+# 常用类型
 ## bool
     True	False
     ------------
@@ -111,7 +159,6 @@ list all data type
     insert into users(is_deleted) values('false')
     insert into users(is_deleted) values('f')
     insert into users(is_deleted) values('0')
-
 
 
 # Data Property

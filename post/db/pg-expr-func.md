@@ -5,12 +5,23 @@ private: true
 ---
 # pg func
 ## return int
+    CREATE OR REPLACE FUNCTION some_f(_tbl regclass, OUT result integer)
+    LANGUAGE plpgsql AS $func$
+    BEGIN
+        EXECUTE format('SELECT (EXISTS (SELECT FROM %s WHERE id = 1))::int', _tbl)
+        INTO result;
+    END
+    $func$;
+
+eg2:
+
     create or replace function f(n int) 
-        returns int as $$ 
-            begin n:=5; 
-               return n; 
-           end; 
-        $$language 'plpgsql';
+    returns int as $$ 
+    begin 
+        n:=5; 
+        return n; 
+    end; 
+    $$language 'plpgsql';
 
 ## return table
 

@@ -212,14 +212,21 @@ When bind_address is omitted (as in your example), the port is bound on the loop
 	ssh -R "[::]:8080:localhost:80" -N root@example.com
     
 ## ssh over socks
+完全配置: want to ssh to machine 1.1.1.1:2222 under socks proxy(127.0.0.1:1080), then you can use the below configuration:
 ~/.ssh/config
 
-	ProxyCommand /usr/bin/nc -X 5 -x 127.0.0.1:7777 %h %p
-	ProxyCommand /usr/bin/nc -x 127.0.0.1:7777 %h %p
+    Host 1.1.1.1
+        HostName 1.1.1.1
+        ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p 
+            #ProxyCommand /usr/bin/nc -X 5 -x 127.0.0.1:7777 %h %p
+            #ProxyCommand /usr/bin/nc -x 127.0.0.1:7777 %h %p
+        Port 2222
+        User YourName
 
 You are using 'connect' for HTTPS as your proxy version, this is from man nc:
 
 	-X proxy_version Requests that nc should use the specified protocol when talking to the proxy server. Supported protocols are ''4'' (SOCKS v.4), ''5'' (SOCKS v.5) and 'connect' (HTTPS proxy). If the protocol is not specified, SOCKS version 5 is used.
+
 
 Manual:
 

@@ -1,5 +1,5 @@
 ---
-title: 用js proxies 继承别的对象
+title: 用js proxy 继承别的对象
 date: 2018-10-04
 ---
 # object set/get

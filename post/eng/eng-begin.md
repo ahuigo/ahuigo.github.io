@@ -1,6 +1,7 @@
 ---
 title: grammar
 date: 2018-09-27
+private: true
 ---
 # grammar
 http://www.yyqh.net/abc/grammar.htm

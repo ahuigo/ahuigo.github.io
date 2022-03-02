@@ -155,7 +155,6 @@ Often fastest in Postgres.
 ### left join/is null
 Sometimes this is fastest. Often shortest. Often results in the same query plan as NOT EXISTS.
 
-
     SELECT l.ip FROM   login_log l 
     LEFT   JOIN ip_location i USING (ip)  -- short for: ON i.ip = l.ip
     WHERE  i.ip IS NULL;

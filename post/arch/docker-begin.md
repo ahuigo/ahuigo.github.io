@@ -4,6 +4,7 @@ title: 学习 docker
 category: blog
 description: 
 date: 2018-09-27
+private: true
 ---
 # 什么是Docker
 虚拟机是对硬件的虚拟化(需要Hypervisor这个软件层), 而docker （LXC, linux container）是对操作系统的虚拟化。

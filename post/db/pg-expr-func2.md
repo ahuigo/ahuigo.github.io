@@ -3,17 +3,6 @@ title: pg sql
 date: 2020-08-25
 private: true
 ---
-# 参考
-http://www.postgres.cn/docs/9.3/plpgsql-structure.html
-
-# pg sql
-    [ <<label>> ]
-    [ DECLARE
-        declarations ]
-    BEGIN
-        statements
-    END [ label ];
-
 # BEGIN END
 
     DO $$

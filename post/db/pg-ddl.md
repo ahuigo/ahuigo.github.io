@@ -279,6 +279,18 @@ show create table(只能用命令行): 利用pgdump  输出
         install_date date
     );
 
+#### create table as
+create table :
+    CREATE TABLE films_recent AS
+        SELECT * FROM films WHERE date_prod >= '2002-01-01';
+
+create temp table:
+1.automatically drops the temporary tables at the end of a session or a transaction.
+2.The TEMP and TEMPORARY keywords are equivalent
+
+    CREATE TEMP TABLE uid_tmp AS 
+        SELECT id FROM users where id<10;
+
 #### show create table
 
     pg_dump -st tablename dbname
@@ -354,33 +366,49 @@ To remove any default value, use:
 id seq　一般保存在`<table>_id_seq`中，可以通过`\d`查看
 
     select last_value from oauth_tokens_id_seq;
-    SELECT nextval('oauth_tokens_id_seq'::regclass)
+    SELECT nextval('oauth_tokens_id_seq'::regclass);  每次insert 就是调用的insert id values(nextval)
 
-    # nextval 必须先执行、或者insert语句执行后，才可以调用 currval
+    # 当前的val
     select currval('oauth_tokens_id_seq');
-
-下面的语句等价
-
-    SELECT setval('users_id_seq', 94, true);  
-    ALTER SEQUENCE users_id_seq RESTART WITH 94
 
 setval 用法：
 
-    SELECT setval('foo', 42);           Next nextval will return 43
-    SELECT setval('foo', 42, true);     Same as above
-    SELECT setval('foo', 42, false);    Next nextval will return 42
+    SELECT setval('users_id_seq', 42);           Next nextval will return 43
+    SELECT setval('users_id_seq', 42, true);     Same as above
+    ALTER SEQUENCE users_id_seq RESTART WITH 42; Same as above
+    SELECT setval('users_id_seq', 42, false);    Next nextval will return 42
 
 一键完成:
 
-    do $$ 
-    declare
-        name  varchar:= "oauth_tokens"
-    begin 
-        PERFORM setval('oauth_tokens_id_seq',(select max(id) from oauth_tokens));
-    end $$;
-
     // method2(推荐)
     select setval('oauth_tokens_id_seq', (select max(id) from oauth_tokens));
+
+动态添加：
+
+
+    do $$
+    declare
+        table_name  varchar:= 'task_checks';
+    begin
+        PERFORM setval(table_name||'_id_seq',(select max(id) from task_checks));
+    end $$;
+
+修复所有的表：
+
+    do language plpgsql $$
+    declare
+      nsp name;
+      rel name;
+      val int8;
+    begin
+      for nsp,rel in select nspname,relname from pg_class t2 , pg_namespace t3 where t2.relnamespace=t3.oid and t2.relkind='S'
+      loop
+        execute format($_$select last_value from %I.%I$_$, nsp, rel) into val;
+        raise notice '%',
+        format($_$select setval('%I.%I'::regclass, %s);$_$, nsp, rel, val+1);
+      end loop;
+    end;
+    $$;
 
 #### add increment id(serial)
 	// alter table mytable add column item_id serial;
