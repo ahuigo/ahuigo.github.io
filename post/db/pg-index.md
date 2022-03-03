@@ -83,7 +83,15 @@ add constraint (好像没有index)
         UNIQUE index_parameters |
         PRIMARY KEY index_parameters |...
 
-add constraint via index(unique): 
+constraint vs index(unique) 区别, 很多情况下二者基本是一样的，除了:
+1. `constraint` 是值约束，不允许某些值
+4. `index` organizes a column’s value to plan queries faster. 
+2. constraint 可借助 index：
+    1. We can add constraint via index(unique): `UNIQUE INDEX == UNIQUE CONSTRAINT`
+2. constraint 也可不借助 index：
+    2. A foreign key constraint is not an index
+    2. constraint 不能使用partial index
+
 https://pg.sjk66.com/postgresql/unique-constraint.html
 https://stackoverflow.com/questions/23542794/postgres-unique-constraint-vs-index
 

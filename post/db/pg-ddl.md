@@ -271,6 +271,11 @@ show create table(只能用命令行): 利用pgdump  输出
 ### create
 
     $ psql -f init.sql
+    create table myusers(
+        id serial primary key, 
+        name varchar, 
+        age int
+    );
     CREATE TABLE playground (
         id serial PRIMARY KEY,
         uid int UNIQUE,
@@ -281,6 +286,7 @@ show create table(只能用命令行): 利用pgdump  输出
 
 #### create table as
 create table :
+
     CREATE TABLE films_recent AS
         SELECT * FROM films WHERE date_prod >= '2002-01-01';
 
@@ -348,7 +354,9 @@ To remove any default value, use:
 
 ### alter column
     \h alter TABLE
-    ALTER TABLE player ALTER [COLUMN] TYPE data_type;
+    ALTER TABLE player ALTER COLUMN TYPE data_type;
+    ALTER TABLE the_table ALTER COLUMN col_name TYPE integer USING (col_name::integer);
+
 
 ### autoincrement
 删除id, 再重建
@@ -404,8 +412,7 @@ setval 用法：
       for nsp,rel in select nspname,relname from pg_class t2 , pg_namespace t3 where t2.relnamespace=t3.oid and t2.relkind='S'
       loop
         execute format($_$select last_value from %I.%I$_$, nsp, rel) into val;
-        raise notice '%',
-        format($_$select setval('%I.%I'::regclass, %s);$_$, nsp, rel, val+1);
+        raise notice '%', format($_$select setval('%I.%I'::regclass, %s);$_$, nsp, rel, val+1);
       end loop;
     end;
     $$;

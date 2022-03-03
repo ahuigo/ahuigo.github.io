@@ -143,13 +143,13 @@ PostgreSQL在内部使用对象标识符(OID)作为各种系统表的主键。
     select pc.oid,nspname,relname from pg_class pc, pg_namespace pn where pc.relnamespace=pn.oid and pc.relkind='S';
 
 # 常用类型
-## number
-    counter    integer := 1;
-    first_name varchar(50) := 'John';
-    last_name  varchar(50) := 'Doe';
-    payment    numeric(11,2) := 20.5;
+## bool 表达
 
-## bool
+    insert into users(is_deleted) values(false)
+    insert into users(is_deleted) values('false')
+    insert into users(is_deleted) values('f')
+    insert into users(is_deleted) values('0')
+
     True	False
     ------------
     true	false
@@ -158,14 +158,6 @@ PostgreSQL在内部使用对象标识符(OID)作为各种系统表的主键。
     ‘y’	    ‘n’
     ‘yes’	‘no’
     ‘1’	    ‘0’
-
-使用
-
-    insert into users(is_deleted) values(false)
-    insert into users(is_deleted) values('false')
-    insert into users(is_deleted) values('f')
-    insert into users(is_deleted) values('0')
-
 
 # Data Property
 

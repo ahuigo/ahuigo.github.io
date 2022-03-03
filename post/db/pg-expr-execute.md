@@ -3,67 +3,79 @@ title: Postgre expression
 date: 2019-09-08
 private: true
 ---
-# execute
-    DO $$
-    DECLARE r record;
+# execute command
+    EXECUTE command-string [ INTO [STRICT] target ] [ USING expression [, ... ] ];
+
+## with format
+https://stackoverflow.com/questions/35559093/how-to-use-variable-as-table-name-in-plpgsql
+
+## execute with format
+return single field(one row)
+
+    CREATE OR REPLACE FUNCTION listusers(OUT name varchar) AS $$
     BEGIN
-        FOR r IN SELECT table_name 
-                    FROM information_schema.tables
-                    WHERE table_catalog = 'public'
-        LOOP
-            EXECUTE format('UPDATE %I SET id = 10 WHERE id = 15', r.table_name);
-        END LOOP;
-    END $$;
+        EXECUTE FORMAT('select name from %I where %I<=%L','myusers', 'name', 'zhui') into name;
+    END$$ LANGUAGE plpgsql;
+    select name from listusers();
+
+return multiple fields(one row)
+
+    CREATE OR REPLACE FUNCTION listusers() RETURNS RECORD AS $$
+    DECLARE 
+        ret RECORD;
+    BEGIN
+        EXECUTE FORMAT('select name,age from %I where %I<=%L','myusers', 'name', 'zhui') into ret;
+        return ret;
+    END$$ LANGUAGE plpgsql;
+    select name from listusers() as (name varchar, age int);
+
+return rows:
+
+    CREATE OR REPLACE FUNCTION listusers() RETURNS SETOF myusers AS $$
+    BEGIN
+        RETURN QUERY EXECUTE FORMAT('select * from %I where %I<=%L','myusers', 'name', 'zhui');
+    END$$ LANGUAGE plpgsql;
+
+## execute with using variables
+`$1` 代表变量
+
+    CREATE OR REPLACE FUNCTION f1(a int,b int, OUT o int)
+    RETURNS int AS $$
+    begin 
+        execute 'select $1+$2' INTO o USING a+1,b;
+    end; 
+    $$language 'plpgsql';
 
 ## quote_ident
 
     EXECUTE 'UPDATE ' || quote_ident(r.table_name) || 'SET ...
 
-# variable as table
-https://stackoverflow.com/questions/35559093/how-to-use-variable-as-table-name-in-plpgsql
+# PERFORM
+1. PERFORM 是表达式
+The PERFORM statement is used for function calls, when functions are not used in assignment statement. 
+2. Execute 是执行的字符串
+The EXECUTE is used for evaluation of dynamic SQL - when a form of SQL command is known in runtime.
 
-    CREATE OR REPLACE FUNCTION f_test()
-      RETURNS void AS
-    $func$
-    DECLARE
-       v_table text;
+The PERFORM statements execute a parameter and forgot result.
+
+    -- direct call from SQL
+    SELECT foo();
+
+    -- in PLpgSQL
+    DO $$
+    declare b int;
     BEGIN
-       FOR v_table IN
-          SELECT table_name  
-          FROM   information_schema.tables 
-          WHERE  table_catalog = 'my_database' 
-          AND    table_schema = 'public'
-          AND    table_name NOT LIKE 'z_%'
-       LOOP
-          EXECUTE format('DELETE FROM %I v WHERE v.id > (SELECT max(id) FROM %I)'
-                        , v_table, 'z_' || v_table);
-       END LOOP;
-    END
-    $func$  LANGUAGE plpgsql;
+        SELECT foo(); -- is not allowed
+        PERFORM foo(); -- is ok
+        SELECT foo() into b; -- is ok
+    END;
+    $$;
 
-# pg sql
-## execute dnamic command
+PERFORM 是不要结果的select
 
-    EXECUTE 'SELECT count(*) FROM '
-        || quote_ident(tabname)
-        || ' WHERE inserted_by = $1 AND inserted <= $2'
-    INTO c
-    USING checked_user, checked_date;
+    DO $$
+    BEGIN
+        perform 'name from myusers';-- like `SELECT 'name from users'` but forgot result.
+        PERFORM name FROM myusers; -- like: select name from users;
+    END $$;
 
-A cleaner approach is to use format()'s %I specification for table or column names (strings separated by a newline are concatenated):
-
-    EXECUTE format('SELECT count(*) FROM %I '
-        'WHERE inserted_by = $1 AND inserted <= $2', tabname)
-        INTO c
-        USING checked_user, checked_date;
-
-## select 语句
-在begin/end 内，select 必须输出保存
-
-    SELECT offer_id FROM users into idx;
-    SELECT setval('oauth_tokens_id_seq', mid+100, true) into a;
-
-或者用PERFORM：
-
-    PERFORM offer_id FROM users;
-    PERFORM setval('oauth_tokens_id_seq', mid+100, true);

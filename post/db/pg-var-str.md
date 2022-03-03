@@ -3,6 +3,47 @@ title: Posgtre String
 date: 2019-06-20
 private:
 ---
+# str Type
+### VARCHAR/TEXT/CHAR
+
+    VARCHAR(n)	variable-length with length limit
+    CHAR(n)	fixed-length, blank padded
+    TEXT/VARCHAR	variable unlimited length(TEXT 就是varchar)
+
+### ENUM
+
+	//如果声明了NOT NULL, 则默认使用第一个
+    CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy');
+    CREATE TABLE person (
+        name text,
+        current_mood mood
+    );
+
+### Mysql type
+mysql 的类型
+
+	VARCHAR(Length) [BINARY ]
+		Length
+			The length can be any value from 0 to 65536.
+			If Length is 0, Char can only be NULL or ""
+			If length is bigger than 255, it will be store as TEXT TYPE
+		BINARY
+			排序时区分大小写(默认不区分)
+    CHARACTER(length)
+        CHAR(length)
+
+	LONGBLOB
+		支持2^32-1个字符, 最大的二进制存储
+	LONGTEXT
+		支持2^32-1个字符, 最大的文本存储(不能存储\0)
+	MEDIUMBLOB/MEDIUMTEXT
+		2^24-1
+	BLOB/TEXT
+		2^16-1 = 65535
+	TINYBLOB/TINYTEXT
+		2^8-1 = 255
+
+
 # define string
 ## 转义
 1. 字符串，只能用`'`,`$$`,`$tag$` 为边界，双引号`"`是用于关键字的(e.g. table_name)
@@ -13,9 +54,10 @@ postgre 不支持\ 转义
     select '\\'; #按字面输出
     select '\''; #error 
 
-插入单引号
+单引号转义
 
-    select 'ahui''s blog'; 
+	select 'My''S'; --like vim 
+		My'S
     select 'a''b' # 不支持 ’a\'b' 
 
 多行：
@@ -39,9 +81,6 @@ postgre 不支持\ 转义
     select concat('a:','b', 1.2); // "a:b1.2"
     select concat(key1,key2)
 
-	select 'My''S';like vim 
-		My'S
-
 只适用于select :
 
 	select 'My' 'S' 'OL';
@@ -60,43 +99,6 @@ join group:?????
 
     select string_agg(actor, ', ') AS actor_list
     SELECT movie, string_agg(actor, ', ' ORDER BY actor) AS actor_list FROM   tbl GROUP  BY 1;
-
-## str Type
-
-### VARCHAR
-
-	VARCHAR(Length) [BINARY ]
-		Length
-			The length can be any value from 0 to 65536.
-			If Length is 0, Char can only be NULL or ""
-			If length is bigger than 255, it will be store as TEXT TYPE
-		BINARY
-			排序时区分大小写(默认不区分)
-    CHARACTER(length)
-        CHAR(length)
-
-
-### BLOB type
-
-	LONGBLOB
-		支持2^32-1个字符, 最大的二进制存储
-	LONGTEXT
-		支持2^32-1个字符, 最大的文本存储(不能存储\0)
-	MEDIUMBLOB/MEDIUMTEXT
-		2^24-1
-	BLOB/TEXT
-		2^16-1 = 65535
-	TINYBLOB/TINYTEXT
-		2^8-1 = 255
-
-### ENUM
-
-	//如果声明了NOT NULL, 则默认使用第一个
-    CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy');
-    CREATE TABLE person (
-        name text,
-        current_mood mood
-    );
 
 ## format string
 
@@ -119,11 +121,11 @@ tppe list:
     SELECT FORMAT('Welcome, %s','EduCBA');
     SELECT FORMAT('%s',stud_lname)  FROM ( select 1 as stud_lname) as f;
 
-%L
+%I and %L
 
-    ahuigo=>     SELECT FORMAT('%I into %L', 'my', 'yo');
+    SELECT FORMAT('select * from %I where name=%L', 'my', 'yo');
     --------------
-    my into 'yo'
+    select * from my where name='yo'
 
 数字转换可以用`to_char()`
 
@@ -217,14 +219,3 @@ split array
 help:
 
     \df+ 'string_to_array'
-
-
-# match string
-
-## regex
-    select regexp_matches(name, 'foo');
-    select pg_typeof(regexp_matches('foo1', 'foo'));// text[]
-
-where regex
-    
-    where name ~ '^\w{2}$'

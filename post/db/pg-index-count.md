@@ -50,11 +50,11 @@ https://developer.aliyun.com/article/39682
     $func$
     DECLARE
         rec   record;
-        ROWS  INTEGER;
+        total  INTEGER;
     BEGIN
         FOR rec IN EXECUTE 'EXPLAIN ' || query LOOP
-            ROWS := SUBSTRING(rec."QUERY PLAN" FROM ' rows=([[:digit:]]+)');
-            EXIT WHEN ROWS IS NOT NULL;
+            total := SUBSTRING(rec."QUERY PLAN" FROM ' rows=([[:digit:]]+)');
+            EXIT WHEN total IS NOT NULL;
         END LOOP;
     
         RETURN ROWS;

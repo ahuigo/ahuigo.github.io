@@ -12,10 +12,68 @@ private: true
         14  | pg_catalog         |       10 | 
         220 | public             |       10 | 
 
-## 列表所有public的id sequence
+# 序列表
+pg_class
+
+    # via pg_class
+    SELECT pc.oid,relname seqname FROM pg_class pc, pg_namespace pn where relkind='S' and pc.relnamespace=pn.oid and pn.nspname='public';
+    # via information_schema.sequences
+    SELECT sequence_name FROM information_schema.sequences where sequence_schema='public';
+
+
+## list sequence of public
 `pg_class.relkind='S'` 代表`id_seq` 
 
-    select pc.oid,nspname,relname from pg_class pc, pg_namespace pn where pc.relnamespace=pn.oid and pc.relkind='S';
+    select pc.oid,nspname,relname from pg_class pc, pg_namespace pn where pc.relnamespace=pn.oid and pc.relkind='S'  and pn.nspname='public';
+
+relkind 清单
+
+    select   CASE 'r' WHEN 'r' THEN 'table' WHEN 'v' THEN 'view' WHEN 'm' THEN 'materialized view' WHEN 'i' THEN 'index' WHEN 'S' THEN 'sequence' WHEN 's' THEN 'special' WHEN 'f' THEN 'foreign table' WHEN 'p' THEN 'partitioned table' WHEN 'I' THEN 'partitioned index' ELSE 'other' END as "Type";
+
+## list seq with tablename
+list table with default seq:
+
+    SELECT scope_schema,table_name,column_default FROM information_schema.columns WHERE column_default LIKE 'nextval%' where table_schema='public';
+
+list real seq_name:
+
+    DO $$
+    declare row record;
+    BEGIN
+        FOR row IN SELECT table_name,column_name,column_default FROM information_schema.columns WHERE column_default LIKE 'nextval%' LOOP
+            RAISE NOTICE '%,%,%', row.table_name,row.column_name, substring(row.column_default, $dd$'(\w+)'::regclass$dd$);
+        END LOOP;
+    END $$;
+
+fix sequence:
+
+    DO $$
+    declare 
+        row record;
+        maxid int;
+        seq_name text;
+    BEGIN
+        FOR row IN SELECT table_name,column_name,column_default FROM information_schema.columns WHERE column_default LIKE 'nextval%' LOOP
+            -- seq_name := substring(row.column_default, $dd$'(\w+)'::regclass$dd$);
+            EXECUTE FORMAT('select max(%I) from %L', row.column_name, row.table_name) into maxid;
+            RAISE NOTICE 'maxid:%', maxid
+        END LOOP;
+    END $$;
+
+    DO $$
+    declare 
+        row record;
+        maxid int;
+        seq_name text;
+    BEGIN
+        FOR row IN SELECT * FROM information_schema.columns WHERE column_default LIKE 'nextval%' LOOP
+            RAISE NOTICE '%,%', row.column_name, substring(row.column_default, $dd$'(\w+)'::regclass$dd$);
+            -- seq_name := substring(row.column_default, $dd$'(\w+)'::regclass$dd$);
+            EXECUTE FORMAT('select max(%I) from %I', row.column_name, row.table_name) into maxid;
+            RAISE NOTICE 'maxid:%', maxid;
+        END LOOP;
+    END $$;
+
 
 # database
     select oid,datname from pg_database;
@@ -37,14 +95,13 @@ private: true
     SELECT pc.oid,relname tablename FROM pg_class pc, pg_namespace pn where relkind='r' and pc.relnamespace=pn.oid and pn.nspname='public';
 
 
-## 索引表 table_constraints
+## 约束表 table_constraints
 
     select tco.table_name,tco.constraint_name,tco.constraint_type from information_schema.table_constraints tco limit 100;
     select tco.table_name,tco.constraint_name,tco.constraint_type from information_schema.table_constraints tco where tco.table_name='current_workflows';
 
-### 所有表的id_seq
-
-    SELECT pc.oid,relname seqname FROM pg_class pc, pg_namespace pn where relkind='S' and pc.relnamespace=pn.oid and pn.nspname='public';
+## 索引表 pg_indexes
+    SELECT tablename, indexname, indexdef FROM pg_indexes WHERE schemaname = 'public' ORDER BY tablename, indexname;
 
 ## `key_column_usage` 表:
 

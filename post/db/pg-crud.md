@@ -96,8 +96,8 @@ eg:
 ## select 
     select array[1,2] where true;
 
-### select order
-execut order:
+### order
+execute order:
 
     FROM with JOIN's to get tables
     WHERE for limit rows from tables
@@ -134,22 +134,24 @@ IS NULL in PostgreSQL is not value:
 
     page=0
     limit 10 offset 10*page
+### where
+#### between
 
-### not in
+    hourt between 0 and 23
+
+#### not exists
 https://stackoverflow.com/questions/19363481/select-rows-which-are-not-present-in-other-table
 
-    table name     column names
-    -----------    ------------------------
-    login_log      ip | etc.
-    ip_location    ip | location | hostname | etc.
+    SELECT col1 FROM tab1 WHERE EXISTS (SELECT 1 FROM tab2 WHERE col2 = tab1.col2);
+    SELECT col1 FROM tab1 WHERE NOT EXISTS (SELECT 1 FROM tab2 WHERE col2 = tab1.col2);
 
-### not exists
-Often fastest in Postgres.
+Only good without NULL values or if you know to handle NULL properly. 
 
-    SELECT ip FROM   login_log l WHERE  NOT EXISTS (
-        SELECT  -- SELECT list mostly irrelevant; can just be empty in Postgres
+    SELECT ip 
+    FROM   login_log
+    WHERE  ip NOT IN (
+        SELECT DISTINCT ip  -- DISTINCT is optional
         FROM   ip_location
-        WHERE  ip = l.ip
     );
 
 ### left join/is null
@@ -170,22 +172,6 @@ Short. Not as easily integrated in more complex queries.
     FROM   ip_location;
 
  want the ALL keyword. If you don't care, still use it because it makes the query faster.
-
-### NOT IN
-Only good without NULL values or if you know to handle NULL properly. 
-
-    SELECT ip 
-    FROM   login_log
-    WHERE  ip NOT IN (
-        SELECT DISTINCT ip  -- DISTINCT is optional
-        FROM   ip_location
-    );
-
-
-
-### between
-
-    hourt between 0 and 23
 
 ### group by 
 `wmname` must appear in the GROUP BY clause or be used in an aggregate function
