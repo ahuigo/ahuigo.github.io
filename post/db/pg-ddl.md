@@ -371,13 +371,13 @@ To remove any default value, use:
     Select setval('player_id_seq', 2000051 ); --set to the highest current value of playerID
 
 #### 修改autoincrement id
-id seq　一般保存在`<table>_id_seq`中，可以通过`\d`查看
+id seq　一般保存在`<table>_id_seq`中，可以通过`\d`查看, 或者：
 
-    select last_value from oauth_tokens_id_seq;
-    SELECT nextval('oauth_tokens_id_seq'::regclass);  每次insert 就是调用的insert id values(nextval)
-
+    # nextval
+    SELECT nextval('oauth_tokens_id_seq'::regclass);  -- 每次insert 就是调用的insert id values(nextval)
     # 当前的val
     select currval('oauth_tokens_id_seq');
+    select last_value from oauth_tokens_id_seq;
 
 setval 用法：
 
@@ -400,22 +400,6 @@ setval 用法：
     begin
         PERFORM setval(table_name||'_id_seq',(select max(id) from task_checks));
     end $$;
-
-修复所有的表：
-
-    do language plpgsql $$
-    declare
-      nsp name;
-      rel name;
-      val int8;
-    begin
-      for nsp,rel in select nspname,relname from pg_class t2 , pg_namespace t3 where t2.relnamespace=t3.oid and t2.relkind='S'
-      loop
-        execute format($_$select last_value from %I.%I$_$, nsp, rel) into val;
-        raise notice '%', format($_$select setval('%I.%I'::regclass, %s);$_$, nsp, rel, val+1);
-      end loop;
-    end;
-    $$;
 
 #### add increment id(serial)
 	// alter table mytable add column item_id serial;

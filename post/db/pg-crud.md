@@ -107,9 +107,20 @@ execute order:
     ORDER BY for order results
 
 ### is null
+see https://www.postgresql.org/docs/current/functions-comparison.html
 
-    select 1 is null; 
-    where column is null;
+    select 1 is null;  -- alias: expression ISNULL
+    where column is null; -- alias: expression NOTNULL
+
+not 'C' but include null 
+
+    SELECT * FROM "A" WHERE "B" != 'C'; -- not include B is null
+
+not 'C': `IS DISTINCT FROM`(Not equal), treating null as a comparable value.
+
+    SELECT * FROM "A" WHERE "B" != 'C' OR "B" IS NULL
+    -- or
+    SELECT * FROM "A" WHERE "B" is distinct from 'C'
 
 IS NULL in PostgreSQL is not value:
 

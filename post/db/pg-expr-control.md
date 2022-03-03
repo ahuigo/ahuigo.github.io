@@ -18,6 +18,19 @@ https://www.postgresql.org/docs/9.1/plpgsql-control-structures.html
         statements ]
     END IF;
 
+## IF is null
+    do $$
+    DECLARE
+        a int;
+    BEGIN
+        if a isnull THEN
+            raise notice 'isnull';
+        ELSE
+            raise notice 'not null';
+        END IF;
+    END $$;
+
+
 # loop object
 ## For loop sequence
     [ <<label>> ]
@@ -120,10 +133,16 @@ for example:
     END LOOP;
 
 
-# RETURN NEXT and RETURN QUERY
+# return 
     RETURN NEXT expression;
     RETURN QUERY query;
     RETURN QUERY EXECUTE command-string [ USING expression [, ... ] ];
 
 `RETURN NEXT` and `RETURN QUERY` do not actually return from the function — 
 1. they simply append zero or more rows to the function's result set, 参考for loop query
+
+# case
+    select CASE 'r' 
+        WHEN 'r' THEN 'table'
+        WHEN 'v' THEN 'view' 
+        ELSE 'other' END as "Type";

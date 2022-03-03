@@ -32,6 +32,11 @@ example:
         END
     $$ LANGUAGE plpgsql;
 
+不要在纯sql 中使用, 它会变成table：
+
+   select 1 into a; 
+   select * from public.a as int;
+
 # print var(raise)
     DO $$ 
     DECLARE

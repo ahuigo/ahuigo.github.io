@@ -65,7 +65,7 @@ note： RETURNS NULL ON NULL INPUT;
             SELECT code, label FROM film where code<'code3';
     $$ LANGUAGE sql;
 
-    -- 使用时可以指定record filed name
+    -- 使用时可以指定record 的field name
     select * from listfilm() as (code varchar, label real);
 
 multiple rows

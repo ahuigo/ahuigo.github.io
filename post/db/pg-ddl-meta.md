@@ -15,16 +15,16 @@ private: true
 # 序列表
 pg_class
 
-    # via pg_class
-    SELECT pc.oid,relname seqname FROM pg_class pc, pg_namespace pn where relkind='S' and pc.relnamespace=pn.oid and pn.nspname='public';
-    # via information_schema.sequences
-    SELECT sequence_name FROM information_schema.sequences where sequence_schema='public';
 
 
 ## list sequence of public
 `pg_class.relkind='S'` 代表`id_seq` 
 
-    select pc.oid,nspname,relname from pg_class pc, pg_namespace pn where pc.relnamespace=pn.oid and pc.relkind='S'  and pn.nspname='public';
+    # via pg_class
+    SELECT pc.oid,relname seqname FROM pg_class pc, pg_namespace pn where pc.relnamespace=pn.oid and relkind='S' and pn.nspname='public';
+
+    # via information_schema.sequences
+    SELECT sequence_name FROM information_schema.sequences where sequence_schema='public';
 
 relkind 清单
 
@@ -45,20 +45,7 @@ list real seq_name:
         END LOOP;
     END $$;
 
-fix sequence:
-
-    DO $$
-    declare 
-        row record;
-        maxid int;
-        seq_name text;
-    BEGIN
-        FOR row IN SELECT table_name,column_name,column_default FROM information_schema.columns WHERE column_default LIKE 'nextval%' LOOP
-            -- seq_name := substring(row.column_default, $dd$'(\w+)'::regclass$dd$);
-            EXECUTE FORMAT('select max(%I) from %L', row.column_name, row.table_name) into maxid;
-            RAISE NOTICE 'maxid:%', maxid
-        END LOOP;
-    END $$;
+## fix all sequence:
 
     DO $$
     declare 
@@ -67,10 +54,11 @@ fix sequence:
         seq_name text;
     BEGIN
         FOR row IN SELECT * FROM information_schema.columns WHERE column_default LIKE 'nextval%' LOOP
-            RAISE NOTICE '%,%', row.column_name, substring(row.column_default, $dd$'(\w+)'::regclass$dd$);
-            -- seq_name := substring(row.column_default, $dd$'(\w+)'::regclass$dd$);
+            seq_name := substring(row.column_default, $dd$'(\w+)'::regclass$dd$);
             EXECUTE FORMAT('select max(%I) from %I', row.column_name, row.table_name) into maxid;
-            RAISE NOTICE 'maxid:%', maxid;
+            IF maxid notnull THEN
+                EXECUTE FORMAT('select setval(%L, %L)', seq_name, maxid);
+            END IF;
         END LOOP;
     END $$;
 
