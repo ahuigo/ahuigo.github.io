@@ -5,7 +5,8 @@ private:
 ---
 # define string
 ## 转义
-1. 字符串，只能用`'` 为边界，双引号`"`是用于关键字的(e.g. table_name)
+1. 字符串，只能用`'`,`$$`,`$tag$` 为边界，双引号`"`是用于关键字的(e.g. table_name)
+2. 单外号会转义
 
 postgre 不支持\ 转义 
 
@@ -22,7 +23,7 @@ postgre 不支持\ 转义
     select 'a'
     'b';
 
-### 用`$$`转义
+### 用`$$`不转义
 
     Syntax: $tag$<string_constant>$tag$
 
@@ -33,8 +34,7 @@ postgre 不支持\ 转义
     => SELECT $message$I'm a string constant that contains a backslash \$message$;
      I'm a string constant that contains a backslash \
 
-# str func
-### concat
+## concat
     select 'a:'||'b'||1.2 as bb;    //"a:b1.2"
     select concat('a:','b', 1.2); // "a:b1.2"
     select concat(key1,key2)
@@ -44,7 +44,7 @@ postgre 不支持\ 转义
 
 只适用于select :
 
-	select 'My' 'S' 'OL'
+	select 'My' 'S' 'OL';
 		MySQL
 
 concat hex:
@@ -61,7 +61,55 @@ join group:?????
     select string_agg(actor, ', ') AS actor_list
     SELECT movie, string_agg(actor, ', ' ORDER BY actor) AS actor_list FROM   tbl GROUP  BY 1;
 
+## str Type
 
+### VARCHAR
+
+	VARCHAR(Length) [BINARY ]
+		Length
+			The length can be any value from 0 to 65536.
+			If Length is 0, Char can only be NULL or ""
+			If length is bigger than 255, it will be store as TEXT TYPE
+		BINARY
+			排序时区分大小写(默认不区分)
+    CHARACTER(length)
+        CHAR(length)
+
+
+### BLOB type
+
+	LONGBLOB
+		支持2^32-1个字符, 最大的二进制存储
+	LONGTEXT
+		支持2^32-1个字符, 最大的文本存储(不能存储\0)
+	MEDIUMBLOB/MEDIUMTEXT
+		2^24-1
+	BLOB/TEXT
+		2^16-1 = 65535
+	TINYBLOB/TINYTEXT
+		2^8-1 = 255
+
+### ENUM
+
+	//如果声明了NOT NULL, 则默认使用第一个
+    CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy');
+    CREATE TABLE person (
+        name text,
+        current_mood mood
+    );
+
+## format string
+
+    do $$ 
+    declare
+        first_name varchar(50) := 'John';
+        str varchar(100) := format('ahui' 'Im %I', first_name);
+    begin 
+        raise notice 'Value: %', str;
+    end $$;
+
+
+# str func
 ### string length
 
     CHAR_LENGTH(name)
@@ -117,59 +165,16 @@ Length 不是字节数，而是字符数
     SELECT string_to_array('ordno-#-orddt-#-ordamt', '-#-');
     SELECT split_part('par1-#-par2-#-part3', '-#-', 2);
 
-## String
-VARCHAR 本来不会存储尾部空白`\0`，而从5.0.3 开始出于兼容性考虑，会跟CHAR一样存储尾部空白。
+split array
 
-	update talbeName set c='str' where id = 1
+    > select regexp_split_to_array('a,b,c,d', ',');
+    -[ RECORD 1 ]---------+----------
+    regexp_split_to_array | {a,b,c,d}
+    > select string_to_array('a,b,,c,d', ',,');
 
-	"abc\n123"
+help:
 
-单引号也会转义
-
-	'a\tb'
-	'a\nb'
-	'\\d+'; //所以正则应二次转义
-
-
-# str Type
-
-## VARCHAR
-
-	VARCHAR(Length) [BINARY ]
-		Length
-			The length can be any value from 0 to 65536.
-			If Length is 0, Char can only be NULL or ""
-			If length is bigger than 255, it will be store as TEXT TYPE
-		BINARY
-			排序时区分大小写(默认不区分)
-    CHARACTER(length)
-        CHAR(length)
-
-
-## Other
-
-	LONGBLOB
-		支持2^32-1个字符, 最大的二进制存储
-	LONGTEXT
-		支持2^32-1个字符, 最大的文本存储(不能存储\0)
-	MEDIUMBLOB/MEDIUMTEXT
-		2^24-1
-	BLOB/TEXT
-		2^16-1 = 65535
-	TINYBLOB/TINYTEXT
-		2^8-1 = 255
-
-## Limit string set
-String set
-
-### ENUM
-
-	//如果声明了NOT NULL, 则默认使用第一个
-    CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy');
-    CREATE TABLE person (
-        name text,
-        current_mood mood
-    );
+    \df+ 'string_to_array'
 
 
 # match string

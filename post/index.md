@@ -1,4 +1,6 @@
 # AHUIGO 的笔记
+- 2018-09-27 [golang help](/b/go/11.go-begin-help) 
+- 2019-09-08 [Postgre expression](/b/db/pg-expr-execute) 
 - 2022-02-24 [tcpdump udp analysis](/b/net/net-tcpdump-udp) 
 - 2022-02-24 [tcpdump tcp analysis](/b/net/net-tcpdump-tcp) 
 - 2015-11-11 [tcp/ip 协议SYN](/b/net/net-tcp-queue) 
@@ -37,5 +39,3 @@
 - 2018-10-04 [python virtualenv](/b/py/py-test-virtualenv) 
 - 2018-10-04 [py-pkg-setuptool](/b/py/py-pkg-setuptool) 
 - 2018-09-28 [py-import](/b/py/py-import) 
-- 2018-09-28 [Python 文件处理](/b/py/py-file) 
-- 2018-09-27 [tool](/b/c/ops-user) 

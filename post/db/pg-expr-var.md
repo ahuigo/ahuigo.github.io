@@ -5,8 +5,7 @@ private:
 ---
 # pg var
 
-
-## var define
+## define variable
     variable_name data_type [:= expression];
 
 example:
@@ -21,7 +20,7 @@ example:
         RAISE NOTICE '% % % has been paid % USD', counter, first_name, last_name, payment;
     END $$;
 
-### var init
+### print var(raise)
     DO $$ 
     DECLARE
        created_at time := NOW();
@@ -30,6 +29,7 @@ example:
        PERFORM pg_sleep(10);
        RAISE NOTICE '%', created_at;
     END $$;
+
 
 ## 写值
 
@@ -44,13 +44,10 @@ example:
         END LOOP;
     END$$;
 
-# String
-## define string
-用单引号表达
+### set variable
+    Variables
+    \prompt [TEXT] NAME    prompt user to set internal variable
+    \set [NAME [VALUE]]    set internal variable, or list all if no parameters
+    \unset NAME            unset (delete) internal variable
 
-    'xxx'
 
-## concat string
-参考 pg-expr-var.md 的for-in 语法:
-
-    EXECUTE 'GRANT ALL ON ' || quote_ident(r.table_schema) || '.' || quote_ident(r.table_name) || ' TO webuser';

@@ -73,20 +73,6 @@ output:
     NOTICE:  The current value of counter in the outer block is 1
     NOTICE:  The current value of counter in the outer block is 1 
 
-# BEGIN END
-
-    DO $$
-    DECLARE myvar integer = 5;
-    BEGIN
-        CREATE TEMP TABLE tmp_table ON COMMIT DROP AS
-            -- put here your query with variables:
-            SELECT * 
-            FROM yourtable
-            WHERE id = myvar;
-    END $$;
-
-    SELECT * FROM tmp_table;
-
 
 # References
 - https://www.geeksforgeeks.org/postgresql-block-structure/

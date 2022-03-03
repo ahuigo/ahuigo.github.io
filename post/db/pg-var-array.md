@@ -20,6 +20,12 @@ private:
     select array['a','b'];
     select array['a',1]; # error
 
+二维数组
+    
+    DECLARE
+        m   varchar[];
+        arr varchar[] := array[['key1','val1'],['key2','val2']];
+
 ## empty array
     ALTER TABLE t1 add friends text[] DEFAULT array[]::varchar[];
 
@@ -27,6 +33,7 @@ private:
 
     array[]::varchar[]
     '{}'::text[]
+
 
 # insert array
     INSERT INTO stus (name, names) VALUES ( 'John Doe', ARRAY [ 'john1', 'john2' ]);
@@ -55,6 +62,21 @@ select first phone number(不是从0开始)
     {"alex1","alex2"}
 
     where phones[0] is null
+
+## loop
+    DO
+    $do$
+    DECLARE
+        m   varchar[];
+        arr varchar[] := array[['key1','val1'],['key2','val2']];
+    BEGIN
+        FOREACH m SLICE 1 IN ARRAY arr LOOP
+            RAISE NOTICE 'another_func(%,%)',m[1], m[2];
+        END LOOP;
+    END
+    $do$
+
+
 
 ## 集合判断
 注意, 不存在的值(null), 永远为false, 比如`phone[0]` 不存在
@@ -185,7 +207,7 @@ array_agg 后判断集合
     // select 与 having 中的`array_agg()` 不会重复计算
     SELECT name, array_agg(distinct phone) AS ps FROM   stus group by 1 having 3=any(array_agg(distinct phone));
 
-## compamre
+## compare
 ### is empty array
 array_length() requires two parameters, the second being the dimension of the array:
 
@@ -195,9 +217,9 @@ compare it to an empty array:
 
     id_clients = '{}'
 
-That's all. You get:
+    That's all. You get:
 
-    TRUE .. array is empty
-    NULL .. array is NULL
-    FALSE .. any other case
+        TRUE .. array is empty
+        NULL .. array is NULL
+        FALSE .. any other case
 
