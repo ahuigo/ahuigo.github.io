@@ -100,6 +100,48 @@ join group:?????
 
 ## format string
 
+    FORMAT(format_string [, format_arg [, ...] ])
+
+### format syntax
+
+    %[position][flags][width]type
+
+### format type
+tppe list:
+
+    %s will format the argument value as a string. NULL could be treated as an empty string.
+    %I deal with argument value as an SQL identifier.
+    %L refers to the argument value as an SQL literal.
+    We frequently use I and L for building dynamic SQL statements
+
+%s type
+
+    SELECT FORMAT('Welcome, %s','EduCBA');
+    SELECT FORMAT('%s',stud_lname)  FROM ( select 1 as stud_lname) as f;
+
+%L
+
+    ahuigo=>     SELECT FORMAT('%I into %L', 'my', 'yo');
+    --------------
+    my into 'yo'
+
+数字转换可以用`to_char()`
+
+    SELECT to_char(50, '99.99');
+
+### format flags
+padding flags
+
+    SELECT FORMAT('|%20s|', 'ten'); -- right
+    SELECT FORMAT('|%-20s|', 'ten'); -- left
+
+### format position
+position
+
+    SELECT FORMAT('%1$s House, %2$s Villa, %1$s Flat', 'my', 'your');
+         my House, your Villa, my Flat
+
+### format as value
     do $$ 
     declare
         first_name varchar(50) := 'John';
