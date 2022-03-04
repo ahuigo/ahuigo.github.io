@@ -46,7 +46,7 @@ return rows:
     end; 
     $$language 'plpgsql';
 
-## quote_ident
+## quote_ident(双引号)
 
     EXECUTE 'UPDATE ' || quote_ident(r.table_name) || 'SET ...
 

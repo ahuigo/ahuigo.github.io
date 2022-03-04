@@ -5,6 +5,7 @@ private: true
 ---
 # golang object visitor mode
 本文参考总结了：https://coolshell.cn/articles/21263.html
+源码实现：[go-lib/reflect/object_visitor_decorator_test.go]
 
 Kubernetes 的 kubectl 命令中的使用到到的一个编程模式 – Visitor(其实，kubectl 用到了Builder、Visitor模式)
 这个模式是一种将算法与操作对象的结构分离的一种方法: 
