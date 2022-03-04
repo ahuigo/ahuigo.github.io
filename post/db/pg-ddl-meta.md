@@ -53,7 +53,7 @@ list real seq_name:
         maxid int;
         seq_name text;
     BEGIN
-        FOR row IN SELECT * FROM information_schema.columns WHERE column_default LIKE 'nextval%' LOOP
+        FOR row IN SELECT * FROM information_schema.columns WHERE  table_schema='public' and column_default LIKE 'nextval%' LOOP
             seq_name := substring(row.column_default, $dd$'(\w+)'::regclass$dd$);
             EXECUTE FORMAT('select max(%I) from %I', row.column_name, row.table_name) into maxid;
             IF maxid notnull THEN
