@@ -2,11 +2,12 @@
 layout: page
 title:	tcpdump tcp analysis
 category: blog
-description:
+description: 
+private: true
 ---
 # TCP Packets
-> 参考`man tcpdump`找到 TCP Packets
-## 
+参考`man tcpdump`找到 TCP Packets
+
 The general format of a tcp protocol line is:
 
         src > dst: flags data-seqno ack window urgent options

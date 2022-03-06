@@ -5,6 +5,10 @@ private: true
 ---
 # go net/url
 
+## encode
+    net/url
+    fmt.Println("http://example.com/say?message="+url.QueryEscape(s))
+
 ## query: url.values
 	v := url.Values{}
 	v.Set("name", "Ava")

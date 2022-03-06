@@ -8,7 +8,7 @@ private: true
 go 中的string 是不是变长，`+`拼接时会不断申请释放内存。
 
 可优化为：
-1. string.Buffer WriteString
+1. make(strings.Builder).WriteString (recommended)
 1. bytes.Buffer new(bytes.Buffer).WriteString
 1. []byte append
 

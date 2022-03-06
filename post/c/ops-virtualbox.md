@@ -1,11 +1,11 @@
 ---
 layout: page
-title: 全屏
+title: virtualbox notes
 category: blog
 description: 
 date: 2018-09-27
 ---
-# install win10
+# install on win10
 ## 提示“Units specified don't exist. SHSUCDX can't install.”
 错误原因:虚拟光驱被分配在SATA控制器下面。
 
