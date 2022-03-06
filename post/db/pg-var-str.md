@@ -121,11 +121,12 @@ tppe list:
     SELECT FORMAT('Welcome, %s','EduCBA');
     SELECT FORMAT('%s',stud_lname)  FROM ( select 1 as stud_lname) as f;
 
-%I and %L
+`%I`(按需双引号转义，相当于`quote_ident`) 
+`%L`(强制单引号转义), `%s` 则不转义
 
-    SELECT FORMAT('select * from %I where name=%L', 'my', 'yo');
+    SELECT FORMAT('select * from %I where age=%L', 'my', 1);
     --------------
-    select * from my where name='yo'
+    select * from my where age='1'
 
 数字转换可以用`to_char()`
 

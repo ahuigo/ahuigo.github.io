@@ -282,7 +282,9 @@ New 是基于rtype 建立新值(就是rvPtr)，Ptr 指向新值， 不能修改o
     //or newPtrVal := reflect.New(rv.Type())
     newPtrVal := reflect.New(refType)
     newPtrVal.Elem().Field(0).SetInt(20)
+
     newPtrVal.Elem().Interface().(Foo)
+    newPtrVal.Interface().(*Foo)
 
 Here’s some code to demonstrate these concepts:
  https://play.golang.org/p/PFcEYfZqZ8
