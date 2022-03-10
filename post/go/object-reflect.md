@@ -271,8 +271,7 @@ field.Interface().(type)
 
 
 # 创建实例
-## 模板实例New
-### New rvPtr 
+## New rvPtr 
 New 是基于rtype 建立新值(就是rvPtr)，Ptr 指向新值， 不能修改oldValue
 1. 先给New(rt reflect.Type)
 2. 由于go 不支持泛型(generics), 你需要用 interface.(FOO) 返回正常的变量
@@ -315,7 +314,15 @@ Here’s some code to demonstrate these concepts:
         fmt.Printf("%+v, %d, %s\n", f2, f2.A, f2.B)
     }
 
-### reflect.MakeSlice/reflect.MakeMap
+### rvptr.Elem()
+`Elem()`,`Indirect()`二者等价:
+
+	refpb := reflect.Indirect(reflect.ValueOf(&b))
+	refpb = reflect.ValueOf(&b).Elem()
+
+	refpb.FieldByName("Age").Set(rv)
+
+## reflect.MakeSlice/reflect.MakeMap
 下面的例子，展示了如何用反射：`reflect.MakeSlice, reflect.MakeMap, and reflect.MakeChan` 创建实例`slice,map,channel`.
 
     func main() {
@@ -345,7 +352,7 @@ Here’s some code to demonstrate these concepts:
         fmt.Println(mapStringInt2)
     }
 
-### 用反射创建function
+## 用反射创建function
  reflect.MakeFunc(rf) 用于创建function 实例
 
     func MakeTimedFunction(f interface{}) interface{} {
@@ -385,7 +392,7 @@ Here’s some code to demonstrate these concepts:
         fmt.Println(timedToo(2))
     }
 
-### 用反射创建新struct
+## 用反射创建新struct
 reflect.StructOf 的原型是： func([]reflect.StructField) reflect.Type
 
     func MakeStruct(vals ...interface{}) interface{} {
@@ -425,7 +432,7 @@ reflect.StructOf 的原型是： func([]reflect.StructField) reflect.Type
         fmt.Println(sr.Elem().Field(2).Interface())
     }
 
-## Embedded Fields
+## Embedded Fields issue
 Golang 有一个匿名struct field 委托行为(Embeded Fields)，
 比如下面的Bar 看起来是继承了Foo.Double() 方法，实际上它是编译期间，内嵌到Bar的。
  https://play.golang.org/p/aeroNQ7bEI
