@@ -99,4 +99,34 @@ private: true
                   arguments: '--debug'
                   failOnStderr: false
 
-## rancher
+
+# helm command
+    helm -h
+    - helm search:    search for charts (workload)
+    - helm pull:      download a chart to your local directory to view
+    - helm install:   upload the chart to Kubernetes
+    - helm list:      list releases of charts
+
+## repo
+    helm repo
+    helm repo add - 添加chart仓库
+    helm repo index - 基于包含打包chart的目录，生成索引文件
+    helm repo list - 列举chart仓库
+    helm repo remove - 删除一个或多个仓库
+    helm repo update - 从chart仓库中更新本地可用chart的信息
+
+## chart
+    helm - 针对Kubernetes的Helm包管理器
+    helm show all - 显示chart的所有信息
+    helm show chart - 显示chart定义
+    helm show crds - 显示chart的CRD
+    helm show readme - 显示chart的README
+    helm show values - 显示chart的values
+
+## list all workloads
+    helm list
+    helm -n dev list
+    helm -n dev list -h
+    helm -n dev list --filter 'ara[a-z]+'
+### remove workload
+    helm -n dev uninstall <workload-name>
