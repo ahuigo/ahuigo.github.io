@@ -69,6 +69,7 @@ Delete all images
     docker tag 7813412341 myname/server:latest
 
 ## 通过容器副本创建image
+创建前，最好先停止container：`docker stop e2182fxd`
 
     $ docker commit -m="has update" -a="ahuigo" e218edb10161 ahuigo/ubuntu:v2
     $ docker commit e2182fxd  ahuigo/ubuntu:v2
@@ -86,7 +87,7 @@ change cmd
 save 会带commit meta 信息
 export 不会带commit meta 信息
 
-### image: save to load
+### image: save/load image
 image to image.tar
 
     docker save [OPTIONS] IMAGE [IMAGE...] -o image.tar
@@ -101,14 +102,15 @@ image.tar to image
     docker load -i fedora.tar
         # Load an image from a tar archive or STDIN
 
-### container to image: export+import
-container(可以是exited statush)
-container to tar
+### container to image: export/import (via tar)
+> container(可以是exited statush)
+
+1.container to tar
 
     docker export <container> -o container.tar
         Export a container's filesystem as a tar archive
 
-containter.tar to image: Import the contents from a tarball to create a filesystem image
+2.containter.tar to image: Import the contents from a tarball to create a filesystem image
 
     # 语法
     docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]

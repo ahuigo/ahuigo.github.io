@@ -80,7 +80,7 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
     （2）Access-Control-Request-Headers
     该字段是一个逗号分隔的字符串，指定浏览器CORS请求会额外发送的头信息字段，上例是X-Custom-Header。
 
-### 预检请求的回应
+#### 预检请求的回应
 服务器收到"预检"请求以后，检查了Origin、Access-Control-Request-Method和Access-Control-Request-Headers字段以后，确认允许跨源请求，就可以做出回应。
 
     HTTP/1.1 200 OK
@@ -116,6 +116,12 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
     该字段与简单请求时的含义相同。
     （4）Access-Control-Max-Age
     该字段可选，用来指定本次预检请求的有效期，单位为秒。上面结果中，有效期是20天（1728000秒），即允许缓存该条回应1728000秒（即20天），在此期间，不用发出另一条预检请求。
+
+#### 限制
+1. preflight 不能包含 cookie (withCredentials)
+
+除非:
+1. chromium-browser --disable-web-security
 
 ### 正常请求和响应
 下面是"预检"请求之后，浏览器的正常CORS请求。

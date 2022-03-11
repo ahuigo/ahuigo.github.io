@@ -73,7 +73,7 @@ example
         },
         credentials: "include",
         body:  JSON.stringify({a:1}),
-    })
+    }).then(async r=>await r.text())
 
 ### cors
 默认(跨域名)是不发送cookie的：
