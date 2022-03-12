@@ -573,7 +573,7 @@ mutex 锁会使线程阻塞等待，当有大量线程进程阻塞时，会加�
 ## Semaphore 信号量
 Mutex 表示一种可用资源，1表示可用，0表示不可用（资源被别的线程给占用）
 信号量（Semaphore）和Mutex 类似， 表示可用资源的数量，和Mutex 不同的是这个数量可以大于1
-本文将介绍POSIX Semaphore 库函数，详见sem_overview(7), 这种信号量不仅可以用于同一进程中线程间同步，也可以用于多个进程间同步。
+本文将介绍POSIX Semaphore 库函数，详见`sem_overview(7)`, 这种信号量不仅可以用于同一进程中线程间同步，也可以用于多个进程间同步。
 
 	#include <semaphore.h>
 	int sem_init(sem_t *sem, int pshared, unsigned int value);
@@ -582,13 +582,16 @@ Mutex 表示一种可用资源，1表示可用，0表示不可用（资源被别
 	int sem_trywait(sem_t *sem);
 	int sem_post(sem_t * sem);
 
-semaphore 变量类型为sem_t, sem_init 初始化一个semaphore 变量，value 是可用资源数量，pshared 为0表示信号量用于同一进程中线程间同时（本节只介绍这种情况）。sem_destroy 用于释放与semaphore 相关的资源。
+semaphore 变量类型为`sem_t`, `sem_init` 初始化一个semaphore 变量，value 是可用资源数量，pshared 为0表示信号量用于同一进程中线程间同时（本节只介绍这种情况）。`sem_destroy` 用于释放与semaphore 相关的资源。
 
-sem_wait 可以获得资源，使得semaphore 减1，如果semaphore 已经为0，则挂起等待，而sem_trywait 则不会挂起等待。而sem_post 可以释放资源，傅semaphore 加1，同时唤醒挂起等待的线程。
+`sem_wait` 可以获得资源，使得semaphore 减1，如果semaphore 已经为0，则挂起等待，而`sem_trywait` 则不会挂起等待。而`sem_post` 可以释放资源，傅semaphore 加1，同时唤醒挂起等待的线程。
 
-> Mac OSX 已经不再使用sem_init 等Unnamed semaphores函数了，
-To use named semaphores instead of unnamed semaphores, use sem_open instead of sem_init, and use sem_close and sem_unlink instead of sem_destroy.
+> Mac OSX 已经不再使用`sem_init` 等Unnamed semaphores函数了，
+To use named semaphores instead of unnamed semaphores, 
+use `sem_open` instead of `sem_init`, 
+and use `sem_close` and `sem_unlink` instead of `sem_destroy`.
 http://stackoverflow.com/questions/1413785/sem-init-on-os-x
+https://stackoverflow.com/questions/26797126/why-sem-wait-doesnt-wait-semaphore-on-mac-osx
 
 上一节生产者消费者的例子是基于链表的，空间是动态分配的。现在基于固定大小的环形队列重写这个程序：
 

@@ -84,9 +84,9 @@ example
 
     credentials : "include"
 
-当设置成include时，服务器返回的`Access-Control-Allow-Origin` 不能为`*`
-
-
+#### Note
+1. 当设置成include时，服务器返回的`Access-Control-Allow-Origin` 不能为`*`
+2. 一级域名不一样跨域时，默认chrome首次不会发送origin
 
 #### cors with cookie
 credential 发送include cookie时，allow-origin 不能是`*`
@@ -97,10 +97,6 @@ credential 发送include cookie时，allow-origin 不能是`*`
                 //credentials: "same-origin" //default
     }).then(...).then(..).catch(...);
     fetch(url).then(async r=> console.log(await r.text()))
-
-注意:
-1. 最新的chrome 对于https网站, 跨域名ajax请求，即使加了`credentials:"include"` 也不能发送cookie. 除非设置: `Set-Cookie: flavor=choco; SameSite=None; Secure`
-2. 跨子域名，不受影响
 
 ### headers
 #### x-www-urlencode

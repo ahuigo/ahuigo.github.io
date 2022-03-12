@@ -44,7 +44,8 @@ curl 默认发送post数据是: application/x-www-form-urlencoded(不同于在fo
 ## host
 modify host for https:
 
-    curl --resolve 'localhost:80:127.0.0.1' https://localhost/md.htm
+    curl --resolve 'ahui:8080:127.0.0.1' http://ahui:8080/md.htm
+    curl https://www.example.com --resolve www.example.com:80:127.0.0.1 --resolve www.example.com:443:127.0.0.1
 
 ## user agent
 

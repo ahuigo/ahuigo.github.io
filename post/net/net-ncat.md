@@ -2,10 +2,9 @@
 title: netcat
 date: 2018-09-28
 ---
-# netcat,
-[nc](http://www.oschina.net/translate/linux-netcat-command?p=2#comments)
+# netcat
+参考[nc](http://www.oschina.net/translate/linux-netcat-command?p=2#comments)
 
-# nc
 Netcat 或者叫 nc 是 Linux 下的一个用于调试和检查网络工具包。可用于创建 TCP/IP 连接，最大的用途就是用来处理 TCP/UDP 套接字。
 
 - 它能通过TCP和UDP在网络中读写数据。通过与其他工具结合和重定向，你可以在脚本中以多种方式使用它。
@@ -49,7 +48,7 @@ server: netcat 命令在1567端口启动了一个tcp 服务器，所有的标准
   $ nc -l 1567
   $ nc -l 127.0.0.1 5000
 
-### tcp client
+## tcp client
 Client 访问1567:
 
   $ nc 127.0.0.1 1567
@@ -69,7 +68,55 @@ Client 访问1567:
 
     echo -n "hello" >/dev/udp/remotehost/8000
 
+## Netcat 支持 IPv6
+netcat 的 -4 和 -6 参数用来指定 IP 地址类型，分别是 IPv4 和 IPv6：
 
+服务器端：
+
+  $ nc -4 -l 2389
+
+客户端：
+
+  $ nc -4 localhost 2389
+
+然后我们可以使用 netstat 命令来查看网络的情况：
+
+  $ netstat | grep 2389
+  tcp        0      0 localhost:2389          localhost:50851         ESTABLISHED
+  tcp        0      0 localhost:50851         localhost:2389          ESTABLISHED
+接下来我们看看IPv6 的情况：
+
+服务器端：
+
+  $ nc -6 -l 2389
+
+客户端：
+
+  $ nc -6 localhost 2389
+
+再次运行 netstat 命令：
+
+  $ netstat | grep 2389
+  tcp6       0      0 localhost:2389          localhost:33234         ESTABLISHED
+  tcp6       0      0 localhost:33234         localhost:2389          ESTABLISHED
+
+前缀是 tcp6 表示使用的是 IPv6 的地址。
+
+### localhost 与127.0.0.1 不同
+在mac 上可以发现：
+
+    nc -l localhost 8081 只能被 nc  localhost 8081  访问
+    nc -l 127.0.0.1 8081 只能被 nc  127.0.0.1 8081  访问
+
+因为nc localhost 默认用的是ipv6
+
+    $ tcpdump -Xn -i any "port 8081"
+    IP6 ::1.51957 > ::1.8081:
+
+    $ netstat -anp tcp | ag 8081
+    tcp6       0      0  ::1.8081               *.*                    LISTEN
+
+# 应用
 ## 文件传输
 有很多种方法，比如FTP,SCP,SMB等等，但是当你只是需要临时或者一次传输文件，真的值得浪费时间来安装配置一个软件到你的机器上嘛。
 
@@ -144,10 +191,10 @@ Client
 
 假设你的netcat支持 -c -e 参数(默认 netcat)
 
-  # Server
-  nc -l 1567 -e /bin/bash -i
-  # Client
-  nc 172.31.100.7 1567
+    # Server
+    nc -l 1567 -e /bin/bash -i
+    # Client
+    nc 172.31.100.7 1567
 
 这里我们已经创建了一个netcat服务器并且表示当它连接成功时执行/bin/bash
 
@@ -236,40 +283,6 @@ Client
 该连接将在 10 秒后中断。
 
 注意: 不要在服务器端同时使用 -w 和 -l 参数，因为 -w 参数将在服务器端无效果。
-
-## Netcat 支持 IPv6
-netcat 的 -4 和 -6 参数用来指定 IP 地址类型，分别是 IPv4 和 IPv6：
-
-服务器端：
-
-  $ nc -4 -l 2389
-
-客户端：
-
-  $ nc -4 localhost 2389
-
-然后我们可以使用 netstat 命令来查看网络的情况：
-
-  $ netstat | grep 2389
-  tcp        0      0 localhost:2389          localhost:50851         ESTABLISHED
-  tcp        0      0 localhost:50851         localhost:2389          ESTABLISHED
-接下来我们看看IPv6 的情况：
-
-服务器端：
-
-  $ nc -6 -l 2389
-
-客户端：
-
-  $ nc -6 localhost 2389
-
-再次运行 netstat 命令：
-
-  $ netstat | grep 2389
-  tcp6       0      0 localhost:2389          localhost:33234         ESTABLISHED
-  tcp6       0      0 localhost:33234         localhost:2389          ESTABLISHED
-
-前缀是 tcp6 表示使用的是 IPv6 的地址。
 
 ## 在 Netcat 中禁止从标准输入中读取数据
 

@@ -145,3 +145,34 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
 	# nginx
 	add_header Access-Control-Allow-Origin *;
 	add_header Access-Control-Allow-Headers Authorization;
+
+# Cookie
+## 发送cookie的Samesite 机制
+> 参考 ruanyifeng https://www.ruanyifeng.com/blog/2019/09/cookie-samesite.html
+### Samesite=Strict
+1. 到第三方网站不可发送cookie
+2. 子域名(二级域名及其子域名间是可以共享cookie的)、端口号不一样 都可以发cookie, 
+
+### Samesite=Lax(默认)
+跨域名发cookie 仅限以下特定场景
+
+    请求类型	示例	正常情况	Lax
+    链接	<a href="..."></a>	发送 Cookie	发送 Cookie
+    预加载	<link rel="prerender" href="..."/>	发送 Cookie	发送 Cookie
+    GET 表单	<form method="GET" action="...">	发送 Cookie	发送 Cookie
+    POST 表单	<form method="POST" action="...">	发送 Cookie	不发送
+    iframe	<iframe src="..."></iframe>	发送 Cookie	不发送
+    AJAX	$.get("...")	发送 Cookie	不发送
+    Image	<img src="...">	发送 Cookie	不发送
+
+
+### Samesite=None
+想在跨域时发送 cookie 那么要设置`SameSite=None; Secure` 两者不可分开, 限制https 或 chrome://flags 配置默认None
+
+## 跨域set-cookie
+1. 通过cors返回set-cookie 时必须开启: `credentials: include`
+2. 想在跨域时发送 cookie 那么要设置`SameSite=None; Secure` 两者不可分开
+    2. Secure 只支持通过https 连接中设置，所以无法用ajax http 发送`SameSite=None; Secure`
+2. 隐身模式下，跨域（包括端口号不一样）不可`set-cookie`, 除非**同子域名且同端口**: 
+    1. 比如: `m:8001` 通过ajax 访问`m:8085`（注意端口不一样算跨域）时，`set-cookie:Domain=m; Max-Age=604800; SameSite=None` 会报`Set-Cookie was blocked due to user preferences`, 2023年这个限制会被引入到正式模式
+    2. 参考 https://stackoverflow.com/questions/62578201/how-to-fix-this-set-cookie-was-blocked-due-to-user-preferences-in-chrome-sta
