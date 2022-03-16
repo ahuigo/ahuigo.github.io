@@ -120,7 +120,7 @@ function gcap(){
     fi
 
     if git remote | grep '\w';then
-        if git remote| grep -vE '^gitee|up|other$' | xargs -L1 -J% git push --follow-tags % HEAD; then
+        if git remote| grep -vE '^gitee|local|up|other$' | xargs -L1 -J% git push --follow-tags % HEAD; then
             cd $(git rev-parse --show-toplevel)
             subdirs=(b )
             top_dir=$(pwd)
