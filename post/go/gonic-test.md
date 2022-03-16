@@ -50,7 +50,9 @@ Test for code example above:
 # mock context
 不用构建testRouter, 只构建context
 
+    // response
     w := httptest.NewRecorder()
+    // request
     context,engine := gin.CreateTestContext(w)
 
 ## mock test context

@@ -4,7 +4,7 @@ date: 2021-12-25
 private: true
 ---
 # cadence conf load
-config/config_template.yaml
+config/config_template.yaml(docker.yaml)
 
     cmd/server/cadence/cadence.go +78
         err := config.Load(env, configDir, zone, &cfg)

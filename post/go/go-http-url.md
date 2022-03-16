@@ -30,14 +30,15 @@ build url:
     query, _:= url.ParseQuery(`x=1&y=2&y=3;z;q=a+b;c`)
     //map[x:[1] y:[2 3] z:[] q:[a b]]
 
-## addQuery
-    u, _:= url.Parse("http://bing.com/search?q1=dotnet")
-	u.Scheme = "https"
-	u.Host = "google.com"
-	q := u.Query()
-	q.Set("q", "golang")
-	q.Add("name", "ahui")
-	u.RawQuery = q.Encode()
+## parseURL & addQuery
+
+    u, _:= url.Parse("http://bing.com/search:8080?q1=dotnet")
+    u.Scheme = "https"
+    u.Host = "google.com" //Hostname()+Port()
+    q := u.Query()
+    q.Set("q", "golang")
+    q.Add("name", "ahui")
+    u.RawQuery = q.Encode()
 
     fmt.Println(u)
 

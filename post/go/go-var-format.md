@@ -61,6 +61,9 @@ for number
     var slice=[]int{0}
     fmt.Printf("%p", slice)
 
+### print slice value
+    fmt.Printf("source slice: %[1]v, address: %[1]p\n", src)
+
 
 ## Print string
 > see go-fmt

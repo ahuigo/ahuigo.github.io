@@ -173,6 +173,10 @@ like `str.replace`
 	re.sub(r'\w+', lambda m: m.group().upper(), ' hilo jack')
 	' HILO JACK'
 
+### replace with group
+
+    re.sub(r'(a) (b)', r'\2 \1', '1 a b a b',1)
+
 str.replace([list], rep) not work
 
 ## search

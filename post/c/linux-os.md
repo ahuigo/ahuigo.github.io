@@ -42,10 +42,42 @@ RISC 精简指令集主要有三种
 ## memory
     free -h
 
-# vim
+## disk
+You should get 1 for hard disks and 0 for a SSD
 
-    apt-get update
-    apt-get install vim
+    cat /sys/block/sda/queue/rotational
+    sudo fdisk -l /dev/sda
+
+### mount partition
+First find partition's uuid
+
+    lsblk -o NAME,FSTYPE,UUID
+    # or
+    sudo blkid
+
+then:
+
+    sudo cp /etc/fstab /etc/fstab.old
+
+sudo vim /etc/fstab 
+
+    UUID=<uuid> /         ext4 umask=0077 0 1
+    UUID=<uuid> /mnt/sda3 ext4 defaults 0 0
+    UUID=<uuid> /mnt/sda4 ntfs uid=1000,gid=1000,umask=0022,sync,auto,rw 0 0
+
+参考 https://help.ubuntu.com/community/Fstab or `man fstab`
+
+    [Device] [Mount Point] [File System Type] [Options] [Dump] [Pass]
+    <options>
+        Mount options of access to the device/partition (see the man page for mount).
+    <dump>
+        Enable or disable backing up of the device/partition (the command dump). This field is usually set to 0, which disables it.
+    <pass num>
+        Controls the order in which fsck checks the device/partition for errors at boot time. The root device should be 1. Other partitions should be 2, or 0 to disable checking.
+
+
+
+
 
 # dpkg
 ## find file which pckages contain

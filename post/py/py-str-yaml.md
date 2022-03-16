@@ -8,7 +8,7 @@ private:
     pip3 install pyyaml
     ```
 
-# load
+# load file
     ```
     >>> import yaml
     >>> a=yaml.load(open('a.conf'))
@@ -21,7 +21,8 @@ private:
     xata: adf
     ''')
 
-## dump
+
+# dump
 
     out = yaml.dump(obj)
     yaml.dump(obj, sys.stdout)
@@ -75,3 +76,30 @@ dummper style
     f = StringIO()
     yaml.dump(data, f)
     return f.getvalue()
+
+
+## keep comments
+import sys
+import ruamel.yaml
+
+yaml_str = """\
+# example
+    name:
+      # details
+      family: Smith   # very common
+      given: Alice    # one of the siblings
+    """
+
+    yaml = ruamel.yaml.YAML()  # defaults to round-trip if no parameters given
+    code = yaml.load(yaml_str)
+    code['name']['given'] = 'Bob'
+
+    yaml.dump(code, sys.stdout)
+
+with result:
+
+    # example
+    name:
+      # details
+      family: Smith   # very common
+      given: Bob      # one of the siblings

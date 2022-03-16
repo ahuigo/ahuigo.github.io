@@ -7,10 +7,14 @@ private: true
     brew tap openresty/brew
     brew untap homebrew/nginx
 
-    # 二选一
-    brew install openresty
+    # or: brew install openresty 
     brew install openresty-debug
     brew services start openresty/brew/openresty
+
+stop:
+
+    brew services info openresty/brew/openresty
+    brew services stop openresty/brew/openresty
 
 conf:
 

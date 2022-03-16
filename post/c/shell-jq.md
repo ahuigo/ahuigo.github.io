@@ -43,3 +43,5 @@ note:
     curl url | jq '.executions[]|.closeTime'
     curl url | jq '.executions[].closeTime'
     curl url | jq '.stus.names[]._source["@timestamp"]'
+
+    jq -c '.[]|.task_name'
