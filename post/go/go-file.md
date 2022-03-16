@@ -89,8 +89,8 @@ func Getwd() (pwd string, err error)
     pathStat.IsDir()
 
 ### path exists
-    if _, err := os.Stat("/path/to/whatever"); os.IsNotExist(err) {
-        // path/to/whatever does not exist
+    if _, err := os.Stat("/path/to/whatever"); !os.IsNotExist(err) {
+        // path/to/whatever exists
     }
 
 ### mkdir

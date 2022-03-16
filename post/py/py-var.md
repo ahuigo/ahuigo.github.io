@@ -30,7 +30,7 @@ calling a func by name
     globals()["func"]()
 
 ## equal
-判断两个变量是否相等（值相同）使用==， 而判断两个变量是否指向`同一个对象`使用 is。
+判断两个变量是否相等（值相同）使用`==`， 而判断两个变量是否指向`同一个对象`使用 is。
 
     >>> a1, a2 = [], []
     >>> a1 == a2
@@ -47,6 +47,15 @@ is 比较的是id, == 比较的是内容
     False
     >>> id('a'[:]+'b') == id('ab')
     False
+
+257 与 256:
+
+    >>> a=256
+    >>> b=256
+    >>> a is b # True
+    >>> a=257
+    >>> b=257
+    >>> a is b # False
 
 ## reference
 不同于string/number 之外，list, tuple, dict 都是引用型的，无论是赋值，还是func 传值, 还是线程`threading.Thread(target=run_thread, args=(list,))`

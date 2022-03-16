@@ -3,20 +3,6 @@ title: elastic query
 date: 2020-10-29
 private: true
 ---
-# install & run
-    brew install elasticsearch
-    # run server
-    $ ./bin/elasticsearch
-
-## config
-默认情况下，Elastic 只允许本机访问，如果需要远程访问，可以修改 config/elasticsearch.yml文件，去掉network.host的注释
-
-    network.host: 0.0.0.0
-
-## running status
-
-    curl http://localhost:9200/_cluster/health?pretty
-
 # ddl
 ## add index
 
@@ -68,6 +54,16 @@ v7/index_template.json:
       },
     }
 
+## show index
+### show index setting and mapping
+
+    http://local:49200/{index-name}
+
+### show index shards
+一样的
+
+    curl -s 'm:9200/{index}/_search?'
+    curl -s 'm:9200/{index}/_doc/_search?'
 
 # read 数据
 ## list all indexes and type
@@ -77,13 +73,6 @@ v7/index_template.json:
 注意：
 
     .value.mappings | keys 代表 value['mappings'].keys()
-
-## list one index
-一样的
-
-    curl -s 'm:9200/index/_search?'
-    curl -s 'm:9200/index/_doc/_search?'
-
 
 # elastic query 语法
 查询示例

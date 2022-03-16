@@ -36,7 +36,7 @@ To adjust your mouse or trackpad's double-click speed, adjust the slider shown b
 4. hhkb 只有6个开关提供定制功能，仅仅是交换Command键和Alt键或者交换Fn键. Niz 可以通过软件定制任意按键、快捷键
 5. hhkb 太贵，NIZ 便宜性价比高
 
-## Office/program1/program2 三种模式
+## Niz68: Office/program1/program2 三种模式
     Office 是固定按键。
     program2/1 模式下按键可定制
 
@@ -45,6 +45,20 @@ To adjust your mouse or trackpad's double-click speed, adjust the slider shown b
     M 常亮.5s 是Office
     M 常亮10s 是Program1
     M 闪亮10s 是Program2
+## Niz84: Office/program 模式
+    Office 是固定按键。
+    program 模式下按键可定制
+
+切换模式：按住 `Fn+M`1s：
+
+    M 亮10s熄灭 是Office
+    M 瞬间熄灭 是Program模式
+
+Program模式可独立设置两个Fn层, 左右两Fn 同时按3秒：
+
+    闪2次: 右Fn层键值 与上层键值对调
+    闪3次: 左Fn层键值 与上层键值对调
+    闪1次: 恢复
  
 ## mac osx 蓝牙
 入手niz plum atom68，蓝牙连接重试了很多次，我的系统是mac osx 10.15.4 
@@ -153,6 +167,10 @@ https://ke-complex-modifications.pqrs.org/
 
 对于外置键盘，交换command 与option
 ![](/img/shell/keyboard/karabiner-ecs68-layout.png)
+
+## 交换esc与~
+类似下图，可以通过 karabiner 交换 `esc` 与 `~`
+![](/img/shell/keyboard/karabiner-readline1.png)
 
 ## ctrl+u/w
 你可以设置`ctrl+w` 映射到`option+DeleteBackward`. 此时iterm2会失效. 
