@@ -124,9 +124,12 @@ private: true
     helm show values - 显示chart的values
 
 ## list all workloads
+
     helm list
     helm -n dev list
     helm -n dev list -h
     helm -n dev list --filter 'ara[a-z]+'
+
 ### remove workload
     helm -n dev uninstall <workload-name>
+    helm -n dev uninstall cadence

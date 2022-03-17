@@ -43,6 +43,7 @@ Note that the app at http://ip_of_the_app:7180/ will now receive the request wit
     location / { 
         proxy_pass http://ip_of_the_app:7180/; 
         proxy_set_header HOST $host;
+        proxy_set_header ORIGIN $http_origin;
     }
 
 代理时, 记得传递header: host, real-ip,...：

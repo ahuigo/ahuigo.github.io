@@ -224,6 +224,30 @@ makefile 中的编译命令可以是这样
         @[ -d dest ] || mkdir dest
         cp $< $@
 
+## global env
+ export individual variables with:
+
+    export MY_VAR = foo  # Available for all targets
+
+Or export variables for a specific target (target-specific variables):
+
+    my-target: export MY_VAR_1 = foo
+    my-target: export MY_VAR_2 = bar
+    my-target: export MY_VAR_3 = baz
+
+    my-target: dependency_1 dependency_2
+        echo do something $$MY_VAR_1
+
+You can also specify the .EXPORT_ALL_VARIABLES target to—you guessed it!—EXPORT ALL THE THINGS!!!:
+
+    .EXPORT_ALL_VARIABLES:
+
+    MY_VAR_1 = foo
+    MY_VAR_2 = bar
+    MY_VAR_3 = baz
+
+    test:
+      @echo $$MY_VAR_1 $$MY_VAR_2 $$MY_VAR_3
 # 执行指令
 
     make init
@@ -315,7 +339,8 @@ Example: clean 清除编译文件 这一target 不需要条件。
     dev: init   #init也是目标
         echo dev
 
-# 判断和循环
+# 控制语法
+## 判断
 Makefile使用 Bash 语法，完成判断和循环。
 上面代码判断当前编译器是否 gcc ，然后指定不同的库文件。
 
@@ -325,7 +350,7 @@ Makefile使用 Bash 语法，完成判断和循环。
         libs=$(normal_libs)
     endif
 
-循环
+## 循环
 
     LIST = one two three
     all:
@@ -339,6 +364,27 @@ Makefile使用 Bash 语法，完成判断和循环。
         for i in one two three; do \
             echo $i; \
         done
+
+## go test 示例: filter, for..
+    ALL_SRC := $(shell find . -name "*test.go" | grep -v -e vendor \
+    	-e ".*/\..*" \
+    	-e ".*/_.*" \
+    	-e ".*/mocks.*")
+    TEST_DIRS := $(sort $(dir $(filter %_test.go,$(ALL_SRC))))
+    COVERAGE_FILE := coverage.out
+    test:
+    	echo $(TEST_DIRS)
+    	@rm -f test.log
+    	@rm -f $(COVERAGE_FILE)
+    	@for dir in $(TEST_DIRS); do \
+    		go test -timeout 20m -coverprofile="test.temp" "$$dir" | tee -a test.log; \
+    		cat test.temp >> $(COVERAGE_FILE); \
+    	done;
+    	@rm -f test.temp
+
+
+
+
 
 # 函数
 Makefile 还可以使用函数，格式如下。
@@ -477,31 +523,6 @@ patsubst 函数用于模式匹配的替换，格式如下。
 
 	VAR=value
 		Eg. `make CPPFLAGS=-g`, 在make 命令行中定义变量
-
-# global env
- export individual variables with:
-
-    export MY_VAR = foo  # Available for all targets
-
-Or export variables for a specific target (target-specific variables):
-
-    my-target: export MY_VAR_1 = foo
-    my-target: export MY_VAR_2 = bar
-    my-target: export MY_VAR_3 = baz
-
-    my-target: dependency_1 dependency_2
-      echo do something
-
-You can also specify the .EXPORT_ALL_VARIABLES target to—you guessed it!—EXPORT ALL THE THINGS!!!:
-
-    .EXPORT_ALL_VARIABLES:
-
-    MY_VAR_1 = foo
-    MY_VAR_2 = bar
-    MY_VAR_3 = baz
-
-    test:
-      @echo $$MY_VAR_1 $$MY_VAR_2 $$MY_VAR_3
 
 # 参考
 Refer to: http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html

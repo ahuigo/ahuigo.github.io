@@ -106,6 +106,8 @@ e.g.
 内建变量如
 
     $http_*     headers
+        $http_origin
+        $http_host
     $cookie
         $cookie_<name>
     $args == $query_string  get args

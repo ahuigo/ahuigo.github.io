@@ -175,39 +175,6 @@ If you want to also remove *directories*, run
 	git commit --amend -m 'new messages'
 	git commit --amend -m 'new messages' --author 'ahuigo'
 
-## git revert
-    C1->C2->C3->B2C3->C5->C6->C7->HEAD
-      |-B2->B2/
-
-git revert -m1 B2C3 创建了新分支: `HEAD-(B2-C3)`
-git revert -m2 B2C3 创建了新分支: `HEAD-(C3-C2)`
-
-    C1->C2->C3->C4->C5->C6->C7->HEAD
-
-git revert C3 会创建新分支: `HEAD-(C3-C2)`
-
-恢复到HEAD 之前的提交:
-
-	git revert HEAD //Creat a new commit to drop HEAD's modifies. '
-        相当于merge HEAD^ based on HEAD: 
-        git checkout HEAD^ . ; // copy HEAD^ -> working === index 
-            git checkout . ; // copy index -> working
-        git commit -m 'rever version xxx'
-
-    # merge parent based on HEAD^^
-	git revert HEAD^^ -m 1
-	git revert A2 -m 1
-
-        git log --graph
-        A0 -- A1 -- A2 -- A3 -- A4(HEAD)
-         \        /      
-          B0-----B1
-
-        -m 1 :merge A1 (Base on A2)
-        -m 2 :merge B1 (Base on A2)
-
-> Note: git revert is used to record some new commits to reverse the effect of some earlier commits (often only a faulty one).
-
 # git add
 
 	git add <file> //stage file(Untracked file is also included )
@@ -465,6 +432,7 @@ tag 相当于commit 的别名
 	git tag -a v1.4 <commit>
 
 ### add -s (-signed) tag
+签名tag, 证明是作者身份
 
 	git tag -s v1.4 -m 'fix'
 	#add tag for a commit

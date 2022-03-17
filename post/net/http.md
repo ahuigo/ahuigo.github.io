@@ -109,7 +109,17 @@ nginx:
 
     //子域名也可以用sub.ahuigo.com
     Set-Cookie: id_token=value; Path=/; Domain=ahuigo.com; Max-Age=86400
+
+A value of 0 means the cookie should expire immediately.
+
     Set-Cookie: id_token=; Path=/; Domain=ahuigo.com; Max-Age=0
+
+    # 不过golang 库，设置maxAge=0 不会传
+    Set-Cookie: id_token=; Path=/; Domain=ahuigo.com;
+    # 必须是为负数
+    ctx.SetCookie("id_token", "", -1, "", ".ahuigo.com", false, false)
+    Set-Cookie: id_token=; Path=/; Domain=ahuigo.com; Max-Age=0
+
 
 # Method
 1. GET 幂等(safe methods): 是安全的, 所以GET返回的内容可以被浏览器、Cache服务器缓存，

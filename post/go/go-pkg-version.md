@@ -29,6 +29,17 @@ If you look at the source code for json-iterator/go, you’ll see that each file
  
 # go module
 
+## 多版本支持 multiple version
+go1.14后不能支持多multi-version 依赖.
+以前可以通过 `replace github.com/pkg/errors/081 => github.com/pkg/errors v0.8.1` 别名依赖多个版本
+
+现在的办法是需要包本身能支持multiple version：
+
+    import (
+        redisv1 "gopkg.in/go-redis/redis.v1"
+        redisv2 "gopkg.in/go-redis/redis.v2"
+    )
+
 ## module 解决了什么问题？
 module 机制会在项目的根目录中添加 go.mod， 该文件用来记录项目依赖的 modules 的版本。
 
@@ -113,7 +124,7 @@ package 定义局部命名空间, 是用于路径查找的：
         github.com/jinzhu/now v0.0.0-20181116074157-8ec929ed50c3 // indirect
     )
 
-项目中依赖A, A依赖A1、A2, 但是A的go.mod 只记录了A1, 则A2是间接引入
+项目中依赖A, A依赖A1、A1依赖A2, 则A2是间接引入
 
     A2 //indirect 是间接引入
 
@@ -143,6 +154,9 @@ I getting this error:
 
 because cloned version of `original-project` still says `module github.com/uber-go/atomic`. You should use the go.mod replace directive. 
 
+    $ cat go.mod
+    module go.uber.org/atomic
+
     $ go mod edit -replace github.com/uber-go/atomic=go.uber.org/atomic@v1.9.0
     replace github.com/uber-go/atomic => go.uber.org/atomic v1.9.0
 
@@ -168,7 +182,7 @@ because cloned version of `original-project` still says `module github.com/uber-
         github.com/ugorji/go v1.1.4 (/Users/ahui/go/pkg/mod/github.com/ugorji/go@v1.1.4/codec)
         github.com/ugorji/go/codec v0.0.0-20181204163529-d75b2dcb6bc8 (/Users/ahui/go/pkg/mod/github.com/ugorji/go/codec@v0.0.0-20181204163529-d75b2dcb6bc8)
 
-由于同步依赖ugorji/go/codec 不同的两个版本，可以指定一个唯一版本. go.mod增加
+由于同步依赖ugorji/go/codec `不同的两个版本` + `module path` 变更了，解决方法是在go.mod 指定一个唯一版本:
 
     replace github.com/ugorji/go => github.com/ugorji/go/codec v1.1.7
     // 或
@@ -181,20 +195,19 @@ go: cannot find main module; see 'go help modules'"，因为没有找到go.mod�
     $ cd project;
     $ go mod init project-name
 
+### go mod graph/why
+
 # 语义导入版本控制
 语义导入版本控制 （Semantic Import Versioning），是使用 module 必须要遵循的一些规定。
-
-1. 需要 modules 的不同版本满足一些兼容规则。 比如： v1.5.4 版本需要向前兼容 v1.5.0、v1.4.0 甚至 v1.0.0 版本， 但不用兼容 v0.0.9 版本。
-2. 另外语义导入版本控制还约定了版本不能向前兼容时，modules 下的包的导入路径的变化。
 
 下面详细介绍具体要满足哪些规则， 以及 golang 工具链是如何选择版本的：
 
 ## 1.semver 规范
 semver 是一个语义化版本规范，是 modules 需要遵从的。
 
-- 主版本号：当你做了**不兼容的** API 修改
-- 次版本号：当你做了**向下兼容**的功能性新增，
-- 修订号：当你做了向下兼容的**问题修正**。
+- 主版本号：当你做了**不兼容的** API 修改  v2.x.x
+- 次版本号：当你做了**向下兼容**的功能性新增，v2.1.x
+- 修订号：当你做了向下兼容的**问题修正**。 v2.1.1
 
 例如： 现在最新的版本号如果是 v1.4.9。 在此基础上，主版本应该是v2.x.x
 具体规则可以参考 https://semver.org/

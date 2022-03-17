@@ -65,7 +65,7 @@ description:
 
     # 按字符变化匹配: word -> word1，变化的是1, -S‘word’ 不匹配
     -S "word"
-    # 按行变化匹配
+    # 按行变化匹配
     -G 'regex'
 
 ## by time

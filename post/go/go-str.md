@@ -32,6 +32,8 @@ byte 其实是int8
 
     fmt.Printf("%T,%T,%T", byte('a'),'a', "abc"[0])
     // uint8, int32, uint8
+    string(0x31) 
+    // "1"
 
 byte array:
 

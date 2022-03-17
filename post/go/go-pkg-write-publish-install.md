@@ -6,14 +6,15 @@ description:
 date: 2016-09-27
 ---
 # write mod package
-例子我放在了：https://github.com/ahuigo/go-lib/tree/master/import-local-mod
 
 ## write a go cli
-cli 程序的实现说明见：go/go-pkg-cli.md https://github.com/ahuigo/go-cli-demo.git
+1. local package: https://github.com/ahuigo/go-lib/tree/master/import-local-mod
+2. cli demo: https://github.com/ahuigo/go-cli-demo.git
+2. cli demo2: https://github.com/ahuigo/arun.git
+
+在go install/get  时生成go.mod中module 同名的bin 并放到公共的path
 
 ## write go mod package
-go mod 不是加载`$GOPATH/src/`。包文件也不需要放在`$GOPATH`
-
 go mod 的包必须上传到repo. (go.mod 不是必须的)
 
     $ cd <project>/go-hello/
@@ -42,7 +43,7 @@ go mod 的包必须上传到repo. (go.mod 不是必须的)
     }
 
     $ go run a.go ;# 自动下载
-    $ go mod tidy; #手动下载
+    $ go mod tidy; # 自动整理: 移除go.mod多余的包，下载缺失的包并加入到go.mod; 多版本依赖会取最新版本
 
 ### clean mod
 如果想清缓存, 涉及三个目录
@@ -70,10 +71,12 @@ clean 命令清：
         rm -r $GOPATH/pkg/mod
 
 # install/get package
+## go install
 安装本地包/远程包
 
     # install binary
-    go install .
+    go install 
+    go install ./path/src
     go install github.com/ahuigo/xxx
 
     # add dependencies + download + install
@@ -94,7 +97,7 @@ clean 命令清：
 go get 可以用于：download+install 或者只download
 go install 只用于install
 
-### private package:GOSUMDB
+## private package:GOSUMDB
 默认通过GOSUMDB 指定服务器对下载包进行签名校验：
 
     $ go env |ag sum
@@ -116,7 +119,7 @@ go install 只用于install
     export GOPROXY=https://goproxy.io,direct
     export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 
-### goproxy
+## goproxy
 
     export GOPROXY=https://goproxy.io,direct
 
@@ -158,7 +161,10 @@ The value of GOPROXY is a list
         pkg/        //go install 生成的静态库.a
             darwin_amd64/
                 mylib.a
+            linux_amd64/          # this will reflect your OS and architecture
+                github.com/user/stringutil.a  # package object
         bin/        //go install
+
 
 ## 包
 ### 包名
@@ -242,6 +248,6 @@ j go-lib
 如果涉及多版本
 
     retract (
-    v0.1.0
-    v0.2.0
+        v0.1.0
+        v0.2.0
     )
