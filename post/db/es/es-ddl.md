@@ -3,56 +3,54 @@ title: elastic query
 date: 2020-10-29
 private: true
 ---
-# ddl
-## add index
+# status
+# ddl index
+## 添加 index
 
+    curl -XPUT http://es:49200/{index}
+    curl -XPUT http://es:49200/index1
+
+or via template json：
+
+    # https://github.com/uber/cadence/blob/87b2eae366953ea908e7158f4cf06428bff8fa58/schema/elasticsearch/v6/visibility/index_template.json
 	ES_SCHEMA_FILE=./schema/elasticsearch/v6/visibility/index_template.json
 	curl -X PUT "http://127.0.0.1:9200/_template/cadence-visibility-template" -H 'Content-Type: application/json' -d "@$(ES_SCHEMA_FILE)"
-	curl -X PUT "http://127.0.0.1:9200/cadence-visibility-dev"
 
-## delete index:
+### index 表达式
+index 支持表达式
+
+    <static_name{date_math_expr{date_format|time_zone}}>
+
+    表达	解析为
+    <accountdetail-{now-d}>	accountdetail-2015.12.29
+    <accountdetail-{now-M}>	accountdetail-2015.11.30
+    <accountdetail-{now{YYYY.MM}}>	accountdetail-2015.12
+
+    # 读数据时
+    /<accountdetail-{now-2d{YYYY.MM.dd|utc}}>/_search
+
+注意：
+1. static_name是表达式的一部分，保持不变
+2. `date_math_expr`包含数学表达式，该数学表达式像`now-2d`一样动态确定日期和时间(表达2天前)。
+3. `date_format`包含将日期写入诸如`YYYY.MM.dd`之类的索引中的格式。
+
+### 自动建索引
+默认是添加json 数据时，自动建索引（不必手动）。
+可以通过将elasticsearch.yml文件中存在的以下参数的值更改为false来禁用此功能。
+
+    action.auto_create_index:false
+    index.mapper.dynamic:false
+
+只允许使用具有特定模式的索引名称-自动建索引
+
+    # + 允许 - 不允许
+    action.auto_create_index:+acc*,-bank*
+
+
+## 删除 index:
 
     curl -X DELETE "http://127.0.0.1:9200/cadence-visibility-dev"
-
-v7/index_template.json: 
-
-    {
-      "order": 0,
-      "index_patterns": [
-        "cadence-visibility-*"
-      ],
-      "settings": {
-        "index": {
-          "number_of_shards": "5",
-          "number_of_replicas": "0"
-        }
-      },
-      "mappings": {
-        "dynamic": "false",
-        "properties": {
-          "WorkflowID": {
-            "type": "keyword"
-          },
-          "StartTime": {
-            "type": "long"
-          },
-          "CloseStatus": {
-            "type": "integer"
-          },
-          "IsCron": {
-            "type": "boolean"
-          },
-          "Attr": {
-            "properties": {
-              "CadenceChangeVersion":  { "type": "keyword" },
-              "CustomStringField":  { "type": "text" },
-              "BinaryChecksums": { "type": "keyword"},
-              "Passed": { "type": "boolean" }
-            }
-          }
-        }
-      },
-    }
+    curl -X DELETE "es:49200/cadence-visibility-dev"
 
 ## show index
 ### show index setting and mapping
@@ -65,20 +63,122 @@ v7/index_template.json:
     curl -s 'm:9200/{index}/_search?'
     curl -s 'm:9200/{index}/_doc/_search?'
 
+# add data 
+## 添加/更新数据
+PUT/POST 都可以
+
+    curl es:49200/school/_doc/1 -H 'Content-Type: application/json' -d ' {
+        "name":"hilo",
+        "age":1
+    }'
+
+## 数据加版本(更新数据)
+
+    curl -XPUT 'es:49200/schools/_doc/5?version=7&version_type=external' -H 'Content-Type: application/json' -d '{
+        "name":"Central School"
+    }'
+
+有两种最重要的版本控制类型-
+
+1. 内部版本控制是默认版本，从1开始，并随着每次更新（包括删除）而递增。
+2. 外部版本控制(指定版本)：要启用此功能`version_type设置为external`。
+
+## 操作类型
+操作类型用于强制执行创建操作。这有助于避免覆盖现有文档。下例如果已经创建过，会报错409
+
+    PUT chapter/_doc/1?op_type=create
+    {
+    "Text":"this is chapter one"
+    }
+
+## 自动ID生成
+如果在索引操作中未指定ID，则Elasticsearch会自动为该文档生成ID。
+
+    POST chapter/_doc/
+    {
+        "user" : "tpoint"
+    }
+
+
 # read 数据
-## list all indexes and type
-    curl -s 'm:9200/_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'
+## 索引搜索
+### list all indexes and type
+    curl -s 'es:49200/_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'
     curl -s 'user:pass@localhost:9200/_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'
 
 注意：
 
     .value.mappings | keys 代表 value['mappings'].keys()
 
+### 搜索多个索引
+    # 搜索所有
+    curl es:49200/index1,index2,index3,school/_search 
+
+    # 搜索来自index1, index2, index3,school 的JSON对象中包含 word1
+    curl es:49200/index1,index2,index3,school/_search -H 'Content-Type: application/json' -d '{
+        "query":{
+            "query_string":{
+                "query":"word1"
+            }
+        }
+    }'
+
+### _all 所有索引
+    POST /_all/_search
+    GET /_all/_search
+
+### 通配符（*，+，–）
+
+    POST 'es:49200/school*/_search'
+    GET 'es:49200/school*/_search'
+
+### 索引排除
+搜索以`school`开头的索引，但不是来自school_gov
+
+    POST '/school*,-schools_gov/_search'
+    GET '/school*,-schools_gov/_search'
+### 忽略索引报错
+    POST /schools_pri*/_search?allow_no_indices=true
+
+### 关闭索引
+    curl es:49200/schools/_close
+
+关闭索引后就不可以对索引读写了
+
+## 响应结果
+### 响应过滤
+利用filter_path 过滤字段，类似jq
+
+    curl 'es:49200/school/_search?filter_path=hits.total'
+    // {"hits":{"total":3}}
+
+
+## 读取指定id
+    GET schools/_doc/5
+
+特定文档的结果中指定所需的字段。
+
+    GET schools/_doc/5?_source_includes=name,fees
+    {
+        "found" : true,
+        "_source" : {
+            "fees" : 2200,
+            "name" : "Central School"
+        }
+    }
+
+# 删除API
+您可以通过向Elasticsearch发送HTTP DELETE请求来删除特定的`索引/映射/文档`。
+
+    # 删除文档4
+    DELETE schools/_doc/4
+
 # elastic query 语法
 查询示例
 
-    /{index}/{type}/_search?q=
     /{index}/{type}/{_id}?q=
+    /{index}/{type}/_search?q=
+
     /{index}/_search?q=
     /weather/_doc/_search?q=
     /weather/beijing/_search?q=

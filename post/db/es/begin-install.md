@@ -15,4 +15,4 @@ private: true
 
 ## running status
 
-    curl http://localhost:9200/_cluster/health?pretty
+    http://es:49200/_cluster/health?pretty

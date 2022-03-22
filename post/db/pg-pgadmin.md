@@ -6,7 +6,7 @@ private: true
 # pgamdin install
 以docker 为例
 
-    docker run --rm -it -p 4501:80 -u root -e 'PGADMIN_DEFAULT_EMAIL=ahui@ahui.com' --entrypoint /entrypoint.sh -e 'PGADMIN_DEFAULT_PASSWORD=ahui' dpage/pgadmin4
+    docker run -d --rm -it -p 4501:80 -u root -e 'PGADMIN_DEFAULT_EMAIL=ahui@qq.com' --entrypoint /entrypoint.sh -e 'PGADMIN_DEFAULT_PASSWORD=ahui' dpage/pgadmin4
 
 ## ldap 支持
 根据 https://www.pgadmin.org/docs/pgadmin4/6.1/ldap.html

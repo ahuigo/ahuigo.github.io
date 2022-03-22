@@ -197,7 +197,7 @@ eg:
 	>>> pattern.search("dog123", 2)  # No match; "g123" doesn't include the "d"
     None
 
-### search info
+### search position
 
 	>>> re.search(r'abc', '1 abc').span()
 	(2, 5)

@@ -6,7 +6,7 @@ private: true
 # 序列化种类
 - xml
 - json
-- protobuf
+- protobuf grpc 使用
 - mojo 
 - Cap'n Proto
 - 非序列化zero-copy 

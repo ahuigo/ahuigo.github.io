@@ -22,14 +22,14 @@ jq 参数：
 
     while(true; .+1) 中对.这个变量进行自增
 
-## 管道
+# 管道
 jq 支持管道，比如我们利用管道生成base64
 
     > jq -ncM '{body: "data" | @base64 }'
     {"body":"ZGF0YQ=="}
     > jq -ncM 'while(true; .+1) | {method: "POST", body: {"num":("num"+(.|tostring))} | @base64 }'
 
-### select
+## select
 
     curl -s https://api.github.com/repos/go-swagger/go-swagger/releases/latest | \
     jq -r '.assets[] | select(.name | contains("'"$(uname | tr '[:upper:]' '[:lower:]')"'_amd64")) | .browser_download_url'
@@ -39,9 +39,31 @@ note:
     $ echo "$(uname | tr '[:upper:]' '[:lower:]')" 
     darwin
 
-### array props
+## to_entries
+map 转数组：
+
+    echo '{"k1":"v1"}' | jq 'to_entries'
+    [ { "key": "k1", "value": "v1" } ]
+
+## 数组
+
+### 数组取值 index
+    # 取全部
+    echo '{"k1":"v1"}' | jq 'to_entries | .[]'
+
+    # 第0个
+    echo '{"k1":{"name":"ahui"},"k2":{"name":"go"}}' | jq 'to_entries | .[1] '
+    { "key": "k1", "value": { "name": "ahui" } }
+
+
+### 数组取值 props
     curl url | jq '.executions[]|.closeTime'
     curl url | jq '.executions[].closeTime'
     curl url | jq '.stus.names[]._source["@timestamp"]'
 
     jq -c '.[]|.task_name'
+
+### 数组map
+对数组每一item 取`keys(item['mappings'])`
+
+    curl -s 'es:49200/_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'

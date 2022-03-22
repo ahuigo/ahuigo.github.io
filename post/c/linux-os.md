@@ -2,7 +2,7 @@
 title: linux os
 date: 2019-06-15
 ---
-# Check os Version
+# Check OS Version
 ## os
 check os:
 
@@ -74,10 +74,6 @@ sudo vim /etc/fstab
         Enable or disable backing up of the device/partition (the command dump). This field is usually set to 0, which disables it.
     <pass num>
         Controls the order in which fsck checks the device/partition for errors at boot time. The root device should be 1. Other partitions should be 2, or 0 to disable checking.
-
-
-
-
 
 # dpkg
 ## find file which pckages contain
