@@ -148,6 +148,13 @@ The `serverReadyAction` feature makes it possible to add a structured property s
 # 各语言的调试方法
 vsc-go-debug
 
+# 通用debug
+https://github.com/redhat-developer/vscode-java/wiki/Troubleshooting#enable-logging
+
+## 显示console log
+Open the command palette (F1)
+1. select `Developer: Toggle Developer Tools`
+
 # vsccode version
     code -v
 

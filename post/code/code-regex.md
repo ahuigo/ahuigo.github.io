@@ -204,5 +204,17 @@ mac OSX 下的`grep -E` 与GNU 的`grep -P` 是等价的, 你也可以安装GNU 
     // /usr/local/bin/grep
     brew install grep
 
+## postgres 不完全支持ERE
+postgres 支持大部分的ERE
+
+    \w
+
+PostgreSQL 不支持`\b\B` , 则是支持:
+
+    \m   matches only at the beginning of a word
+    \M   matches only at the end of a word
+    \y   matches only at the beginning or end of a word
+    \Y   matches only at a point that is not the beginning or end of a word 
+
 ## Reference
 - http://www.ruanyifeng.com/blog/2018/09/bash-wildcards.html

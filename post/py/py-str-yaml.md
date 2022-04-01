@@ -3,6 +3,9 @@ title: python yaml
 date: 2018-10-04
 private:
 ---
+# yaml 语法
+
+
 # install:
     ```
     pip3 install pyyaml
@@ -20,7 +23,6 @@ private:
     obj = yaml.safe_load('''
     xata: adf
     ''')
-
 
 # dump
 

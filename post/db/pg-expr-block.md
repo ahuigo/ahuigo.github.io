@@ -46,6 +46,7 @@ Note: The DO statement does not belong to the block. It is used to execute an an
     END first_block $$;
 
 ## block in block
+`outer_block.counter` 是label 引用
 
     DO $$ 
     <<outer_block>>

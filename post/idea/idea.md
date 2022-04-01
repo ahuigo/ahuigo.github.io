@@ -65,7 +65,7 @@ simple iptable:
     simple modify iptable
     route to http proxy: iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 9090
 
-# 全职团队
+# 全职
 http://deepdevelop.com/
 一早一晚: 自由工作社区
 http://yizaoyiwan.com/discussions/460
@@ -75,6 +75,9 @@ https://medium.com/%E5%86%99%E4%BD%9C%E4%B9%8B%E8%B7%AF/%E7%A8%8B%E5%BA%8F%E5%91
 ## Remote Engineer
 contact http://nvie.com/about/
 https://stackoverflow.com/jobs/live-work-anywhere?utm_source=so-owned&utm_medium=email&utm_campaign=job-engage-work-live&utm_content=em-tips&utm_term=has-match-pref
+
+## 投资
+https://www.bmpi.dev/about/
 
 # 反馈
 类似于多说, 但是可以对未解决的进行排序
@@ -130,13 +133,7 @@ To: weibo/zhihu-live/weixin
 类似为知: 但提供各种接口
 推送到知乎, 微信
 
-## 爬虫
-神箭手云市场 Saas
-http://www.shenjianshou.cn/index.php?r=market/index
-
 # app
-## 字典
-## 班级管理
 ## markdown 写作
 ## 反馈投票
 

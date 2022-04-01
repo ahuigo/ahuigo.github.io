@@ -65,6 +65,14 @@ pprof 其它输出格式
         -tree            Outputs a text rendering of call graph
         -web             Visualize graph through web browser
 
+### top sort
+
+    flat 是函数自身的cpu 占用
+    sum% 之前累加每一行flat%的累加（见top方法）
+    cum 包含函数调用的时间，比如cpuFunc 就包含了longRun 的时间
+
+    top20 -cum
+
 ### pprof 交互模式指令
 进入pprof 交互模式后，可以执行`top`,`top20`, `list`, `help`等各种指令，具体参考`help`
 
@@ -105,7 +113,7 @@ example:
 
     go tool pprof --pdf hello cpu.prof > cpu.pprof.pdf
 
-## pkg/profile 包
+## pkg/profile 包(runtime/pprof 的封装)
 pkg/profile 是对 runtime/pprof 的封装，更易用一点儿
 
 ### 生成mem.pprof
@@ -120,6 +128,9 @@ pkg/profile 是对 runtime/pprof 的封装，更易用一点儿
     }
 ### 生成cpu.pprof
 
+    import (
+        "github.com/pkg/profile"
+    )
     func main() {
         defer profile.Start().Stop()
         concat(100)
@@ -128,6 +139,10 @@ pkg/profile 是对 runtime/pprof 的封装，更易用一点儿
 运行后：将生成类似
 
     cpu profiling ..., /tmp/profile068616584/cpu.pprof
+
+cpu+mem
+
+        defer profile.Start(profile.MemProfile, profile.CpuProfile, profile.MemProfileRate(1)).Stop()
 
 ## net/http/pprof
 > 示例：github.com/ahuigo/go-lib/gonic/ginapp/gin-pprof.go

@@ -29,6 +29,13 @@ build url:
 ### parse query
     query, _:= url.ParseQuery(`x=1&y=2&y=3;z;q=a+b;c`)
     //map[x:[1] y:[2 3] z:[] q:[a b]]
+    query.Encode()
+    query.Set("q","1")
+    query.Del("q")
+    query.Get("q")
+
+### enocde query
+    url.QueryEscape(val)
 
 ## parseURL & addQuery
 

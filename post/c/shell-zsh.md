@@ -46,7 +46,7 @@ priority:
 
     # Undo
     Ctrl-_		Undo the last editing command; you can undo all the way back to an empty line
-    Ctrl-x Ctrl-u  Undo the last editing command; you can undo all the way back to an empty line
+        Ctrl-x Ctrl-u  Undo the last editing command; you can undo all the way back to an empty line
     Alt-r   Undo all changes made to this line
     Ctrl-l  Clear the screen, reprinting the current line at the top
 

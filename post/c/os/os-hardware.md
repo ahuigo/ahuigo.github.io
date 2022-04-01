@@ -2,8 +2,10 @@
 title: linux os
 date: 2019-06-15
 ---
-# Check OS Version
-## os
+# os
+获取os 信息脚本: a/tool/os/os-info.py
+
+## Check OS Version
 check os:
 
     lsb_release -a
@@ -22,9 +24,6 @@ check os:
 
     $ cat /proc/cpuinfo | grep MHz
     cpu MHz		: 2127.998
-
-### simple cpu
-核数
 
 ### CISC 复杂指令集
 
@@ -74,17 +73,11 @@ sudo vim /etc/fstab
         Enable or disable backing up of the device/partition (the command dump). This field is usually set to 0, which disables it.
     <pass num>
         Controls the order in which fsck checks the device/partition for errors at boot time. The root device should be 1. Other partitions should be 2, or 0 to disable checking.
+## display card
 
-# dpkg
-## find file which pckages contain
+$ lspci -v | less
+$ lspci -v | grep -i vga
 
-    $ dpkg -s libssl1.0.0
-    Version: 1.0.1e-2+deb7u12
-    Depends: libc6 (>= 2.7), zlib1g (>= 1:1.1.4), debconf (>= 0.5) | debconf-2.0
-
-    $ dpkg -l | grep libc6
-    ii  libc6:i386          
-
-## list installed files
-    dpkg-query -L <package_name>
-    dpkg-deb -c <package_name.deb>
+# network
+## mac address
+    cat /sys/class/net/eno1/address

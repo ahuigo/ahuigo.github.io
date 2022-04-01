@@ -14,6 +14,11 @@ private:
     DECIMAL(4,2) not null;
     int not null;
 
+### null
+In SQL, NULL is not equal to anything. Nor is it unequal to anything.
+
+    where c not like 'xxx%'; -- not include null
+
 ### 不要用null
 	NULL means you do not have to provide a value for the field... default to null
 	NOT NULL means you must provide a value for the fields. 但很多情况下，插入数据时默认会给一个空值(0, 或者空字符串).

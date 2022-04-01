@@ -1,4 +1,10 @@
 # network
+## 基本配置
+https://help.ubuntu.com/community/NetworkConfigurationCommandLine/Automatic
+### dhcp
+    sudo ip link set dev eth0 down
+    sudo dhclient eth0
+
 ## 820.1X 认证配置
 很多公司内网会采用这个820.1x配置, 参考 https://help.ubuntu.com/community/Network802.1xAuthentication
 1. This authentication protocol can be used on both wireless and wired networks.
@@ -23,7 +29,7 @@ show interface status
     ifconfig eno1
 
 #### 配置wpa_supplicant
-先创建 wpa conf
+先创建 wpa conf, 我的配置是这个
 
     # sudo vim /etc/wpa_supplicant.conf
     # Where is the control interface located? This is the default path:
@@ -59,7 +65,7 @@ show interface status
         eapol_flags=0
     }
 
-If EAP-Tunnelled Transport Layer Security, using PAP and MD5 as the authentication protocol. 配置应该是类似：
+如果你需要 EAP-Tunnelled Transport Layer Security, using PAP and MD5 as the authentication protocol. 配置应该是类似：
 
     network={
         key_mgmt=IEEE8021X
@@ -74,7 +80,7 @@ If EAP-Tunnelled Transport Layer Security, using PAP and MD5 as the authenticati
 
 验证一下是否能认证成功：
 
-    sudo wpa_supplicant -c /etc/wpa_supplicant.conf -D wired -i eno1 -dd
+    sudo wpa_supplicant -c /etc/wpa_supplicant.conf -D wired -i eno1
 
 如果失败的话搜索一下谷歌
 
@@ -86,8 +92,8 @@ If EAP-Tunnelled Transport Layer Security, using PAP and MD5 as the authenticati
     iface lo inet loopback
 
     # The first network interface.
-    # In this case we want to receive an IP-address through DHCP:
     auto eth0
+    # In this case we want to receive an IP-address through DHCP:
     iface eth0 inet dhcp
 
     # In this case we have a wired network:

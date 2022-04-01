@@ -7,10 +7,17 @@ date: 2018-09-27
 
 - Homebrew-cask是一套建立在homebrew基础上的Mac软件安装命令行工具 ，有了它再也不想用dmg了（每次都要下载，不停的点下一步，拖放多麻烦呀）
 
+## install
+
+    export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.ustc.edu.cn/brew.git"
+    export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.ustc.edu.cn/homebrew-core.git"
+    export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
 ## brew 源
 homebrew主要分两部分：git repo（位于GitHub）和二进制bottles（位于bintray）
 
-### brew 下载太慢
+### brew 手动下载
 可以用vpn 或其它ss. 也可以手动下载，以go 为例子：
 
     cd `brew --cache`

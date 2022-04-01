@@ -164,6 +164,15 @@ Saving your firewall rules can be done as follows:
     ## stop
     service iptables stop; # /etc/init.d/iptables stop
 
+## 关闭
+ubuntu:
+
+    > sudo ufw disable
+
+other:
+
+    service iptables stop
+
 ## backoup and Restore
 备份当前规则
 

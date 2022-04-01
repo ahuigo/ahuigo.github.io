@@ -3,7 +3,6 @@ title: elastic query
 date: 2020-10-29
 private: true
 ---
-# status
 # ddl index
 ## 添加 index
 
@@ -14,7 +13,7 @@ or via template json：
 
     # https://github.com/uber/cadence/blob/87b2eae366953ea908e7158f4cf06428bff8fa58/schema/elasticsearch/v6/visibility/index_template.json
 	ES_SCHEMA_FILE=./schema/elasticsearch/v6/visibility/index_template.json
-	curl -X PUT "http://127.0.0.1:9200/_template/cadence-visibility-template" -H 'Content-Type: application/json' -d "@$(ES_SCHEMA_FILE)"
+	curl -X PUT "http://127.0.0.1:9200/_template/cadence-visibility-template" -H 'Content-Type: application/json' -d "@$ES_SCHEMA_FILE"
 
 ### index 表达式
 index 支持表达式
@@ -49,8 +48,8 @@ index 支持表达式
 
 ## 删除 index:
 
-    curl -X DELETE "http://127.0.0.1:9200/cadence-visibility-dev"
-    curl -X DELETE "es:49200/cadence-visibility-dev"
+    curl -X DELETE "http://127.0.0.1:9200/cadence-visibility-dev2"
+    curl -X DELETE "es2:49200/cadence-visibility-dev2"
 
 ## show index
 ### show index setting and mapping
@@ -166,6 +165,43 @@ PUT/POST 都可以
             "name" : "Central School"
         }
     }
+
+## 搜索URI
+### q搜索key-value
+
+    GET /_all/_search?q=city:paprola
+
+除了q 外还有参数
+
+    lenient
+        此参数用于指定查询字符串。只要将此参数设置为 true，就可以忽略基于 Formatbased 的错误。默认false
+
+    fields
+        此参数用于指定查询字符串
+
+    sort
+        这个参数的可能值是fieldName, fieldName:asc/ fieldName:desc
+
+    timeout
+        限制搜索时间，并且响应只包含指定时间内的命中。默认情况下，没有超时
+    terminate_after
+        可以将响应限制为每个碎片的指定数量的文档，到达该分片时，查询将提前终止。默认情况下，没有 termin_after.
+    from
+        要返回的命中数的起始索引。默认为0。
+
+    size
+        它表示要返回的命中数，默认值为10。
+
+## 正文搜索
+    POST /schools/_search
+    {
+        "query":{
+            "query_string":{
+                "query":"word"
+            }
+        }
+    }
+    // word 区分大小写
 
 # 删除API
 您可以通过向Elasticsearch发送HTTP DELETE请求来删除特定的`索引/映射/文档`。

@@ -13,9 +13,6 @@ private: true
         220 | public             |       10 | 
 
 # 序列表
-pg_class
-
-
 
 ## list sequence of public
 `pg_class.relkind='S'` 代表`id_seq` 
@@ -28,12 +25,29 @@ pg_class
 
 relkind 清单
 
-    select   CASE 'r' WHEN 'r' THEN 'table' WHEN 'v' THEN 'view' WHEN 'm' THEN 'materialized view' WHEN 'i' THEN 'index' WHEN 'S' THEN 'sequence' WHEN 's' THEN 'special' WHEN 'f' THEN 'foreign table' WHEN 'p' THEN 'partitioned table' WHEN 'I' THEN 'partitioned index' ELSE 'other' END as "Type";
+    select 
+        CASE 'r' WHEN 'r' THEN 'table' 
+                 WHEN 'v' THEN 'view' 
+                 WHEN 'm' THEN 'materialized view' 
+                 WHEN 'i' THEN 'index' 
+                 WHEN 'S' THEN 'sequence' 
+                 WHEN 's' THEN 'special' 
+                 WHEN 'f' THEN 'foreign table' 
+                 WHEN 'p' THEN 'partitioned table' 
+                 WHEN 'I' THEN 'partitioned index' ELSE 'other' END as "Type";
 
 ## list seq with tablename
 list table with default seq:
 
-    SELECT scope_schema,table_name,column_default FROM information_schema.columns WHERE column_default LIKE 'nextval%' where table_schema='public';
+    SELECT scope_schema,table_name,column_default FROM information_schema.columns WHERE column_default LIKE 'nextval%' and table_schema='public';
+
+不含自增主键的表:
+
+    select * from (
+        SELECT table_name as name,(string_agg(column_default, '|')) as defaults FROM information_schema.columns
+        WHERE table_schema='public' group by 1 
+    )tmp where defaults !~ '\mnextval\(' or defaults is null;
+
 
 list real seq_name:
 

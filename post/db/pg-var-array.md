@@ -120,6 +120,9 @@ any array
     SELECT NOT value_variable = ANY('{1,2,3}'::int[])
     SELECT value_variable != ANY('{1,2,3}'::int[])
 
+### like any
+    SELECT 'abc' LIKE ANY('{"ab%","def"}')
+
 ### 交集
 
     SELECT ARRAY[1,4,3] && ARRAY[2,1] -- true
@@ -129,7 +132,7 @@ any array
 
     select ARRAY[1,4,3] @> ARRAY[3,1]; -- true
 
-### 其它
+## 其它operator
 
     Operator	Description	                Example	                                Result
     =	        equal	                    ARRAY[1.1,2.1,3.1]::int[] = ARRAY[1,2,3]	t
@@ -145,6 +148,18 @@ any array
     ||	        array-to-array concat   	ARRAY[1,2,3] || ARRAY[[4,5,6],[7,8,9]]	    {{1,2,3},{4,5,6},{7,8,9}}
     ||	        element-to-array concat     3 || ARRAY[4,5,6]	                        {3,4,5,6}
     ||	        array-to-element concat     ARRAY[4,5,6] || 7	                        {4,5,6,7}
+
+## submatch`<~~` 
+参考 pg-expr-operator 定义operator
+
+    // create function reverse_like (text, text) returns boolean language sql as $$ select $2 like $1 $$;
+    create or replace function reverse_like (text, text) returns boolean language sql as
+    $$ select $2 like $1 $$ immutable parallel safe;
+
+    create operator <~~ ( function =reverse_like, leftarg = text, rightarg=text );
+
+    SELECT 'ab%' <~~ ANY('{"abc","def"}');
+    SELECT not 'ab%' <~~ ALL('{"abc","def"}');
 
 # Array function
 ## expand array
@@ -176,6 +191,15 @@ any array
 
 ## 聚合array
 
+### join array
+    ahuigo=# select 'item' name,unnest(array[1,2]) b;
+    name | b
+    ------+---
+    item | 1
+    item | 2
+
+    select *,unnest(arr) as item from table
+
 ### string_agg
     ahuigo=# select name,phone from stus;
     John     |      
@@ -197,6 +221,10 @@ string_agg with order by
     ahuigo=# SELECT name, array_agg(phone) AS ps FROM   stus group by 1;
     ahui     | {NULL,NULL,3,4,4,5}
 
+agg 可能为null
+
+    select array_agg(phone) is not NULL from t;
+
 array_agg with distinct
 
     ahuigo=# SELECT name, array_agg(distinct phone::char) AS ps FROM   stus group by 1;
@@ -217,9 +245,9 @@ compare it to an empty array:
 
     id_clients = '{}'
 
-    That's all. You get:
+That's all. You get:
 
-        TRUE .. array is empty
-        NULL .. array is NULL
-        FALSE .. any other case
+    TRUE .. id_clients is empty
+    NULL .. id_clients is NULL
+    FALSE .. any other case
 

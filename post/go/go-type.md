@@ -21,6 +21,26 @@ private: true
 
     test2(MyInt(i))
 
+## interface 类型接受任意满足要求的类型
+interface 类型接受任意满足要求的类型
+
+    type Any interface{}
+    var a Any
+    var b = 1
+    // a = b
+    switch b{
+        case  Any:
+            a = b
+    }
+
+## 非interface 类型只接受相同的type
+这样是不行的
+
+    type A string
+    var a A
+    var b string
+    a = b // cannot use b (type A) as type string
+
 ## type func
 go-lib/type/type-func.go
 

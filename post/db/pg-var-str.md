@@ -187,7 +187,14 @@ concat hex as string:
 #### length
 
 	select length('国'); //1
-	select length("中\');
+	select length('中\'); //2
+
+其它
+
+    SELECT length('');   --> 0
+    SELECT length(NULL); --> NULL
+    SELECT NULL IS NULL; --> TRUE
+    SELECT '' IS NULL;   --> FALSE
 
 Length 不是字节数，而是字符数
 
