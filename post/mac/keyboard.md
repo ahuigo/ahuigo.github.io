@@ -128,11 +128,12 @@ atom68缺少一个左Fn 不太方便，于是我通过`程控键`改了下按键
     ~/.local/share/karabiner/log/console_user_server.log
 
 ## iterm2 快捷键配置
-注意，建议把　profile=>keys 选项卡中的`Option` 按键设置成`ESC+`
-![](/img/mac/iterm2-shortcut.png)
-自用按键
+1. 自用按键
 ![](/img/mac/iterm2-iterm2-keys.png)
-export: a/conf/iterm2/iterm2.itermkeymap
+2. 导出: a/conf/iterm2/iterm2.itermkeymap
+
+3. 为了方便`Option+f`移动，建议把　profile=>keys 选项卡中的`Left-Option` 按键设置成`ESC+` 
+![](/img/mac/iterm2-shortcut.png)
 
 ### 注意
 1. 分配权限
