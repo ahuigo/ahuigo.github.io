@@ -23,6 +23,10 @@ If you want a global `.ignore` file:
 
     alias ag='ag --path-to-ignore ~/.ignore'
 
+## 包售.xxx 隐藏文件
+
+    ag --hidden
+
 ## ag 一般操作
 
     ag  foo /bar/ ;

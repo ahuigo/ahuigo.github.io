@@ -35,3 +35,5 @@ download http://www.apuebook.com/code3e.html
 
 	ln -s ~/www/apue.3e/include/apue.h /usr/local/include/  
 	ln -s ~/www/apue.3e/lib/libapue.a /usr/local/lib/
+
+## docker
