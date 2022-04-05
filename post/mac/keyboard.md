@@ -9,8 +9,15 @@ date: 2020-05-08
     defaults write -g ApplePressAndHoldEnabled -bool false
     $ defaults get -g ApplePressAndHoldEnabled
     0 
+    # 设置repeat 
     ~ defaults write -g InitialKeyRepeat -int 10
     ~ defaults write -g KeyRepeat -int 1
+
+mac osx 12 Moterey:
+
+    defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+    defaults read NSGlobalDomain ApplePressAndHoldEnabled 
+    defaults read NSGlobalDomain KeyRepeat 
 
 ## 加快按键速度
 keyboard配置建议

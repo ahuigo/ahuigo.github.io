@@ -14,16 +14,10 @@ title: vim plug 插件系统
     call plug#end()
     MM
 
-## install
+## use
 
     :PluginInstall
     :PluginClean 
-    :CheckHealth
-
-或者：直接在shell 中执行，参考vim-command-ex.md
-
-    nvim +PluginInstall +PluginClean   +qall
-    nvim +CheckHealth
 
 ## Pluginlist
 自动补全

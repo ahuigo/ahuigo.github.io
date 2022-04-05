@@ -130,6 +130,10 @@ Syntax:
 		All the other initializations are skipped.
 		vim -u NONE " No init file.
 
+### exect command from shell
+	vim +PluginInstall +qall
+	vim +PluginInstall +qall
+
 ## external bang command
 Syntax:
 

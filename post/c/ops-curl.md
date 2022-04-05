@@ -163,7 +163,12 @@ Socks5 takes precedence over -x:
 ## via proxy
 global:
 
-	export http_proxy=http://your.proxy.server:port/
+	# http
+	export all_proxy=http://your.proxy.server:port/
+
+	# socks5h
+	export http_proxy=socks5h://localhost:1080 HTTPS_PROXY=socks5h://localhost:1080 ALL_PROXY=socks5h://localhost:1080
+
 
 cmd:
 

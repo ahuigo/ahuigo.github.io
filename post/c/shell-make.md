@@ -131,7 +131,7 @@ You can also specify the `.EXPORT_ALL_VARIABLES` target to EXPORT ALL THE THINGS
 or use `.ONESHELL` if `make>=3.8.2`
 
 ### 内置变量（Implicit Variables）
-比如 $(CC) 指向当前使用的编译器，$(MAKE) 指向当前使用的Make工具。
+比如 `$(CC)` 指向当前使用的编译器，`$(MAKE)` 指向当前使用的Make工具。
 
 make默认了一些[缺省内置常量](http://akaedu.github.io/book/ch22s03.html)
 
