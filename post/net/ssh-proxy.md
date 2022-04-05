@@ -17,15 +17,23 @@ SSH 密钥及私钥: https://telcruel.gitee.io/2019/09/21/SSH/
 
 	ssh -D 0:1080 hilo@remote-ip
 	ssh -D 1080 hilo@remote-ip
+	ssh -NTCD 1080 hilo@remote-ip
+
+使用：
+
 	export http_proxy=socks5://127.0.0.1:1080 https_proxy=socks5://127.0.0.1:1080
     # curl socks5h
 	export http_proxy=socks5h://localhost:1080 HTTPS_PROXY=socks5h://localhost:1080 ALL_PROXY=socks5h://localhost:1080
 	youtube-dl youtube.com/watch?V=3XjwiV-6_CA
 
-    ssh -N -C -D1080 user@hostB &
+建议的选项
+
+    ssh -NTCD 1080 user@hostB 
     -N   Do not execute a remote command
     -T   Disable pseudo-terminal allocation.
     -C  Requests compression of all data(gzip)
+    -D [[ip]:port]]
+        socks5 tunnel port
 
 
 ## 正向tunnel

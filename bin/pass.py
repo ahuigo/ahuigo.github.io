@@ -64,6 +64,10 @@ def decode_c(i):
     c=i.to_bytes(1, byteorder='big')
     return c
 
+'''''''
+p pass.py -e path to_path
+p pass.py -d to_path
+'''''''
 if __name__ == '__main__':
     if '-e' in sys.argv:
         if len(sys.argv)<4:

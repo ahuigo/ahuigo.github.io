@@ -166,13 +166,13 @@ global:
 	# http
 	export all_proxy=http://your.proxy.server:port/
 
-	# socks5h
+	# socks5h, 比较新的curl 才会支持
 	export http_proxy=socks5h://localhost:1080 HTTPS_PROXY=socks5h://localhost:1080 ALL_PROXY=socks5h://localhost:1080
-
 
 cmd:
 
 	-x, --proxy <[protocol://][user:password@]proxyhost[:port]>
+    curl -x socks5h://localhost:1080 google.com
 
 ## resolve
     curl 'https://my.com' --resolve my.com:443:192.168.0.218 --resolve my.com:8:192.168.0.218
