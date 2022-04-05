@@ -67,7 +67,7 @@ A server name may be omitted in the replacement string:
     # rewrite this string to "http://frontend/"
     proxy_redirect http://localhost:8000/two/ /;
 
-### proxy_pass URI
+## proxy_pass URI
     listen       5002;
     location /{
         echo  "req_uri=$request_uri";
@@ -91,6 +91,8 @@ access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/remote
 	location /name {
 		proxy_pass http://127.0.0.1/remote/?pass=1;    
     }
+
+相当于 replace('/name', '/')
 
 #### rewrite(+query_string)
 access "http://host/name/act?q=a" will be replaced with "http://127.0.0.1/rewrite?r=1&q=a"

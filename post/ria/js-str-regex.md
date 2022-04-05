@@ -124,6 +124,10 @@ $ 放前面就不会成功
     /($end)/
     /(head^)/
 
+## regxp func
+
+    regx.test()  bool
+    regx.exec()  match
 
 ### test
 
@@ -134,7 +138,7 @@ $ 放前面就不会成功
 		console.log(r.lastIndex);//2 4 6 下次要匹配的字符串起始位置
 	}
 
-### comile
+### compile
 
 	r.compile(/\d/); //改变正则表达式
 

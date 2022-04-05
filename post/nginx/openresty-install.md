@@ -15,6 +15,7 @@ stop:
 
     brew services info openresty/brew/openresty
     brew services stop openresty/brew/openresty
+    brew services restart openresty/brew/openresty
 
 conf:
 
@@ -50,3 +51,11 @@ conf:
     make && make install
     ln -sf /usr/local/opt/openresty/nginx/sbin/nginx /usr/local/opt/openresty/bin/openresty
     ln -sf /usr/local/opt/openresty/nginx/sbin/nginx /usr/local/bin/
+
+# config
+
+## config path
+
+    $ openresty -t
+    nginx: the configuration file /usr/local/etc/openresty/nginx.conf syntax is ok
+    nginx: configuration file /usr/local/etc/openresty/nginx.conf test is successful
