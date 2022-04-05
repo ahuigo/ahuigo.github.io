@@ -132,6 +132,11 @@ atom68缺少一个左Fn 不太方便，于是我通过`程控键`改了下按键
 ![](/img/mac/iterm2-shortcut.png)
 自用按键
 ![](/img/mac/iterm2-iterm2-keys.png)
+export: a/conf/iterm2/iterm2.itermkeymap
+
+### 注意
+1. 分配权限
+2. 不用系统keyboard 交换cap
 
 ## 基本按键配置
 https://ke-complex-modifications.pqrs.org/

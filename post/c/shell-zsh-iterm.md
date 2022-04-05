@@ -5,6 +5,8 @@ priority:
 
 # iTerm2
 zsh号称终极shell, 配合iTerm2(terminal)会更加的方便. 本小节参考了池建强的[终极shell]
+## iterm快捷键
+iterm快捷键配置参考 mac/keyboard.md
 
 ## 导入导出配置
 1. If you have a look at `Preferences -> General`
