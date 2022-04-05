@@ -18,6 +18,8 @@ SSH 密钥及私钥: https://telcruel.gitee.io/2019/09/21/SSH/
 	ssh -D 0:1080 hilo@remote-ip
 	ssh -D 1080 hilo@remote-ip
 	export http_proxy=socks5://127.0.0.1:1080 https_proxy=socks5://127.0.0.1:1080
+    # curl socks5h
+	export http_proxy=socks5h://localhost:1080 HTTPS_PROXY=socks5h://localhost:1080 ALL_PROXY=socks5h://localhost:1080
 	youtube-dl youtube.com/watch?V=3XjwiV-6_CA
 
     ssh -N -C -D1080 user@hostB &
