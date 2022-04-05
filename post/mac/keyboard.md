@@ -127,6 +127,12 @@ atom68缺少一个左Fn 不太方便，于是我通过`程控键`改了下按键
     /var/log/karabiner/observer.log
     ~/.local/share/karabiner/log/console_user_server.log
 
+## iterm2 快捷键配置
+注意，建议把　profile=>keys 选项卡中的`Option` 按键设置成`ESC+`
+![](/img/mac/iterm2-shortcut.png)
+自用按键
+![](/img/mac/iterm2-iterm2-keys.png)
+
 ## 基本按键配置
 https://ke-complex-modifications.pqrs.org/
 

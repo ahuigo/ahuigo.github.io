@@ -12,12 +12,6 @@ zsh号称终极shell, 配合iTerm2(terminal)会更加的方便. 本小节参考�
 3. There is a button next to it `Save settings to Folder`.
 
 
-## 快捷键配置
-注意，建议把　profile=>keys 选项卡中的`Option` 按键设置成`ESC+`
-![](/img/mac/iterm2-shortcut.png)
-
-### 
-
 ## 新建tab默认打开当前的工作区
 profiles -> General -> Working Directory
 
