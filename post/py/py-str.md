@@ -27,6 +27,12 @@ same as js:
 	s=("str1"
 		"str2" )
 
+or, 只有三个字符的边界
+
+    """"
+    aaaa
+    """"
+
 ## string number
     int: 123
         str.isdecimal()

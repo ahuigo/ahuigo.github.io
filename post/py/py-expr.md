@@ -2,6 +2,10 @@
 title: Python 的语法
 date: 2018-03-01
 ---
+# multiple comments
+    """
+    line
+    """
 # 多条件compare
 多条件比较
 

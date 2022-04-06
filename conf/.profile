@@ -48,6 +48,7 @@ alias py='ipython3'
 alias p='python3'
 alias p2='python2'
 alias pi='pip3'
+alias pip='pip3'
 export PYTHONPATH=.
 
 # docker

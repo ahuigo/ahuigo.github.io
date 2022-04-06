@@ -153,7 +153,7 @@ custom-format archive:
     -f table.sql
 
 ### export sql result
-copy sql
+copy (sql) to './out.csv' csv header;
 
     \copy (select * from my_table limit 10) TO './a.csv'; -- 空格分割
     \copy (select * from my_table limit 10) TO './a.csv' CSV ; -- CSV 分割
@@ -351,6 +351,8 @@ To remove any default value, use:
     ALTER TABLE player drop id;
     ALTER TABLE player drop column id;
     ALTER TABLE player ADD COLUMN id SERIAL PRIMARY KEY;
+
+    Alter table domains add column "desc" text not null default '';
 
 ### alter column
     \h alter TABLE

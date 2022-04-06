@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os,sys
 fp = sys.argv[1]
 if not os.path.exists(fp):

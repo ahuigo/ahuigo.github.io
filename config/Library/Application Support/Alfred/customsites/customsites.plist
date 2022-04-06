@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>keyword</key>
+		<string>tls</string>
+		<key>spaces</key>
+		<false/>
+		<key>text</key>
+		<string>google tranlate</string>
+		<key>url</key>
+		<string>https://translate.google.cn/#view=home&amp;op=translate&amp;sl=auto&amp;tl=en&amp;text={query}</string>
+		<key>utf8</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>keyword</key>
+		<string>tl</string>
+		<key>spaces</key>
+		<false/>
+		<key>text</key>
+		<string>baidu translate</string>
+		<key>url</key>
+		<string>https://fanyi.baidu.com/?aldtype=85#zh/en/{query}</string>
+		<key>utf8</key>
+		<true/>
+	</dict>
+</array>
+</plist>

@@ -127,12 +127,25 @@ atom68缺少一个左Fn 不太方便，于是我通过`程控键`改了下按键
     /var/log/karabiner/observer.log
     ~/.local/share/karabiner/log/console_user_server.log
 
+## 导致备份的readline 快捷键
+.config/karabiner/assets/complex_modifications/niz.json 提供了
+
+    ctrl+p up
+    ctrl+n down
+    ctrl+w delete word backward  (alt+delete)
+    ctrl+u  delete from cursor to head line (cmd+delete)
+
+如果导入不生效，原因:
+1. 可能是由于在系统键盘keyboard 内交换了 ctrl-caps
+1. 改成由karabiner 交换了 ctrl-caps 或者配置不要区分`left-ctrl`
+
+
 ## iterm2 快捷键配置
 1. 自用按键
 ![](/img/mac/iterm2-iterm2-keys.png)
 2. 导出: a/conf/iterm2/iterm2.itermkeymap
 
-3. 为了方便`Option+f`移动，建议把　profile=>keys 选项卡中的`Left-Option` 按键设置成`ESC+` 
+3. 为了方便`Option+f`和`option+w`移动和删除，建议把　profile=>keys 选项卡中的`Left-Option` 按键设置成`ESC+` 
 ![](/img/mac/iterm2-shortcut.png)
 
 ### 注意

@@ -20,7 +20,6 @@ private: true
     ahuigo=# select substring(' a33b yuan', 'a(\d+)(b)');
         33
 
-
 # regex
 ## group regex
     select regexp_matches(name, 'foo');

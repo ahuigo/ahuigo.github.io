@@ -185,6 +185,7 @@ any array
     # 2是最后一个(不是从0开始)
     SELECT string_to_array('ordno-#-orddt-#-ordamt', '-#-');
     SELECT split_part('par1-#-par2-#-part3', '-#-', 2);
+        part2
 
 ## array_to_string
     select array_to_string(array[1,2], ',');

@@ -216,6 +216,7 @@ Length 不是字节数，而是字符数
     # 2是最后一个(不是从0开始)
     SELECT string_to_array('ordno-#-orddt-#-ordamt', '-#-');
     SELECT split_part('par1-#-par2-#-part3', '-#-', 2);
+        par2
 
 split array
 
@@ -227,3 +228,9 @@ split array
 help:
 
     \df+ 'string_to_array'
+
+## contains strpos
+
+    where strpos(name, '@') > 0
+    where name ~ '@'
+
