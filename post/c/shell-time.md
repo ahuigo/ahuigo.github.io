@@ -25,9 +25,10 @@ date: 2012-07-08
 2. 对我们日常所使用的时间工具而言，UTC和GMT时间没有区别。
 
 ## ISO8601
+ISO 8601通过制定一种国际公认的日期表示方式, 广泛用于程序时间表达。用来取代 UTC/GMT 时间格式表达
+
 > moment.defaultFormat is the ISO8601 format YYYY-MM-DDTHH:mm:ssZ
 [ISO8601](https://en.wikipedia.org/wiki/ISO_8601):
-
 
     new Date("2016-01-01 11:13:00Z");      +0区
     new Date("2016-01-01T11:13:00Z");      +0区

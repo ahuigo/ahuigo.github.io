@@ -16,15 +16,19 @@ mac:
     brew install postgresql
 
     # 初始化数据库（默认role `whoami`）
-    initdb --locale=C -E UTF-8 /usr/local/var/postgres
+    # initdb --locale=C -E UTF-8 /usr/local/var/postgres
+    # 或者创建别的库
+    # createdb mydb
     
     # run
     brew services start postgresql
 
     $ psql -U `whoami` postgres
+    $ psql -U `whoami` mydb
 
     # log
     tail -f /usr/local/var/log/postgres.log
+
 
 如果遇到：FATAL:  database files are incompatible with server
 

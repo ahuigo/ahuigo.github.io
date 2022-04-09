@@ -3,27 +3,83 @@ title: Docker network
 date: 2020-03-11
 private: true
 ---
+
+# expose port
+## export port
+在dockerfile 中expose 只是一个注释
+
+    EXPOSE 4501
+
+测试一下:
+
+    $ docker run -p 5000:5001 --rm -it --name=debian debain
+    $ docker inspect debian | less
+
+可以看到实际只绑定了 5001, 没有绑定4501
+
+        "HostConfig": {
+            "PortBindings": {
+                "5000/tcp": [ { "HostIp": "", "HostPort": "5001" } ]
+            },
+        "NetworkSettings": {
+            "Ports": {
+                "4501/tcp": null,
+                "5000/tcp": [ { "HostIp": "0.0.0.0", "HostPort": "5001" } ]
+            },
+
+
+## -P 将expose 所有端口
+由于没有指定主机端口，主机port是随机的.
+
+    $ docker run -P --rm -it --name=debian debain
+    $ docker inspect debian | less
+        "NetworkSettings": {
+            "Ports": {
+                "4501/tcp": [ { "HostIp": "0.0.0.0", "HostPort": "55002" } ],
+            },
+
+
 # Docker network
+
 ## net
 ### 创建网络
 默认创建一个桥接网络
 
-    $ docker network create hostnet
-    557079c79ddf6be7d6def935fa0c1c3c8290a0db4649c4679b84f6363e3dd9a0
+    $ docker network create myhostnet
+    f9dc3449bf0fe6944b6aab03d77c100d86948868078b23aa71c9ef2a4c5dc6e7
+
+删除网络
+
+    docker network rm myhostnet
 
 网络列表
 
     $ docker network ls
+    NETWORK ID     NAME      DRIVER    SCOPE
+    ecefc731b31b   bridge      bridge    local
+    cab07ceee07a   host        host      local
+    f9dc3449bf0f   myhostnet   bridge    local (新建的)
+    8c2fda5c329b   none        null      local
 
-指定使用网络
+### 指定使用网络
 
-    $ docker run --rm --net hostnet slim-image
+    $ docker run --rm --net myhostnet slim-image
+    $ docker inspect ...
+    "NetworkSettings": {
+        "Networks": {
+            "myhostnet": {
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.2",
 
-### host bridage
-指定使用网络
 
-    --net host
+其它选项是
+
+    --net bridge 
+        # 默认是bridage
+    --net host 
+        # 使用host
     --net none # localhost only
+        # 不用任何网络
 
 ### dns
     --dns=192.168.1.1

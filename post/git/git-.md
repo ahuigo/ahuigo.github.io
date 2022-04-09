@@ -33,9 +33,13 @@ description: Abstract of git commmands.
 
 > You can set your loved tool, such as kdiff3,tkdiff,meld,xxdiff,emerge,gvimdiff,opendiff,etc.
 
+## list config
+
 	## config Command
+	git config -l
 	git config --list #list configration
 	git config user.name #query a item
+	git config user.email
 
 	## set color
 	git config --global color.diff auto // git diff 要顯示顏色

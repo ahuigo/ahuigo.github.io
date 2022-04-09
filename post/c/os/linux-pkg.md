@@ -13,6 +13,6 @@ private: true
     $ dpkg -l | grep libc6
     ii  libc6:i386          
 
-## list installed files
+## list installed package files
     dpkg-query -L <package_name>
     dpkg-deb -c <package_name.deb>

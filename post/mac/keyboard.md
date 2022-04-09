@@ -251,3 +251,5 @@ https://apple.stackexchange.com/questions/89981/remapping-keys-in-iterm2
                 "type": "frontmost_application_if"
             }
         ],
+
+注意，这个正则应该可以匹配多个app(不过我没有试过)

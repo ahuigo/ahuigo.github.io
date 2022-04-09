@@ -1,7 +1,13 @@
 From debian:latest
-RUN apt update && apt install -y procps gcc vim curl wget git lsof \
+RUN apt update && apt install -y procps gcc vim curl wget git lsof netcat \
  man zsh
+WKDIRDIR /root
+EXPOSE 4501
+EXPOSE 4502
+EXPOSE 4503
 
+# build
+# docker build -t debian:dev -f dockerfile-debian
 
+# clang
 #docker run  --name debian  -p 1500:1500 -it -w="/root" debian:clang bash
-#

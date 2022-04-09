@@ -21,7 +21,7 @@ date: 2018-09-27
   只限VM 之间访问，不能访问主机和外网
 - NAT: 
   VM --虚拟的NAT--> 访问其他主机-->访问外网（只能单向访问, vm之间也不可以访问）
-- Bridged Adapter 网桥模式: 
+- Bridged Adapter 网桥模式: (独立的ip)
   通过桥接网卡(e.g. en0/wifi)，得到独立的ip
 - Host-Only: 
   在主机上虚拟一张网卡，VM 通过此网卡vmnet1实现以上的所有的功能。guest 与host机器相当于双绞线互连
