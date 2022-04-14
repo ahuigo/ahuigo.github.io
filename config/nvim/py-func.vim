@@ -1,3 +1,6 @@
+""""""""""""""""""""
+" example tts#Speak
+""""""""""""""""""""
 python3 << END
 import vim
 def GetRange():
@@ -28,3 +31,23 @@ END
 function! tts#Speak(visual) 
   :py3 Text2Speech(vim.eval("a:visual"))
 endfunction
+
+""""""""""""""""""""
+" example EditRun
+""""""""""""""""""""
+python3 << END
+import vim
+def EditRun():
+    ext = vim.eval("expand('%:e')")
+    if ext == 'py':
+        vim.command('!python3 %')
+    elif ext == 'go':
+        filepath = vim.eval("expand('%')")
+        if filepath.endswith('_test.go'):
+            vim.eval('!go test -v '+filepath)
+        else:
+            vim.eval('!go run %')
+    elif ext == 'vim':
+        vim.command('echom "save ".expand("%")')
+        #vim.command('source %')
+END

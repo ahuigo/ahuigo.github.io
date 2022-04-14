@@ -80,8 +80,11 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
     }
 
-### 对象联合
+### 合并对像
 
+    interface MergeType extends IClientRequest, ICoords {} 
+    或
+    type MergeType = ClientRequest & Coords
     type PropsWithChildren<P> = P & { children?: ReactNode };
 
 ### 常量联合类型

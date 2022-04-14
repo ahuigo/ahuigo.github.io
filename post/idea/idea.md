@@ -18,6 +18,7 @@ c sharp 生态计划 vs java/kotlin
 golang
 
 # 工具类
+vscode translate plugin:
 ssl_ca_certificate_generator
     1. https://github.com/diafygi/acme-tiny
     2. local ca
@@ -52,7 +53,7 @@ httpdump: like fiddler but without proxy
 arun: 
     1. arun -p 4501 # a shell support command from vim/vscode/
     2. arun go run .
-gotestdoc:
+swagger in gonic:
     1. 通过comment 生成doc: gotestdoc 
     /* gotestdoc: md
         # title

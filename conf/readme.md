@@ -38,7 +38,7 @@
 
     # config
     ln -s ~/www/a/config/nvim ~/.config/
-    ln -s ~/www/a/config/karabiner/assets/complex_modifications/* ~/.config/karabiner/assets/complex_modifications/
+    ln -s ~/www/a/config/karabiner/assets/complex_modifications ~/.config/karabiner/assets/
 
     ## nvim-plugin.md
 

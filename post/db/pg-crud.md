@@ -239,7 +239,7 @@ Supported by any database: 利用 group + column=max(column)
 #### partition
 partition:
 
-    # SELECT FIRST(id), customer, FIRST(total) FROM  purchases GROUP BY customer ORDER BY total DESC;
+    # 相当于伪代码：SELECT FIRST(id), customer, FIRST(total) FROM  purchases GROUP BY customer ORDER BY total DESC;
     WITH summary AS (
         SELECT p.id, 
             p.customer, 

@@ -28,9 +28,11 @@ github 使用email 认证自己的身份
 
 1. https://github.com/settings/keys 
 2. 提交gnu key （生成key 见git/gpg.md）
+    1. 注意gnu name/email 必须和git user.name/email 是相同的
 2. Enabling vigilant mode
 
 然后每次提交时：
 
     $ git commit -S -m "your commit message"
+    $ git push
 

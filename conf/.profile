@@ -215,7 +215,7 @@ export GOPROXY=https://goproxy.io,direct
 export GONOSUMDB=*.corp.example.com,rsc.io/private
 #export GOSUMDB=off
 
-export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin:/opt/homebrew/opt/go@1.17/bin
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
 alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'

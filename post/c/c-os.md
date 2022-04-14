@@ -8,7 +8,7 @@ description:
 
 本文描述的是现代的计算机所采用的冯诺伊曼(Von Neumann)结构: CPU(Central Procession Unit) + Memory + Device
 
-    // py-lib/os-info.py
+    // a/tool/os/os-info.py
     system_profiler
     sw_vers
 

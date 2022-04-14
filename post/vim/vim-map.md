@@ -193,35 +193,46 @@ Alt+Char 在mac下会输出特殊字符（默认的mac keyboard layout）. 如�
     :map å 2w
 
 ## Ctrl+Char 问题
-vim 对Ctrl+Char的支持其实非常有限: <C-char>对应的keycode就是 char & 0x1F, 它只能表示31个keycode.(这个char有一个范围,不能是数字, 只能是C0 Control_character) <C-a> 与 <C-A> 对vim而言都视为是0x01 (因为 0x41 & 0x1f == 0x61 & 0x1f).
+vim 对Ctrl+Char的支持其实非常有限: `<C-char>`对应的keycode就是 char & 0x1F, 
+2它只能表示31个keycode.(这个char有一个范围,不能是数字, 只能是C0 Control_character) 
+`<C-a> 与 <C-A>` 对vim而言都视为是0x01 (因为 0x41 & 0x1f == 0x61 & 0x1f).
+
+    Ctrl-@                 0x00            NUL
+    Ctrl-A to Ctrl-Z       0x01 to 0x1A
+    Ctrl-a to Ctrl-z       0x01 to 0x1A
+    Ctrl-[                 0x1B            ESC
+    Ctrl-\                 0x1C
+    Ctrl-]                 0x1D
+    Ctrl-^                 0x1E
+    Ctrl-_                 0x1F
+    Ctrl-?                 0x7F            DEL
 
 参阅:
-
 - [<C-char> map in vim](http://superuser.com/questions/580110/why-does-vim-require-every-key-mapping-to-have-a-unique-ascii-code).
 - [Control Character](http://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E5%AD%97%E7%AC%A6)
 
 ## Ctrl+s/Ctrl+q 问题
 mac 终端默认会拦截Ctrl+s/Ctrl+q, 它们属于终于的控制符。你可以从这里获得更多： `stty -a` and  `man stty`.
-
-1. <c-s> will sent stty stop signal which would stop terminal character output.
-1. <c-q> will sent stty start signal which would resume terminal character output.
+1. `<c-s>` will sent stty stop signal which would stop terminal character output.
+1. `<c-q>` will sent stty start signal which would resume terminal character output.
 
 此时，如果终端需要绑定这两个按键，可以关闭它们(在~/.profile_private 或者 .zshrc 或者 .bashrc 中):
 
     stty start undef
     stty stop undef
 
-## fastcode
+## fastcode(16进制,hexcode)
 如果需要map `Ctrl+1` , 只能将它映射到别的空闲keycode(比如我在iTerm2中的keymap中设定Ctrl+1 输出字符序列`C-1` ).
 然后在map命令中直接指定vim keycode为`{lhs}`
 
-    :inoremap C-1  some str
+    :inoremap C-1  what ever u want
 
     或者这样
     :set <F13> C-1
     :imap <F13> what ever u want
 
-    或者直接指定16进制
+或者直接指定16进制(不能超过0xff)
+
     :imap <char-0x20> space
 
 > 这种作为`{lhs}`的字符序列在vim 中叫fastcode map ,参阅：[fastcode map](http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim)
@@ -234,7 +245,7 @@ Entering literal characters & terminal codes Edit:
 
 更多参考：
 - [vim mapping keys](http://vim.wikia.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_2)) 所描述的那样, 直接从keycode 做map
-- Type `:set termcap` to see which keycodes are unused.
+- Type `:set termcap` to see which keycodes are unused in vim.
 
 # command
 Vim 编辑器允许你定义你自己的命令。你可以像运行其他命令行命令一样运行你自定义的 命令。 要定义一个命令,象下面一样执行 ":command" 命令:
@@ -247,7 +258,6 @@ Vim 编辑器允许你定义你自己的命令。你可以像运行其他命令�
 ## 列出用户命令：`command`
 
     :command | :com
-
 
 ## 参数
 

@@ -103,6 +103,54 @@ default 与其他变量混用
 
     import AnyDefaultName, { each, each as forEach } from 'lodash';
 
+### export default 本质
+default 相当于是一个特殊标识符, 后面只能是定义， 以下是伪代码
+
+    export default function example() {}
+    // is the same as
+    function example() {}
+    export { example as default }
+
+    export default class Example {}
+    // is the same as
+    class Example {}
+    export { Example as default }
+
+    export default (expression);
+    // is the same as
+    let *default* = (expression);
+    export { *default* as default }
+
+
+    export default 42;
+    // is the same as
+    const myConst = 42;
+    export { myConst as default};
+
+    //合法
+    export default Foo;
+    // 因为
+    export const default = Foo;
+
+不合法
+
+    // 不合法
+    export default Foo = 1;
+    // 因为
+    export { Foo=1 as default }
+
+    // 不合法
+    export default const Foo = 1;
+    // 因为...
+
+### export named variable 本质
+
+    export const a =1
+    export const b =2
+    const c = 3
+    export default c
+    export {a, b, c as default} 
+
 ### export *
     // lib/mathplusplus.js
     export * from "lib/math";

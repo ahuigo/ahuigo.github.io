@@ -1,8 +1,9 @@
+// ~/.config/karabiner/assets/complex_modifications/readline.json
 {
-  "title": "redline shortcuts for mac osx...",
+  "title": "readline shortcuts for mac osx..",
   "rules": [
     {
-      "description": "redline shortcuts for mac osx...",
+      "description": "readline shortcuts for mac osx..",
       "manipulators": [
         {
           "type": "basic",
@@ -22,9 +23,7 @@
           "from": {
             "key_code": "n",
             "modifiers": {
-              "mandatory": [
-                "left_control"
-              ]
+              "mandatory": [ "left_control" ]
             }
           },
           "to": {
@@ -35,16 +34,12 @@
           "from": {
             "key_code": "w",
             "modifiers": {
-              "mandatory": [
-                "control"
-              ]
+              "mandatory": [ "control" ]
             }
           },
           "to": {
               "key_code": "delete_or_backspace",
-              "modifiers": [
-                "option"
-              ]
+              "modifiers": [ "option" ]
             }
         },{
           "type": "basic",
@@ -64,10 +59,18 @@
           },
           "to": {
               "key_code": "delete_or_backspace",
-              "modifiers": [
-                "command"
-              ]
+              "modifiers": [ "command" ]
             }
+        },{
+          "type": "basic",
+          "from": {
+            "key_code": "delete_or_backspace",
+            "modifiers": { "mandatory": [ "command" ] }
+          },
+          "to": {
+              "key_code": "u",
+              "modifiers": [ "control" ]
+          }
         },{
           "type": "basic",
           "from": { "key_code": "f10", "modifiers": { "mandatory": [ "left_control" ] }

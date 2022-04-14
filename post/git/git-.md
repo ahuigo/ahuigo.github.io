@@ -57,6 +57,7 @@ description: Abstract of git commmands.
 ### verbose
 
     export GIT_CURL_VERBOSE=1
+    export GIT_TRACE=1
 
 ## git auth
 ### git https
