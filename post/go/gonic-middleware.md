@@ -164,8 +164,8 @@ you **SHOULD NOT** use the original context inside it, 因为context 会被copy�
     r.Use(middleware.Auth())
     r.POST("", AddItem)
 
-# other
-## Get response body
+# write response 
+## response header and body
 go-lib/gonic/middleware/resp-body.go (Refer to https://github.com/gin-gonic/gin/issues/1363)
 
     /********** responseBodyWriter ******************/

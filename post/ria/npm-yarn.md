@@ -3,6 +3,11 @@ title: yarn
 date: 2019-11-01
 private: 
 ---
+# pnpm
+https://zhuanlan.zhihu.com/p/137535779
+1. pnpm 采用flat
+2. go get -u ext3.com/module3@v0.0.4 https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
+
 # yarn
     # 国内源tyarn
     npm i yarn tyarn -g

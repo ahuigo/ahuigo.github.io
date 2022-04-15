@@ -8,11 +8,17 @@ date: 2018-10-04
 context: http,server:
 There are many compress algorithm: gzip, deflate, sdch
 
-	gzip on;
-	gzip_min_length  1100; # The length is determined only from the “Content-Length” response header field.
-	gzip_types	text/plain application/x-javascript application/json text/xml text/css;
-	gzip_vary on;		# Enables or disables inserting the “Vary: Accept-Encoding” response header field
+    gzip  on;
+    gzip_proxied any; # need by pass_proxy
+    gzip_min_length  10; # The length is determined only from the “Content-Length” response header field.
+    gzip_types	text/plain application/x-javascript application/json text/xml text/css;
+    gzip_vary on;		# Enables or disables inserting the “Vary: Accept-Encoding” response header field
+
 	gzip_comp_level  6;# range from 1 to 9, default: 1,  too much compression does not make a substantial difference,
+
+test:
+
+    curl -D- -sH 'Accept-encoding: gzip' m/echo/100
 
 # io
 

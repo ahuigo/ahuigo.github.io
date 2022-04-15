@@ -231,6 +231,6 @@ export CLASSPATH='.:/usr/local/lib/jar/*'
 export CPPFLAGS="-I/usr/local/opt/openjdk/include"
 
 
-
+export YARN_REGISTRY="http:test"
 [ -f ~/.private ] && source ~/.private
 [ -f ~/.local.rc ] && source ~/.local.rc

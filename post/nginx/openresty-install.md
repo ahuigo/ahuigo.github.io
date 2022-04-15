@@ -8,14 +8,19 @@ private: true
     brew untap homebrew/nginx
 
     # or: brew install openresty 
-    brew install openresty-debug
+    brew install openresty/brew/openresty-debug
+
+start:
+
     brew services start openresty/brew/openresty
+    brew services start openresty/brew/openresty-debug
 
 stop:
 
     brew services info openresty/brew/openresty
     brew services stop openresty/brew/openresty
     brew services restart openresty/brew/openresty
+
 
 conf:
 

@@ -13,6 +13,12 @@ shell 主要支持字符串 和 数组 两种数据类型。数组功能很弱�
 
 ## String, 字符串
 
+### string color
+    RED='\033[0;31m'
+    NC='\033[0m' # No Color
+    printf "I ${RED}love${NC} Stack Overflow\n"
+    echo "I ${RED}love${NC} Stack Overflow\n"
+
 ### heredoc and nowdoc
 Act as stdin
 
