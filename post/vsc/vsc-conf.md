@@ -14,4 +14,4 @@ from the Command Palette (`⇧⌘P`)
 
 不可以写多个
 
-    "[typescriptreact,javascript]": {
+    "[typescriptreact,javascript]": {}

@@ -234,6 +234,7 @@ j go-lib
 参考github.com/ahuigo/requests， 如果想发布v0.1.0
 
     git tag v0.1.0
+    git push origin v0.1.0
     git push origin master
 
 ## go.mod retract 声明问题版本

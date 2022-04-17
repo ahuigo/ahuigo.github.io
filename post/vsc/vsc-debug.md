@@ -155,7 +155,8 @@ https://github.com/redhat-developer/vscode-java/wiki/Troubleshooting#enable-logg
 Open the command palette (F1)
 1. select `Developer: Toggle Developer Tools`
 
-# vsccode version
+## vscode version
+    # 可参考a/tool/os/os-info.py
     code -v
 
 

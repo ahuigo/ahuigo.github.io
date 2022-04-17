@@ -18,7 +18,12 @@ c sharp 生态计划 vs java/kotlin
 golang
 
 # 工具类
-vscode translate plugin:
+swagger in gonic:
+    1. 通过comment 生成doc: gotestdoc 
+    /* gotestdoc: md
+        # title
+        test case description
+    */
 ssl_ca_certificate_generator
     1. https://github.com/diafygi/acme-tiny
     2. local ca
@@ -53,12 +58,6 @@ httpdump: like fiddler but without proxy
 arun: 
     1. arun -p 4501 # a shell support command from vim/vscode/
     2. arun go run .
-swagger in gonic:
-    1. 通过comment 生成doc: gotestdoc 
-    /* gotestdoc: md
-        # title
-        test case description
-    */
 memstat/iotop:
     1. 参考 [PSS/USS 和 RSS 其实是一回事，吗？](https://changkun.de/blog/posts/pss-uss-rss/)
 http request/response modifier like requestly

@@ -27,6 +27,12 @@ conf:
     openresty -h 
     /usr/local/etc/openresty/nginx.conf
 
+## mac boot
+    brew services
+    $ cat ~/Library/LaunchAgents/homebrew.mxcl.openresty-debug.plist
+    /opt/homebrew/opt/openresty-debug/bin/openresty -g 'daemon off;'
+    /opt/homebrew/opt/openresty-debug/bin/openresty -h
+
 # 源码安装
 ## 预编译
 安装到：/usr/local/opt/openresty

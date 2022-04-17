@@ -24,6 +24,7 @@
 	default = simple
 [init]
 	templatedir = ~/.git
+	defaultBranch = main
 [merge]
 	tool = vimdiff
 [mergetool]

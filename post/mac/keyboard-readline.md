@@ -1,8 +1,10 @@
 ---
-title: The better readline shortcuts for mac osx
+title: 几个让你编辑效率提升数倍的小技巧(mac osx)
 date: 2020-05-08
 ---
-# mac osx 所支持的readline 快捷键
+# 使用mac osx 所支持的readline 快捷键
+可能很少有人知道mac 是支持全局readline快捷键的.
+
 mac osx 大部分app 是支持常规的readline 或变种的, 但是支持得并不完整
 
 ## 移动快捷键

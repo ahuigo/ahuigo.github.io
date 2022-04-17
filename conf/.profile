@@ -221,15 +221,14 @@ export PATH=$PATH:$GOPATH/bin:/opt/homebrew/opt/go@1.17/bin
 alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
 
 # java
-export JAVA_HOME="$(/usr/libexec/java_home)"
-# /Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
+# export JAVA_HOME="$(/usr/libexec/java_home)"
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
 export JRE_HOME=$JAVA_HOME
 export PATH=$JAVA_HOME/bin:$PATH
 #export CLASSPATH='.;./openjdk.jdk\lib\dt.jar'
 export CLASSPATH=.:/usr/local/lib/jar:~/jar/json-simple-1.1.jar:/usr/local/lib/jar/java-json.jar
 export CLASSPATH='.:/usr/local/lib/jar/*'
-export CPPFLAGS="-I/usr/local/opt/openjdk/include"
-
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
 export YARN_REGISTRY="http:test"
 [ -f ~/.private ] && source ~/.private

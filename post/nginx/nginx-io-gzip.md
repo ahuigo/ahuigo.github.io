@@ -16,9 +16,10 @@ There are many compress algorithm: gzip, deflate, sdch
 
 	gzip_comp_level  6;# range from 1 to 9, default: 1,  too much compression does not make a substantial difference,
 
-test:
+请求头必须要加:
 
     curl -D- -sH 'Accept-encoding: gzip' m/echo/100
+    curl -D- -sH 'Accept-encoding: gzip' m/echo/100 --compressed
 
 # io
 
