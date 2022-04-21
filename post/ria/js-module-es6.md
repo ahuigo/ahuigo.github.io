@@ -194,12 +194,12 @@ main.js(babel)
 
 注意，`export *` 命令会忽略模块的default方法
 
-## import index.js
-`import ./module` 代表`module/index.js`:
+### import ./module
+node `import ./module` 代表`module/index.js`:
 
     import {Foo} from './module'
 
-## export 与 import 的复合写法 
+## export+import 的复合写法 
 
     export { foo, bar } from 'my_module';
 

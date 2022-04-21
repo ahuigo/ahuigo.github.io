@@ -29,9 +29,6 @@ linux desktop 的优点：
 - Mac OSX 有极少数私有的命令, 比如：dscl （相当于linux下的用户管理命令 useradd, usermod ）
 - Mac OSX 有一些命令不是gnu版本的: 比如sed，awk, 不过可以一键安装gnu 版的命令: `brew install gsed gawk`
 
-# Start Tips
-1. 鼠标、键盘、touchpad 的speed 设置为最高fast
-2. Touchpad 的设置三指drag、轻触
 
 # Invisible Shortcuts
 > Reference: http://apple.stackexchange.com/questions/400/please-share-your-hidden-os-x-features-or-tips-and-tricks

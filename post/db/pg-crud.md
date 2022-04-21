@@ -235,9 +235,10 @@ Supported by any database: 利用 group + column=max(column)
             GROUP BY p.workflow_uuid, p.task_name) y
     ON y.id=x.id limit 1
 
+#### partition(top N)
 
-#### partition
-partition:
+##### partition with ROW_NUMBER()
+partition top 1:
 
     # 相当于伪代码：SELECT FIRST(id), customer, FIRST(total) FROM  purchases GROUP BY customer ORDER BY total DESC;
     WITH summary AS (
@@ -260,6 +261,33 @@ PARTITION BY when multiple columns:
     SELECT s.*
     FROM summary s
     WHERE s.rk = 1
+
+##### partition with RANK() and DENSE_RANK()
+RANK() and DENSE_RANK() 区别: https://stackoverflow.com/questions/7747327/sql-rank-versus-row-number
+
+    WITH T(StyleID, ID)
+        AS (SELECT 1,1 UNION ALL
+            SELECT 1,1 UNION ALL
+            SELECT 1,1 UNION ALL
+            SELECT 1,2)
+    SELECT *,
+        RANK() OVER(PARTITION BY StyleID ORDER BY ID)       AS 'RANK',
+        ROW_NUMBER() OVER(PARTITION BY StyleID ORDER BY ID) AS 'ROW_NUMBER',
+        DENSE_RANK() OVER(PARTITION BY StyleID ORDER BY ID) AS 'DENSE_RANK'
+    FROM   T  
+
+    StyleID     ID       RANK      ROW_NUMBER      DENSE_RANK
+    ----------- -------- --------- --------------- ----------
+    1           1        1         1               1
+    1           1        1         2               1
+    1           1        1         3               1
+    1           2        4         4               2
+
+可以看到:
+1. ROW_NUMBER 对分区排序的row是唯一编号的
+1. DENSE_RANK 对分区排序的row，重复的row是会用相同编号
+1. RANK 对分区排序的row，重复的row是会用相同编号，内部编号会自增
+
 
 ##### delete duplicated row
 delete and keep top 2 row(order by peg) with group by industry
@@ -339,11 +367,11 @@ Or shorter (if not as clear) with ordinal numbers of output columns:
 
 where filter, 会导致提前过滤掉的分组top1行, 导致留下topN列上位顶替原来的top1
 
-    # 比如我想找所有股票code 中，最新end_date财报中, peg<1 的(有问题)
-    select distinct on (code,end_date) code,end_date,pe from profits where peg>0 order by code,end_date desc limit 1
-    # 没有问题
+    # 比如我想找所有股票code 中，取最新end_date财报中, peg<1 的
+    # 有问题: 先过滤，再最新的end_date
+    select distinct on (code,end_date) code,end_date,pe from profits where peg<1 order by code,end_date desc limit 1
+    # 没有问题: 先分组取最新的end_date, 再过滤
     select p.* from (select distinct on (code) code,end_date,pe,peg from profits order by code,end_date desc  ) p where p.peg<1;
-
 
 If total can be NULL (won't hurt either way, but you'll want to match existing indexes):
 

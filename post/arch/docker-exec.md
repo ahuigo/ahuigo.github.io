@@ -1,8 +1,13 @@
 ---
-title: Docker exec nsenter
+title: Docker exec and nsenter
 date: 2019-08-15
 ---
-# Docker exec nsenter
+# Docker run
+启动动一个daemon container
+
+    docker run --name debian -it -d debian bash
+    docker exec -it debian bash
+# Docker exec 
 ## exec exited container
 如果想exec 一个exited container, 应该先让它先启动
 
@@ -26,11 +31,12 @@ date: 2019-08-15
 
     docker run --rm -it debian bash
 
-有时需要：
+同时需要：
 
     docker run -ti --detach-keys="ctrl-@" ubuntu:14.04 bash
+    docker exec -ti --detach-keys="ctrl-@" ubuntu:14.04 bash
 
-You can add this to your ~/.docker/config.json file to persist this change:
+or You can add this to your ~/.docker/config.json file to persist this change:
 
     {
         ...
@@ -41,13 +47,13 @@ You can add this to your ~/.docker/config.json file to persist this change:
 ## nsenter工具进入docker容器
 1. docker exec: 直接执行容器命令
 2. docker attach: 类似exec, 但是多个窗口attach 到一个窗口, 窗口都会同步的显示\阻塞
-3. nsenter: 外部工具
+3. nsenter: 这是一个外部工具
 
 nsenter命令抓包:
 
     // 1、找到容器ID，并打印它的NS ID
     docker inspect --format "{{.State.Pid}}"  16938de418ac
-    // 2、进入此容器的网络Namespace
+    // 2、进入此容器的网络Namespace NSID 为54438
     nsenter -n -t  54438
     // 3、抓DNS包
     tcpdump -i eth0 udp dst port 53|grep youku.com

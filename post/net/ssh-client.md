@@ -31,17 +31,7 @@ OpenSSH 是SSH 协议的开源软件包（OpenBSD 子项目），它和OpenSSL �
 
 
 ## ssh-keygen
-on mac osx/linux
-
-	ssh-keygen - authentication key generation, management and conversion
-		-f ~/.ssh/id_rsa
-		-t rsa/dsa
-
-Example
-
-	ssh-keygen -t rsa -C "your_email@example.com"
-	# Generating public/private rsa key pair.
-		id_rsa.pub/id_rsa
+ssh-keygen - see ssh-client-login
 
 ## SSH Client
     ssh user@host echo 1 2

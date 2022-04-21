@@ -35,6 +35,9 @@ private: true
 小结: 其实你可以一步到位：
 
 	ssh-keygen -t rsa; ssh-copy-id user@host;
+		-f ~/.ssh/id_rsa
+		-t rsa/dsa
+        -p change password
 
 ### 检验
 
@@ -49,17 +52,35 @@ private: true
 http://www.cnblogs.com/weafer/archive/2011/06/10/2077852.html
 http://www.chinaunix.net/old_jh/4/343905.html
 
+## change password
+> https://docs.github.com/en/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases
+Adding or changing a passphrase
+
+    ssh-keygen -p -f ~/.ssh/id_rsa
+
+The first time you use your key, you will be prompted to enter your passphrase. 
+
+If you choose to save the passphrase with your keychain(when add your key to the ssh-agent), you won't have to enter it again.
+
 ## sshagent
-如果有多个密钥，比如github, 就需要将密钥加入到ssh agent 客户端缓存代理
+> https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent
+
+1. If you choose to save the passphrase with your keychain(when add your key to the ssh-agent), you won't have to enter it again.
+2. 如果有多个密钥，比如github, 就需要将密钥加入到ssh agent 客户端缓存代理
 
 这个缓存代理, 将偿试不同的密钥
 
     # 启动agent
 	eval "$(ssh-agent -s)"
+
     # 关闭
     ssh-agent -k
+
     # 加入密钥
-    ssh-add ~/.ssh/other_id_rsa
+    ssh-add -K ~/.ssh/other_id_rsa
+        The -K option is Apple's standard version of ssh-add, which stores the passphrase in your keychain for you when you add an SSH key to the ssh-agent
+        In MacOS Monterey (12.0), the -K and -A flags are deprecated and have been replaced by the --apple-use-keychain and --apple-load-keychain flags, respectively.
+
     # list
     ssh-add -l
     # you can delete all cached keys before

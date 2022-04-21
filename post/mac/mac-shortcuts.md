@@ -388,10 +388,6 @@ With `space` to move region.
 # keynote
 [keynote](/p/doc-keynote)
 
-# touchpad
-
-    三指选中
-
 # Reference
 [The shortcuts on Mac]
 [mac hide feature]

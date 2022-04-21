@@ -71,6 +71,14 @@ recycle counter:
 优点：回收性能好
 缺点：算法复杂
 
+# golang gc
+链接：https://zhuanlan.zhihu.com/p/77943973
+1. 1.3以前的版本使用标记-清理的方式，整个过程都需要STW。
+1. 1.3版本分离了标记和清理的操作，标记过程STW，清理过程并发执行。
+1. 1.5版本在标记过程中使用三色标记法。回收过程主要有四个阶段，其中，标记和清理都并发执行的，但标记阶段的前后需要STW一定时间来做GC的准备工作和栈的re-scan。
+1. 1.8版本在引入混合屏障rescan来降低mark termination的时间
+
+
 # Rerference
 1. https://developer.aliyun.com/article/775798
 1. golang垃圾回收机制: https://www.hurace.net/post/golang-gc/

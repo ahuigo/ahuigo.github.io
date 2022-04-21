@@ -2,10 +2,55 @@
 title: 几个让你编辑效率提升数倍的小技巧(mac osx)
 date: 2020-05-08
 ---
-# 使用mac osx 所支持的readline 快捷键
-可能很少有人知道mac 是支持全局readline快捷键的.
+# 加快按键速度(mac osx )
+## keyboard settings
+In `System Preferences`, enter `Keyboard`, click `Keyboard Tab`. 
+1. Drag the `Delay Until Repeat` to shortest
+1. Drag the `Key Repeat` to fastest
 
-mac osx 大部分app 是支持常规的readline 或变种的, 但是支持得并不完整
+Open terminal：
+```bash
+# mac osx 12 Moterey:
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+defaults read NSGlobalDomain ApplePressAndHoldEnabled 
+# mac osx 11: 
+defaults write -g ApplePressAndHoldEnabled -bool false
+defaults get -g ApplePressAndHoldEnabled
+```
+
+### key repeat 不生效
+```
+# mac osx 12 Moterey:
+defaults write NSGlobalDomain InitialKeyRepeat  10
+defaults read NSGlobalDomain InitialKeyRepeat
+defaults write NSGlobalDomain KeyRepeat 1
+defaults read NSGlobalDomain KeyRepeat 
+
+# mac osx 11:
+defaults write -g InitialKeyRepeat -int 15
+defaults write -g KeyRepeat -int 2
+```
+
+## Touchpad Mouse Setting
+Open Touchpad Setting:
+1. click `Point & Click` Tab
+2. Drag the `Tracking Speed` to Fast
+2. Select `Tap to click` if you don't want to cost too much strength
+
+Open Accessibility Setting:
+1. In the left sidebar, select `Mouse & Trackpad`(Mac OSX11) or `Pointer Control` (MacOSX 12).
+2. Click `Trackpad Options...`
+    1. Select enable dragging with `three finger drag`
+    2. Drag the `Scrolling Speed` to Fast
+2. Click `Mouse Options...`
+    2. Drag the `Scrolling Speed` to Fast
+
+# 使用mac osx 所支持的readline 快捷键
+可能很少有人知道mac 是支持全局readline快捷键, 它可以极大的提升编辑效率.
+
+mac osx 下，大部分app 支持常规的readline的。对不同的app 来说，支持程度不一样
+1. 对于terminate/iterm2来说，基本都支持。
+1. 对于chrome/safari app来说， 不支持`ctrl+w/u`
 
 ## 移动快捷键
 

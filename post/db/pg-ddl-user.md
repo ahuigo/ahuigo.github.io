@@ -39,6 +39,7 @@ password method 使用独立的帐号，使用ROLE管理
 # User Role
 
     psql DBNAME USERNAME
+    psql DBNAME -U USERNAME
     psql -U user_name -d database_name -h 127.0.0.1 -W
         \W prompt enter password
 
@@ -80,6 +81,9 @@ psql: 如果密码用户名有特殊字符，需要用urlencoded 转义
 
     # create 默认带login
     create user demo_role;
+
+`create role` 默认不带login 权限
+
     # give ability to login in
     CREATE ROLE demo_role WITH LOGIN;
 
