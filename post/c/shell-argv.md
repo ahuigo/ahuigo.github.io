@@ -33,4 +33,7 @@ date: 2019-05-17
 
 test:
 
+    # -b -c 是开关
     sh test.sh -a name -b -c
+    sh test.sh -a name -bc
+    sh test.sh -bca name

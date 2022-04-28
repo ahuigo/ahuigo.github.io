@@ -68,36 +68,46 @@ e.g.
     pg_dump help
 
 ### backup binary
-tar 包更大
 
     pg_dump -Fc database_name_here > database.bak # compressed binary format
     pg_dump -Ft database_name_here > database.tar # tarball
+    pg_dump -Ft database_name_here | gzip > database.tgz # tar.gz
 
-Restore if database exists:
+        -F format
+            p plain, c custom, t tar
 
-    pg_restore -Fc database.bak # restore compressed binary format
-    pg_restore -Ft database.tar # restore tarball
+Restore create original database
 
-Restore auto create database(-C)：
-
+    # -C create origin database
     # 指定-d any_db 是用于初始化连接db
     pg_restore -d any_db -Fc -C database.bak # restore compressed binary format
     pg_restore -d any_db -Ft -C database.tar # restore tarball
 
-Restore to db1
+Restore if database exists:
 
-    pg_restore -d db1 -Fc -C database.bak
+    # Restore to db1
+    pg_restore -d db1 -Fc database.bak # restore compressed binary format
+    pg_restore -d db1 -Ft database.tar # restore tarball
 
-### backup
+dump sql:
+
+
+    pg_restore -f dump.sql  -Fc database.bak # restore compressed binary format
+    pg_restore -f dump.sql  -Ft database.tar # restore tarball
+
+### backup schema
 
     # only schema(-s)
     pg_dump -U db_username -s  -f [filename.sql] [db_name]
+
     # only data(-a)
     pg_dump -U db_username -a  -f [filename.sql] [db_name]
-    # spcify table(-t)
-    pg_dump -U db_username -t table_name -a  -f [filename.sql] [db_name]
+
     # data+schema(null)
     pg_dump                      -f [filename.sql] [db_name]
+
+    # spcify table(-t)
+    pg_dump -U db_username -t table_name -a  -f [filename.sql] [db_name]
 
     -F format
         -Fc custom, Output a custom-format archive suitable for input
@@ -137,7 +147,7 @@ custom-format archive:
     \copy my_table to 'my_table.csv' csv;
     \copy my_table FROM 'my_table.csv' DELIMITER ',' CSV;
 
-### export table with bash:
+### export table with shell:
 
     $ pg_dump \
     -h localhost \
@@ -302,8 +312,31 @@ create temp table:
     pg_dump -st tablename dbname
 
 #### copy table struture
-    CREATE TEMP TABLE tmp_table AS SELECT * FROM tracks;
+tmp table:
+
     CREATE TABLE tmp_table AS SELECT * FROM tracks;
+
+mememory table:
+
+    CREATE TEMP TABLE tmp_table AS SELECT * FROM tracks;
+
+sql table
+
+    WITH summary AS (
+        SELECT p.id, 
+            p.customer, 
+            p.total, 
+            ROW_NUMBER() 
+            OVER( PARTITION BY p.customer ORDER BY p.total DESC ) AS rk
+        FROM PURCHASES p)
+    SELECT s.* FROM summary s WHERE s.rk = 1
+
+    WITH T(StyleID, ID)
+    AS (SELECT 1,1 UNION ALL
+        SELECT 1,1 UNION ALL
+        SELECT 1,1 UNION ALL
+        SELECT 1,2)
+    SELECT * FROM T;
 
 #### create view table
 	create view t_view as
@@ -358,6 +391,17 @@ To remove any default value, use:
     \h alter TABLE
     ALTER TABLE player ALTER COLUMN TYPE data_type;
     ALTER TABLE the_table ALTER COLUMN col_name TYPE integer USING (col_name::integer);
+
+with null
+
+    ALTER TABLE mytable
+    ALTER COLUMN col TYPE character varying(15), 
+    ALTER COLUMN col SET NOT NULL;
+
+drop null:
+
+    ALTER TABLE mytable 
+    ALTER COLUMN email DROP NOT NULL;
 
 
 ### autoincrement

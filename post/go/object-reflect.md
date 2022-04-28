@@ -355,6 +355,8 @@ Here’s some code to demonstrate these concepts:
 ## 用反射创建function
  reflect.MakeFunc(rf) 用于创建function 实例
 
+    // 参考 go-lib/reflect/func_reduce_test.go
+    // todo: go-lib/reflect/func_make_test.go
     func MakeTimedFunction(f interface{}) interface{} {
         rf := reflect.TypeOf(f)
         if rf.Kind() != reflect.Func {

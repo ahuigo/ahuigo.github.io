@@ -67,3 +67,6 @@ map 转数组：
 对数组每一item 取`keys(item['mappings'])`
 
     curl -s 'es:49200/_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'
+
+## inner json
+    echo '{"data":"{\"age\":1}"}' |  jq '.data|fromjson|.age'

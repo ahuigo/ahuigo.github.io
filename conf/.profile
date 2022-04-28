@@ -44,6 +44,13 @@ alias l='ls -lah'
 alias code1='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 
 # python
+export PATH=/opt/homebrew/opt/python@3.10/bin:$PATH
+if [[ -z $LDFLAGS ]];then
+    # For compilers to find python@3.10 you may need to set:
+    #export LDFLAGS="-L/opt/homebrew/opt/python@3.10/lib"
+    #For pkg-config to find python@3.10 you may need to set:
+    export PKG_CONFIG_PATH="/opt/homebrew/opt/python@3.10/lib/pkgconfig"
+fi
 alias py='ipython3'
 alias p='python3'
 alias p2='python2'
@@ -209,7 +216,7 @@ export GODEV=local
 export GO111MODULE=on 
 export GOPATH=~/go
 # 配置 GOPROXY 环境变量
-export GOPRIVATE='*.internal.mycompany.com,github.com/ahuigo1,github.com/ahuigo2/requests'
+export GOPRIVATE='*.internal.mycompany.com,github.com/ahuigo1,github.com/ahuigo2/requests,github.com/momenta/mojito,gitlab.momenta.works/hdmap-workflow'
 export GOPROXY=https://goproxy.io,direct
 #export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 export GONOSUMDB=*.corp.example.com,rsc.io/private
@@ -225,8 +232,7 @@ alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
 export JRE_HOME=$JAVA_HOME
 export PATH=$JAVA_HOME/bin:$PATH
-#export CLASSPATH='.;./openjdk.jdk\lib\dt.jar'
-export CLASSPATH=.:/usr/local/lib/jar:~/jar/json-simple-1.1.jar:/usr/local/lib/jar/java-json.jar
+#export CLASSPATH=.:/usr/local/lib/jar:~/jar/json-simple-1.1.jar:/usr/local/lib/jar/java-json.jar
 export CLASSPATH='.:/usr/local/lib/jar/*'
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 

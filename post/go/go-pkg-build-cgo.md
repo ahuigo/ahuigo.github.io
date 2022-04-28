@@ -153,7 +153,7 @@ CGO 开启：默认情况下，Go的runtime环境变量`CGO_ENABLED=1`，即默�
 1. `cmd/link`默认使用`internal linking`，而无需启动外部`external linker`(如:gcc、clang等)，
 2. 不过由于`cmd/link`功能有限，仅仅是将`.o和pre-compiled`的标准库的.a写到最终二进制文件中。
    
-因此如果标准库中是在`CGO_ENABLED=1`情况下编译的，那么编译出来的最终二进制文件依旧是动态链接的，即便在go build时传入 `-ldflags '-extldflags "-static"'`亦无用，因为根本没有使用`external linker`：
+因此如果标准库中是在`CGO_ENABLED=1`情况下编译的，那么编译出来的最终二进制文件依旧是动态链接的，即便在go build时传入 `-ldflags '-extldflags "-static"'`亦无用，因为没有使用`external linker`：
 
     $ go build -o server-fake-static-link  -ldflags '-extldflags "-static"' server.go
     $ otool -L server-fake-static-link

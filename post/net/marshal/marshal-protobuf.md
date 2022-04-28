@@ -8,7 +8,7 @@ private: true
 - json
 - protobuf grpc 使用
 - mojo 
-- Cap'n Proto
+- Cap'n Proto 比pb快 1000倍: https://blog.51cto.com/u_15127662/2784635
 - 非序列化zero-copy 
 
 # protobuf

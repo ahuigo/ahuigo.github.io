@@ -1,0 +1,14 @@
+# docker build -t debug -f  dock-env-arg --build-arg name=hello-name  .
+# docker run --rm -it -e ename=111 debug sh -c 'export|grep ename'
+FROM debian
+ARG name=who
+ENV ename=$name
+RUN echo "name1: $name"
+RUN echo "name2: ${name}"
+RUN echo name3=$name
+RUN echo "ename1: $ename"
+RUN echo "ename2: ${ename}"
+RUN echo ename3: $ename
+
+ENV APP_ENV=dev
+RUN echo APP_ENV=$APP_ENV

@@ -206,6 +206,7 @@ cpu+mem
     go tool pprof http://localhost:4500/debug/pprof/profile
     # wait 120s
     go tool pprof http://localhost:4500/debug/pprof/profile?seconds=120     
+    go tool pprof -seconds=120 http://localhost:4500
 
     # 下载 heap profile
     go tool pprof http://localhost:4500/debug/pprof/heap
@@ -226,6 +227,10 @@ cpu+mem
     go tool pprof -http=:4501   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
 
 ### pprof CPU 分析
+先安装：
+
+    brew install graphviz
+
 采集 profile 数据之后，可以分析 CPU 热点代码。 先执行压测试
 
     $ go-wrk  -d=50 -c=50  http://localhost:4500/cpu/5

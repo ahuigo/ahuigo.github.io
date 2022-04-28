@@ -70,6 +70,7 @@ writing new private key to '/usr/local/etc/ssl/private/self-signed.key'
 
 
 ## 3. Add the self-signed certificate to the trusted root store
+把证书添加到keychain, 两种方法
 add certificate via command line
 
     sudo security add-trusted-cert \

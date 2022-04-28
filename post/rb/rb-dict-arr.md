@@ -27,7 +27,7 @@ padding 4 'good' elelement
 
 序列
 
-    #range(0,20,2)
+    #python: range(0,20,2)
     nums = Array.new(10) { |e| e = e * 2 }
     #range(0,10)
     digits = Array(0..9)
@@ -71,11 +71,13 @@ padding 4 'good' elelement
 删除指定的 index 处的元素，并返回该元素。如果 index 超出范围，则返回 nil。
 
     array.delete_at(index)
+    arr.delete_at(arr.index(44))
 
 #### delete by block
 当 block 为 true 时，删除 self 的每个元素。
 
     array.delete_if { |item| block }
+    [2,4,6,3,8,3].delete_if {|x| x == 3 } 
 
 ##### delete range
 删除 index（长度是可选的）或 range 指定的元素。返回被删除的对象、子数组，如果 index 超出范围，则返回 nil。

@@ -291,10 +291,10 @@ parse rfc3339 format:
 
     from dateutil.parser import parse as strptime
     from datetime import timedelta,datetime
-    def isCloseTime(t1:datetime, t2:datetime, tol=timedelta(microseconds=10)):
+    def isCloseTime(t1:datetime, t2:datetime, tol=timedelta(milliseconds=1)):
         # 二选1
-        return -tol<t1-t2<tol
-        return abs(t1-t2)<tol
+        return -tol<t1-t2<=tol
+        return abs(t1-t2)<=tol
 
     from dateutil.parser import parse as strptime
     from datetime import timedelta,datetime

@@ -4,7 +4,21 @@ title:	brew dev
 category: blog
 description: 
 ---
-# Preface
+# Prepare
+Homebrew概念
+
+    Keg：安装好的脚本、软件等；
+    Cellar：所有用 Homebrew 安装在本地的脚本、软件组成的集合；
+    Formula：定义如何下载、编译和安装脚本或软件的 Ruby 脚本；
+    Tap：Formula 仓库
+
+生成Formula
+
+	cd $(brew --repo ahuigo/ahui)
+    brew create https://github.com/ahuigo/arun/archive/refs/tags/master.tar.gz --tap ahuigo/homebrew-ahui
+
+## proxy(via socks5)
+    export ALL_PROXY=socks5://127.0.0.1:1080
 
 # rule
 brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
@@ -87,16 +101,35 @@ https://github.com/ahuigo/homebrew-ahui/blob/master/langdao-dict.rb
      brew install ahuigo/ahui/langdao-dict
      brew install --verbose --debug ahuigo/ahui/langdao-dict
 
-# install dir
+## OS 环境
+参考： https://github.com/jkawamoto/homebrew-fgo/blob/master/fgo.rb
+
+    require 'rbconfig'
+    class Fgo < Formula
+      if Hardware::CPU.is_64_bit?
+        case RbConfig::CONFIG['host_os']
+        when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
+          :windows
+        when /darwin|mac os/
+          url "https://github.com/jkawamoto/fgo/releases/download/v0.3.4/fgo_v0.3.4_darwin_amd64.zip"
+        when /linux/
+          url "https://github.com/jkawamoto/fgo/releases/download/v0.3.4/fgo_v0.3.4_linux_amd64.tar.gz"
+        when /solaris|bsd/
+          :unix
+        else
+          :unknown
+        end
+      else
+
+
+# install
+## install golang
+参考：https://gist.github.com/miguelmota/33489af6d1655188869f3698020354c3
+
+## install dir
 dir:
 
     brew --repo
         /usr/local/Homebrew
     brew --cache
         ~/Library/Caches/Homebrew/downloads
-
-# dev command
-    $ /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/cmd/postgresql-upgrade-database.rb
-
-# proxy(via socks5)
-    export ALL_PROXY=socks5://127.0.0.1:1080

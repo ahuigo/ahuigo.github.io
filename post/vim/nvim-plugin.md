@@ -69,3 +69,7 @@ shortcuts:
     <ESC> <C-o> normal 选择
         p preview
     i   insert filter
+
+# debug
+## health check
+see vim-debug.md for  `:checkhealth`

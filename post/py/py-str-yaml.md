@@ -3,9 +3,6 @@ title: python yaml
 date: 2018-10-04
 private:
 ---
-# yaml 语法
-
-
 # install:
     ```
     pip3 install pyyaml
@@ -81,15 +78,15 @@ dummper style
 
 
 ## keep comments
-import sys
-import ruamel.yaml
+    import sys
+    import ruamel.yaml
 
-yaml_str = """\
-# example
+    yaml_str = """
+    # example
     name:
-      # details
-      family: Smith   # very common
-      given: Alice    # one of the siblings
+    # details
+    family: Smith   # very common
+    given: Alice    # one of the siblings
     """
 
     yaml = ruamel.yaml.YAML()  # defaults to round-trip if no parameters given
@@ -105,3 +102,73 @@ with result:
       # details
       family: Smith   # very common
       given: Bob      # one of the siblings
+
+# 语法
+## 类型
+    boolean: 
+        - TRUE  #true,True都可以
+        - FALSE  #false，False都可以
+    float:
+        - 3.14
+        - 6.8523015e+5  #可以使用科学计数法
+    int:
+        - 123
+        - 0b1010_0111_0100_1010_1110    #二进制表示
+    null:
+        nodeName: 'node'
+        parent: ~  #使用~表示null
+    string:
+        - 哈哈
+        - 'Hello world'  #可以使用双引号或者单引号包裹特殊字符
+        - newline
+        newline2    #字符串可以拆成多行，每一行会被转化成一个空格
+    date:
+        - 2018-02-17    #日期必须使用ISO 8601格式，即yyyy-MM-dd
+    datetime: 
+        -  2018-02-17T15:02:31+08:00    #时间使用ISO 8601格式，时间和日期之间使用T连接，最后使用+代表时区
+
+## 多行
+多行字符串可以使用|保留换行符，也可以使用>折叠换行。
+
+    # { this: 'Foo\nBar\n', that: 'Foo Bar\n' }
+    this: |
+      Foo
+      Bar
+    that: >
+      Foo
+      Bar
+
++表示保留文字块末尾的换行，-表示删除字符串末尾的换行。
+
+
+    #{ s1: 'Foo\n', s2: 'Foo\n\n', s3: 'Foo' }
+    s1: |
+      Foo
+    s2: |+
+      Foo
+
+    s3: |-
+      Foo
+
+## 引用
+
+    defaults: &defaults
+      adapter:  postgres
+      host:     localhost
+
+    development:
+      database: myapp_development
+      <<: *defaults
+
+    test:
+      database: myapp_test
+      <<: *defaults
+
+& 用来建立锚点（defaults），<< 表示合并到当前数据，* 用来引用锚点。
+
+下面是另一个例子:
+
+    # [ 'Steve', 'Clark', 'Steve' ]
+    - &showell Steve 
+    - Clark 
+    - *showell 

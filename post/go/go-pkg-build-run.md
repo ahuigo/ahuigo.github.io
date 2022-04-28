@@ -92,7 +92,7 @@ ldflags/gcflags 都是linker 链接器选项。可以用于设定静态链接、
         fmt.Println("Version:", Version)
     }
 
-run:
+run: main 入口注入变量
 
     go run -ldflags="-X 'main.Version=注入version'" ldflags-var.go
         Version:注入version

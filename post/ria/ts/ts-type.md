@@ -204,6 +204,11 @@ The compiler will think that foo is string in the below-guarded block
 ## 枚举enum
 不同于string/number、元组/interface 类型，`enum会被编译进js`
 
+### type mock enum
+
+    type Status = 0 | 1 | 2
+    let status:Status = 0
+
 ### 自增枚举enum
 枚举使用 enum 关键字来定义：
 

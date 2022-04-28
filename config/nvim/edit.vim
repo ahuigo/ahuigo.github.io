@@ -49,6 +49,20 @@ function! edit#run()
   ":py3 EditRun()
 endfunction 
 
+""""""""""""""""""
+" Copy Quit Save Select
+" config iTerm2 keys: Esc+Ac, Esc+As, Esc+Aa
+"""""""""""""""""""""
+" Quit
+nnoremap <C-q> :qa<CR>
+" Copy
+vnoremap <M-A>c "+y
+" Save
+nnoremap <M-A>s :up<CR>
+inoremap <M-A>s <C-o>:up<CR>
+" Select whole content
+nnoremap <M-A>a ggVG
+
 """"""""""""""""""""""
 " F1...F12 
 """"""""""""""""""""""
@@ -57,7 +71,9 @@ nnoremap <F1> :let @/ = ""<CR>
 nnoremap  \w :%s/\s\+$//e<CR>
 nnoremap <F2> "+p
 inoremap <F2> <C-o>"+p
-nnoremap <F3> :w<CR>:call edit#run()<CR>
+vnoremap <F2> "+y
+"Shift+F2
+nnoremap <F14> :w<CR>:call edit#run()<CR>
 
 """"""""""""""""""""""""""
 """ meta config
@@ -71,7 +87,6 @@ set laststatus=2
 	 \ |   exe "normal! g`\""
 	 \ | endif
 
-colorscheme industry
 set mouse=a
 set wrap
 " xterm
@@ -150,19 +165,6 @@ nnoremap <C-K> <C-W>k
 "inoremap <D-V> <ESC>:r!pasteImg.py '%:t:r'<CR>
 "inoremap <D-V> <ESC>:r!pasteImg.py '%'<CR>
 
-""""""""""""""""""
-" Copy Quit Save Select
-" config iTerm2 keys: Esc+Ac, Esc+As, Esc+Aa
-"""""""""""""""""""""
-" Quit
-nnoremap <C-q> :qa<CR>
-" Copy
-vnoremap <M-A>c "+y
-" Save
-nnoremap <M-A>s :up<CR>
-inoremap <M-A>s <C-o>:up<CR>
-" Select whole content
-nnoremap <M-A>a ggVG
 
 """"""""""""""""""""""
 " Vimdiff
@@ -174,14 +176,22 @@ noremap <c-j> ]c
 noremap <c-k> [c
 
 """"""""""""""
-" File Format
+" Corlor Format
 """""""""""""
 "https://github.com/romainl/Apprentice/blob/master/colors/apprentice.vim
 "autocmd ColorScheme *
-hi DiffAdd      gui=none    guifg=NONE          guibg=#cccccc
-hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac
-hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0
-hi DiffText     gui=none    guifg=NONE          guibg=#8cbee2
 "autocmd ColorScheme * hi DiffText     gui=none    guifg=NONE          guibg=#cccccc
-hi DiffAdd ctermbg=135  ctermfg=208  guibg=#262626 guifg=#87af87 cterm=reverse gui=reverse
-
+"colorscheme industry
+"hi DiffAdd      ctermbg=135  ctermfg=208  guibg=#262626 guifg=#87af87 cterm=reverse gui=reverse
+" Refer to Xterm-color-table: https://vim.fandom.com/wiki/Xterm256_color_names_for_console_Vim?file=Xterm-color-table.png
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=16 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+"cterm - sets the style
+"ctermfg - set the text color
+"ctermbg - set the highlighting
+"DiffAdd - line was added
+"DiffDelete - line was removed
+"DiffChange - part of the line was changed (highlights the whole line)
+"DiffText - the exact part of the line that changed

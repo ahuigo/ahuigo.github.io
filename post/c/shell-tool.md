@@ -154,13 +154,13 @@ Usage:
 	-s, --squeeze-repeats
 		replace each input sequence of a repeated character that is listed in SET1 with a single occurrence of that character
 
-删除一段文字, 或者替换字符
+### 删除一段文字, 或者替换字符
 
 	echo 'a : b' | tr 'a-z' 'A-Z' #替换 -有特别的含义哦
 	echo 'a : b' | tr 'a\-z' 'A\-Z' #- 需要转义
 	echo 'a : b' | tr -d 'ab'; #删除
 
-Special character:
+### Special character:
 
 	 tr '\n' ','
 	 tr '\r' ','
@@ -312,3 +312,14 @@ If you want to remove the first n leading components of the file name, you need 
 ## exclude
 
 	tar czvf tarname.tar --exclude=.git dir
+
+## exclude .gitignore files
+    tar --exclude-vcs -zcvf foo.tar.gz ./FOLDER_NAME
+    gtar --exclude-vcs -zcvf foo.tar.gz ./FOLDER_NAME
+
+或
+
+    # 指定分支 v1.4.0
+    git archive --format=tar --prefix=git-1.4.0/ v1.4.0 | gzip >git-1.4.0.tar.gz
+    git archive --format=tar master | gzip >arun.tgz
+
