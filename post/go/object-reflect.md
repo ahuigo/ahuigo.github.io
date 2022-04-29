@@ -235,6 +235,7 @@ rv.Field example: [go-lib/reflect/ref-value-struct_test.go]
     refPtrVal.Elem().Field(0).setInt(1) //结构体
 
 #### rvPtrStr.Set() 
+set string rv
 
     s := "s1"
 	rv := reflect.ValueOf(&s)
@@ -251,6 +252,14 @@ rvPtrStruct: 注意小写元素`age` 的`CanSet` 是false.(因为golang 原则�
         rvField.Set(reflect.ValueOf(23))
     }
     fmt.Println(s)
+
+example 2:
+
+    rv := reflect.ValueOf(12)
+	refpb := reflect.Indirect(reflect.ValueOf(&b))
+	refpb = reflect.ValueOf(&b).Elem()
+	refpb.FieldByName("Age").Set(rv)
+
 
 ### get
 #### getProp
@@ -269,6 +278,14 @@ field.Interface().(type)
     f := reflect.Indirect(rv).FieldByName('Id')
     f.Interface().{struct{Id int}}
 
+
+#### Elem() vs Indirect()
+    func Indirect(v Value) Value {
+        if v.Kind() != Pointer {
+            return v
+        }
+        return v.Elem()
+    }
 
 # 创建实例
 ## New rvPtr 
