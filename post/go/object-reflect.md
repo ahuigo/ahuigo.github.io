@@ -125,7 +125,7 @@ The `Elem()` example:
     pf("%#v, %T\n", rt,rt)
     pf("%#v, %T\n", rt.Elem(), rt.Elem())
 
-来看下例子（by Jon Bodner@medium） [go-lib/reflect/ref-type.go]
+来看下例子（by Jon Bodner@medium） [go-lib/reflect/ref-type_test.go]
 
     type Foo struct {
         A int `tag1:"First Tag" tag2:"Second Tag"`
@@ -207,11 +207,15 @@ The `Elem()` example:
 ## reflect.ValueOf
 获取变量反射值的ValueOf: 类型`%T`都是`reflect.Value`
 
-### rv.Type() Kind()
+### rv.Type() vs Kind()
+
+    Kind() -> slice
+    Type() -> []uint8
+
 refVal/refPtrVal 提供的method 与typeOf 类似:
 1. refVal.Type()    返回`*reflect.rtype`类型. 
-   1. 用于`rv1.Type()==rv2.Type()`
-2. refVal.Kind()    返回`reflect.Kind`，可以与`reflect.String`比较. 
+   1. 可用于`rv1.Type()==rv2.Type()` 反射类型比较 `参考slice_pushpop_test.go`
+2. refVal.Kind()    返回`reflect.Kind`，可以与`reflect.String/Slice`比较. 
 
 ### rv.Field(i) & FieldByName(name)
 对于struct 来说：
@@ -222,7 +226,7 @@ refVal/refPtrVal 提供的method 与typeOf 类似:
 rv.Field example: [go-lib/reflect/ref-value-struct_test.go]
 
 ### Set/CanSet(pointer)
-只有`指针(addressable)`+`Elem()` 才能修改值 
+只有`指针(addressable)`+`Elem()` 才能修改值
 1. 通过`refVal := reflect.ValueOf(var)`获取变量反射值，不可以修改值
 2. 通过`refPtrVal := reflect.ValueOf(&var)`获取指针反射值，可以通过`refPtrVal.Elem()`修改值
 3. 通过`structFieldValue.Set(val)`
@@ -234,18 +238,20 @@ rv.Field example: [go-lib/reflect/ref-value-struct_test.go]
     refPtrVal.Elem().SetString("string")
     refPtrVal.Elem().Field(0).setInt(1) //结构体
 
-#### rvPtrStr.Set() 
+#### rvPtrStr.Set(rv) 
+set string rv
 
     s := "s1"
 	rv := reflect.ValueOf(&s)
 	rv.Elem().Set(reflect.ValueOf("modify"))
 
-#### rvField.Set()
-rvPtrStruct: 注意小写元素`age` 的`CanSet` 是false.(因为golang 原则认为大写才暴露给外部，只能通过`s.age=23`修改值)
+#### rvField.Set(refValue)
+rvPtrStruct: 注意小写元素`age` 的`CanSet` 是false.(因为golang 原则认为大写才暴露给外部)
 
     type A struct{Age int}
     s := A{1}
     rv := reflect.ValueOf(&s)
+    // Elem()
     rvField := rv.Elem().FieldByName("Age")
     if rvField.CanSet(){
         rvField.Set(reflect.ValueOf(23))
@@ -269,6 +275,18 @@ field.Interface().(type)
     f := reflect.Indirect(rv).FieldByName('Id')
     f.Interface().{struct{Id int}}
 
+### `Elem()`vs`Indirect()`等价:
+
+    func Indirect(v Value) Value {
+        if v.Kind() != Pointer {
+            return v
+        }
+        return v.Elem()
+    }
+
+	refpb := reflect.Indirect(reflect.ValueOf(&b))
+	refpb = reflect.ValueOf(&b).Elem()
+	refpb.FieldByName("Age").Set(reflect.ValueOf(23))
 
 # 创建实例
 ## New rvPtr 
@@ -313,14 +331,6 @@ Here’s some code to demonstrate these concepts:
         f2 := fVal.Elem().Interface().(Foo)
         fmt.Printf("%+v, %d, %s\n", f2, f2.A, f2.B)
     }
-
-### rvptr.Elem()
-`Elem()`,`Indirect()`二者等价:
-
-	refpb := reflect.Indirect(reflect.ValueOf(&b))
-	refpb = reflect.ValueOf(&b).Elem()
-
-	refpb.FieldByName("Age").Set(rv)
 
 ## reflect.MakeSlice/reflect.MakeMap
 下面的例子，展示了如何用反射：`reflect.MakeSlice, reflect.MakeMap, and reflect.MakeChan` 创建实例`slice,map,channel`.
