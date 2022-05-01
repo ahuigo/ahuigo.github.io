@@ -49,7 +49,6 @@ To fix the following error:
 
 Add the following to openssl.cnf:
 
-    $ 
     $ vim openssl.cnf
     [v3_ca]
     subjectAltName = DNS:localhost

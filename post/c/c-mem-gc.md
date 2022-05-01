@@ -78,6 +78,12 @@ recycle counter:
 1. 1.5版本在标记过程中使用三色标记法。回收过程主要有四个阶段，其中，标记和清理都并发执行的，但标记阶段的前后需要STW一定时间来做GC的准备工作和栈的re-scan。
 1. 1.8版本在引入混合屏障rescan来降低mark termination的时间
 
+https://www.v2ex.com/t/846178#reply21
+1. Go 的 Goroutine 在 1.14 之后就是基于信号抢占式调度的了（ https://go.dev/doc/go1.14 ），因为没有手动的 yield ，并不是 cooperative 的。
+2. Java 的 Green Thread 已经在 1.3 之后被 Native Thread 取代，换句话说，现行的 JDK 的原生调度模型等同于 OS Thread 。Java 的新用户侧线程 Project Loom 会是新的 Green Thread 方案，但是仍然是抢占式调度的。
+3. 由于硬件和软件的进步，Windows 的 Fibers 已经日渐式微了（ https://devblogs.microsoft.com/oldnewthing/20191011-00/?p=102989 ），在日常讨论中常用的 User-Thread 切换已经基本达到一样的性能。
+4. 抢占式调度和协作式调度的核心区别不是有新任务时是谁在执行，而是谁发出切换信号：抢占式调度往往在一些重要位置（ sleep call ，timer tick ）放置了中断信号，通过这个信号通知 scheduler 进行切换；协作式调度则是通过 thread 自己根据执行情况，主动交出控制权
+
 
 # Rerference
 1. https://developer.aliyun.com/article/775798
