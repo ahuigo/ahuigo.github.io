@@ -68,6 +68,7 @@ psql: 如果密码用户名有特殊字符，需要用urlencoded 转义
     psql postgresql://other@localhost/otherdb?connect_timeout=10&application_name=myapp
     psql 'postgresql://host1:123,host2:456/somedb?target_session_attrs=any&application_name=myapp'
 
+    # 或者 postgres://
     psql 'postgres://ahuigo.com:5432/dbname?sslmode=disable'
 
 ## create role/user

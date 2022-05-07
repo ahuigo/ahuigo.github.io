@@ -12,16 +12,29 @@ priority:
 `[0,1)` 小数
 
 	import random
-    random.random()
+	random.random() 0~1
+		0.1234
 
 包含`[3,8]` 的整数
 
 	random.randint(3,8)
+        8
 
-	# 主要用于密码强随机
+包含`[3,8)` 的整数
+
+	random.randrange(3,8)
+		7
+	random.randrange(8) 0-7
+		7
+
+密码强随机
+
 	os.urandom(24)
-	'\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
+	b'\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
     # head -c 24 /dev/urandom
+
+    import os,base64
+    base64.b64encode(os.urandom(24)).decode()
 
 ## nan
     >>> import math
@@ -65,16 +78,6 @@ Also for negative numbers just add lstrip():
 
 	>>> '-12'.lstrip('-')
 	'12'
-
-## random
-
-	import random
-	random.randint(0, 19)
-        19
-	random.randrange(20)
-		19
-	random.random() 0~1
-		0.1234
 
 ## range
 

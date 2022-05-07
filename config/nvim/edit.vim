@@ -74,6 +74,7 @@ inoremap <F2> <C-o>"+p
 vnoremap <F2> "+y
 "Shift+F2
 nnoremap <F14> :w<CR>:call edit#run()<CR>
+inoremap <F14> <ESC>:w<CR>:call edit#run()<CR>
 
 """"""""""""""""""""""""""
 """ meta config

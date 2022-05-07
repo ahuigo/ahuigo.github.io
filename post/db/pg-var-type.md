@@ -7,6 +7,11 @@ date: 2018-09-27
 private:
 ---
 # define var
+## test type
+
+    SELECT pg_typeof(your_variable);
+    json_typeof(var)
+
 
 ## define type
 
@@ -28,11 +33,6 @@ Null 列的缺点:
 - 难以优化索引：Mysql难以优化引用可空列查询，它会使索引、索引统计和值更加复杂。
 - 更多的空间：可空列需要更多的存储空间，还需要mysql内部进行特殊处理。
 > NULL columns require additional space in the rowto record whether their values are NULL. For MyISAM tables, each NULL columntakes one bit extra, rounded up to the nearest byte.”
-
-## test type
-
-    SELECT pg_typeof(your_variable);
-    json_typeof(var)
 
 ## convert type
 ### convert type::

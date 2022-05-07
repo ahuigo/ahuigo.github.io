@@ -1,5 +1,6 @@
 #####################debug
 #set -x
+alias todo='nvim ~/wk/todo.md'
 
 ############ iterm2 #######
 # key bindings
@@ -216,7 +217,7 @@ export GODEV=local
 export GO111MODULE=on 
 export GOPATH=~/go
 # 配置 GOPROXY 环境变量
-export GOPRIVATE='*.internal.mycompany.com,github.com/ahuigo1,github.com/ahuigo2/requests,github.com/momenta/mojito,gitlab.momenta.works/hdmap-workflow'
+export GOPRIVATE='*.internal.mycompany.com,github.com/ahuigo1,github.com/ahuigo2/requests,github.com/momenta/mojito'
 export GOPROXY=https://goproxy.io,direct
 #export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 export GONOSUMDB=*.corp.example.com,rsc.io/private

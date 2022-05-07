@@ -156,7 +156,7 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
 	>>> import os # 导入os模块，模块的概念后面讲到
 	>>> [d for d in os.listdir('.')] # os.listdir可以列出文件和目录
 
-## Nested List Ccomprehension
+## Nested List Comprehensions
 通常用于二维数组
 
     flatten_matrix = [val for sublist in matrix for val in sublist]
@@ -166,6 +166,14 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
     [f(x) if condition else g(x) for x in sequence]
     # if filter
     [f(x) for x in sequence if condition]
+    [f(u) for u in data if '@' not in u ]
+    filter(lambda u:'@' not in u,data)
+
+## other Comprehensions
+
+    (x for x)
+    {x for x}
+    {x:x for x}
 
 # logic/bit/compare expression
 
