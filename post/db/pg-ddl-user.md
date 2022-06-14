@@ -193,6 +193,12 @@ list  role attr
 
 # Permissions
 ## Grant Permissions
+    # One Table
+    GRANT ALL PRIVILEGES ON TABLE side_adzone TO jerry;
+    
+    # All Tables of schema
+    GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO jerry;
+
 Grammar:
 1. GRANT permission_type ON table_name TO role_name|PUBLIC;
 1. GRANT permission_type ON DATABASE db_name TO role_name|PUBLIC;

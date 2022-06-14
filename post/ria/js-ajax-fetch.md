@@ -3,38 +3,46 @@ title: 新一代ajax api--fetch、axios
 date: 2018-
 private:
 ---
+
 # 新一代ajax api--fetch、axios
+
 - fetch: 底层，相当于xhr 升级版, 原生
-    1. https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
+  1. https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
 - axios：非原生, 支持并发
 - vue-resource: vue 提供的，只提供基本的功能
 
 ## ajax 请求类型
-不同的请求头，会被解析为不同的变量(以php 为例)
-1. `application/x-www-form-urlencode` 才会传`$_POST`, 
-2. `enctype="multipart/form-data"` 则包括`POST+FILES`
-3. `Content-Type:text/plain:json + POST `只会传`RAW_POST_DATA` ,
 
-	$GLOBALS['HTTP_RAW_POST_DATA'] or $HTTP_RAW_POST_DATA; # 这个在php7中被废弃了
-    file_get_contents('php://input'); # 不是php://stdin
+不同的请求头，会被解析为不同的变量(以php 为例)
+
+1. `application/x-www-form-urlencode` 才会传`$_POST`,
+2. `enctype="multipart/form-data"` 则包括`POST+FILES`
+3. `Content-Type:text/plain:json + POST`只会传`RAW_POST_DATA` ,
+
+   $GLOBALS['HTTP_RAW_POST_DATA'] or $HTTP_RAW_POST_DATA; # 这个在php7中被废弃了
+   file_get_contents('php://input'); # 不是php://stdin
 
 Detect Ajax(php 为例)：
 
-	$_SERVER['HTTP_X_REQUESTED_WITH']
-	$_SERVER['HTTP_ACCEPT'] === 'application/json';
+    $_SERVER['HTTP_X_REQUESTED_WITH']
+    $_SERVER['HTTP_ACCEPT'] === 'application/json';
 
 ## isAjax
+
     fetch(url, {
       method: 'POST',
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
       },
     )
+
 # fetch
+
 ## request
-        fetch('http://localhost:5001').then(response=>response.json()).then(json=>{
-            vm.products=json.products
-        })
+
+    fetch('http://localhost:5001').then(response=>response.json()).then(json=>{
+        vm.products=json.products
+    })
 
 with query
 
@@ -76,6 +84,7 @@ example
     }).then(async r=>await r.text())
 
 ### cors
+
 默认(跨域名)是不发送cookie的：
 
     credentials: "same-origin"
@@ -85,10 +94,12 @@ example
     credentials : "include"
 
 #### Note
+
 1. 当设置成include时，服务器返回的`Access-Control-Allow-Origin` 不能为`*`
 2. 一级域名不一样跨域时，默认chrome首次不会发送origin
 
 #### cors with cookie
+
 credential 发送include cookie时，allow-origin 不能是`*`
 
     fetch(url, {
@@ -99,9 +110,10 @@ credential 发送include cookie时，allow-origin 不能是`*`
     fetch(url).then(async r=> console.log(await r.text()))
 
 ### headers
+
 #### x-www-urlencode
-如果想发送  application/x-www-form-urlencoded
-可以用手动拼body
+
+如果想发送 application/x-www-form-urlencoded 可以用手动拼body
 
     fetch(url, {
       method: 'POST',
@@ -125,6 +137,7 @@ credential 发送include cookie时，allow-origin 不能是`*`
     })
 
 ### cancel request
+
 参考： https://github.com/umijs/umi-request#use-cancel-token
 
     const controller = new AbortController()
@@ -158,9 +171,10 @@ credential 发送include cookie时，allow-origin 不能是`*`
         controller.abort()
     }
 
-
 ## response
+
 ### data
+
 json(), text(), blob(), arrayBuffer()
 
     response.json().then
@@ -188,6 +202,7 @@ async function with in `then`:
     then(r=>if(r.ok) ..)
 
 # axios
+
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
     axios.defaults.withCredentials=true;//让ajax携带cookie
 
@@ -201,6 +216,7 @@ async function with in `then`:
           })
 
 # vue-resource
+
 get:
 
     <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
@@ -220,7 +236,6 @@ get:
                 });
             }
         }
-
 
 post:
 

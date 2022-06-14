@@ -27,9 +27,11 @@ python安装路径: sys.prefix
 
 ## install pip pkg 
 
-	pip3 install requests
+    # 指定version
     pip install cryptography>=0.8.2
+    # 升级最新
     pip install -U requests #升级
+    # 带extra
     pip install wechatpy[cryptography] # extra: cryptography
 
     $ pip3 uninstall python-highcharts
@@ -37,13 +39,13 @@ python安装路径: sys.prefix
       /usr/local/lib/python3.5/site-packages/highcharts/__init__.py
 
 ### mirrors
-http://www.pypi-mirrors.org/ 
+镜像列表：http://www.pypi-mirrors.org/ 
 - e.pypi.python.org
 - pypi.douban.com
 - pypi.hustunique.com
 - pypi.mirrors.ustc.edu.cn
 
-使用时路径要包含 simple
+指定镜像的 simple
 
     pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ pandas 
     pip install -i https://mirrors.ustc.edu.cn/pypi/web/simple -r requirement.txt

@@ -57,7 +57,7 @@ alias p='python3'
 alias p2='python2'
 alias pi='pip3'
 alias pip='pip3'
-export PYTHONPATH=.
+#export PYTHONPATH=.
 
 # docker
 alias drmi='docker rmi $( docker images --filter "dangling=true" -q --no-trunc)'
@@ -129,7 +129,7 @@ function gcap(){
     fi
 
     if git remote | grep '\w';then
-        if git remote| grep -vE '^gitee|local|up|other$' | xargs -L1 -J% git push --follow-tags % HEAD; then
+        if git remote| grep -vE '^donau|gitee|local|up|other$' | xargs -L1 -J% git push --follow-tags % HEAD; then
             cd $(git rev-parse --show-toplevel)
             subdirs=(b )
             top_dir=$(pwd)
@@ -196,7 +196,7 @@ function mda (){
 }
 
 #alias for cnpm
-alias cnpm="npm --registry=https://registry.npm.taobao.org \
+alias cnpm_del="npm --registry=https://registry.npm.taobao.org \
   --cache=$HOME/.npm/.cache/cnpm \
   --disturl=https://npm.taobao.org/dist \
   --userconfig=$HOME/.cnpmrc"
@@ -222,9 +222,7 @@ export GOPROXY=https://goproxy.io,direct
 #export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 export GONOSUMDB=*.corp.example.com,rsc.io/private
 #export GOSUMDB=off
-
-export PATH=$PATH:$GOPATH/bin:/opt/homebrew/opt/go@1.17/bin
-#[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go@1.12/1.12.17/libexec
+export PATH=/opt/homebrew/opt/go@1.17/bin:$PATH:$GOPATH/bin
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
 alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
 
@@ -237,6 +235,9 @@ export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH='.:/usr/local/lib/jar/*'
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
+# yarn
 export YARN_REGISTRY="http:test"
+export PATH="$PATH:$(yarn global bin)"
 [ -f ~/.private ] && source ~/.private
 [ -f ~/.local.rc ] && source ~/.local.rc
+

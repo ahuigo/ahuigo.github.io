@@ -42,6 +42,10 @@ import 的包都会缓存到sys.modules
 ## import function
 A目录下必须放`__init__.py`才被被作为pkg 引入import
 
+import 函数原型：
+
+    __import__(name, globals=None, locals=None, fromlist=(), level=0) -> module
+
 依次从locals, globals, PYTHONPATH查找:
 
 	```python
@@ -81,7 +85,7 @@ The . is a shortcut that tells it search in current package(not process's cwd) b
 
 	from .submodule import sth
         # 本质是 from __name__.submodule import sth
-        # 直接执行会出问题 from '__main__'.submodule import sth
+        # 不过直接执行会出问题 from '__main__'.submodule import sth
 	from ..parentmodule import sth
 
 wrong:
@@ -94,6 +98,48 @@ current working path
 	from mod.pkg;   # entrance file's directory (not process's cwd) 见sys.path
 	from .mod.pkg;  # current file's directory (not process's cwd)
 	from . import a,b,c ; current file's directory (not process's cwd)
+
+比如：
+
+    package/
+        __init__.py
+        subpackage1/
+            __init__.py
+            moduleX.py
+            moduleY.py
+        subpackage2/
+            __init__.py
+            moduleZ.py
+        moduleA.py
+
+Assuming that the current file is either `moduleX.py or subpackage1/__init__.py`, following are correct usages of the new syntax:
+
+    from .moduleY import spam
+    from .moduleY import spam as ham
+    from . import moduleY
+    from ..subpackage1 import moduleY
+    from ..subpackage2.moduleZ import eggs
+    from ..moduleA import foo
+    from ...package import bar
+    from ...sys import path
+    # Note that while that last case is legal, it is certainly discouraged (“insane” was the word Guido used).
+
+Relative imports must always use from `<> import`, `import <>` is always absolute. 
+Of course, absolute imports can use `from <> import x` by omitting the leading dots. 
+The reason `import .foo` is prohibited is because:
+1. after `import XXX.YYY.ZZZ` then `XXX.YYY.ZZZ` is usable in an expression. 
+2. But after `import .moduleY`, then `.moduleY` is not usable in an expression.
+
+以上方法仅用于 module:  `python -m pkg.moddule1`
+
+如果不是module, 可以用这个办法：
+
+    if __name__ == "__main__":
+        sys.path.append(".")
+        #sys.path.remove(".")
+
+    import src.c.d
+
 
 ## path
 此PATH 与 SHELL PATH 是独立的
@@ -128,7 +174,7 @@ module find path
 	 /usr/local/lib/python3.5/site-packages/pip/_vendor/requests/cookies.py
 
 #### PYTHONPATH
-相当于: sys.path.insert(1,'.'): 注意不是0个，第0个是执行入口文件所在的目录, 比如flask/gunicorn 所在的目录
+相当于: sys.path.insert(1,'.'): 注意不是0个，第0个是执行入口文件所在的目录, 比如flask/gunicorn 所在的目录
 
 	export PYTHONPATH=. ;# 当前的working 目录
 

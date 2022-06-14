@@ -84,23 +84,23 @@ private:
 
 # Create 创建记录
 
-## Creat/newRecord
-
+## Creat(insert)
 Creat: 创建真正的record
-NewRecord: check if value's primary key is blank(check v.ID, 不会insert 数据)
-
-    p := Product{Code: "L1217", Price: 17}
-    fmt.Printf("%#v\n", db.NewRecord(p))    // => 主键为空, 则返回`true`
-    if db.NewRecord(p){
-        fmt.Printf("%#v\n", p.ID)
-        err := db.Create(&p).Error
-        fmt.Printf("%#v\n", p.ID)               //ID
-        fmt.Printf("%#v\n", db.NewRecord(p))    //// => 创建后返回`false`
-    } 
 
 ### error
 
     if err := db.Create(data).Error; err != nil {
+
+## Batch insert
+    var users = []User{{Name: "jinzhu1"}, {Name: "jinzhu2"}, {Name: "jinzhu3"}}
+    db.Create(&users)
+
+    for _, user := range users {
+        user.ID // 1,2,3
+    }
+
+    // 数量为 100
+    db.CreateInBatches(users, 100)
 
 ## 默认值
 
@@ -558,6 +558,18 @@ Specify Joins conditions
     s.Table("tableName").find(&users)
 
 ## Result
+### Result.Error
+    result := db.First(&user)
+    result.RowsAffected // 返回找到的记录数
+    result.Error        // returns error or nil
+
+ErrRecordNotFound
+
+    // 检查 ErrRecordNotFound 错误
+    errors.Is(result.Error, gorm.ErrRecordNotFound)
+
+如果你想避免ErrRecordNotFound错误，你可以使用Find，比如db.Limit(1).Find(&user)，Find方法可以接受struct和slice的数据。
+
 ### First Take Last
 
     //通过主键查询第一条记录
@@ -566,7 +578,7 @@ Specify Joins conditions
 
     // 查询指定的某条记录(只可在主键为整数型时使用)
     db.First(&user, 10)
-    db.Firse(&User{ID:10})
+    db.First(&User{ID:10})
     //// SELECT * FROM users WHERE id = 10;
 
     // 随机取一条记录
@@ -850,6 +862,14 @@ If a model has a `DeletedAt` field, it will get a soft delete ability automatica
     // Delete record permanently with Unscoped
     db.Unscoped().Delete(&order)
     //// DELETE FROM orders WHERE id=10;
+# 其它
+## DryRun 
+dryrun 模式会生成但不执行 SQL，可以用于检查、测试生成的 SQL
+
+    stmt := db.Session(&Session{DryRun: true}).Find(&user, 1).Statement
+    stmt.SQL.String() //=> SELECT * FROM `users` WHERE `id` = $1 // PostgreSQL
+    stmt.SQL.String() //=> SELECT * FROM `users` WHERE `id` = ?  // MySQL
+    stmt.Vars         //=> []interface{}{1}
 
 # 原生SQL
 ## Exec & Raw

@@ -3,8 +3,11 @@ title: Golang response
 date: 2019-10-03
 private:
 ---
+
 # Response
+
 ## redirect
+
     c.Redirect(http.StatusFound, "http://example.com")
 
 ## error
@@ -17,22 +20,34 @@ private:
     messages := c.Errors.Errors()
 
 ## string
+
     c.String(http.StatusOK, name)
     c.String(http.StatusBadRequest, "no task_id")
     c.String(http.StatusBadRequest, err.Error())
 
+## data
+
+    // ctx.String(http.StatusOK, html)
+    ctx.Render(http.StatusOK, render.Data{
+        ContentType: "text/html",
+        Data:        []byte(html),
+    })
+
 ## JSON
+
     // gin.H is a shortcut for map[string]interface{}
     c.JSON(http.StatusOK, gin.H{"user": user, "value": value})
     c.JSON(http.StatusOK, structA{"user": user, "value": value})
     ctx.JSON(http.StatusOK, map[string]string{"message": "state"})
 
 ### PureJSON
+
 避免将 `<` 转成`\u003c`:
 
     c.PureJSON(200, gin.H{ "html": "<b>Hello, world!</b>", })
 
 ## XML
+
     c.XML(http.StatusOK, gin.H{"message": "hey", "status": http.StatusOK})
 
 ## YAML
@@ -40,6 +55,7 @@ private:
     c.YAML(http.StatusOK, gin.H{"message": "hey", "status": http.StatusOK})
 
 ## ProtoBuf
+
 https://gin-gonic.com/docs/examples/rendering/
 
     reps := []int64{int64(1), int64(2)}
@@ -54,7 +70,8 @@ https://gin-gonic.com/docs/examples/rendering/
     c.ProtoBuf(http.StatusOK, data)
 
 ## Redirect
-	c.Redirect(http.StatusMovedPermanently, "http://www.google.com/")
+
+    c.Redirect(http.StatusMovedPermanently, "http://www.google.com/")
 
 Issuing a Router redirect, use `HandleContext` like below.
 
@@ -67,26 +84,29 @@ Issuing a Router redirect, use `HandleContext` like below.
     })
 
 ## reader and header
+
     router.GET("/someDataFromReader", func(c *gin.Context) {
-		response, err := http.Get("https://raw.githubusercontent.com/gin-gonic/logo/master/color.png")
-		if err != nil || response.StatusCode != http.StatusOK {
-			c.Status(http.StatusServiceUnavailable)
-			return
-		}
+    	response, err := http.Get("https://raw.githubusercontent.com/gin-gonic/logo/master/color.png")
+    	if err != nil || response.StatusCode != http.StatusOK {
+    		c.Status(http.StatusServiceUnavailable)
+    		return
+    	}
 
-		reader := response.Body
-		contentLength := response.ContentLength
-		contentType := response.Header.Get("Content-Type")
+    	reader := response.Body
+    	contentLength := response.ContentLength
+    	contentType := response.Header.Get("Content-Type")
 
-		extraHeaders := map[string]string{
-			"Content-Disposition": `attachment; filename="gopher.png"`,
-		}
+    	extraHeaders := map[string]string{
+    		"Content-Disposition": `attachment; filename="gopher.png"`,
+    	}
 
-		c.DataFromReader(http.StatusOK, contentLength, contentType, reader, extraHeaders)
-	})
+    	c.DataFromReader(http.StatusOK, contentLength, contentType, reader, extraHeaders)
+    })
 
 # header
+
 ## header
+
     func (c *Context) Header(key, value string) {
         if value == "" {
             c.Writer.Header().Del(key)
@@ -97,29 +117,31 @@ Issuing a Router redirect, use `HandleContext` like below.
 
 ## cookie
 
-	ctx.SetSameSite(http.SameSiteLaxMode)
-	ctx.SetCookie("key", "value", 86400, "ahuigo.com", "", false, false)
+    ctx.SetSameSite(http.SameSiteLaxMode)
+    ctx.SetCookie("key", "value", 86400, "ahuigo.com", "", false, false)
 
 ### custom cookie
-	idTokenCookieStr := fmt.Sprintf("id_token=%s; Domain=%s; Max-Age=%d; SameSite=None", url.QueryEscape(res["id_token"].(string)), cookieDomain, timeout)
-	ctx.Writer.Header().Add("Set-Cookie", idTokenCookieStr)
+
+    idTokenCookieStr := fmt.Sprintf("id_token=%s; Domain=%s; Max-Age=%d; SameSite=None", url.QueryEscape(res["id_token"].(string)), cookieDomain, timeout)
+    ctx.Writer.Header().Add("Set-Cookie", idTokenCookieStr)
 
 或
 
-	ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{
-		Name:     "id_token2",
-		Value:    url.QueryEscape(res["id_token"].(string)),
-		MaxAge:   timeout,
-		Path:     "",
-		Domain:   cookieDomain,
-		SameSite: 3,
-		Secure:   true,
-		HttpOnly: false,
-	}).String())
+    ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{
+    	Name:     "id_token2",
+    	Value:    url.QueryEscape(res["id_token"].(string)),
+    	MaxAge:   timeout,
+    	Path:     "",
+    	Domain:   cookieDomain,
+    	SameSite: 3,
+    	Secure:   true,
+    	HttpOnly: false,
+    }).String())
 
 ## Html
 
 ### LoadHTMLGlob
+
     func main() {
         router := gin.Default()
         router.LoadHTMLGlob("templates/**/*")
@@ -146,16 +168,18 @@ templates/posts/index.tmpl， `define-end`不是必须的，只是方便引入?
     {{ end }}
 
 ### Static
+
     // access local:8080/assets/a.js
     r.Static("/assets", "./assets")
 
     // static dir
-	r.StaticFS("/more_static", http.Dir("my_file_system"))
+    r.StaticFS("/more_static", http.Dir("my_file_system"))
 
     // static file
-	r.StaticFile("/favicon.ico", "./resources/favicon.ico")
+    r.StaticFile("/favicon.ico", "./resources/favicon.ico")
 
 ### Custom Template renderer
+
     import "html/template"
 
     func main() {
@@ -184,14 +208,16 @@ also:
     })
 
 ### Dlimiter
+
 设定模板变量的分割符
 
-	r := gin.Default()
-	r.Delims("{[{", "}]}")
-	r.LoadHTMLGlob("/path/to/templates")
+    r := gin.Default()
+    r.Delims("{[{", "}]}")
+    r.LoadHTMLGlob("/path/to/templates")
 
 ### Pipe Func
-	import "html/template"
+
+    import "html/template"
 
     func formatAsDate(t time.Time) string {
         year, month, day := t.Date()
@@ -217,29 +243,32 @@ raw.tmpl
     Date: {[{.now | formatAsDate}]}
 
 # http2 and push
+
 https://gin-gonic.com/docs/examples/http2-server-push/
+
 > pem 生成见ssl-tool.md
 
     r := gin.Default()
-	r.Static("/assets", "./assets")
-	r.SetHTMLTemplate(html)
+    r.Static("/assets", "./assets")
+    r.SetHTMLTemplate(html)
 
-	r.GET("/", func(c *gin.Context) {
-		if pusher := c.Writer.Pusher(); pusher != nil {
-			// use pusher.Push() to do server push
-			if err := pusher.Push("/assets/app.js", nil); err != nil {
-				log.Printf("Failed to push: %v", err)
-			}
-		}
-		c.HTML(200, "https", gin.H{
-			"status": "success",
-		})
-	})
+    r.GET("/", func(c *gin.Context) {
+    	if pusher := c.Writer.Pusher(); pusher != nil {
+    		// use pusher.Push() to do server push
+    		if err := pusher.Push("/assets/app.js", nil); err != nil {
+    			log.Printf("Failed to push: %v", err)
+    		}
+    	}
+    	c.HTML(200, "https", gin.H{
+    		"status": "success",
+    	})
+    })
 
-	// Listen and Server in https://127.0.0.1:8080
-	r.RunTLS(":8080", "./testdata/server.pem", "./testdata/server.key")
+    // Listen and Server in https://127.0.0.1:8080
+    r.RunTLS(":8080", "./testdata/server.pem", "./testdata/server.key")
 
 # LetsEncrypt
+
 example for 1-line LetsEncrypt HTTPS servers.
 
     package main
@@ -292,7 +321,9 @@ example for custom autocert manager.
     }
 
 # 高级
+
 ## shell pipe to response
+
     func (c *gin.Context){
         // var stdout bytes.Buffer
         var stderr bytes.Buffer

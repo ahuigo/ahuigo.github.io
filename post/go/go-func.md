@@ -5,15 +5,22 @@ category: blog
 description: 
 date: 2018-09-27
 ---
+
 # define func
-1. 不支持嵌套nested, 重载overload 和 
+
+1. 不支持嵌套nested, 重载overload 和
 2. 不支持默认参数default parameter
 3. 支持不定长变参数
 4. 多返回值
 5. 支持命名返回参数
 6. 支持匿名函数和闭包
 
+## define func type
+
+    type area func(int, int) int
+
 ## Function Closures
+
 https://stackoverflow.com/questions/21961615/why-doesnt-go-allow-nested-function-declarations-functions-inside-functions
 
 直接定义inner function(nested) 是不行的, 除了匿名函数随便生成：
@@ -23,25 +30,26 @@ https://stackoverflow.com/questions/21961615/why-doesnt-go-allow-nested-function
 
 A closure example
 
-	func adder() func(int) int {
-		sum := 0
-		return func(x int) int {
-			sum += x
-			return sum
-		}
-	}
+    func adder() func(int) int {
+    	sum := 0
+    	return func(x int) int {
+    		sum += x
+    		return sum
+    	}
+    }
 
-	func main() {
-		pos, neg := adder(), adder()
-		for i := 0; i < 10; i++ {
-			fmt.Println(
-				pos(i),
-				neg(-2*i),
-			)
-		}
-	}
+    func main() {
+    	pos, neg := adder(), adder()
+    	for i := 0; i < 10; i++ {
+    		fmt.Println(
+    			pos(i),
+    			neg(-2*i),
+    		)
+    	}
+    }
 
 ### 匿名函数是变量funcVal 对象
+
     // --- func as slice ----
     fns := [](func(x int) int){
         func(x int) int { return x + 1 },
@@ -83,6 +91,7 @@ A closure example
     FuncVal { func_address, closure_var_pointer ... }
 
 ### Lazy value
+
 下面的结果全是3
 
     func main() {
@@ -92,13 +101,14 @@ A closure example
           fmt.Println(fmt.Sprintf("iterator value: %d", i))
           }
         }
-    
+
       functions[0]()
       functions[1]()
       functions[2]()
     }
 
 #### ignore lazy value
+
 方式1：直接在临时函数使用掉(js做法)
 
     func main() {
@@ -110,7 +120,7 @@ A closure example
           }
         }(i)
       }
-    
+
       functions[0]()
       functions[1]()
       functions[2]()
@@ -125,42 +135,44 @@ method 2 通过一个闭包：
         }
     }
 
-
 ## multi Parameters(变参)
+
 变参其实是一个slice: []int
 
-	//func sum(nums... int) 
-	func sum(nums ...int) {
-	    fmt.Printf("%T",nums)  //slice = []int{1, 2, 3)
-	}
+    //func sum(nums... int) 
+    func sum(nums ...int) {
+        fmt.Printf("%T",nums)  //slice = []int{1, 2, 3)
+    }
 
 发送多参数
 
     s:=[]int{1,2,3}
-	sum(s...)
-	sum(1, 2, 3)
+    sum(s...)
+    sum(1, 2, 3)
 
     //不能是　sum(1, s...)
 
 any type: interface{} , `$ godoc fmt Printf`
 
-	func Statusln(a ...interface{})
-	a := []interface{}{"hello", "world", 42}
+    func Statusln(a ...interface{})
+    a := []interface{}{"hello", "world", 42}
 
 ## Multiple results
+
 ### return multiple value
+
 A function can return any number of results.
 
-	func swap(x, y string) (string, string) {
-		return y, x
-	}
-	a, b := swap("hello", "world")
-	a, _ := swap("hello", "world")
+    func swap(x, y string) (string, string) {
+    	return y, x
+    }
+    a, b := swap("hello", "world")
+    a, _ := swap("hello", "world")
 
 multi return 不能赋值为单值，但是可以传给变参、多参
 
     // error
-	a := swap("hello", "world")
+    a := swap("hello", "world")
 
     func(x,y string){
         println(x,y)
@@ -177,10 +189,9 @@ fmt.Println(a ...interface{}) 就能接入多参返回
 发送参数时，不可以混用单参与多参: (接收参数时可以混用)
 
     //error: single-value context
-    fmt.Println("swap", swap("a","b"))  
+    fmt.Println("swap", swap("a","b"))
 
-参数匹配数不对时，就不能变参与形参混用了, 报: multiple-value in sigle-value context error
-不传多值时，就可以混用
+参数匹配数不对时，就不能变参与形参混用了, 报: multiple-value in sigle-value context error 不传多值时，就可以混用
 
     func(z int,x,y string){
         println(z,x,y)
@@ -191,15 +202,16 @@ fmt.Println(a ...interface{}) 就能接入多参返回
     }(swap(2, "a","b"))
 
 ### Named return values
+
 A return statement `without` arguments returns the `named return values`.
 
-	func split(sum int) (x, y int) {
-		x = sum * 4 / 9
-		y = sum - x
-		return
-	}
+    func split(sum int) (x, y int) {
+    	x = sum * 4 / 9
+    	y = sum - x
+    	return
+    }
     x,y:=split(17)
-	fmt.Println(split(17))
+    fmt.Println(split(17))
 
 Named value redeclared error:
 
@@ -212,6 +224,7 @@ Named value redeclared error:
     }
 
 ### defer 修改返回值
+
     func add(x, y int) (z int) {
         defer func() { z += 100 }()
         z=x+y
@@ -233,8 +246,8 @@ Named value redeclared error:
         println(add(1, 2)) // 执⾏行顺序: (z = z + 200) -> (call defer) -> (ret)
     }
 
-
 ## func is value
+
     func test(fn func() int) int {
         return fn()
     }
@@ -250,12 +263,13 @@ Named value redeclared error:
         println(s1, s2)
     }
 
-# Argument 
-传参时类型要匹配(包括pointer). 
+# Argument
+
+传参时类型要匹配(包括pointer).
 
 ## struct as arg
-> 不过struct 作为caller 时：`struct.method` 与`(&struct).method` 等价（）
-struct 作为参数是按值传递:
+
+> 不过struct 作为caller 时：`struct.method` 与`(&struct).method` 等价（） struct 作为参数是按值传递:
 
     package main
     import "fmt"
@@ -275,6 +289,7 @@ struct 作为参数是按值传递:
     }
 
 ## map as arg
+
 map 作为参数是按引用传递:
 
     func test(s map[string]int){
@@ -288,70 +303,76 @@ map 作为参数是按引用传递:
     }
 
 # Methods(struct)
-Go does not have classes. However, you can define methods with a special receiver argument.
-The receiver appears in its `own argument list` between the `func keyword` and the `method name`.
 
-	type Vertex struct {
-		X, Y float64
-	}
+Go does not have classes. However, you can define methods with a special
+receiver argument. The receiver appears in its `own argument list` between the
+`func keyword` and the `method name`.
 
-	func (v Vertex) Abs() float64 {
-		return math.Sqrt(v.X*v.X + v.Y*v.Y)
-	}
+    type Vertex struct {
+    	X, Y float64
+    }
 
-	func main() {
-		v := Vertex{3, 4}
-		fmt.Println(v.Abs())
-	}
+    func (v Vertex) Abs() float64 {
+    	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+    }
+
+    func main() {
+    	v := Vertex{3, 4}
+    	fmt.Println(v.Abs())
+    }
 
 ## Mehtond on local-type
+
 Declare a method on non-struct types, such as float64
 
-	type MyFloat float64
+    type MyFloat float64
 
-	func (f MyFloat) Abs() float64 {
-		if f < 0 {
-			return float64(-f)
-		}
-		return float64(f)
-	}
+    func (f MyFloat) Abs() float64 {
+    	if f < 0 {
+    		return float64(-f)
+    	}
+    	return float64(f)
+    }
 
-	func main() {
-		f := MyFloat(-math.Sqrt2)
-		fmt.Println(f.Abs())
-	}
+    func main() {
+    	f := MyFloat(-math.Sqrt2)
+    	fmt.Println(f.Abs())
+    }
 
 You can only declare:
-1. a method with a receiver whose **type** is **defined in the same package** as the method.
-2. You cannot declare a method with a receiver whose type is defined in another package (such as the built-in types: int float64).
+
+1. a method with a receiver whose **type** is **defined in the same package** as
+   the method.
+2. You cannot declare a method with a receiver whose type is defined in another
+   package (such as the built-in types: int float64).
 
 ## methods with pointer receivers.
+
 If you wanna change receivers, use pointer pls.
 
-	type Vertex struct {
-		X, Y float64
-	}
+    type Vertex struct {
+    	X, Y float64
+    }
 
-	func (v Vertex) Abs() float64 {
-		return math.Sqrt(v.X*v.X + v.Y*v.Y)
-	}
+    func (v Vertex) Abs() float64 {
+    	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+    }
 
     // Pointer 指针，而不是copy
-	func (v *Vertex) Scale(f float64) {
-		v.X = v.X * f
-		v.Y = v.Y * f
-	}
+    func (v *Vertex) Scale(f float64) {
+    	v.X = v.X * f
+    	v.Y = v.Y * f
+    }
 
-	func main() {
-		v := Vertex{3, 4}
-		v.Scale(10)     //30,40
-		fmt.Println(v.Abs())
-	}
+    func main() {
+    	v := Vertex{3, 4}
+    	v.Scale(10)     //30,40
+    	fmt.Println(v.Abs())
+    }
 
 ### Method values
-> https://go.dev/ref/spec#Method_values
-> go-lib/func/method-value.go
-e.g.
+
+> https://go.dev/ref/spec#Method_values go-lib/func/method-value.go e.g.
 
     type T struct {
         a int
@@ -363,7 +384,8 @@ e.g.
     var pt *T
     func makeT() T
 
-method with a pointer receiver using `an addressable value` will automatically take the address of that value
+method with a pointer receiver using `an addressable value` will automatically
+take the address of that value
 
     f := t.Mv; f(7)   // like t.Mv(7)
     f := pt.Mp; f(7)  // like pt.Mp(7)
@@ -385,6 +407,7 @@ pt.Mv 相当于：
 参考：address value: go-var-addressable.md
 
 ### pointer as arg
+
 `p.Abs()` 和 `(*p).Abs()`等价，是传值还是指针完全看成员方法的定义
 
 纯函数类型则要严格匹配
@@ -397,17 +420,17 @@ pt.Mv 相当于：
     test(j)
     println(*j)
 
-
 # Errors
+
 The error type is a built-in interface similar to fmt.Stringer:
 error类型本身就是一个预定义好的接口，里面定义了一个method
 
-	type error interface {
-	    Error() string
-	}
+    type error interface {
+        Error() string
+    }
 
-	err:=nil
-	err:=io.EOF
+    err:=nil
+    err:=io.EOF
 
 ## nil error
 
@@ -415,9 +438,11 @@ error类型本身就是一个预定义好的接口，里面定义了一个method
     var e *MyError = nil 
     e == nil //false
 
-在 Go 内部，接口是一个结构体，包含了实际目标实例（这里为 nil）和接口类型（在这里是 error），而且根据 Go 语言规范，只有在这个结构体的两个值都为 nil 时，接口实例才为 nil
+在 Go 内部，接口是一个结构体，包含了实际目标实例（这里为 nil）和接口类型（在这里是 error），而且根据 Go 语言规范，只有在这个结构体的两个值都为
+nil 时，接口实例才为 nil
 
 ## if err
+
 err 作用域限定为if/else 内
 
     if rows, err := db.Table("products").Select("*").Rows(); err==nil{
@@ -438,34 +463,36 @@ err 作用域限定为if/else 内
     }
 
 ## 方式2： fmt.Errorf
+
     err = fmt.Errorf("%s", "the error test for fmt.Errorf")
     fmt.Println(err.Error())
 
 ## custom MyError
-方式3: 自定义Customeror 结构体和Error(): 
 
-	type MyError struct {
-		When time.Time
-		What string
-	}
+方式3: 自定义Customeror 结构体和Error():
 
-	func (e *MyError) Error() string {
-		return fmt.Sprintf("at %v, %s",
-			e.When, e.What)
-	}
+    type MyError struct {
+    	When time.Time
+    	What string
+    }
 
-	func run() (string, error) {
-		return "results!!", &MyError{
-			time.Now(),
-			"it didn't work",
-		}
-	}
+    func (e *MyError) Error() string {
+    	return fmt.Sprintf("at %v, %s",
+    		e.When, e.What)
+    }
 
-	func main() {
-		if ret, err := run(); err != nil {
-			fmt.Println(ret,err)
-		}
-	}
+    func run() (string, error) {
+    	return "results!!", &MyError{
+    		time.Now(),
+    		"it didn't work",
+    	}
+    }
+
+    func main() {
+    	if ret, err := run(); err != nil {
+    		fmt.Println(ret,err)
+    	}
+    }
 
 # defer+panic 延迟调用
 
@@ -494,7 +521,9 @@ err 作用域限定为if/else 内
     panic: runtime error: integer divide by zero
 
 ## Panic
+
 参考：https://ieevee.com/tech/2017/11/23/go-panic.html 所述
+
 1. panic有操守，退出前会执行本goroutine的defer，方式是原路返回(reverse order)
 2. panic不多管，不是本goroutine的defer，不执行
 3. 注意recover:
@@ -504,36 +533,37 @@ err 作用域限定为if/else 内
 
 相当于 throw exception, 可以通过 defer 被 recovery 捕获:
 
-	func g(i int) {
-		 fmt.Println("Panic!")
-		 panic(fmt.Sprintf("%v", i))
-	}
+    func g(i int) {
+    	 fmt.Println("Panic!")
+    	 panic(fmt.Sprintf("%v", i))
+    }
 
-	func f() {
-		 defer func() {
+    func f() {
+    	 defer func() {
             if r := recover(); r != nil {
                 fmt.Println("error:", r)
-				fmt.Println("stacktrace from panic: \n" + string(debug.Stack()))
+    			fmt.Println("stacktrace from panic: \n" + string(debug.Stack()))
             }
-		 }()
+    	 }()
 
-		i := 10
-		fmt.Println("Calling g with ", i)
-		g(i)
-		fmt.Println("Returned normally from g.")
-	}
+    	i := 10
+    	fmt.Println("Calling g with ", i)
+    	g(i)
+    	fmt.Println("Returned normally from g.")
+    }
 
 ### panic map/object/...
 
-	func f() {
-		 defer func() {
+    func f() {
+    	 defer func() {
                 fmt.Printf("map: %#v\n", recover())
-		 }()
+    	 }()
          m := map[string]int{"key":1}
          panic(m)
-	}
+    }
 
-### multi panic 
+### multi panic
+
 只有最后一个被捕获: panic2 会覆盖前面的panic1
 
     //go-lib/func/panic-nest
@@ -555,6 +585,7 @@ err 作用域限定为if/else 内
     recover: test panic2
 
 ## recover
+
 recover 只有在延迟`defer 函数调⽤`内直接调⽤用才会清空panic, 终止goroutine 错误
 
 由于 panic、recover 参数类型为 interface{}，因此可抛出任何类型对象。

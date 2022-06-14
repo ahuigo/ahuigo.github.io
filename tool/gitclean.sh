@@ -7,8 +7,8 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
     git checkout --orphan latest_branch
     git add -A
     git commit -am "Delete all previous commit"
-    git branch -D master
-    git branch -m master
+    git branch -D main
+    git branch -m main
 fi
 
 ## see https://github.com/18F/C2/issues/439
@@ -29,4 +29,4 @@ select yn in "Yes" "No"; do
     esac
 done
 
-#git push -f origin master
+#git push -f origin HEAD

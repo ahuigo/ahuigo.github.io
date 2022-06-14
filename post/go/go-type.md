@@ -14,12 +14,13 @@ private: true
 
     func main(){
         var i int= 1
-        test2(i)
+        test2(i) // error
+        test2(MyInt(i)) // ok
     }
 
-除非转类型：
+type alias 不是新类型，一般用于重构需要
 
-    test2(MyInt(i))
+    type T1 = T2
 
 ## interface 类型接受任意满足要求的类型
 interface 类型接受任意满足要求的类型

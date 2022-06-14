@@ -150,6 +150,11 @@ utf8以8位为单元对[UCS]进行编码,编码会占用1~4字节.与utf16所编
 		|  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
 	)*\z/x;
 
+有的语言支持中文unicode 匹配, 比如python
+
+    [\u4e00-\u9fa5\uf900-\ufa2a]
+    re.search('[\u4e00-\u9fa5]', 'hi,中文') // 中
+
 ## utf8_unicode_ci和utf8_general_ci区别
 
 	ci - case insensitive

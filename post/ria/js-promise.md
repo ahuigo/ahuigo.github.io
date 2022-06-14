@@ -127,6 +127,24 @@ then+catch:
         e=>console.log(e)
     )
 
+## cancel promise
+    let controller = new AbortController();
+
+    let task = new Promise((resolve, reject) => {
+        controller.signal.addEventListener('abort', () => {
+            reject('oops'));
+        }
+        // do sth.
+    });
+
+    controller.abort(); // task is now in rejected state
+
+fetch 版本:
+
+    let controller = new AbortController();
+    fetch(url, { signal: controller.signal });
+    controller.abort();
+
 ## 串行
 
     // 5秒后返回input*input的计算结果:
