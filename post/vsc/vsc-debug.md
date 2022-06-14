@@ -53,6 +53,11 @@ Such as windows/osx/linux properties
         "args": ["myFolder\\path\\app.js"]
       }
 
+### args and ENV
+
+      "args": ["-d", "./"],
+      "env": {"APP_ENV":"dev"},
+
 ### cwd
 https://code.visualstudio.com/docs/editor/debugging#_launch-configurations
 
