@@ -15,14 +15,25 @@ dir + file:
     dir := filepath.Dir(path)
     dir, file := filepath.Split(path)
 
-### abs path
+### absolute path
 
     path,error := exec.LookPath(alias_path)
     filepath.Abs(path)
 
+#### IsAbs
+	if filepath.IsAbs(rel) {
+		return rel
+	}
+
+### relative path
+    relPath, err := filepath.Rel(searchDir, absolutePath)
+
 ### clean path
-	// Make ./name and name equivalent
+	// Make ./name to name 
 	name = filepath.Clean(name)
+
+### join path
+    path = filepath.Join(os.Getenv("HOME"), "goproject2")
 
 ## glob match
     import (
@@ -78,11 +89,6 @@ func Getwd() (pwd string, err error)
 #### change dir
     home, _ := os.UserHomeDir()
     err := os.Chdir(filepath.Join(home, "goproject2"))
-
-#### IsAbs
-	if filepath.IsAbs(rel) {
-		return rel
-	}
 
 ### file stat
     pathStat, err := os.Stat("/path/to/whatever")
