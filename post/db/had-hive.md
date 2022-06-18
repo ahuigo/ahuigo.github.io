@@ -43,15 +43,17 @@ date: 2018-09-27
 
 # Debug
 
-  Invalid column reference Time
-    select 的子句中没有Time
-  mismatched input 'Time' expecting ) near 't'
-    Time 被当成关键字了。。Group by Time?
-  Expression not in GROUP BY key total
-    total 不属于group by total
-  Invalid table alias or column reference total
-    因为子名不存在total
-    ref: sql excute order
+    Invalid column reference Time
+        select 的子句中没有Time
+    mismatched input 'Time' expecting ) near 't'
+        Time 被当成关键字了。。Group by Time?
+    Expression not in GROUP BY key total
+        total 不属于group by total
+    Invalid table alias or column reference total
+        因为子名不存在total
+        ref: sql excute order
+
+    cannot recognize input near 'select' in subquery
 
 # TIME
 You can design your own format patterns for dates and times from the list of symbols in the following table:
@@ -86,7 +88,7 @@ You can design your own format patterns for dates and times from the list of sym
 Let’s look at an example. Consider a click-stream event table:
 
 	  CREATE TABLE clicks (
-	  timestamp date, sessionID string, url string, source_ip string
+        timestamp date, sessionID string, url string, source_ip string
 	  ) STORED as ORC tblproperties ("orc.compress" = "SNAPPY");
 
 Each record represents a click event, and we would like to find the latest URL for each sessionID.
@@ -104,10 +106,12 @@ In the above query, we build a sub-query to collect the timestamp of the latest 
 While the query is a reasonable solution—from a functional point of view—it turns out there’s a better way to re-write this query as follows:
 
 	SELECT * FROM
-	(SELECT
-	*,
-	RANK() over (partition by sessionID, order by timestamp desc) as rank
-	FROM clicks) ranked_clicks
+	(
+        SELECT *, RANK() 
+        over (partition by sessionID, order by timestamp desc) 
+        as rank
+        FROM clicks
+    ) ranked_clicks
 	WHERE ranked_clicks.rank=1;
 
 Here we use Hive’s OLAP functionality (OVER and RANK) to achieve the same thing, but without a Join.

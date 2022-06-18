@@ -71,7 +71,19 @@ or:
 
 	git remote set-url origin https://name:password@github.org/repo.git
 
-## git ssh
+### https auth
+
+auto　save　username and password in `~/.git-credential`
+
+    git config --global credential.helper store
+    git config --global credential.helper cache
+    git config --global credential.helper 'cache --timeout=3600'
+
+**This method saves the credentials in plaintext on your PC's disk**
+
+    git config --global -l
+
+## git ssh auth
 生活在墙内的我们或者使用代理的朋友难免会遇到:`error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed while accessing https://github.com/zsh-users/zsh/info/refs?service=git-upload-pack`. 如果只是想用git clone, 最方便的方法是忽略SSL：
 
 	export GIT_SSL_NO_VERIFY=1
@@ -105,16 +117,12 @@ with go get （git config 有点问题）:
 
     HTTP_PROXY=socks5://127.0.0.1:1080 go get  github.com/gin-gonic/gin
 
-## git status
-
-	git status -s
-
 # Repository
 
 ## init
 
 	git init //create .git
-	git init --bare // create bare repository
+	git init --bare // create bare repository (.git 本身)
 
 ## git clone repository
 

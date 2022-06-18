@@ -52,7 +52,7 @@ private: true
 http://www.cnblogs.com/weafer/archive/2011/06/10/2077852.html
 http://www.chinaunix.net/old_jh/4/343905.html
 
-## change password
+## add password to private key
 > https://docs.github.com/en/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases
 Adding or changing a passphrase
 

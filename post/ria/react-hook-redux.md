@@ -6,7 +6,7 @@ private: true
 # react hook redux/dva
 
 ## useDispatch
-useDispath 只能在function component 内使用，这样会报错的：
+useDispath 只能在function component 内使用，如果是这样会报错的：
 
     <div onClick={e=>{ 
         const dispatch = useDispatch()

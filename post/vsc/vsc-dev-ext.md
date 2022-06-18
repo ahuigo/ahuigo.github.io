@@ -26,3 +26,6 @@ When the Java extension fails to start, the first thing to look at is the VS Cod
 
     Open the command palette (F1)
     select Developer: Toggle Developer Tools
+
+# 进程战胜process explorer
+`> Open Process Explorer`可查看进程占用

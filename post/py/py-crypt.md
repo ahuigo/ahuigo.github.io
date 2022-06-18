@@ -10,7 +10,7 @@ date: 2018-09-28
 # AES
 
 ## aes-256-cbc 算法实例
-### node example
+### nodejs example
 
     engine = 'aes-256-cbc'; //aes-256-ecb, aes192, ...
     crypto = require('crypto')
@@ -53,8 +53,7 @@ date: 2018-09-28
     console.log(enc, dec)
 
 ### python3 example
-pip3 install pycryptodome
-
+    # pip3 install pycryptodome
     import base64
     from Crypto.Cipher import AES
     from Crypto.Hash import SHA256
@@ -141,7 +140,7 @@ Warn:
 2. ECB 会忽略IV 
 
 ### 固定iv的风险
-很多示例是用的内部默认的iv，固定的iv 会有风险:
+很多示例是用的内部默认的iv，固定的iv 会有风险:
 1. https://stackoverflow.com/questions/3008139/why-is-using-a-non-random-iv-with-cbc-mode-a-vulnerability
 2. https://crypto.stackexchange.com/questions/5094/is-aes-in-cbc-mode-secure-if-a-known-and-or-fixed-iv-is-used
 
