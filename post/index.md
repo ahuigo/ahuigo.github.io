@@ -5,7 +5,7 @@
 - 2022-02-24 [tcpdump tcp analysis](/b/net/net-tcpdump-tcp) 
 - 2015-11-11 [tcp/ip 协议SYN](/b/net/net-tcp-queue) 
 - 2016-09-27 [golang pkg 开发包](/b/go/go-pkg-publish) 
-- 2022-02-20 [shell 表达式](/b/c/shell-expr) 
+- 2022-06-18 [shell 表达式](/b/c/shell-expr) 
 - 2018-09-27 [ops-process-ps](/b/c/ops-process-ps) 
 - 2018-09-26 [如何避免深度递归](/b/algorithm/func-tail-call) 
 - 2018-09-27 [Golang：Array and slice](/b/go/go-array-slice) 

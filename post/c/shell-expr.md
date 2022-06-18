@@ -298,7 +298,15 @@ logic order
 	true || false && echo yes; # 默认左序
 	0 and 1 or 2
 
-shell 逻辑测试符是从左开始以最短的语句为子语句。python/js 都是如此
+所有语言都是左优先的
+
+    flag = false
+    > (flag && true) || true # 左优先：node/golang/shell/python/php
+    true
+    > flag &&( true || true) # 右优先
+    false
+
+shell 逻辑测试符是从左开始以最短的语句为子语句。python/js/go 都是如此
 
 	hash git || echo 'Err: git is not installed.' && exit 3
 	# 等价于
