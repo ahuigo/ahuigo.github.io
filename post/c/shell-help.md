@@ -70,10 +70,10 @@ MAN 手册默认的PAGER 是less
 
 ## 常用例子
 
-	$man -f curl //按手册名搜索man手册（相当于whatis curl, 此命令会搜索缓存）
-	$man -k curl //按手册名和手册描述搜索man手册(相当于apropos curl，此命令搜索的也是缓存)
-	$man -w curl //打印手册路径
-	$man -wa man //打印所有找到的手册路径
+	man -f curl //按手册名搜索man手册（相当于whatis curl, 此命令会搜索缓存）
+	man -k curl //按手册名和手册描述搜索man手册(相当于apropos curl，此命令搜索的也是缓存)
+	man -w curl //打印手册路径
+	man -wa man //打印所有找到的手册路径
 
 ## man手册的分类
 一般地manual分为9大类。

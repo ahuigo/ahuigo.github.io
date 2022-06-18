@@ -4,6 +4,7 @@ title: idea
 date: 2018-09-27
 ---
 # Preface
+## project
 1. sideidea.com: http://sideidea.com/article/42
 2. 失物招领: http://www.bjgaj.gov.cn/swzl/index.do
 3. 付费问卷
@@ -14,8 +15,10 @@ date: 2018-09-27
 # 语言：
 deno 生态发展计划
     - Alephjs  css module
+    - medium 课程
 c sharp 生态计划 vs java/kotlin
 golang
+
 
 # 工具类
 swagger in gonic:
@@ -24,6 +27,13 @@ swagger in gonic:
         # title
         test case description
     */
+dtm:
+    https://v2ex.com/t/845132#reply56 消息最终一致性的架构革命
+    https://www.v2ex.com/t/851763 缓存一致性
+git写作平台：
+    1. 支持markdown, latex
+    3. git存储
+    2. 支持文章发布SEO
 ssl_ca_certificate_generator
     1. https://github.com/diafygi/acme-tiny
     2. local ca

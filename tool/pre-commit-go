@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+<<Usage
+	# 项目本身
+	cp tool/pre-commit-go  -O .git/hooks/pre-commit
+	chmod u+x .git/hooks/pre-commit
+
+	# 全局
+ 	mkdir -p ~/.git_template/hooks
+ 	git config --global init.templatedir '~/.git_template'
+	wget tool/pre-commit-go  -O ~/.git_template/hooks/pre-commit
+	chmod u+x ~/.git_template/hooks/pre-commit
+Usage
+
+
+set -e 
+set -x 
+make test
+go build -o /dev/null cmd/main.go
+exit 0

@@ -1,0 +1,228 @@
+---
+title: 写npm 包
+date: 2018-10-04
+private:
+---
+# Preface
+本文内容:
+1. 编写npm 包: 涉及库、cli
+2. 发布npm 包
+3. 安装npm 包
+    1. 使用cnpm　代替npm
+4. 管理mirrors
+
+# 写npm 包
+Node 实现一个命令行程序 
+- 生成包信息package.json: npm init
+- 参考ahuigo/js-zfuncs 项目
+
+## bin
+如果要编写bin cli, 配置package.json
+
+    "bin": {
+        "egg-bin": "bin/egg-bin.js",
+        "mocha": "bin/mocha.js"
+        "hello": "lib/bin/hi.js"
+    },
+
+npm install 的bin 位于`$(npm bin)/{mocha, egg-bin,hello}`
+
+## import 
+import directory 其实是import directory/index.js
+
+    import {sth} from './directory'
+
+## install
+### 安装到本地
+
+    npm install ./your-project -g
+    yarn add global ./your-project
+
+    # 等价于
+    cd ./your-project
+    npm link .    # 1. 将本目录link 到 `npm root -g` ; bin 命令link 到 `npm　bin -g`/ 下面
+    # Note 不要用：`npm link ./your-project`, 它会额外执行：$ cp -r ./your-project/node_modules ./ 
+
+删除: 如果报错　npm ERR! Cannot read properties of null (reading 'package')　可忽略
+
+    # 删除link(node_modules + bin)
+    $ npm rm -g js-zfuncs
+    $ npm unlink -g js-zfuncs
+
+### 查看全局安装的目录：
+查看包目录
+
+    $ npm root -g        
+    /opt/homebrew/lib/node_modules
+    $ npm list -g
+    └── js-zfuncs@1.0.0 -> ./../../../Users/ahui/www/js-zfuncs
+    ├── npm@8.5.5
+    ├── pnpm@6.32.6
+    $ npm ls --g js-zfuncs
+    └── js-zfuncs@1.0.0 -> ./../../../Users/ahui/www/js-zfuncs
+
+bin 目录
+
+    # 全局bin 目录
+    $ npm bin -g
+    /opt/homebrew/bin
+    $ ls -l `which hello`
+    lrwxr-xr-x  1 ahui  admin    43B Jun 14 10:18 /opt/homebrew/bin/hello -> ../lib/node_modules/js-zfuncs/lib/bin/hi.js
+    
+    # 局部bin 目录
+    $ npm bin
+    /Users/ahui/www/js-zfuncs/node_modules/.bin
+
+
+
+## 加载包
+以加载　js-zfuncs 为例
+
+### 创建应用
+    $ mkir my-app && cd my-app
+    # init package.json
+    $ npm init -y
+
+
+### link 到app/node_modules
+前一步安装到全局的js-zfuncs 是不可在局部app 使用的
+
+    npm install ./js-zfuncs -g
+    npm install . -g
+
+我们还需要将包link到局部app: `npm link js-zfuncs` 不可用(`npm i js-zfuncs`)
+
+    $ cd my-app
+    $ npm link js-zfuncs
+    $ npm list js-zfuncs
+    └── js-zfuncs@1.0.0 extraneous -> ./../../www/js-zfuncs
+
+    注意：
+    1.　如果本地存在./node_modules/link2 指向js-zfuncs的symlink. `npm link js-zfuncs` 会报ERR! Cannot read properties of null (reading 'package')
+
+或者可以直接在`package.json` 中指定package link
+
+    "dependencies": {
+        "bar": "file:../foo/bar"
+    }
+
+### load commonjs(默认支持)
+加载require
+
+    $ cat > app.js <<MM
+    const m2 = require('js-zfuncs')
+    console.log(m2)
+    MM
+    $ node app.js
+    
+### load esm package
+package.json 增加
+
+    "type": "module",
+
+再执行import: 
+
+    cat > app.js <<MM
+    import * as m2 from 'js-zfuncs'
+    MM
+
+    node app.js
+
+
+
+
+
+
+
+# 发布包
+发布包的过程:
+1. https://www.npmjs.com/ 注册账号
+3. `npm adduser` 添加账号
+3. `npm whoami` 验证
+5. `npm publish` 发布
+6. `npm unpublish <package>@<version>` //可以撤销发布自己发布过的某个版本代码。
+
+## 选择registry
+使用yrm 配置registry:
+
+    npm install -g yrm
+
+手动配置registry:
+
+    npm config set registry https://artifactory.sina.works/artifactory/api/npm/npm/
+    npm login
+
+    # 查看
+    npm config get registry
+    yrm ls
+
+with scope: 
+
+    npm config set @company:registry https://artifactory.sina.works/artifactory/api/npm/npm/
+    npm login --registry=https://artifactory.company.works/artifactory/api/npm/npm/ --scope=@company
+
+npm install 下载scoped 包时，就会去关联到的私有库下载
+
+## adduser
+注册命令:
+    npm adduser
+
+或者访问web 注册：
+1. https://www.npmjs.com/signup 
+2. get it from artifactory if you use artifactory as npm mirror
+
+## login
+
+    npm login --registry=https://registry.npmjs.org/
+
+除了使用npm login 后，会将token写到`~/.npmrc` 
+
+    registry=https://artifactory.company.works/artifactory/api/npm/npm/
+    //registry.npmjs.org/:_authToken=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
+
+## publish
+### include publish files
+Set files in `package.json`,only the files will be publish to npm package, 
+
+     "files": ["lib/**/*"],
+
+If you do not set files abolve. You can set exclude files in `.npmignore`:
+
+    src
+    tsconfig.json
+    tslint.json
+    .prettierrc
+
+### exec publish
+    npm test 
+    npm run build
+    npm version patch
+    npm publish
+
+search package
+
+    https://npmjs.com/package/{your-pacakge-name}
+
+### scoped 包
+scope 是包的命名空间：比如 `@babel/core` 在安装后，会被放在`node_modules/@babel/core/`, 对于企业/个人来说，可以将企业/个人名作为命名空间。
+
+我们可以自己作一个scope 包, 然后发布：
+
+    npm init --scope=ahuigo
+    npm login
+    npm publish
+
+scoped 包默认发布是私有的，你如果没有权限上面的publish 不会成功。我们可以改成
+
+    npm publish --access=public
+
+# 安装包
+## install npm
+
+    npm install <PACKAGE_NAME>
+    npm install <PACKAGE_NAME> --registry https://artifactory.momenta.works/artifactory/api/npm/npm/
+
+### with branch
+
+    npm install webpack@beta
+    npm install webpack/webpack#<tagname/branchname>

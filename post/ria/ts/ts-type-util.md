@@ -34,7 +34,6 @@ Note: 断言不是类型转换
 
     let myVar: I2['y'];
 
-
 ## ts类型别名
 常用于联合类型
 
@@ -134,22 +133,6 @@ https://stackoverflow.com/questions/56415826/is-it-possible-to-precisely-type-in
     let orange: string[] = doSomething("orange");
 
 ## 获取类型
-### Parameters
-    function foo(a: number) {
-        return true;
-    }
-    type p = Parameters<typeof foo>[0];
-
-返回
-
-    function foo(a: number, b: string) {
-        return true;
-    }
-    type p = ParametersWithNames<typeof foo>;
-    // p = { a: number, b: string }
-    type p = Parameters<typeof foo>;
-    // p = [number, strin]
-
 ### typeof 获取数据类型
     const data = {
         value: 123,
@@ -202,91 +185,6 @@ https://stackoverflow.com/questions/36015691/obtaining-the-return-type-of-a-func
     type T13 = ReturnType<(<T extends U, U extends number[]>() => T)>;  // number[]
 
 
-## keyof
-### keyof T
-    interface Person {
-        name: string;
-        age: number;
-        location: string;
-    }
-
-    type K1 = keyof Person; // "name" | "age" | "location"
-    type K2 = keyof Person[]; // "length" | "push" | "pop" | "concat" | ...
-    type K3 = keyof { [x: string]: Person }; // string
-
-### keyof data
-
-    const data = {K:1}
-    type Keys = keyof typeof data 
-
-
-### extends keyof
-"K extends keyof T"说明这个类型值必须为T类型属性的子元素或子集, `K` 与`T[K]`必须是关联的
-
-    function prop<T, K extends keyof T>(obj: T, key: K) {
-        return obj[key]; //T[K]
-    }
-    function prop2<T>(obj: T, key: keyof T, value: T[K]) {
-        return obj[key]; //T[keyof T] 
-            //error, 不能是 T["name"|"age"]
-            //只能是 T[extends "name"|"age"]
-    }
-
-    let o = {
-        age: 0,
-        name: 'hilo'
-    }
-
-    let v = prop(o, 'name', 'ahui') // K is of type 'name'
-
-再来一个例子 extends 继承
-
-    interface Lengthwise {
-        length: number;
-    }
-
-    function loggingIdentity<T extends Lengthwise>(arg: T): T {
-        console.log(arg.length);  // Now we know it has a .length property, so no more error
-        return arg;
-    }
-
-## valueof
-
-    Person[keyof Person];
-    type ValueOf<T> = T[keyof T];
-
-which gives you
-
-    type Foo = { a: string, b: number };
-    type ValueOfFoo = ValueOf<Foo>; // string | number
-    // or 
-    type sameAsString = Foo['a']; // lookup a in Foo
-    type sameAsNumber = Foo['b']; // lookup b in Foo
-
-
-## extends(eleOf)
-https://stackoverflow.com/questions/49285864/is-there-a-valueof-similar-to-keyof-in-typescript
-
-下例中key 与value 类型配对
-
-    type JWT = { id: string, token: string, expire: Date };
-    const obj: JWT = { id: 'abc123', token: 'tk01', expire: new Date(2018, 2, 14) };
-
-    function onChange(key: keyof JWT, value: JWT[keyof JWT]) {
-        obj[key] = value //value match key type?
-    }
-
-用`extends` 推断泛型的, The idea is that the `key` parameter allows the compiler to infer the `generic K` parameter.
- Then it requires that `value` matches `JWT[K]`, the lookup type you need.
-
-    declare function onChange<K extends keyof JWT>(key: K, value: JWT[K]): void; 
-
-### in union type
-in 类似于extends
-
-    type Foo = 'a' | 'b';
-    type Bar = {[key in Foo]: any};
-
 ## Map key type
 
     type M = {[key:string]: any}
@@ -322,37 +220,6 @@ partial key with `?`
         name: `Lily` 
     };
 
-## Omit
-删除某keys
-
-    interface Todo {
-        title: string;
-        description: string;
-        completed: boolean;
-    }
-
-    type TodoPreview = Omit<Todo, "description">;
-
-    const todo: TodoPreview = {
-        title: "Clean room",
-        completed: false,
-    };
-
-删除多个keys
-
-    type OmitAB = Omit<Test, "a"|"b">; 
-
-这是等价
-
-    type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-
-或者：
-
-    // Functionally the same as Exclude, but for strings only.
-    type Diff<T extends string, U extends string> = ({[P in T]: P } & {[P in U]: never } & { [x: string]: never })[T]
-    type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>
-
-
 ## `Record<K,T>`
 Constructs a type with a set of properties K of type T. This utility can be used to map the properties of a type to another type.
 
@@ -371,26 +238,6 @@ Constructs a type with a set of properties K of type T. This utility can be used
 Dict:
 
     Record<string, string>
-
-## `Pick<T,K>`
-Constructs a type by picking the set of properties K from T.
-
-    interface Todo {
-        title: string;
-        description: string;
-        completed: boolean;
-    }
-
-    type TodoPreview = Pick<Todo, 'title' | 'completed'>;
-
-    const todo: TodoPreview = {
-        title: 'Clean room',
-        completed: false,
-    };
-
-### Pick Except
-
-    Pick<T, K> & {k:string}
 
 ## 子类型
 > https://stackoverflow.com/questions/27875483/typescript-reference-subtype-of-type-definition-interface
@@ -415,15 +262,6 @@ also:
 
     type fieldKey = 'id' | 'name';
     type fieldTypes = ExerciseData[fieldKey]; // number | string
-## Exclude
-    type T0 = Exclude<"a" | "b" | "c", "a">;  // "b" | "c"
-    type T1 = Exclude<"a" | "b" | "c", "a" | "b">;  // "c"
-    type T2 = Exclude<string | number | (() => void), Function>;  // string | number
-
-## Extract
-    type T0 = Extract<"a" | "b" | "c", "a" | "f">;  // "a"
-    type T1 = Extract<"a" | "b" | "c", "a" | "c">;  // "a"|"c"
-    type T2 = Extract<string | number | (() => void), Function>;  // () => void
 
 ## NonNullable
     type T0 = NonNullable<string | number | undefined>;  // string | number

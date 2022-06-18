@@ -73,26 +73,61 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
     import * as X from 'rc-picker/lib/interface.d';
     type DatePickerTypes = X.RangeValue<moment.Moment>;
 
-## 联合类型
+## 联合类型 Union Types
 
     let age: string | number;
     if(ag instanceof string) {
 
     }
 
-### 合并对像
-
-    interface MergeType extends IClientRequest, ICoords {} 
-    或
-    type MergeType = ClientRequest & Coords
-    type PropsWithChildren<P> = P & { children?: ReactNode };
-
 ### 常量联合类型
     type t1= 'number' | 'float' | 'int' | 'ordinal' | 'time';
 
 使用：
 
-    var name:t1 = 'ordinal' as 'number' | 'float' | 'int' | 'ordinal' | 'time'
+    var name:t1 = 'ordinal' as ('number' | 'float' | 'int' | 'ordinal' | 'time')
+
+
+## 合并类型 intersections types
+    type Animal = {
+        name: string
+    }
+
+    type Bear = Animal & { 
+        honey: boolean 
+    }
+    const a:Bear={name:'',honey:false}
+
+也可以用
+
+    interface MergeType extends Animal, ICoords {} 
+
+
+## interface vs type
+interface 可以叠加
+
+    interface Window {
+        title: string
+    }
+
+    interface Window {
+        ts: TypeScriptAPI
+    }
+
+    const src = 'const a = "Hello World"';
+    window.ts.transpileModule(src, {});
+
+不可以用type：
+
+    type Window = {
+        title: string
+    }
+
+    type Window = {
+        ts: TypeScriptAPI
+    }
+
+    // Error: Duplicate identifier 'Window'.
 
 ## 类型预测
 https://stackoverflow.com/questions/40081332/what-does-the-is-keyword-do-in-typescript

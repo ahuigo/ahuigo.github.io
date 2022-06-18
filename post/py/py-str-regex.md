@@ -98,7 +98,7 @@ groupdict 判断key 存在性
     'k1' in mdict
 
 ## 元字符
-可以是unicode
+`.`可以是unicode
 
     re.split(r'[，,]+', '你好，我是..')
     >>> re.match(r'.', '你好').group()

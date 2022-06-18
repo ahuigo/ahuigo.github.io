@@ -240,7 +240,8 @@ PHP 通过设置配置文件中 zlib.output_compression=1  或者在代码中使
     Last-Modified header. //强刷  服务端判断（304）
     Etag                    //304
                           
-    
+## 配置实体标签ETag
+ETag是实体标签，属于http协议，受web服务支持。使用特殊的字符串来标识某个请求资源的版本。用来唯一标识一个资源。当浏览器向服务器请求资源的时候如果服务器发现ETag一样，就会告诉浏览器使用本地缓存(304)
 
 ## Cache-Control & Expires
 通常在不关闭浏览器的情况下 一般常用的cache有两种:

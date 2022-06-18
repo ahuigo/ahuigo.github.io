@@ -5,7 +5,7 @@ category: blog
 description: 
 ---
 # Prepare
-Homebrew概念
+了解Homebrew概念
 
     Keg：安装好的脚本、软件等；
     Cellar：所有用 Homebrew 安装在本地的脚本、软件组成的集合；
@@ -20,7 +20,7 @@ Homebrew概念
 ## proxy(via socks5)
     export ALL_PROXY=socks5://127.0.0.1:1080
 
-# rule
+# Write formula
 brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
 
 	require 'formula'

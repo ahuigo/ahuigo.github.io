@@ -101,3 +101,11 @@ the setbuf() function is exactly equivalent to the call:
     setvbuf(stream, buf, buf ? _IOFBF : _IONBF, BUFSIZ);
 
 其中type 表示缓冲模式，如`_IONBF`表示行缓冲，就是IO not buffer的意思。
+
+# 命令行缓冲
+grep, awk 命令可能是全缓冲的，可以这样改：
+
+    # grep 加 --line-buffered
+    # awk 加 system("")
+    # 或: stdbuf --output=L awk -F. '{print $1}'
+    tail -f access.log |grep --line-buffered '128' | awk '{print $1};system("")' > output.file

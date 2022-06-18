@@ -2,20 +2,20 @@
 title: command
 date: 2018-10-04
 ---
-
-# path
+# cli usage
+## path
 
     npm -g bin
     npm -g get prefix
     `npm -g get prefix`/lib/node_modules
 
-# command
+## command
 
     npm list -g; # global
     npm list; # local
     npm dedupe -g; # Reduce duplication
 
-## run
+### run
 http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
 
     "scripts": {
@@ -44,7 +44,7 @@ http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
     # specs
     npm run test:specs
 
-### npx
+#### npx
 下面三种等价
 
     "scripts": {
@@ -55,7 +55,7 @@ http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
     $ npm run build
 
 
-## short cmd
+### short cmd
 
     npm start是npm run start
     npm stop是npm run stop的简写
@@ -66,13 +66,18 @@ http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
 
 ## config edit
     npm config edit
+    ~/.npmrc
+
+对cnpm 来说
+
+    cnpm config edit
     ~/.cnpmrc
 
 ## config list
 
     npm config ls -l
 
-# repo
+# mirrors
 
     # temp
     npm install -g cnpm --registry=https://registry.npm.taobao.org
@@ -84,10 +89,12 @@ http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
     # verify
     npm config get registry
 
-自动切换源, nrm是个npm镜像管理工具，可以很方便的切换镜像源
+## yrm
+自动切换源, yrm是个npm镜像管理工具，可以很方便的切换镜像源
 
-    npm i nrm -g
-    nrm use npm
+    npm i yrm -g
+    yrm -h
+    yrm ls
 
 # npm help
     npm help install
@@ -177,7 +184,7 @@ npm install或npm update命令，从 registry 下载压缩包之后，都存放�
 
     1.30.2 - 2.30.2 匹配 >=1.30.2 且 <=2.30.2
 
-# npm require
+# node require
 > https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders
 Node.js will search in the following locations by default:
 

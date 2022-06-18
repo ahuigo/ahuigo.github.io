@@ -283,11 +283,13 @@ df 是pands 最重要的概念，类似于二维关系表
 ### Define df
 via col: dict/series
 
+    import pandas as pd
     df=pd.DataFrame({'col1':{'index1':1,'index2':2}, 'col2':{'index1':2, 'index2':4}})
     pd.concat([s1,s2,s3],axis=1)
 
 via row: record/series
 
+    import pandas as pd
     pd.DataFrame([{'col1':1},{'col2':2}], index=['index1','index2'])
     pd.DataFrame([s1,s2], index=['index1','index2'])  
 
@@ -408,6 +410,7 @@ filter rows:
     df.loc[df['column_name'] == some_value]
     df.loc[df['column_name'] != some_value]
     df.loc[df['column_name'].isin(some_values)]
+        df.loc[df['column_name'].isin(['v1','v2'])]
     df[df.col1>1]
     df[df.col1>df.col2]
     df[df.年度==2022]

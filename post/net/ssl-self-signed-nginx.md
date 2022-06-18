@@ -36,12 +36,9 @@ date: 2018-10-04
 for mac osx
 
 ## 0. prepare
-    sudo mkdir -p /usr/local/etc/ssl/private
-    sudo mkdir -p /usr/local/etc/ssl/certs
-    cd /usr/local/etc/ssl/
-    sudo mkdir nginx
-    sudo chmod o+rwx nginx
-    cp /System/Library/OpenSSL/openssl.cnf nginx/openssl.cnf
+    mcd /usr/local/etc/ssl/
+    sudo chmod o+rwx .
+    cp /System/Library/OpenSSL/openssl.cnf openssl.cnf
 
 To fix the following error:
 
@@ -54,19 +51,18 @@ Add the following to openssl.cnf:
     subjectAltName = DNS:localhost
 
 ## 1. gen ssl Certificate
-writing new private key to '/usr/local/etc/ssl/private/self-signed.key'
+writing new private key to '/usr/local/etc/ssl/self-signed.key'
+writing new certificate to ...
 
-    sudo openssl req \
+    openssl req \
     -x509 -nodes -days 365 -newkey rsa:2048 \
     -subj "/CN=localhost" \
-    -config nginx/openssl.cnf \
-    -keyout /usr/local/etc/ssl/private/self-signed.key \
-    -out /usr/local/etc/ssl/certs/self-signed.crt
-
+    -config ./openssl.cnf \
+    -keyout ./self-signed.key \
+    -out ./self-signed.crt
 
 ## 2. Create a Diffie-Hellman Key Pair
-    sudo openssl dhparam -out /usr/local/etc/ssl/certs/dhparam.pem 128
-
+    openssl dhparam -out /usr/local/etc/ssl/dhparam.pem 128
 
 ## 3. Add the self-signed certificate to the trusted root store
 把证书添加到keychain, 两种方法
@@ -74,10 +70,10 @@ add certificate via command line
 
     sudo security add-trusted-cert \
     -d -r trustRoot \
-    -k /Library/Keychains/System.keychain /usr/local/etc/ssl/certs/self-signed.crt
+    -k /Library/Keychains/System.keychain ./self-signed.crt
 
     # delete
-    sudo security remove-trusted-cert    -d   /usr/local/etc/ssl/certs/self-signed.crt
+    sudo security remove-trusted-cert    -d   ./self-signed.crt
     sudo security remove-trusted-cert -h
 
     # delete cert
