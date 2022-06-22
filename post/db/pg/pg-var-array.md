@@ -3,6 +3,7 @@ title: Posgtre Var
 date: 2019-06-20
 private:
 ---
+
 # define array
 
     CREATE TABLE stus (
@@ -21,12 +22,18 @@ private:
     select array['a',1]; # error
 
 二维数组
-    
+
     DECLARE
         m   varchar[];
         arr varchar[] := array[['key1','val1'],['key2','val2']];
 
+### array from select
+
+    // sort array
+    SELECT ARRAY(SELECT unnest(phones) ORDER BY 1)
+
 ## empty array
+
     ALTER TABLE t1 add friends text[] DEFAULT array[]::varchar[];
 
 转换为特定类型的数组
@@ -34,8 +41,8 @@ private:
     array[]::varchar[]
     '{}'::text[]
 
-
 # insert array
+
     INSERT INTO stus (name, names) VALUES ( 'John Doe', ARRAY [ 'john1', 'john2' ]);
 
 or use bracket to insert:
@@ -45,16 +52,19 @@ or use bracket to insert:
     INSERT INTO stus (name, names) VALUES ( 'alex', '{alex1,alex2}');
 
 # update array
+
 update all array:
 
     UPDATE stus SET phones = '{"(408)-589-5843"}' WHERE ID = 3;
 
 update one array element:
 
-    UPDATE stus SET phones[2] = '(408)-589-5843' WHERE ID = 3; 
+    UPDATE stus SET phones[2] = '(408)-589-5843' WHERE ID = 3;
 
 # read array
+
 ## via index
+
 select first phone number(不是从0开始)
 
     > SELECT phones[1] FROM stus;
@@ -64,6 +74,7 @@ select first phone number(不是从0开始)
     where phones[0] is null
 
 ## loop
+
     DO
     $do$
     DECLARE
@@ -76,16 +87,17 @@ select first phone number(不是从0开始)
     END
     $do$
 
-
-
 ## 集合判断
+
 注意, 不存在的值(null), 永远为false, 比如`phone[0]` 不存在
 
     where phones[0]=ANY(array[1,2])
     where NOT phones[0]=ANY(array[1,2])
 
 ### in subquery
-IN is equivalent to = ANY: https://www.postgresql.org/docs/current/functions-subquery.html#FUNCTIONS-SUBQUERY-ANY-SOME
+
+IN is equivalent to = ANY:
+https://www.postgresql.org/docs/current/functions-subquery.html#FUNCTIONS-SUBQUERY-ANY-SOME
 
     expression operator ANY (subquery)
 
@@ -109,6 +121,7 @@ any array
     where 182=ANY(phones);
 
 ### all array
+
 `NOT IN` is equivalent to `<> ALL`/`!=ALL`.
 
     expression operator ALL (subquery)
@@ -121,12 +134,17 @@ any array
     SELECT value_variable != ANY('{1,2,3}'::int[])
 
 ### like any
+
     SELECT 'abc' LIKE ANY('{"ab%","def"}')
 
-### 交集
+### insersection 交集
 
     SELECT ARRAY[1,4,3] && ARRAY[2,1] -- true
     where (phones && ARRAY['1234','1235'])
+
+### concat并集
+
+    select  ARRAY[1,2,3] || ARRAY[4,5,6]
 
 ### 子集
 
@@ -149,7 +167,8 @@ any array
     ||	        element-to-array concat     3 || ARRAY[4,5,6]	                        {3,4,5,6}
     ||	        array-to-element concat     ARRAY[4,5,6] || 7	                        {4,5,6,7}
 
-## submatch`<~~` 
+## submatch`<~~`
+
 参考 pg-expr-operator 定义operator
 
     // create function reverse_like (text, text) returns boolean language sql as $$ select $2 like $1 $$;
@@ -162,19 +181,9 @@ any array
     SELECT not 'ab%' <~~ ALL('{"abc","def"}');
 
 # Array function
-## expand array
-    ahuigo=# select id,phones from stus;
-    1 | {1,2}
-    2 | {111,222}
-    ahuigo=# select id,unnest(phones) from stus;
-    id | unnest 
-    1 |      1
-    1 |      2
-    2 |    111
-    2 |    222
-
 
 ## array length
+
 第二个参数代表维度1维数组
 
     select array_length(string_to_array(name, 'o'), 1) - 1
@@ -188,20 +197,49 @@ any array
         part2
 
 ## array_to_string
+
     select array_to_string(array[1,2], ',');
+
+## sort array
+
+sort intarray only
+
+    CREATE EXTENSION intarray;
+    SELECT sort( ARRAY[4,3,2,1] );
+
+A function that works for any array type is:
+
+    CREATE OR REPLACE FUNCTION array_sort (ANYARRAY)
+    RETURNS ANYARRAY LANGUAGE SQL
+    AS $$
+        SELECT ARRAY(SELECT unnest($1) ORDER BY 1)
+    $$;
 
 ## 聚合array
 
-### join array
+### expand array
+
+    > WITH T(id, uids)
+    AS (SELECT 1,array[1,2] UNION ALL
+        SELECT 2,array[3,4]
+    )
+    SELECT unnest(uids) uid,id FROM T ;
+    // output
+    uid | id 
+    -----+----
+    1 |  1
+    2 |  1
+    3 |  2
+    4 |  2
+
     ahuigo=# select 'item' name,unnest(array[1,2]) b;
     name | b
     ------+---
     item | 1
     item | 2
 
-    select *,unnest(arr) as item from table
+### join array(string_agg)
 
-### string_agg
     ahuigo=# select name,phone from stus;
     John     |      
     ahui     |     3
@@ -214,11 +252,12 @@ string_agg with distinct:
 
     SELECT name, string_agg(distinct phone::char, ', ') AS phonelist FROM   stus GROUP  BY 1;
 
-string_agg with order by 
+string_agg with order by
 
     string_agg(phone::char, ', ' order by phone desc)
 
 ### array_agg
+
     ahuigo=# SELECT name, array_agg(phone) AS ps FROM   stus group by 1;
     ahui     | {NULL,NULL,3,4,4,5}
 
@@ -237,8 +276,11 @@ array_agg 后判断集合
     SELECT name, array_agg(distinct phone) AS ps FROM   stus group by 1 having 3=any(array_agg(distinct phone));
 
 ## compare
+
 ### is empty array
-array_length() requires two parameters, the second being the dimension of the array:
+
+array_length() requires two parameters, the second being the dimension of the
+array:
 
     array_length(id_clients, 1) > 0
 
@@ -251,4 +293,3 @@ That's all. You get:
     TRUE .. id_clients is empty
     NULL .. id_clients is NULL
     FALSE .. any other case
-

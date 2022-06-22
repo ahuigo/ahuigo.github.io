@@ -4,7 +4,7 @@ date: 2018-10-04
 ---
 # Preface
 test framework list:
-- pytest   比unittest 好的一点是：可以选择测试范围
+- pytest   比unittest 好的一点是：可以选择测试范围 (Recommended)
 - unittest 单元测试, py-unittest
     - doctest, 不太常用
 - nose
@@ -26,6 +26,10 @@ https://medium.com/@yeraydiazdiaz/what-the-mock-cheatsheet-mocking-in-python-6a7
     def test_answer():
         assert func(3) == 5
 ```
+assert 还支持提示信息:
+
+    assert func(3) == 5, "expected value is 5"
+
 ## test case rule
 name rule:
 

@@ -74,6 +74,8 @@ http request/response modifier like requestly
 simple iptable:
     simple modify iptable
     route to http proxy: iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 9090
+ACL, RBAC lib
+    https://github.com/casbin/casbin#role-manager
 
 # 全职
 http://deepdevelop.com/

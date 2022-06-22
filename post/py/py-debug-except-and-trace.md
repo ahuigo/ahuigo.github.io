@@ -46,24 +46,25 @@ getframe(0) 是`debug_info`本身，getframe(1) 是caller
 Python 代码调试技巧: \
     https://www.ibm.com/developerworks/cn/linux/l-cn-pythondebugger/
 
-# 异常
-## 异常信息处理
-### 异常的callstack
-callstack 要利用到traceback
+# Exception
+## raise try catch finnaly else
+raise 必须基于类BaseException, 否则即没有trace　信息，也不能被catch
 
-    except:
-        import traceback
-        print('异常的call stack:', traceback.format_exc()) 
-
-
-### 异常信息叠加
-可以把异常信息放到第二个参数
-
-    try:
-        raise Exception("msg1")
-    except Exception as err:
-        raise Exception("get upload url failed", err.args)
-        reise e
+	try:
+		do sth.
+        raise Exception('msg')
+    except ZeroDivisionError as e:
+        print(e)
+	except ValueError:
+		raise
+		raise ValueError('sth error!')
+    except (RuntimeError, TypeError, NameError) as e:
+        print("Unexpected error:", e)
+        pass
+	else:
+		return None
+	finally:
+		do sth.
 
 ## Exception对象
 
@@ -105,23 +106,6 @@ callstack 要利用到traceback
                 return None 
         return func_wrapper
 
-## try catch finnaly else
-
-	try:
-		do sth.
-    except ZeroDivisionError as e:
-        print(e)
-	except ValueError:
-		raise
-		raise ValueError('sth error!')
-    except (RuntimeError, TypeError, NameError) as e:
-        print("Unexpected error:", e)
-        pass
-	else:
-		return None
-	finally:
-		do sth.
-
 ## exception type
 
     BaseException
@@ -146,7 +130,9 @@ exit(n), quit(n), sys.exit(n)都是一个东西: SystemExit(n);
     2. if it is None, the exit status is zero;
     3. if it has another type (such as a string), the object’s value is printed and the exit status is one.
 
+## trace exception
 ### debug mode
+PYTHON ASYNC IO DEBUG: 好像是用于异步调试用的
 
     PYTHONASYNCIODEBUG=1 python3 a.py
 
@@ -172,6 +158,23 @@ exit(n), quit(n), sys.exit(n)都是一个东西: SystemExit(n);
 logging file path(default by current path):
 
 	logging.getLoggerClass().root.handlers[0].baseFilename
+
+## 异常信息处理
+### 异常的callstack
+callstack 要利用到traceback
+
+    except:
+        import traceback
+        print('异常的call stack:', traceback.format_exc()) 
+
+### 异常信息叠加
+可以把异常信息放到第二个参数
+
+    try:
+        raise Exception("msg1")
+    except Exception as err:
+        raise Exception("get upload url failed", err.args)
+        reise e
 
 
 # 调试
@@ -200,7 +203,7 @@ Python解释器时可以用-O参数来关闭assert：
     > info threads
 
 
-好像失效了: If you have Python extensions installed, you can enter:
+好像失效了: If you have Python extensions installed, you can enter:
 https://wiki.python.org/moin/DebuggingWithGdb
 On linux, you can attach gdb to the process and get a python stack trace with some gdb macros. Put http://svn.python.org/projects/python/trunk/Misc/gdbinit in ~/.gdbinit, then
 

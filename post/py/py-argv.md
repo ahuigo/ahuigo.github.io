@@ -163,7 +163,21 @@ click.command 装饰使hello 能接收cli args:
 
 ### bool:
 
-    @click.option('-d', is_flag=True)
+    @click.command()
+    @click.option('-h', is_flag=True, help='Print help usage')
+    @click.argument('args', nargs=-1)
+    def main(args, **kw):
+        """
+        Usage: 
+            xlparser [options] <src_file> [<out_file>]\n
+                options:\n
+                    -h       For help.\n
+        """
+        if 'h' in kw:
+            ctx = click.get_current_context()
+            click.echo(ctx.get_help())
+            ctx.exit()
+
 
 ### required
 toto:

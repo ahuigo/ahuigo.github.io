@@ -82,7 +82,7 @@ via exec
 3. subprocess.getoutput("ls -l;pwd"); # only support utf8
 	1. subprocess.getstatusoutput("ls -l") # return list: [code, output_str]
 4. print output: errno = os.system('ls -ls')
-5. errno=call("ls -l", shell=True)
+5. errno=subprocess.call("ls -l", shell=True)
     2. s.call(["ls","-a"])
 
 background+gui:
@@ -160,7 +160,7 @@ read output
 	Exit code: 0
 
 ### via call
-类似run, 但不返回结果，Popen 才只返回结果
+类似run, 但不返回结果:
 
 1. 只返回errno
 2. print capture output

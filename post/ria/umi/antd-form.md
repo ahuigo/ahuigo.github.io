@@ -3,6 +3,7 @@ title: Umi form 表单
 date: 2019-11-12
 private: true
 ---
+
 # Umi form 表单
 
     <Form layout="inline" ... >
@@ -15,12 +16,15 @@ private: true
     const data = form.getFieldsValue();
 
 # 写值
+
 ## forceRender
+
 写值不会触发update, 除非手动：
 
     const forceUpdate = React.useReducer(() => ({}))[1];
 
 ## 初值
+
     <Form initialValues={{ type: defaultType }} onFinish={onFinish} form={form}>
 
 或：
@@ -35,6 +39,7 @@ private: true
     <Select defaultValue={86400} >
 
 ## OnFieldsChange 写值
+
 Store Form Data into Upper Component
 
     // const initFields = Object.entries(def).map((item) => ({name:item[0],value:item[1]}))
@@ -58,8 +63,8 @@ Store Form Data into Upper Component
       </Form.Item>
     </Form>
 
-
 ## 手动更新field
+
 用 setFieldsValue
 
     <input 
@@ -73,14 +78,15 @@ Store Form Data into Upper Component
 
 ## via Form.Item
 
-      <Form.Item
-        name="username"
-        label="Username"
-        rules={[{ required: true, message: 'Username is required!' }]}
-      >
-        <Input/>
+    <Form.Item
+      name="username"
+      label="Username"
+      rules={[{ required: true, message: 'Username is required!' }]}
+    >
+      <Input/>
 
 ## 监听所有field
+
 可用Form的onFieldsChange 监听变化
 
     <Form
@@ -90,6 +96,7 @@ Store Form Data into Upper Component
     >
 
 ## onSubmit(e)/onFinish(data)
+
     <Form onSubmit={ (e) => {
         e.preventDefault();
     }} >
@@ -103,11 +110,11 @@ Store Form Data into Upper Component
 
     const data = form.getFieldsValue()
 
-
 ## getFieldDecorator 存取值
+
 > 推荐用v4的form.Item 代替 getFieldDecorator: https://ant.design/components/form/v3
 
- 建立Input 与form 之间的数据响应
+建立Input 与form 之间的数据响应
 
     const LoginForm = () => {
         const form = Form.useform({
@@ -126,19 +133,40 @@ Store Form Data into Upper Component
         );
     };
 
-
 ## required 值
+
     <Form.Item 
         label="密码" name="password" 
         rules={[{ required: true, message: 'input password !', type:'string' }]}
     >
+
 # select
+
 ## multiple
+
     <Select mode="multiple">
+
 ## allowClear
+
     <Select allowClear>
 
+## allow input
+
+    const handleSelectStatus= (newValue: string) => {
+        if (newValue) {
+            options.push({ name: newValue })
+            setOptions(statusDefList.unique())
+        }
+    };
+    <Select 
+    showSearch
+    onSearch={handleSearch}>
+        {options.map((def, i) => {
+            return ( <Option key={i} value={def.name}> {def.name} </Option>);
+        })}
+
 ## filter
+
 filter key and value "children"
 
     <Select
@@ -154,7 +182,9 @@ filter key and value "children"
     >
         {person.map(p => <Option value={p.username}>{p.displayName}</Option>)}
     </Select>
+
 # Input
+
 自动激活
 
     <Input
@@ -168,6 +198,7 @@ filter key and value "children"
         }}
 
 ## fieldset
+
     <div>
         <label for="username">Name: <abbr title="required" aria-label="required">*</abbr></label>
         <input id="username" type="text" name="username">
@@ -188,15 +219,17 @@ filter key and value "children"
 # layout
 
 ## form class
+
 no wrap
 
     <Form className="flex" >
 
 ## Input width
+
     <Input style={{ width: '20%' }} defaultValue="0571" />
 
-
 ## 列宽度
+
 labelCol, wrapperCol 分别控制label/Item 的宽度
 
     const layout = {
@@ -214,6 +247,7 @@ labelCol, wrapperCol 分别控制label/Item 的宽度
     </Form>
 
 ## Input Row
+
 https://ant.design/components/input/
 
     <Input.Group size="large">
