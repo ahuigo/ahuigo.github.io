@@ -2,12 +2,16 @@
 title: Postgre CRUD
 date: 2018-09-27
 ---
+
 # Postgre meta
+
 ## string or keyword
+
     select 'string';
     select "count"(1) from "table_name"
 
 ## find foreign keys
+
 查找使用users为外键foreign key的表
 
     select R.table_name,R.column_name,U.column_name as id
@@ -23,7 +27,9 @@ date: 2018-09-27
     where U.TABLE_NAME = 'users'
 
 ## select primary key
-refer: https://dataedo.com/kb/query/postgresql/list-all-primary-keys-and-their-columns
+
+refer:
+https://dataedo.com/kb/query/postgresql/list-all-primary-keys-and-their-columns
 
     select kcu.column_name as pk
     from information_schema.table_constraints tco
@@ -42,7 +48,9 @@ refer: https://dataedo.com/kb/query/postgresql/list-all-primary-keys-and-their-c
     key_column - PK column name
 
 # crud
-## insert 
+
+## insert
+
     CREATE TABLE users (id INT, counters JSONB NOT NULL DEFAULT '{}');
     INSERT INTO users (id, counters) VALUES (1, '{"bar": 10}');
 
@@ -50,13 +58,15 @@ refer: https://dataedo.com/kb/query/postgresql/list-all-primary-keys-and-their-c
 
     INSERT INTO "table1" ("created_at","status") VALUES ('2019-05-13 15:34:51','1') RETURNING "table1"."id";
 
-### insert with select 
+### insert with select
+
     insert into items_ver (item_id, name, item_group)
         select item_id, name, item_group from items where item_id=2;
     insert into items_ver (id, item_id, name, item_group)
         select 100, item_id, name, item_group from items where item_id=2;
 
 ### last insert id
+
 3 ways,all are concurrent safe:
 
     SELECT currval(table_name+'_id_seq');
@@ -64,22 +74,18 @@ refer: https://dataedo.com/kb/query/postgresql/list-all-primary-keys-and-their-c
     insert into .... RETURNING id;
 
 ### insert+update
-1. 加条insert+update 两句
-INSERT INTO table (id, field, field2)
-       SELECT 3, 'C', 'Z'
-       WHERE NOT EXISTS (SELECT 1 FROM table WHERE id=3);
-2. insert + onconflict do update
-eg:
 
-    INSERT INTO the_table (id, column_1, column_2) VALUES (1, 'A', 'X'), (2, 'B', 'Y'), (3, 'C', 'Z')
-    ON CONFLICT (id) 
-    DO UPDATE 
-        SET column_1 = EXCLUDED.column_1, -- 更新值
-            column_2 = the_table.column_2  -- 保留值
-        [RETURNING id];
-    DO NOTHING;
+1. 加条insert+update 两句 INSERT INTO table (id, field, field2) SELECT 3, 'C', 'Z'
+   WHERE NOT EXISTS (SELECT 1 FROM table WHERE id=3);
+2. insert + onconflict do update eg:
+
+   INSERT INTO the_table (id, column_1, column_2) VALUES (1, 'A', 'X'), (2, 'B',
+   'Y'), (3, 'C', 'Z') ON CONFLICT (id) DO UPDATE SET column_1 =
+   EXCLUDED.column_1, -- 更新值 column_2 = the_table.column_2 -- 保留值 [RETURNING
+   id]; DO NOTHING;
 
 #### on conflict
+
 `ON CONFLICT [target] action [RETURNING id]`:
 
     target:
@@ -93,10 +99,12 @@ eg:
 
     ON CONFLICT DO NOTHING
 
-## select 
+## select
+
     select array[1,2] where true;
 
 ### order
+
 execute order:
 
     FROM with JOIN's to get tables
@@ -107,12 +115,13 @@ execute order:
     ORDER BY for order results
 
 ### is null
+
 see https://www.postgresql.org/docs/current/functions-comparison.html
 
     select 1 is null;  -- alias: expression ISNULL
     where column is null; -- alias: expression NOTNULL
 
-not 'C' but include null 
+not 'C' but include null
 
     SELECT * FROM "A" WHERE "B" != 'C'; -- not include B is null
 
@@ -128,6 +137,7 @@ IS NULL in PostgreSQL is not value:
     select 1 is 1
 
 ### 字段引号
+
 双引号 反引号。表示特殊的字段：
 
     select "abc";
@@ -138,6 +148,7 @@ IS NULL in PostgreSQL is not value:
     select 'abc'
 
 ### custom table
+
     select user_id, name
     from (values (1, 'John Smith')) t(user_id, name)
 
@@ -145,18 +156,21 @@ IS NULL in PostgreSQL is not value:
 
     page=0
     limit 10 offset 10*page
+
 ### where
+
 #### between
 
     hourt between 0 and 23
 
 #### not exists
+
 https://stackoverflow.com/questions/19363481/select-rows-which-are-not-present-in-other-table
 
     SELECT col1 FROM tab1 WHERE EXISTS (SELECT 1 FROM tab2 WHERE col2 = tab1.col2);
     SELECT col1 FROM tab1 WHERE NOT EXISTS (SELECT 1 FROM tab2 WHERE col2 = tab1.col2);
 
-Only good without NULL values or if you know to handle NULL properly. 
+Only good without NULL values or if you know to handle NULL properly.
 
     SELECT ip 
     FROM   login_log
@@ -166,13 +180,16 @@ Only good without NULL values or if you know to handle NULL properly.
     );
 
 ### left join/is null
-Sometimes this is fastest. Often shortest. Often results in the same query plan as NOT EXISTS.
+
+Sometimes this is fastest. Often shortest. Often results in the same query plan
+as NOT EXISTS.
 
     SELECT l.ip FROM   login_log l 
     LEFT   JOIN ip_location i USING (ip)  -- short for: ON i.ip = l.ip
     WHERE  i.ip IS NULL;
 
 ### Except
+
 Short. Not as easily integrated in more complex queries.
 
     SELECT ip 
@@ -182,14 +199,17 @@ Short. Not as easily integrated in more complex queries.
     SELECT ip
     FROM   ip_location;
 
- want the ALL keyword. If you don't care, still use it because it makes the query faster.
+want the ALL keyword. If you don't care, still use it because it makes the query
+faster.
 
-### group by 
+### group by
+
 `wmname` must appear in the GROUP BY clause or be used in an aggregate function
 
     SELECT cname, MAX(avg)  FROM makerar GROUP BY cname;
 
 #### group by expression
+
 group by hour
 
     group by date_trunc('hour', ctime)
@@ -206,6 +226,7 @@ with order by:
     select hour/2 as hour2 from users group by hour2 order by hour2;
 
 #### group by with top N
+
 https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group
 
 不存在first 这个函数, 下面是伪代码
@@ -238,6 +259,7 @@ Supported by any database: 利用 group + column=max(column)
 #### partition(top N)
 
 ##### partition with ROW_NUMBER()
+
 partition top 1:
 
     # 相当于伪代码：SELECT FIRST(id), customer, FIRST(total) FROM  purchases GROUP BY customer ORDER BY total DESC;
@@ -263,7 +285,9 @@ PARTITION BY when multiple columns:
     WHERE s.rk = 1
 
 ##### partition with RANK() and DENSE_RANK()
-RANK() and DENSE_RANK() 区别: https://stackoverflow.com/questions/7747327/sql-rank-versus-row-number
+
+RANK() and DENSE_RANK() 区别:
+https://stackoverflow.com/questions/7747327/sql-rank-versus-row-number
 
     WITH T(StyleID, ID)
         AS (SELECT 1,1 UNION ALL
@@ -284,12 +308,13 @@ RANK() and DENSE_RANK() 区别: https://stackoverflow.com/questions/7747327/sql-
     1           2        4         4               2
 
 可以看到:
+
 1. ROW_NUMBER 对分区排序的row是唯一编号的
 1. DENSE_RANK 对分区排序的row，重复的row是会用相同编号
 1. RANK 对分区排序的row，重复的row是会用相同编号，内部编号会自增
 
-
 ##### delete duplicated row
+
 delete and keep top 2 row(order by peg) with group by industry
 
     DELETE FROM stock where id in 
@@ -312,11 +337,13 @@ delete and keep top 2 row(order by peg) with group by industry
     );
 
 #### having
+
 PostgreSQL won't calculate the sum twice
 
     SELECT  SUM(points) AS total FROM table GROUP BY username HAVING  SUM(points) > 25
 
 ### concat rows
+
 合并为array
 
     SELECT uid, ARRAY_AGG (first_name || ' ' || last_name) fullname FROM users; 
@@ -326,9 +353,10 @@ PostgreSQL won't calculate the sum twice
 
     -- GROUP BY 1 is a positional reference and a shortcut for GROUP BY movie
     -- The `group by 1` is a positional reference and a shortcut for `GROUP BY movie` in this case.
-    SELECT movie, string_agg(actor, ', ') AS actor_list FROM tbl GROUP  BY 1; 
+    SELECT movie, string_agg(actor, ', ') AS actor_list FROM tbl GROUP  BY 1;
 
 ### DISTINCT
+
 > https://stackoverflow.com/questions/18539223/select-random-row-for-each-group-in-a-postgres-table
 > SELECT DISTINCT ON expressions must match initial ORDER BY expressions
 
@@ -354,7 +382,6 @@ Or shorter (if not as clear) with ordinal numbers of output columns:
 
     select distinct task_id, min(update_time) as update_time from pod_monitors group by task_id having count(*) > 1
 
-
 `distinct on(fieldList)` 必须匹配`order by list`. list与fieldlist 必须要有交集
 `fieldList`中字段顺序不影响分组及结果, `list` 排序则影响顺序
 
@@ -373,7 +400,8 @@ where filter, 会导致提前过滤掉的分组top1行, 导致留下topN列上�
     # 没有问题: 先分组取最新的end_date, 再过滤
     select p.* from (select distinct on (code) code,end_date,pe,peg from profits order by code,end_date desc  ) p where p.peg<1;
 
-If total can be NULL (won't hurt either way, but you'll want to match existing indexes):
+If total can be NULL (won't hurt either way, but you'll want to match existing
+indexes):
 
     ORDER  BY customer, total DESC NULLS LAST, id; //null 排序时放在最后
 
@@ -409,22 +437,33 @@ If total can be NULL (won't hurt either way, but you'll want to match existing i
 
 ## update
 
-	UPDATE ed_names SET c_request = c_request+1 WHERE id = 'x'"
+    UPDATE ed_names SET c_request = c_request+1 WHERE id = 'x'"
+
+### update subquery
+
+    UPDATE dummy
+    SET customer=subquery.customer,
+        address=subquery.address,
+        partn=subquery.partn
+    FROM (SELECT address_id, customer, address, partn
+        FROM  /* big hairy SQL */ ...) AS subquery
+    WHERE dummy.address_id=subquery.address_id;
 
 ### update DUPLICATE
+
 mysql update 多个unique key 时,如果遇到 `duplicate key`, 比如所有的i加1
 
 一般情况下可以通过排序避免(mysql update/insert 时会按一定的顺序去查数据是否有效):
 
-	UPDATE <table> set i=i+1 where id>10 order by i desc; # 大的先加1，避免冲突
+    UPDATE <table> set i=i+1 where id>10 order by i desc; # 大的先加1，避免冲突
 
 如果`i`没有加索引，排序比较耗时或内存，就变通一下，比如：放弃排序，先负数：
 
-	UPDATE <table> set i=-i where id>10; # 先变负，就不存在+1冲突
-	UPDATE <table> set i=1-i where id>10;
-
+    UPDATE <table> set i=-i where id>10; # 先变负，就不存在+1冲突
+    UPDATE <table> set i=1-i where id>10;
 
 ### update limit
+
     UPDATE server_info
     SET    status = 'active' 
     WHERE  server_ip = ( SELECT server_ip FROM   server_info WHERE  status = 'standby' LIMIT  1)

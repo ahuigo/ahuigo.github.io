@@ -112,21 +112,20 @@ package 定义局部命名空间, 是用于路径查找的：
     $ go run main.go
     main.go:3:8: found packages godemo1 (fault1.go) and godemo2 (fault2.go) in
 
-### indirect 间隔引入
+### indirect 间隔引入(transparent dependency)
+> https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
+项目中依赖A, A依赖A1、A1依赖A2@v1.0.0, 则A2是间接引入. 
 
-    module tt
+不过此时：
+1.　如果A2 有重大bug，要升级到A2@v1.0.1，
+2. A1 不能及时升级
+
+则需要显示通过indirect 间隔引入A2 v1.0.1
 
     require (
-        github.com/mitchellh/mapstructure latest 
-        github.com/ahuigo/go-hello v0.0.0-20190325051759-913dff133b48 // indirect
-        github.com/jinzhu/gorm v1.9.1
-        github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
-        github.com/jinzhu/now v0.0.0-20181116074157-8ec929ed50c3 // indirect
+        A2 v1.0.1//indirect 是间接引入
+        golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
     )
-
-项目中依赖A, A依赖A1、A1依赖A2, 则A2是间接引入
-
-    A2 //indirect 是间接引入
 
 ## go.mod init
 使用步骤：

@@ -49,6 +49,19 @@ Hook 是 让你在不编写 class 的情况下使用 state 以及其他的 React
 2. useState 只在组件首次渲染的时候被创建state。在下一次重新渲染时，useState 返回给我们当前的 state。
 3. immutable: 不像 class 中的 this.setState，更新 state 变量总是替换它而不是合并它。
 
+## useEffect
+https://zhuanlan.zhihu.com/p/514751791
+本质就是：
+1. 利用useRef 存储更新fn
+1. 利用useLayoutEffect 保持引用不变性
+
+e.g
+
+     // ✅ Always the same function (even if `text` changes)
+     const onClick = useEvent(() => {
+        sendMessage(text);
+     });
+
 ## hook effect
 
 ### effect 本质

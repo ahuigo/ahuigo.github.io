@@ -52,12 +52,13 @@ if [[ -z $LDFLAGS ]];then
     #For pkg-config to find python@3.10 you may need to set:
     export PKG_CONFIG_PATH="/opt/homebrew/opt/python@3.10/lib/pkgconfig"
 fi
+export PATH="$HOME/.poetry/bin:$PATH"
 alias py='ipython3'
 alias p='python3'
 alias p2='python2'
 alias pi='pip3'
 alias pip='pip3'
-#export PYTHONPATH=.
+export PYTHONPATH=.
 
 # docker
 alias drmi='docker rmi $( docker images --filter "dangling=true" -q --no-trunc)'

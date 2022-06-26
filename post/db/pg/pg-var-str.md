@@ -3,7 +3,9 @@ title: Posgtre String
 date: 2019-06-20
 private:
 ---
+
 # str Type
+
 ### VARCHAR/TEXT/CHAR
 
     VARCHAR(n)	variable-length with length limit
@@ -12,7 +14,7 @@ private:
 
 ### ENUM
 
-	//如果声明了NOT NULL, 则默认使用第一个
+    //如果声明了NOT NULL, 则默认使用第一个
     CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy');
     CREATE TABLE person (
         name text,
@@ -20,45 +22,47 @@ private:
     );
 
 ### Mysql type
+
 mysql 的类型
 
-	VARCHAR(Length) [BINARY ]
-		Length
-			The length can be any value from 0 to 65536.
-			If Length is 0, Char can only be NULL or ""
-			If length is bigger than 255, it will be store as TEXT TYPE
-		BINARY
-			排序时区分大小写(默认不区分)
+    VARCHAR(Length) [BINARY ]
+    	Length
+    		The length can be any value from 0 to 65536.
+    		If Length is 0, Char can only be NULL or ""
+    		If length is bigger than 255, it will be store as TEXT TYPE
+    	BINARY
+    		排序时区分大小写(默认不区分)
     CHARACTER(length)
         CHAR(length)
 
-	LONGBLOB
-		支持2^32-1个字符, 最大的二进制存储
-	LONGTEXT
-		支持2^32-1个字符, 最大的文本存储(不能存储\0)
-	MEDIUMBLOB/MEDIUMTEXT
-		2^24-1
-	BLOB/TEXT
-		2^16-1 = 65535
-	TINYBLOB/TINYTEXT
-		2^8-1 = 255
-
+    LONGBLOB
+    	支持2^32-1个字符, 最大的二进制存储
+    LONGTEXT
+    	支持2^32-1个字符, 最大的文本存储(不能存储\0)
+    MEDIUMBLOB/MEDIUMTEXT
+    	2^24-1
+    BLOB/TEXT
+    	2^16-1 = 65535
+    TINYBLOB/TINYTEXT
+    	2^8-1 = 255
 
 # define string
+
 ## 转义
+
 1. 字符串，只能用`'`,`$$`,`$tag$` 为边界，双引号`"`是用于关键字的(e.g. table_name)
 2. 单外号会转义
 
-postgre 不支持\ 转义 
+postgre 不支持\ 转义
 
     select '\\'; #按字面输出
-    select '\''; #error 
+    select '\''; #error
 
 单引号转义
 
-	select 'My''S'; --like vim 
-		My'S
-    select 'a''b' # 不支持 ’a\'b' 
+    select 'My''S'; --like vim 
+    	My'S
+    select 'a''b' # 不支持 ’a\'b'
 
 多行：
 
@@ -77,19 +81,20 @@ postgre 不支持\ 转义
      I'm a string constant that contains a backslash \
 
 ## concat
+
     select 'a:'||'b'||1.2 as bb;    //"a:b1.2"
     select concat('a:','b', 1.2); // "a:b1.2"
     select concat(key1,key2)
 
 只适用于select :
 
-	select 'My' 'S' 'OL';
-		MySQL
+    select 'My' 'S' 'OL';
+    	MySQL
 
 concat hex:
 
-	select concat(0x31,2);
-	| 12             |
+    select concat(0x31,2);
+    | 12             |
 
 join:
 
@@ -109,6 +114,7 @@ join group:?????
     %[position][flags][width]type
 
 ### format type
+
 tppe list:
 
     %s will format the argument value as a string. NULL could be treated as an empty string.
@@ -121,8 +127,7 @@ tppe list:
     SELECT FORMAT('Welcome, %s','EduCBA');
     SELECT FORMAT('%s',stud_lname)  FROM ( select 1 as stud_lname) as f;
 
-`%I`(按需双引号转义，相当于`quote_ident`) 
-`%L`(强制单引号转义), `%s` 则不转义
+`%I`(按需双引号转义，相当于`quote_ident`) `%L`(强制单引号转义), `%s` 则不转义
 
     SELECT FORMAT('select * from %I where age=%L', 'my', 1);
     --------------
@@ -133,18 +138,21 @@ tppe list:
     SELECT to_char(50, '99.99');
 
 ### format flags
+
 padding flags
 
     SELECT FORMAT('|%20s|', 'ten'); -- right
     SELECT FORMAT('|%-20s|', 'ten'); -- left
 
 ### format position
+
 position
 
     SELECT FORMAT('%1$s House, %2$s Villa, %1$s Flat', 'my', 'your');
          my House, your Villa, my Flat
 
 ### format as value
+
     do $$ 
     declare
         first_name varchar(50) := 'John';
@@ -153,8 +161,8 @@ position
         raise notice 'Value: %', str;
     end $$;
 
-
 # str func
+
 ### string length
 
     CHAR_LENGTH(name)
@@ -168,26 +176,34 @@ position
     444  |  ###
 
 ### replace str
+
     REPLACE(name, 'substring', '')
 
+### preg_replace
 
-#### str to hex
+    REGEXP_REPLACE(source, pattern, new_text [,flags])
+
+    // \M means match only at the end of each word
+    SELECT regexp_replace( 'Bar sheepbar bar bars barsheep', 'bar\M', 'foo', 'gi');
+
+### str to hex
+
 hex() and unhex
 
-	mysql> SELECT X'616263', HEX('abc'), UNHEX(HEX('abc'));
-			-> 'abc', 616263, 'abc'
-	mysql> SELECT HEX(255), CONV(HEX(255),16,10);
-			-> 'FF', 255
+    mysql> SELECT X'616263', HEX('abc'), UNHEX(HEX('abc'));
+    		-> 'abc', 616263, 'abc'
+    mysql> SELECT HEX(255), CONV(HEX(255),16,10);
+    		-> 'FF', 255
 
 concat hex as string:
 
-	select concat(0x31,2);
-	| 12             |
+    select concat(0x31,2);
+    | 12             |
 
-#### length
+### length
 
-	select length('国'); //1
-	select length('中\'); //2
+    select length('国'); //1
+    select length('中\'); //2
 
 其它
 
@@ -198,18 +214,18 @@ concat hex as string:
 
 Length 不是字节数，而是字符数
 
-	CHAR(Length) [BINARY | ASCII | UNICODE ]
+    CHAR(Length) [BINARY | ASCII | UNICODE ]
 
-		Length
-			The length can be any value from 0 to 255.
-			If Length is 0, Char can only be NULL or ""
-			If length is bigger than 255, it will be store as TEXT TYPE
-		BINARY
-			排序时区分大小写(默认不区分)
-		ASCII
-			使用Latin1 这种万能字符集(默认?)
-		UNICODE
-			使用ucs2 字符集(又字节?)
+    	Length
+    		The length can be any value from 0 to 255.
+    		If Length is 0, Char can only be NULL or ""
+    		If length is bigger than 255, it will be store as TEXT TYPE
+    	BINARY
+    		排序时区分大小写(默认不区分)
+    	ASCII
+    		使用Latin1 这种万能字符集(默认?)
+    	UNICODE
+    		使用ucs2 字符集(又字节?)
 
 ## split string
 
@@ -233,4 +249,3 @@ help:
 
     where strpos(name, '@') > 0
     where name ~ '@'
-

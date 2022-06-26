@@ -41,7 +41,7 @@ http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
     "\033[1;33m"
     "\033[1;33;45m"
 
-## color
+## foreground and background color
 The SGR parameters 30-37 selected the foreground color,
 
     BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(30,38)
@@ -98,19 +98,19 @@ zsh color list
 >  In version 2.50 and later, bold is interpreted as high-intensity
 
 
-# color
-## color tool
+# rgb/rgba/hsl/hsv color
+## 
 mac:
 1. digital color meter
 1. ColorSync Utility
 2. chrome color picker
 
-在计算机中经常使用rgb/rgba 三原色来表示所有的颜色。 在做艺术设计时，经常使用另一种更多允观的HSL或者HSV 来表示。对于HSL 来说， 
+在计算机中经常使用rgb/rgba 三原色来表示所有的颜色。 
+在做艺术设计时，经常使用另一种更多允观的HSL或者叫HSV 来表示。对于HSL 来说， 
+
+
     hsl(359, 100%, 50%)
     hsla(239, 100%, 50%, 0.36)
-
-在计算机中经常使用rgb 三原色来表示所有的颜色。
-在做艺术设计时，经常使用另一种更多允观的HSL或者HSV 来表示。对于HSL 来说，
 
 	H: Hue 色相(0~359)
 	S: Saration 饱和度,(0%是灰色,100%是饱和)
@@ -125,12 +125,12 @@ mac:
 	b = 2 * {l + [s*(hb-0.5)+0.5] - l*[s*(hb-0.5)+0.5]} -1
 
 色相表示人类能感知的颜色(rgb 两两组合的颜色)
-饱和度0表示灰色(50%,50%,50%)=rgb(#888)
+饱和度0表示灰色: 即`(50%,50%,50%)=rgb(#888)`
 明亮度表示接近黑色(0，0，0), 或者白色(1,1,1) 的程度
 
 ![Have](/img/ria.color.hue.png)
 
-## coloer list
+## css color
 
     a:hover{background: cadetblue}
     a:link{background: lightgray}
