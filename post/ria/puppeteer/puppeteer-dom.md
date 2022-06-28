@@ -3,31 +3,34 @@ title: puppeteer login
 date: 2020-12-29
 private: true
 ---
+
 # puppeteer login example
+
 https://www.codota.com/code/javascript/functions/puppeteer/Page/click
 
 ```ts
 (async () => {
- const browser = await puppeteer.launch({ headless: true })
- const page = await browser.newPage()
- await page.goto('https://github.com/login', { waitUntil: 'networkidle2' })
- await page.type('#login_field', process.env.GITHUB_USER)
- await page.type('#password', process.env.GITHUB_PWD)
- await page.type('input[placeholder="Enter a title"]', 'title')
-//  document.querySelector('input[placeholder="Enter a title"]')
-//  document.querySelector('input[placeholder="Enter a title"][type="text"]')
- await page.click('[name="commit"]')
-//  await page.waitForNavigation()
- await page.waitForSelector('h4.cart-items-header')
- await page.screenshot({ path: screenshot })
- browser.close()
- console.log('See screenshot: ' + screenshot)
-})()
+  const browser = await puppeteer.launch({ headless: true });
+  const page = await browser.newPage();
+  await page.goto("https://github.com/login", { waitUntil: "networkidle2" });
+  await page.type("#login_field", process.env.GITHUB_USER);
+  await page.type("#password", process.env.GITHUB_PWD);
+  await page.type('input[placeholder="Enter a title"]', "title");
+  //  document.querySelector('input[placeholder="Enter a title"]')
+  //  document.querySelector('input[placeholder="Enter a title"][type="text"]')
+  await page.click('[name="commit"]');
+  //  await page.waitForNavigation()
+  await page.waitForSelector("h4.cart-items-header");
+  await page.screenshot({ path: screenshot });
+  browser.close();
+  console.log("See screenshot: " + screenshot);
+})();
 ```
 
 # wait request
 
 ## Wait for the element to appear in DOM.
+
 wait until the element is found and will throw an error otherwise.
 
     await page.waitFor('.CL1');
@@ -36,19 +39,23 @@ wait until the element is found and will throw an error otherwise.
         timeout: 20*1000 //20s
       });
 
+## waitUntil
 
-## waitUntil 
 e.g.
 
     await page.goto(url, {waitUntil: 'networkidle2'});
     await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
 1. load - consider navigation to be finished when the load event is fired.
-1. domcontentloaded - consider navigation to be finished when the DOMContentLoaded event is fired.
-1. networkidle0 - consider navigation to be finished when there are no more than 0 network connections for at least 500 ms.
-1. networkidle2 - consider navigation to be finished when there are no more than 2 network connections for at least 500 ms.
+1. domcontentloaded - consider navigation to be finished when the
+   DOMContentLoaded event is fired.
+1. networkidle0 - consider navigation to be finished when there are no more than
+   0 network connections for at least 500 ms.
+1. networkidle2 - consider navigation to be finished when there are no more than
+   2 network connections for at least 500 ms.
 
 # selector
+
 right click and click Copy > Copy selector
 
 ## selector with XPATH(innerText)
@@ -58,7 +65,7 @@ right click and click Copy > Copy selector
         await button.click();
     }
 
-复杂一点的XPath:  父子
+复杂一点的XPath: 父子
 
     const [button] = await page.$x("//div[@class='elements']/button[contains(., 'Button text')]");
 
@@ -67,8 +74,8 @@ right click and click Copy > Copy selector
     const [link] = await page.$x('//*[@class="elements"]//a[text()="Button text"]');
     el && (await el.click());
 
-
 ## selector handler
+
 Instead of
 
     await page.evaluate(() => document.querySelector('#my-sweet-id').innerText)
@@ -84,13 +91,16 @@ You can use page.$eval:
     const element = await page.$(".scrape");
 
 # dom evaluate
+
 ## page.evaluate
 
     const element = await page.$(".scrape");
     const text = await page.evaluate(element => element.textContent, element);
 
 # open page
+
 ## open post page
+
 how do POST request in puppeteer?
 
     // Create browser instance, and give it a first tab

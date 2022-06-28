@@ -14,6 +14,8 @@ http://www.chartjs.org/docs/#line-chart-example-usage
 2. 必须是window 中的dom
 3. 以下几种都可以
 
+e.g.
+
     ctx = $('#id')
     ctx = $('#id')[0]
     ctx = $('#id')[0].getContext('2d')

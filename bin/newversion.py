@@ -26,12 +26,14 @@ def incrVersion(m):
     return v
 
 def upgradePlainFile(versionFile):
+    global newversion
     if len(sys.argv)==3:
         v = sys.argv[2]
     else:
         version = open(versionFile).read().strip()
-        v = re.sub(r'(?<=\.)(-)?\d+$',incrVersion, version)
+        v = re.sub(r'(?<=\.)(-)?\d+$',incrNum, version)
 
+    newversion = v
     open(versionFile,'w').write(v)
     return newversion
 

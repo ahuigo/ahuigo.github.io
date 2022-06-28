@@ -165,6 +165,7 @@ function gcap(){
 unset GREP_OPTIONS
 alias grep='grep --color=auto --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn'
 mcd(){ mkdir -p $@; cd $1;}
+compdef -d mcd
 alias grepr='grep -rn -F'
 grepr.(){ grep -rn $@ .}
 

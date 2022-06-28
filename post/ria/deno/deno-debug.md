@@ -8,6 +8,10 @@ private: true
 
 https://deno.land/manual/getting_started/debugging_your_code
 
+# vscode debug
+
+how to disable **Skipped by smartStep**
+
 # chrome
 
 ## run deno

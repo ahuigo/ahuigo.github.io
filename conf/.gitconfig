@@ -23,7 +23,7 @@
 [push]
 	default = simple
 [init]
-	templatedir = ~/.git
+	templatedir = ~/.git_template
 	defaultBranch = main
 [merge]
 	tool = vimdiff
@@ -45,4 +45,4 @@
 [pull]
 	rebase = false
 [commit]
-    template = ~/.gitmessage
+	template = ~/.git_template/gitmessage

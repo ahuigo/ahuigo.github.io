@@ -12,6 +12,8 @@ function! edit#run()
         !node %
     elseif ext == 'ts'
         !deno run %
+    elseif ext == 'rs'
+        !rustc % -o a && ./a
     elseif ext == 'go'
         let filepath = expand('%')
         if filepath =~ '_test.go$'

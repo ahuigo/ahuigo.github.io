@@ -2,15 +2,20 @@
 title: go-test
 date: 2018-09-27
 ---
-# unittest 
-Go has a lightweight test framework composed of the go test command and the testing package.
+
+# unittest
+
+Go has a lightweight test framework composed of the go test command and the
+testing package.
 
 1. test framework composed of the `go test` command and the `testing` package.
-2. file with a name ending in `_test.go` that contains functions named `TestXXX` with signature `func (t *testing.T)`
+2. file with a name ending in `_test.go` that contains functions named `TestXXX`
+   with signature `func (t *testing.T)`
 3. if the function calls a failure function such as `t.Error or t.Fail`
 
 ## go test help
-几个常用的参数： 
+
+几个常用的参数：
 
     go help testflag
     go help test
@@ -28,7 +33,9 @@ Go has a lightweight test framework composed of the go test command and the test
         -bench=Alloc ; 表示运行所有基准测试: Benchmark_Alloc
 
 ## command faq
+
 ### testcache
+
 禁用cache 的方法有多个
 
     go clean -testcache
@@ -36,6 +43,7 @@ Go has a lightweight test framework composed of the go test command and the test
     go test -count=1
 
 ### test cwd
+
 默认go test会改变cwd 到测试文件所在的目录
 
     package xtesting
@@ -61,6 +69,7 @@ After that, just import the package into any of the test files:
     )
 
 ### test mode
+
 几种test mode:
 
     # test pkg in current directory (not recursive)
@@ -78,7 +87,18 @@ After that, just import the package into any of the test files:
     # specify test file(可能存在依赖问题, recommended)
     go test -run='^Test1$' ./path/to/pkg
 
+### test all subdirectories
+
+    go test ./...
+
+    # with coverage
+    got test -coverprofile="test.temp" ./... | tee coverage.out
+
+    # filter coverage pkg
+    go test -coverpkg=./... ./... | tee coverage.out
+
 #### 1.directory mode(不会递归)
+
 执行当前diretory下所有的`_test.go` 是(必须有go.mod, module名不限定)
 
 这种模式下 caching is disabled.
@@ -87,6 +107,7 @@ After that, just import the package into any of the test files:
     $ go test  -v
 
 #### 2.package list mode(带cached):
+
 这种模式下要指定pkg目录：
 
     go test -v -timeout 1m ./service
@@ -95,7 +116,7 @@ After that, just import the package into any of the test files:
 
 1. 加上`-v` `go test -v`, 让fmt/logger 实时输出cache
 1. 利用t.Log() t.Logf() 输出信息
-3. 加上`-count=1` 禁用cache
+1. 加上`-count=1` 禁用cache
 
 执行测试 module、文件夹、文件:
 
@@ -111,16 +132,17 @@ After that, just import the package into any of the test files:
     // test file
     go test -v math_test.go //ok
 
-In package list mode ，successful package test result will be cached and reused, 
+In package list mode ，successful package test result will be cached and reused,
 如果想禁止cache ，就用-count=1
 
     go test . -count=1;
 
 #### 3. test file and func
+
 1. `go test` is okay.
-2. `go test <pkg>`  is okay.
+2. `go test <pkg>` is okay.
 3. `go test whatever_test.go` is okay
-3. `go test whatever.go` is not okay!!!!!
+4. `go test whatever.go` is not okay!!!!!
 
 指定文件、路径. 如是foo_test.go 依赖foo.go 就要写全:
 
@@ -134,8 +156,7 @@ In package list mode ，successful package test result will be cached and reused
          flag (interpreted as `.*<regexp>.*` match function)
     $ go test -run TestSubset #指定函数名
     $ go test -run '^TestSubset$' #指定函数名
-    $ go test -run TestSubset  ./service 
-
+    $ go test -run TestSubset  ./service
 
 注意：
 
@@ -145,6 +166,7 @@ In package list mode ，successful package test result will be cached and reused
     go run  ./cmd/samples/recipes/helloworld/
 
 ## unit test 介绍
+
 github.com/ahuigo/go-lib/gotest
 
 go test 会执行Test 打头的函数
@@ -186,7 +208,7 @@ go test 会执行Test 打头的函数
         // hello world
     }
 
-### test timeout 
+### test timeout
 
     $ go test -timeout 30s -run ^TestSimple$   #用
 
@@ -210,8 +232,7 @@ testing.T 提供了几种日志输出方法:
     Fail    等价于Fail = func (){t.Error("")}
     FailNow    等价于Fail = func (){t.Fatal("")}
 
-Note:
-Error/Fatal 都会导致bench 不被执行
+Note: Error/Fatal 都会导致bench 不被执行
 
     t.Fatal(err)
 
@@ -220,7 +241,9 @@ Error/Fatal 都会导致bench 不被执行
     strings.HasSuffix(os.Args[0], ".test")
 
 # bench test
+
 ## bench test rule
+
 1.go test不会默认执行压力测试的函数，如果要执行压力测试需要带上参数`-test.bench`，语法:
 
     go test -test.bench="Benchmark_*"    #表示匹配所有的`Benchmark_`或`Benchmark`打头的压力测试函数
@@ -230,7 +253,7 @@ Error/Fatal 都会导致bench 不被执行
     func Benchmark_XXX(b *testing.B) { ... }
     func BenchmarkXXX(b *testing.B) { ... }
 
-## write bench 
+## write bench
 
     package gotest
     import "testing"
@@ -246,9 +269,11 @@ Error/Fatal 都会导致bench 不被执行
         }
     }
 
-b.N 从 1 开始，如果该用例能够在 1s 内完成，b.N 的值便会增加，再次执行。b.N 的值大概以 1, 2, 3, 5, 10, 20, 30, 50, 100 这样的序列递增
+b.N 从 1 开始，如果该用例能够在 1s 内完成，b.N 的值便会增加，再次执行。b.N 的值大概以 1, 2, 3, 5, 10, 20, 30, 50,
+100 这样的序列递增
 
 ## 测试bench
+
 -bench regex
 
     # 测试全部
@@ -264,11 +289,13 @@ b.N 从 1 开始，如果该用例能够在 1s 内完成，b.N 的值便会增�
 
 2000000000 表示测试的次数，也就是 testing.B 结构中提供给程序使用的 N。“0.33 ns/op”表示每一个操作耗费多少时间（纳秒）。
 
-BenchmarkDivision-4 中的 -4 即 GOMAXPROCS，默认等于 CPU 核数。可以通过 -cpu 参数改变 GOMAXPROCS，-cpu 支持传入一个列表作为参数，例如：
+BenchmarkDivision-4 中的 -4 即 GOMAXPROCS，默认等于 CPU 核数。可以通过 -cpu 参数改变
+GOMAXPROCS，-cpu 支持传入一个列表作为参数，例如：
 
     $ go test -cpu=2,4 .
 
 ### 自定义bench 时间
+
 通过-benchtime参数可以自定义测试时间，默认是1s, 例如：
 
     $ go test -v -bench=. -benchtime=5ms bench_test.go
@@ -280,10 +307,10 @@ BenchmarkDivision-4 中的 -4 即 GOMAXPROCS，默认等于 CPU 核数。可以�
     $ go test -bench='Fib$' -benchtime=50x .
 
 ### count执行轮数(go test也有)
+
 如果想定义执行5轮（实际次数是b.N*5）
 
     go test -bench=".*" -count=5
-
 
 ### bench cpu.profile
 
@@ -293,6 +320,7 @@ BenchmarkDivision-4 中的 -4 即 GOMAXPROCS，默认等于 CPU 核数。可以�
     cpu.profile popcnt.test
 
 #### 进入交互
+
 进入command 交互模式
 
     $ go tool pprof popcnt.test cpu.profile
@@ -307,7 +335,7 @@ BenchmarkDivision-4 中的 -4 即 GOMAXPROCS，默认等于 CPU 核数。可以�
 
 web 打开svg:
 
-    $ go tool pprof -web cpu.profile 
+    $ go tool pprof -web cpu.profile
 
 text模式top
 
@@ -316,11 +344,12 @@ text模式top
 更多: 运行 go tool pprof 来得到最完整的列表
 
 ## -benchmem bench memory
+
 可以 从help 找到memory profile 的说明
 
     go help testflag
 
-测试代码 
+测试代码
 
     func Benchmark_Alloc(b *testing.B) {
         for i := 0; i < b.N; i++ {
@@ -339,6 +368,7 @@ text模式top
                             16 B/op	       2 allocs/op
 
 ## ResetTimer 忽略无关的耗时
+
     func BenchmarkFib(b *testing.B) {
         time.Sleep(time.Second * 3) // 模拟耗时准备任务
         b.ResetTimer() // 重置定时器
@@ -348,18 +378,20 @@ text模式top
     }
 
 ## StopTimer & StartTimer
+
 还有一种情况，每次函数调用前后需要一些准备工作和清理工作，我们可以使用 StopTimer 暂停计时以及使用 StartTimer 开始计时。
 
-例如，如果测试一个冒泡函数的性能，每次调用冒泡函数前，需要随机生成一个数字序列，这是非常耗时的操作，这种场景下，就需要使用 StopTimer 和 StartTimer 避免将这部分时间计算在内。
+例如，如果测试一个冒泡函数的性能，每次调用冒泡函数前，需要随机生成一个数字序列，这是非常耗时的操作，这种场景下，就需要使用 StopTimer 和
+StartTimer 避免将这部分时间计算在内。
 
     package main
-    
+
     import (
     	"math/rand"
     	"testing"
     	"time"
     )
-    
+
     func generateWithCap(n int) []int {
     	rand.Seed(time.Now().UnixNano())
     	nums := make([]int, 0, n)
@@ -368,7 +400,7 @@ text模式top
     	}
     	return nums
     }
-    
+
     func bubbleSort(nums []int) {
     	for i := 0; i < len(nums); i++ {
     		for j := 1; j < len(nums)-i; j++ {
@@ -378,7 +410,7 @@ text模式top
     		}
     	}
     }
-    
+
     func BenchmarkBubbleSort(b *testing.B) {
     	for n := 0; n < b.N; n++ {
     		b.StopTimer()
@@ -387,5 +419,7 @@ text模式top
     		bubbleSort(nums)
     	}
     }
+
 # 参考
+
 https://geektutu.com/post/hpg-benchmark.html
