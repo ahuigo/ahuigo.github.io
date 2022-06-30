@@ -153,6 +153,9 @@ see `:help <D-` for command key or super key
 
     <D-s>  Command+s
 
+map Cmd+left/right:
+https://stackoverflow.com/questions/9595633/how-to-get-cmd-left-right-working-with-iterm2-and-vim-without-requiring-vimrc
+
 ### Alt key
 
     <M-...>		alt-key or meta-key		*META* *ALT* *<M-*

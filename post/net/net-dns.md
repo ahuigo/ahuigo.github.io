@@ -209,6 +209,8 @@ On Mac OSX
 
 	networksetup -listallnetworkservices
 	sudo networksetup -setdnsservers Wi-Fi 223.5.5.5 223.6.6.6
+    sudo networksetup -setdnsservers Wi-Fi "Empty"
+
 
 On Linux
 

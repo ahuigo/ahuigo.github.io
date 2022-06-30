@@ -6,6 +6,13 @@ date: 2018-09-27
 https://en.wikipedia.org/wiki/ANSI_escape_code
 http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
 
+## shell
+
+    RED='\033[0;31m'
+    NC='\033[0m' # No Color
+    printf "I ${RED}love${NC} Stack Overflow\n"
+
+
 ## python
 
     class bcolors:

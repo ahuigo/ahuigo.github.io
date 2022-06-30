@@ -14,6 +14,8 @@ private:
     >>> a=yaml.load(open('a.conf'))
     conf = yaml.load(open(sys.argv[1]), Loader=yaml.FullLoader)
 
+    # or
+    conf = yaml.safe_load(open(sys.argv[1]))
     ```
 
 ## load str
@@ -57,7 +59,10 @@ dummper style
 
 不过，上面的例子对 `yaml.dump('\"key:value\",\n \n') `无效. 我们可以采用下面的示例解决此问题
 
-    def dump_with_newline2(data):
+    
+    pip install ruamel_yaml
+
+    def initYaml():
         from ruamel.yaml.representer import RoundTripRepresenter
         from ruamel.yaml import YAML
         def repr_str(dumper: RoundTripRepresenter, data: str):
@@ -67,15 +72,17 @@ dummper style
 
         yaml = YAML()
         yaml.representer.add_representer(str, repr_str)
-        yaml.dump(data, sys.stdout)
+        return yaml
 
-上例封装中，必须传sys.stdout, 可用stringIO 替代 sys.stdout
-
-    from io import StringIO
-    f = StringIO()
-    yaml.dump(data, f)
-    return f.getvalue()
-
+    def yamlDump(data):
+        from io import StringIO
+        f = StringIO()
+        yaml.dump(data, f)
+        #yaml.dump(data, sys.stdout)
+        return f.getvalue()
+    yaml = initYaml()
+    conf = yaml.load(open(helmPath,'r'))
+    yamlDump(conf)
 
 ## keep comments
     import sys

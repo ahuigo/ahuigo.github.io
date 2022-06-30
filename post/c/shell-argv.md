@@ -6,6 +6,25 @@ date: 2019-05-17
 
     ${1:"default"}
 
+# parse argv
+
+    # bash a.sh -f -o a.txt 
+    parse_argv(){
+        while test $# -gt 0; do
+            case "$1" in
+                (-f) force=1;;
+                (-o) outfile=$2;
+                    shift;;
+                (*) help=1;;
+            esac
+            shift
+        done
+    }
+    parse_argv "$@"
+    echo -f:$force
+    echo -o:$outfile
+    echo -h:$help
+
 # optional
 
     while getopts "a:bc" arg #选项后面的冒号表示该选项需要参数

@@ -35,6 +35,8 @@ date: 2018-09-28
 
     os.chdir('/')
     os.getcwd()
+## home
+    pathlib.Path.home()
 
 ## .iterdir
 
@@ -78,7 +80,7 @@ Listing Python source files in this directory tree:
 
 ## path info
 
-## .resolve
+### .resolve
 
     >>> q.resolve()
     PosixPath('/etc/rc.d/init.d/halt')

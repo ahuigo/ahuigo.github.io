@@ -38,7 +38,7 @@ Act as stdin
 		The leading tab is ignored.
     MM
 	fi
-	# nowdoc + ignore tab(not include space) MM 仍然要顶行写
+	# nowdoc + ignore tab(not include space) MM 仍然要顶行写, 且不能用`;` 分号
 	cat <<-'MM' | sudo tee -a a.txt > /dev/null
 		echo $PATH
     MM
@@ -488,15 +488,16 @@ shift 3: 左移出3
 		el="$1"
 		shift
 		while test $# -gt 0; do
-				test $el = $1 && return 0;		# for zsh
-				# test "$el" = "$1" && return 0 # for bash and zsh
+				test "$el" = "$1" && return 0 # for bash and zsh
+				#test $el = $1 && return 0;		# for zsh
 				shift
 		done
 		return 1
 	}
-	arr=( 1 2 'Hello  Jack');
-	in_array 'Hello  Jack' $arr && echo has;		# for zsh only
-	in_array 'Hello  Jack' "${arr[@]}" && echo has; # for zsh and bash
+	arr=( 1 2 'Hello Jack');
+	in_array 'Hello Jack' "${arr[@]}" && echo has; # for zsh and bash
+	in_array 'Hello Jack' "$@" && echo has; # for zsh and bash
+	in_array 'Hello Jack' $arr && echo has;		# for zsh only
 
 利用eval 访问外围的arr
 

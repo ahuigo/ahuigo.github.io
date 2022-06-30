@@ -37,3 +37,6 @@ date: 2019-01-23
     $ go tool objdump -s .New queue
     $ go tool objdump -s New queue
     $ go tool objdump -s .Queue.PushTailCAS queue
+
+# view asm online
+- compiler explorer: https://godbolt.org/

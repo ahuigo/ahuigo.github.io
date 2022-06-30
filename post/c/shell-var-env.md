@@ -68,40 +68,39 @@ export -n FOO 相当于
 
 ### Get Script pid
 
+    echo pid:$$
+
 > http://wiki.jikexueyuan.com/project/13-questions-of-shell/exec-source.html
 
 - fork 子进程
 - exec 替换当前进程的code(原有程序终止)
 - source 在前进程执行code
 
-### Get Script File Path
+### Get Script Path
 
-In zsh:
+In zsh: `$0` is **script relative path** or **function name**
 
     # Current Script's relative path
     script_path=$0
     script_dir=$(dirname $0)
 
     # Current Script's absolute path 
-    script_path=${0:a} ; # bash would ignore :a
+    script_path=${0:a} ; # bash would ignore `:a`
 
-in bash :
+in bash: 
+- `BASH_SOURCE[0]` is  **script relative path**, no function name
+- `$0` is **first** script relative path, no function name.
 
-    # Current Script's relative path
-    script_path=${BASH_SOURCE[0]}
+bash e.g.
 
-    # get **first script's** relative path
-    $0
-
-Example:
-
-    $ cat a/s.sh
-    printf '$0 is: %s\n $BASH_SOURCE is: %s\n' "$0" "$BASH_SOURCE"
-
-    $ bash ./a/s.sh
-    	$0 is: ./a/s.sh,$BASH_SOURCE is: ./a/s.sh
-    $ zsh ./a/s.sh
-    	$0 is: /tmp/a/s.sh,$BASH_SOURCE is: /tmp/a/s.sh
+    $ cat first.sh
+        source ./sub/sencond.sh
+    $ cat ./sub/second.sh
+        echo 'BASH_SOURCE[0] is '${BASH_SOURCE[0]}
+        echo '$0 is ' $0
+    $ bash first.sh
+        BASH_SOURCE[0] is ./sub/second.sh
+        $0 is first.sh
 
 #### Working Directory:
 

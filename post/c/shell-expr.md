@@ -99,8 +99,8 @@ until
 # case
 
 1. case 不需要加break
-1. 条件以右括号结尾,_左括号可省略_;
-1. 每个条件判断语句块都以一对分号结尾";;"
+1. 条件以右括号结尾,**左括号可省略**;
+1. 每个条件判断语句块都以一对分号结尾`;;`
 
 e.g.
 
@@ -123,7 +123,7 @@ case条件 可以是变量、与或非(不能有引号)、简单的通配符(不
 不是前缀匹配，而是完全匹配, 除非加`pre*)`：
 
     case "$2,$3" in
-    merge,) print' "$3" ;;
+        merge,) print' "$3" ;;
         *) ;;
     esac
 
@@ -199,6 +199,12 @@ option produces a more verbose description:
     command -v ls
 
 # condition expression
+
+## multiple conditions
+注意空格分割
+
+    ! { false || true;}
+    ! { [[ -n $a ]] || [[ -n $b ]];}
 
 ## if
 

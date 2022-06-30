@@ -83,6 +83,16 @@ go install 命令在内部实际上分成了两步操作：
 ## go vet
 vet         report likely mistakes in packages
 
+## go list 
+查看指定目录所属于的包名
+
+    $ go list
+    github.com/ahuigo/requests
+
+    $ go list dir
+
+注意： go list 会检查dir 中的go 文件，如果没有go 文件的话，就找不到package path
+
 ## 其他命令
 go fix 用来修复以前老版本的代码到新版本，例如go1之前老版本的代码转化到go1
 

@@ -4,6 +4,8 @@ date: 2020-01-20
 private: true
 ---
 # React setState 多次渲染问题
+> setState/useReducer 本质上是触发全局的`currentComponent` 执行render
+
 如果是同步调用，多次setState 会被合并为一次, 因为此时setState 通过上下文能判断出属于function compoment 生命周期的第一阶段，会忽略render。到生命周期的render 阶段再统一渲染
 
     const [loading, setLoading] = useState(true);
@@ -57,7 +59,7 @@ React提供了useReducer来管理各个依赖项，(useState本身就是用的us
         setRequest({loading: false, data:data}); 
     }, []);
 
-如果想要支持回调函数－获取上一个状态，需要对上面的代码进行改造:
+如果想要支持回调函数－获取上一个状态prevState，需要对上面的代码进行改造:
 
     const [request, setRequest] = useReducer(
         (prevState, newState) => {
@@ -78,9 +80,9 @@ React提供了useReducer来管理各个依赖项，(useState本身就是用的us
 
 ### typescript 支持
     interface MyState {
-    loading: boolean;
-    data: any;
-    something: string;
+        loading: boolean;
+        data: any;
+        something: string;
     }
 
     const [state, setState] = useReducer<Reducer<MyState, Partial<MyState>>>(

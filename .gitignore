@@ -43,3 +43,5 @@ go.sum
 /img/open-web.png
 /slide.html
 *.rdb
+
+/post/deno-doc/

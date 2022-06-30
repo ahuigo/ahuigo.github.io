@@ -21,6 +21,14 @@ golang
 
 
 # 工具类
+github pages:
+    redirect all path to 404.html
+    refer deno pagic blog plugin
+faas:
+    https://github.com/varHarrie/fn/tree/main/fn-server
+tiny image:
+    https://understandingdata.com/python-for-seo/how-to-compress-images-in-python/
+    https://stackoverflow.com/questions/71941791/most-efficient-method-to-reduce-image-size-in-kb-under-a-given-size-using-pil
 swagger in gonic:
     1. 通过comment 生成doc: gotestdoc 
     /* gotestdoc: md
