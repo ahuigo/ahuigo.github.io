@@ -23,3 +23,8 @@ iterm2 默认的 Profile - Terminal: Report Terminal Type = xterm , 导致nvim �
 
     nvim -u NORC ;#not load init.vim
     nvim -u NONE ;#not load all
+    nvim --clean ("use factory defaults").
+
+like vim
+
+    vim -u DEFAULTS

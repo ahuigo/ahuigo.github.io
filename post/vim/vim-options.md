@@ -65,7 +65,21 @@ ts & sw 的具体区别是:
       1. 否则，输入`tab`, 那么每次移位是`sw(shiftwidth)`个`空格字符`长度
       3. 移位的字符宽度达到`ts=16`个字符宽度后, 就将空格字符 替换成`tab 字符`（仅当设置`:set noexpandtab`）
 
+# debug (like shell's `set -x`)
+find which script set this value
+
+	:verbose set shiftwidth cindent?
+    shiftwidth=4 
+        Last set from modeline line 1 
+    cindent 
+        Last set from ~/vim/vim60/ftplugin/c.vim line 30 
+
 # statusline
+help:
+
+    :h 'statusline'
+
+path example
 
 	:set statusline=%f\ -\ FileType:\ %y
 	:set statusline=%f         " Path to the file

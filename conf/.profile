@@ -27,14 +27,8 @@ export GNUTERM=qt
 export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])'$'\n$ '
 # for ssh-host-machine: export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
 
-################# NVM ##############
-echo "nvm.sh"
-export NVM_DIR="$HOME/.nvm"
-#source $(brew --prefix nvm)/nvm.sh
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
 
-
-# nvim
+###################### nvim #####################
 export EDITOR="nvim"
 alias vi='nvim'
 alias vim='nvim'
@@ -121,6 +115,7 @@ function devops2() {
 }
 
 
+########################## git #####################
 # git -C dir
 function gcap(){
     ori_dir=$(pwd)
@@ -161,6 +156,7 @@ function gcap(){
     cd $ori_dir
 }
 
+################ shell cli###########################
 # grep
 unset GREP_OPTIONS
 alias grep='grep --color=auto --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn'
@@ -197,16 +193,13 @@ function mda (){
         sudo chmod a+rwx $1
 }
 
+################ node:cnpm/yarn #################
 #alias for cnpm
 alias cnpm_del="npm --registry=https://registry.npm.taobao.org \
   --cache=$HOME/.npm/.cache/cnpm \
   --disturl=https://npm.taobao.org/dist \
   --userconfig=$HOME/.cnpmrc"
 
-alias yarn=tyarn
-
-# z.lua
-#eval "$(lua ~/conf/z.lua --init zsh)"
 
 # app
 export APP_ENV=dev
@@ -219,8 +212,8 @@ export GODEV=local
 export GO111MODULE=on 
 export GOPATH=~/go
 # 配置 GOPROXY 环境变量
-export GOPRIVATE='*.internal.mycompany.com,github.com/ahuigo1,github.com/ahuigo2/requests,github.com/momenta/mojito'
-export GOPROXY=https://goproxy.io,direct
+export GOPRIVATE='*.internal.mycompany.com,github.com/ahuigo1,github.com/ahuigo2/requests'
+#export GOPROXY=https://goproxy.io,direct
 #export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 export GONOSUMDB=*.corp.example.com,rsc.io/private
 #export GOSUMDB=off
@@ -238,6 +231,7 @@ export CLASSPATH='.:/usr/local/lib/jar/*'
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
 # yarn
+alias yarn=tyarn
 export YARN_REGISTRY="http:test"
 export PATH="$PATH:$(yarn global bin)"
 [ -f ~/.private ] && source ~/.private

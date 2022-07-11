@@ -1,0 +1,45 @@
+---
+title: deno cache
+date: 2022-07-11
+private: true
+---
+# deno cache
+in case of the content in the remote url https://some.url/a.ts is changed, we should use lock.json to check subresource integrity for modules.
+
+
+    // A lock.json might look like this 
+    {
+    "https://deno.land/std@0.147.0/textproto/mod.ts": "3118d7a42c03c242c5a49c2ad91c8396110e14acca1324e7aaefd31a999b71a4",
+    "https://deno.land/std@0.147.0/io/util.ts": "ae133d310a0fdcf298cea7bc09a599c49acb616d34e148e263bcb02976f80dee",
+    "https://deno.land/std@0.147.0/async/delay.ts": "35957d585a6e3dd87706858fb1d6b551cb278271b03f52c5a2cb70e65e00c26a",
+    ...
+    }
+
+## update/create lock.json
+To update or create a lock.json
+
+    //# Create/update the lock file "lock.json".
+    $ deno cache --lock=lock.json --lock-write src/deps.ts
+    $ deno cache --lock=lock.json --lock-write main.ts
+    --lock=lock.json 
+        tells Deno what the lock file to use is, 
+    --lock-write
+        is used to create/update dependency hashes to the lock file 
+
+## download deps cache with verification
+Collaborator on another machine -- in a freshly cloned project tree:
+
+    # Download the project's dependencies into the machine's cache, integrity
+    deno cache --reload --lock=lock.json src/deps.ts
+
+## Runtime verification
+Like caching above, you can also use the `--lock=lock.json` option during use of the deno run sub command, validating the integrity of any locked modules during the run. 
+
+    // this only validates against dependencies previously added to the lock.json file. New dependencies will be cached but not validated.
+    deno run --lock=lock.json --cached-only mod.ts
+
+using the `--cached-only` flag to require that remote dependencies are already cached.
+
+    // This will fail if there are any dependencies in the dependency tree for mod.ts which are not yet cached.
+    deno run --lock=lock.json --cached-only mod.ts
+

@@ -355,13 +355,46 @@ PostgreSQL won't calculate the sum twice
     -- The `group by 1` is a positional reference and a shortcut for `GROUP BY movie` in this case.
     SELECT movie, string_agg(actor, ', ') AS actor_list FROM tbl GROUP  BY 1;
 
-### DISTINCT
+#### distinct
+
+    WITH T(uid, age)
+    AS (SELECT 1,1 UNION ALL
+        SELECT 1,3 UNION ALL
+        SELECT 1,2 UNION ALL
+        SELECT 2,1)
+    SELECT distinct uid FROM T ;
+     uid 
+    -----
+    1
+    2
+
+    WITH T(uid, age)
+    AS (SELECT 1,1 UNION ALL
+        SELECT 1,3 UNION ALL
+        SELECT 1,2 UNION ALL
+        SELECT 2,1)
+    SELECT distinct uid,age FROM T ;
+    -----
+    2 |   1
+    1 |   3
+    1 |   2
+    1 |   1
+
+#### count distinct
+
+    # bad
+    select group,count(*) from (select group, uid from tmp group by group, uid) tmp group by group;
+    # better
+    select group, count(distinct uid) from tmp group by group;
+
+#### DISTINCT on
 
 > https://stackoverflow.com/questions/18539223/select-random-row-for-each-group-in-a-postgres-table
 > SELECT DISTINCT ON expressions must match initial ORDER BY expressions
 
 distinct 就是分组，然后按序(order by 取top1)/或随机取一个row
 
+    # 按customer 分组
     SELECT DISTINCT ON (customer)
         id, customer, total
     FROM   purchases
@@ -378,12 +411,35 @@ Or shorter (if not as clear) with ordinal numbers of output columns:
     FROM   purchases
     ORDER  BY 2, 3 DESC, 1;
 
+按uid 分组，不排序直接取第一个age
+
+    WITH T(uid, age)
+    AS (SELECT 1,1 UNION ALL
+        SELECT 1,3 UNION ALL
+        SELECT 1,2 UNION ALL
+        SELECT 2,1)
+    SELECT distinct on(uid) uid,age FROM T ;
+
+按uid 分组，排序取第一个age
+
+    WITH T(uid, age)
+    AS (SELECT 1,1 UNION ALL
+        SELECT 1,3 UNION ALL
+        SELECT 1,2 UNION ALL
+        SELECT 2,1)
+    SELECT distinct on(uid) uid,age FROM T order by age desc;
+
 如果按有group分组可以替代ON 分组
 
     select distinct task_id, min(update_time) as update_time from pod_monitors group by task_id having count(*) > 1
 
-`distinct on(fieldList)` 必须匹配`order by list`. list与fieldlist 必须要有交集
-`fieldList`中字段顺序不影响分组及结果, `list` 排序则影响顺序
+Note:
+
+1. `distinct on(fieldList)` 必须匹配`order by list`. list与fieldlist 必须要有交集(除非不要order
+   by) 且**交集必须位于order by 开头**,
+2. `fieldList`中字段顺序不影响分组及结果, `list` 排序则影响顺序
+
+e.g.
 
     # ERROR: DISTINCT ON expressions must match initial ORDER BY expressions: (code,pe)与end_date 没有交集
     select distinct on (code,pe) code,pe,end_date from profits order by end_date;

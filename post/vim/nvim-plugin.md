@@ -3,6 +3,7 @@ date: 2018-05-09
 title: vim plug 插件系统
 ---
 # vim plug 插件系统
+vim-plug 是用于安装vim/nvim 插件的
 
     curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -10,7 +11,8 @@ title: vim plug 插件系统
     # call plug#begin('~/.vim/plugged')
     cat <<MM | tee -a ~/.config/nvim/init.vim
     call plug#begin('~/.local/share/nvim/plugged')
-        Plug 'vim-scripts/AutoComplPop'
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'neomake/neomake'
     call plug#end()
     MM
 
@@ -24,12 +26,6 @@ title: vim plug 插件系统
 
     nvim +PluginInstall +PluginClean   +qall
     nvim +CheckHealth
-
-## Pluginlist
-自动补全
-
-    "变量/函数/path
-    Plug 'vim-scripts/AutoComplPop'
 
 ## config reload
 

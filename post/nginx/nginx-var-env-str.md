@@ -19,7 +19,7 @@ Example:
 	set $script_uri "${document_root}/public/index.php";
 	set $script_uri "$document_root/public/index.php";
 
-## Embedded Variables
+## http 相关的内置变量
 $http_user_agent, $http_cookie, and so on. 
 
     echo $scheme://$http_host$request_uri;

@@ -9,9 +9,15 @@ function! edit#run()
     if ext == 'py'
         !python3 %
     elseif ext == 'js'
-        !node %
-    elseif ext == 'ts'
         !deno run %
+    elseif ext == 'ts'
+        let filepath = expand('%')
+        if filepath =~ '_test.ts$'
+            !deno test -A %
+        else
+            !deno run -A %
+        endif
+
     elseif ext == 'rs'
         !rustc % -o a && ./a
     elseif ext == 'go'

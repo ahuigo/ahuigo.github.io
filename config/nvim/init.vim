@@ -2,7 +2,10 @@
 " Plugin: plug
 """"""""""""""""""""""
 call plug#begin('~/.local/share/nvim/plugged')
-    Plug 'vim-scripts/AutoComplPop'
+		" auto complete: coc > YouCompleteMe
+		"coc.vim:　基于 LSP 的插件，具备了代码补全，语法检查，标签跳转等功能。
+		"YouCompleteMe: 整合了:clang_complete、AutoComplPop 、Supertab 、neocomplcache 、Syntastic(c/c++/obj-c代码)
+		Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     " snippet: for<C-\>
     "Plug 'drmingdrmer/xptemplate'

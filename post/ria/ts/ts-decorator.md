@@ -23,25 +23,25 @@ date: 2018-10-04
     ​
     @addAge
     class Hello{
-    name: string;
-    age: number;
-    constructor() {
-        console.log('hello');
-        this.name = 'yugo';
-    }
-    ​
-    @method
-    hello(){
-        return 'instance method';
-    }
-    ​
-    @method
-    static shello(){
-        return 'static method';
-    }
-    ​
-    @configurable(false)
-    get own_name(){
-        return this.name;
-    }
+        name: string;
+        age: number;
+        constructor() {
+            console.log('hello');
+            this.name = 'yugo';
+        }
+        ​
+        @method
+        hello(){
+            return 'instance method';
+        }
+        ​
+        @method
+        static shello(){
+            return 'static method';
+        }
+        ​
+        @configurable(false)
+        get own_name(){
+            return this.name;
+        }
     }

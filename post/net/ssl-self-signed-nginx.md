@@ -3,7 +3,7 @@ title: nginx的ssl配置
 date: 2018-10-04
 ---
 # nginx ssl配置
-参考[](/p/net/net-ssl) and [nginx_https]
+参考[](/p/net/net-openssl) 
 
 	server {
 		listen 80;
@@ -37,7 +37,6 @@ for mac osx
 
 ## 0. prepare
     mcd /usr/local/etc/ssl/
-    sudo chmod o+rwx .
     cp /System/Library/OpenSSL/openssl.cnf openssl.cnf
 
 To fix the following error:
@@ -51,18 +50,29 @@ Add the following to openssl.cnf:
     subjectAltName = DNS:localhost
 
 ## 1. gen ssl Certificate
-writing new private key to '/usr/local/etc/ssl/self-signed.key'
-writing new certificate to ...
 
+    domain=localhost
     openssl req \
     -x509 -nodes -days 365 -newkey rsa:2048 \
-    -subj "/CN=localhost" \
+    -subj "/CN=$domain" \
     -config ./openssl.cnf \
     -keyout ./self-signed.key \
     -out ./self-signed.crt
 
+this will writing new certificate and key
+
+    $ file self*
+    self-signed.crt: PEM certificate
+    self-signed.key: ASCII text
+
 ## 2. Create a Diffie-Hellman Key Pair
-    openssl dhparam -out /usr/local/etc/ssl/dhparam.pem 128
+    openssl dhparam -out /usr/local/etc/ssl/dhparam.pem 1024
+    # or??
+    openssl dhparam -out ./dhparam.pem 1024
+
+1024比较好，太小的话，首次client 请求时会报：
+
+    [alert] 26091#4139815: *1 ignoring stale global SSL error (SSL: error:1408518A:SSL routines:ssl3_ctx_ctrl:dh key too small) while SSL handshaking
 
 ## 3. Add the self-signed certificate to the trusted root store
 把证书添加到keychain, 两种方法
@@ -79,11 +89,10 @@ add certificate via command line
     # delete cert
     sudo security delete-certificate -h
 
-add certificate via Keychain Access.app
+You can also add certificate via Keychain Access.app
 1. Open Keychain Access.app
 2. `File->Import Items(Shift+Cmd+i)` to import `my.crt`, `ca.crt` in `system` or `login`
 3. Select *always trust*
-
 
 
 ## 4. Configure NGINX to use SSL/TLS

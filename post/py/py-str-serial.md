@@ -28,6 +28,10 @@ Python has a more primitive serialization module called *marshal*(support Python
 
     lines = json.dumps(dict(item),  cls=DateEnconding)
 
+## json pretty print
+
+    json.dump(data, open('a','w'), indent=4)
+
 # base64
 
     a = base64.b64encode(b'a')

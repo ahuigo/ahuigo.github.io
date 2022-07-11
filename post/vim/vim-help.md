@@ -38,6 +38,7 @@ vim中的很多命令都可以结合使用，比如强大的`:g`, 我们先help 
     :h 'smartcase'
     :h 'ignorecase'
 
+for more see vim-options.md
 ## help func
 
     :h substitute()

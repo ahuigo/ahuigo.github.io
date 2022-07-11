@@ -112,6 +112,7 @@ bash e.g.
     unset v ;#删除字符串
 
 ### read 交互
+import environment
 
     read [-pt] [variable]
     read [-ers] [-u fd] [-t timeout] [-p prompt] [-a array] [-n nchars] [-d delim] [name name2...]

@@ -3,8 +3,11 @@ title: Postgre Time
 date: 2019-10-03
 private:
 ---
+
 # Postgre Time
+
 ## Compare Time
+
     select time > '20101013'
     time > '2010-10-13'
     time > '2010-10-13 10:00:00'
@@ -12,6 +15,7 @@ private:
     time > '20101013 10:00:00+08'
 
 ## Time Type
+
     SELECT typname, typlen FROM pg_type WHERE typname ~ '^date';
     date 
         '2016-06-22',
@@ -23,6 +27,7 @@ private:
         '2016-06-22 19:10:25-07',
 
 ### timestamp with timezone
+
     SET timezone = 'America/New_York';
     SHOW TIMEZONE;
 
@@ -32,8 +37,9 @@ switch timezone
     2016-06-01 03:00:00
     # 上面的例子，PostgreSQL casts string to timestamptz implicitly
     > SELECT timezone('America/New_York','2016-06-01 00:00'::timestamptz);
-    
+
 ### timestamp without timezone
+
 timestamp to date:'2018-07-25 10:30:30' to '2018-07-25', 3种方法
 
     SELECT DATE(column_name) FROM table_name;
@@ -42,6 +48,7 @@ timestamp to date:'2018-07-25 10:30:30' to '2018-07-25', 3种方法
     SELECT DATE(SUBSTRING('2018-07-25 10:30:30' FROM 1 FOR 10));
 
 ## Get time
+
 get time only, date only
 
     > CURRENT_DATE;
@@ -58,6 +65,26 @@ get datetime(timestamp)
 
     > select  TIMESTAMP 'yesterday' ;
 
+## Set time
+
+    show timezone;
+        Asia/Shanghai
+
+字面强转换会忽略字符中包含的时区, `where created_time > '2022-06-01 00:00:00+08'`则不会忽略
+
+    select '2022-06-01 00:00:00+08'::timestamp;
+     2022-06-01 00:00:00
+    select '2022-06-01 00:00:00+00'::timestamp;
+     2022-06-01 00:00:00
+    select '2022-06-01'::timestamp;
+     2022-06-01 00:00:00
+
+    select '2022-06-01 00:00:00+08'::date
+    select '2022-06-01 00:00:00+08'::date
+    select '2022-06-01 00:00:00-11'::date;
+        2022-06-01 00:00:00
+    select '2022-06-01T23:00:00+11'::timestamp;
+        2022-06-01 23:00:00
 
 ## Delta time(plus)
 
@@ -71,10 +98,12 @@ get datetime(timestamp)
     select created_at + hour_field as deadline //not work
 
 ### Get delta time
+
     select  now() - INTERVAL '1 day' ;
     select (now()-created_at) from task_checks limit 1;
     --------------------------
     451 days 18:51:57.959561
 
 ### compare delta time
+
     where exittime - entrytime > interval '1 hour';

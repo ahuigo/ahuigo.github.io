@@ -9,6 +9,7 @@ private: true
 
 # ssl生成器：
 https://github.com/acmesh-official/acme.sh
+https://github.com/diafygi/acme-tiny
 
     ipcert:
     acme.sh  --issue  -d 1.1.1.1  --w /etc/apache/xxxxxx

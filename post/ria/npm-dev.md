@@ -48,12 +48,15 @@ import directory 其实是import directory/index.js
 
     # 等价于
     cd ./your-project
-    npm link .    # 1. 将本目录link 到 `npm root -g` ; bin 命令link 到 `npm　bin -g`/ 下面
-    # Note 不要用：`npm link ./your-project`, 它会额外执行：$ cp -r ./your-project/node_modules ./
+    npm link .    
+        # 1. 将本目录link 到 `npm root -g` ; 
+        # 2. bin 命令link 到 `npm　bin -g`/ 下面
+        # Note 不要直接用：`npm link ./your-project`, 
+        # 它会额外执行：$ cp -r ./your-project/node_modules ./
 
 删除: 如果报错　npm ERR! Cannot read properties of null (reading 'package')　可忽略
 
-    # 删除link(node_modules + bin)
+    # 删除全局link(node_modules + bin)
     $ npm rm -g js-zfuncs
     $ npm unlink -g js-zfuncs
 
@@ -88,20 +91,20 @@ bin 目录
 
 ### 创建应用
 
-    $ mkir my-app && cd my-app
+    $ mkir npm-app && cd npm-app
     # init package.json
     $ npm init -y
 
 ### link 到app/node_modules
 
-前一步安装到全局的js-zfuncs 是不可在局部app 使用的
+安装到全局的js-zfuncs 是不可在局部app 使用的, 下面这个安装只是全局
 
     npm install ./js-zfuncs -g
     npm install . -g
 
-我们还需要将包link到局部app: `npm link js-zfuncs` 不可用(`npm i js-zfuncs`)
+我们还需要将包link到局部app: `npm link js-zfuncs` (不能用这个`npm i js-zfuncs`安装）
 
-    $ cd my-app
+    $ cd npm-app
     $ npm link js-zfuncs
     $ npm list js-zfuncs
     └── js-zfuncs@1.0.0 extraneous -> ./../../www/js-zfuncs
@@ -133,11 +136,11 @@ package.json 增加
 
 再执行import:
 
-    cat > app.js <<MM
+    cat > app2.js <<MM
     import * as m2 from 'js-zfuncs'
     MM
 
-    node app.js
+    node app2.js
 
 # 发布包
 

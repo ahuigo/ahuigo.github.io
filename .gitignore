@@ -45,3 +45,4 @@ go.sum
 *.rdb
 
 /post/deno-doc/
+/conf/nginx/resty.test.conf

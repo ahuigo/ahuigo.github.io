@@ -156,20 +156,21 @@ e.g
 而systemd是一种更加优秀的服务管理器。
 
 # profile(login shell)
+## login shell
 /etc/profile 是启动初始化脚本(login shell 才会读), 它会执行以下脚本
 
 	/etc/inputrc 输入键相关
 	/etc/profile.d/ 子目录
 	/etc/sysconfig/i18n 由/etc/profile.d/lang.sh呼叫
 
-## ~/.bash_profile ~/.profile
+### ~/.bash_profile ~/.profile
 这几个文件是次启动脚本(同样是login shell 才会读)，对于bash 来说，它会顺序遍历以下脚本并执行第一个：
 
 	~/.bash_profile
 	~/.bash_login
 	~/.profile
 
-# non-login(.bashrc .zshrc)
+## non-login(.bashrc .zshrc)
 这两个文件是non-login 就会读：
 
 	/etc/zshrc ~/.zshrc
@@ -191,12 +192,37 @@ e.g
 	 /etc/skel/.bashrc
 	 /etc/skel/.zshrc
 
-## *ctl
+### *ctl
 许多*ctl 实际是对一些服务的单独封装. 比如: apachectl 就是对httpd的独立封装
 
 	vi `which apachectl`
 
 在Mysql中mysql.service 也是对mysql_safe启动的单独封装
+
+## sudo
+sudo 会使用root用户:
+2. 即不会使用login shell 定义的env: e.g. `~/.profile`
+1. 也不会执行 non-login shell`~/.bashrc/.zshrc` 
+
+sudo's -E and -i options.
+
+    -E, --preserve-env
+         preserve their existing environment variables
+    -i, --login
+        Run the shell specified by the target user's password database entry as a login shell.
+        This means that login-specific resource files such as `.profile, .bash_profile or .login` will be read by the shell.
+
+所以我们可以有几个选择：
+
+    # use /root/.profile
+    sudo -i bash -c 'echo $PATH'
+
+    # or explicitly source .profile with:
+    sudo sh -c '. ~/.profile; echo $PATH'
+
+    # keep env
+    sudo -E bash -c 'echo $PATH'
+
 
 # crontab
 Unix/Linux 下以用户身份编辑`crontab -e`, 在`/etc/crontab` 中编辑的话则需要在命令前指定用户身份

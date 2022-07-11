@@ -9,8 +9,16 @@ https://zhuanlan.zhihu.com/p/137535779
 2. go get -u ext3.com/module3@v0.0.4 https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
 
 # yarn
+## mirror
     # 国内源tyarn
     npm i yarn tyarn -g
+
+    npm i yrm  -g
+
+config yarn mirror
+
+    yarn config set npmRegistryServer http://nexus.local/repository/npm-group/
+    YARN_REGISTRY="<url-to-your-registry>" yarn publish
 
 ## yarn bin
     echo 'export PATH="$PATH:`yarn global bin`"' >> ~/.profile

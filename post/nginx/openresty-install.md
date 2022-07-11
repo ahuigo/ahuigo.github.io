@@ -21,7 +21,6 @@ stop:
     brew services stop openresty/brew/openresty
     brew services restart openresty/brew/openresty
 
-
 conf:
 
     openresty -h 

@@ -68,6 +68,7 @@ via lsof:
 
 check for default log path assigned by compile:
 
+	openresty -V | grep log
 	nginx -V
 	--prefix=/usr/local/nginx; 相对日志路径
 	--http-log-path=/usr/local/var/log/nginx/access.log
