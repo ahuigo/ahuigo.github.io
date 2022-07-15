@@ -119,6 +119,10 @@ go install 只用于install
     export GOPROXY=https://goproxy.io,direct
     export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 
+## 查看版本
+    go list -m -versions github.com/hashicorp/vault/api
+    go list -m -versions github.com/ahuigo/requests    
+
 ## goproxy
 
     export GOPROXY=https://goproxy.io,direct

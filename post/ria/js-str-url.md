@@ -18,10 +18,11 @@ private: true
     url.host='localhost'
 
 ## build query
+    const params = new URLSearchParams('?a=1&b=1')
     const params = new URLSearchParams({
-    var1: "value",
-    obj: {a:1},
-    arr:[ "foo","bar"],
+        var1: "value",
+        obj: {a:1},
+        arr:[ "foo","bar"],
     });
     console.log(params.toString()); //var1=value&obj=%5Bobject+Object%5D&arr=foo%2Cbar
 

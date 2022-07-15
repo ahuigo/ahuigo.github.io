@@ -3,7 +3,6 @@ private:
 title: idea
 date: 2018-09-27
 ---
-
 # Preface
 
 ## project
@@ -16,13 +15,27 @@ date: 2018-09-27
 6. 群通知
 
 # 语言：
-deno 生态发展计划: deno 
 
-- markdown static view server: deno run mdview -d www
+deno 生态发展计划: deno
+
+- markdown static view server:
+  - deno run mdview -d www
+  - github pages:
+    - markdown + SEO/404
+    - toc
+    - pwa?
+  - vscode pages:
+    - paste image: Squoosh thin png
+    - dir tree: .catalog.yaml (toc of directory)  //refer: https://github.com/ahuigo/vscode-crossnote
+        - new/edit-move/delete, 
+        - toggle title and path
+    - markdown+vim+latex
+  - pwa markdown:
+    - 和视图同步 //refer: 
 - framework:
-    1. Alephjs css module
-    2. fresh 
-    3. AdonisJS
+  1. Alephjs css module
+  2. fresh
+  3. AdonisJS
 - medium 课程
 
 # 工具类
@@ -33,11 +46,12 @@ deno 生态发展计划: deno
 2. faas:
    1. https://github.com/varHarrie/fn/tree/main/fn-server
 3. tiny image:
-    1. convert  8-bit/color RGBA to 8-bit colormap
-        1. https://towardsdatascience.com/simple-steps-to-create-custom-colormaps-in-python-f21482778aa2
-    1. devtool/bin/tinypng
+   1. convert  8-bit/color RGBA to 8-bit colormap
+      1. https://towardsdatascience.com/simple-steps-to-create-custom-colormaps-in-python-f21482778aa2
+   2. devtool/bin/tinypng
 4. swagger in gonic:
    1. 通过markdown comment 生成doc: gotestdoc
+
    ```
    /* gotestdoc: md
        # title
@@ -58,7 +72,7 @@ deno 生态发展计划: deno
    1. via input,readline 重写argparse (python)
 9. fsync: file transfer like rsync/netcat(nc)
    1. fsync -daemon -l 9999 -o dir [default output dir .]
-   1. fsync -h 192.168.0.100:9999
+   2. fsync -h 192.168.0.100:9999
       1. client support both send+recv file
       2. check file via md5
       3. session verify via token
@@ -79,8 +93,8 @@ deno 生态发展计划: deno
     5. support https/http2
        1. 写给工程师：关于证书（certificate）和公钥基础设施（PKI）的一切
           http://arthurchiao.art/blog/everything-about-pki-zh/
-       1. certificate generate
-       1. https packet parse
+       2. certificate generate
+       3. https packet parse
 12. arun:
     1. arun -p 4501 # a shell support command from vim/vscode/
     2. arun go run .
@@ -96,17 +110,15 @@ deno 生态发展计划: deno
 
 # 全职
 
-    http://deepdevelop.com/
-    一早一晚: 自由工作社区
-    http://yizaoyiwan.com/discussions/460
-    medium.com
-    https://medium.com/%E5%86%99%E4%BD%9C%E4%B9%8B%E8%B7%AF/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%A6%82%E4%BD%95%E5%9C%A8medium-com%E4%B8%8A%E9%80%9A%E8%BF%87%E5%86%99%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2%E8%B5%9A%E9%92%B1-6d47d82b03dd
-
+http://deepdevelop.com/
+一早一晚: 自由工作社区
+http://yizaoyiwan.com/discussions/460
+medium.com
+https://medium.com/%E5%86%99%E4%BD%9C%E4%B9%8B%E8%B7%AF/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%A6%82%E4%BD%95%E5%9C%A8medium-com%E4%B8%8A%E9%80%9A%E8%BF%87%E5%86%99%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2%E8%B5%9A%E9%92%B1-6d47d82b03dd
 ## Remote Engineer
 
-    contact http://nvie.com/about/
-    https://stackoverflow.com/jobs/live-work-anywhere?utm_source=so-owned&utm_medium=email&utm_campaign=job-engage-work-live&utm_content=em-tips&utm_term=has-match-pref
-
+contact http://nvie.com/about/
+https://stackoverflow.com/jobs/live-work-anywhere?utm_source=so-owned&utm_medium=email&utm_campaign=job-engage-work-live&utm_content=em-tips&utm_term=has-match-pref
 ## 投资
 
 https://www.bmpi.dev/about/

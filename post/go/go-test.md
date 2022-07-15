@@ -240,6 +240,12 @@ Note: Error/Fatal 都会导致bench 不被执行
 
     strings.HasSuffix(os.Args[0], ".test")
 
+### test temp dir
+
+    // auto create temporary directory
+	dir := t.TempDir() // string
+
+
 # bench test
 
 ## bench test rule

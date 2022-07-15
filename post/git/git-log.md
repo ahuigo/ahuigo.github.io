@@ -218,6 +218,12 @@ alias grep:
 
     git config --global alias.g "grep --break --heading --line-number"
 
+## git grep
+git 内置的grep 内容
+
+    $ git grep -wiEIl '(he)|(she)|(his)|(hers)|(him)|(her)|(guy)|(guys)'
+    xx.md
+
 # git 维护、数据恢复
 
 ## git gc
