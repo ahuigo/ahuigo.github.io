@@ -19,7 +19,7 @@ curring 也叫部分求值
     sum(4)()返回4；
     sum(7)(1)()返回8；
 
-通过bind 实现
+通过bind 实现(实时计算)
 
     f=(v, n)=>{
         if(n===undefined){
@@ -30,7 +30,7 @@ curring 也叫部分求值
     }
     sum=f.bind(null,0)
 
-通过闭包通用的curring:
+通过闭包通用的curring(柯里化):
 
     function sum(...arg1){
         return (...args2)=>{
@@ -41,6 +41,21 @@ curring 也叫部分求值
             }
         }
     }
+
+    // 或
+    function sum(){
+        let prev = arguments
+        return function rawsum(){
+            let args = arguments
+            if(args.length==0){
+                return prev.reduce((s,b)=>s+b)
+                return  Math.sum(prev)
+            }
+            prev = [...prev, ...args]
+            return rawsum
+        }
+    }
+
 
 ## python 实现固定参数的科里化
 
