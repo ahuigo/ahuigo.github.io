@@ -5,16 +5,37 @@ category: blog
 description: 
 date: 2018-09-27
 ---
-# Preface
+# git diff 
 
-# git diff category
+## difftool
+
+	git config --global alias.d difftool
+
+## diff object
 
 1. git diff sha1 main/origin:
-	between commit
 2. git diff --staged // same as : git diff --cached : between cached and commit
 2. git diff // between working and staged
+2. git diff HEAD// between working and commit(HEAD)
 
-## diff between commit
+### diff working
+
+	## diff between working and staged
+	git diff
+	## diff between working and HEAD
+	git diff HEAD
+
+### diff staging
+	## diff between staged and commit
+	git diff --staged // same as : git diff --cached
+
+	## diff working & commit
+	git diff HEAD
+	git diff HEAD ./lib # diff sub-dir between working & HEAD
+	git diff branch1 //diff current branch based on branch1
+	git diff branch1 feature//diff feature based on branch1
+
+### diff between commit
 
 	git diff $start_commit $end_commit -- path/to/file
 	git diff $start_commit path/to/file
@@ -36,38 +57,7 @@ Equal:
 	HEAD~3
 	//refer to # revision
 
-### git diff filelist
-
-	git diff --name-only SHA1 SHA2
-
-where you only need to include enough of the SHA to identify the commits. You can also do, for example
-
-	git diff --name-only HEAD~10 HEAD~5
-
-shows *what operations were done* to the files too
-
-	git diff --name-status [TAG|SHA1]
-
-## difftool
-
-	git config --global alias.d difftool
-
-## diff object
-
-	## diff between working and staged
-	git diff
-
-	## diff between staged and commit
-	#diff between staged file and commited file
-	git diff --staged // same as : git diff --cached
-
-	## diff working & commit
-	git diff HEAD
-	git diff HEAD ./lib # diff sub-dir between working & HEAD
-	git diff branch1 //diff current branch based on branch1
-	git diff branch1 feature//diff feature based on branch1
-
-### diff 2 branch
+### diff parent
 
 	## diff 2 branch
 	git diff master..branch1 #diff branch1 based on The Parent of master&branch1 基于共同祖先做diff, 即得到branch1的变更.
@@ -117,24 +107,48 @@ Example:
 	"two commit
 	git d origin/dev main/master -- mis/src/model/signcheck.php
 
-## diff files
+## diff output
+### git diff file only
+
+	git diff --name-only SHA1 SHA2
+
+where you only need to include enough of the SHA to identify the commits. You can also do, for example
+
+	git diff --name-only HEAD~10 HEAD~5
+
+and filter ACMDR
+
+	git diff-index --cached --name-only --diff-filter=ACMR HEAD
+	git diff-index --name-only --diff-filter=ACMR HEAD
+
+shows *what operations were done* to the files too
+
+	git diff --name-status [TAG|SHA1]
+
+### diff fileinfo
 
 	#--stat just print statistic
 	git diff master..branch1 --stat
 
-show merged files
+## filter
+
+### filter ACMDR
+	git diff-index --diff-filter=ACMR HEAD
+	git diff --diff-filter=ACMR HEAD
+		A add
+		M modified
+		C Copied
+		R rename
+		D delete
+
+### show merged files only
 
 	git diff -m --stat
 
-## check option
+### check option
 
 	#check white space at the end of line
 	git diff --check
-
-## diff name only
-
-	git diff-index --cached --name-only --diff-filter=ACMR HEAD
-	git diff-index --name-only --diff-filter=ACMR HEAD
 
 ## merge-base
 
@@ -147,7 +161,7 @@ show merged files
 		// to working copy
 		$ git diff bb92
 
-# diff mode
+# other diff command
 
 ## git diff-index
 compare a tree to a working tree or index
@@ -162,20 +176,6 @@ compare a tree to a working tree or index
 e.g. 
 
     git diff-index --cached --name-only --diff-filter=ACMR HEAD -- PATH
-
-### filter
-keep
-
-	git diff-index --diff-filter=ACMR HEAD
-		A add
-		M modified
-		C Copied
-		R rename
-		D delete
-
-### info
-
-	--name-only
 
 ## diff-tree
 git-diff-tree - Compares the content and mode of blobs found via two tree objects

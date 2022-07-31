@@ -59,6 +59,7 @@ date: 2018-10-04
     };
 
     const handler3 = {
+        // receiver ==== handler3
         get: function (target, prop, receiver) {
             if (prop === "message2") {
                 return "world";
@@ -74,9 +75,9 @@ date: 2018-10-04
 get 与 in 的区别
 
     const handler = {
-      get: function(obj, prop) {
-        return prop in obj ?
-          obj[prop] :
+      get: function(oriobj, prop) {
+        return prop in oriobj ?
+          oriobj[prop] :
           37;
       }
     };
@@ -84,6 +85,28 @@ get 与 in 的区别
     const p = new Proxy({}, handler);
     console.log('c' in p, p.c);
     //  false, 37
+
+## extend object method
+
+    const children = [1,2,3]
+    const ctx = {
+        next(){
+            console.log('child1:',children.shift())
+        }
+    }
+
+    const children2 = [4]
+    const ctx2 = new Proxy(ctx, {
+      get: function(oriobj, prop) {
+        if(prop=="next"){
+            if(children2.length){
+                return ()=> console.log('child2:',children2.shift())
+            }
+        }
+        return oriobj[prop]
+      }
+    });
+
 
 ## set validator
     let validator = {

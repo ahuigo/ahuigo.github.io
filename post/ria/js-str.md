@@ -36,6 +36,17 @@ raw 只解析 `$`
     > String.raw`${1+2}`
     '3'
 
+
+es有这样的语法 string raw
+
+    function button(){}
+    function f(){}
+    function tw() {
+        console.log(arguments)
+    }
+    tw`${button} w-20 ${f}`
+    // output: [button, ' w-20 ', f]
+
 ### charcode(unicode)
 length/slice/substr/都是基于字符的
 

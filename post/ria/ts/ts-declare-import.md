@@ -325,7 +325,7 @@ declare namespace jQuery {
 }
 ```
 
-注意，在使用这个 `interface` 的时候，也应该加上 `jQuery` 前缀：
+注意，在使用这个 `interface` 的时候，也应该加上 `jQuery.` 前缀：
 
 ```ts
 // src/index.ts
@@ -363,7 +363,24 @@ jQuery.ajax('/api/get_something');
 
 
 # export & import type
-## Ts import type/interface
+### export declare
+
+    // node_modules/@types/marked/index.d.ts
+    declare function marked(src: string): string;
+    declare function marked(src: string, options: string[]): string;
+    declare namespace marked {..}
+
+    export = marked; 
+        //导出marked 函数及namespace 为`module.default` 否则：`import marked  from 'marked'` 报错不是module
+    //export as namespace marked;//(不需要了)
+
+使用：
+
+    import marked  from 'marked'
+    marked('') // 使用函数
+    marked.setOptions({}) //使用namespace
+
+## import type/interface
 in IfcSampleInterface.d.ts(或者命名为`.ts`):
 
     export interface IfcSampleInterface {

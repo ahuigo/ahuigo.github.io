@@ -283,14 +283,37 @@ Future is Not thread safe!
        results = executor.map(load_url, URLS)
        print(list(results)) # block for all
 
-每个io 返回的时间不一样，可以Executor.submit生成Future task, 然后实时处理 `futures.as_completed(futures)`
+每个io 返回的时间不一样，可以Executor.submit生成Future task, 然后实时处理 `futures.as_completed(futures)`(阻塞)
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-        future_to_url = {executor.submit(load_url, url, 60): url for url in URLS}
-        for future in concurrent.futures.as_completed(future_to_url): # 任何一个完成都会迭代
-            url=future_to_url[future]
+    from concurrent.futures.thread import ThreadPoolExecutor
+    import concurrent.futures
+    import time
+    def load_url(url, timeout=1):
+        time.sleep(timeout)
+        msg = f"load {url} successful"
+        print(msg)
+        return msg + f",timeout={timeout}"
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        urls = [('url1',4), ('url2',1)]
+        futures = {pool.submit(load_url, *args): args[0] for args in urls}
+        for future in concurrent.futures.as_completed(futures): # 任何一个完成都会迭代
+            url=futures[future]
             print('url:', url)
             data = future.result()
+            print('data:', data)
+
+executor 上下文结束是阻塞的
+
+    from concurrent.futures.thread import ThreadPoolExecutor
+    import time
+    def load_url(url, timeout=1):
+        time.sleep(timeout)
+        print(f"load {url} successful, timeout={timeout}")
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        for args in [('url1',4), ('url2',1)]:
+            pool.submit(load_url, *args)
+    print('All tasks has been finished')
 
 ## ProcessPoolExecutor
 也支持executor.map(func,urls) 和 executor.submit(func, url, 60) + as_completed()

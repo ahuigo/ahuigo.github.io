@@ -275,7 +275,14 @@ If the proxy server requires a username and password then add these to the URL. 
 	$ export http_proxy=http://foo:bar@127.0.0.1:3128/
 	$ export http_proxy=http://USERNAME:PASSWORD@proxy-server.mycorp.com:3128/
 
-> 另外，还有一个https_proxy
+还有一个`https_proxy` 用于代理https 请求
+
+    $ https_proxy=http://127.0.0.1:8080 curl https://baidu.com/
+
+    http_proxy=http://user:pass@server:port curl http://baidu.com/
+    http_proxy=https://user:pass@server:port curl http://baidu.com/
+    https_proxy=https://user:pass@server:port curl https://baidu.com/
+    https_proxy=http://user:pass@server:port curl https://baidu.com/ 
 
 ## http socks5
 Suppose you have a socks5 proxy running on localhost:8001.

@@ -148,10 +148,7 @@ function gcap(){
                 fi
             done
         fi
-    elif git svn info | grep '\w';then
-        echo git svn dcommit;
-        git svn rebase;
-        git svn dcommit;
+        # git svn rebase; git svn info; git svn dcommit;
     fi
     cd $ori_dir
 }
@@ -205,7 +202,10 @@ alias cnpm_del="npm --registry=https://registry.npm.taobao.org \
 export APP_ENV=dev
 
 # deno
-export PATH=$PATH:~/.deno/bin
+export PATH=$PATH:~/.deno/bin:~/www/js-lib/bin
+alias dr='deno run'
+alias dt='deno test'
+export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 # golang
 export GODEV=local
@@ -217,9 +217,9 @@ export GOPRIVATE='*.internal.mycompany.com,github.com/ahuigo1,github.com/ahuigo2
 #export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 export GONOSUMDB=*.corp.example.com,rsc.io/private
 #export GOSUMDB=off
-export PATH=/opt/homebrew/opt/go@1.17/bin:$PATH:$GOPATH/bin
+export PATH=/opt/homebrew/opt/go/bin:$PATH:$GOPATH/bin
+alias go17='ln -sf /opt/homebrew/opt/go@1.17/bin /opt/homebrew/opt/go/bin'
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
-alias go14='export GOROOT=/usr/local/Cellar/go/1.14.3/libexec; ln -sf /usr/local/opt/go@1.14/bin/go /usr/local/bin/go'
 
 # java
 # export JAVA_HOME="$(/usr/libexec/java_home)"

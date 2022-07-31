@@ -56,14 +56,15 @@ priority:
     break n
 
 ## for
-
 `seq 1 5`:
 
     for a in "$*" ; do echo "$a "; done
     for a in "$@" ; do echo "$a "; done # equal to for a ;do ... done
     for file in Downloads/*.sh ; do echo "$file"; done #遍历文件
     for file  (Downloads/*.sh) ; do echo "$file"; done #遍历文件(只能用于zsh)
+
     for ((i=0;i<10;i++)); do echo $i; done;
+    for i in `seq 1 5`;do
 
 ## while
 

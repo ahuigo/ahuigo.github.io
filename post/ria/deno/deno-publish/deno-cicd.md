@@ -7,7 +7,7 @@ private: true
 > https://deno.land/manual/continuous_integration
 Let's set up basic pipelines for Deno projects in GitHub Actions
 
-# Setting up a basic pipeline
+# github pipeline
 
 ```yml
 name: Build
@@ -107,3 +107,10 @@ if lock.json is updated, we want to update key:  using the hashFiles function pr
 
 
 
+# deploy
+## deno deploy
+## vercel deno runtime
+https://github.com/vercel-community/deno
+
+vercel bot for github
+https://github.com/react-component/field-form/commit/d7892873e9eee6e4c618d4289fcdbc9ee240f68f

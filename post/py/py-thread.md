@@ -182,16 +182,22 @@ thread.start() 后isAlive为true
     t = threading.Thread(target=loop, name='LoopThread')
         #t.start() t.join()
 
-e.g.
+e.g., use pool
 
+
+    import time
     def foo(bar, baz):
+        time.sleep(1)
         print('hello {0}'.format(bar))
         return 'return baz:' + baz
 
     import multiprocessing.pool
     pool = multiprocessing.pool.ThreadPool(2)
-    async_result = pool.apply_async(foo, ('world', 'foo')) # tuple of args for foo
-    print(async_result.get()) # 阻塞+get
+    async1= pool.apply_async(foo, ('world1', 'foo1'))
+    async2= pool.apply_async(foo, ('world2', 'foo2'))
+
+    print(async1.get()) # 阻塞+get
+    print(async2.get()) # 阻塞+get
 
 # 多核CPU
 打开Mac OS X的Activity Monitor，或者Windows的Task Manager，都可以监控某个进程的CPU使用率。

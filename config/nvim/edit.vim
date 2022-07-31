@@ -8,6 +8,8 @@ function! edit#run()
     let ext = expand('%:e')
     if ext == 'py'
         !python3 %
+    elseif ext == 'sh'
+        !bash %
     elseif ext == 'js'
         !deno run %
     elseif ext == 'ts'

@@ -1,12 +1,17 @@
-From alpine:latest
+#From alpine:latest
+From debian
 WORKDIR /app/
-#RUN apk add --no-cache bash 
-RUN echo $'#!/bin/sh\n''echo foo=$FOO;APP_ENV=$APP_ENV' > echo.sh && cat echo.sh && chmod a+x echo.sh 
-RUN echo $'#!/bin/sh\n''a=$FOO;echo a=$a:$APP_ENV;unset FOO;FOO=$a exec sh -c "$@"' > run.sh  && chmod a+x run.sh && cat run.sh
+ENV APP_ENV=ahuigo
+RUN echo '#!/bin/sh\n''echo APP_ENV=$APP_ENV; echo args: $@' > echo.sh && cat echo.sh && chmod a+x echo.sh 
+RUN bash ./echo.sh
+RUN date
+RUN sleep 5
 #USER daemon
 #ENTRYPOINT ["sh", "-c", "exec ./echo.sh && unset FOO && echo sleep && sleep 60"]
-ENTRYPOINT ["./run.sh", "./echo.sh && unset FOO && sleep 60"]
+ENTRYPOINT ["./echo.sh", "hello world","arg2"]
 
 
-# docker build -t tmp .
-# docker run --rm  -e APP_ENV=ahui -e FOO=bar tmp
+# docker build -t tmp --no-cache --progress=plain -f dockerfile-env .
+# docker run --rm tmp
+# docker run --rm -it --entrypoint=/bin/bash tmp
+# docker run --rm  -e APP_ENV=ahui tmp arg3 arg4 arg5

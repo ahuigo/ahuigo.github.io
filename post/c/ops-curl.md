@@ -163,11 +163,13 @@ Socks5 takes precedence over -x:
 ## via proxy
 global:
 
-	# http
+	# socks5h, 比较新的curl 才会支持
+    https_proxy=socks5h://127.0.0.1:1081 curl https://google.com/
+	export http_proxy=socks5h://localhost:1080 HTTPS_PROXY=socks5h://localhost:1080 ALL_PROXY=socks5h://localhost:1080
+
+	# all http proxy
 	export all_proxy=http://your.proxy.server:port/
 
-	# socks5h, 比较新的curl 才会支持
-	export http_proxy=socks5h://localhost:1080 HTTPS_PROXY=socks5h://localhost:1080 ALL_PROXY=socks5h://localhost:1080
 
 cmd:
 

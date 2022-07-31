@@ -104,6 +104,15 @@ get datetime(timestamp)
     --------------------------
     451 days 18:51:57.959561
 
+info
+
+    // to seconds
+    SELECT EXTRACT(epoch FROM (SELECT (NOW() - '2014-08-02 08:10:56')))
+    // to days
+    SELECT (EXTRACT(epoch FROM (SELECT (NOW() - '2014-08-02 08:10:56')))/86400)::int
+    SELECT EXTRACT(DAY FROM NOW() - '2014-08-02 08:10:56');
+
+
 ### compare delta time
 
     where exittime - entrytime > interval '1 hour';

@@ -5,16 +5,25 @@ call plug#begin('~/.local/share/nvim/plugged')
 		" auto complete: coc > YouCompleteMe
 		"coc.vim:　基于 LSP 的插件，具备了代码补全，语法检查，标签跳转等功能。
 		"YouCompleteMe: 整合了:clang_complete、AutoComplPop 、Supertab 、neocomplcache 、Syntastic(c/c++/obj-c代码)
+		":h coc-config-suggest
 		Plug 'neoclide/coc.nvim', {'branch': 'release'}
+		"init:
+		":CocInstall coc-json coc-tsserver
+		"
+		"config: https://github.com/neoclide/coc.nvim/wiki/Using-the-configuration-file
+		"open config and write: {"suggest.noselect":true}
+		":CocConfig
+
+    " 基于jedi 可以提示obj 属性: sys.path.
+		"Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
+
 
     " snippet: for<C-\>
     "Plug 'drmingdrmer/xptemplate'
 	
-    " new async grammar check: better than sync 'syntastic' 
+    " new async syntax lint
     Plug 'neomake/neomake'
 
-    " 基于jedi 可以提示obj 属性: sys.path.
-    Plug 'davidhalter/jedi-vim'
 
     " ctrlp
     "Plug 'Shougo/denite.nvim'
@@ -26,10 +35,12 @@ call plug#begin('~/.local/share/nvim/plugged')
 		"let g:autoformat_verbosemode=1
     "Plug 'Chiel92/vim-autoformat'
 call plug#end()
+""""""""""""""""""
+" coc.nvim press <CR>  select first popup item
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+""""""""""""""""""
 
-"" When writing a buffer (no delay), and on normal mode changes (after 750ms)
-"" call neomake#configure#automake('nw', 500)
-"call neomake#configure#automake('w')
+
 
 """"""""""""""""""
 " autoformat

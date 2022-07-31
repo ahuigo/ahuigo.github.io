@@ -266,7 +266,7 @@ e.g.:
     var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
     touchOriginY = touch.pageY;
 
-#### 查找元素在窗口的位置
+#### 元素在窗口的位置
 
 goto:
 
@@ -296,7 +296,7 @@ goto:
     	return (rect.left<0 || rect.top <0) ? false : true;
     }
 
-#### 查找元素在页面的位置
+#### 元素在页面的位置
 
 或者累加offsetLeft:
 
@@ -315,10 +315,14 @@ goto:
     	return pos;
     }
 
-##### 根据窗口的内部位置(innerWidth,innerHeight) 查询element
+### 根据位置(innerWidth,innerHeight) 查询element
+It only works if the element is in the viewport.
 
     document.elementFromPoint(500,10)
     document.elementFromPoint(x, y).click();
+
+https://stackoverflow.com/questions/9011668/get-element-at-point-in-entire-page-even-if-its-not-visible
+
 
 # Dom type
 

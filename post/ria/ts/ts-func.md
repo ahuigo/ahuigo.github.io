@@ -28,11 +28,21 @@ private:
     interface SearchFunc {
         (source: string, subString: string): boolean;
     }
+    // same as: 
+
+    type SearchFunc = (source: string, subString: string)=> boolean;
 
     let mySearch: SearchFunc;
     mySearch = function(source: string, subString: string) {
         return source.search(subString) !== -1;
     }
+
+Note: 这和对象不一样
+
+    interface Obj{
+        say(name: string, subString: string): boolean;
+    }
+    type say = Obj['say']
 
 ## 可选参数
 与接口中的可选属性类似，我们用 ? 表示可选的参数：

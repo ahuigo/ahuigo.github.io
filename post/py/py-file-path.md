@@ -33,8 +33,13 @@ date: 2018-09-28
 
 ## current working path
 
-    os.chdir('/')
+    p.cwd()
     os.getcwd()
+
+    p = Path('..')
+    os.chdir('/')
+    os.chdir(p)
+
 ## home
     pathlib.Path.home()
 

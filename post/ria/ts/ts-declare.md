@@ -9,6 +9,9 @@ private:
 ## 新语法索引
 本章涉及大量新语法，快速查找到对应的讲解：
 
+    /// <reference /> 三斜线指令
+    declare global 扩展全局变量
+    declare module 扩展模块
     declare var 声明全局变量
     declare function 声明全局方法
     declare class 声明全局类
@@ -20,9 +23,6 @@ private:
     export default ES6 默认导出
     export = commonjs 导出模块
     export as namespace UMD 库声明全局变量
-    declare global 扩展全局变量
-    declare module 扩展模块
-    /// <reference /> 三斜线指令
 
 ## 什么是声明语句
 比如通过 `<script>` 标签引入 jQuery，

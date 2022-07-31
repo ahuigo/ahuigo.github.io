@@ -5,9 +5,6 @@ title: git hooks
 # git hooks
 钩子(hooks)是一些在$GIT-DIR/hooks目录的脚本, 在被特定的事件(certain points)触发后被调用。当git init命令被调用后, 一些非常有用的示例钩子脚本被拷到新仓库的hooks目录中; 但是在默认情况下它们是不生效的。 把这些钩子文件的".sample"文件名后缀去掉就可以使它们生效。
 
-## TODO & Reference
-- [git-scm]: https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks#Server-Side-Hooks
-
 Useful hooks: 按顺序
 
     pre-commit
@@ -59,7 +56,6 @@ Useful hooks: 按顺序
 
 这个钩子被 git commit 命令调用, 而且可以通过在命令中添加`--no-verify` 参数来跳过。
 
-如果（进行git commit的）命令没有制定一个编辑器来修改提交信息(commit message)，任何的 git-commit 钩子（译注：即无论是否自带）被调用时都会带上环境变量GIT_EDITOR=:
 
 # prepare-commit-msg
 
@@ -91,6 +87,49 @@ Useful hooks: 按顺序
 	GIT_DIR/hooks/pre-push
 
 # Server-Side Hooks
+执行按顺序：
+
+    pre-receive
+    update
+    post-receive
+
+
+## pre-receive
+处理来自客户端的推送操作时，最先被调用的脚本是 pre-receive。 
+1. 它从标准输入获取一系列被推送的引用: old-sha new-sha branch-name
+2. 如果它以非零值退出，所有的推送内容都不会被接受。 你可以用这个钩子阻止对引用进行非快进（non-fast-forward）的更新，或者对该推送所修改的所有引用和文件进行访问控制。
+
+示例：
+
+    $ cat ../g1/.git/hooks/pre-commit
+    #!/usr/bin/env bash
+    # cat | tee -a ~/pre-commit.stdin
+    read oldsha newsha branch
+    echo pre-commit-content: $oldsha $newsha $branch
+    exit 100
+
+## update
+update 脚本和 pre-receive 脚本十分类似，不同之处在于:
+1. 它会为每一个准备更新的分支各运行一次。 假如推送者同时向多个分支推送内容，pre-receive 只运行一次，相比之下 update 则会为每一个被推送的分支各运行一次。 
+2. 它不会从标准输入读取内容，而是接受三个参数：
+    1. 引用的名字（分支），
+    2. 推送前的引用指向的内容的 SHA-1 值，
+    2. 以及用户准备推送的内容的 SHA-1 值。 
+3. 如果 update 脚本以非零值退出，只有相应的那一个引用会被拒绝；其余的依然会被更新。
+
+示例：
+
+    $ cat ../g1/.git/hooks/update
+    #!/usr/bin/env bash
+    echo branch-name old-sha new-sha: $@ | tee ~/tmp/a.log
+    exit 100
+
+    $ git push
+    remote: branch-name old-sha new-sha: refs/heads/main 7e223 156e675
+    remote: error: hook declined to update refs/heads/main
+
+## post-receive
+post-receive 挂钩在整个过程完结以后运行，可以用来更新其他系统服务或者通知用户。 它接受与 pre-receive 相同的标准输入数据。 它的用途包括给某个邮件列表发信，通知持续集成。。。
 
 ## pre-receive
 [php-lib/git/pre-receive]
@@ -99,3 +138,22 @@ Useful hooks: 按顺序
 
 ## post-receive
 The `post-receive` hook runs after the entire process is completed and can be used to update other services or notify users.
+
+    $ cat ../g1/.git/hooks/post-commit
+    #!/usr/bin/env bash
+    read oldsha newsha branch
+    echo $oldsha $newsha $branch
+
+# 目录限制
+
+    #!/usr/bin/env bash
+    echo pre-receive argv: $@ | tee -a ~/tmp/a.log
+    read oldsha newsha branch
+    if git diff --name-only $oldsha $newsha |grep -E '^tmp/';then
+        echo "this dir is not allowed to push"
+        exit 101
+    fi
+
+
+# Reference
+- [git-scm]: https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks#Server-Side-Hooks

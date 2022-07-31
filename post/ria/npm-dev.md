@@ -26,12 +26,10 @@ Node 实现一个命令行程序
 如果要编写bin cli, 配置package.json
 
     "bin": {
-        "egg-bin": "bin/egg-bin.js",
-        "mocha": "bin/mocha.js"
         "hello": "lib/bin/hi.js"
     },
 
-npm install 的bin 位于`$(npm bin)/{mocha, egg-bin,hello}`
+npm install 的bin 位于`$(npm bin)/hello`
 
 ## import
 
@@ -153,19 +151,12 @@ package.json 增加
 5. `npm unpublish <package>@<version>` //可以撤销发布自己发布过的某个版本代码。
 
 ## 选择registry
-
-使用yrm 配置registry:
-
-    npm install -g yrm
+> 参考npm-pkg.md
 
 手动配置registry:
 
     npm config set registry https://artifactory.sina.works/artifactory/api/npm/npm/
     npm login
-
-    # 查看
-    npm config get registry
-    yrm ls
 
 with scope:
 
@@ -209,6 +200,10 @@ npm install 下载scoped 包时，就会去关联到的私有库下载
 Set files in `package.json`,only the files will be publish to npm package,
 
     "files": ["lib/**/*"],
+
+    // 指定打包的入口文件
+    "main": "lib/index.js",
+
 
 If you do not set files abolve. You can set exclude files in `.npmignore`:
 

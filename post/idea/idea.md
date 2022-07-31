@@ -16,10 +16,19 @@ date: 2018-09-27
 
 # 语言：
 
-deno 生态发展计划: deno
-
+deno 生态: https://dev.to/aralroca/from-node-to-deno-5gpn#electron
+- pkg manager
+    - https://github.com/crewdevio/Trex
+- electron
+    - webview_deno
+- ui library
+    1. migrate https://github.com/react-component/field-form to deno(antd)
+        1. https://github.com/ahuigo/react-component.github.io
 - markdown static view server:
   - deno run mdview -d www
+  - toc:
+    1. get the main body's point range
+    2. elementFromPoint
   - github pages:
     - markdown + SEO/404
     - toc

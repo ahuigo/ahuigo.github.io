@@ -3,9 +3,6 @@ title: React Redux
 date: 2019-05-21
 private:
 ---
-# 导读
-React 组件间通讯
-http://taobaofed.org/blog/2016/11/17/react-components-communication/
 
 # 父子组件通信
 react 本身是单向数据流，不过
@@ -18,12 +15,79 @@ react 本身是单向数据流，不过
     <Component onChange={this.parentHandle}>
 
 redux 出现就是为了解决组件间的状态同步
-1. redux是的诞生是为了给 React 应用提供「可预测化的状态管理」机制。
 1. Redux会将整个应用状态(其实也就是数据)存储到到一个地方，称为store
-1. 这个store里面保存一棵状态树(state tree)
-1. 组件改变state的唯一方法是通过调用store的dispatch方法，触发一个action，这个action被对应的reducer处理，于是state完成更新
 1. 组件可以派发(dispatch)行为(action)给store,而不是直接通知其它组件
 1. 其它组件可以通过订阅store中的状态(state)来刷新自己的视图
+
+# Redux Basic
+
+    import { createStore } from 'redux'
+
+    // reducer handler
+    function counterReducer(state = { value: 0 }, action) {
+      switch (action.type) {
+        case 'counter/incremented':
+          return { value: state.value + 1 }
+        case 'counter/decremented':
+          return { value: state.value - 1 }
+        default:
+          return state
+      }
+    }
+
+    // Create a Redux store holding the state of your app.
+    let store = createStore(counterReducer)
+
+    // subscribe() to response to state changes.
+    store.subscribe(() => console.log(store.getState()))
+
+    // The only way to mutate the internal state is to dispatch an action.
+    // The actions can be serialized, logged or stored and later replayed.
+    store.dispatch({ type: 'counter/incremented' })
+    // {value: 1}
+    store.dispatch({ type: 'counter/incremented' })
+    // {value: 2}
+    store.dispatch({ type: 'counter/decremented' })
+    // {value: 1}
+
+
+## Redux Toolkit 示例
+Redux Toolkit 简化了编写 Redux 逻辑和设置 store 的过程。
+使用 Redux Toolkit，相同的逻辑如下所示：
+
+    import { createSlice, configureStore } from '@reduxjs/toolkit'
+
+    const counterSlice = createSlice({
+      name: 'counter',
+      initialState: {
+        value: 0
+      },
+      reducers: {
+        incremented: state => {
+          state.value += 1
+        },
+        decremented: state => {
+          state.value -= 1
+        }
+      }
+    })
+
+    export const { incremented, decremented } = counterSlice.actions
+
+    const store = configureStore({
+      reducer: counterSlice.reducer
+    })
+
+    // Can still subscribe to the store
+    store.subscribe(() => console.log(store.getState()))
+
+    // Still pass action objects to `dispatch`, but they're created for us
+    store.dispatch(incremented())
+    // {value: 1}
+    store.dispatch(incremented())
+    // {value: 2}
+    store.dispatch(decremented())
+    // {value: 1}
 
 # Redux 基础
 ## state and store
@@ -115,11 +179,6 @@ dispatch 传async callback 时，会返回promise:
     });
     console.log(await promise)
 
-dispatch 传callback 时，callback 与可以返回promise:
-
-    dispatch((dispatch, getState)=>{ 
-        return Ajax.request('url.com').exec()
-    }).then(..)
 
 ## Reducer 计数器
     import React,{useState,useEffect} from 'react';
@@ -217,77 +276,6 @@ dispatch 传callback 时，callback 与可以返回promise:
         reducer,
         applyMiddleware(thunk)
     );
-
-## redux-promise 中间件
-既然 Action Creator 可以返回函数，当然也可以返回其他值。另一种异步操作的解决方案，就是让 Action Creator 返回一个 Promise 对象。
-
-这就需要使用redux-promise中间件。
-
-    import { createStore, applyMiddleware } from 'redux';
-    import promiseMiddleware from 'redux-promise';
-    import reducer from './reducers';
-
-    const store = createStore(
-      reducer,
-      applyMiddleware(promiseMiddleware)
-    ); 
-
-这个中间件使得store.dispatch方法可以接受 Promise 对象作为参数。这时，Action Creator 有两种写法。
-
-    //写法一，返回值是一个 Promise 对象。
-    const fetchPosts = 
-      (dispatch, postTitle) => new Promise(function (resolve, reject) {
-         dispatch(requestPosts(postTitle));
-         return fetch(`/some/API/${postTitle}.json`)
-           .then(response => {
-             type: 'FETCH_POSTS',
-             payload: response.json()
-           });
-    });
-
-写法二，Action 对象的payload属性是一个 Promise 对象。这需要从redux-actions模块引入createAction方法，并且写法也要变成下面这样。
-
-    import { createAction } from 'redux-actions';
-
-    class AsyncApp extends Component {
-      componentDidMount() {
-        const { dispatch, selectedPost } = this.props
-        // 发出同步 Action
-        dispatch(requestPosts(selectedPost));
-        // 发出异步 Action
-        dispatch(createAction(
-          'FETCH_POSTS', 
-          fetch(`/some/API/${postTitle}.json`)
-            .then(response => response.json())
-        ));
-      }
-
-上面代码中，第二个dispatch方法发出的是异步 Action，只有等到操作结束，这个 Action 才会实际发出。注意，createAction的第二个参数必须是一个 Promise 对象。
-
-看一下redux-promise的源码，就会明白它内部是怎么操作的。
-
-    export default function promiseMiddleware({ dispatch }) {
-      return next => action => {
-        if (!isFSA(action)) {
-          return isPromise(action)
-            ? action.then(dispatch)
-            : next(action);
-        }
-
-        return isPromise(action.payload)
-          ? action.payload.then(
-              result => dispatch({ ...action, payload: result }),
-              error => {
-                dispatch({ ...action, payload: error, error: true });
-                return Promise.reject(error);
-              }
-            )
-          : next(action);
-      };
-    }
-
-    从上面代码可以看出，如果 Action 本身是一个 Promise，它 resolve 以后的值应该是一个 Action 对象，会被dispatch方法送出（action.then(dispatch)），但 reject 以后不会有任何动作；如果 Action 对象的payload属性是一个 Promise 对象，那么无论 resolve 和 reject，dispatch方法都会发出 Action。
-
 
 # react redux
 react 把store直接集成到React应用的顶层props里面. 顶层组件叫Provider

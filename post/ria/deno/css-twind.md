@@ -28,13 +28,6 @@ https://adamwathan.me/composing-the-uncomposable-with-css-variables/
 ## css的@apply 语法
 https://www.iwyvi.com/css/css-apply-rule/
 
-# with classnames
-class　拼接：
-
-    import cx from 'classnames'
-
-    <div className={cx('text-center transition-opacity', showTip ? 'opacity-100' : 'opacity-0')} />
-
 # styled-components
 
 umijs support styled-components
@@ -48,3 +41,18 @@ umijs support styled-components
     extraBabelPlugins: [
         "babel-plugin-styled-components"
     ],
+
+# css inner string
+注意到twind 有一种用法
+
+    tw`${button} w-20`
+
+因为es有这样的语法 string raw
+
+    function button(){}
+    function f(){}
+    function tw() {
+        console.log(arguments)
+    }
+    tw`${button} w-20 ${f}`
+    // output: [button, ' w-20 ', f]
