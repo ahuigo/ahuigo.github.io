@@ -6,6 +6,7 @@ date: 2019-01-23
 发现一份汇编示例：
 1. Go Assembly 示例 https://colobu.com/goasm/
 2. 英文版：https://www.davidwong.fr/goasm/
+3. compiler explorer: https://godbolt.org/
 
 # show asm
     $go tool compile -S int.go |grep new
@@ -37,6 +38,3 @@ date: 2019-01-23
     $ go tool objdump -s .New queue
     $ go tool objdump -s New queue
     $ go tool objdump -s .Queue.PushTailCAS queue
-
-# view asm online
-- compiler explorer: https://godbolt.org/
