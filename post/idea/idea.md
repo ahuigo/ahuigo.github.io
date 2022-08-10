@@ -47,6 +47,13 @@ deno 生态: https://dev.to/aralroca/from-node-to-deno-5gpn#electron
   3. AdonisJS
 - medium 课程
 
+serverless:
+1. expose web:
+    1. https://erisa.dev/exposing-a-web-service-with-cloudflare-tunnel/
+
+## rust
+https://github.com/sunface/rust-course
+
 # 工具类
 
 1. github pages:

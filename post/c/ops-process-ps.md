@@ -62,10 +62,7 @@ ps工具标识进程的5种状态码:
        ps ajx
 
 ## header
-
-	h no header
-
-headers:`man ls`
+headers:`man ps`
 
 	C			processor utilization.(see %cpu).
 	COMMAND		see args. (alias args, cmd)
@@ -75,20 +72,42 @@ headers:`man ls`
 
 ## OUTPUT MODIFIERS
 
-    c      Show the true command name.
-    -L     Show threads, possibly with LWP and NLWP columns.
-    m      Show threads after processes.
-    -m     Show threads after processes.
-    -T     Show threads, possibly with SPID column.
+    c   Show the true command name.
+    -l  print: uid, pid, ppid, flags, cpu, pri, nice, vsz=SZ, rss, wchan, state=S, paddr=ADDR, tty, time, and command=CM
+    -j  print: user, pid, ppid, pgid, sess, jobc, state, tt, time, and command.
+        ps -ej; ps ej
+    -L  Show threads, possibly with LWP and NLWP columns.
+    m   Show threads after processes.
+    -m  Show threads after processes.
+    -T  Show threads, possibly with SPID column.
+
+In legacy mode(此模式不能加`-`前缀)
+
+    -u  show: user, pid, %cpu, %mem, vsz, rss, tt, state, start, time, and command. 
+        ps aux === ps u -ax !== ps -aux
+            ps -aux  它这时指  ps -a -u x,uname2,uname3(x这个用户不存在)
+            建议用 ps ajx
 
 mac:
 
 	-M Show threads
 
 ## filter
+    
+    -a other users' processes as well as your own.
+    -x include processes which do not have a controlling terminal.
+    -A user process + controlling terminal
+    -e identical to -A
+        ps -A == ps -e == ps -ax
 
-	-U user,user,...
+    -u the processes belonging to the specified usernames.(default own)
+        -u user1,user1,...
+        -U uid1,uid2,...
 	-p pid,pid,...
+
+## sort
+
+	-r      Sort by current CPU usage
 
 ## format
 
@@ -210,10 +229,6 @@ top 中的MEM：
 	RES — 进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA
 	VIRT — 进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES
 	SHR — 共享内存大小，单位kb(物理内存)
-
-### sort
-
-	-r      Sort by current CPU usage
 
 # 查看进程
 

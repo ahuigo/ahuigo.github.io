@@ -26,7 +26,7 @@ private: true
 - [`declare namespace`](#declare-namespace) 声明（含有子属性的）全局对象
 - [`interface` 和 `type`](#interface-he-type) 声明全局类型
 
-### `declare var`
+## `declare var`
 与其类似的，还有 `declare let` 和 `declare const`，都是用于定义全局变量的
 
     // src/jQuery.d.ts
@@ -43,7 +43,7 @@ private: true
 1. 一般，全局变量都是禁止修改的常量，所以大部分情况都应该使用 `const` 而不是 `var` 或 `let`。
 1. declare 声明语句中只能定义类型，切勿在声明语句中定义具体的实现
 
-#### extend window,String
+### extend window,String
 > https://stackoverflow.com/questions/39877156/how-to-extend-string-prototype-and-use-it-next-in-typescript
 If you want to augment the `class`, and not the instance, augment the `constructor`:
 
@@ -80,7 +80,7 @@ If you want the function on the `instance`(aka prototype)
         return s;
     }
 
-#### extend JSX
+### extend JSX
 为了支持`<center/>` 标签，我们可以这样
 
     // test.d.ts
@@ -92,8 +92,7 @@ If you want the function on the `instance`(aka prototype)
         }
     }
 
-### declare
-#### `declare function`
+## `declare function`
 `declare function` 用来定义全局函数的类型。jQuery 其实就是一个函数，所以也可以用 `function` 来定义：
 
     // src/jQuery.d.ts
@@ -110,7 +109,7 @@ If you want the function on the `instance`(aka prototype)
     declare function jQuery(domReadyCallback: () => any): any;
     ```
 
-#### `declare class`
+## `declare class`
 当全局变量是一个类的时候，我们用 `declare class` 来定义它的类型[<sup>7</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/07-declare-class)：
 
 ```ts
@@ -144,7 +143,7 @@ declare class Animal {
 }
 ```
 
-#### `declare enum`
+## `declare enum`
 
 使用 `declare enum` 定义的枚举类型也称作外部枚举（Ambient Enums），举例如下[<sup>8</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/08-declare-enum)：
 
@@ -175,15 +174,8 @@ var directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Ri
 
 其中 `Directions` 是由第三方库定义好的全局变量!!!。
 
-#### `declare namespace`
-
-`namespace` 是 ts 早期时为了解决模块化而创造的关键字，中文称为命名空间。
-
-由于历史遗留原因，在早期还没有 ES6 的时候，ts 提供了一种模块化方案，使用 `module` 关键字表示内部模块。但由于后来 ES6 也使用了 `module` 关键字，ts 为了兼容 ES6，使用 `namespace` 替代了自己的 `module`，更名为命名空间。
-
-随着 ES6 的广泛应用，现在已经不建议再使用 ts 中的 `namespace`，而推荐使用 ES6 的模块化方案了，故我们不再需要学习 `namespace` 的使用了。
-
-`namespace` 被淘汰了，但是在声明文件中，`declare namespace` 还是比较常用的，它用来表示全局变量是一个对象，包含很多子属性(接口也有很多属性，但是描述特定的变量)。
+## `declare namespace`
+`declare namespace` 还是比较常用的，它用来表示全局变量是一个对象，包含很多子属性(接口也有很多属性，但是描述特定的变量)。
 
 比如 `jQuery` 是一个全局变量，它是一个对象，提供了一个 `jQuery.ajax` 方法可以调用，那么我们就应该使用 `declare namespace jQuery` 来声明这个拥有多个子属性的全局变量。
 
@@ -227,7 +219,7 @@ const e = new jQuery.Event();
 e.blur(jQuery.EventType.CustomClick);
 ```
 
-##### 嵌套的命名空间
+### 嵌套的命名空间
 
 如果对象拥有深层的层级，则需要用嵌套的 `namespace` 来声明深层的属性的类型[<sup>10</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/10-declare-namespace-nesting)：
 
@@ -277,9 +269,10 @@ jQuery.fn.extend({
 });
 ```
 
-#### `interface` 和 `type`
+## `interface` 和 `type`
 
-除了全局变量之外，可能有一些类型我们也希望能暴露出来。在类型声明文件中，我们可以直接使用 `interface` 或 `type` 来声明一个全局的接口或类型[<sup>12</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/12-interface)：
+
+除了全局变量之外，可能有一些类型我们也希望能暴露出来。在类型声明文件中，我们可以直接使用 `interface` 或 `type` 来声明一个全局的接口或类型
 
 ```ts
 // src/jQuery.d.ts
@@ -309,8 +302,7 @@ jQuery.ajax('/api/post_something', settings);
 
 `type` 与 `interface` 类似，不再赘述。
 
-##### 防止命名冲突
-
+### 防止命名冲突
 暴露在最外层的 `interface` 或 `type` 会作为全局类型作用于整个项目中，我们应该尽可能的减少全局变量或全局类型的数量。故最好将他们放到 `namespace` 下[<sup>13</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/13-avoid-name-conflict)：
 
 ```ts
@@ -339,7 +331,7 @@ let settings: jQuery.AjaxSettings = {
 jQuery.ajax('/api/post_something', settings);
 ```
 
-#### 声明合并
+## 声明合并
 
 假如 jQuery 既是一个函数，可以直接被调用 `jQuery('#foo')`，又是一个对象，拥有子属性 `jQuery.ajax()`（事实确实如此），那么我们可以组合多个声明语句，它们会不冲突的合并起来[<sup>14</sup>](https://github.com/xcatliu/typescript-tutorial/tree/master/examples/declaration-files/14-declaration-merging)：
 

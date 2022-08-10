@@ -205,8 +205,7 @@ COPY 中, 复制文件夹还是`子内容` , 取决于destination是目录 还�
     --network: 默认 default。在构建期间设置RUN指令的网络模式
 
 ### ARG and ENV
-不同点：
-1. ARG/ENV 都可以在build 阶段定义和使用
+ARG/ENV 都可以在build 阶段定义和使用, 不同点：
 2. ARG 可以在build时改变 `docker build --build-arg <varname>=<value>`
 2. ENV 才将环境变量传给容器, 即可用run时改变 `docker run -e APP_ENV=dev <image-在后>`
 
