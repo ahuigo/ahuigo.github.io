@@ -77,7 +77,8 @@ clean 命令清：
     # install binary
     go install 
     go install ./path/src
-    go install github.com/ahuigo/xxx
+    go install github.com/ahuigo/arun@latest
+    go install github.com/swaggo/swag/cmd/swag@latest
 
     # add dependencies + download + install
     go get github.com/ahuigo/xxx

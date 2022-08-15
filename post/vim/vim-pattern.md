@@ -159,40 +159,57 @@ replace 比较特别：
 ## multi
 default nomagic, need `\\` backslash
 
-		 'magic' 'nomagic'	matches of the preceding atom ~
-	\*	0 or more	as many as possible
-	\+	1 or more	as many as possible (*)
-	\=	0 or 1		as many as possible (*)
-	\?	0 or 1		as many as possible (*)
+	    'magic'        'nomagic'    matches of the preceding atom ~
+	\*	0 or more	    as many as possible
+	\+	1 or more	    as many as possible (*)
+	\=	0 or 1		    as many as possible (*)
+	\?	0 or 1		    as many as possible (*)
 
 	\{n,m}	n to m		as many as possible (*)
-	\{n}	n		exactly (*)
+	\{n}	n		    exactly (*)
 	\{n,}	at least n	as many as possible (*)
 	\{,m}	0 to m		as many as possible (*)
-	\{}	0 or more	as many as possible (same as *) (*)
+	\{}	0 or more	    as many as possible (same as *) (*)
 
 	\{-n,m}	n to m		as few as possible (*)
-	\{-n}	n		exactly (*)
+	\{-n}	n		    exactly (*)
 	\{-n,}	at least n	as few as possible (*)
 	\{-,m}	0 to m		as few as possible (*)
 	\{-}	0 or more	as few as possible (*)
 
-    \(\) 这个得全部转义 \{\} 可最左转义
+    \(\) 这个得全部转义 \{\} 只需要左括号转义
 
-## very magic
+
+## magic, very magic,nomagic
+
+            magic   nomagic	matches ~
+    |/\m|	\m	    \m	'magic' on for the following chars in the pattern
+
+    |/\M|	\M	    \M	'magic' off for the following chars in the pattern
+
+    |/\v|	\v	    \v	the following chars in the pattern are "very magic"
+
+    |/\V|	\V	    \V	the following chars in the pattern are "very nomagic" 
+
+总结一下
+
+    Use of "\v" means that after it, all ASCII characters except '0'-'9', 'a'-'z',
+    'A'-'Z' and '_' have special meaning: "very magic"
+
+    Use of "\V" means that after it, only a backslash and the terminating
+    character (usually / or ?) have special meaning: "very nomagic"
+
+
+
+
 like perl and php:
 
-	+*?(){}| is very magic
-	<> is very magic
-	& is very magic
+	+*?(){}|    is very magic
+	<>          is very magic
+	&           is very magic
         /\v<(word|word2)>
 	:execute 'normal! gg/\vfor .+ in .+:' . "\<cr>"
 
-      magic   nomagic	matches ~
-    |/\m|	\m	\m	'magic' on for the following chars in the pattern
-    |/\M|	\M	\M	'magic' off for the following chars in the pattern
-    |/\v|	\v	\v	the following chars in the pattern are "very magic"
-    |/\V|	\V	\V	the following chars in the pattern are "very nomagic" 
 
 ## zeor-width assert
 

@@ -146,7 +146,7 @@ peer 包（被大量包依赖的，如React）
     $ npm cache ls react
     ~/.npm/react/0.14.6/
 
-## version spec
+## version semver
 
     ^1.1.0 匹配 >=1.1.0 且 <2.0.0
     ^0.0.3 匹配 >=0.0.3 且 <0.0.4
@@ -160,6 +160,12 @@ peer 包（被大量包依赖的，如React）
     ~1 匹配 >=1.0.0 且 <2.0.0
 
     1.30.2 - 2.30.2 匹配 >=1.30.2 且 <=2.30.2
+
+### 版本冲突
+http://aprilandjan.github.io/npm/2019/08/02/how-npm-handles-dependency-version-conflict/
+
+1. npm v3: 依赖平铺, 无法避免多版本依赖冲突
+    2. 模块的安装顺序可能影响 node_modules 内的文件结构
 
 # npm list
 查看node_modules 中的包

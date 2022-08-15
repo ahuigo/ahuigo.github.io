@@ -55,6 +55,7 @@ alias pip='pip3'
 export PYTHONPATH=.
 
 # docker
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
 alias drmi='docker rmi $( docker images --filter "dangling=true" -q --no-trunc)'
 
 
