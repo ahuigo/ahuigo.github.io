@@ -9,6 +9,10 @@ https://zhuanlan.zhihu.com/p/137535779
 2. go get -u ext3.com/module3@v0.0.4 https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
 
 # yarn
+## install yarn binary
+
+    corepack enable
+
 ## mirror
     # 国内源tyarn
     npm i yarn tyarn -g
@@ -17,13 +21,30 @@ https://zhuanlan.zhihu.com/p/137535779
 
 config yarn mirror
 
-    yarn config set npmRegistryServer http://nexus.local/repository/npm-group/
+    yarn config set registry https://npmmirror.com/
+    yarn config get registry 
     YARN_REGISTRY="<url-to-your-registry>" yarn publish
+
+可以通过yrm ls 找到mirror
+
+  npm ---- https://registry.npmjs.org/
+  cnpm --- http://r.cnpmjs.org/
+  taobao - https://npmmirror.com/
+  nj ----- https://registry.nodejitsu.com/
+  rednpm - http://registry.mirror.cqupt.edu.cn/
+  npmMirror  https://skimdb.npmjs.com/registry/
+  edunpm - http://registry.enpmjs.org/
+  yarn --- https://registry.yarnpkg.com
 
 ## yarn bin
     echo 'export PATH="$PATH:`yarn global bin`"' >> ~/.profile
 
 ## yarn install
+等价, 相当于npm install
+
+   yarn  
+   yarn install
+
 ### lock
     # 如果package.json与yarn.lock 不匹配就会更新lock
     yarn 

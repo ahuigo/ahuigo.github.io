@@ -8,6 +8,19 @@ ag 比ack/grep 还快
 
     brew install the_silver_searcher
 
+
+## 过滤文件名
+    ag -G '\.java$' 'ftp' .
+
+过滤文件类型集
+
+    ag --list-file-types
+        --go
+        --ruby
+        --python
+    ag --ruby 'ftp' .
+    ag --python 'ftp' .
+
 ## 自动忽略`.gitinore/.hgignore` 中的文件
 https://github.com/ggreer/the_silver_searcher/wiki/Advanced-Usage
 ag 支持`.ignore/.gitinore/.hgignore`
@@ -23,7 +36,7 @@ If you want a global `.ignore` file:
 
     alias ag='ag --path-to-ignore ~/.ignore'
 
-## 包售.xxx 隐藏文件
+## 包括.hiden隐藏文件
 
     ag --hidden
 

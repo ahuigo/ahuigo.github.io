@@ -8,8 +8,8 @@ ArrayBuffer 跟array不一样：
 1. new ArrayBuffer(16); // 创建一个长度为 16 的 buffer, 并填充0
 2. 长度不可变。
 
-##　视图(TypedArray)
-ArrayBuffer没有数据类型, 要操作它则要转成视图，视图(TypedArray)可分为
+# TypedArray 视图
+ArrayBuffer没有数据类型, 要操作它则要转成视图(`TypedArray`或`DataView`). `TypedArray`可分为
 1. Uint8Array —— 将 ArrayBuffer 中的每个字节视为 0 到 255 之间的单个数字（每个字节是 8 位，因此只能容纳那么多）。这称为 “8 位无符号整数”。
 1. Uint16Array —— 将每 2 个字节视为一个 0 到 65535 之间的整数。这称为 “16 位无符号整数”。
 1. Uint32Array —— 将每 4 个字节视为一个 0 到 4294967295 之间的整数。这称为 “32 位无符号整数”。
@@ -121,7 +121,7 @@ e.g:
     arr8[2] //undefined
     arr8[2] = 1 //无效，但是不报错
 
-## DataView 
+# DataView, 无类型视图
 DataView 是在 ArrayBuffer 上的一种特殊的超灵活“未类型化”视图。
 
     // 与类型化数组不同，DataView 不会自行创建缓冲区（buffer）

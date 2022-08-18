@@ -125,9 +125,9 @@ https://github.com/sunface/rust-course
     1. https://github.com/casbin/casbin#role-manager
 
 # 全职
-
-http://deepdevelop.com/
-一早一晚: 自由工作社区
+直播/在线帮人解决技术问题
+付费解决/h
+一早一晚: 自由工作社区 http://deepdevelop.com/
 http://yizaoyiwan.com/discussions/460
 medium.com
 https://medium.com/%E5%86%99%E4%BD%9C%E4%B9%8B%E8%B7%AF/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%A6%82%E4%BD%95%E5%9C%A8medium-com%E4%B8%8A%E9%80%9A%E8%BF%87%E5%86%99%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2%E8%B5%9A%E9%92%B1-6d47d82b03dd

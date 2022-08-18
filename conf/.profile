@@ -232,8 +232,7 @@ export CLASSPATH='.:/usr/local/lib/jar/*'
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
 # yarn
-alias yarn=tyarn
-export YARN_REGISTRY="http:test"
+#alias yarn=tyarn
 export PATH="$PATH:$(yarn global bin)"
 [ -f ~/.private ] && source ~/.private
 [ -f ~/.local.rc ] && source ~/.local.rc

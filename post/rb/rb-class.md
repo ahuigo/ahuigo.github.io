@@ -57,6 +57,13 @@ Calling `attr_accessor` will create a `getter` AND a `setter` for the given vari
 
     attr_accessor :name
 
+
+检查属性是否存在：
+
+    if obj and obj.name and obj.name and defined? obj.name.bc then 
+        p obj.name 
+    end
+
 ### 冻结对象
 让对象只读
 

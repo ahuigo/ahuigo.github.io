@@ -17,3 +17,7 @@ Adding a Module here: https://deno.land/add_module
 ## Publishing Deno modules for Node.js
 See dnt - Deno to Node Transform.
 https://deno.land/manual@main/publishing
+https://nest.land
+https://denopkg.com/
+
+trex 用的就是这三家

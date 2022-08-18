@@ -15,6 +15,13 @@ in case of the content in the remote url https://some.url/a.ts is changed, we sh
     ...
     }
 
+## where is cache dir
+refer: deno-module.md
+
+    $ deno info
+    DENO_DIR location: ~/Library/Caches/deno
+    Remote modules cache: ~/Library/Caches/deno/deps
+
 ## update/create lock.json
 To update or create a lock.json
 
@@ -36,7 +43,7 @@ Collaborator on another machine -- in a freshly cloned project tree:
 Like caching above, you can also use the `--lock=lock.json` option during use of the deno run sub command, validating the integrity of any locked modules during the run. 
 
     // this only validates against dependencies previously added to the lock.json file. New dependencies will be cached but not validated.
-    deno run --lock=lock.json --cached-only mod.ts
+    deno run --lock=lock.json mod.ts
 
 using the `--cached-only` flag to require that remote dependencies are already cached.
 

@@ -34,6 +34,7 @@ ps工具标识进程的5种状态码:
 
 	ps -options
 	ps [axu] -option
+	ps [ajx] -option
 
 -Options:
 
@@ -81,7 +82,7 @@ headers:`man ps`
     -m  Show threads after processes.
     -T  Show threads, possibly with SPID column.
 
-In legacy mode(此模式不能加`-`前缀)
+In legacy mode(加`-`前缀就是legacy mode), 此模式只有`-uegl` 四个. 其它选项不受`-`的影响
 
     -u  show: user, pid, %cpu, %mem, vsz, rss, tt, state, start, time, and command. 
         ps aux === ps u -ax !== ps -aux
@@ -119,7 +120,7 @@ mac:
 
 	-f
 		UID   PID  PPID   C STIME   TTY           TIME CMD
-	-u,u
+	-u,
 		USER  PID  %CPU %MEM      VSZ    RSS   TT  STAT STARTED      TIME COMM
 	-l
 		UID   PID  PPID   F CPU PRI NI       SZ    RSS WCHAN     S             ADDR TTY           TIME CMD

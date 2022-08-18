@@ -323,6 +323,7 @@ symbol value: `:symbol` 是一种symbol类型数据
 
 ### read value
 via key
+
     options['key']
     hash.fetch(key [, default] ) [or]
     # 不可以用options.key
