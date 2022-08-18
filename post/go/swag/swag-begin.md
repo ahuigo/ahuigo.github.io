@@ -6,26 +6,67 @@ private: true
 # swagger begin
 This article will introduce swagger's source code.
 
+本文语法：
+
+    new Parser() // parser.go  --- this caller is defined in parser.go
+
 # swag init
     go run cmd/swag/main.go init
 
 ## initAction
-    func initAction(ctx *cli.Context) error {
-        return gen.New().Build(&gen.Config{
-            SearchDir:           ctx.String(searchDirFlag),
-            ...
-        })
-    }
+    initAction(ctx *cli.Context)
+        return gen.New().Build(&gen.Config{ SearchDir ...  })
+            1. p := swag.New(...)
+            2. p.ParseAPIMultiSearchDir(searchDir) // parser.go
 
 ## ParseAPIMultiSearchDir
 
-    ParseAPIMultiSearchDir
-        getAllGoFileInfo->parseFile parse.go
-            goparser.ParseFile
-            parser.packages.CollectAstFile
+    (parser *Parser)ParseAPIMultiSearchDir()    //parser.go
+        parser.getAllGoFileInfo
+            parser.parseFile 
+                astFile = goparser.ParseFile(filename, mode=ParseComments)
+                parser.packages.CollectAstFile(astFile)
+                    //(pkgDefs *PackagesDefinitions)CollectAstFile(astFile)
+                    pkgDefs.packages[packageDir].Files[path] = astFile
+                    pkgDefs.files[astFile] = &AstFileInfo{
+                        File:        astFile,
+                        Path:        path,
+                        PackagePath: packageDir,
+                    }
+        if parser.ParseDependency :
+            parser.getAllGoFileInfoFromDeps(&tree.Root.Deps[i])
+                parser.parseFile(pkg.Name, path) 
+        parser.ParseGeneralAPIInfo(absMainAPIFilePath="main.go")
+            astFile = goparser.ParseFile("main.go", mode=ParseComments)
+            parseGeneralAPIInfo(parser, astFile.comments)
+                //comment like: @contact.name,@license.url,@host
 
+        parser.parsedSchemas = parser.packages.ParseTypes()
+            //pkgDefs.ParseTypes()
+            for astFile, info := range pkgDefs.files:
+                parsedSchemas += pkgDefs.parseTypesFromFile(astFile, info.PackagePath)
+                    for astDeclaration := range astFile.Decls: 
+                        //if generalDeclaration:= astDeclaration.(*ast.GenDecl);
+                        for astSpec := range generalDeclaration.Specs:
+                            // if typeSpec:= astSpec.(*ast.TypeSpec);
+                            parsedSchemas[typeSpecDef] = &Schema{
+                                PkgPath: typeSpecDef.PkgPath,
+                                Name:    astFile.Name.Name,
+                                Schema:  PrimitiveSchema(TransToValidSchemeType(idt.Name)),
+                            }
+                            pkgDefs.uniqueDefinitions[fullName] = typeSpecDef
+                            //pkgDefs.uniqueDefinitions['server.User'] = typeSpecDef
+                            pkgDefs.packages[typeSpecDef.PkgPath].TypeDefinitions[typeSpecDef.Name()] = typeSpecDef
 
-    goparser.ParseFile
+        rangeFiles(parser.packages.files, parser.ParseRouterAPIInfo)
+            for {path,File}=range files:
+                parser.ParseRouterAPIInfo(path,File)
+        parser.renameRefSchemas()
+        return parser.checkOperationIDUniqueness()
+
+## goparser.ParseFile
+    // go/1.18/src/ligexec/go/parser
+    goparser.ParseFile(filename,mode=ParseComments)
         paser.parseGenDecl
             paser.parseImportSpec
                 paser.next

@@ -15,7 +15,8 @@
        query.set('.ghspa_path', pathname)
        u.pathname = basePath
        u.search = query
-       window.location.replace(u)
+       console.log(u.href)
+       //window.location.replace(u)
    }
 
    /* resolve 404 redirects into internal routes */
@@ -27,6 +28,7 @@
             q.delete('.ghspa_path')
            u.pathname= pathname
            u.search = q
+        console.log(u.href)
          window.history.replaceState(null, null,u)
        }
      }

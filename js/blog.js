@@ -76,7 +76,7 @@ const mdConponent = {
       return hljs.highlightBlock(e, '    ');
     });
     this.$root.$$('#content a').forEach((v, k, arr) => {
-      let match_reg = /^\/(p|b)\//
+      let match_reg = /^\/(p|b|a)\//
       if(v.getAttribute('href').match(match_reg)){
         v.href = v.getAttribute('href').replace(match_reg, '#/post/') + '.md'
       }

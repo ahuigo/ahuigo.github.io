@@ -2,7 +2,29 @@
 <html>
 <head>
     <title>404</title>
-    <script type="text/javascript" src="ghspa.js"></script>
+    <script type="text/javascript" src="/ghspa.js"></script> 
+    <script type="text/javascript">
+        function isExisted(path){
+            return fetch(path).then((res)=>res.status<400)
+        }
+        function loadJs(src){
+            var s = document.createElement('script');
+            s.src = src;
+            s.onload = function() {
+                this.remove();
+            };
+            (document.head || document.documentElement).appendChild(s);
+        }
+        const repoName = location.pathname.split('/')[1] 
+        if(repoName){
+            // const isExisted=await isExisted('/ghspa.js')
+            if(isExisted){
+                // loadJs('/ghspa.js')
+            }else{
+                loadJs(`/${repoName}/ghspa.js`)
+            }
+        }
+    </script>
 </head>
 <body>
     todo: import ghspa.js in index.html
