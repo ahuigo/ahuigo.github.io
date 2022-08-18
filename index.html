@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <script>
+    <script type="text/javascript">
         if(!('noModule' in HTMLScriptElement.prototype)){
             alert('你的浏览器不能很好的支持 es6，请用最新的chrome、firefox浏览!')
         }
         var config = {
             // github user acount
             'user': 'ahuigo',
+            // your github's repo name
             'repo': 'a', //'repo': 'ahuigo.github.io',
             'weibo_uid': 1607772514,
             'twitter_user': 'ahuigoo',
             'disqus_user': 'ahuigo',
         }
+
+        // spa
+        function loadJs(src){
+            var s = document.createElement('script');
+            s.src = src;
+            (document.head || document.documentElement).appendChild(s);
+        }
+        const repoName = location.pathname.split('/')[1] 
+        if(repoName==""||repoName=="index.html"){
+            loadJs('/ghspa.js')
+        }else{
+            loadJs(`/${repoName}/ghspa.js`)
+        }
+
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1" />
@@ -31,11 +46,11 @@
     <link rel="stylesheet" href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/KaTeX/0.15.2/katex.min.css">
     <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/KaTeX/0.15.2/katex.min.js"></script>
 
-    <script src="js/marked.js"></script>
-    <script src="js/toc.js"></script>
 </head>
 
 <body class="layout-documentation page-layout">
+    <script src="js/marked.js"></script>
+    <script src="js/toc.js"></script>
     <div>
         <div class="pure-menu pure-menu-horizontal" style=" background: #363636; ">
             <a href="#" class="pure-menu-heading pure-menu-link"><strong>AHUIGO'S BLOG</STRONG></a>

@@ -10,9 +10,11 @@
 
 比如：
 
+    // index.html
     var config = {
         // github user acount
         'user': 'ahuigo',
+        // github repo
         'repo': 'ahuigo.github.io',
         'disqus_user': 'ahuigo',
         'twitter_user': 'ahuigoo',
