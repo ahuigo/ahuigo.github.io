@@ -3,7 +3,6 @@ title: 极端天气
 date: 2022-08-19
 ---
 # 极端天气
-
 没错，但是，过去几千年，温度是温和变化的，但是近100年，温度是极速增长的：https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/ 
 
 你可以说过去几千年，全球气候越来越适合人类生存在，但是面对近百年的海水在上涨、珊瑚礁在消失、极端天气越发的频繁时，很难说这一百年来人类的生存环境越来越好了吧。

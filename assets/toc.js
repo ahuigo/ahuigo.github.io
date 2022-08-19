@@ -46,13 +46,13 @@ function createToc(article){
   var tocObj = getTocObj(article),
     div = document.createElement('div');
     div.innerHTML = genToc(tocObj);
-    div.onclick = function(e){
-      e = e || event;
-      var from = findParent('a',e.target || e.srcElement);
+  div.onclick = function (e) {
+    return;
+    const from = findParent('a', e.target);
       if (from){
         e.preventDefault()
-        var hash = decodeURI(from.hash)
-        document.getElementById(hash.substr(1)).scrollIntoView()
+        const hash = decodeURI(from.hash);
+        document.getElementById(hash.slice(1))?.scrollIntoView()
       }
 
     }

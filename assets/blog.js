@@ -78,7 +78,9 @@ const mdConponent = {
   },
   mounted: function () {
     console.log('mounted');
-    this.$nextTick(function () { });
+    this.$nextTick(function () {
+      gotoHash();
+    });
   },
   updated() {
     console.log('updated');
@@ -160,12 +162,13 @@ const mdConponent = {
       } else if (filepath.startsWith('/p/') || filepath.startsWith('/b/')) {
         filepath = '/post' + filepath.slice(2) + '.md';
       } else {
+        // convert resource path to historyPath
         this.setHistoryPath(filepath);
       }
 
       fetch(filepath).then(async (r) => {
         if (!r.ok) {
-          this.md = '# 文章不存在!';
+          this.md = '# 此文章可能被删除了';
         } else {
           let data = await r.text();
           let title, date;
@@ -277,3 +280,11 @@ const app = new Vue({
     this.fetchFolder(this.$data);
   }
 }).$mount('#app');
+
+
+function gotoHash() {
+  setTimeout(function () {
+    const hash = decodeURI(location.hash);
+    document.getElementById(hash.slice(1))?.scrollIntoView();
+  }, 1000);
+}

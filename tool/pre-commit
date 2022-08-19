@@ -164,7 +164,7 @@ def genIndexPages(index_blogs):
             fp.write("\n"+pager)
         print('\n')
 
-    getoutput(f"git add atom.xml post/index.md post/p")
+    # getoutput(f"git add atom.xml post/index.md post/p")
 
 
 def getIndexBlogs():
@@ -186,8 +186,9 @@ def getIndexBlogs():
     return index_blogs
 
 
+
+modified_linelist = []
 if "all" in sys.argv:
-    modified_linelist = []
     for path in glob("post/**/*.md", recursive=True):
         if not path.startswith("post/p/") and path != "post/index.md":
             modified_linelist.append(f"A\t{path}")
@@ -195,8 +196,9 @@ elif len(sys.argv) > 1:
     modified_linelist = [f"A\t{path}" for path in sys.argv[1:]]
 else:
     cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vE "\spost/(index|p/.+).md$" '
-    modified_linelist = getoutput(cmd).strip().split("\n")
-    # modified_linelist = filter(lambda x: x, modified_linelist)
+    out = getoutput(cmd).strip()
+    if out:
+        modified_linelist = out.split("\n")
 
 if modified_linelist:
     index_blogs = getIndexBlogs()
@@ -205,6 +207,7 @@ if modified_linelist:
     old_index_path_list = list(index_blogs.keys())
     for line in [line for line in modified_linelist if line]:
         status, path = line.split("\t")
+        path = '/'+path
         if status == "D":
             index_blogs.pop(path, None)
             delete_files.append(path)
@@ -234,6 +237,7 @@ if modified_linelist:
     if errors:
         breakout(errors)
 
+quit(1)
 if os.path.exists("no-commit"):
     log("no-commit")
     quit(1)
