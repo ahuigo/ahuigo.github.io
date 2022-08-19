@@ -1,24 +1,37 @@
 # 纯静态博客
 本博客是完全纯静态blog, 核心js 代码只有200 多行。 
 
-- Fork 地址: [https://github.com/ahuigo/a](https://github.com/ahuigo/a)
-- 示例地址：[https://ahuigo.github.io/a#/README.md](https://ahuigo.github.io/a#/README.md)
+- Fork 地址: [https://github.com/ahuigo/yourname.github.io](https://github.com/ahuigo/yourname.github.io)
+- 示例地址：[https://ahuigo.github.io/readme](https://ahuigo.github.io/readme)
 
-使用方法：
-1. Fork 到任意其它的仓库, 比如: `{yourname}.github.io` 
-2. 修改 `index.html` 中的`config`变量
+## 使用方法：
+1. Fork 此仓库: https://github.com/ahuigo/yourname.github.io, 
+2. 然后仓库名重命名为你的帐号号: `{yourname}.github.io`, 这样就可直接访问:  `{yourname}.github.io`
+3. 修改 `index.html` 中的`config`变量
 
 比如：
 
     // index.html
-    var config = {
-        // github user acount
-        'user': 'ahuigo',
-        // github repo
-        'repo': 'ahuigo.github.io',
-        'disqus_user': 'ahuigo',
+    const config = {
+        // your github's username
+        'user': '{yourname}',
+
+        // your github's repo name
+        'repo': '{yourname}.github.io',
+        'weibo_uid': 1607772514,
         'twitter_user': 'ahuigoo',
+        'disqus_user': 'ahuigo',
     }
+
+最后，进入到`/post/`目录，编写你的markdown 文件(你可以任意建子目录)
+
+    ├── img
+    └── post
+        └── index.md
+        ├── go/
+        └── python/
+
+编写完了后, 不需要构建，直接提交git push，就可查看你的文章了.
 
 ## 博客采用的技术方案
 1. Vue.js 框架

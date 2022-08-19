@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # This script is used to generate a static site.
 import sys
 import os
@@ -12,8 +12,9 @@ print("Exec python:",sys.executable)
 print("current_path:", os.getcwd())
 
 ROOT = "/b"
+ROOT = ""
+PAGE_BASE="/b"
 WWW_PATH = os.getenv('HOME')+'/www'
-PAGE_TPL = open("page.html").read()
 errors = []
 log = print
 
@@ -23,29 +24,25 @@ def basename(path):
     return os.path.splitext(filename)[0]
 
 
-def getPostPath(path):
-    return WWW_PATH + '/' + f"{ROOT[1:]}/{path[5:-3]}.html"
-
-
+# via: /post/c/c-shell.md
 def getPostUrl(path):
-    # return f'/p/{path[5:-3]}'
-    return f"{ROOT}/{path[5:-3]}"
+    return f"{PAGE_BASE}/{path[6:-3]}"
 
 
 def updateAtom(blogs, max_items=40):
     from copy import copy
     from bs4 import BeautifulSoup as BS
 
-    atomPath = f"./{ROOT[1:]}/atom.xml"
+    atomPath = f".{ROOT}/atom.xml"
     if os.path.exists(atomPath):
         s = open(atomPath).read()
     else:
         s = f"""
 <feed xmlns="http://www.w3.org/2005/Atom">
-<title>Ahuigo 的网络日志</title>
+<title>Ahuigo 的笔记</title>
 <link href="https://ahuigo.github.io{ROOT}/atom.xml" rel="self" type="application/atom+xml"/>
 <updated>2018-08-17T13:46:49Z</updated>
-<subtitle>ahuigo's Blog</subtitle>
+<subtitle>Ahuigo's notes</subtitle>
 <entry xml:base="https://ahuigo.github.io">
 <title>vue instance</title>
 <link href="/b/ria/vue-ins" rel="alternate" type="text/html"/>
@@ -127,80 +124,47 @@ def parseBlog(path, withContent=False):
     return blog
 
 
-def publishBlog(path, pager=""):
-    import html
-    import markdown2
-
-    # post/a/t.md
-    post_path = getPostPath(path)
-    post_dir = os.path.dirname(post_path)
-    if not os.path.exists(post_dir):
-        os.mkdir(post_dir)
-    if not path.startswith("post/p/"):
-        log(f"Generate: {path} -> {post_path}")
-    blog = parseBlog(path, True)
-    meta = f"""---
-title: {blog['title']}
-date: {blog['date']}
-updated: {blog['updated']}
----
-"""
-    md = f'{meta}{blog["content"]}'
-    render_md = (
-        re.sub(r"(?<=\n)\s+", "", PAGE_TPL)
-        .replace("{ROOT}", ROOT)
-        .replace("{MD_URL}", "%r" % path)
-        .replace("{TITLE}", html.escape(blog["title"]))
-        .replace(f'<pre id="pager"></pre>', f'<div id="pager">{pager}</div>')
-    )
-    if pager:
-        render_md = render_md.replace(
-            f'<pre id="markdown"></pre>',
-            f'<div id="markdown2" v-pre>{markdown2.markdown(blog["content"])}</div>',
-        )
-    else:
-        render_md = render_md.replace(
-            f'<pre id="markdown"></pre>',
-            f'<pre id="markdown" v-pre>{html.escape(md)}</pre>',
-        )
-
-    print("cwd:", os.getcwd())
-    open(post_path, "w").write(render_md)
-
-
-def genPager(page_urls, pos):
+def genPager(pos, max_page):
     pager = ""
-    for i, page_url in enumerate(page_urls):
-        pager += f' <a href="{page_url}">p{i}</a>' if i != pos else f" p{i}"
+    for i in range(max_page):
+        page_url = f''
+        page_url = "/" if i == 0 else f"/b/p/p{i}"
+        pager += f' [p{i}]({page_url})' if i != pos else f" p{i}"
     return pager
 
 
 def genIndexPages(index_blogs):
     files_num = len(index_blogs)
-    SIZE = 40
+    SIZE = 20
     page_urls = []
     if not os.path.exists('post/p'):
         os.mkdir("post/p")
-    page_files = []
-    for i in range(0, files_num, SIZE):
-        n = i // SIZE
-        page_file = "post/index.md" if n == 0 else f"post/p/p{n}.md"
-        page_files.append(page_file)
-        page_urls.append(getPostUrl(page_file))
 
     from itertools import islice
+    from itertools import groupby, count
+    def chunks(iterable, size):
+        c = count()
+        for i, g in groupby(iterable, lambda _: next(c)//size):
+            yield i,g
+
 
     it_blogs = iter(index_blogs)
-    for pos, page_file in enumerate(page_files):
+    max_page = -(-len(index_blogs)//SIZE)
+    for n,p_blogs in chunks(it_blogs, SIZE):
+        page_file = "post/index.md" if n == 0 else f"post/p/p{n}.md"
+        print('generate file:',page_file)
+        pager = genPager(n, max_page)
         with open(page_file, "w") as fp:
             fp.write(f"# AHUIGO 的笔记\n")
-            for path in islice(it_blogs, SIZE):
+            for path in p_blogs:
+                print('pppp:',path)
                 blog = index_blogs[path]
                 article = f'- {blog["date"]} [{blog["title"]}]({getPostUrl(path)}) '
                 fp.write(article + "\n")
-        publishBlog(page_file, genPager(page_urls, pos))
-    getoutput(f"git add post/index.md")
-    return page_files
+            fp.write("\n"+pager)
+        print('\n')
+
+    getoutput(f"git add atom.xml post/index.md post/p")
 
 
 def getIndexBlogs():
@@ -212,8 +176,8 @@ def getIndexBlogs():
             m = re.match(
                 "^- (?P<created>\S+) \[(?P<title>[^\]]+)\]\((?P<path>/[^\)]+)\)", line
             )
-            if m and m.group("path").startswith(f"{ROOT}/"):
-                path = m.group("path").replace(f"{ROOT}/", "post/", 1) + ".md"
+            if m and m.group("path").startswith(f"{PAGE_BASE}/"):
+                path = m.group("path").replace(f"{PAGE_BASE}/", "/post/", 1) + ".md"
                 index_blogs[path] = {
                     "title": m.group("title"),
                     "path": path,
@@ -232,16 +196,14 @@ elif len(sys.argv) > 1:
 else:
     cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vE "\spost/(index|p/.+).md$" '
     modified_linelist = getoutput(cmd).strip().split("\n")
-    modified_linelist = filter(lambda x: x, modified_linelist)
+    # modified_linelist = filter(lambda x: x, modified_linelist)
 
-# breakout(modified_linelist)
 if modified_linelist:
-    # index_blogs = OrderedDict()
     index_blogs = getIndexBlogs()
     new_blogs = {}
     delete_files = []
     old_index_path_list = list(index_blogs.keys())
-    for line in modified_linelist:
+    for line in [line for line in modified_linelist if line]:
         status, path = line.split("\t")
         if status == "D":
             index_blogs.pop(path, None)
@@ -260,21 +222,14 @@ if modified_linelist:
         if path not in old_index_path_list:
             index_blogs.move_to_end(path, last=False)
 
-    for path in delete_files:
-        post_path = getPostPath(path)
-        if os.path.exists(post_path):
-            os.unlink(post_path)
-
-    if new_blogs:
+    # breakout(index_blogs)
+    if new_blogs or delete_files:
         from itertools import islice
-
         log("updateAtom, current_path:", os.getcwd())
         updateAtom({k: new_blogs[k] for k in islice(new_blogs, 10)})
+
         log("genIndexPages")
         genIndexPages(index_blogs)
-        log("publishBlogs")
-        for path in new_blogs.keys():
-            publishBlog(path)
 
     if errors:
         breakout(errors)

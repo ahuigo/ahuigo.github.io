@@ -302,6 +302,7 @@ Vue.js 的插件应当有一个公开方法 install 。这个方法的第一个�
     Vue.use(require('vue-router'))
 
 # router
+vue router 是有默认变量的
 
     path: '/post/:id'
          this.$route.params.id

@@ -128,7 +128,7 @@ function gcap(){
     if git remote | grep '\w';then
         if git remote| grep -vE '^donau|gitee|local|up|other$' | xargs -L1 -J% git push --follow-tags % HEAD; then
             cd $(git rev-parse --show-toplevel)
-            subdirs=(b )
+            subdirs=( )
             top_dir=$(pwd)
             echo "check top_dir $top_dir"
             for subdir in "${subdirs[@]}"; do

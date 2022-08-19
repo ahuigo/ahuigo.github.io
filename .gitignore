@@ -27,7 +27,6 @@ node_modules
 #/img/mo
 
 # blog
-post/p/
 no-commit
 blog2
 /a.*
@@ -44,5 +43,5 @@ go.sum
 /slide.html
 *.rdb
 
-/post/deno-doc/
 /conf/nginx/resty.test.conf
+/tpl

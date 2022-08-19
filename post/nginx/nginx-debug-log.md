@@ -61,6 +61,12 @@ Other connections will use logging level set by the error_log directive
 
 > nginx needs to be built with --with-debug, 
 
+## set log path
+http:
+
+    access_log  /dev/stdout  main;
+    error_log  /dev/stdout notice;
+
 ## find log path
 via lsof:
 

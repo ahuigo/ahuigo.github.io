@@ -1,5 +1,4 @@
 ---
-layout: page
 title:	tcp/ip 协议
 date: 2011-11-11
 ---

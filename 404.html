@@ -2,9 +2,11 @@
 <html>
 <head>
     <title>404</title>
-    <script type="text/javascript" src="/ghspa.js"></script> 
-    <script type="text/javascript">
-        function isExisted(path){
+    <script type="text/javascript" src="/assets/ghspa.js"></script> 
+</head>
+<body>
+    <!-- <script type="module">
+        function hasUrl(path){
             return fetch(path).then((res)=>res.status<400)
         }
         function loadJs(src){
@@ -17,16 +19,14 @@
         }
         const repoName = location.pathname.split('/')[1] 
         if(repoName){
-            // const isExisted=await isExisted('/ghspa.js')
+            const isExisted=await hasUrl('/ghspa.js')
             if(isExisted){
-                // loadJs('/ghspa.js')
+                loadJs('/ghspa.js')
             }else{
                 loadJs(`/${repoName}/ghspa.js`)
             }
         }
-    </script>
-</head>
-<body>
-    todo: import ghspa.js in index.html
+    </script> -->
+    redirect to index.html via ghspa.js
 </body>
 </html>

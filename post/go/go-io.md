@@ -10,7 +10,7 @@ private: true
         Read(p []byte) (n int, err error)
     }
 
-## 构建reader 
+## reader 
 ### string reader
 
     strings.NewReader("abc")
@@ -52,6 +52,11 @@ teeReader 相当于是shell tee 命令
         r = io.TeeReader(r, os.Stdout)
         str := ioutil.ReadAll(r)
     }
+
+### file reader
+
+    fileReader, err := os.Open("/tmp/dat")
+    fileReader.Close()
 
 ### NopCloser
 为reader 添加close 方法支持
@@ -96,3 +101,13 @@ read to bytes from bytes
 
     // bp:  0123llo   [0 48 49 50 51 108 108 111 0 0]
     fmt.Println("bp:",string(p), p)
+
+## pipe
+
+### pipe buffer to
+    var b *bytes.Buffer = bytes.NewBuffer([]byte("hi"))
+    io.Copy(os.Stdout, b) // copy b to stdout
+
+### pipe file to
+
+    io.Copy(ctx.Writer, f)

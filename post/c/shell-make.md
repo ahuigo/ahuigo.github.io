@@ -87,6 +87,21 @@ make 变量与shell 变量语法不同
     LDFLAGS += -X "main.Version=$(shell git rev-parse HEAD)"
     GO := GO111MODULE=on go
 
+#### define multiple line
+    define BODY
+        home:$(HOME)
+        test:123
+    endef
+
+    export BODY
+    tpl:
+        # ok
+        echo "$$BODY" > index.md
+
+        # failed， 因为BODY提前解析为多行参数了
+        echo "$(BODY)" > index.md
+
+
 #### Array 变量
 
     CMDS =
@@ -138,7 +153,7 @@ THINGS!!!:(不用加`export`前缀)
     main:
         echo $$PATH
 
-## global env variables, ONESHELL
+### export env ONESHELL
 
 命令间环境变量不会共享, 可把命令写成一行：
 
@@ -152,6 +167,33 @@ THINGS!!!:(不用加`export`前缀)
     var-kept:
         export foo=bar; 
         echo "foo=[$$foo]"
+
+### global env
+
+export individual variables with:
+
+    export MY_VAR = foo  # Available for all targets
+
+Or export variables for a specific target (target-specific variables):
+
+    my-target: export MY_VAR_1 = foo
+    my-target: export MY_VAR_2 = bar
+    my-target: export MY_VAR_3 = baz
+
+    my-target: dependency_1 dependency_2
+        echo do something $$MY_VAR_1
+
+You can also specify the .EXPORT_ALL_VARIABLES target to—you guessed it!—EXPORT
+ALL THE THINGS!!!:
+
+    .EXPORT_ALL_VARIABLES:
+
+    MY_VAR_1 = foo
+    MY_VAR_2 = bar
+    MY_VAR_3 = baz
+
+    test:
+      @echo $$MY_VAR_1 $$MY_VAR_2 $$MY_VAR_3
 
 ### set shell variables
 
@@ -264,33 +306,6 @@ makefile 中的编译命令可以是这样
     dest/%.txt: src/%.txt
         @[ -d dest ] || mkdir dest
         cp $< $@
-
-## global env
-
-export individual variables with:
-
-    export MY_VAR = foo  # Available for all targets
-
-Or export variables for a specific target (target-specific variables):
-
-    my-target: export MY_VAR_1 = foo
-    my-target: export MY_VAR_2 = bar
-    my-target: export MY_VAR_3 = baz
-
-    my-target: dependency_1 dependency_2
-        echo do something $$MY_VAR_1
-
-You can also specify the .EXPORT_ALL_VARIABLES target to—you guessed it!—EXPORT
-ALL THE THINGS!!!:
-
-    .EXPORT_ALL_VARIABLES:
-
-    MY_VAR_1 = foo
-    MY_VAR_2 = bar
-    MY_VAR_3 = baz
-
-    test:
-      @echo $$MY_VAR_1 $$MY_VAR_2 $$MY_VAR_3
 
 # 执行指令
 
