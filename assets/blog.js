@@ -7,7 +7,7 @@ function disqus() {
   if (!window.DISQUS) {
     var d = document, s = d.createElement('script');
     s.src = `https://${config.disqus_user}.disqus.com/embed.js`;
-    s.setAttribute('data-timestamp', +new Date());
+    // s.setAttribute('data-timestamp', +new Date());
     (d.head || d.body).appendChild(s);
     s.onload = function () {
       console.log('onload disqus')
@@ -23,8 +23,8 @@ function disqus_reset() {
     DISQUS.reset({
       reload: true,
       config: function () {
-        this.page.url = window.location.href.replace('#', '#!');
-        this.page.identifier = window.location.hash.slice(1);
+        this.page.url = window.location.href.split('#')[0];
+        this.page.identifier = window.location.pathname
         this.page.title = document.title;
       }
     });
@@ -131,7 +131,7 @@ const mdConponent = {
       h1node.before(dateNode);
       //set title
       h1node.style.cssText +=
-        'color: #007998; text-align:center; background:initial';
+        'text-align:center; background:initial';
       document.title = h1node.innerText;
     }
     disqus_reset();
@@ -226,7 +226,7 @@ const app = new Vue({
       var v = localStorage.getItem(vueData.path) || '{}';
       var data = JSON.parse(v);
       if (data && data.time) {
-        if (new Date() - data.time < 86400 * 1000) {
+        if (new Date() - data.time < 86400 * 1000 * 7) {
           console.log('from cache');
           Vue.set(vueData, 'nodes', data.nodes);
           return;

@@ -47,10 +47,10 @@
         <div class="pure-menu pure-menu-horizontal" style=" background: #363636; ">
             <a href="#" class="pure-menu-heading pure-menu-link"><strong>AHUIGO'S NOTES</STRONG></a>
             <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a class="button is-primary" href="/">Home</a></li>
-                <li class="pure-menu-item"><a class="button is-primary" href="/readme">Readme</a></li>
-                <li class="pure-menu-item"><a class="button is-primary" href="/atom.xml">Rss</a></li>
-                <li class="pure-menu-item"><a class="button is-primary" href="https://codepen.io/">Codepen</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/">Home</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/readme">Readme</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/atom.xml">Rss</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="https://codepen.io/">Codepen</a></li>
             </ul>
         </div>
 
@@ -108,7 +108,7 @@
             <li class="pure-menu-item" v-for="(file,index) in nodes" :key="file.path">
                 <a v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name}}
                 </a>
-                <router-link v-else :type="file.type" class="file" :to="'/'+file.path">{{file.name.slice(0,-3)}} </router-link>
+                <router-link v-else :type="file.type" class="file" :to="'/b'+file.path.slice(4,-3)">{{file.name.slice(0,-3)}} </router-link>
                 <tree-folder v-if="file.nodes" :show="file.show" :nodes="file.nodes"></tree-folder>
             </li>
         </ul>

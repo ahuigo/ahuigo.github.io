@@ -1,5 +1,5 @@
 # AHUIGO 的笔记
-- 2022-08-19 [极端天气](/b/ews/weather)
+- 2022-08-19 [极端天气](/b/news/weather)
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip)
 - 2018-10-04 [Vue 自定义指令](/b/ria/vue/vue-project)
 - 2022-08-19 [nginx debug](/b/nginx/nginx-debug-log)

@@ -27,15 +27,23 @@ function getTocObj(article){
 		var l=h.tagName.substr(1);
 		var tNode = getTNode(l, toc);
 
-		var id = tNode.sn + h.innerText;
-		tNode.href = "#"+id.encodeURIComponentUnicode();
+    var id = tNode.refIndex + h.innerText;
+    const hash = "#" + id.encodeURIComponentUnicode();
+
+    tNode.href = hash;
 		tNode.title = h.innerText;
-        h.id = id;
-        h.innerText = tNode.sn +' '+ 
-            h.innerText.charAt(0).toUpperCase()+
-            h.innerText.slice(1)
-	}
-    return toc;
+    // title
+    h.id = id;
+    h.innerText = tNode.refIndex + ' ' +
+      h.innerText.charAt(0).toUpperCase() +
+      h.innerText.slice(1);
+    // link
+    const link = document.createElement('a');
+    link.href = hash;
+    link.innerText = h.innerText;
+    h.replaceChildren(link);
+  }
+  return toc;
 }
 
 /**
@@ -93,22 +101,22 @@ function genToc(toc){
   return t;
 }
 
-function getTNode(l, toc, sn_pre){
+function getTNode(l, toc, refIndexPre) {
   var node;
-  if(sn_pre === undefined ) sn_pre = '';
+  if (refIndexPre === undefined) refIndexPre = '';
   l = parseInt(l); 
 if(l<1 || toc.l >=l ) return;
   if(toc.list === undefined){ toc['list'] =[];}
 
   if(toc.l===l-1){
-     node = toc.list[toc.list.length]= {l:l}
-     node.sn = sn_pre + toc.list.length + '.';
-     return node;
+    node = toc.list[toc.list.length] = { l: l };
+    node.refIndex = refIndexPre + toc.list.length + '.';
+    return node;
   }else{
-     if(toc.list.length === 0){
-       toc.list[0]= {l:toc.l+1};
+    if (toc.list.length === 0) {
+      toc.list[0] = { l: toc.l + 1 };
     }
     node = toc.list[toc.list.length-1];
-    return getTNode(l, node, sn_pre + toc.list.length + '.');
+    return getTNode(l, node, refIndexPre + toc.list.length + '.');
   }
 }
