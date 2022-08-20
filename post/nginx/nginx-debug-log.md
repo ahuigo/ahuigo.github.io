@@ -4,8 +4,6 @@ title:	nginx debug
 category: blog
 description:
 ---
-# Preface
-
 # log
 ## log scope
 

@@ -82,9 +82,6 @@ go install 命令在内部实际上分成了两步操作：
     go install github.com/swaggo/swag/cmd/swag@latest
     go install github.com/ahuigo/arun@latest
 
-## go test
-参考go help testflag
-
 ## go vet
 vet         report likely mistakes in packages
 
