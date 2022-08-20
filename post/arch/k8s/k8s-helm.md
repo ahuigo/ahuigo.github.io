@@ -1,7 +1,6 @@
 ---
 title: k8s helm
 date: 2021-11-11
-private: true
 ---
 # k8s helm
 

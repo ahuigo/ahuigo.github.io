@@ -63,7 +63,7 @@ marked.setOptions({
 
 
 const routeUriMap = {
-    '/': `/post/index.md`,
+    '/': `/index.md`,
     '/readme': '/README.md',
 }
 
@@ -99,16 +99,16 @@ const mdConponent = {
       })
     });
     const toc = document.querySelector('#toc');
-    if (toc.children.length) {
-      toc.children[0].replaceWith(createToc(this.$el));
-    } else {
-      toc.appendChild(createToc(this.$el));
-    }
-    const h1nodes = $$('#content h1');
+      const tocDom = createToc(this.$el);
+      toc.hidden = tocDom.childElementCount == 0;
+      if (tocDom.childElementCount > 0) {
+          toc.replaceChildren(tocDom);
+      }
 
-    // fix title + date
+    // Render title + date
+      const h1nodes = $$('#content h1');
     if (h1nodes.length) {
-      var h1node;
+        let h1node;
       if (h1nodes.length === 1) {
         h1node = h1nodes[0];
         for (const el of $('#content').children) {
@@ -124,7 +124,7 @@ const mdConponent = {
       const dateNode = document.createElement('p');
       dateNode.style.cssText = 'text-align:center; color:#ccc';
       dateNode.innerHTML = this.date;
-      h1node.before(dateNode);
+        h1node.after(dateNode);
       //set title
       h1node.style.cssText +=
         'text-align:center; background:initial';
@@ -179,7 +179,7 @@ const mdConponent = {
             title = m ? m[1] : '';
                 m = data.slice(4, pos).match(/date:[ \t]*(\S.*)/);
             date = m ? m[1] : '';
-            data = data.substr(pos + 5);
+                data = data.slice(pos + 5);
           }
           this.title = title || data.split('\n', 1)[0].slice(2);
           this.date = date ? date : '';
@@ -224,7 +224,7 @@ const getDirectoryAsMarkdown = (uri) => {
         const tokens = [];
         const navPaths = [];
         pathSegs.forEach((pathSeg, i) => {
-            navPaths.push(`[${pathSeg || 'Archive'}](/a${pathSegs.slice(0, i).join("/")})`);
+            navPaths.push(`[${pathSeg || 'Archive'}](/a${pathSegs.slice(0, i + 1).join("/")})`);
         });
         tokens.push(navPaths.join('/'));
 
@@ -251,7 +251,7 @@ const fetchPath = (path) => {
     const v = localStorage.getItem(path) || '{}';
     const data = JSON.parse(v);
     if (data && data.time) {
-        if (new Date() - data.time < 86400 * 1000 * 7) {
+        if (new Date() - data.time < 86400 * 1000 * 1) {
             console.log('from cache');
             return Promise.resolve(data.nodes);
         }
@@ -264,7 +264,7 @@ const fetchPath = (path) => {
         .then((r) => r.json())
         .then((data) => {
             const hidePaths =
-                window.config.user === 'ahuigo' ? ['ai', 'p', 'index.md'] : [];
+                window.config.user === 'ahuigo' ? ['ai', 'p'] : [];
             let nodes = data
                 .map((v) => ({
                     name: v.name,

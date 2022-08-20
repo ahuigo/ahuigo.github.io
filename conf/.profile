@@ -118,6 +118,7 @@ function devops2() {
 
 ########################## git #####################
 # git -C dir
+alias gcm='git commit -m'
 function gcap(){
     ori_dir=$(pwd)
 	git commit -am $1;

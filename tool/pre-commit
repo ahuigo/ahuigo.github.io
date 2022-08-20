@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-# This script is used to generate a static site.
+# This script is used to generate rss atom.xml
+# Usage1: 
+#   ./tool/pre-commit post/java/java-inject.md post/go/go-generic.md ...
+# Usage2: 
+#   git add post/java/java-inject.md post/go/go-generic.md ...
+#   ./tool/pre-commit -a 
 import sys
 import os
 import re
@@ -8,15 +13,18 @@ from datetime import datetime
 from collections import OrderedDict
 from glob import glob
 
+XML_BASE='https://ahuigo.github.io'
+USERNAME = 'Ahuigo'
+PAGE_BASE="/b"
+
 print("Exec python:",sys.executable)
 print("current_path:", os.getcwd())
 
-ROOT = "/b"
-ROOT = ""
-PAGE_BASE="/b"
-WWW_PATH = os.getenv('HOME')+'/www'
-errors = []
 log = print
+
+def breakout(*args):
+    log(*args)
+    quit(1)
 
 
 def basename(path):
@@ -33,17 +41,17 @@ def updateAtom(blogs, max_items=40):
     from copy import copy
     from bs4 import BeautifulSoup as BS
 
-    atomPath = f".{ROOT}/atom.xml"
+    atomPath = f"{getRoot()}/atom.xml"
     if os.path.exists(atomPath):
         s = open(atomPath).read()
     else:
         s = f"""
 <feed xmlns="http://www.w3.org/2005/Atom">
-<title>Ahuigo 的笔记</title>
-<link href="https://ahuigo.github.io{ROOT}/atom.xml" rel="self" type="application/atom+xml"/>
+<title>{USERNAME} 的笔记</title>
+<link href="{XML_BASE}/atom.xml" rel="self" type="application/atom+xml"/>
 <updated>2018-08-17T13:46:49Z</updated>
-<subtitle>Ahuigo's notes</subtitle>
-<entry xml:base="https://ahuigo.github.io">
+<subtitle>{USERNAME}'s notes</subtitle>
+<entry xml:base="{XML_BASE}">
 <title>vue instance</title>
 <link href="/b/ria/vue-ins" rel="alternate" type="text/html"/>
 <updated>2018-09-30T20:29:15Z</updated>
@@ -91,21 +99,18 @@ def updateAtom(blogs, max_items=40):
     open(atomPath, "wb").write(bs.encode())
 
 
-def breakout(errors):
-    log("\n".join(errors))
-    quit(1)
-
 
 current_date = datetime.now().strftime("%Y-%m-%d")
 
 
 def parseBlog(path, withContent=False):
     blog = {"path": path}
-    print(path)
+    filePath = getRoot()+'/'+path
+    print('generate xml:', filePath)
     if withContent:
-        data = open(path).read()
+        data = open(filePath).read()
     else:
-        data = open(path).read(200)
+        data = open(filePath).read(200)
     if data.startswith("---\n"):
         pos = data.index("\n---\n", 4)
         blogStr = data[4:pos]
@@ -123,119 +128,37 @@ def parseBlog(path, withContent=False):
     blog["updated"] = current_date
     return blog
 
-
-def genPager(pos, max_page):
-    pager = ""
-    for i in range(max_page):
-        page_url = f''
-        page_url = "/" if i == 0 else f"/b/p/p{i}"
-        pager += f' [p{i}]({page_url})' if i != pos else f" p{i}"
-    return pager
-
-
-def genIndexPages(index_blogs):
-    files_num = len(index_blogs)
-    SIZE = 20
-    page_urls = []
-    if not os.path.exists('post/p'):
-        os.mkdir("post/p")
-
-    from itertools import islice
-    from itertools import groupby, count
-    def chunks(iterable, size):
-        c = count()
-        for i, g in groupby(iterable, lambda _: next(c)//size):
-            yield i,g
-
-
-    it_blogs = iter(index_blogs)
-    max_page = -(-len(index_blogs)//SIZE)
-    for n,p_blogs in chunks(it_blogs, SIZE):
-        page_file = "post/index.md" if n == 0 else f"post/p/p{n}.md"
-        print('generate file:',page_file)
-        pager = genPager(n, max_page)
-        with open(page_file, "w") as fp:
-            fp.write(f"# AHUIGO 的笔记\n")
-            for path in p_blogs:
-                print('pppp:',path)
-                blog = index_blogs[path]
-                article = f'- {blog["date"]} [{blog["title"]}]({getPostUrl(path)}) '
-                fp.write(article + "\n")
-            fp.write("\n"+pager)
-        print('\n')
-
-    # getoutput(f"git add atom.xml post/index.md post/p")
-
-
-def getIndexBlogs():
-    index_blogs = OrderedDict()
-    for index_path in ["post/index.md"] + sorted(
-        glob("post/p/*.md"), key=lambda x: int(x[8:-3])
-    ):
-        for line in open(index_path):
-            m = re.match(
-                "^- (?P<created>\S+) \[(?P<title>[^\]]+)\]\((?P<path>/[^\)]+)\)", line
-            )
-            if m and m.group("path").startswith(f"{PAGE_BASE}/"):
-                path = m.group("path").replace(f"{PAGE_BASE}/", "/post/", 1) + ".md"
-                index_blogs[path] = {
-                    "title": m.group("title"),
-                    "path": path,
-                    "date": m.group("created"),
-                }
-    return index_blogs
-
-
-
-modified_linelist = []
-if "all" in sys.argv:
-    for path in glob("post/**/*.md", recursive=True):
-        if not path.startswith("post/p/") and path != "post/index.md":
-            modified_linelist.append(f"A\t{path}")
-elif len(sys.argv) > 1:
-    modified_linelist = [f"A\t{path}" for path in sys.argv[1:]]
-else:
-    cmd = 'git diff-index --cached --name-status --diff-filter=ACMRD HEAD -- post | grep -vE "\spost/(index|p/.+).md$" '
+def getChangedPaths():
+    cmd = 'git diff-index --cached --name-status --diff-filter=ACMR HEAD | grep -E "\spost/.+.md$" '
     out = getoutput(cmd).strip()
+    paths = []
     if out:
-        modified_linelist = out.split("\n")
+        paths = [line.split('\t')[1].strip() for line in out.split('\n')]
+    return paths
 
-if modified_linelist:
-    index_blogs = getIndexBlogs()
-    new_blogs = {}
-    delete_files = []
-    old_index_path_list = list(index_blogs.keys())
-    for line in [line for line in modified_linelist if line]:
-        status, path = line.split("\t")
-        path = '/'+path
-        if status == "D":
-            index_blogs.pop(path, None)
-            delete_files.append(path)
-            continue
+ROOT=''
+def getRoot():
+    global ROOT
+    if not ROOT:
+        cmd = 'git rev-parse --show-toplevel'
+        ROOT = getoutput(cmd).strip()
+    return ROOT
 
-        if not os.stat(path).st_size:
-            continue
+def chroot():
+    os.chdir(getRoot())
+    print(os.getcwd())
 
-        blog = parseBlog(path)
-        if "private" in blog:
-            continue
-        new_blogs[path] = blog
-        index_blogs[path] = blog
-        # 'priority' in blog:
-        if path not in old_index_path_list:
-            index_blogs.move_to_end(path, last=False)
+def generateRss():
+    paths = sys.argv[1:]
+    if '-a' in sys.argv:
+        chroot()
+        paths = getChangedPaths()
+    new_blogs = {path: parseBlog(path) for path in paths}
+    updateAtom(new_blogs)
 
-    # breakout(index_blogs)
-    if new_blogs or delete_files:
-        from itertools import islice
-        log("updateAtom, current_path:", os.getcwd())
-        updateAtom({k: new_blogs[k] for k in islice(new_blogs, 10)})
 
-        log("genIndexPages")
-        genIndexPages(index_blogs)
-
-    if errors:
-        breakout(errors)
+if __name__ == '__main__':
+    generateRss()
 
 quit(1)
 if os.path.exists("no-commit"):

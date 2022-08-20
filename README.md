@@ -1,8 +1,18 @@
 # 纯静态博客
-本博客是完全纯静态blog, 核心js 代码只有200 多行。 
+本博客是完全纯静态blog，基于发布不需要构建，js 代码500 多行，就不打包了(未压缩) 
 
 - Fork 地址: [https://github.com/ahuigo/yourname.github.io](https://github.com/ahuigo/yourname.github.io)
 - 示例地址：[https://ahuigo.github.io/readme](https://ahuigo.github.io/readme)
+
+## 支持的功能
+
+- [x] Markdown + Latex + TOC(Table of Content)
+- [x] 多级动态目录, 适合笔记的归纳总结
+  - [x] 目录缓存(缓存时间1天)
+- [x] Disqus
+- [x] 自适应
+- [x] Twitter & 微博分享
+- [x] RSS支持(由pre-commit hooks 自动生成)
 
 ## 使用方法：
 1. 首先Fork 此仓库: https://github.com/ahuigo/yourname.github.io 
@@ -42,16 +52,6 @@
     - 自动生成 Markdown TOC
 4. highlight: 用于代码高亮
 5. disqus: 用于评论，懒加载
-
-## 支持的功能
-
-- [x] Markdown + Math + TOC(Table of Content)
-- [x] 多级动态目录, 适合笔记的归纳总结
-- [x] Disqus
-- [x] 自适应
-- [x] 目录缓存(缓存时间1天)
-- [x] Twitter & 微博分享
-- [x] RSS+首页目录(pre-commit hooks 自动生成)
 
 ## 数学公式
 展示数学公式的库主要有 mathjax 和katex, 本博采用了非常轻量的katex。
@@ -106,5 +106,18 @@ katex 支持标准的latex，如果想转义数学符号:
 
 > 更多截图工具参考：https://zhuanlan.zhihu.com/p/25154768
 
-## 为博客增加自动发布功能
-为了不用每次写完文章后，都要手动编辑`0.md` 这个目录文件，今天就添加一个用于发布文章时，自动生成索引的钩子`pre-commit`。
+## RSS 一健生成
+执行RSS 一键生成脚本，会把新文章添加到根目录的 atom.xml
+
+使用方法:
+
+    Usage1: 
+      ./tool/pre-commit post/java/java-inject.md post/go/go-generic.md ...
+
+    Usage2: 
+      git add post/java/java-inject.md post/go/go-generic.md ...
+      ./tool/pre-commit -a 
+
+如果想每次commit 时自动生成atom.xml 可以把这个脚本放到hooks
+
+    cp ./tool/pre-commit .git/hooks/

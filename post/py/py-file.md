@@ -182,6 +182,7 @@ change current workspace:  support abspath only
 	os.getcwd()
 	os.path.abspath('.')
 	os.path.abspath(amodule.__file__)
+    // unix only
 	os.chroot(path)
 
 current file's dir:

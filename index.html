@@ -48,19 +48,22 @@
         <div class="pure-menu pure-menu-horizontal" style=" background: #363636; ">
             <a href="#" class="pure-menu-heading pure-menu-link"><strong>AHUIGO'S NOTES</STRONG></a>
             <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a class="is-primary" href="/">Home</a></li>
-                <li class="pure-menu-item"><a class="is-primary" href="/a">Archive</a></li>
-                <li class="pure-menu-item"><a class="is-primary" href="/readme">Readme</a></li>
-                <li class="pure-menu-item"><a class="is-primary" href="/atom.xml">Rss</a></li>
-                <li class="pure-menu-item"><a class="is-primary" href="https://codepen.io/">Codepen</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/">🏠 Home</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/a">📂 Archive</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/readme">📖 Readme</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="//github.com/ahuigo">🐙 Github</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/atom.xml">📶 Rss</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="https://codepen.io/">✏️ Codepen</a></li>
             </ul>
         </div>
 
         <div class="main"  id="app">
+            <!-- imgview -->
             <div :id="'imgview'" v-if="imgsrc" @click="imgsrc=null">
                 <div class="popup-back"></div>
                 <div class="img-wrapper"><img :src="imgsrc"></div>
             </div>
+            <!-- left menu -->
             <div :class="{left:true, 'active':showMenu}" >
                 <button class="button is-primary menu-toggle" :class="{a:true}" @click="showMenu=!showMenu">
                         <template v-if="showMenu"> Close </template>
@@ -81,11 +84,11 @@
                     </div> -->
                     <div>
                         <h4>分享文章</h4>
-                        <div class="pointer">
-                            <span @click="openShare('twitter', this)"> 
-                                <span class="icon twitter-icon"></span> <span>twitter</span>
+                        <div>
+                            <span @click="openShare('twitter', this)" class="icon twitter-icon"> 
+                                twitter
                             </span>
-                            <span @click="openShare('weibo')"> <span class="icon weibo-icon"></span><span>微博 </span></span>
+                            <span @click="openShare('weibo')" class="icon weibo-icon">微博 </span>
                         </div>
                     </div>
                 </div>

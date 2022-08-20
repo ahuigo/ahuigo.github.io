@@ -347,16 +347,6 @@ Example: clean 清除编译文件 这一target 不需要条件。
         @-mkdir -p dir1/dir2
         echo "ok"
 
-## 忽略目标
-
-如果当前目录有文件叫做clean，那么这个命令`make clean`不会执行。因为Make发现clean文件已经存在，就认为没有必要重新构建了
-
-除非指定`.PHONY`：
-
-    .PHONY: clean
-    clean:
-            rm *.o temp
-
 ## 命令前导符
 
 默认每行命令之前必须有一个tab键。如果想用其他键，可以用内置变量`.RECIPEPREFIX声明`。
@@ -497,6 +487,16 @@ patsubst 函数用于模式匹配的替换，格式如下。
         echo $(filename:.js=.min.js )
 
 # 依赖处理
+
+## 忽略目标
+
+如果当前目录有文件叫做clean，那么这个命令`make clean`不会执行。因为Make发现clean文件已经存在，就认为没有必要重新构建了
+
+除非指定`.PHONY`：
+
+    .PHONY: clean
+    clean:
+            rm *.o temp
 
 ## 隐含规则和模式规则
 

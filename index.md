@@ -5,6 +5,8 @@
 - 2022-08-19 [nginx debug](/b/nginx/nginx-debug-log)
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip)
 - 2018-09-27 [golang help](/b/go/11.go-begin-help)
+- 2018-09-15 [算法复杂度的证明](/b/algorithm/1.time-complex)
+- 2014-10-10 [求杨氏矩阵的topK](/b/algorithm/algo-young-tableau-topk)
 - 2019-09-08 [Postgre expression](/b/db/pg-expr-execute)
 - 2022-02-24 [tcpdump udp analysis](/b/net/net-tcpdump-udp)
 - 2022-02-24 [tcpdump tcp analysis](/b/net/net-tcpdump-tcp)
