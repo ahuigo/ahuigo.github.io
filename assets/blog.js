@@ -3,6 +3,12 @@ const $$ = document.querySelectorAll.bind(document);
 function searchBlog(kword) {
   location.href = "https://google.com/search?q=" + encodeURIComponent(`${kword} site:${location.hostname}`);
 }
+const Cnf = {
+    postDir: 'post',
+    basePostUri: '/b',
+    baseArchiveUri: '/a',
+};
+
 function disqus() {
   if (!window.DISQUS) {
     var d = document, s = d.createElement('script');
@@ -39,7 +45,7 @@ Vue.component('tree-folder', {
       if (!file.nodes) {
         file.show = true
         Vue.set(file, 'nodes', [{ type: 'file', name: "loading...", path: '' }]);
-        this.$root.fetchFolder(file)
+          this.$root.routeFolder(file)
       } else {
         Vue.set(file, 'show', !file.show);
       }
@@ -57,8 +63,8 @@ marked.setOptions({
 
 
 const routeUriMap = {
-  '/': '/post/index.md',
-  '/readme': '/README.md',
+    '/': `/post/index.md`,
+    '/readme': '/README.md',
 }
 
 const mdConponent = {
@@ -87,20 +93,10 @@ const mdConponent = {
     document.querySelectorAll('pre code').forEach(function (e) {
       return hljs.highlightBlock(e, '    ');
     });
-    // this.$root.$$('#content a').forEach((v, k, arr) => {
-    //   let match_reg = /^\/p\//;
-    //   if (v.getAttribute('href').match(match_reg)) {
-    //     v.href = v.getAttribute('href').replace(match_reg, '#/post/') + '.md';
-    //   }
-    // });
     this.$root.$$('#content img').forEach((v, k, arr) => {
       v.addEventListener('click', e => {
-        this.$root.imgsrc = e.target.src;
-        //$('#imgview').style.display = 'flex';
+          this.$root.imgsrc = e.target.src;
       })
-      // if (v.getAttribute('src').startsWith('/img/')) {
-      //   v.src = v.getAttribute('src').replace(/^\/img/, 'img');
-      // }
     });
     const toc = document.querySelector('#toc');
     if (toc.children.length) {
@@ -155,28 +151,33 @@ const mdConponent = {
       history.replaceState(null, '', uri);
     },
     fetchMd() {
-      let filepath = this.$route.path;
-      const tmppath = routeUriMap[filepath];
-      if (tmppath) {
-        filepath = tmppath;
-      } else if (filepath.startsWith('/p/') || filepath.startsWith('/b/')) {
-        filepath = '/post' + filepath.slice(2) + '.md';
-      } else {
-        // convert resource path to historyPath
-        this.setHistoryPath(filepath);
-      }
+        let uriPath = this.$route.path;
+        const filepath = routeUriMap[uriPath];
+        let filePromise;
+        if (filepath) {
+            filePromise = fetch(filepath);
+        } else if (uriPath.startsWith('/p/') || uriPath.startsWith('/b/')) {
+            const filepath = '/post' + uriPath.slice(2) + '.md';
+            filePromise = fetch(filepath);
+        } else if (uriPath.match(/^\/a(?=\/|$)/)) {
+            filePromise = getDirectoryAsMarkdown(uriPath);
+        } else {
+            alert(`call author:{tmppath} not found`)
+            // convert resource path to historyPath
+            // this.setHistoryPath(filepath);
+        }
 
-      fetch(filepath).then(async (r) => {
+        filePromise.then(async (r) => {
         if (!r.ok) {
           this.md = '# 此文章可能被删除了';
         } else {
           let data = await r.text();
           let title, date;
-          if (data.substr(0, 4) === '---\n') {
+            if (data.slice(0, 4) === '---\n') {
             let pos = data.indexOf('\n---\n', 4);
-            var m = data.slice(4, pos).match(/title:[ \t]*(\S.*)/);
+                let m = data.slice(4, pos).match(/title:[ \t]*(\S.*)/);
             title = m ? m[1] : '';
-            var m = data.slice(4, pos).match(/date:[ \t]*(\S.*)/);
+                m = data.slice(4, pos).match(/date:[ \t]*(\S.*)/);
             date = m ? m[1] : '';
             data = data.substr(pos + 5);
           }
@@ -198,70 +199,122 @@ const mdConponent = {
   }
 };
 
+/**
+node: {name: "algorithm", path: "post/algorithm", type: "dir", show: true}
+node: {name: "0.go-begin.md", path: "post/go/0.go-begin.md", type: "file", show: true}
+*/
+
+const getUriByFilePath = (filepath) => {
+    if (filepath.endsWith('.md')) {
+        // post/go/go-begin.md -> /b/go/go-begin
+        return Cnf.basePostUri + filepath.slice(Cnf.postDir.length, -3);
+    } else {
+
+        return Cnf.baseArchiveUri + filepath.slice(Cnf.postDir.length);
+    }
+}
+
+// e.g.: getDirectoryAsMarkdown('/a')
+// e.g.: getDirectoryAsMarkdown('/a/db')
+const getDirectoryAsMarkdown = (uri) => {
+    // /post + /a/vim/vim-motion -> /post/vim/vim-motion
+    const dirpath = `${Cnf.postDir}${uri.slice(Cnf.baseArchiveUri.length)}`;
+    return fetchPath(dirpath).then(nodes => {
+        const pathSegs = uri.slice(2).split('/');
+        const tokens = [];
+        const navPaths = [];
+        pathSegs.forEach((pathSeg, i) => {
+            navPaths.push(`[${pathSeg || 'Archive'}](/a${pathSegs.slice(0, i).join("/")})`);
+        });
+        tokens.push(navPaths.join('/'));
+
+        for (const node of nodes) {
+            const href = getUriByFilePath(node.path);
+            let item = '';
+            if (node.type == 'dir') {
+                item = `- [${node.name}](${href})`;
+            } else if (node.type == 'file') {
+                item = `- [${node.name}](${href})`;
+            }
+            if (item) {
+                tokens.push(item);
+            }
+        }
+        const markdown = tokens.join('\n');
+        return new Response(markdown);
+    });
+}
+
+// @usage: fetchPath('post/db')
+// @return nodes or []
+const fetchPath = (path) => {
+    const v = localStorage.getItem(path) || '{}';
+    const data = JSON.parse(v);
+    if (data && data.time) {
+        if (new Date() - data.time < 86400 * 1000 * 7) {
+            console.log('from cache');
+            return Promise.resolve(data.nodes);
+        }
+        console.log('cache expired:', new Date() - data.time);
+    }
+    return fetch(
+        `https://api.github.com/repos/${window.config.user}/${window.config.repo}/contents/${path}`,
+        {}
+    )
+        .then((r) => r.json())
+        .then((data) => {
+            const hidePaths =
+                window.config.user === 'ahuigo' ? ['ai', 'p', 'index.md'] : [];
+            let nodes = data
+                .map((v) => ({
+                    name: v.name,
+                    path: v.path,
+                    type: v.type,
+                    show: true
+                }))
+                .filter(
+                    (node) => !hidePaths.includes(node.path.split('/')[1])
+                );
+            localStorage.setItem(path, JSON.stringify({ time: +new Date(), nodes })
+            );
+            return nodes;
+        }).catch((err) => {
+            console.error({ err });
+            throw err;
+            // return [err];
+        });
+
+};
+
 const router = new VueRouter({
-  // history: createWebHistory(),
-  mode: 'history',
-  routes: [
-    { path: '/bar', component: { template: '<div>bar</div>' } },
-    { path: '/*', component: mdConponent }
-  ],
-  scrollBehavior(to, from, savedPosition) {
-    return { x: 0, y: 0 };
-  }
+    // history: createWebHistory(),
+    mode: 'history',
+    routes: [
+        { path: '/bar', component: { template: '<div>bar</div>' } },
+        { path: '/*', component: mdConponent }
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        return { x: 0, y: 0 };
+    }
 });
 
 const app = new Vue({
-  router,
-  data: {
-    nodes: [],
-    path: 'post',
-    show: true,
-    showMenu: false,
-    config: config,
-    imgsrc: "",
-  },
-  methods: {
-    $$: $$,
-    fetchFolder(vueData) {
-      var v = localStorage.getItem(vueData.path) || '{}';
-      var data = JSON.parse(v);
-      if (data && data.time) {
-        if (new Date() - data.time < 86400 * 1000 * 7) {
-          console.log('from cache');
-          Vue.set(vueData, 'nodes', data.nodes);
-          return;
-        }
-        console.log('cache expired:', new Date() - data.time);
-      }
-      return fetch(
-        `https://api.github.com/repos/${this.config.user}/${this.config.repo}/contents/${vueData.path}`,
-        {}
-      )
-        .then((r) => r.json())
-        .then((data) => {
-          const hidePaths =
-            this.config.user === 'ahuigo' ? ['ai', 'p', 'index.md'] : [];
-          let nodes = data
-            .map((v) => ({
-              name: v.name,
-              path: v.path,
-              type: v.type,
-              show: true
-            }))
-            .filter(
-              (v) => !hidePaths.includes(v.path.slice(this.path.length + 1))
-            );
-          Vue.set(vueData, 'nodes', nodes);
-          localStorage.setItem(
-            vueData.path,
-            JSON.stringify({ time: +new Date(), nodes })
-          );
-          return [null, nodes];
-        })
-        .catch((err) => {
-          console.log([err, 1]);
-          return [err];
-        });
+    router,
+    data: {
+        nodes: [],
+        path: Cnf.postDir,
+        show: true,
+        showMenu: false,
+        config: config,
+        imgsrc: "",
+    },
+    methods: {
+        $$: $$,
+        async routeFolder(vueData) {
+            const nodes = await fetchPath(vueData.path);
+            if (nodes.length) {
+                Vue.set(vueData, 'nodes', nodes);
+            }
     },
     openShare(site, o) {
       var link;
@@ -277,7 +330,7 @@ const app = new Vue({
     }
   },
   created: function () {
-    this.fetchFolder(this.$data);
+      this.routeFolder(this.$data);
   }
 }).$mount('#app');
 

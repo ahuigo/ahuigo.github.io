@@ -105,6 +105,7 @@ Create RegExp：test, exec
 global 模式的match, 结果只有数组
 
 ### zero-width 断言
+js 对断言支持得非常好
 正向断言，假定该位置后跟的是X
 
 	(?<=X)	zero-width positive lookbehind
@@ -113,10 +114,17 @@ global 模式的match, 结果只有数组
 	(?<!X)	zero-width negative lookbehind>
 	(?!X)	zero-width negative lookahead
 
+限制无前缀
+
     > 'my pre-word'.match(/my.*(?<!pre-)word/)
     null
     > 'my pre1-word'.match(/my.*(?<!pre-)word/)
     my pre1-word
+
+前缀必须是/a or /a/
+
+    '/a/b'.match(/^\/a(?=\/|$)/)
+    '/a'.match(/^\/a(?=\/|$)/)
 
 ### $,^
 $ 放前面就不会成功

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1" />
     <title>AHUIGO的笔记</title>
     <meta name="author" content="ahuigo">
-    <script type="text/javascript" src="/assets/ghspa.js"></script> 
     <script type="text/javascript">
+        console.log()
         if(!('noModule' in HTMLScriptElement.prototype)){
             alert('你的浏览器不能很好的支持 es6，请用最新的chrome、firefox浏览!')
         }
@@ -25,9 +25,10 @@
            config.repo = location.host 
            config.user =  matchHost[1]
         }
+        window.config = config
+        console.log(window.config)
     </script>
-
-
+    <script type="text/javascript" src="/assets/ghspa.js"></script> 
     <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.min.js"></script>
     <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue-router/3.5.3/vue-router.min.js"></script>
 
@@ -48,6 +49,7 @@
             <a href="#" class="pure-menu-heading pure-menu-link"><strong>AHUIGO'S NOTES</STRONG></a>
             <ul class="pure-menu-list">
                 <li class="pure-menu-item"><a class="is-primary" href="/">Home</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/a">Archive</a></li>
                 <li class="pure-menu-item"><a class="is-primary" href="/readme">Readme</a></li>
                 <li class="pure-menu-item"><a class="is-primary" href="/atom.xml">Rss</a></li>
                 <li class="pure-menu-item"><a class="is-primary" href="https://codepen.io/">Codepen</a></li>
@@ -70,18 +72,20 @@
                 <router-view></router-view>
                 <div class="hr"></div>
                 <div class="share" style="display:flex;justify-content:space-between">
-                    <div>
+                    <!-- <div>
                         <h4>关注我</h4>
                         <div>
                         <iframe width="120" height="22" :src="`https://platform.twitter.com/widgets/follow_button.4a8202e5fcbfb5ba8d36683841f4d020.en.html#screen_name=${config.twitter_user}&width=67&height=22&show_count=false&show_screen_name=true`"></iframe>
                         <iframe width="120" height="22" :src="`https://widget.weibo.com/relationship/followbutton.php?btn=light&style=1&uid=${config.weibo_uid}&width=67&height=22&language=zh_cn`"></iframe>
                         </div>
-                    </div>
+                    </div> -->
                     <div>
                         <h4>分享文章</h4>
-                        <div>
-                            <span class="icon twitter-icon" @click="openShare('twitter', this)"></span>
-                            <span class="icon weibo-icon" @click="openShare('weibo')"></span>
+                        <div class="pointer">
+                            <span @click="openShare('twitter', this)"> 
+                                <span class="icon twitter-icon"></span> <span>twitter</span>
+                            </span>
+                            <span @click="openShare('weibo')"> <span class="icon weibo-icon"></span><span>微博 </span></span>
                         </div>
                     </div>
                 </div>

@@ -41,6 +41,10 @@ code{
     border-radius: 10px;
     padding: 3px;
 }
+pre>code{
+    width:100%;
+    overflow:auto;
+}
 .pure-menu-list>li{line-height: 2em;vertical-align: middle;}
 .pure-menu-list>li>a{
     vertical-align: bottom;
@@ -106,11 +110,13 @@ p{margin: 0.5em 0;}
     padding:0;
     word-break:break-all;
 }
+.pointer{
+    cursor: pointer;
+}
 .icon{
     display: inline-block;
     width: 22px;
     height: 22px;
-    cursor: pointer;
 }
 .twitter-icon{
     background: url(/img/ico/twitter.png);

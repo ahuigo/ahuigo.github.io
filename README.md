@@ -5,11 +5,10 @@
 - 示例地址：[https://ahuigo.github.io/readme](https://ahuigo.github.io/readme)
 
 ## 使用方法：
-1. Fork 此仓库: https://github.com/ahuigo/yourname.github.io, 
-2. 然后仓库名重命名为你的帐号号: `{yourname}.github.io`, 这样就可直接访问:  `{yourname}.github.io`
+1. 首先Fork 此仓库: https://github.com/ahuigo/yourname.github.io 
+2. 然后将repo 重命名为你的帐号: `{yourname}.github.io`, 这样就可直接访问:  `{yourname}.github.io`
 3. 修改 `index.html` 中的`config`变量
 
-比如：
 
     // index.html
     const config = {
@@ -23,7 +22,8 @@
         'disqus_user': 'ahuigo',
     }
 
-最后，进入到`/post/`目录，编写你的markdown 文件(你可以任意建子目录)
+4. 最后，进入到`/post/`目录，编写你的markdown 文件(你可以建多层子目录)
+
 
     ├── img
     └── post
@@ -102,9 +102,7 @@ katex 支持标准的latex，如果想转义数学符号:
 
 > 如果想定义图片名，先输入类似`readme`的图片路径, 并选中，再按`Option+Cmd+V`, 路径就自动替换为markdown 的图片路径 `![](/img/readme.png)` .
 
-不过截图体积优点大, 有时间我再想点办法有:
-1. 为pasteImage 添加自动压缩, 可以借助一些工具或者python 
-2. 为pasteImage 添加自动上传到图床的功能, 图床负责压缩
+如果截图体积优点大, 可以使用Squoosh 等工具压缩, 或者上传到图床
 
 > 更多截图工具参考：https://zhuanlan.zhihu.com/p/25154768
 
