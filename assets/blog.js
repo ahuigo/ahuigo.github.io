@@ -99,14 +99,14 @@ const mdConponent = {
       })
     });
     const toc = document.querySelector('#toc');
-    if (toc.children.length) {
-      toc.children[0].replaceWith(createToc(this.$el));
-    } else {
-      toc.appendChild(createToc(this.$el));
-    }
-    const h1nodes = $$('#content h1');
+      const tocDom = createToc(this.$el);
+      toc.hidden = tocDom.childElementCount == 0;
+      if (tocDom.childElementCount > 0) {
+          toc.replaceChildren(tocDom);
+      }
 
     // fix title + date
+      const h1nodes = $$('#content h1');
     if (h1nodes.length) {
       var h1node;
       if (h1nodes.length === 1) {
@@ -224,7 +224,7 @@ const getDirectoryAsMarkdown = (uri) => {
         const tokens = [];
         const navPaths = [];
         pathSegs.forEach((pathSeg, i) => {
-            navPaths.push(`[${pathSeg || 'Archive'}](/a${pathSegs.slice(0, i).join("/")})`);
+            navPaths.push(`[${pathSeg || 'Archive'}](/a${pathSegs.slice(0, i + 1).join("/")})`);
         });
         tokens.push(navPaths.join('/'));
 
@@ -251,7 +251,7 @@ const fetchPath = (path) => {
     const v = localStorage.getItem(path) || '{}';
     const data = JSON.parse(v);
     if (data && data.time) {
-        if (new Date() - data.time < 86400 * 1000 * 7) {
+        if (new Date() - data.time < 86400 * 1000 * 1) {
             console.log('from cache');
             return Promise.resolve(data.nodes);
         }

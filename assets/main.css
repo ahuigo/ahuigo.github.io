@@ -110,21 +110,22 @@ p{margin: 0.5em 0;}
     padding:0;
     word-break:break-all;
 }
-.pointer{
-    cursor: pointer;
-}
-.icon{
+span.icon{
     display: inline-block;
-    width: 22px;
     height: 22px;
+    line-height: 22px;
+    padding-left: 25px;
+    cursor: pointer;
+    background-position-x: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-origin: padding-box;
 }
 .twitter-icon{
     background: url(/img/ico/twitter.png);
-    background-size: cover;
 }
 .weibo-icon{
     background: url(/img/ico/weibo.png);
-    background-size: cover;
 }
 .hr{
     height: 1px; background-color: #dededc; margin: 25px 0;
