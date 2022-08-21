@@ -145,11 +145,7 @@ const mdConponent = {
           eval(code);
         }
       }
-    },
-    setHistoryPath(postpath) {
-      let uri = `/p/${postpath.slice(6, -3)}`;
-      history.replaceState(null, '', uri);
-    },
+      },
     fetchMd() {
         let uriPath = this.$route.path;
         const filepath = routeUriMap[uriPath];
@@ -160,11 +156,9 @@ const mdConponent = {
             const filepath = '/post' + uriPath.slice(2) + '.md';
             filePromise = fetch(filepath);
         } else if (uriPath.match(/^\/a(?=\/|$)/)) {
-            filePromise = getDirectoryAsMarkdown(uriPath);
+            filePromise = fetchDirectoryAsMarkdown(uriPath);
         } else {
-            alert(`call author:{tmppath} not found`)
-            // convert resource path to historyPath
-            // this.setHistoryPath(filepath);
+            filePromise = new Promise(r => r(new Response(`# 404\n${uriPath} not found`)))
         }
 
         filePromise.then(async (r) => {
@@ -216,7 +210,7 @@ const getUriByFilePath = (filepath) => {
 
 // e.g.: getDirectoryAsMarkdown('/a')
 // e.g.: getDirectoryAsMarkdown('/a/db')
-const getDirectoryAsMarkdown = (uri) => {
+const fetchDirectoryAsMarkdown = (uri) => {
     // /post + /a/vim/vim-motion -> /post/vim/vim-motion
     const dirpath = `${Cnf.postDir}${uri.slice(Cnf.baseArchiveUri.length)}`;
     return fetchPath(dirpath).then(nodes => {

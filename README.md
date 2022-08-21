@@ -1,5 +1,5 @@
 # 纯静态博客
-本博客是完全纯静态blog，基于发布不需要构建，js 代码500 多行，就不打包了(未压缩) 
+本博客是完全纯静态blog，js 代码500 多行，发布文章只需要git push 即可（不需要 build）
 
 - Fork 地址: [https://github.com/ahuigo/yourname.github.io](https://github.com/ahuigo/yourname.github.io)
 - 示例地址：[https://ahuigo.github.io/readme](https://ahuigo.github.io/readme)
