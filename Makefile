@@ -33,9 +33,9 @@ export indexmd
 tpl:
 	set -x
 	mkdir -p tpl/post tpl/img/{algo,ico} tpl/tool 
-	cp -r 404.html README.md assets index.html atom.xml md.html tpl
-	cp -r img/ico/{twitter.png,weibo.png} tpl/img/ico
+	cp -r README.md assets index.html  tpl
+	#cp -r 404.html  atom.xml md.html tpl
+	#cp -r img/ico/{twitter.png,weibo.png} tpl/img/ico
 	cp tool/pre-commit tpl/tool
-	cp ./img/algo/master-theorem-tree.png tpl/img/algo/master-theorem-tree.png
 	echo "$$indexmd" > tpl/post/algo.md
 	echo "# Index\n- 2021-01-01 [复杂度证明](/b/algo)" > tpl/index.md
