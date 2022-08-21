@@ -20,10 +20,10 @@ echo:
 
 define indexmd
 ---
-title: 复杂度证明
+title: 递归树法
 date: 2017-11-11
 ---
-# 复杂度证明
+# 递归树法证明
 ![proof](/img/algo/master-theorem-tree.png)
 endef
 
@@ -32,7 +32,9 @@ export indexmd
 .PHONY: tpl
 tpl:
 	set -x
-	mkdir -p tpl/post tpl/img/algo tool
+	mkdir -p tpl/post tpl/img/algo tpl/tool
 	cp -r 404.html README.md assets index.html atom.xml md.html tpl
+	cp tool/pre-commit tpl/tool
 	cp ./img/algo/master-theorem-tree.png tpl/img/algo/master-theorem-tree.png
-	echo "$$indexmd" > tpl/post/index.md
+	echo "$$indexmd" > tpl/post/algo.md
+	echo "# Index\n- 2021-01-01 [复杂度证明](/b/algo)" > tpl/index.md

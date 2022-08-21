@@ -13,6 +13,7 @@
 - [x] 自适应
 - [x] Twitter & 微博分享
 - [x] RSS支持(由pre-commit hooks 自动生成)
+- [x] 归档
 
 ## 使用方法：
 1. 首先Fork 此仓库: https://github.com/ahuigo/yourname.github.io 
@@ -111,13 +112,20 @@ katex 支持标准的latex，如果想转义数学符号:
 
 使用方法:
 
-    Usage1: 
-      ./tool/pre-commit post/java/java-inject.md post/go/go-generic.md ...
+    # Usage1: 
+    ./tool/pre-commit post/java/java-inject.md post/go/go-generic.md ...
 
-    Usage2: 
-      git add post/java/java-inject.md post/go/go-generic.md ...
-      ./tool/pre-commit -a 
+    # Usage2: 
+    git add post/java/java-inject.md post/go/go-generic.md ...
+    ./tool/pre-commit -a 
 
 如果想每次commit 时自动生成atom.xml 可以把这个脚本放到hooks
 
+    # 添加hooks
     cp ./tool/pre-commit .git/hooks/
+
+    # 然后commit
+    $ git add post/c/shell-make.md post/c/shell-make2.md
+    $ git commit -am 'test'
+    generate rss: post/c/shell-make.md
+    generate rss: post/c/shell-make2.md

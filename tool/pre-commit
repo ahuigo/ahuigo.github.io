@@ -106,7 +106,7 @@ current_date = datetime.now().strftime("%Y-%m-%d")
 def parseBlog(path, withContent=False):
     blog = {"path": path}
     filePath = getRoot()+'/'+path
-    print('generate xml:', filePath)
+    print('generate rss:', filePath)
     if withContent:
         data = open(filePath).read()
     else:
