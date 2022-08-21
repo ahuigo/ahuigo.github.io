@@ -8,24 +8,23 @@ private:
 ## Go profiler 指标
 使用Go 内置的profiler我们能获取以下的样本信息：
 
-    CPU profiles
-    Heap profiles
-    block profile 阻塞分析
+    CPU profiles    cpu 分析
+    Heap profiles   内存 分析
+    block profile   阻塞分析
     mutex profiling 锁性能分析
-    traces等
-
+    traces等        调用栈分析
 
 ## go profiling相关的分析工具
 主要有以下几种工具
 1. `go test` 基准测试文件：比如使用命令`go test -bench . -cpuprofile prof.cpu` 生成采样文件后，再通过命令 `go tool pprof [binary] prof.cpu` 来进行分析。
-2. `runtime` 工具：通过在代码里面调用 `runtime.StartCPUProfile`或者`runtime.WriteHeapProfile`等能方便的采集程序运行的`堆栈、goroutine、内存分配和占用、io 等信息`并生成 `.prof` 文件.
-    1. `pkg/profile` : 封装了 `runtime/pprof` 的接口，使用起来更简单
-3. `net/http/pprof`：用于分析http 服务的性能瓶颈. 其实其内部调用的就是`runtime`
+2. `runtime` 工具：通过在代码里面调用 `runtime.StartCPUProfile`或者`runtime.WriteHeapProfile`等能方便的采集程序运行的`堆栈、goroutine、内存分配和占用、io 等信息`并生成 `.prof` 文件. 基于runtime, 官方还提供了：
+    1. `pkg/profile` : 它封装了 `runtime/pprof` 的接口，使用起来更简单
+    2. `net/http/pprof`：也是基于`runtime/pprof`, 用于分析http 服务的性能瓶颈. 
 
 > 更多调试的使用，可以阅读Go Blog的 Profiling Go Programs: https://go.dev/blog/pprof
 
 # go tool pprof 的使用
-`go tool pprof` 可以实现分析 `.prof` 文件、下载prof并分析. 下面具体总结一下
+`go tool pprof` 可以采集并生成 `.prof` 文件、下载prof并生成分析结果（火焰图、调用栈等）. 下面具体总结一下
 
 ## pprof 命令的基本用法
 `go tool pprof`的基本用法见:https://github.com/google/pprof， 常用的指令有：
@@ -320,25 +319,6 @@ pprof 支持内存分析，找出内存消耗大的代码
         1MB     5.21% 74.58%        3MB 15.62%  net/http.readRequest
         1MB     5.21% 79.79%        1MB  5.21%  net/http.(*Server).newConn
     (pprof)
-
-### go-torch 火焰图分析
-go-torch 是一款非官方的profile 分析工具. 功能已经集成到官方的`go tool pprof`了
-
-    go get -v github.com/uber/go-torch
-    $ go-torch -h
-    Usage:
-    go-torch [options] [binary] <profile source>
-
-用法示例:
-
-    # cpu 火焰图
-    go-torch -u http://localhost:4500 
-    go-torch -u http://localhost:9090 -t 30
-
-    # inuse_space 火焰图
-    go-torch -inuse_space http://localhost:4500/debug/pprof/heap --colors=mem
-    # alloc_space 火焰图
-    go-torch -alloc_space http://localhost:4500/debug/pprof/heap --colors=mem
 
 ## Memory leak(内存泄露分析)
 参考【大彬】的[实战Go内存泄露]https://segmentfault.com/a/1190000019222661

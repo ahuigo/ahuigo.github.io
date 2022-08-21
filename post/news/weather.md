@@ -3,14 +3,14 @@ title: 极端天气
 date: 2022-08-19
 ---
 # 极端天气
-看了下数据，过去几千年，温度是温和变化的，但是近100年，温度是极速增长的：https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/ 
+看下数据，过去几千年，温度是温和变化的，但是近100年，温度是极速增长的：https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/ 
 
-你可以说过去几千年，全球气候越来越适合人类生存在，但是面对近百年的海水在上涨、珊瑚礁在消失、极端天气越发的频繁时，很难说这一百年来人类的生存环境越来越好了吧。
+你可以说过去几千年，全球气候越来越适合人类生存在，但是面对近百年的海水在上涨、珊瑚礁在消失、极端天气(热浪)越发的频繁时，很难说这一百年来人类的生存环境越来越好了吧。
 
 ------------
 现在的温度变化在整个地球史上确实不算啥，过去1000年温度甚至还是下降的（https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/#22）
 
-看起来，认为气候变暖是地球正常的周期是合理的。 但反常的是，过去数千年，全球温度都是温和变化，但近百年来，全球温度却是极速上升的。
+看起来，认为气候变暖是地球正常的周期是合理的。 但反常的是，过去数千年，全球温度都是温和变化，但近百年来，全球温度却是极速上升的(特别是近50年)。https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/  
 
 现在大量的研究认为全球暖化是人为因素，而不是地球正常的周期。
 

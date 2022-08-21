@@ -20,30 +20,27 @@ String.prototype.encodeURIComponentUnicode = function(){
 }
 
 function getTocObj(article){
-	var toc = {l:0};
-	var hList = article.querySelectorAll('h1,h2,h3,h4,h5,h6,h7');
-	for(var i=0; i< hList.length; ++i){
-		var h=hList[i];
-		var l=h.tagName.substr(1);
-		var tNode = getTNode(l, toc);
+    const toc = { l: 0 };
+    const hList = article.querySelectorAll('h1,h2,h3,h4,h5,h6,h7');
+    for (let i = 0; i < hList.length; ++i) {
+        const h = hList[i];
+        const l = h.tagName.substr(1);
+        const tNode = getTNode(l, toc);
+        const id = tNode.refIndex + h.innerText;
+        const hash = "#" + id.encodeURIComponentUnicode();
+        tNode.href = hash;
+        tNode.title = h.innerText;
 
-    var id = tNode.refIndex + h.innerText;
-    const hash = "#" + id.encodeURIComponentUnicode();
-
-    tNode.href = hash;
-		tNode.title = h.innerText;
-    // title
-    h.id = id;
-    h.innerText = tNode.refIndex + ' ' +
-      h.innerText.charAt(0).toUpperCase() +
-      h.innerText.slice(1);
-    // link
-    const link = document.createElement('a');
-    link.href = hash;
-    link.innerText = h.innerText;
-    h.replaceChildren(link);
-  }
-  return toc;
+        // title
+        h.id = id;
+        h.innerText = tNode.refIndex + ' ' + h.innerText;
+        // link
+        const link = document.createElement('a');
+        link.href = hash;
+        link.innerText = h.innerText;
+        h.replaceChildren(link);
+    }
+    return toc;
 }
 
 /**
