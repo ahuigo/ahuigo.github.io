@@ -85,6 +85,7 @@ const mdConponent = {
   mounted: function () {
     console.log('mounted');
     this.$nextTick(function () {
+      this.onclickLink()
       gotoHash();
     });
   },
@@ -144,7 +145,28 @@ const mdConponent = {
           eval(code);
         }
       }
-      },
+    },
+    onclickLink() {
+      window.addEventListener('click', event => {
+        let { target } = event;
+        let i = 10;
+        while (i-- > 0 && target?.tagName !== 'A') target = target.parentNode;
+        if (!target) {
+          return;
+        }
+        if (target.getAttribute('target')?.match(/\b_blank\b/i)) {
+          return;
+        }
+        const oriHref = target.getAttribute('href');
+        if (oriHref?.match(/^\/(|a|b|readme|)(\/|$)/)) {
+          const url = new URL(target.href);
+          if (window.location.pathname !== url.pathname) {
+            event.preventDefault();
+            this.$router.push(url.pathname);
+          }
+        }
+      });
+    },
     fetchMd() {
         let uriPath = this.$route.path;
         const filepath = routeUriMap[uriPath];
