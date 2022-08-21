@@ -105,33 +105,32 @@ const mdConponent = {
           toc.replaceChildren(tocDom);
       }
 
-    // Render title + date
+      // Render title + date
       const h1nodes = $$('#content h1');
-    if (h1nodes.length) {
-        let h1node;
-      if (h1nodes.length === 1) {
-        h1node = h1nodes[0];
-        for (const el of $('#content').children) {
-          if (el.tagName.match(/^H\d$/)) {
-            el.innerText = el.innerText.replace(/^1\./, '');
+      if (h1nodes.length) {
+          let h1node;
+          if (h1nodes.length === 1) {
+              h1node = h1nodes[0];
+              for (const el of $('#content').children) {
+                  if (el.tagName.match(/^H\d$/)) {
+                      el.innerText = el.innerText.replace(/^1\./, '');
+                  }
+              }
+          } else {
+              h1node = document.createElement('h1');
+              h1node.innerText = this.title;
+              $('#content').insertBefore(h1node, h1nodes[0]);
           }
-        }
-      } else {
-        h1node = document.createElement('h1');
-        h1node.innerText = this.title;
-        $('#content').insertBefore(h1node, h1nodes[0]);
+          const dateNode = document.createElement('p');
+          dateNode.style.cssText = 'text-align:center; color:#ccc';
+          dateNode.innerHTML = this.date;
+          h1node.after(dateNode);
+          //set title
+          h1node.style.cssText += 'text-align:center; background:initial';
+          document.title = h1node.innerText;
       }
-      const dateNode = document.createElement('p');
-      dateNode.style.cssText = 'text-align:center; color:#ccc';
-      dateNode.innerHTML = this.date;
-        h1node.after(dateNode);
-      //set title
-      h1node.style.cssText +=
-        'text-align:center; background:initial';
-      document.title = h1node.innerText;
-    }
-    disqus_reset();
-    this.evalMdScript();
+      disqus_reset();
+      this.evalMdScript();
   },
   methods: {
     async evalMdScript() {
@@ -218,9 +217,9 @@ const fetchDirectoryAsMarkdown = (uri) => {
         const tokens = [];
         const navPaths = [];
         pathSegs.forEach((pathSeg, i) => {
-            navPaths.push(`[${pathSeg || 'Archive'}](/a${pathSegs.slice(0, i + 1).join("/")})`);
+            navPaths.push(`[${pathSeg || 'All'}](/a${pathSegs.slice(0, i + 1).join("/")})`);
         });
-        tokens.push(navPaths.join('/'));
+        tokens.push('# Archive\n' + navPaths.join('/'));
 
         for (const node of nodes) {
             const href = getUriByFilePath(node.path);
