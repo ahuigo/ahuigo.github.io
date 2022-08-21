@@ -149,8 +149,8 @@ const mdConponent = {
     onclickLink() {
       window.addEventListener('click', event => {
         let { target } = event;
-        let i = 10;
-        while (i-- > 0 && target?.tagName !== 'A') target = target.parentNode;
+        let i = 5;
+        while (i-- > 0 && target && target.tagName !== 'A') target = target.parentNode;
         if (!target) {
           return;
         }
