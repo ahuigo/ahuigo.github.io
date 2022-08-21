@@ -15,11 +15,10 @@
 - [x] RSS支持(由pre-commit hooks 自动生成)
 - [x] 归档
 
-## 使用方法：
-1. 首先Fork 此仓库: https://github.com/ahuigo/yourname.github.io 
-2. 然后用的你的帐号重命名仓库: `{yourname}.github.io`, 这样就可直接访问:  `{yourname}.github.io`
-3. 修改 `index.html` 中的`config`变量
-
+## 使用方法
+1.首先Fork 此仓库: https://github.com/ahuigo/yourname.github.io 
+2.然后用的你的帐号重命名仓库: `{yourname}.github.io`, 这样就可直接访问:  `{yourname}.github.io`
+3.修改 `index.html` 中的`config`变量
 
     // index.html
     const config = {
@@ -27,13 +26,13 @@
         'user': '{yourname}',
 
         // your github's repo name
-        'repo': '{yourname}.github.io',
+        'repo': '{yourname}.github.io', 
 
         // your disqus's username
         'disqus_user': '{disqus_user}',
     }
 
-4. 最后，进入到`/post/`目录，编写你的markdown 文件(你可以建多层子目录)
+4.最后，进入到`/post/`目录，编写你的markdown 文件(你可以建多层子目录)
 
 
     ├── img
