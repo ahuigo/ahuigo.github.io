@@ -151,7 +151,7 @@ const mdConponent = {
         let { target } = event;
         let i = 5;
         while (i-- > 0 && target && target.tagName !== 'A') target = target.parentNode;
-        if (!target) {
+        if (target?.tagName !== 'A') {
           return;
         }
         if (target.getAttribute('target')?.match(/\b_blank\b/i)) {
