@@ -16,9 +16,11 @@
 - [x] 归档
 
 ## 使用方法
-1.首先Fork 此仓库: https://github.com/ahuigo/yourname.github.io 
-2.然后用的你的帐号重命名仓库: `{yourname}.github.io`, 这样就可直接访问:  `{yourname}.github.io`
-3.修改 `index.html` 中的`config`变量
+1. 首先Fork 此仓库: https://github.com/ahuigo/yourname.github.io 
+2. 然后用的你的帐号重命名仓库: `{yourname}.github.io`, 这样就可直接访问:  `{yourname}.github.io`
+3. 修改 `index.html` 中的`config`变量
+
+e.g.:
 
     // index.html
     const config = {
