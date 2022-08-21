@@ -157,9 +157,8 @@ const mdConponent = {
         if (target.getAttribute('target')?.match(/\b_blank\b/i)) {
           return;
         }
-        const oriHref = target.getAttribute('href');
-        if (oriHref?.match(/^\/(|a|b|readme|)(\/|$)/)) {
-          const url = new URL(target.href);
+        const url = new URL(target.href);
+        if (url.host == location.host && url.pathname?.match(/^\/(|a|b|readme)(\/|$)/)) {
           if (window.location.pathname !== url.pathname) {
             event.preventDefault();
             this.$router.push(url.pathname);
