@@ -107,8 +107,8 @@ katex 支持标准的latex，如果想转义数学符号:
 
 > 更多截图工具参考：https://zhuanlan.zhihu.com/p/25154768
 
-## RSS 一健生成
-执行RSS 一键生成脚本，会把新文章添加到根目录的 atom.xml
+## RSS 生成
+执行RSS 生成脚本，会把新文章添加到 atom.xml
 
 使用方法:
 
