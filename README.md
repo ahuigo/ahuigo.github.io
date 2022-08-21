@@ -28,9 +28,9 @@
 
         // your github's repo name
         'repo': '{yourname}.github.io',
-        'weibo_uid': 1607772514,
-        'twitter_user': 'ahuigoo',
-        'disqus_user': 'ahuigo',
+
+        // your disqus's username
+        'disqus_user': '{disqus_user}',
     }
 
 4. 最后，进入到`/post/`目录，编写你的markdown 文件(你可以建多层子目录)

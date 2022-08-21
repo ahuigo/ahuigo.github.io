@@ -14,10 +14,7 @@
             // your github's username
             'user': 'ahuigo',
             // your github's repo name
-            'repo': 'ahuigo.github.io',
-            'repo': 'a',
-            'weibo_uid': 1607772514,
-            'twitter_user': 'ahuigoo',
+            'repo': 'ahuigo.github.io', // 如果自建域名的话，就必须要指定你的仓库
             'disqus_user': 'ahuigo',
         }
         const matchHost = location.host.match(/^([^\.]+)\.github\.io$/)
@@ -75,13 +72,6 @@
                 <router-view></router-view>
                 <div class="hr"></div>
                 <div class="share" style="display:flex;justify-content:space-between">
-                    <!-- <div>
-                        <h4>关注我</h4>
-                        <div>
-                        <iframe width="120" height="22" :src="`https://platform.twitter.com/widgets/follow_button.4a8202e5fcbfb5ba8d36683841f4d020.en.html#screen_name=${config.twitter_user}&width=67&height=22&show_count=false&show_screen_name=true`"></iframe>
-                        <iframe width="120" height="22" :src="`https://widget.weibo.com/relationship/followbutton.php?btn=light&style=1&uid=${config.weibo_uid}&width=67&height=22&language=zh_cn`"></iframe>
-                        </div>
-                    </div> -->
                     <div>
                         <h4>分享文章</h4>
                         <div>
