@@ -44,23 +44,12 @@ function getTocObj(article){
 }
 
 /**
- * 
  * @param {createToc} article 
  */
-function createToc(article){
-  var tocObj = getTocObj(article),
+export function createToc(article) {
+  const tocObj = getTocObj(article),
     div = document.createElement('div');
-    div.innerHTML = genToc(tocObj);
-  div.onclick = function (e) {
-    return;
-    const from = findParent('a', e.target);
-      if (from){
-        e.preventDefault()
-        const hash = decodeURI(from.hash);
-        document.getElementById(hash.slice(1))?.scrollIntoView()
-      }
-
-    }
+  div.innerHTML = genToc(tocObj);
   return div;
 }
 
@@ -115,5 +104,74 @@ if(l<1 || toc.l >=l ) return;
     }
     node = toc.list[toc.list.length-1];
     return getTNode(l, node, refIndexPre + toc.list.length + '.');
+  }
+}
+
+export function enableTocScroll(tocEl, contentEl) {
+  // auto overflow
+  const offsetTop = tocEl.offsetTop;
+  tocEl.style.overflow = 'auto';
+  tocEl.style.boxSizing = 'border-box';
+  tocEl.style.maxHeight = window.innerHeight + 'px';
+
+  let isScrolTop = false;
+  const scrollTocViaContent = throttle(scrollTocWithContent, 200);
+  window.onscroll = () => {
+    // auto position:fix
+    const _isScrolTop = window.scrollY > offsetTop;
+    if (isScrolTop !== _isScrolTop) {
+      isScrolTop = _isScrolTop;
+      tocEl.style.position = isScrolTop ? 'fixed' : ''; ``;
+      tocEl.style.top = isScrolTop ? '0px' : undefined;
+    }
+    // sync scroll toc with content
+    scrollTocViaContent(tocEl, contentEl);
+  };
+}
+
+function isVisible(elm, mode = 'visible') {
+  const rect = elm.getBoundingClientRect();
+  const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+  const res = {
+    'visible': !(rect.bottom < 0 || rect.top - viewHeight >= 0),
+    'below': rect.bottom > 0,
+  };
+  return res[mode];
+}
+
+function throttle(func, wait) {
+  let previous = 0;
+  return function (...args) {
+    let now = Date.now();
+    if (now - previous > wait) {
+      func(...args);
+      previous = now;
+    }
+  };
+}
+
+
+function scrollTocWithContent(tocEl, contentEl) {
+  console.log('tirgger toc scroll');
+  const nodes = contentEl.querySelectorAll('h1,h2,h3,h4,h5,h6');
+  for (const node of nodes) {
+    if (node.id && isVisible(node, 'below')) {
+      // highlight toc a link
+      const hash = '#' + node.id;
+      const linkNodes = tocEl.querySelectorAll('a');
+      for (const link of linkNodes) {
+        if (link.getAttribute('href') === hash) {
+          link.classList.add('selected');
+          if (!isVisible(link)) {
+            link.scrollIntoView();
+          }
+        } else {
+          if (link.classList.contains('selected')) {
+            link.classList.remove('selected');
+          };
+        }
+      }
+      break;
+    }
   }
 }

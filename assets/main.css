@@ -163,6 +163,10 @@ a {
 a:hover{
     color:#000;
 }
+a.selected{
+    border-bottom: 1px solid;
+    color:#000;
+}
 #content ul{
     list-style: outside disc;
     margin-left:2.1em;
@@ -183,7 +187,7 @@ ol,ul{
     margin:0;
     margin: 0 0 0 15px;
 }
-#toc, .right > iframe{
+#toc{
     border-radius: 1em;
     border: 0.3em solid  lightslategray;
     margin-bottom: 1em;
@@ -195,7 +199,9 @@ ol,ul{
 }
 
 .right {
-    flex: 3;
+    /* flex: 3; */
+    width:340px;
+    overflow:auto;
 }
 
 #content img{

@@ -1,6 +1,7 @@
-const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
-function searchBlog(kword) {
+import * as toclib from './toc.js';
+window.$ = document.querySelector.bind(document);
+window.$$ = document.querySelectorAll.bind(document);
+window.searchBlog = (kword) => {
   location.href = "https://google.com/search?q=" + encodeURIComponent(`${kword} site:${location.hostname}`);
 }
 const Cnf = {
@@ -9,7 +10,7 @@ const Cnf = {
     baseArchiveUri: '/a',
 };
 
-function disqus() {
+window.disqus = function () {
   if (!window.DISQUS) {
     var d = document, s = d.createElement('script');
     s.src = `https://${config.disqus_user}.disqus.com/embed.js`;
@@ -99,14 +100,17 @@ const mdConponent = {
           this.$root.imgsrc = e.target.src;
       })
     });
-    const toc = document.querySelector('#toc');
-      const tocDom = createToc(this.$el);
-      toc.hidden = tocDom.childElementCount == 0;
-      if (tocDom.childElementCount > 0) {
-          toc.replaceChildren(tocDom);
-      }
 
-      // Render title + date
+    console.log('create toc');
+    const toc = document.querySelector('#toc');
+    const tocDom = toclib.createToc(this.$el);
+    toc.hidden = tocDom.childElementCount == 0;
+    if (tocDom.childElementCount > 0) {
+      toc.replaceChildren(tocDom);
+    }
+    toclib.enableTocScroll(toc, this.$el)
+
+      // parse title + date
       const h1nodes = $$('#content h1');
       if (h1nodes.length) {
           let h1node;
@@ -347,7 +351,6 @@ const app = new Vue({
       this.routeFolder(this.$data);
   }
 }).$mount('#app');
-
 
 function gotoHash() {
   setTimeout(function () {

@@ -5,9 +5,11 @@
 - 示例地址：[https://ahuigo.github.io/readme](https://ahuigo.github.io/readme)
 
 ## 支持的功能
-
-- [x] Markdown + Latex + TOC(Table of Content)
-- [x] 多级动态目录, 适合笔记的归纳总结
+- [x] Markdown 
+    - [x] Latex 
+    - [x] TOC目录(Table of Content) 
+    - [x] TOC滚动
+- [x] 多级动态目录: 适合*海量*笔记按**目录**归纳整理、总结
   - [x] 目录缓存(缓存时间1天)
 - [x] Disqus
 - [x] 自适应
@@ -45,16 +47,6 @@ e.g.:
 
 编写完了后, 不需要构建，直接提交git push，就可查看你的文章了.
 
-## 博客采用的技术方案
-1. Vue.js 框架
-2. pure.css: 非常轻量
-3. markdown 渲染
-    - Marked 修改版: 原生的marked 不能很好的支持数学公式. (由于marked 正考虑解耦一些代码，修改版PR的暂时没被接受)
-    - 数学公式采用katex. 用`$$`,`$` 做分割符号
-    - 自动生成 Markdown TOC
-4. highlight: 用于代码高亮
-5. disqus: 用于评论，懒加载
-
 ## 数学公式
 展示数学公式的库主要有 mathjax 和katex, 本博采用了非常轻量的katex。
 1. `$` 用与行内公式;
@@ -78,6 +70,28 @@ katex 支持标准的latex，如果想转义数学符号:
     >	>
     <	<
     \	\backslash
+
+## 内容搜索
+纯文本笔记有一个好处，搜索非常方便且可以用通配符、正则、脚本来搜索。还可以定制文件名、目录过滤等搜索规则。
+
+大多数时候，我是通过 ag(the_silver_searcher, 比grep 快十倍) 结合正则、目录名（或文件名）来搜索的。如果是wordpress, 就无法灵活实现这一点。
+
+    # 搜索关键词
+    ag keyword 
+
+    # 指定搜索目录 algorithm
+    ag keyword1 keyworkd2 .. algorithm
+
+    # 关键词必须为单词
+    ag -w word 
+
+    # 只显示匹配的文件
+    ag -w word -l
+
+它可以通过管道与其它shell工具、脚本结合使用。
+也可以在vscode/vim 等编辑器中很方便的使用它. 可以配置成点击搜索结果`/path/to/file/main.go:10` 可直接在vscode/vim 打开文件。
+
+我写笔记有很多年了，很多具体内容我虽然忘记了，但是凭借关键词+正则匹配，我可以非常容易的找到我的笔记。
 
 ## 用vscode 写作
 我几乎所有的写作都是通过markdown + vscode 完成的。
@@ -130,3 +144,13 @@ katex 支持标准的latex，如果想转义数学符号:
     $ git commit -am 'test'
     generate rss: post/c/shell-make.md
     generate rss: post/c/shell-make2.md
+
+## 博客采用的技术方案
+1. Vue.js 框架
+2. pure.css: 非常轻量
+3. markdown 渲染
+    - Marked 修改版: 原生的marked 不能很好的支持数学公式. (由于marked 正考虑解耦一些代码，修改版PR的暂时没被接受)
+    - 数学公式采用katex. 用`$$`,`$` 做分割符号
+    - 自动生成 Markdown TOC
+4. highlight: 用于代码高亮
+5. disqus: 用于评论，懒加载

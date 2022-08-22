@@ -132,7 +132,7 @@ device-width(jquery)
         deviceWidth = $(window).width();
     })
 
-### 窗口
+### window窗口
 
 窗口位置 (0,22)
 
@@ -145,7 +145,7 @@ device-width(jquery)
     document.documentElement.clientWidth, document.documentElement.clientHeight
     897,731
 
-窗口外宽/高(包含了窗口菜单栏、dev-tool、底边任务栏等)
+窗口外宽/高(包含了窗口菜单栏、dev-tool、底边任务栏等) (对于用户来说，基本没有用)
 
     window.outerWidth, window.outerHeight 当前页面可视区的外宽/高(含边界)
     1177,826
@@ -179,17 +179,20 @@ clientLeft 就是 border-left
 
 #### 滚动偏移
 
-整个页面偏移: body.style=width:3009px; 不是window的偏移，而是其内页面偏
+##### 整个页面滚动偏移: 
+body.style=width:3009px; 不是window的偏移，而是其内页面偏
 
+    # 等价 scrollY == window.pageYOffset
     window.scrollX/scrollY
-    window.scrollLeft/scrollTop
+    window.pageXOffset/window.pageYOffset
+        el.scrollLeft/scrollTop
 
     window.scrollTo(left,top);
     window.scrollBy(offsetX,offsetY)
     	window.scrollTo(0, 100) == window.scroll(0, 100) 
     	window.scrollBy(0, -100) 归位
 
-归位:
+到指定位置:
 
     window.scrollTo(0, 0) 
     window.scrollBy(x, y)
@@ -266,19 +269,8 @@ e.g.:
     var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
     touchOriginY = touch.pageY;
 
-#### 元素在窗口的位置
-
-goto:
-
-    element.scrollIntoView();
-
-不要用： getComputedStyle(ele).left， 因为它可能是auto (相当于offsetLeft)
-
-    window.getComputedStyle($0).left;//可能是auto; 还是相对的偏移
-
 #### 元素在视窗的位置
-
-下面的是视窗位置(即窗口), 它受滚动影响，而不是page 位置
+下面的是视窗位置(即窗口), 受滚动影响，它相对窗口的位置是变化的
 
     div.getBoundingClientRect().x y left,top, height,width
     x==left
@@ -296,9 +288,35 @@ goto:
     	return (rect.left<0 || rect.top <0) ? false : true;
     }
 
-#### 元素在页面的位置
+##### 切换视窗可见
+goto:
 
-或者累加offsetLeft:
+    element.scrollIntoView();
+
+##### 判断视窗可见
+    function isVisible(elm) {
+        const rect = elm.getBoundingClientRect();
+        const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+        return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+    }
+
+#### 元素在页面的位置
+方法1： 直接使用：
+
+    function getOffset(el) {
+        const rect = el.getBoundingClientRect();
+        return {
+            left: rect.left + window.scrollX,
+            top: rect.top + window.scrollY
+        };
+    }
+
+方法2：
+如果父元素没有relative/absolute, 可直接使用：
+
+    $0.offsetLeft
+
+否则累加offsetLeft:
 
     function GetObjPos(ATarget) {
     	var target = ATarget;
@@ -315,7 +333,11 @@ goto:
     	return pos;
     }
 
-### 根据位置(innerWidth,innerHeight) 查询element
+不要用： getComputedStyle(ele).left
+
+    window.getComputedStyle($0).left;//可能返回的是auto; 而且它只是相对父元素(relative/fixed)的偏移
+
+### 根据window位置(innerWidth,innerHeight) 查询element
 It only works if the element is in the viewport.
 
     document.elementFromPoint(500,10)

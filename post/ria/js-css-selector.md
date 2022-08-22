@@ -79,6 +79,8 @@ example:
         $('span').parentsUntil('div'); //父节点以div为止, 不含div
         $('span').parentsUntil('div').parent(); //父节点以div为止, 含div
 
+    最近parent:
+
         $('span').closest('div') = $('span').parentsUntil('div').parent();
             document.querySelector('span').closest('div.cls1')
 

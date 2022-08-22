@@ -28,8 +28,13 @@ box 的 horizonal 水平居中
     .box{
         margin: 0 auto;
         max-width: 500px;
-        box-sizing: border-box; //将border, padding 也作为盒模型width的一部分
+        box-sizing: border-box; //将border, padding 也作为盒模型width的一部分. 默认是content-box
     }
+
+注意：不支持margin-box. 如果想包含margin的话, 可以这样做
+
+    width: calc(50% - 24px);
+    margin-bottom: 24px;
 
 ## column
 吧文本分成 column 3列

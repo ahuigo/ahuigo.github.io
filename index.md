@@ -3,7 +3,6 @@
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip)
 - 2018-10-04 [Vue 自定义指令](/b/ria/vue/vue-project)
 - 2022-08-19 [nginx debug](/b/nginx/nginx-debug-log)
-- 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip)
 - 2018-09-27 [golang help](/b/go/11.go-begin-help)
 - 2018-09-15 [算法复杂度的证明](/b/algorithm/1.time-complex)
 - 2014-10-10 [求杨氏矩阵的topK](/b/algorithm/algo-young-tableau-topk)
