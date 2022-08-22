@@ -116,7 +116,10 @@ export function enableTocScroll(tocEl, contentEl) {
 
   let isScrolTop = false;
   const scrollTocViaContent = throttle(scrollTocWithContent, 200);
-  window.onscroll = () => {
+  const onscroll = () => {
+    if (tocEl.offsetTop - contentEl.offsetTop > 300) {
+      return;
+    }
     // auto position:fix
     const _isScrolTop = window.scrollY > offsetTop;
     if (isScrolTop !== _isScrolTop) {
@@ -127,6 +130,7 @@ export function enableTocScroll(tocEl, contentEl) {
     // sync scroll toc with content
     scrollTocViaContent(tocEl, contentEl);
   };
+  window.onscroll = onscroll;
 }
 
 function isVisible(elm, mode = 'visible') {

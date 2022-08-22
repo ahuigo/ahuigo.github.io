@@ -156,7 +156,7 @@ device-width(jquery)
 
 div 的长宽度:
 
-    padding + border + width
+    padding + border + width(clientHeight)
     如果加 box-sizing: border-box; width 就相当于scrollWidth, 包括border+padding
 
 不含border, and margin.(clientWidth)
@@ -164,7 +164,7 @@ div 的长宽度:
     document.body.clientWidth .clientHeight body本身的宽/高
     ele.clientWidth, ele.clientHeight; //=padding+[ele.style.width, ele.style.height] (css的style必须指明:height:50px)
 
-含border: offsetWidth = clientWidth + (clientLeft + cleintRight(没有这个值)).:
+含border: offsetWidth = clientWidth + (clientLeft + cleintRight(没有这个属性)).:
 clientLeft 就是 border-left
 
     document.body.offsetWidth .offsetHeight; //padding+border

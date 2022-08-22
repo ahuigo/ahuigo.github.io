@@ -237,7 +237,7 @@ ol,ul{
         visibility: visible;
         /* border-radius:20px; */
     }
-    .main{
+    #app{
         display:block;
         position:relative;
     }
@@ -247,7 +247,7 @@ ol,ul{
     }
 }
 @media screen and (min-width:801px) {
-    .main{
+    #app{
         display:flex;
     }
 }
