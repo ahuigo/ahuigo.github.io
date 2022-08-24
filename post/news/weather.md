@@ -2,10 +2,12 @@
 title: 极端天气
 date: 2022-08-19
 ---
-# 极端天气
-看下数据，过去几千年，温度是温和变化的，但是近100年，温度是极速增长的：https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/ 
+# 极端天气-数据
+> 我记得今年5月全国比以前要格外的冷，而到了7月却是高温（热射病挺多）; 今年5月印度罕见高温; 今年1月北美历史特大暴雪; 2021.7.20河南罕见特大暴雨; 2021年4月甘肃马拉松遇罕见暴雨，名名选手死亡; 2020-2021冬天,经历了一次寒科到暖冬大逆转
 
-你可以说过去几千年，全球气候越来越适合人类生存在，但是面对近百年的海水在上涨、珊瑚礁在消失、极端天气(热浪)越发的频繁时，很难说这一百年来人类的生存环境越来越好了吧。
+过去几千年，温度是温和变化的，但是近100年，温度是极速增长的：https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/ 
+
+可以说过去几千年，全球气候越来越适合人类生存在，但是面对近百年的海水在上涨、珊瑚礁在消失、极端天气(热浪、干旱、暴雪、洪水、山火)越发的频繁时，很难说这一百年来人类的生存环境越来越好
 
 ------------
 现在的温度变化在整个地球史上确实不算啥，过去1000年温度甚至还是下降的（https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/#22）
@@ -16,9 +18,7 @@ date: 2022-08-19
 
 无论是否是地球正常的周期，目前的趋势看，人类都会受不了 —— 温度上升0.5度人确实感受不到，但是越发频繁的极端天气所造成的灾害（暴雪、洪水、干旱、热温、山火、冰山融化）人还是能感受到的
 
-> 我记得今年5月全国比以前要格外的冷，而到了7月却是高温（热射病挺多）; 今年5月印度罕见高温; 今年1月北美历史特大暴雪; 2021.7.20河南罕见特大暴雨; 2021年4月甘肃马拉松遇罕见暴雨，名名选手死亡; 2020-2021冬天,经历了一次寒科到暖冬大逆转
-
-关于极端天气，容我放一点数据：
+关于极端天气，找到一些数据：
 
 1. 过去50年(1970-2019)，气候导致的灾害增长了5倍，得益于灾害预警与管理，死亡人数减少到1/3（数据见原文）
 The number of disasters has increased by a factor of five over the 50-year period, driven by climate change, more extreme weather and improved reporting. But, thanks to improved early warnings and disaster management, the number of deaths decreased almost three-fold.
