@@ -10,26 +10,34 @@ date: 2022-08-19
 可以说过去几千年，全球气候越来越适合人类生存在，但是面对近百年的海水在上涨、珊瑚礁在消失、极端天气(热浪、干旱、暴雪、洪水、山火)越发的频繁时，很难说这一百年来人类的生存环境越来越好
 
 ------------
-现在的温度变化在整个地球史上确实不算啥，过去1000年温度甚至还是下降的（https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/#22）
-
-看起来，认为气候变暖是地球正常的周期是合理的。 但反常的是，过去数千年，全球温度都是温和变化，但近百年来，全球温度却是极速上升的(特别是近50年)。https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/  
+现在的温度变化在整个地球史上确实不算啥，
 
 现在大量的研究认为全球暖化是人为因素，而不是地球正常的周期。
 
-无论是否是地球正常的周期，目前的趋势看，人类都会受不了 —— 温度上升0.5度人确实感受不到，但是越发频繁的极端天气所造成的灾害（暴雪、洪水、干旱、热温、山火、冰山融化）人还是能感受到的
+无论是否是地球正常的周期，目前的趋势看，人类都会受不了 —— 温度上升0.5度人确实感受不到，但是越发频繁的极端天气所造成的灾害（暴雪、洪水、干旱、热浪、山火、冰山融化）人还是能感受到的
 
-关于极端天气，找到一些数据：
+先不要把气候变暖上升到西方阴谋，就气候变暖(极端气候)本身而言这并不是骗局，过去几十年有大量研究数据证实这不是地球的正常周期，而是受到了人类活动的影响。
 
-1. 过去50年(1970-2019)，气候导致的灾害增长了5倍，得益于灾害预警与管理，死亡人数减少到1/3（数据见原文）
+1. 公元1000看-1850年的范围内确实有一段降温期, 但是过去50年温度上升远超数千年的温度变化幅度，这显然不是正常的地球周期
+图版来源：https://en.wikipedia.org/wiki/Global_temperature_record
+![](/img/weather/global-temperature-record-2.webp)
+看起来，认为气候变暖是地球正常的周期是合理的。 但反常的是，过去数千年，全球温度都是温和变化，但近百年来，全球温度却是极速上升的(特别是近50年)。https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/  
+
+2. 过去50年(1970-2019)，气候导致的灾害增长了5倍，得益于灾害预警与管理，死亡人数减少到1/3
 The number of disasters has increased by a factor of five over the 50-year period, driven by climate change, more extreme weather and improved reporting. But, thanks to improved early warnings and disaster management, the number of deaths decreased almost three-fold.
-https://public.wmo.int/en/media/press-release/weather-related-disasters-increase-over-past-50-years-causing-more-damage-fewer
+数据出处：https://public.wmo.int/en/media/press-release/weather-related-disasters-increase-over-past-50-years-causing-more-damage-fewer
 
-2. 从1980-1999到2000-2019, 气候导致的灾害次数上升了83%.
+
+3. 过去50年(1970-2019)，气候导致的灾害(暴雪、洪水、干旱、热浪、山火)增长了5倍，得益于灾害预警与管理，死亡人数减少到1/3（数据见原文）
+The number of disasters has increased by a factor of five over the 50-year period, driven by climate change, more extreme weather and improved reporting. But, thanks to improved early warnings and disaster management, the number of deaths decreased almost three-fold.
+数据出处：https://public.wmo.int/en/media/press-release/weather-related-disasters-increase-over-past-50-years-causing-more-damage-fewer
+
+4. 从1980-1999到2000-2019, 气候导致的灾害次数上升了83%.
 Climate-related disasters jumped 83 percent — from 3,656 events during the 1980-1999 period to 6,681 in the past 20 years. 
-https://e360.yale.edu/digest/extreme-weather-events-have-increased-significantly-in-the-last-20-years#:~:text=Climate%2Drelated%20disasters%20jumped%2083,droughts%2C%20wildfires%2C%20and%20heatwaves.
+数据出处：https://e360.yale.edu/digest/extreme-weather-events-have-increased-significantly-in-the-last-20-years#:~:text=Climate%2Drelated%20disasters%20jumped%2083,droughts%2C%20wildfires%2C%20and%20heatwaves.
 
-3. 这份可视化地图，显示了近年来的极端天气导致灾害(红色最多，代表有人为因素)：
-https://www.carbonbrief.org/mapped-how-climate-change-affects-extreme-weather-around-the-world/
+5. 这份可视化地图，显示了近年来的极端天气导致的灾害(红色是最多的，代表有人为因素)
+数据出处：https://www.carbonbrief.org/mapped-how-climate-change-affects-extreme-weather-around-the-world/
 
 
 ## 知友观

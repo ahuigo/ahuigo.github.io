@@ -63,6 +63,7 @@ https://medium.com/@wereHamster/beware-react-setstate-is-asynchronous-ce87ef1a9c
     this.setState({a:this.state.a+1}, e=>{console.log(this.state)})
 
 尽量用`setState({})` 合并render, 少用forceUpdate 
+也可用用ReactDom.unstable_updateBatch() 避免 （见 /react-hook-render）
 
     this.setState({})
 

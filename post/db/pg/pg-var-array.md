@@ -11,7 +11,8 @@ private:
         name VARCHAR (100),
         phone INT,
         phones INT [],
-        names TEXT []
+        names TEXT [],
+        owners varchar(30)[]
     );
 
 ## init array

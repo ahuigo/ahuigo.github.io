@@ -51,6 +51,9 @@ serverless:
 1. expose web:
     1. https://erisa.dev/exposing-a-web-service-with-cloudflare-tunnel/
 
+## 数据服务
+1. stock 数据
+1. 气候数据
 ## rust
 https://github.com/sunface/rust-course
 

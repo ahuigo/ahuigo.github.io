@@ -264,7 +264,7 @@ current file's dir:
 ## read and write
 > pydoc file
 
-	fp.read()	Return file content.
+	fp.read(n=65535)	Return file content.
 	fp.readline()	Return just one line of text file.
 	fp.readlines() === list(fp)	Return just one line of text file.
 		for line in fp

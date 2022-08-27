@@ -163,29 +163,40 @@ Ref 只能用于useEffect
 1. Hook 是一种复用状态逻辑的方式，它不复用 state 本身。
 2. 事实上 Hook 的每次调用都有一个完全独立的 state —— 因此你可以在单个组件中多次调用同一个自定义 Hook。
 
-### useReducer(examle)
+### useReducer/useContext(examle)
 比如编写一个 useReducer 的 Hook，使用 reducer 的方式来管理组件的内部 state 呢？其简化版本可能如下所示：
 
-    function useReducer(reducer, initialState) {
-      const [state, setState] = useState(initialState);
+    const countCtx = createContext<[number, (action: string) => void]>(
+        [ 0, () => {}]
+    );
 
-      function dispatch(action) {
-        const nextState = reducer(state, action);
-        setState(nextState);
-      }
-
-      return [state, dispatch];
+    function ChildButton() {
+      const [count, countLen] = React.useContext(countCtx);
+      console.log({ child1: count });
+      return <div onClick={() => countLen("abc")}>click countByte: {count}</div>;
+    }
+    function Child2() {
+      const [count] = React.useContext(countCtx);
+      console.log({ child2: count });
+      return <div>child2: {count}</div>;
     }
 
-在组件中使用它，让 reducer 驱动它管理 state：
-
-    function Todos() {
-      const [todos, dispatch] = useReducer(todosReducer, []);
-
-      function handleAddClick(text) {
-        dispatch({ type: 'add', text });
-      }
+    export default function Home() {
+      const [count, countLen] = React.useReducer(
+        (prev: number, a: string) => a.length,
+        1,
+      );
+      return (
+        <div>
+          <Child2 />
+          <countCtx.Provider value={[count, countLen]}>
+            <ChildButton />
+            <Child2 />
+          </countCtx.Provider>
+        </div>
+      );
     }
+
 
 ### 封装useEffect
 
@@ -216,7 +227,7 @@ useCallback Hook 允许你在重新渲染之间保持对相同的回调引用以
     const memoizedResult = doSomething(a, b);
     // 除非 `a` 或 `b` 改变，否则不会变
     const memoizedCallback = useCallback(() => {
-        doSomething(a, b);
+        return doSomething(a, b);
     }, [a, b]);
 
 ## useMemo: 取代shouldComponentUpdate
@@ -240,9 +251,17 @@ useCallback Hook 允许你在重新渲染之间保持对相同的回调引用以
 你可以用 React.memo 包裹一个组件来对它的 props 进行浅比较：
 
     //export var CreatorExamine = React.memo(CreatorExamineRaw)
-    const Button = React.memo((props) => {
-        // 你的组件
+    const ShowCount = React.memo(
+        (props:any) => {
+            console.log({myprops: props});
+            return <div>show:{props.count}</div>;
+        }, 
+        (prevProps:any, nextProps:any) => {
+            console.log({prevProps, nextProps})
+            return prevProps.count!=nextProps.count
     });
+
+我试了不生效
 
 ### useMemo 避免计算
     const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
@@ -322,8 +341,8 @@ Note:
 ### useImperativeHandle
 useImperativeHandle 可以让你在使用 ref 时自定义暴露给父组件的实例值
 
-    useImperativeHandle(ref, createHandle, [deps])
-    // ref.current = createHandle()
+    useImperativeHandle(ref, factory: ()=>ojects, [deps])
+    // ref.current = factory()
 
 用来给ref.current加方法focus的。
 

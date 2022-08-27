@@ -8,7 +8,7 @@ private:
 
 ## JSX 语法
 
-    const element = (
+    const element:vnode = (
       <h1 className="greeting">
         Hello, world!
       </h1>

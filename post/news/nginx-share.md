@@ -14,10 +14,10 @@ private: true
 # nginx/openresty介绍
 1. nginx 提供反射代理、4/7层负载均衡、http-server功能
 2. OpenResty是以Nginx为核心的Web开发平台，主要为nginx提供执行Lua的模块支持
-![](img/openresty/lua-api.png)
+![](/img/openresty/lua-api.png)
 ---
 ## 一种权限网关时序图设计
-![img](img/resty/auth-arch.png)
+![img](/img/resty/auth-arch.png)
 ---
 ## nginx变量-内建变量
 比如：

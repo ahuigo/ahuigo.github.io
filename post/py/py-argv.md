@@ -69,13 +69,6 @@ click 之于argparse/argv, 相当于requests 之于urllib
     parser = argparse.ArgumentParser(description="calculate X to the power of Y")
     parger.add_argument('-r', '--run', help="running")
 
-## file
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--raw', type=argparse.FileType('wb', 0))
-    parser.add_argument('out', type=argparse.FileType('w', encoding='UTF-8'))
-    parser.parse_args(['--raw', 'raw.dat', 'file.txt'])
-
 ## enum args
     from enum import Enum
     class Color(Enum):
@@ -97,6 +90,15 @@ click 之于argparse/argv, 相当于requests 之于urllib
     #args = parser.parse_args()
     args, unknown = parser.parse_known_args(["-unknown",'other'])
     print(args, unknown)
+
+## file arg
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--raw', type=argparse.FileType('wb', 0))
+    parser.add_argument('in', type=argparse.FileType('r'))
+    parser.add_argument('out', type=argparse.FileType('w', encoding='UTF-8'))
+    # test
+    parser.parse_args(['--raw', 'raw.dat', "in.txt",'out.txt'])
 
 ## positional args
 

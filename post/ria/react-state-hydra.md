@@ -5,7 +5,7 @@ private: true
 ---
 # react hydra state
 
-## Missing getServerSnapshot, 
+## Missing getServerSnapshot
 which is required for server-rendered content. Will revert to client rendering
 
 solutions: refer: https://github.com/reactwg/react-18/discussions/121
@@ -17,3 +17,6 @@ The new useSyncExternalStore hook has a third argument, called getServerSnapshot
           store[key].getSnapshot,
           store[key].getSnapshot
         );
+
+## useSyncExternalStore 是 useReduce 替代
+参考: app/routes/state.tsx

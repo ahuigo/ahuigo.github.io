@@ -177,7 +177,7 @@ position
 
 ### replace str
 
-    REPLACE(name, 'substring', '')
+    REPLACE(name, 'substring', 'newstr')
 
 ### preg_replace
 
@@ -185,6 +185,10 @@ position
 
     // \M means match only at the end of each word
     SELECT regexp_replace( 'Bar sheepbar bar bars barsheep', 'bar\M', 'foo', 'gi');
+
+with group
+
+    SELECT regexp_replace('http://dev-app.ahuigo.com', '/(dev-|staging-|)([\w\-]+)\.ahuigo.com', '/\2.ahuigo.io', 'gi') 
 
 ### str to hex
 

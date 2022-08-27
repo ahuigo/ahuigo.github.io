@@ -216,7 +216,7 @@ postgres 支持大部分的ERE
 
     \w
 
-PostgreSQL 不支持`\b\B` , 则是支持:
+PostgreSQL 不支持`\b\B` , 但是支持:
 
     \m   matches only at the beginning of a word
     \M   matches only at the end of a word

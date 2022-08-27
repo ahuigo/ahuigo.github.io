@@ -195,6 +195,19 @@ async function with in `then`:
     .then(async r => await r.json())
     .then(data=>console.log(data))
 
+### header
+
+    .then(async r => console.log(...r.headers)
+
+you can access only following standard headers:
+
+    Cache-Control
+    Content-Language
+    Content-Type
+    Expires
+    Last-Modified
+    Pragma
+
 ### status code
 
     r.status===200 
