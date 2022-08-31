@@ -61,6 +61,10 @@ server build
         Build()
 
 ## Functional Options
+Optional Parameters/Variadic Functions in Go
+
+
+For example:
 
     func Protocol(p string) Option {
     return func(s *Server) {
@@ -94,3 +98,4 @@ server build
     s1, _ := NewServer("localhost", 1024)
     s2, _ := NewServer("localhost", 2048, Protocol("udp"))
     s3, _ := NewServer("0.0.0.0", 8080, Timeout(300*time.Second), MaxConns(1000
+

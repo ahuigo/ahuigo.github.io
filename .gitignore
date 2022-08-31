@@ -44,4 +44,4 @@ go.sum
 *.rdb
 
 /conf/nginx/resty.test.conf
-/tpl
+/temp

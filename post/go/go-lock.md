@@ -4,20 +4,21 @@ date: 2020-07-25
 private: true
 ---
 # 锁
-## Mutex
+## Mutex 互斥
 避免并发, 使用mutex 保证`total_tickets > 0 && total_tickets--` 构成原子性:
 
     var mutex = &sync.Mutex{}
     for i:=0; i<3; i++{
         go func(j int) {
             mutex.Lock()
-                fmt.Print(j,"\n")
-                time.Sleep(time.Second * 1)
-            mutex.Unlock()
+            defer mutex.Unlock()
+
+            fmt.Print(j,"\n")
+            time.Sleep(time.Second * 1)
         }(i)
     }
 
-### 读写锁RWMutex
+### RWMutex 读写锁
 sync.RWMutex 特点是：
 2. 读写互斥
 3. 写写互斥

@@ -53,38 +53,15 @@ https://stackoverflow.com/questions/55889357/change-react-hook-state-from-parent
     });
     ReactDOM.render(<Parent />, document.getElementById('app'));
 
-##  避免子组件重复render? Todo
-todo:
-
-    // 如何避免forceUpdate 时子组件重复render
-    function Show({ count }: { count: number }) {
-      const [c, setC] = React.useState(count);
-      console.log({ myprops: count, c });
-      React.useEffect(() => {
-        setTimeout(() => setC(5000), 5000);
-      }, [count]);
-
-      return <div>show:{c}</div>;
-    }
-
-    function Counter() {
-      const [count, setCount] = React.useState(0);
-      const forceUpdate = React.useReducer(() => ({}), {})[1] as () => void;
-      return (
-        <div>
-          <div>count:{count}</div>
-          <Show count={count} />
-          <button onClick={() => setCount(count + 1)}>incr</button>|
-          <button onClick={() => forceUpdate()}>not change?</button>
-        </div>
-      );
-    }
 
 # React setState 多次渲染问题
+##  避免子组件重复render
+REfer: react-hook.md 中的`React.memo`, 不是`React.useMemo` 哈
 
 ## 多次setState 重复render
 > setState/useReducer 本质上是触发全局的`currentComponent` 执行render
 > function compoment 生命周期的第一阶段，会忽略render。到生命周期的render 阶段再统一渲染
+
 如果脱离react的生命周期，多次调用setState 就会导致多次render, 比如下例的next2
 
     function Counter() {

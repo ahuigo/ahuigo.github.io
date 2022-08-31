@@ -115,6 +115,7 @@ where in:
     where phones[1]=111
     where code in ('1','2')
     where code=any(ARRAY['1','2'])
+    # 不能用 where '1' in codes
 
 any array
 

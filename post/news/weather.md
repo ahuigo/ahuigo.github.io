@@ -23,21 +23,34 @@ date: 2022-08-19
 ![](/img/weather/global-temperature-record-2.webp)
 看起来，认为气候变暖是地球正常的周期是合理的。 但反常的是，过去数千年，全球温度都是温和变化，但近百年来，全球温度却是极速上升的(特别是近50年)。https://www.encyclopedie-environnement.org/zh/climat-zh/climate-variations-last-millennium/  
 
+@赵冷 提到，气象记录显示，1880 年以来，全球地表平均温度每十年平均升高约 0.08 摄氏度，是地球历史上冰期结束时升温速度的 10 倍以上。1981 年以来，升温速度达到每十年 0.18 摄氏度。
+
 2. 过去50年(1970-2019)，气候导致的灾害增长了5倍，得益于灾害预警与管理，死亡人数减少到1/3
 The number of disasters has increased by a factor of five over the 50-year period, driven by climate change, more extreme weather and improved reporting. But, thanks to improved early warnings and disaster management, the number of deaths decreased almost three-fold.
 数据出处：https://public.wmo.int/en/media/press-release/weather-related-disasters-increase-over-past-50-years-causing-more-damage-fewer
 
 
-3. 过去50年(1970-2019)，气候导致的灾害(暴雪、洪水、干旱、热浪、山火)增长了5倍，得益于灾害预警与管理，死亡人数减少到1/3（数据见原文）
+2. 过去50年(1970-2019)，气候导致的灾害(暴雪、洪水、干旱、热浪、山火)增长了5倍，得益于灾害预警与管理，死亡人数减少到1/3（数据见原文）
 The number of disasters has increased by a factor of five over the 50-year period, driven by climate change, more extreme weather and improved reporting. But, thanks to improved early warnings and disaster management, the number of deaths decreased almost three-fold.
 数据出处：https://public.wmo.int/en/media/press-release/weather-related-disasters-increase-over-past-50-years-causing-more-damage-fewer
 
-4. 从1980-1999到2000-2019, 气候导致的灾害次数上升了83%.
+3. 从1980-1999到2000-2019, 气候导致的灾害次数上升了83%.
 Climate-related disasters jumped 83 percent — from 3,656 events during the 1980-1999 period to 6,681 in the past 20 years. 
 数据出处：https://e360.yale.edu/digest/extreme-weather-events-have-increased-significantly-in-the-last-20-years#:~:text=Climate%2Drelated%20disasters%20jumped%2083,droughts%2C%20wildfires%2C%20and%20heatwaves.
 
-5. 这份可视化地图，显示了近年来的极端天气导致的灾害(红色是最多的，代表有人为因素)
+4. 这份可视化地图，显示了近年来的极端天气导致的灾害(红色是最多的，代表有人为因素)
 数据出处：https://www.carbonbrief.org/mapped-how-climate-change-affects-extreme-weather-around-the-world/
+
+5. 太阳黑子活动曲线与全球平均气温、海平面、碳排放变化曲线
+另一位知友提到，可能也受到太阳黑子的影响，但是对比黑子活动曲线和全球平均气温变化曲线——太阳黑子与全球变暖的相关性并不显著（影响很小）。
+相反，平均气温的整体趋势与海平面、碳排放量变化曲线相关性非常显著。
+
+    1. 2000-2003年是太阳黑子的高峰，2009是低谷，2014年是高峰，2020年是低谷（数据来源sidc）; 同时，我们2019/2020年冬季是“暖冬”
+    2. 2020-2020年，这20年的总碳排放则是单调上升，无下降趋势(数据见下面)
+    3. 2000-2020年，这20年全球平均海平面是单调上升的，没有下降趋势（数据见下面）
+
+6. 全球碳排放量持续增长曲线图、全球平均海平面上升曲线图
+数据来源：Global CO2 emissions, by Our World in Data
 
 
 ## 知友观

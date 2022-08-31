@@ -247,21 +247,30 @@ useCallback Hook 允许你在重新渲染之间保持对相同的回调引用以
 > 记住，传入 useMemo 的函数会在`渲染期间执行`。请不要在这个函数内部执行与渲染无关的操作，诸如副作用这类的操作属于 useEffect 的适用范畴，而不是 useMemo。
 > `[a,b]`依赖不会作为参数传进去
 
-### React.memo 也可代替shouldComponentUpdate
-你可以用 React.memo 包裹一个组件来对它的 props 进行浅比较：
+### React.memo 可代替shouldComponentUpdate
+你可以用 React.memo 包裹一个组件来对它的 props 进行浅比较, 相同则不更新
 
-    //export var CreatorExamine = React.memo(CreatorExamineRaw)
-    const ShowCount = React.memo(
-        (props:any) => {
-            console.log({myprops: props});
-            return <div>show:{props.count}</div>;
-        }, 
-        (prevProps:any, nextProps:any) => {
-            console.log({prevProps, nextProps})
-            return prevProps.count!=nextProps.count
+    function Show({ count }: { count: number }) {
+      console.log("render child",{count});
+      return <div>show:{count}</div>;
+    }
+    // 避免forceUpdate 时子组件重复render
+    const ShowCount = React.memo( Show, (prevProps:any, nextProps:any) => {
+          console.log({prevProps, nextProps})
+          return prevProps.count==nextProps.count
     });
-
-我试了不生效
+    function Counter() {
+      const [count, setCount] = React.useState(0);
+      const forceUpdate = React.useReducer(() => ({}), {})[1] as () => void;
+      return (
+        <div>
+          <div>count:{count}</div>
+          <ShowCount count={count} />
+          <button onClick={() => setCount(count + 1)}>incr</button>|
+          <button onClick={() => forceUpdate()}>not change</button>
+        </div>
+      );
+    }
 
 ### useMemo 避免计算
     const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
@@ -341,7 +350,7 @@ Note:
 ### useImperativeHandle
 useImperativeHandle 可以让你在使用 ref 时自定义暴露给父组件的实例值
 
-    useImperativeHandle(ref, factory: ()=>ojects, [deps])
+    useImperativeHandle(ref, factory: ()=>objects, [deps])
     // ref.current = factory()
 
 用来给ref.current加方法focus的。
