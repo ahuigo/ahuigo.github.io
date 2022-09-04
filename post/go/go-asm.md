@@ -8,8 +8,26 @@ date: 2019-01-23
 2. 英文版：https://www.davidwong.fr/goasm/
 3. compiler explorer: https://godbolt.org/
 
-# show asm
-    $go tool compile -S int.go |grep new
+# 生成汇编
+> 相关代码： go-lib/go-debug/assembly/file.go
+产生汇编有几种方法: https://www.reddit.com/r/golang/comments/6a5557/how_to_get_assembly_output_from_a_small_go_program/
+
+目标文件对应的汇编
+
+    go tool compile -S file.go > file.S
+    go tool compile -S int.go |grep new
+
+最终生成binary 对应的汇编
+
+    go build -gcflags -S file.go 2>& file2.S
+
+从二进制反向汇编：(带有runtime 执行时，非常大)
+
+    go tool objdump executable > disassembly
+
+## 汇编解释工具asmrepl
+https://github.com/tenderlove/asmrepl
+
 ## objdump asm
     $ go tool objdump 
     usage: go tool objdump [-S] [-gnu] [-s symregexp] binary [start end]
