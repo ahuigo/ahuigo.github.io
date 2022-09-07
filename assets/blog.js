@@ -1,4 +1,6 @@
 import * as toclib from './toc.js';
+import styles from "/assets/main.css" assert { type: "css" };
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, styles];
 window.$ = document.querySelector.bind(document);
 window.$$ = document.querySelectorAll.bind(document);
 window.searchBlog = (kword) => {
