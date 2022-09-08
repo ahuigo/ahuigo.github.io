@@ -1,0 +1,152 @@
+[
+  {
+    "name": "book.md",
+    "path": "post/math/book.md",
+    "type": "file"
+  },
+  {
+    "name": "field.md",
+    "path": "post/math/field.md",
+    "type": "file"
+  },
+  {
+    "name": "finite-field.md",
+    "path": "post/math/finite-field.md",
+    "type": "file"
+  },
+  {
+    "name": "geo-algo-douglas.md",
+    "path": "post/math/geo-algo-douglas.md",
+    "type": "file"
+  },
+  {
+    "name": "geo-analytic.md",
+    "path": "post/math/geo-analytic.md",
+    "type": "file"
+  },
+  {
+    "name": "geo-circle.md",
+    "path": "post/math/geo-circle.md",
+    "type": "file"
+  },
+  {
+    "name": "geo-distance-geohash.md",
+    "path": "post/math/geo-distance-geohash.md",
+    "type": "file"
+  },
+  {
+    "name": "geo-distance.md",
+    "path": "post/math/geo-distance.md",
+    "type": "file"
+  },
+  {
+    "name": "geo-triangle.md",
+    "path": "post/math/geo-triangle.md",
+    "type": "file"
+  },
+  {
+    "name": "geo.md",
+    "path": "post/math/geo.md",
+    "type": "file"
+  },
+  {
+    "name": "math-bezier_curve.md",
+    "path": "post/math/math-bezier_curve.md",
+    "type": "file"
+  },
+  {
+    "name": "math-envelope.md",
+    "path": "post/math/math-envelope.md",
+    "type": "file"
+  },
+  {
+    "name": "math-find.md",
+    "path": "post/math/math-find.md",
+    "type": "file"
+  },
+  {
+    "name": "math-integral-exp.md",
+    "path": "post/math/math-integral-exp.md",
+    "type": "file"
+  },
+  {
+    "name": "math-latex.md",
+    "path": "post/math/math-latex.md",
+    "type": "file"
+  },
+  {
+    "name": "math-matrix67.md",
+    "path": "post/math/math-matrix67.md",
+    "type": "file"
+  },
+  {
+    "name": "math-num-fibonacii.md",
+    "path": "post/math/math-num-fibonacii.md",
+    "type": "file"
+  },
+  {
+    "name": "math-num-log.md",
+    "path": "post/math/math-num-log.md",
+    "type": "file"
+  },
+  {
+    "name": "math-num-operator.md",
+    "path": "post/math/math-num-operator.md",
+    "type": "file"
+  },
+  {
+    "name": "math-num-seq.md",
+    "path": "post/math/math-num-seq.md",
+    "type": "file"
+  },
+  {
+    "name": "math-num.md",
+    "path": "post/math/math-num.md",
+    "type": "file"
+  },
+  {
+    "name": "math-probability.md",
+    "path": "post/math/math-probability.md",
+    "type": "file"
+  },
+  {
+    "name": "math-reservoir-sampling.md",
+    "path": "post/math/math-reservoir-sampling.md",
+    "type": "file"
+  },
+  {
+    "name": "math-symbol.md",
+    "path": "post/math/math-symbol.md",
+    "type": "file"
+  },
+  {
+    "name": "math-tool-octave.md",
+    "path": "post/math/math-tool-octave.md",
+    "type": "file"
+  },
+  {
+    "name": "math-tool-wolframalpha.md",
+    "path": "post/math/math-tool-wolframalpha.md",
+    "type": "file"
+  },
+  {
+    "name": "math-variance.md",
+    "path": "post/math/math-variance.md",
+    "type": "file"
+  },
+  {
+    "name": "math-word.md",
+    "path": "post/math/math-word.md",
+    "type": "file"
+  },
+  {
+    "name": "prob-.md",
+    "path": "post/math/prob-.md",
+    "type": "file"
+  },
+  {
+    "name": "vector.md",
+    "path": "post/math/vector.md",
+    "type": "file"
+  }
+]

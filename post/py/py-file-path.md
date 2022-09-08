@@ -112,6 +112,7 @@ Please use `Path.resolve()`:
 ### filepath
 
     str(Path('a.txt'))
+    Path('a.txt').__str__()
 
 ### relative_to
 

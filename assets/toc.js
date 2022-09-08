@@ -108,6 +108,9 @@ if(l<1 || toc.l >=l ) return;
 }
 
 export function enableTocScroll(tocEl, contentEl) {
+  if (window.scroll) {
+    return;
+  }
   // auto overflow
   const offsetTop = tocEl.offsetTop;
   tocEl.style.overflow = 'auto';
@@ -117,6 +120,7 @@ export function enableTocScroll(tocEl, contentEl) {
   let isScrolTop = false;
   const scrollTocViaContent = throttle(scrollTocWithContent, 200);
   const onscroll = () => {
+    console.log('onscroll1')
     if (tocEl.offsetTop - contentEl.offsetTop > 300) {
       return;
     }

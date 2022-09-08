@@ -2,7 +2,7 @@
 本博客是完全纯静态blog，js 代码500 多行，发布文章只需要git push 即可（不需要 build）
 
 - Fork 地址: [https://github.com/ahuigo/yourname.github.io](https://github.com/ahuigo/yourname.github.io)
-- 示例地址：[https://ahuigo.github.io/readme](https://ahuigo.github.io/readme)
+- 示例地址：[https://ahuigo.github.io/?p=f~readme](https://ahuigo.github.io/?p=f~readme)
 
 ## 支持的功能
 - [x] Markdown 
@@ -119,6 +119,22 @@ katex 支持标准的latex，如果想转义数学符号:
 如果截图体积优点大, 可以使用Squoosh 等工具压缩, 或者上传到图床
 
 > 更多截图工具参考：https://zhuanlan.zhihu.com/p/25154768
+
+## 生成缓存目录.dir.json
+默认使用github api获取目录，我测试发现这个api 不利于seo. 可以通过提前生成.dir.json(相当于site map) 更好的支持seo
+
+mac/linux可以使用以下脚本自动生成 .dir.json (只有修改过的文件才会生成dir.json)
+
+    cp ./tool/gen-postdir.py .git/hooks/pre-commit
+
+也可手动生成所有目录的.dir.json
+
+    $ ./tool/gen-postdir.py -a
+    generate .dir.json for all directory
+
+有了.dir.json 就可以在index.html 开启`use_cached_dir`, 这样就不会通过gihutb.com api 访问目录了
+
+    use_cached_dir: true,
 
 ## RSS 生成
 执行RSS 生成脚本，会把新文章添加到 atom.xml

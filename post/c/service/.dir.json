@@ -1,0 +1,22 @@
+[
+  {
+    "name": "init-launchd.md",
+    "path": "post/c/service/init-launchd.md",
+    "type": "file"
+  },
+  {
+    "name": "init-systemd-log.md",
+    "path": "post/c/service/init-systemd-log.md",
+    "type": "file"
+  },
+  {
+    "name": "init-systemd.md",
+    "path": "post/c/service/init-systemd.md",
+    "type": "file"
+  },
+  {
+    "name": "ops-init.md",
+    "path": "post/c/service/ops-init.md",
+    "type": "file"
+  }
+]

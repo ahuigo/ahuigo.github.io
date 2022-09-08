@@ -1,0 +1,62 @@
+[
+  {
+    "name": "redis-.md",
+    "path": "post/db/redis/redis-.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-begin.md",
+    "path": "post/db/redis/redis-begin.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-benchmark.md",
+    "path": "post/db/redis/redis-benchmark.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-cache.md",
+    "path": "post/db/redis/redis-cache.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-cluster.md",
+    "path": "post/db/redis/redis-cluster.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-geo.md",
+    "path": "post/db/redis/redis-geo.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-install.md",
+    "path": "post/db/redis/redis-install.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-lua.md",
+    "path": "post/db/redis/redis-lua.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-ops.md",
+    "path": "post/db/redis/redis-ops.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-pubsub.md",
+    "path": "post/db/redis/redis-pubsub.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-transanction.md",
+    "path": "post/db/redis/redis-transanction.md",
+    "type": "file"
+  },
+  {
+    "name": "redis-type-zset.md",
+    "path": "post/db/redis/redis-type-zset.md",
+    "type": "file"
+  }
+]

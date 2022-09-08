@@ -1,0 +1,22 @@
+[
+  {
+    "name": "idea-book.md",
+    "path": "post/idea/idea-book.md",
+    "type": "file"
+  },
+  {
+    "name": "idea-job.md",
+    "path": "post/idea/idea-job.md",
+    "type": "file"
+  },
+  {
+    "name": "idea-work-efficiency.md",
+    "path": "post/idea/idea-work-efficiency.md",
+    "type": "file"
+  },
+  {
+    "name": "idea.md",
+    "path": "post/idea/idea.md",
+    "type": "file"
+  }
+]

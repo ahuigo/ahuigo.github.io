@@ -9,9 +9,7 @@ window.searchBlog = (kword) => {
   location.href = "https://google.com/search?q=" + encodeURIComponent(`${kword} site:${location.hostname}`);
 }
 const Cnf = {
-    postDir: 'post',
-    basePostUri: '/b',
-    baseArchiveUri: '/a',
+  postDir: 'post',
 };
 
 window.disqus = function () {
@@ -50,7 +48,7 @@ Vue.component('tree-folder', {
       if (!file.nodes) {
         file.show = true
         Vue.set(file, 'nodes', [{ type: 'file', name: "loading...", path: '' }]);
-          this.$root.routeFolder(file)
+        this.$root.routeFolder(file)
       } else {
         Vue.set(file, 'show', !file.show);
       }
@@ -65,13 +63,6 @@ marked.setOptions({
   latexRender: katex.renderToString.bind(katex),
 });
 
-
-
-const routeUriMap = {
-    '/': `/index.md`,
-    '/readme': '/README.md',
-}
-
 const mdConponent = {
   template: '#md',
   data() {
@@ -81,12 +72,6 @@ const mdConponent = {
     };
   },
   props: [],
-  watch: {
-    $route(to, from) {
-      console.log('trigger watched');
-      this.fetchMd();
-    }
-  },
   mounted: function () {
     console.log('mounted');
     this.$nextTick(function () {
@@ -141,7 +126,51 @@ const mdConponent = {
       disqus_reset();
       this.evalMdScript();
   },
+  watch: {
+    $route(to, from) {
+      console.log("watch.$route", { to: to.query.p });
+        this.fetchMd();
+    }
+  },
   methods: {
+    fetchMd() {
+      let uriPath = this.$route.query.p;
+      if (!uriPath) {
+        uriPath = 'f~index';
+      }
+      console.log({ u: this.$route, uriPath: uriPath })
+      let filePromise;
+      if (uriPath.startsWith('f~')) {
+        const filepath = '/' + uriPath.slice(2).replaceAll('~', '/') + '.md';
+        filePromise = fetch(filepath);
+      } else if (uriPath.startsWith('d~')) {
+        const dirpath = uriPath.slice(2).replaceAll('~', '/');
+        filePromise = fetchDirectoryAsMarkdown(dirpath);
+      } else {
+        filePromise = new Promise(r => r(new Response(`# 404\n${uriPath} not found`)));
+      }
+
+      filePromise.then(async (r) => {
+        if (!r.ok) {
+          this.md = '# 此文章可能被删除了';
+        } else {
+          let data = await r.text();
+          let title, date;
+          if (data.slice(0, 4) === '---\n') {
+            let pos = data.indexOf('\n---\n', 4);
+            let m = data.slice(4, pos).match(/title:[ \t]*(\S.*)/);
+            title = m ? m[1] : '';
+            m = data.slice(4, pos).match(/date:[ \t]*(\S.*)/);
+            date = m ? m[1] : '';
+            data = data.slice(pos + 5);
+          }
+          this.title = title || data.split('\n', 1)[0].slice(2);
+          this.date = date ? date : '';
+          //data = data.replace(/\n/g, '\t\n')
+          this.md = data;
+        }
+      });
+    },
     async evalMdScript() {
       for (let script of document.querySelectorAll('#content script')) {
         if (script.src) {
@@ -166,47 +195,18 @@ const mdConponent = {
           return;
         }
         const url = new URL(target.href);
-        if (url.host == location.host && url.pathname?.match(/^\/(|a|b|readme)(\/|$)/)) {
-          if (window.location.pathname !== url.pathname) {
+        if (url.host == location.host) {
+          if (url.hash == location.hash) {
             event.preventDefault();
-            this.$router.push(url.pathname);
           }
-        }
-      });
-    },
-    fetchMd() {
-        let uriPath = this.$route.path;
-        const filepath = routeUriMap[uriPath];
-        let filePromise;
-        if (filepath) {
-            filePromise = fetch(filepath);
-        } else if (uriPath.startsWith('/p/') || uriPath.startsWith('/b/')) {
-            const filepath = '/post' + uriPath.slice(2) + '.md';
-            filePromise = fetch(filepath);
-        } else if (uriPath.match(/^\/a(?=\/|$)/)) {
-            filePromise = fetchDirectoryAsMarkdown(uriPath);
-        } else {
-            filePromise = new Promise(r => r(new Response(`# 404\n${uriPath} not found`)))
-        }
-
-        filePromise.then(async (r) => {
-        if (!r.ok) {
-          this.md = '# 此文章可能被删除了';
-        } else {
-          let data = await r.text();
-          let title, date;
-            if (data.slice(0, 4) === '---\n') {
-            let pos = data.indexOf('\n---\n', 4);
-                let m = data.slice(4, pos).match(/title:[ \t]*(\S.*)/);
-            title = m ? m[1] : '';
-                m = data.slice(4, pos).match(/date:[ \t]*(\S.*)/);
-            date = m ? m[1] : '';
-                data = data.slice(pos + 5);
+          if (url.pathname.startsWith('/b/')) {
+            url.search = 'p=f~post~' + url.pathname.slice(3).replaceAll('/', '~');
           }
-          this.title = title || data.split('\n', 1)[0].slice(2);
-          this.date = date ? date : '';
-          //data = data.replace(/\n/g, '\t\n')
-          this.md = data;
+          if (url.search != window.location.search) {
+            // const path = url.searchParams.get('p') || '';
+            console.log(url.search);
+            this.$router.push(url.search);
+          }
         }
       });
     },
@@ -228,25 +228,22 @@ node: {name: "0.go-begin.md", path: "post/go/0.go-begin.md", type: "file", show:
 
 const getUriByFilePath = (filepath) => {
     if (filepath.endsWith('.md')) {
-        // post/go/go-begin.md -> /b/go/go-begin
-        return Cnf.basePostUri + filepath.slice(Cnf.postDir.length, -3);
+      // post/go/go-begin.md -> ?p=f~post/go/go-begin
+      return '?p=f~' + filepath.slice(0, -3).replaceAll('/', '~');
     } else {
-
-        return Cnf.baseArchiveUri + filepath.slice(Cnf.postDir.length);
+      return '?p=d~' + filepath.replaceAll('/', '~');
     }
 }
 
 // e.g.: getDirectoryAsMarkdown('/a')
-// e.g.: getDirectoryAsMarkdown('/a/db')
+// e.g.: getDirectoryAsMarkdown('/post/.dir.json')
 const fetchDirectoryAsMarkdown = (uri) => {
-    // /post + /a/vim/vim-motion -> /post/vim/vim-motion
-    const dirpath = `${Cnf.postDir}${uri.slice(Cnf.baseArchiveUri.length)}`;
-    return fetchPath(dirpath).then(nodes => {
-        const pathSegs = uri.slice(2).split('/');
+  return fetchPath(uri).then(nodes => {
+    const pathSegs = uri.split('/');
         const tokens = [];
         const navPaths = [];
         pathSegs.forEach((pathSeg, i) => {
-            navPaths.push(`[${pathSeg || 'All'}](/a${pathSegs.slice(0, i + 1).join("/")})`);
+          navPaths.push(`[${pathSeg || 'All'}](?p=d~${pathSegs.slice(0, i + 1).join("~")})`);
         });
         tokens.push('# Archive\n' + navPaths.join('/'));
 
@@ -269,7 +266,7 @@ const fetchDirectoryAsMarkdown = (uri) => {
 
 // @usage: fetchPath('post/db')
 // @return nodes or []
-const fetchPath = (path) => {
+const fetchPath = (path, disableCache = false) => {
     const v = localStorage.getItem(path) || '{}';
     const data = JSON.parse(v);
     if (data && data.time) {
@@ -279,12 +276,18 @@ const fetchPath = (path) => {
         }
         console.log('cache expired:', new Date() - data.time);
     }
-    return fetch(
-        `https://api.github.com/repos/${window.config.user}/${window.config.repo}/contents/${path}`,
-        {}
-    )
-        .then((r) => r.json())
-        .then((data) => {
+  let fetchPromise;
+  if (window.config.use_cached_dir && !disableCache) {
+    fetchPromise = fetch(`/${path}/.dir.json`, {});
+  } else {
+    fetchPromise = fetch(`https://api.github.com/repos/${window.config.user}/${window.config.repo}/contents/${path}`, {});
+  }
+  return fetchPromise.then(async (r) => {
+    if (r.status === 404) {
+      throw 404;
+    }
+    return r.json();
+  }).then((data) => {
             const hidePaths =
                 window.config.user === 'ahuigo' ? ['ai', 'p'] : [];
             let nodes = data
@@ -301,9 +304,11 @@ const fetchPath = (path) => {
             );
             return nodes;
         }).catch((err) => {
-            console.error({ err });
-            throw err;
-            // return [err];
+          // if (err === 404 && window.config.use_cached_dir && disableCache === false) {
+          //   return fetchPath(path, true);
+          // }
+          console.error({ err });
+          throw err;
         });
 
 };

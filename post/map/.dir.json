@@ -1,0 +1,32 @@
+[
+  {
+    "name": "2.mapbox-source-layer.md",
+    "path": "post/map/2.mapbox-source-layer.md",
+    "type": "file"
+  },
+  {
+    "name": "mapbox-local.md",
+    "path": "post/map/mapbox-local.md",
+    "type": "file"
+  },
+  {
+    "name": "mapbox-popup.md",
+    "path": "post/map/mapbox-popup.md",
+    "type": "file"
+  },
+  {
+    "name": "mapbox-vector-tile.md",
+    "path": "post/map/mapbox-vector-tile.md",
+    "type": "file"
+  },
+  {
+    "name": "mapbox.md",
+    "path": "post/map/mapbox.md",
+    "type": "file"
+  },
+  {
+    "name": "osm.md",
+    "path": "post/map/osm.md",
+    "type": "file"
+  }
+]

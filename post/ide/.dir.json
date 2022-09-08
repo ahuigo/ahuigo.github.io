@@ -1,0 +1,42 @@
+[
+  {
+    "name": "framework-laravel.md",
+    "path": "post/ide/framework-laravel.md",
+    "type": "file"
+  },
+  {
+    "name": "framework-lumen.md",
+    "path": "post/ide/framework-lumen.md",
+    "type": "file"
+  },
+  {
+    "name": "ide-netbeans.md",
+    "path": "post/ide/ide-netbeans.md",
+    "type": "file"
+  },
+  {
+    "name": "ide-phpstorm.md",
+    "path": "post/ide/ide-phpstorm.md",
+    "type": "file"
+  },
+  {
+    "name": "ide-sublime.md",
+    "path": "post/ide/ide-sublime.md",
+    "type": "file"
+  },
+  {
+    "name": "laravel-autoload.md",
+    "path": "post/ide/laravel-autoload.md",
+    "type": "file"
+  },
+  {
+    "name": "laravel-route.md",
+    "path": "post/ide/laravel-route.md",
+    "type": "file"
+  },
+  {
+    "name": "laravel-test.md",
+    "path": "post/ide/laravel-test.md",
+    "type": "file"
+  }
+]

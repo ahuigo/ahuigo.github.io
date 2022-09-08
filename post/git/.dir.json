@@ -1,0 +1,77 @@
+[
+  {
+    "name": "git-.md",
+    "path": "post/git/git-.md",
+    "type": "file"
+  },
+  {
+    "name": "git-ci.md",
+    "path": "post/git/git-ci.md",
+    "type": "file"
+  },
+  {
+    "name": "git-diff.md",
+    "path": "post/git/git-diff.md",
+    "type": "file"
+  },
+  {
+    "name": "git-hooks.md",
+    "path": "post/git/git-hooks.md",
+    "type": "file"
+  },
+  {
+    "name": "git-ignore.md",
+    "path": "post/git/git-ignore.md",
+    "type": "file"
+  },
+  {
+    "name": "git-log.md",
+    "path": "post/git/git-log.md",
+    "type": "file"
+  },
+  {
+    "name": "git-refs.md",
+    "path": "post/git/git-refs.md",
+    "type": "file"
+  },
+  {
+    "name": "git-revert.md",
+    "path": "post/git/git-revert.md",
+    "type": "file"
+  },
+  {
+    "name": "git-server.md",
+    "path": "post/git/git-server.md",
+    "type": "file"
+  },
+  {
+    "name": "git-struct.md",
+    "path": "post/git/git-struct.md",
+    "type": "file"
+  },
+  {
+    "name": "git-submodule.md",
+    "path": "post/git/git-submodule.md",
+    "type": "file"
+  },
+  {
+    "name": "git-svn.md",
+    "path": "post/git/git-svn.md",
+    "type": "file"
+  },
+  {
+    "name": "github-actions.md",
+    "path": "post/git/github-actions.md",
+    "type": "file"
+  },
+  {
+    "name": "github-auth.md",
+    "path": "post/git/github-auth.md",
+    "type": "file"
+  },
+  {
+    "name": "gpg.md",
+    "path": "post/git/gpg.md",
+    "type": "file"
+  }
+]

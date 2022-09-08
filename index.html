@@ -9,20 +9,24 @@
     <script type="text/javascript">
         const config = {
             // your github's username
-            'user': 'ahuigo',
+            user: 'ahuigo',
             // your github's repo name
-            'repo': 'ahuigo.github.io', // 如果自建域名的话，就必须要指定你的仓库
-            'disqus_user': 'ahuigo',
+            repo: 'ahuigo.github.io', // 如果自建域名的话，就必须要指定你的仓库
+            use_cached_dir: false,
+            disqus_user: 'ahuigo',
         }
-        const matchHost = location.host.match(/^([^\.]+)\.github\.io$/)
+        const matchHost = location.host.match(/^([^\.]+)\.github\.io$/) 
         if(matchHost){
            config.repo = location.host 
+           config.use_cached_dir= true
            config.user =  matchHost[1]
+        }
+        if(location.hostname==='m'){
+           config.use_cached_dir= true
         }
         window.config = config
         console.log(window.config)
     </script>
-    <script type="text/javascript" src="/assets/ghspa.js"></script> 
 </head>
 
 <body class="layout-documentation page-layout">
@@ -31,8 +35,8 @@
             <a href="#" class="pure-menu-heading pure-menu-link"><strong>AHUIGO'S NOTES</STRONG></a>
             <ul class="pure-menu-list">
                 <li class="pure-menu-item"><a class="is-primary" href="/">🏠 Home</a></li>
-                <li class="pure-menu-item"><a class="is-primary" href="/a">📂 Archive</a></li>
-                <li class="pure-menu-item"><a class="is-primary" href="/readme">📖 Readme</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="?p=d~post">📂 Archive</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/?p=f~readme">📖 Readme</a></li>
                 <li class="pure-menu-item"><a class="is-primary" href="//github.com/ahuigo">🐙 Github</a></li>
                 <li class="pure-menu-item"><a class="is-primary" href="/atom.xml">📶 Rss</a></li>
                 <li class="pure-menu-item"><a class="is-primary" href="//ahuigo.github.io/local-jsfiddle/fiddle.html">✏️ Fiddle</a></li>
@@ -89,9 +93,9 @@
     <template id="tree-folder">
         <ul class="pure-menu-list" v-if="show">
             <li class="pure-menu-item" v-for="(file,index) in nodes" :key="file.path">
-                <a v-if="file.type==='dir'" :type="file.type" @click="openFolder(file)" class="folder">{{file.name}}
+                <a v-if="file.type==='dir'" :type="file.type" class="folder" @click="openFolder(file)" :xhref="'?p=d~'+file.path.slice(0).replaceAll('/','~')">{{file.name}}
                 </a>
-                <router-link v-else :type="file.type" class="file" :to="'/b'+file.path.slice(4,-3)">{{file.name.slice(0,-3)}} </router-link>
+                <router-link v-else :type="file.type" class="file" :to="'?p=f~'+file.path.slice(0,-3).replaceAll('/','~')">{{file.name.slice(0,-3)}} </router-link>
                 <tree-folder v-if="file.nodes" :show="file.show" :nodes="file.nodes"></tree-folder>
             </li>
         </ul>
@@ -105,6 +109,6 @@
     <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/KaTeX/0.15.2/katex.min.js"></script>
     <link href="/assets/purecss@2.0.3.css" rel="stylesheet" >
     <script src="/assets/marked.js"></script>
-    <script type="module" src="/assets/blog.js"></script>
+    <script type="module" src="/assets/blog.js?a=3"></script>
 </body>
 </html>

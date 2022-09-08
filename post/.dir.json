@@ -1,0 +1,222 @@
+[
+  {
+    "name": "algorithm",
+    "path": "post/algorithm",
+    "type": "dir"
+  },
+  {
+    "name": "arch",
+    "path": "post/arch",
+    "type": "dir"
+  },
+  {
+    "name": "bc",
+    "path": "post/bc",
+    "type": "dir"
+  },
+  {
+    "name": "bpf",
+    "path": "post/bpf",
+    "type": "dir"
+  },
+  {
+    "name": "c",
+    "path": "post/c",
+    "type": "dir"
+  },
+  {
+    "name": "cadence",
+    "path": "post/cadence",
+    "type": "dir"
+  },
+  {
+    "name": "code",
+    "path": "post/code",
+    "type": "dir"
+  },
+  {
+    "name": "course",
+    "path": "post/course",
+    "type": "dir"
+  },
+  {
+    "name": "cplus",
+    "path": "post/cplus",
+    "type": "dir"
+  },
+  {
+    "name": "db",
+    "path": "post/db",
+    "type": "dir"
+  },
+  {
+    "name": "doc",
+    "path": "post/doc",
+    "type": "dir"
+  },
+  {
+    "name": "em",
+    "path": "post/em",
+    "type": "dir"
+  },
+  {
+    "name": "embed",
+    "path": "post/embed",
+    "type": "dir"
+  },
+  {
+    "name": "eng",
+    "path": "post/eng",
+    "type": "dir"
+  },
+  {
+    "name": "git",
+    "path": "post/git",
+    "type": "dir"
+  },
+  {
+    "name": "go",
+    "path": "post/go",
+    "type": "dir"
+  },
+  {
+    "name": "ide",
+    "path": "post/ide",
+    "type": "dir"
+  },
+  {
+    "name": "idea",
+    "path": "post/idea",
+    "type": "dir"
+  },
+  {
+    "name": "java",
+    "path": "post/java",
+    "type": "dir"
+  },
+  {
+    "name": "life",
+    "path": "post/life",
+    "type": "dir"
+  },
+  {
+    "name": "lua",
+    "path": "post/lua",
+    "type": "dir"
+  },
+  {
+    "name": "mac",
+    "path": "post/mac",
+    "type": "dir"
+  },
+  {
+    "name": "map",
+    "path": "post/map",
+    "type": "dir"
+  },
+  {
+    "name": "math",
+    "path": "post/math",
+    "type": "dir"
+  },
+  {
+    "name": "net",
+    "path": "post/net",
+    "type": "dir"
+  },
+  {
+    "name": "news",
+    "path": "post/news",
+    "type": "dir"
+  },
+  {
+    "name": "nginx",
+    "path": "post/nginx",
+    "type": "dir"
+  },
+  {
+    "name": "office",
+    "path": "post/office",
+    "type": "dir"
+  },
+  {
+    "name": "phone",
+    "path": "post/phone",
+    "type": "dir"
+  },
+  {
+    "name": "php",
+    "path": "post/php",
+    "type": "dir"
+  },
+  {
+    "name": "proj",
+    "path": "post/proj",
+    "type": "dir"
+  },
+  {
+    "name": "py",
+    "path": "post/py",
+    "type": "dir"
+  },
+  {
+    "name": "rb",
+    "path": "post/rb",
+    "type": "dir"
+  },
+  {
+    "name": "ria",
+    "path": "post/ria",
+    "type": "dir"
+  },
+  {
+    "name": "rpc",
+    "path": "post/rpc",
+    "type": "dir"
+  },
+  {
+    "name": "sec",
+    "path": "post/sec",
+    "type": "dir"
+  },
+  {
+    "name": "share",
+    "path": "post/share",
+    "type": "dir"
+  },
+  {
+    "name": "svn",
+    "path": "post/svn",
+    "type": "dir"
+  },
+  {
+    "name": "ui",
+    "path": "post/ui",
+    "type": "dir"
+  },
+  {
+    "name": "vim",
+    "path": "post/vim",
+    "type": "dir"
+  },
+  {
+    "name": "vsc",
+    "path": "post/vsc",
+    "type": "dir"
+  },
+  {
+    "name": "webpack",
+    "path": "post/webpack",
+    "type": "dir"
+  },
+  {
+    "name": "win",
+    "path": "post/win",
+    "type": "dir"
+  },
+  {
+    "name": "wx",
+    "path": "post/wx",
+    "type": "dir"
+  }
+]

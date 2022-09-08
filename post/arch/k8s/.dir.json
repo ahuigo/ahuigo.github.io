@@ -1,0 +1,52 @@
+[
+  {
+    "name": "1.begin.md",
+    "path": "post/arch/k8s/1.begin.md",
+    "type": "file"
+  },
+  {
+    "name": "2.install.md",
+    "path": "post/arch/k8s/2.install.md",
+    "type": "file"
+  },
+  {
+    "name": "3.deploy.md",
+    "path": "post/arch/k8s/3.deploy.md",
+    "type": "file"
+  },
+  {
+    "name": "4.k8s-dns.md",
+    "path": "post/arch/k8s/4.k8s-dns.md",
+    "type": "file"
+  },
+  {
+    "name": "istio.md",
+    "path": "post/arch/k8s/istio.md",
+    "type": "file"
+  },
+  {
+    "name": "k8s-cmd-todo.md",
+    "path": "post/arch/k8s/k8s-cmd-todo.md",
+    "type": "file"
+  },
+  {
+    "name": "k8s-ctl.md",
+    "path": "post/arch/k8s/k8s-ctl.md",
+    "type": "file"
+  },
+  {
+    "name": "k8s-debug.md",
+    "path": "post/arch/k8s/k8s-debug.md",
+    "type": "file"
+  },
+  {
+    "name": "k8s-helm.md",
+    "path": "post/arch/k8s/k8s-helm.md",
+    "type": "file"
+  },
+  {
+    "name": "k8s-prms.md",
+    "path": "post/arch/k8s/k8s-prms.md",
+    "type": "file"
+  }
+]

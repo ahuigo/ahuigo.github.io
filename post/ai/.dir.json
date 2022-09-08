@@ -1,0 +1,22 @@
+[
+  {
+    "name": "ai-book.md",
+    "path": "post/ai/ai-book.md",
+    "type": "file"
+  },
+  {
+    "name": "ai-neural-network.md",
+    "path": "post/ai/ai-neural-network.md",
+    "type": "file"
+  },
+  {
+    "name": "book-deeplearning.md",
+    "path": "post/ai/book-deeplearning.md",
+    "type": "file"
+  },
+  {
+    "name": "text-audio.md",
+    "path": "post/ai/text-audio.md",
+    "type": "file"
+  }
+]

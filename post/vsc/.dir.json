@@ -1,0 +1,77 @@
+[
+  {
+    "name": "vsc-code-cmd.md",
+    "path": "post/vsc/vsc-code-cmd.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-conf.md",
+    "path": "post/vsc/vsc-conf.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-debug.md",
+    "path": "post/vsc/vsc-debug.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-dev-ext.md",
+    "path": "post/vsc/vsc-dev-ext.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-go.md",
+    "path": "post/vsc/vsc-go.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-ime.md",
+    "path": "post/vsc/vsc-ime.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-js.md",
+    "path": "post/vsc/vsc-js.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-markdown.md",
+    "path": "post/vsc/vsc-markdown.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-path.md",
+    "path": "post/vsc/vsc-path.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-pkg.md",
+    "path": "post/vsc/vsc-pkg.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-prettier.md",
+    "path": "post/vsc/vsc-prettier.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-python.md",
+    "path": "post/vsc/vsc-python.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-remote-docker.md",
+    "path": "post/vsc/vsc-remote-docker.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-shortcut.md",
+    "path": "post/vsc/vsc-shortcut.md",
+    "type": "file"
+  },
+  {
+    "name": "vsc-sync.md",
+    "path": "post/vsc/vsc-sync.md",
+    "type": "file"
+  }
+]

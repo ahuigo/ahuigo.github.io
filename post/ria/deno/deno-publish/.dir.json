@@ -1,0 +1,37 @@
+[
+  {
+    "name": "deno-bundle.md",
+    "path": "post/ria/deno/deno-publish/deno-bundle.md",
+    "type": "file"
+  },
+  {
+    "name": "deno-cache.md",
+    "path": "post/ria/deno/deno-publish/deno-cache.md",
+    "type": "file"
+  },
+  {
+    "name": "deno-cicd.md",
+    "path": "post/ria/deno/deno-publish/deno-cicd.md",
+    "type": "file"
+  },
+  {
+    "name": "deno-lint.md",
+    "path": "post/ria/deno/deno-publish/deno-lint.md",
+    "type": "file"
+  },
+  {
+    "name": "deno-publish.md",
+    "path": "post/ria/deno/deno-publish/deno-publish.md",
+    "type": "file"
+  },
+  {
+    "name": "deno-run.md",
+    "path": "post/ria/deno/deno-publish/deno-run.md",
+    "type": "file"
+  },
+  {
+    "name": "deno-vendor.md",
+    "path": "post/ria/deno/deno-publish/deno-vendor.md",
+    "type": "file"
+  }
+]

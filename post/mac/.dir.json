@@ -1,0 +1,102 @@
+[
+  {
+    "name": "android-adb.md",
+    "path": "post/mac/android-adb.md",
+    "type": "file"
+  },
+  {
+    "name": "android-root.md",
+    "path": "post/mac/android-root.md",
+    "type": "file"
+  },
+  {
+    "name": "keyboard-niz.md",
+    "path": "post/mac/keyboard-niz.md",
+    "type": "file"
+  },
+  {
+    "name": "keyboard-readline.md",
+    "path": "post/mac/keyboard-readline.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-applescript.md",
+    "path": "post/mac/mac-applescript.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-brew-formula.md",
+    "path": "post/mac/mac-brew-formula.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-brew-service.md",
+    "path": "post/mac/mac-brew-service.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-brew.md",
+    "path": "post/mac/mac-brew.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-inputmethod-pinyin.md",
+    "path": "post/mac/mac-inputmethod-pinyin.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-inputmethod.md",
+    "path": "post/mac/mac-inputmethod.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-power.md",
+    "path": "post/mac/mac-power.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-rime.md",
+    "path": "post/mac/mac-rime.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-sendfile.md",
+    "path": "post/mac/mac-sendfile.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-shortcuts-open.md",
+    "path": "post/mac/mac-shortcuts-open.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-shortcuts.md",
+    "path": "post/mac/mac-shortcuts.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-sip.md",
+    "path": "post/mac/mac-sip.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-tool-dict.md",
+    "path": "post/mac/mac-tool-dict.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-tool.md",
+    "path": "post/mac/mac-tool.md",
+    "type": "file"
+  },
+  {
+    "name": "mac-user.md",
+    "path": "post/mac/mac-user.md",
+    "type": "file"
+  },
+  {
+    "name": "safari.md",
+    "path": "post/mac/safari.md",
+    "type": "file"
+  }
+]

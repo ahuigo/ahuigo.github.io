@@ -1,0 +1,507 @@
+[
+  {
+    "name": "0.go-begin.md",
+    "path": "post/go/0.go-begin.md",
+    "type": "file"
+  },
+  {
+    "name": "11.go-begin-help.md",
+    "path": "post/go/11.go-begin-help.md",
+    "type": "file"
+  },
+  {
+    "name": "13.go-pointer.md",
+    "path": "post/go/13.go-pointer.md",
+    "type": "file"
+  },
+  {
+    "name": "16.go-interface.md",
+    "path": "post/go/16.go-interface.md",
+    "type": "file"
+  },
+  {
+    "name": "18.go-routines-inner.md",
+    "path": "post/go/18.go-routines-inner.md",
+    "type": "file"
+  },
+  {
+    "name": "19.go-time.md",
+    "path": "post/go/19.go-time.md",
+    "type": "file"
+  },
+  {
+    "name": "20.go-image.md",
+    "path": "post/go/20.go-image.md",
+    "type": "file"
+  },
+  {
+    "name": "3.go-math.md",
+    "path": "post/go/3.go-math.md",
+    "type": "file"
+  },
+  {
+    "name": "8.go-expr.md",
+    "path": "post/go/8.go-expr.md",
+    "type": "file"
+  },
+  {
+    "name": "cicd-embed.md",
+    "path": "post/go/cicd-embed.md",
+    "type": "file"
+  },
+  {
+    "name": "go-argv.md",
+    "path": "post/go/go-argv.md",
+    "type": "file"
+  },
+  {
+    "name": "go-arr-link.md",
+    "path": "post/go/go-arr-link.md",
+    "type": "file"
+  },
+  {
+    "name": "go-array.md",
+    "path": "post/go/go-array.md",
+    "type": "file"
+  },
+  {
+    "name": "go-asm.md",
+    "path": "post/go/go-asm.md",
+    "type": "file"
+  },
+  {
+    "name": "go-context.md",
+    "path": "post/go/go-context.md",
+    "type": "file"
+  },
+  {
+    "name": "go-debug-dvl.md",
+    "path": "post/go/go-debug-dvl.md",
+    "type": "file"
+  },
+  {
+    "name": "go-debug-share.md",
+    "path": "post/go/go-debug-share.md",
+    "type": "file"
+  },
+  {
+    "name": "go-debug-trace.md",
+    "path": "post/go/go-debug-trace.md",
+    "type": "file"
+  },
+  {
+    "name": "go-debug-vscode.md",
+    "path": "post/go/go-debug-vscode.md",
+    "type": "file"
+  },
+  {
+    "name": "go-design-single.md",
+    "path": "post/go/go-design-single.md",
+    "type": "file"
+  },
+  {
+    "name": "go-expr-switch.md",
+    "path": "post/go/go-expr-switch.md",
+    "type": "file"
+  },
+  {
+    "name": "go-file-watch.md",
+    "path": "post/go/go-file-watch.md",
+    "type": "file"
+  },
+  {
+    "name": "go-file.md",
+    "path": "post/go/go-file.md",
+    "type": "file"
+  },
+  {
+    "name": "go-func-err-hell.md",
+    "path": "post/go/go-func-err-hell.md",
+    "type": "file"
+  },
+  {
+    "name": "go-func-option.md",
+    "path": "post/go/go-func-option.md",
+    "type": "file"
+  },
+  {
+    "name": "go-func.md",
+    "path": "post/go/go-func.md",
+    "type": "file"
+  },
+  {
+    "name": "go-generic.md",
+    "path": "post/go/go-generic.md",
+    "type": "file"
+  },
+  {
+    "name": "go-http-close.md",
+    "path": "post/go/go-http-close.md",
+    "type": "file"
+  },
+  {
+    "name": "go-http-url.md",
+    "path": "post/go/go-http-url.md",
+    "type": "file"
+  },
+  {
+    "name": "go-http.md",
+    "path": "post/go/go-http.md",
+    "type": "file"
+  },
+  {
+    "name": "go-inject.md",
+    "path": "post/go/go-inject.md",
+    "type": "file"
+  },
+  {
+    "name": "go-install.md",
+    "path": "post/go/go-install.md",
+    "type": "file"
+  },
+  {
+    "name": "go-interview.md",
+    "path": "post/go/go-interview.md",
+    "type": "file"
+  },
+  {
+    "name": "go-io.md",
+    "path": "post/go/go-io.md",
+    "type": "file"
+  },
+  {
+    "name": "go-ipc-signal.md",
+    "path": "post/go/go-ipc-signal.md",
+    "type": "file"
+  },
+  {
+    "name": "go-lock-queue.md",
+    "path": "post/go/go-lock-queue.md",
+    "type": "file"
+  },
+  {
+    "name": "go-lock-string.md",
+    "path": "post/go/go-lock-string.md",
+    "type": "file"
+  },
+  {
+    "name": "go-lock.md",
+    "path": "post/go/go-lock.md",
+    "type": "file"
+  },
+  {
+    "name": "go-log.md",
+    "path": "post/go/go-log.md",
+    "type": "file"
+  },
+  {
+    "name": "go-method.md",
+    "path": "post/go/go-method.md",
+    "type": "file"
+  },
+  {
+    "name": "go-name.md",
+    "path": "post/go/go-name.md",
+    "type": "file"
+  },
+  {
+    "name": "go-os.md",
+    "path": "post/go/go-os.md",
+    "type": "file"
+  },
+  {
+    "name": "go-parser.md",
+    "path": "post/go/go-parser.md",
+    "type": "file"
+  },
+  {
+    "name": "go-perf-range.md",
+    "path": "post/go/go-perf-range.md",
+    "type": "file"
+  },
+  {
+    "name": "go-perf-slice.md",
+    "path": "post/go/go-perf-slice.md",
+    "type": "file"
+  },
+  {
+    "name": "go-perf-str.md",
+    "path": "post/go/go-perf-str.md",
+    "type": "file"
+  },
+  {
+    "name": "go-perfmance.md",
+    "path": "post/go/go-perfmance.md",
+    "type": "file"
+  },
+  {
+    "name": "go-pkg-build-cgo.md",
+    "path": "post/go/go-pkg-build-cgo.md",
+    "type": "file"
+  },
+  {
+    "name": "go-pkg-build-run.md",
+    "path": "post/go/go-pkg-build-run.md",
+    "type": "file"
+  },
+  {
+    "name": "go-pkg-cmd.md",
+    "path": "post/go/go-pkg-cmd.md",
+    "type": "file"
+  },
+  {
+    "name": "go-pkg-init.md",
+    "path": "post/go/go-pkg-init.md",
+    "type": "file"
+  },
+  {
+    "name": "go-pkg-proxy.md",
+    "path": "post/go/go-pkg-proxy.md",
+    "type": "file"
+  },
+  {
+    "name": "go-pkg-version.md",
+    "path": "post/go/go-pkg-version.md",
+    "type": "file"
+  },
+  {
+    "name": "go-pkg-write-cli.md",
+    "path": "post/go/go-pkg-write-cli.md",
+    "type": "file"
+  },
+  {
+    "name": "go-pkg-write-publish-install.md",
+    "path": "post/go/go-pkg-write-publish-install.md",
+    "type": "file"
+  },
+  {
+    "name": "go-profile-perf.md",
+    "path": "post/go/go-profile-perf.md",
+    "type": "file"
+  },
+  {
+    "name": "go-profile.md",
+    "path": "post/go/go-profile.md",
+    "type": "file"
+  },
+  {
+    "name": "go-proxy.md",
+    "path": "post/go/go-proxy.md",
+    "type": "file"
+  },
+  {
+    "name": "go-redis.md",
+    "path": "post/go/go-redis.md",
+    "type": "file"
+  },
+  {
+    "name": "go-routines-custom.md",
+    "path": "post/go/go-routines-custom.md",
+    "type": "file"
+  },
+  {
+    "name": "go-routines.md",
+    "path": "post/go/go-routines.md",
+    "type": "file"
+  },
+  {
+    "name": "go-shell.md",
+    "path": "post/go/go-shell.md",
+    "type": "file"
+  },
+  {
+    "name": "go-socket.md",
+    "path": "post/go/go-socket.md",
+    "type": "file"
+  },
+  {
+    "name": "go-str-buffer.md",
+    "path": "post/go/go-str-buffer.md",
+    "type": "file"
+  },
+  {
+    "name": "go-str-regex.md",
+    "path": "post/go/go-str-regex.md",
+    "type": "file"
+  },
+  {
+    "name": "go-str-serial.md",
+    "path": "post/go/go-str-serial.md",
+    "type": "file"
+  },
+  {
+    "name": "go-str.md",
+    "path": "post/go/go-str.md",
+    "type": "file"
+  },
+  {
+    "name": "go-struct-layout.md",
+    "path": "post/go/go-struct-layout.md",
+    "type": "file"
+  },
+  {
+    "name": "go-struct.md",
+    "path": "post/go/go-struct.md",
+    "type": "file"
+  },
+  {
+    "name": "go-swagger.md",
+    "path": "post/go/go-swagger.md",
+    "type": "file"
+  },
+  {
+    "name": "go-test.md",
+    "path": "post/go/go-test.md",
+    "type": "file"
+  },
+  {
+    "name": "go-type.md",
+    "path": "post/go/go-type.md",
+    "type": "file"
+  },
+  {
+    "name": "go-var-addressable.md",
+    "path": "post/go/go-var-addressable.md",
+    "type": "file"
+  },
+  {
+    "name": "go-var-format.md",
+    "path": "post/go/go-var-format.md",
+    "type": "file"
+  },
+  {
+    "name": "go-var-make.md",
+    "path": "post/go/go-var-make.md",
+    "type": "file"
+  },
+  {
+    "name": "go-var-map.md",
+    "path": "post/go/go-var-map.md",
+    "type": "file"
+  },
+  {
+    "name": "go-var.md",
+    "path": "post/go/go-var.md",
+    "type": "file"
+  },
+  {
+    "name": "gonic-context.md",
+    "path": "post/go/gonic-context.md",
+    "type": "file"
+  },
+  {
+    "name": "gonic-debug.md",
+    "path": "post/go/gonic-debug.md",
+    "type": "file"
+  },
+  {
+    "name": "gonic-middleware.md",
+    "path": "post/go/gonic-middleware.md",
+    "type": "file"
+  },
+  {
+    "name": "gonic-request.md",
+    "path": "post/go/gonic-request.md",
+    "type": "file"
+  },
+  {
+    "name": "gonic-resp-html.md",
+    "path": "post/go/gonic-resp-html.md",
+    "type": "file"
+  },
+  {
+    "name": "gonic-response.md",
+    "path": "post/go/gonic-response.md",
+    "type": "file"
+  },
+  {
+    "name": "gonic-router-proxy.md",
+    "path": "post/go/gonic-router-proxy.md",
+    "type": "file"
+  },
+  {
+    "name": "gonic-router.md",
+    "path": "post/go/gonic-router.md",
+    "type": "file"
+  },
+  {
+    "name": "gonic-test.md",
+    "path": "post/go/gonic-test.md",
+    "type": "file"
+  },
+  {
+    "name": "net-dns.md",
+    "path": "post/go/net-dns.md",
+    "type": "file"
+  },
+  {
+    "name": "net-grpc-pb.md",
+    "path": "post/go/net-grpc-pb.md",
+    "type": "file"
+  },
+  {
+    "name": "net-grpc.md",
+    "path": "post/go/net-grpc.md",
+    "type": "file"
+  },
+  {
+    "name": "net-packet.md",
+    "path": "post/go/net-packet.md",
+    "type": "file"
+  },
+  {
+    "name": "net-rpc.md",
+    "path": "post/go/net-rpc.md",
+    "type": "file"
+  },
+  {
+    "name": "object-.md",
+    "path": "post/go/object-.md",
+    "type": "file"
+  },
+  {
+    "name": "object-decorator.md",
+    "path": "post/go/object-decorator.md",
+    "type": "file"
+  },
+  {
+    "name": "object-fx-module.md",
+    "path": "post/go/object-fx-module.md",
+    "type": "file"
+  },
+  {
+    "name": "object-generate.md",
+    "path": "post/go/object-generate.md",
+    "type": "file"
+  },
+  {
+    "name": "object-ioc.md",
+    "path": "post/go/object-ioc.md",
+    "type": "file"
+  },
+  {
+    "name": "object-map-reduce.md",
+    "path": "post/go/object-map-reduce.md",
+    "type": "file"
+  },
+  {
+    "name": "object-pipeline.md",
+    "path": "post/go/object-pipeline.md",
+    "type": "file"
+  },
+  {
+    "name": "object-reflect.md",
+    "path": "post/go/object-reflect.md",
+    "type": "file"
+  },
+  {
+    "name": "object-visitor.md",
+    "path": "post/go/object-visitor.md",
+    "type": "file"
+  },
+  {
+    "name": "swag",
+    "path": "post/go/swag",
+    "type": "dir"
+  }
+]

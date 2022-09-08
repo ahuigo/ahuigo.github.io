@@ -1,0 +1,62 @@
+[
+  {
+    "name": "2.next-frontend.md",
+    "path": "post/news/2.next-frontend.md",
+    "type": "file"
+  },
+  {
+    "name": "deliberately.md",
+    "path": "post/news/deliberately.md",
+    "type": "file"
+  },
+  {
+    "name": "finance.md",
+    "path": "post/news/finance.md",
+    "type": "file"
+  },
+  {
+    "name": "geek-proj.md",
+    "path": "post/news/geek-proj.md",
+    "type": "file"
+  },
+  {
+    "name": "interview-go.md",
+    "path": "post/news/interview-go.md",
+    "type": "file"
+  },
+  {
+    "name": "interview-js.md",
+    "path": "post/news/interview-js.md",
+    "type": "file"
+  },
+  {
+    "name": "nginx-share.md",
+    "path": "post/news/nginx-share.md",
+    "type": "file"
+  },
+  {
+    "name": "offer.md",
+    "path": "post/news/offer.md",
+    "type": "file"
+  },
+  {
+    "name": "the-way-of-life.md",
+    "path": "post/news/the-way-of-life.md",
+    "type": "file"
+  },
+  {
+    "name": "ticketing-software.md",
+    "path": "post/news/ticketing-software.md",
+    "type": "file"
+  },
+  {
+    "name": "time-value.md",
+    "path": "post/news/time-value.md",
+    "type": "file"
+  },
+  {
+    "name": "weather.md",
+    "path": "post/news/weather.md",
+    "type": "file"
+  }
+]

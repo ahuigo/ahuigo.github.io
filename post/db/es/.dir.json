@@ -1,0 +1,22 @@
+[
+  {
+    "name": "begin-install.md",
+    "path": "post/db/es/begin-install.md",
+    "type": "file"
+  },
+  {
+    "name": "begin-intro.md",
+    "path": "post/db/es/begin-intro.md",
+    "type": "file"
+  },
+  {
+    "name": "es-ddl.md",
+    "path": "post/db/es/es-ddl.md",
+    "type": "file"
+  },
+  {
+    "name": "es-kibana.md",
+    "path": "post/db/es/es-kibana.md",
+    "type": "file"
+  }
+]
