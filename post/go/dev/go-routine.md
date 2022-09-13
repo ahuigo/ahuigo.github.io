@@ -18,7 +18,7 @@ golang 对多核CPU支持:
 1. 单个Master-Process 只能执行一个goroutine
 2. 多个Master-Process 可以执行多个goroutine, 一般默认master 个数是cpu内核数量(`GOMAXPROCS`)
 
-对于多核cpu来说，多个goroutine 并行执行，就可能需要对共享的变量加锁，否则就可能出现问题，比如：
+对于多核cpu来说，多个goroutine 并行执行。以及gorounine 执行非原子操作。就需要对共享的变量加锁，否则就可能出现问题，比如：
 > 一个协程读一个字符串，只读了一半; 就被另外一个协程改写了（e.g. https://github.com/ahuigo/golib/blob/main/lock/atom/race-string_test.go）
 
 具体可参考(Go 语言设计与实现)：https://draveness.me/golang/docs/part3-runtime/ch06-concurrency/golang-goroutine/

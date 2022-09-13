@@ -1,6 +1,10 @@
 body{font-family:"lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     font-size: 18px;
 }
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
 .share iframe{
     border:0;
     height:36px;

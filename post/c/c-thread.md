@@ -79,6 +79,10 @@ golang 的协程本质上是epoll; 在php 中协程是单线程内自己调度
 	yexue+ 19710 19712  0.0  0.3 972184 14000 pts/1    Sl+  16:53   0:00 php b.php
 	yexue+ 19710 19713  0.0  0.3 972184 14000 pts/1    Sl+  16:53   0:00 php b.php
 
+mac show thread
+
+    sudo dtruss -ap pid
+
 # 内核线程、轻量级进程、用户线程
 http://www.cnitblog.com/tarius.wu/articles/2277.html
 
