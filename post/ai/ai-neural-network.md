@@ -2,6 +2,9 @@
 title: Neural Network
 date: 2018-09-26
 ---
+# book
+1. https://aegeorge42.github.io/
+一个英文的图文互动教程，使用简单的语言和图片，解释什么是神经网络。 
 # Neural Network
 人工智能的底层模型是"神经网络"（neural network）。许多复杂的应用（比如模式识别、自动控制）和高级模型（比如深度学习）都基于它。学习人工智能，一定是从它开始。
 

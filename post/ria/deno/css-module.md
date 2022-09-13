@@ -131,3 +131,5 @@ https://css-tricks.com/styling-a-web-component/#aa-link-to-external-styles-inste
     window.customElements.define('whats-up', WhatsUp);
 
 
+# convert react to webcomponents
+https://github.com/preactjs/preact-custom-element

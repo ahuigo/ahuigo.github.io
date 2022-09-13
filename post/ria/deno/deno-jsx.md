@@ -64,8 +64,9 @@ The @jsxImportSource pragma
 适合全局：
 
   "compilerOptions": {
-        "jsx": "react-jsx",
-        "jsxImportSource": "https://esm.sh/preact"
+    "jsx": "react-jsx",
+    //"jsxImportSource": "https://esm.sh/preact"
+    "jsxImportSource": "preact"
   }
 
 ## import_map

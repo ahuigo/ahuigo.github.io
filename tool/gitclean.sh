@@ -31,3 +31,7 @@ select yn in "Yes" "No"; do
 done
 
 #git push -f origin HEAD
+
+
+################## clean unused git files ###################
+# git gc --prune=now --aggressive
