@@ -108,7 +108,7 @@ if(l<1 || toc.l >=l ) return;
 }
 
 export function enableTocScroll(tocEl, contentEl) {
-  if (window.scroll) {
+  if (window.onscroll) {
     return;
   }
   // auto overflow

@@ -62,8 +62,13 @@ Delve is full featured debugging tool for Go.
         "name": "Launch Package",
         "type": "go",
         "request": "launch",
-        "mode": "auto",
-        "program": "${fileDirname}"
+        "mode": "auto", //"mode": "debug",
+        "program": "${fileDirname}",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "APP_ENV":"dev",
+            },
+            "args": []
     }
 
 F5 运行后vscode自动监听62324：

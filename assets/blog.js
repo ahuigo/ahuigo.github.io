@@ -33,7 +33,8 @@ function disqus_reset() {
       reload: true,
       config: function () {
         this.page.url = window.location.href.split('#')[0];
-        this.page.identifier = window.location.pathname
+        const p = (new URL(location.href).searchParams?.get('p') || '').slice(2);
+        this.page.identifier = p ? p : window.location.pathname
         this.page.title = document.title;
       }
     });
@@ -196,6 +197,9 @@ const mdConponent = {
         }
         const url = new URL(target.href);
         if (url.host == location.host) {
+          if (url.pathname.match(/\.html$/)) {
+            return;
+          }
           if (url.hash == location.hash) {
             event.preventDefault();
           }

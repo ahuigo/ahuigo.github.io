@@ -16,27 +16,71 @@ There are 3 usages of extends
     }
     // Dog => { name: string; bark(): void }
 
+
 ## 泛型约束 
+### 约束属性
+
     function getCnames<T extends { name: string }>(entities: T[]):string[] {
         return entities.map(entity => entity.cname)
     }
 
-## 条件判断
-继承判断
+### 约束Unions 类型
+即约束实例，又约束类型
+
+    type NameOrId<T extends number | string> = T extends number ? 'number' : 'string';
+    type X = NameOrId<1> // 'number'
+    type Y = NameOrId<number> // 'number'
+    type Y2 = NameOrId<false> // not ok
+
+
+## conditional types, 条件判断
+https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
+
+### 普通类型判断
+    type X = 1 extends number ? 'number' : 'string' // 'number'
+    type X2 = '1' extends number ? 'number' : 'string' // 'string'
+    type X3 = boolean extends number ? 'number' : 'string' // 'string'
+
+### 泛型判断
+
+    // bad
+    type MessageOf<T> = T["message"];// Type '"message"' cannot be used to index type 'T'.
+    // ok
+    type MessageOf<T extends { message: unknown }> = T["message"];
+    type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
+
+### 泛型判断infer
+判断T数组
+
+    type Flatten<T> = T extends any[] ? T[number] : T;
+    // Extracts out the element type.
+    type Str = Flatten<string[]>; //string
+
+利用infer 推断元素类型(占位)
+
+    type Flatten<Type> = Type extends Array<infer Item> ? Item : Type;
+
+infer 推断Return
+
+    type GetReturnType<Type> = Type extends (...args: never[]) => infer Return
+        ? Return : never;
+    type Num = GetReturnType<() => number>;
+
+### 继承判断
 
     type Human = {
         name: string;
         occupation: string;
     }
-    type Duck = {
+    type Animal = {
         name: string;
     }
-    type Bool = Duck extends Human ? 'yes' : 'no'; // 'no'
-    type Bool2 = Human extends Duck ? 'yes' : 'no'; // 'yes'
-    // Duck 包含Human 集合; Huan继承Duck 所有的属性
+    type Bool = Animal extends Human ? 'yes' : 'no'; // 'no'
+    type Bool2 = Human extends Animal ? 'yes' : 'no'; // 'yes'
+    // Animal 包含Human 集合; Huan继承Animal 所有的属性
+    // Human 范围更小，但是属性更多
 
-
-### 类型约束
+约束属性、方法
 
     // 人属于动物
     type Bool = Human extends Animal  ? 'yes' : 'no'; // 'yes'
@@ -58,16 +102,28 @@ There are 3 usages of extends
     type A3 = ['x'] extends ['x', 'y'] ? true : false; // false
     type A4 = ['x', 'y'] extends ['x'] ? true : false; // false
 
-### 子集约束(泛型T)
-如果泛型T是联合类型，则比较奇怪：
+### 子集约束(泛型T,分配律)
+如果泛型T是联合类型，则采用分配律， 泛型在extends 中会被展开：
 
     type P<T> = T extends 'x' ? string : number;
     type A3 = P<'x' | 'y'> // string|number;
 
-因为：如果extends前面的参数是一个泛型类型，当传入该参数的是联合类型，则使用分配律计算最终的结果。
+因为：如果extends前面的参数是一个泛型类型，当传入该参数的是联合类型(UnionsType)，则使用分配律计算最终的结果。
 分配律是指，将联合类型的联合项拆成单项，分别代入条件类型，然后将每个单项代入得到的结果再联合起来，得到最终的判断结果
 
     type A3 = P<'x'> | P<'y'>
+
+### extends unit type to string|number|symbol
+用extends 实现类型分配，否则ts 无法推断泛型`K=typeof T`类型：`Type 'K' is not assignable to type 'string | number | symbol'`
+
+1. `K=keyof T` may be typeof **unit type**: such as 'name'|'age'
+1. use extends to extend K to be assignable type: `string|number|symbol` (扩展类型|扩展子集)
+
+e.g.
+
+    type Pick<T, K extends keyof T> = {
+        [P in K]: T[P]
+    }
 
 ### never
 never 属于集合，`空子集`属于`所有父集`
@@ -80,6 +136,8 @@ never 是所有类型的子类型(子集)
     type A1 = never extends 'x' ? string : number; // string
     // any 是所有类型的联合体
     type A2 = A1 extends any ? string : number; // string
+    type A3 = string[] extends any[] ? string : number; // string
+    type A4 = string[] extends never[] ? string : number; // number
 
 由于never被认为是空的联合类型：结果被认为是never, 而不是string
 
@@ -107,6 +165,7 @@ Note: 数组整体是一个类型
     type A2  = [never] extends 'x' ? string : number; // number
 
 # extends 应用
+
 ## Exclude
 例子：
 

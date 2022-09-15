@@ -4,6 +4,7 @@ date: 2019-11-04
 private: 
 ---
 # TS type
+
 ts 分 原始数据类型（Primitive data types）和对象类型（Object types）。
 # 原始数据类型（Primitive data types）
 原始数据类型包括：布尔值、数值、字符串、null、undefined 以及 ES6 中的新类型 Symbol。
@@ -73,7 +74,7 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
     import * as X from 'rc-picker/lib/interface.d';
     type DatePickerTypes = X.RangeValue<moment.Moment>;
 
-## 联合类型 Union Types
+## Unions Type 联合类型(like enum)
 
     let age: string | number;
     if(ag instanceof string) {
@@ -82,13 +83,15 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
 ### 常量联合类型
     type t1= 'number' | 'float' | 'int' | 'ordinal' | 'time';
+    type Status = 0 | 1 | 2
 
 使用：
 
     var name:t1 = 'ordinal' as ('number' | 'float' | 'int' | 'ordinal' | 'time')
+    let status:Status = 0
 
 
-## 合并类型 intersections types
+## intersections types, 合并类型 
     type Animal = {
         name: string
     }
@@ -102,6 +105,14 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
     interface MergeType extends Animal, ICoords {} 
 
+    // it is string, but has property named __compileTimeOnly
+    type FString = string & { __compileTimeOnly: any };
+
+## Unit types and const type
+Unit types are subtypes of primitive types that contain exactly one primitive value.
+
+    type X = 'a'|'b'
+    type X = "a" as const;
 
 ## interface vs type
 interface 可以叠加
@@ -129,7 +140,7 @@ interface 可以叠加
 
     // Error: Duplicate identifier 'Window'.
 
-## 类型预测
+## is类型预测(以及extends 类型判断)
 https://stackoverflow.com/questions/40081332/what-does-the-is-keyword-do-in-typescript
 The compiler will think that foo is string in the below-guarded block
 
@@ -143,17 +154,42 @@ The compiler will think that foo is string in the below-guarded block
             console.log(foo.length); // string function
         }
     }
+## readonly
+readonly property
 
-# 对象类型（Object types）。
-    Array<string> or string[]
-    enum Choose { Wife = 1, Mother = 2} // 选择 妻子 还是 妈妈
+    interface Rx {
+        readonly x: number;
+    }
+    let rx: Rx = { x: 1 };
+    rx.x = 12; // error
 
-## 对象类型
+readonly object or as const
+
+    interface X {
+        x: number;
+    }
+    let rx: Readonly<X> = { x: 1 };
+    let rx = { x: 1 } as const
+    rx.x = 12; // error
+
+readonly array
+
+    let a: ReadonlyArray<number> = [1, 2, 3];
+    let b: readonly number[] = [1, 2, 3];
+    a.push(102); // error
+    b[0] = 101; // error
+
+# 对象类型
+## interface对象
     type LayerName = 'data_marker' | 'quality_marker';
 
     export interface State {
         [key in LayerName]?: boolean
     }
+
+## Structural typing, struct类型
+    let o = { x: "hi", extra: 1 }; // ok
+    let o2: { x: string } = o; // ok
 
 ## 数组类型
 
@@ -163,10 +199,8 @@ The compiler will think that foo is string in the below-guarded block
 
 ### 数组泛型（Array Generic） 
 
+    Array<string> or string[]
     let fibonacci: Array<number> = [1, 1, 2, 3, 5];
-
-???
-
     let fibonacci: Array<number|string> = ['1', 1, 2, 3, 5];
 
 ### 接口数组
@@ -239,10 +273,7 @@ The compiler will think that foo is string in the below-guarded block
 ## 枚举enum
 不同于string/number、元组/interface 类型，`enum会被编译进js`
 
-### type mock enum
-
-    type Status = 0 | 1 | 2
-    let status:Status = 0
+    enum Choose { Wife = 1, Mother = 2} // 选择 妻子 还是 妈妈
 
 ### 自增枚举enum
 枚举使用 enum 关键字来定义：
@@ -409,3 +440,7 @@ TypeScript 核心库的定义文件中定义了所有浏览器环境需要用到
 Node.js 不是内置对象的一部分，如果想用 TypeScript 写 Node.js，则需要引入第三方声明文件：
 
     npm install @types/node 
+
+# Reference
+1. https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#unions
+2. https://github.com/type-challenges/type-challenges

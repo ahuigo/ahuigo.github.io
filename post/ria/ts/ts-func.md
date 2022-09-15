@@ -107,6 +107,8 @@ Note: 这和对象不一样
     }
 
 ## 重载
+> a type with multiple call signatures (such as the type of an overloaded function)
+
 为了能够精确的表达，输入为数字的时候，输出也应该为数字，输入为字符串的时候，输出也应该为字符串。
 
 我们可以使用重载定义多个 reverse 的函数类型：
