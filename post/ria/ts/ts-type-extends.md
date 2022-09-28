@@ -42,9 +42,11 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
     type X3 = boolean extends number ? 'number' : 'string' // 'string'
 
 ### 泛型判断
+访问泛型属性前，应该加条件约束
 
     // bad
     type MessageOf<T> = T["message"];// Type '"message"' cannot be used to index type 'T'.
+
     // ok
     type MessageOf<T extends { message: unknown }> = T["message"];
     type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
@@ -102,16 +104,20 @@ infer 推断Return
     type A3 = ['x'] extends ['x', 'y'] ? true : false; // false
     type A4 = ['x', 'y'] extends ['x'] ? true : false; // false
 
-### 子集约束(泛型T,分配律)
-如果泛型T是联合类型，则采用分配律， 泛型在extends 中会被展开：
+### 子集约束(泛型T:分配律, Distributive Conditional Types)
+When conditional types act on a generic type, they become distributive when given a union type. For example, take the following:
+https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributive-conditional-types
+
+    type ToArray<T> = T extends any ? T[] : never;
+
+如果泛型T是联合类型(UnionType)，则采用分配律， 泛型在extends 中会被展开：
 
     type P<T> = T extends 'x' ? string : number;
     type A3 = P<'x' | 'y'> // string|number;
 
-因为：如果extends前面的参数是一个泛型类型，当传入该参数的是联合类型(UnionsType)，则使用分配律计算最终的结果。
-分配律是指，将联合类型的联合项拆成单项，分别代入条件类型，然后将每个单项代入得到的结果再联合起来，得到最终的判断结果
+如果是`extends T`呢？则不是 Distributive Conditional Types
 
-    type A3 = P<'x'> | P<'y'>
+    type BeLong<T> = string extends T ? {x:1,y:1} : {y:1, z:1};
 
 ### extends unit type to string|number|symbol
 用extends 实现类型分配，否则ts 无法推断泛型`K=typeof T`类型：`Type 'K' is not assignable to type 'string | number | symbol'`
@@ -288,7 +294,7 @@ example:
     // type of item1 is `{name: string}`
     type item2 = ArrayElementType<{ name: string }>;
 
-## Return type
+## Return infer type
 
     type FunctionReturnType<T> = T extends (...args: any) => infer R ? R : T;
     type FunctionReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : T;

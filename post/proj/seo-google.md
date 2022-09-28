@@ -18,3 +18,12 @@ Check `Page resources`:
     Other error
     Script
     https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.min.js
+
+# 推广项目
+## 准备
+推荐 carbon.now.sh（https://carbon.now.sh/）和 snappify.io（https://carbon.now.sh/），gist（https://gist.github.com/）提供可粘贴的代码片段
+
+## 在哪推广项目？
+1. twitter 发介绍
+2. Reddit r/deno 之类的节点
+3. Hacker News 的Show HN

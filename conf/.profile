@@ -36,7 +36,7 @@ alias gpass='openssl rand -base64 10'
 alias cp='cp -i'
 alias svnst='svn st'
 alias l='ls -lah'
-alias code1='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+alias code1=~/'Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 
 # python
 export PATH=/opt/homebrew/opt/python@3.10/bin:$PATH
@@ -238,3 +238,6 @@ export PATH="$PATH:$(yarn global bin)"
 [ -f ~/.private ] && source ~/.private
 [ -f ~/.local.rc ] && source ~/.local.rc
 
+# pnpm
+export PNPM_HOME=~/Library/pnpm
+export PATH="$PNPM_HOME:$PATH"

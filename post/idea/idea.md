@@ -20,7 +20,7 @@ deno 生态: https://dev.to/aralroca/from-node-to-deno-5gpn#electron
 - pkg manager
     - https://github.com/crewdevio/Trex
 - electron
-    - webview_deno
+    - webview_deno or tauri
 - ui library
     1. migrate https://github.com/react-component/field-form to deno(antd)
         1. https://github.com/ahuigo/react-component.github.io
@@ -46,6 +46,8 @@ deno 生态: https://dev.to/aralroca/from-node-to-deno-5gpn#electron
   2. fresh
   3. AdonisJS
 - medium 课程
+    - mac-tool
+        - readline
 
 serverless:
 1. expose web:

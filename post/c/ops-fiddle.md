@@ -12,6 +12,10 @@ title: 各种语言的fiddle
     http://tinkerbin.com/# 实时运行
     http://codepen.io/ 实时, 支持embed 嵌入
     http://rendur.com/# 超级轻量级, 不支持分享
+    2. react: sandbox
+    3. ts: http://www.typescriptlang.org/play/
+2. sql: 
+    1. pg:
 
 2. clang:
    1. https://www.jdoodle.com/c-online-compiler

@@ -9,6 +9,37 @@ private:
         return x + y;
     }
 
+## default arguments type
+
+    export function usePromise<T, K extends keyof T | undefined = undefined>(
+      factory: () => Promise<T>,
+      options: Options<K extends keyof T ? T[K] : T> = {},
+      filterKey?: K,
+    ): [K extends keyof T ? T[K] : T, boolean] {
+      type R = K extends keyof T ? T[K] : T;
+      const [state, setState] = useState<R>(
+        options.initValue!,
+      );
+    
+      const isLoadingRef = useRef(false);
+      useEffect(() => {
+        factory().then((r) => {
+          if (filterKey) {
+            // deno-lint-ignore no-explicit-any
+            setState((r as any)[filterKey] as unknown as R);
+          } else {
+            setState(r as unknown as R);
+          }
+        }).catch((res) => {
+          if (options.onError) options.onError(res);
+          else throw res;
+        });
+      }, []);
+      return [state, isLoadingRef.current] as [R, boolean];
+    }
+
+
+
 ## 函数表达式
 对函数表达式（Function Expression）的定义
 

@@ -106,10 +106,10 @@ NGX_HTTP_INTERNAL_SERVER_ERROR
     curl localhost:8070/index.php -I
     HTTP/1.1 500 Internal Server Error
 
-### 501
-NGX_HTTP_NOT_IMPLEMENTED
-
+### 501 Not Implemented
 比如：nginx的transfer-encoding现在只支持chunked,如果客户端随意设置这个值,会报501
+
+`NGX_HTTP_NOT_IMPLEMENTED`
  
     curl localhost:8070  -H 'Transfer-Encoding:1'
 
@@ -118,9 +118,10 @@ NGX_HTTP_BAD_GATEWAY
 
     1.nginx not running
     2.指向一个未监听的ip/port
-        fastcgi_pass 127.0.0.1:2300;
-    3.服务没有开：如fpm/golang/nodejs没有开
-    3.服务因为timeout主动关闭了连接：如fpm/golang/nodejs 超时后主动关闭了连接
+        proxy_pass 127.0.0.1:2300;
+    3.服务没有开：如golang/nodejs/python/java没有开
+    3.服务因为timeout 主动关闭了连接
+    4.服务panic/exception 后主动关闭了连接
 
 case:
 1. golang 502 https://studygolang.com/articles/30217

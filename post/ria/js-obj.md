@@ -158,17 +158,7 @@ property list
     obj.__proto__
 
 ### for in prop
-
-obj.hasOwnProperty('attr') # 不是继承proto的
-
-in, `for in` 可以判断ownProp 以及继承的props
-
-    > oo={}
-    > oo.__proto__= {a:1}
-    > 'a' in oo
-    true
-
-Object.keys(obj) ownprop
+obj.hasOwnProperty('attr'), Object.keys(obj) 都只有ownprop
 
      static ObjectFlip(obj) {
         const ret = {};
@@ -177,6 +167,13 @@ Object.keys(obj) ownprop
         });
         return ret;
     }
+
+in, `for in` 可以判断ownProp 以及继承的props
+
+    > oo={}
+    > oo.__proto__= {a:1}
+    > 'a' in oo
+    true
 
 ## value
 
@@ -266,7 +263,8 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
         //obj.f1() === obj.__proto__.f1()
         __proto__: {f1(){return 'parent call1'}}, 
 
-        // duplicate __proto__ properties.
+        // duplicate __proto__ properties is not allowed
+        // 这个动态属性['__proto__'] 会阻止后续__proto__继承, 它是普通属性
         // 1. does not set prototype: obj.f2 === undefined 
         // 2. obj.__proto__.f2() works
         ['__proto__']: {f2(){return 'parent call2'}}, //
@@ -279,7 +277,11 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 
 ## 对象实例的原型
 
-    > new A().constructor===A
+    function A(){}
+
+    > A.prototype.constructor === A
+        true
+    > new A().constructor===A.prototype.constructor
         true
     > new A().__proto__===A.prototype
         true
@@ -365,6 +367,7 @@ new func() 相当于: `{attrs:vals,__proto__:func.prototype}`
 
 class 定义的方法是不可keys 枚举定义值（除了assign值）, 不过可以用getOwnPropertyNames
 
+    // 等于：Point.prototype = { constructor() {},  func1() {}, };
     class Point {
         constructor(){ }
         func1(){}
@@ -419,7 +422,7 @@ https://es6.ruanyifeng.com/#docs/class-extends#super-%E5%85%B3%E9%94%AE%E5%AD%97
     class B extends A {
       constructor() {
         super();
-        console.log(super.p()); // 2
+        console.log(super.p()); // 2 相当于A.prototype.p()
       }
     }
 
@@ -495,6 +498,11 @@ constructor方法默认返回实例对象（即this），完全可以指定返�
             console.log('setter: '+value);
         }
     }
+    "get" in new MyClass()  // false
+    "prop" in new MyClass()  // true
+    Object.hasOwnProperty(new MyClass, "prop"); //false
+
+
     var descriptor = Object.getOwnPropertyDescriptor( MyClass.prototype, "prop");
 
     "get" in descriptor  // true

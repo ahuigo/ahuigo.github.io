@@ -12,6 +12,11 @@ chrome://net-internals/#dns
 - spdy
 chrome://net-internals/#spdy
 
+## clear ssl
+Go to chrome://net-internals/#hsts. Enter example.com under Delete domain security policies and press the Delete button.
+
+Now go to chrome://settings/clearBrowserData, tick the box Cached images and files and press click the button Clear data.
+
 ## shortcuts
 建议使用vimium
 

@@ -11,7 +11,7 @@ title: js copy to clipboard
 主要有几种方法：
 1. textarea + select + execCommand('copy')
 1. range + select + execCommand('copy')
-2. navigator.clipboard.writeText // 草案
+2. navigator.clipboard.writeText('text') // 草案
 
 ## execCommand('copy')
 先选中，再执行copy

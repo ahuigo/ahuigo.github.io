@@ -112,7 +112,10 @@ package 定义局部命名空间, 是用于路径查找的：
     $ go run main.go
     main.go:3:8: found packages godemo1 (fault1.go) and godemo2 (fault2.go) in
 
-### indirect 间隔引入(transparent dependency)
+### 为什么有了Go module后“依赖地狱”问题依然存在
+https://tonybai.com/2022/03/12/dependency-hell-in-go/
+
+### indirect 间隔引入(transparent dependency, grandson package)
 > https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
 项目中依赖A, A依赖A1、A1依赖A2@v1.0.0, 则A2是间接引入. 
 
