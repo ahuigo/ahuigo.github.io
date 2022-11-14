@@ -1,10 +1,7 @@
 import * as toclib from './toc.js';
 import styles from "/assets/main.css" assert { type: "css" };
-//debug_ahui
-// import "https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.10/vue.min.js";
-// import "https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.6.5/vue-router.min.js";
-import "/assets/vue.min.js";
-import "/assets/vue-router.min.js";
+import "https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.10/vue.min.js";
+import "https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.6.5/vue-router.min.js";
 document.adoptedStyleSheets = [...document.adoptedStyleSheets, styles];
 window.$ = document.querySelector.bind(document);
 window.$$ = document.querySelectorAll.bind(document);
@@ -36,8 +33,8 @@ function disqus_reset() {
       reload: true,
       config: function () {
         this.page.url = window.location.href.split('#')[0];
-        // const p = (new URL(location.href).searchParams?.get('p') || '').slice(2);
-        this.page.identifier = window.location.pathname
+        const p = (new URL(location.href).searchParams?.get('p') || '').slice(2);
+        this.page.identifier = p ? p : window.location.pathname
         this.page.title = document.title;
       }
     });
@@ -64,8 +61,7 @@ marked.setOptions({
   gfm: true,
   breaks: true,
   sanitize: false,
-  // debug_ahui
-  // latexRender: katex.renderToString.bind(katex),
+  latexRender: katex.renderToString.bind(katex),
 });
 
 const mdConponent = {
@@ -133,33 +129,24 @@ const mdConponent = {
   },
   watch: {
     $route(to, from) {
-      console.log("watch.$route", { toQuery: to });
+      console.log("watch.$route", { to: to.query.p });
         this.fetchMd();
     }
   },
   methods: {
     fetchMd() {
-      const routeUriMap = {
-        '/': `/index.md`,
-        '/readme': '/README.md',
+      let uriPath = this.$route.query.p;
+      if (!uriPath) {
+        uriPath = 'f~index';
       }
+      console.log({ u: this.$route, uriPath: uriPath })
       let filePromise;
-      let uriPath = this.$route.path;
-      // console.log({ u: this.$route, uriPath: uriPath })
-
-      const seo_content = $('#seo-content').innerText;
-      if (seo_content) {
-        filePromise = new Promise(r => r(new Response(seo_content)));
-        $('#seo-content').innerText = '';
-      } else if (routeUriMap[uriPath]) {
-        const filepath = routeUriMap[uriPath];
+      if (uriPath.startsWith('f~')) {
+        const filepath = '/' + uriPath.slice(2).replaceAll('~', '/') + '.md';
         filePromise = fetch(filepath);
-      } else if (uriPath.startsWith('/b/')) {
-        const filepath = '/post/' + uriPath.slice(3) + '.md';
-        filePromise = fetch(filepath);
-      // } else if (uriPath.startsWith('d~')) {
-        // const dirpath = uriPath.slice(2).replaceAll('~', '/');
-        // filePromise = fetchDirectoryAsMarkdown(dirpath);
+      } else if (uriPath.startsWith('d~')) {
+        const dirpath = uriPath.slice(2).replaceAll('~', '/');
+        filePromise = fetchDirectoryAsMarkdown(dirpath);
       } else {
         filePromise = new Promise(r => r(new Response(`# 404\n${uriPath} not found`)));
       }
@@ -216,8 +203,13 @@ const mdConponent = {
           if (url.hash == location.hash) {
             event.preventDefault();
           }
-          if (url.pathname != window.location.pathname) {
-            this.$router.push(url.pathname);
+          if (url.pathname.startsWith('/b/')) {
+            url.search = 'p=f~post~' + url.pathname.slice(3).replaceAll('/', '~');
+          }
+          if (url.search != window.location.search) {
+            // const path = url.searchParams.get('p') || '';
+            console.log(url.search);
+            this.$router.push(url.search);
           }
         }
       });
