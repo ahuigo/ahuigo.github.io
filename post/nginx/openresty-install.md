@@ -3,7 +3,9 @@ title: openresty install
 date: 2020-05-19
 private: true
 ---
+
 # brew 安装
+
     brew tap openresty/brew
     brew untap homebrew/nginx
 
@@ -14,6 +16,9 @@ start:
 
     brew services start openresty/brew/openresty
     brew services start openresty/brew/openresty-debug
+
+    # start with conf
+    openresty -c ./nginx.conf
 
 stop:
 
@@ -27,18 +32,22 @@ conf:
     /usr/local/etc/openresty/nginx.conf
 
 ## mac boot
+
     brew services
     $ cat ~/Library/LaunchAgents/homebrew.mxcl.openresty-debug.plist
     /opt/homebrew/opt/openresty-debug/bin/openresty -g 'daemon off;'
     /opt/homebrew/opt/openresty-debug/bin/openresty -h
 
 # 源码安装
+
 ## 预编译
+
 安装到：/usr/local/opt/openresty
 
     ./configure --prefix=/usr/local/opt/openresty --with-http_iconv_module  --with-http_postgres_module --with-debug
 
 如果openssl 找不到，两种方法
+
 1. 方法1：下载openssl 源码, 用 `--with-openssl=OPENSSL_SOURCE_DIR`
 2. 方法2： 或者用brew 下载安装openssl 源码
 
@@ -56,6 +65,7 @@ conf:
     $ ./configure --with-openssl=/usr/local/opt/openssl@1.1/
 
 ## 编译-安装
+
 最后：
 
     make && make install

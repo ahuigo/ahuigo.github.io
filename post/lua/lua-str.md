@@ -3,8 +3,11 @@ title: lua str
 date: 2020-05-04
 private: true
 ---
+
 # lua str
+
 ## Define String
+
 不区分single/double quote
 
     print("a\nb")
@@ -22,9 +25,29 @@ private: true
     ]]
     doc = [[ string ]] --空白也是字符
 
+### check empty string
+
+    if str ~= '' then
+        ...
+
+    local function isempty(s)
+      return s == nil or s == ''
+    end
+
+expr:
+
+    == -- Equal to whatever
+    <= -- Less than or equal to
+    >= -- Greater than or equal to
+    < -- Less than
+    > -- Greater Than
+    ~= -- Doesnt equal
+    # -- Length of something
 
 ## str func
+
 ### string length
+
 `#`返回字符串或表的长度。
 
     print(#"str len")
@@ -40,25 +63,28 @@ private: true
     > string.reverse("Lua")
 
 ### pad & repeat
+
 返回字符串string的n个拷贝
 
     string.rep(string, n)
     > string.rep("abcd",2)
     abcdabcd
 
-
 ### format
+
     string.upper(str):
 
     print(string.format("日期格式化 %02d/%02d/%03d", date, month, year))
     print(string.format("%.4f",1/3))
 
 ### split/join
+
 ngx only
 
     local t, err = ngx_re.split(cookie, ";")
 
 # Bytes/char
+
     string.char(arg) 和 string.byte(arg[,int])
 
 char 将整型数字转成字符并连接， byte 转换字符为整数值(可以指定某个字符，默认第一个字符, 不是从0开始)。
@@ -71,10 +97,10 @@ char 将整型数字转成字符并连接， byte 转换字符为整数值(可�
     > string.byte("ABCD")
     65
 
-
 # regex
 
 ## char
+
 在模式匹配中有一些特殊字符，他们有特殊的意义，Lua中的特殊字符如下：
 
     ( ) . % + - * ? [ ^ $
@@ -114,8 +140,10 @@ char 将整型数字转成字符并连接， byte 转换字符为整数值(可�
     %f[set]， 指 边境模式； 这个条目会匹配到一个位于 set 内某个字符之前的一个空串， 且这个位置的前一个字符不属于 set 。 集合 set 的含义如前面所述。 匹配出的那个空串之开始和结束点的计算就看成该处有个字符 '\0' 一样。
 
 ## match/gmatch
+
 ### string.match(str, pattern, init)
-string.match()只寻找源字串str中的第一个配对. 参数init可选, 指定搜寻过程的起点, 默认为1。 
+
+string.match()只寻找源字串str中的第一个配对. 参数init可选, 指定搜寻过程的起点, 默认为1。
 
 如果没有设置捕获标记, 则返回整个配对字符串. 当没有成功的配对时, 返回nil。
 
@@ -132,7 +160,9 @@ group match 会返回多个值
     2, "questions"
 
 ### string.gmatch(str, pattern)
-回一个迭代器函数，每一次调用这个函数，返回一个在字符串 str 找到的下一个符合 pattern 描述的子串。如果参数 pattern 描述的字符串没有找到，迭代函数返回nil。
+
+回一个迭代器函数，每一次调用这个函数，返回一个在字符串 str 找到的下一个符合 pattern 描述的子串。如果参数 pattern
+描述的字符串没有找到，迭代函数返回nil。
 
     > for word in string.gmatch("Hello Lua user", "%a+") do print(word) end
     Hello
@@ -150,10 +180,11 @@ group match 会返回多个值
     7    9
 
 ## gsub 替换
+
     = string.gsub("---aaaa","a","z",1);
     ---zaaa    1
 
-gsub 支持group capture 
+gsub 支持group capture
 
     =string.gsub("ab","(a)(b)","%2:%1");
     b:a     1

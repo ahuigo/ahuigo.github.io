@@ -122,7 +122,7 @@ katex 支持标准的latex，如果想转义数学符号:
 
 mac/linux可以使用以下脚本自动生成 .dir.json (只有修改过的文件才会生成dir.json)
 
-    cp ./tool/gen-postdir.py .git/hooks/pre-commit
+    ln -s ./tool/gen-postdir.py .git/hooks/pre-commit
 
 也可手动生成所有目录的.dir.json
 

@@ -3,6 +3,7 @@ title: js url
 date: 2020-04-28
 private: true
 ---
+
 # js url
 
     url =new URL("/p/2?a=1#hash", "https://ahuigo.github.io/a/");
@@ -18,6 +19,7 @@ private: true
     url.host='localhost'
 
 ## build query
+
     const params = new URLSearchParams('?a=1&b=1')
     const params = new URLSearchParams({
         var1: "value",
@@ -28,9 +30,12 @@ private: true
 
 ## change params
 
-    window.setSearchParam=(params) =>{
+    window.setSearchParam=(params, oriurl=undefined) =>{
         let urlInfo = new URL(window.location.href);
-        let searchParams = new window.URLSearchParams(window.location.search);
+        if(oriurl){
+            urlInfo = (oriurl instanceof URL) ? oriurl: new URL(oriurl);
+        }
+        let searchParams = new window.URLSearchParams(urlInfo.search);
         Object.entries(params).forEach(([key,value])=>{
             if (value === undefined || value === null) {
                 searchParams.delete(key);

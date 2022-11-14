@@ -6,6 +6,7 @@
     <title>AHUIGO的笔记</title>
     <meta name='description' content='ahuigo, note, blog, spa, programming'>
     <meta name="author" content="ahuigo">
+    <script type="text/javascript" src="/assets/ghspa.js"></script>
     <script type="text/javascript">
         const config = {
             // your github's username
@@ -35,8 +36,8 @@
             <a href="#" class="pure-menu-heading pure-menu-link"><strong>AHUIGO'S NOTES</STRONG></a>
             <ul class="pure-menu-list">
                 <li class="pure-menu-item"><a class="is-primary" href="/">🏠 Home</a></li>
-                <li class="pure-menu-item"><a class="is-primary" href="?p=d~post">📂 Archive</a></li>
-                <li class="pure-menu-item"><a class="is-primary" href="/?p=f~readme">📖 Readme</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/b/">📂 Archive</a></li>
+                <li class="pure-menu-item"><a class="is-primary" href="/readme">📖 Readme</a></li>
                 <li class="pure-menu-item"><a class="is-primary" href="//github.com/ahuigo">🐙 Github</a></li>
                 <li class="pure-menu-item"><a class="is-primary" href="/atom.xml">📶 Rss</a></li>
                 <li class="pure-menu-item"><a class="is-primary" href="//ahuigo.github.io/local-jsfiddle/fiddle.html">✏️ Fiddle</a></li>
@@ -93,13 +94,13 @@
     <template id="tree-folder">
         <ul class="pure-menu-list" v-if="show">
             <li class="pure-menu-item" v-for="(file,index) in nodes" :key="file.path">
-                <a v-if="file.type==='dir'" :type="file.type" class="folder" @click="openFolder(file)" :xhref="'?p=d~'+file.path.slice(0).replaceAll('/','~')">{{file.name}}
-                </a>
-                <router-link v-else :type="file.type" class="file" :to="'?p=f~'+file.path.slice(0,-3).replaceAll('/','~')">{{file.name.slice(0,-3)}} </router-link>
+                <a v-if="file.type==='dir'" :type="file.type" class="folder" @click="openFolder(file)">{{file.name}}/</a>
+                <router-link v-else :type="file.type" class="file" :to="'/b/'+file.path.slice(5,-3)">{{file.name.slice(0,-3)}} </router-link>
                 <tree-folder v-if="file.nodes" :show="file.show" :nodes="file.nodes"></tree-folder>
             </li>
         </ul>
     </template>
+    <div id="seo-content"></div>
     <template id="md">
         <div id="content" v-html="marked(md)"></div>
     </template>

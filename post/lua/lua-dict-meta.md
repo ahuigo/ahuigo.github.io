@@ -3,13 +3,21 @@ title: lua metatable
 date: 2020-05-07
 private: true
 ---
+
 # lua metatable
+
 metatable 实现了table 之间的魔法函数
 
     setmetatable(table,metatable): 对指定 table 设置元表(metatable)，如果元表(metatable)中存在 __metatable 键值，setmetatable 会失败。
     getmetatable(table): 返回对象的元表(metatable)。
 
 ## __index
+
+lua从table中查找一个key时, 如果没有key, 就会在`metatable.__index` 对应的table 中找
+
+    t中是否有k，有则返回，无则第2步
+    t是否有metatable，无则返回nil，有则第3步
+    t的metatable中是否有__index方法，无则返回nil，有则查找 __index对应的table或者方法
 
 ### index(类似js的prototype)
 
@@ -18,6 +26,10 @@ metatable 实现了table 之间的魔法函数
     > t.foo
     3
     > t.bar
+    nil
+    > getmetatable(t).__index.foo
+    3
+    > getmetatable(t).foo
     nil
 
 setmetatable 是inplace 的
@@ -42,12 +54,10 @@ setmetatable 是inplace 的
 
 ipairs 是按key 从1开始迭代的, 1这个key不存在，就调用`__index`
 
-    print('loop1')
     for k, v in ipairs(mytable) do
         print('kv1:',k,v)
     end
     // 返回
-    loop1
     myt:	true	1
 
 pairs 是按实际的key 开始迭代的, 不会调用`__index`
@@ -56,8 +66,8 @@ pairs 是按实际的key 开始迭代的, 不会调用`__index`
         print('kv2:',k,v)
     end
     // 返回
-    kv:	k2	v2
-    kv:	key1	value1
+    kv2:	k2	v2
+    kv2:	key1	value1
 
 直接访问不存在的key
 
@@ -66,10 +76,9 @@ pairs 是按实际的key 开始迭代的, 不会调用`__index`
     myt:	true	key2
     value1	metatablevalue
 
-
 ## `__newindex` 元方法
-`__newindex` 元方法用来对表更新，`__index`则用来对表访问 。
 
+`__newindex` 元方法用来对表更新，`__index`则用来对表访问 。
 
     mymetatable = {}
     mytable = setmetatable({key1 = "value1"}, { __newindex = mymetatable }) 
@@ -99,6 +108,7 @@ pairs 是按实际的key 开始迭代的, 不会调用`__index`
     print(mytable.key1,mytable.key2)
 
 ### 操作符
+
     __add	对应的运算符 '+'.
     __sub	对应的运算符 '-'.
     __mul	对应的运算符 '*'.
@@ -130,6 +140,7 @@ pairs 是按实际的key 开始迭代的, 不会调用`__index`
     end
 
 ## call 元方法
+
 `__call` 元方法在 Lua 调用一个值时调用。
 
     -- 定义元方法__call
@@ -150,6 +161,7 @@ pairs 是按实际的key 开始迭代的, 不会调用`__index`
     //以上实例执行输出结果为： 70
 
 ## `__tostring` 元方法
+
     mytable = setmetatable({ 10, 20, 30 }, {
         __tostring = function(mytable)
             return "表所有元素的个数为 " .. #mytable

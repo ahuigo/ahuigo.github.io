@@ -12,6 +12,8 @@ function! edit#run()
         !bash %
     elseif ext == 'js'
         !deno run %
+    elseif ext == 'lua'
+        !lua %
     elseif ext == 'ts'
         let filepath = expand('%')
         if filepath =~ '_test.ts$'

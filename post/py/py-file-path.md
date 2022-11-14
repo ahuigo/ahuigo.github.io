@@ -115,6 +115,10 @@ Please use `Path.resolve()`:
     Path('a.txt').__str__()
 
 ### relative_to
+    >>> a=Path('/a/b/c/d/e.md')
+    >>> a.relative_to(Path('/a/b'))
+    >>> a.relative_to('/a/b')
+    PosixPath('c/d/e.md')
 
     >>> p = PurePosixPath('/etc/passwd')
     >>> p.relative_to('/')
@@ -163,7 +167,13 @@ Please use `Path.resolve()`:
     Path.mkdir(mode=0o777, parents=False, exist_ok=False)¶
 
 ### .rename(new_path)
-for r in Path('.').glob('devops-*.md'): r.rename(str(r).replace('devops-', 'ops-'))
+    for r in Path('.').glob('devops-*.md'): 
+        r.rename(str(r).replace('devops-', 'ops-'))
+
+### replace: move dir
+
+    a= Path('/a/b/c/d.md')
+    a.replace('e/d2.md') # move to e/d2.md
 
 ### .unlink()
 remove file or directory

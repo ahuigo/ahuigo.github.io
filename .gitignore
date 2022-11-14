@@ -1,13 +1,13 @@
+/a.go
+go.mod
 # blog b
 /b
 *.tmp
 *.log
 .idea
 todo
-/a.go
 #godemo/?.go
 *.out
-go.mod
 tmp
 pri
 Gemfile.lock
@@ -21,10 +21,6 @@ __pycache__
 # node
 package-lock.json
 node_modules
-
-# em
-#/img/em
-#/img/mo
 
 # blog
 no-commit
@@ -45,3 +41,6 @@ go.sum
 
 /conf/nginx/resty.test.conf
 /tpl
+# debug
+/assets/vue-router.min.js
+/assets/vue.min.js

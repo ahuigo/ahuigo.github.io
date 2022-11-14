@@ -24,7 +24,7 @@ python 也向typescript 学习 也自己加类型系统了。本文对此做个�
 
 类型别名可用于简化复杂类型签名。例如:
 
-    from typing import Dict, Tuple, Sequence
+    from typing import Dict, Tuple, Sequence, Set
 
     ConnectionOptions = Dict[str, str]
     Address = Tuple[str, int]
@@ -84,8 +84,11 @@ python 也向typescript 学习 也自己加类型系统了。本文对此做个�
     def first(l: Sequence[T]) -> T:   # Generic function
         return l[0]
 
+### Set
+    from typing import Dict, Tuple, Sequence, Set
+    Set[str]
 
-## 用户定义的泛型类型
+### 用户定义的泛型类型
 用户定义的类可以定义为泛型类。
 
     from typing import TypeVar, Generic

@@ -3,8 +3,11 @@ title: TS function
 date: 2019-11-04
 private: 
 ---
+
 # 函数定义
+
 ## 函数声明式
+
     function sum(x: number, y: number): number {
         return x + y;
     }
@@ -20,7 +23,7 @@ private:
       const [state, setState] = useState<R>(
         options.initValue!,
       );
-    
+
       const isLoadingRef = useRef(false);
       useEffect(() => {
         factory().then((r) => {
@@ -38,13 +41,13 @@ private:
       return [state, isLoadingRef.current] as [R, boolean];
     }
 
-
-
 ## 函数表达式
+
 对函数表达式（Function Expression）的定义
 
     let mySum = function (x: number, y: number): number {
     return x + y;
+
 };
 
 上面函数是类型推论而推断出来的。手动给函数类型如：
@@ -54,11 +57,13 @@ private:
     };
 
 # 用接口定义函数的形状
+
 我们也可以使用接口的方式来定义一个函数需要符合的形状：
 
     interface SearchFunc {
         (source: string, subString: string): boolean;
     }
+
     // same as: 
 
     type SearchFunc = (source: string, subString: string)=> boolean;
@@ -76,6 +81,7 @@ Note: 这和对象不一样
     type say = Obj['say']
 
 ## 可选参数
+
 与接口中的可选属性类似，我们用 ? 表示可选的参数：
 
     function buildName(firstName: string, lastName?: string) {
@@ -91,6 +97,7 @@ Note: 这和对象不一样
 需要注意的是，可选参数必须接在必需参数后面。
 
 ## 参数默认值
+
 默认参数就不受「可选参数必须接在必需参数后面」的限制了：
 
     function buildName(firstName: string = 'Tom', lastName: string) {
@@ -100,6 +107,7 @@ Note: 这和对象不一样
     let cat = buildName(undefined, 'Cat');
 
 ## 剩余参数
+
 用 ...rest 的方式获取函数中的剩余参数
 
     function push(array: any[], ...items: any[]) {
@@ -112,6 +120,7 @@ Note: 这和对象不一样
     push(a, 1, 2, 3);
 
 ## 析构参数destruct arguments
+
     function buildName({lastName=''}:{lastName:string}={lastName:''}):string {
         return  ' ' + lastName;
     }
@@ -138,7 +147,9 @@ Note: 这和对象不一样
     }
 
 ## 重载
-> a type with multiple call signatures (such as the type of an overloaded function)
+
+> a type with multiple call signatures (such as the type of an overloaded
+> function)
 
 为了能够精确的表达，输入为数字的时候，输出也应该为数字，输入为字符串的时候，输出也应该为字符串。
 

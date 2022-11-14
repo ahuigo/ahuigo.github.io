@@ -3,6 +3,7 @@ title: antd tabel
 date: 2020-05-26
 private: true
 ---
+
 # antd table
 
 # pagination
@@ -38,22 +39,33 @@ private: true
         // forceUpdate();
     }}
 
+## footer
+
+    -- <Table pagination={{ size: "small" }}/>
+    <Table 
+      columns={columns}
+      data={data}
+      footer={() => 
+        <TableFooter />
+      }
+
 ## no pagination
-    pagination={false} 
+
+    pagination={false}
 
 ## row key
+
     rowKey={(row: any, i) => `key${i}`}
 
 ## 宽度自适应
 
-      <Table
-        bordered
-        // scroll={{ y: 1000 }}
-        scroll={{ x: 'max-content' }}
-        ...
+    <Table
+      bordered
+      // scroll={{ y: 1000 }}
+      scroll={{ x: 'max-content' }}
+      ...
 
 同时column 设置宽度
-
 
     {
       title: '资源',

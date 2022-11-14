@@ -199,6 +199,19 @@ option produces a more verbose description:
 
     command -v ls
 
+## xargs with functions
+
+    echo_var(){
+        echo $1
+        return 0
+    }
+    export -f echo_var
+    seq -f "n%04g" 1 100 | xargs -n 1 -P 10 -I {} bash -c 'echo_var "$@"' _ {}
+
+You can use the builtin printf instead of the external seq:
+
+    printf "n%04g\n" {1..100} | xargs -n 1 -P 10 -I {} bash -c 'echo_var "$@"' _ {}
+
 # condition expression
 
 ## multiple conditions

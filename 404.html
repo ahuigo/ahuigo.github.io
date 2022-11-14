@@ -1,8 +1,31 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>404</title>
+    <script type="text/javascript" src="/assets/ghspa.js"></script> 
+</head>
 <body>
-    <script type="module">
-        location.href = '/?p=f~post~'+location.pathname.slice(3).replaceAll('/','~')
-    </script>
+    <!-- <script type="module">
+        function hasUrl(path){
+            return fetch(path).then((res)=>res.status<400)
+        }
+        function loadJs(src){
+            var s = document.createElement('script');
+            s.src = src;
+            s.onload = function() {
+                this.remove();
+            };
+            (document.head || document.documentElement).appendChild(s);
+        }
+        const repoName = location.pathname.split('/')[1] 
+        if(repoName){
+            const isExisted=await hasUrl('/ghspa.js')
+            if(isExisted){
+                loadJs('/ghspa.js')
+            }else{
+                loadJs(`/${repoName}/ghspa.js`)
+            }
+        }
+    </script> -->
 </body>
 </html>

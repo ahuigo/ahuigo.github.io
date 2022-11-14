@@ -38,7 +38,7 @@ private: true
 
     <Select defaultValue={86400} >
 
-## OnFieldsChange 写值
+### OnFieldsChange 写值
 
 Store Form Data into Upper Component
 
@@ -63,8 +63,7 @@ Store Form Data into Upper Component
       </Form.Item>
     </Form>
 
-## 手动更新field
-
+## 更新field
 用 setFieldsValue
 
     <input 
@@ -139,6 +138,13 @@ Store Form Data into Upper Component
         label="密码" name="password" 
         rules={[{ required: true, message: 'input password !', type:'string' }]}
     >
+
+## 复合数据结构
+
+    // data = {props: {title: "news1"}[] }
+    <Form.Item name={['props', 0, 'title']}>
+        <Input placeholder="请输入规格名称" />
+    </Form.Item>
 
 # select
 
@@ -215,6 +221,7 @@ filter key and value "children"
         <label for="female">女</label>
         </p>
     </fieldset>
+
 
 # layout
 

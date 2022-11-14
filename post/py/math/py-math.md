@@ -41,7 +41,8 @@ priority:
     >>> x = float('nan')
     >>> math.isnan(x)
     True
-## floor
+
+## floor/ceil/round
 
     import math
     math.ceil(x)

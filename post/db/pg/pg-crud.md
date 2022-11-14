@@ -208,6 +208,29 @@ faster.
 
     SELECT cname, MAX(avg)  FROM makerar GROUP BY cname;
 
+#### count number of group
+    SELECT COUNT(*) AS total_group
+    FROM
+    ( SELECT 1
+        FROM images 
+        GROUP BY group_id
+    ) AS t ;
+
+或者利用over 聚合
+
+    WITH images(group_id, uid)
+        AS (SELECT 1,1 UNION ALL
+            SELECT 1,2 UNION ALL
+            SELECT 1,3 UNION ALL
+            SELECT 2,21)
+    SELECT COUNT(*) OVER() AS total_group
+    FROM images 
+    GROUP BY group_id
+    LIMIT 1 ;
+
+解释：over中没有带参数，会将group list 看成单个大分区。count则会统计分区内的group 总数
+
+
 #### group by expression
 
 group by hour
@@ -259,6 +282,7 @@ Supported by any database: 利用 group + column=max(column)
 #### partition(top N)
 
 ##### partition with ROW_NUMBER()
+> 结合OVER 分组聚合运算符
 
 partition top 1:
 
@@ -278,7 +302,7 @@ PARTITION BY when multiple columns:
 
     WITH summary AS (
         SELECT *, ROW_NUMBER() 
-            OVER( PARTITION BY workflow_uuid,task_name ORDER BY p.id DESC ) AS rk
+            OVER(PARTITION BY workflow_uuid,task_name ORDER BY p.id DESC ) AS rk
         FROM task_checks p)
     SELECT s.*
     FROM summary s
@@ -293,25 +317,27 @@ https://stackoverflow.com/questions/7747327/sql-rank-versus-row-number
         AS (SELECT 1,1 UNION ALL
             SELECT 1,1 UNION ALL
             SELECT 1,1 UNION ALL
-            SELECT 1,2)
+            SELECT 2,2 UNION ALL
+            SELECT 1,100)
     SELECT *,
-        RANK() OVER(PARTITION BY StyleID ORDER BY ID)       AS 'RANK',
-        ROW_NUMBER() OVER(PARTITION BY StyleID ORDER BY ID) AS 'ROW_NUMBER',
-        DENSE_RANK() OVER(PARTITION BY StyleID ORDER BY ID) AS 'DENSE_RANK'
-    FROM   T  
+        ROW_NUMBER() OVER(PARTITION BY StyleID ORDER BY ID) AS ROW_NUMBER,
+        RANK() OVER(PARTITION BY StyleID ORDER BY ID)       AS RANK,
+        DENSE_RANK() OVER(PARTITION BY StyleID ORDER BY ID) AS DENSE_RANK
+    FROM   T; 
 
-    StyleID     ID       RANK      ROW_NUMBER      DENSE_RANK
-    ----------- -------- --------- --------------- ----------
-    1           1        1         1               1
-    1           1        1         2               1
-    1           1        1         3               1
-    1           2        4         4               2
+    styleid | id  | row_number | rank | dense_rank 
+    ---------+-----+------------+------+------------
+        1 |   1 |          1 |    1 |          1
+        1 |   1 |          2 |    1 |          1
+        1 |   1 |          3 |    1 |          1
+        1 | 100 |          4 |    4 |          2
+        2 |   2 |          1 |    1 |          1
 
 可以看到:
 
 1. ROW_NUMBER 对分区排序的row是唯一编号的
-1. DENSE_RANK 对分区排序的row，重复的row是会用相同编号
-1. RANK 对分区排序的row，重复的row是会用相同编号，内部编号会自增
+1. DENSE_RANK 对分区排序的row，相等row用相同编号, 不相等的row才自增
+1. RANK 对分区排序的row，相等的row用相同编号, 相等的row用相同编号
 
 ##### delete duplicated row
 
@@ -346,8 +372,8 @@ PostgreSQL won't calculate the sum twice
 
 合并为array
 
-    SELECT uid, ARRAY_AGG (first_name || ' ' || last_name) fullname FROM users; 
     select code, ARRAY_AGG(label) l from t group by code;
+    SELECT family, ARRAY_AGG (first_name || ' ' || last_name) fullname FROM users group by family; 
 
 合并为字符串：
 
@@ -372,20 +398,49 @@ PostgreSQL won't calculate the sum twice
     AS (SELECT 1,1 UNION ALL
         SELECT 1,3 UNION ALL
         SELECT 1,2 UNION ALL
+        SELECT 1,2 UNION ALL
         SELECT 2,1)
-    SELECT distinct uid,age FROM T ;
+    SELECT distinct uid,age FROM T ; -- 类似于 SELECT  uid,age FROM T group by uid,age
     -----
     2 |   1
     1 |   3
     1 |   2
     1 |   1
 
+不能用这个，语法错误：
+
+    # syntax error 
+    SELECT uid,distinct age FROM T ;
 #### count distinct
 
     # bad
     select group,count(*) from (select group, uid from tmp group by group, uid) tmp group by group;
     # better
     select group, count(distinct uid) from tmp group by group;
+
+
+
+#### distinct array
+
+    SELECT ARRAY(SELECT DISTINCT e FROM unnest(ARRAY[a,b,c,d]) AS a(e))
+    FROM ( VALUES
+        ('foo', 'bar', 'foo', 'baz' )
+    ) AS t(a,b,c,d);
+        array
+    ---------------
+    {baz,bar,foo}
+
+with CROSS JOIN LATERAL which is much cleaner,
+
+    SELECT ARRAY(
+        SELECT DISTINCT e
+        FROM ( VALUES
+            ('foo', 'bar', 'foo', 'baz' )
+        ) AS t(a,b,c,d)
+        CROSS JOIN LATERAL unnest(ARRAY[a,b,c,d]) AS a(e)
+        -- ORDER BY e; -- if you want it sorted
+    );
+
 
 #### DISTINCT on
 
@@ -394,7 +449,7 @@ PostgreSQL won't calculate the sum twice
 
 distinct 就是分组，然后按序(order by 取top1)/或随机取一个row
 
-    # 按customer 分组
+    # 按customer 分组, 其它的id, total 只取一个
     SELECT DISTINCT ON (customer)
         id, customer, total
     FROM   purchases
@@ -419,6 +474,10 @@ Or shorter (if not as clear) with ordinal numbers of output columns:
         SELECT 1,2 UNION ALL
         SELECT 2,1)
     SELECT distinct on(uid) uid,age FROM T ;
+     uid | age
+    -----+-----
+    1 |   1
+    2 |   1
 
 按uid 分组，排序取第一个age
 

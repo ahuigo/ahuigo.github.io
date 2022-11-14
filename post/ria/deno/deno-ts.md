@@ -145,6 +145,11 @@ Similar to the triple-slash directive, Deno supports a header for remote modules
     Content-Length: 648
     X-TypeScript-Types: ./coolLib.d.ts
 
+e.g.
+
+    curl -D- -L https://esm.sh/lodash/unescape
+    x-typescript-types: https://esm.sh/v97/@types/lodash@^4/unescape~.d.ts
+
 ## Using global types
 define global types: https://deno.land/manual@v1.25.2/typescript/types#using-ambient-or-global-types 
 
