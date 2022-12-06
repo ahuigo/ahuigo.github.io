@@ -89,7 +89,6 @@ align-items 用来定义`伸缩项目`在`侧轴`的对齐方式
 eg.
 
         align-content: flex-start || flex-end || center || space-between || space-around || stretch;
-
 ## flex项目item 属性
 http://www.ruanyifeng.com/blog/2018/10/flexbox-form.html 参考
 
@@ -117,12 +116,104 @@ http://www.ruanyifeng.com/blog/2018/10/flexbox-form.html 参考
 
 > flex container 会限制item: max-width
 
-### flex: grow shrink basis
+### flex: flex-shrink
 https://codepen.io/ahuigo/pen/VJedwm
 
-1. grow: 如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。默认值是0，不扩容空间
-2. shrink: 如果所有项目的flex-shrink属性默认为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，项目不收缩。
-3. basis: flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的内空本来大小。
+1. flex-grow: 如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。默认值是0，不扩容空间
+
+    ```html
+    <div style="width:400px;display:flex">
+        <div style="width:100px;flex-grow:1">item-a</div>
+        <div style="width:100px;flex-grow:2">item-b</div>
+    </div>
+    item-a, item-b 会根据flex-grow 值，分割剩余的200px(仅当存在剩余空间时)
+        item-a: 100 + 200px*(1/3) = 166.66
+        item-b: 100 + 200px*(2/3) = 233.33
+    ```
+
+2. flex-shrink: 当存在溢出空间、且没有flex-wrap时，会按shrink比例收缩。
+项目的flex-shrink属性默认为1，当空间不足时，都将等比例缩小。
+flex-shrink属性为0，项目不收缩，
+
+    ```html
+    <div style="width:200px;display:flex">
+        <div style="width: 100px;flex-shrink:1">item-a</div>
+        <div style="width:200px;flex-shrink:2">item-b</div>
+    </div>
+        三个flex item元素的width: w1, w2, w3
+        三个flex item元素的flex-shrink：a, b, c
+        计算总压缩权重： sum = a * w1 + b * w2 + c * w3
+        计算每个元素压缩率： S1 = a * w1 / sum，S2 =b * w2 / sum，S3 =c * w3 / sum
+        计算每个元素宽度：width - 压缩率 * 溢出空间, 即 w1 - a*w1/sum
+    item-a, item-b 会根据flex-shrink 值，收缩超出的100px 溢出空间
+        item-a: 
+            压缩率: s1 = 1*100/(1*100+2*200) = 1/5
+            100- 100px*(1/5) = 80
+        item-b: 200- 100px*(4/5) = 120
+    ```
+
+3. flex-basis: shrink/item扩展宽度前，原宽度受以下优先级影响: `max-width/min-width > flex-basis > width > box`
+    ```html
+    <div style="width:500px;display:flex">
+        <div style="width: 100px;flex-basis:150px">item-a</div>
+        <div style="flex-basis:200px; max-width:150px">item-b</div>
+    </div>
+    ```
+
+参考：https://juejin.cn/post/6844904016439148551
+
+# 布局
+## 左右布局
+    <div style="display:flex;flex-direction: row;flex-wrap: nowrap;">
+        <div style="width:20%">left</div>
+        <div style="flex:1;" >right main</div>
+    </div>
+
+right div 可能会超出父div 的width, 此时`flex-shrink:1` 会失效，应该用 `min-width: 0`
+
+```html
+    <div id="root" style="
+       border: 1px solid red;
+       flex-direction: row;
+       display: flex;
+       width:400px;
+       ">
+       <div id="left" style="width: 25%;background: red;flex-shrink: 0;">left</div>
+       <div id="right" style="flex:1;flex-shrink: 1; ">
+          <div id="header" style="line-height: 28px;background:lightpink">
+             <div>header</div>
+          </div>
+          <div id="main">
+             <div id="content" style="
+                background: lightblue;
+                width: 400px;
+                border: 1px solid blue;
+                ">content</div>
+          </div>
+       </div>
+    </div>
+    <div>
+    flex-item 会被子元素撑大，此时我们考虑：
+    1. flex-item 加上`min-width: 0;`, 不需要`flex-shrink:1`
+    参考： https://stackoverflow.com/questions/36230944/prevent-flex-items-from-overflowing-a-container
+    解释：对于flex-item来说，默认的`min-width: auto;`就是会被子div撑大
+    2.  (无用)使用flex-shrink:1 没有作用，因为它不是基于元素内容放缩，而是基于其它flex-items 放缩的
+    参考：https://stackoverflow.com/questions/59553888/flex-items-do-not-overflow
+    https://stackoverflow.com/questions/22429003/how-to-right-align-flex-item
+
+    3. 可以使用overflow:auto, 防止main 被撑大覆盖head，
+```
+
+## 右对齐布局
+    .main { display: flex; }
+    .a, .b, .c { background: #efefef; border: 1px solid #999; }
+    .b { flex: 1; text-align: center; }
+    .c {margin-left: auto;}
+    <div class="main">
+        <div class="a"><a href="#">left</a></div>
+        <div class="b"><a href="#">middle</a></div>
+        <div class="c"><a href="#">right</a></div>
+    </div>
 
 # flex 居中实践
 ## flex center
@@ -133,6 +224,21 @@ http://zh.learnlayout.com/flexbox.html
 	display:flex;
 	align-items: center;
 	justify-content: center;
+
+### gloading
+note：100% 仅在父元素长度指定了才生效(参考css-layout.md parent percent)
+
+    .gloading {
+        top: 49%;
+        left: 49%;
+        position: fixed;
+        width: 2%;
+        height: 2%;
+    }
+    <div class="gloading">
+        <div style="width:100%;height:100%">
+    </div>
+
 
 ### item 纵轴对齐
 align-items - 控制交叉轴（纵轴）上每个 flex 项目的对齐。 
@@ -192,15 +298,6 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
         <div></div>
     </div>
 
-## item 被撑大
-为了防止main 被撑大覆盖head，可以使用overflow:auto
-
-    <div style="display:flex;height:431px">
-        <div class="head" style="min-height:31px"></div>
-        <div className="main" style="flex:1; overflow:auto">
-            <div style="min-height:1000px"></div>
-        </div>
-    </div>
 
 ## flex vs height percent
 flex 能有效传递height percent(前提是指定了`flex:1`)

@@ -78,3 +78,10 @@ xargs默认只用一个进程执行命令。如果命令要执行多次，必须
 --max-procs 0表示不限制进程数。
 
     $ docker ps -q | xargs -n 1 --max-procs 0 docker kill
+
+## call function in xargs
+    function run(){
+        echo run arg0:$0 arg1:$1
+    }
+    export -f fun
+    echo 11 22 | xargs -n1 -I % bash -c 'run "$@"' arg0 %

@@ -270,7 +270,7 @@ replace
     l[slice] = [item]
     l[0:0] = [item]
 
-deque:
+deque: popleft(shift) items.appendleft(unshift)
 
     from collections import deque
     items = deque([1, 2])

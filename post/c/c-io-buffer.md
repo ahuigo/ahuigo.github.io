@@ -103,9 +103,25 @@ the setbuf() function is exactly equivalent to the call:
 其中type 表示缓冲模式，如`_IONBF`表示行缓冲，就是IO not buffer的意思。
 
 # 命令行缓冲
-grep, awk 命令可能是全缓冲的，可以这样改：
+grep, awk 命令可能是全缓冲的，可以这样改成行缓冲行为：
 
     # grep 加 --line-buffered
     # awk 加 system("")
     # 或: stdbuf --output=L awk -F. '{print $1}'
     tail -f access.log |grep --line-buffered '128' | awk '{print $1};system("")' > output.file
+
+stdbuf 手册：
+
+        -i, --input=MODE   adjust standard input stream buffering
+        -o, --output=MODE  adjust standard output stream buffering
+        -e, --error=MODE   adjust standard error stream buffering
+
+    If MODE is 'L' the corresponding stream will be line buffered.
+    This option is invalid with standard input.
+
+    If MODE is '0' the corresponding stream will be unbuffered.
+
+    Otherwise MODE is a number which may be followed by one of the following:
+    KB 1000, K 1024, MB 1000*1000, M 1024*1024, and so on for G, T, P, E, Z, Y.
+    In this case the corresponding stream will be fully buffered with the buffer
+    size set to MODE bytes.
