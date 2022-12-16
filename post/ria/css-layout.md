@@ -266,12 +266,12 @@ flex 内部，s1 与 s2 之间距不是max(s1,s2) 而是s1+s2
             没有positioned 的话，则以: window.innerWidth/innerHeight 为基准
 
 
-### relative/static + height percent
+### relative/static + height parent percent
 When you set a percentage height on an element who's parent elements(包括static/relative).
 严重依赖parent height
 
 Summary
-1. absolute 么有这个毛病: 严格依赖 parent positioned 一定有height
+1. absolute: 严格依赖 parent positioned 一定有height
 2. static/relative: 依赖parent, 以下两种parent 的height 都有效
    1. 依赖parent 的height：`html,body{height:100%}`
    1. 依赖parent 的`flex:1`

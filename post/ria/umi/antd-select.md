@@ -4,9 +4,50 @@ date: 2022-10-26
 private: true
 ---
 
-# antd table
+# select
 
-## show search
+## multiple
+
+    <Select mode="multiple">
+
+## allowClear
+
+    <Select allowClear>
+
+## allow input
+
+    const handleSelectStatus= (newValue: string) => {
+        if (newValue) {
+            options.push({ name: newValue })
+            setOptions(statusDefList.unique())
+        }
+    };
+    <Select 
+    showSearch
+    onSearch={handleSearch}>
+        {options.map((def, i) => {
+            return ( <Option key={i} value={def.name}> {def.name} </Option>);
+        })}
+
+## filter
+
+filter key and value "children"
+
+    <Select
+        showSearch
+        optionFilterProp="children"
+
+        onSearch={onSearch}
+        // 自定义搜索函数
+        filterOption={(input, option) =>  
+            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 
+            || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+    >
+        {person.map(p => <Option value={p.username}>{p.displayName}</Option>)}
+    </Select>
+
+# show search
     <Select
         showSearch
         onSearch={handleSelectStatus}

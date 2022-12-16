@@ -267,7 +267,7 @@ agg 可能为null
 
     select array_agg(phone) is not NULL from t;
 
-array_agg with distinct
+array_agg with distinct(unique)
 
     ahuigo=# SELECT name, array_agg(distinct phone::char) AS ps FROM   stus group by 1;
     ahui     | {3,4,5,NULL}

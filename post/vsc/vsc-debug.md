@@ -44,6 +44,7 @@ VS Code supports adding a "launch" object inside your User settings. This "launc
 
     "args": ["${env:USERNAME}"]
     "cwd": "${workspaceFolder}",
+     "runtimeArgs": [ "run", "-A",]
 
 ### platfrom special properties
 Such as windows/osx/linux properties

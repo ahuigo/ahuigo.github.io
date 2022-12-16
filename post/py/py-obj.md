@@ -25,19 +25,23 @@ class property without assigned
 
 # Class and Object
 
-	class MyStuff(object):
-		name = 'hilo'
-		print(name); # hilo
-
-		def __init__(self):
-			self.tangerine = "And now a thousand years between"
-
-		def apple(self):
-			print "I AM CLASSY APPLES!"
-
-	obj = MyStuff();
-	print(MyStuff.name); # hilo
-	print(obj.name);     # hilo
+    class MyStuff(object):
+        name = 'hilo'
+        age = 1
+        print(name); # hilo
+    
+        def __init__(self):
+            self.tangerine = "And now a thousand years between"
+            self.age =2
+    
+        def apple(self):
+            print("I AM CLASSY APPLES!")
+    
+    obj = MyStuff();
+    print(MyStuff.name); # hilo
+    print(obj.name);     # hilo
+    print(MyStuff.age); # 1
+    print(obj.age);     # 2
 
 ## 单例
 via metaclass/decorator/`__new__`:

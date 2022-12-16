@@ -15,12 +15,11 @@ vegeta 是golang 写的压测工具
 
 header(要加json):
 
-    jq -ncM '{method: "GET", url: "http://m:8099", header: {"Content-Type": ["text/plain"]}}' |
-    vegeta attack -format=json -rate=100 | vegeta encode
+    jq -ncM '{method: "POST", url: "http://m:8099", header: {"Content-Type": ["text/plain"]}}' | vegeta attack -format=json -rate=100 | vegeta report
 
 必须通过base64传body json
 
-    jq -ncM '{method: "GET", url: "http://m:8099", body: {a:{b:[1,2]}} | @base64, header: {"Content-Type": ["application/json"]}}' | vegeta attack -format=json -rate=100 | vegeta encode
+    jq -ncM '{method: "POST", url: "http://m:8099", body: {a:{b:[1,2]}} | @base64, header: {"Content-Type": ["application/json"]}}' | vegeta attack -format=json -rate=100 | vegeta report
 
 以上jq脚本的解释：
 

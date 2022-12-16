@@ -256,7 +256,7 @@ https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-gr
 
     # SELECT FIRST(id), customer, FIRST(total) FROM  purchases GROUP BY customer ORDER BY total DESC;
 
-Supported by any database: 利用 group + column=max(column)
+利用 join: group + `column==max(column)`, Supported by any database: 
 
     SELECT MIN(x.id),  -- change to MAX if you want the highest id
          x.customer, 
@@ -336,8 +336,8 @@ https://stackoverflow.com/questions/7747327/sql-rank-versus-row-number
 可以看到:
 
 1. ROW_NUMBER 对分区排序的row是唯一编号的
-1. DENSE_RANK 对分区排序的row，相等row用相同编号, 不相等的row才自增
-1. RANK 对分区排序的row，相等的row用相同编号, 相等的row用相同编号
+1. RANK 对分区排序的row，相等的row用相同编号, 不相等的row才自增(相等时也会计数)
+1. DENSE_RANK 对分区排序的row，相等row用相同编号, 不相等的row才自增(无计数)
 
 ##### delete duplicated row
 

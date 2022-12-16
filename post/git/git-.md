@@ -102,7 +102,7 @@ auto　save　username and password in `~/.git-credential`
     "unset proxy
     git config [--global] unset https.proxy
 
-socks5、 socks5h(host 解析) proxy
+socks5、 socks5h(host dns解析也走代理) proxy
 
     git config --global http.proxy socks5h://127.0.0.1:1080
     git config --global http.proxy socks5://127.0.0.1:1080
@@ -116,6 +116,16 @@ specify domain:
 with go get （git config 有点问题）:
 
     HTTP_PROXY=socks5://127.0.0.1:1080 go get  github.com/gin-gonic/gin
+
+设置ssh proxy, 利用/usr/bin/nc(https://www.v2ex.com/t/843383)
+
+    $ cat ~/.ssh/config
+    Host github.com
+     Hostname ssh.github.com
+     IdentityFile /xxx/.ssh/github_id_rsa
+     User git
+     Port 443
+     ProxyCommand nc -v -x 127.0.0.1:7890 %h %p
 
 # Repository
 

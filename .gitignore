@@ -44,3 +44,4 @@ go.sum
 # debug
 /assets/vue-router.min.js
 /assets/vue.min.js
+/bak
