@@ -1,4 +1,5 @@
 # AHUIGO 的笔记
+- 2022-12-16 [阳性用药清单](/b/life/medicine-covid-19)
 - 2011-11-11 [tcp/ip 协议](/b/net/net-tcpip)
 - 2014-10-10 [求杨氏矩阵的topK](/b/algorithm/algo-young-tableau-topk)
 - 2018-09-15 [算法复杂度的证明](/b/algorithm/1.time-complex)

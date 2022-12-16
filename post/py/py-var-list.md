@@ -261,7 +261,7 @@ repeat
     list.insert(pos, item)
     list = list[1:]
 
-move item:
+move item: from oldindex to newindex
 
     l.insert(newindex, l.pop(oldindex))
 

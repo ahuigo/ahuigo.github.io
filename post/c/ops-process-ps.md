@@ -41,8 +41,9 @@ ps工具标识进程的5种状态码:
 	-e, -A
 		Select all processes.  Identical to -e.
     a   show other users' processes as well as your own
-	-f     Do full-format listing.
-		-L, the NLWP (number of threads) and LWP (thread ID) columns will be added
+    -f  (linux)Do full-format listing.
+        (mac) Display the uid, pid, parent pid, ....
+		-L, (linux) the NLWP (number of threads) and LWP (thread ID) columns will be added
 	-T Show threads, possibly with SPID column
 	-L Show threads, possibly with LWP and NLWP columns
     -A  Display other users' processes, including those without controlling terminals. 
@@ -52,7 +53,7 @@ ps工具标识进程的5种状态码:
 	-x,x
 		include processes which do not have a controlling terminal.
 	-U userlist
-     Select by real user ID (RUID) or name
+        Select by real user ID (RUID) or name
 	-u userlist
 		Select by effective user ID (EUID) or name
 	u

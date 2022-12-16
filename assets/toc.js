@@ -108,6 +108,7 @@ if(l<1 || toc.l >=l ) return;
 }
 
 export function enableTocScroll(tocEl, contentEl) {
+return;
   if (window.onscroll) {
     return;
   }

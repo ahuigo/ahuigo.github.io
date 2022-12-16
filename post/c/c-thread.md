@@ -121,6 +121,7 @@ http://www.cnitblog.com/tarius.wu/articles/2277.html
 - 其它线程可以调用pthread_join 得到start_routine 的返回值，类似于父进程通过wait 得到子进程的状态。
 - 新创建线程的id 被填写到thread 指向的内存单元。它不像进程id 一样是一个正整数，可以通过getpid 获得当前进程的id. 线程id 的类型是pthread_t, 它只在当前进程中是唯一的，而且它的具体数据类型在不同的系统有不同的实现，可能是一个整数，也可能是一个结构体，也可能是一个地址，所以不能直接通过printf 打印thread, 而应该使用 pthread_self(3) 获取当前线程的id
 
+clib/thread/create-thread.c
 
 	#include <stdio.h>
 	#include <string.h>
