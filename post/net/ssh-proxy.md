@@ -73,9 +73,9 @@ then:
 
 参数说明:
 
-    -M port[:echo_port] # specifies the base monitoring port to use. 用于监听并自动重连
+    -M port[:echo_port] # specifies the base monitoring port to use. 用于监听ssh状态的端口,并自动重连
         echo_port 转认为port+1,
-        if you specify "-M 5000", autossh will send test data on the base monitoring port 2000, and receive it back on the port 5001
+        if you specify "-M 5000", autossh will send test data on the base monitoring port 5000, and receive it back on the port 5001(5000+1)
 
 autossh 自动重连配置参数
 
