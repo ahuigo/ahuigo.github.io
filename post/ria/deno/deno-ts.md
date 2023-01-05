@@ -6,6 +6,11 @@ private: true
 # deno ts 支持
 deno run 自动将ts 通过swc(不是tsc) 编译成js
 
+## config path
+https://deno.land/manual@v1.29.1/getting_started/configuration_file
+1. Since v1.18, Deno will automatically detect `deno.json or deno.jsonc` in your current working directory (or parent directories)
+2. manually set by `-c path/to/deno.json`
+
 ## ts compiled cache
 deno run 编译是有cache的， 查看cache
 
@@ -25,7 +30,7 @@ Check compiled files
     (also potentially .map files)
 
 ## type checking
-you could skip type checking
+you could skip type checking by:
 
     deno run --allow-net --no-check my_server.ts
 
@@ -55,10 +60,25 @@ mime-types:
     text/plain	                Attempt to determine that path extension, otherwise unknown
     application/octet-stream	Attempt to determine that path extension, otherwise unknown
 
-# config ts
-默认deno不需要配置ts, 不建议配置ts不兼容)，deno使用deno.json 中的compilerOptions 配置取代`tsconfig.json`
+# compilerOptions
+默认deno不需要配置ts, 不建议配置ts不兼容)，deno使用deno.json 中的`compilerOptions` 配置取代`tsconfig.json`
 
-    deno run --config ./deno.json main.ts
+    $ deno run --config ./deno.json main.ts
+    $ cat deno.json
+    "compilerOptions": {
+        "jsx": "react-jsxdev",
+        "jsxImportSource": "react"
+
+        "allowJs": true,
+        "esModuleInterop": true,
+        "lib": ["esnext", "dom"],
+        "module": "esnext",
+        "moduleResolution": "node",
+        "noEmit": true,
+        "pretty": true,
+        "resolveJsonModule": true,
+        "target": "esnext"
+    },
 
 支持的配置项有 https://deno.land/manual@v1.25.2/typescript/configuration#how-deno-uses-a-configuration-file
 
@@ -96,8 +116,15 @@ These are common libraries that Deno doesn't use by default:
     "webworker.importscripts" - The library that exposes the importScripts() API in the web worker.
     "webworker.iterable" - The library that adds iterables to objects within a web worker. Modern browsers support this.
 
-## Targeting Deno and the Browser
-code works in both Deno and the browse:
+all valid value:
+
+    Argument for '--lib' option must be: 'es5', 'es6', 'es2015', 'es7', 'es2016', 'es2017', 'es2018', 'es2019', 'es2020', 'es2021', 'es2022', 'esnext', 'dom', 'dom.iterable', 'dom.asynciterable', 'dom.extras', 'webworker', 'webworker.importscripts', 'webworker.iterable', 'scripthost', 'es2015.core', 'es2015.collection', 'es2015.generator', 'es2015.iterable', 'es2015.promise', 'es2015.proxy', 'es2015.reflect', 'es2015.symbol', 'es2015.symbol.wellknown', 'es2016.array.include', 'es2017.object', 'es2017.sharedmemory', 'es2017.string', 'es2017.intl', 'es2017.typedarrays', 'es2018.asyncgenerator', 'es2018.asynciterable', 'es2018.intl', 'es2018.promise', 'es2018.regexp', 'es2019.array', 'es2019.object', 'es2019.string', 'es2019.symbol', 'es2019.intl', 'es2020.bigint', 'es2020.date', 'es2020.promise', 'es2020.sharedmemory', 'es2020.string', 'es2020.symbol.wellknown', 'es2020.intl', 'es2020.number', 'es2021.promise', 'es2021.string', 'es2021.weakref', 'es2021.intl', 'es2022.array', 'es2022.error', 'es2022.intl', 'es2022.object', 'es2022.sharedmemory', 'es2022.string', 'esnext.array', 'esnext.symbol', 'esnext.asynciterable', 'esnext.intl', 'esnext.bigint', 'esnext.string', 'esnext.promise', 'esnext.weakref', 'deno.window', 'deno.worker', 'deno.shared_globals', 'deno.ns', 'deno.unstable', 'deno.url', 'deno.cache', 'deno.console', 'deno.net', 'deno.websocket', 'deno.fetch', 'deno.broadcast_channel', 'deno.crypto', 'deno.webstorage', 'deno.web', 'deno.webgpu'.
+
+## Target browser dom
+deno默认不含有dom api，使用dom api会报错：
+> Cannot find name 'document'. Do you need to change your target library? Try changing the `lib` compiler option to include 'dom'.ts(2584)
+
+Deno could works in both Deno and the browser:
 
     "compilerOptions": {
         "target": "esnext",
@@ -109,35 +136,45 @@ code works in both Deno and the browse:
 
 tsc 在import 'm.ts' 时会尝试同目录的`m.d.ts`, deno 则需要显式import `.d.ts`
 
-deno import ts有增强方案
+deno import ts分为两种
 
-    As the importer of a JavaScript module, I know what types should be applied to the module.
+    As the importer of a JavaScript module,   I know what types should be applied to the module.
     As the supplier of the JavaScript module, I know what types should be applied to the module.
 
-## Providing types when importing
-via `@deno-types`:
+## import npm with specifier
+Refer to https://deno.land/manual@v1.29.1/node/npm_specifiers , npm包名格式
+
+    npm:<package-name>[@<version-requirement>][/<sub-path>]
+
+e.g. in source
+
+    // main.ts
+    // @deno-types="npm:@types/express@^4.17"
+    import express from "npm:express@^4.17";
+
+e.g in cli
+
+    deno run --allow-env --allow-read npm:cowsay@1.5.0 Hello there!
+
+### 下载本地`node_module`
+
+    deno run --node-modules-dir main.ts
+    tree node_module
+
+我们也可以只缓存`node_module`，不执行. 然后修改后再执行
+
+    deno cache --node-modules-dir main.ts
+
+## import url with types
+Providing types when importing
+
+### Using `@deno-types`:
 
     // @deno-types="./coolLib.d.ts"
     import * as coolLib from "./coolLib.js";
 
-## Providing types when hosting
-If you are in control of the source code of the module. there are two ways to inform deno of types
-
-### Using the triple-slash reference directive
-
-    /// <reference types="./coolLib.d.ts" />
-
-    // ... the rest of the JavaScript ...
-
-也可以是url
-
-    /// <reference types="https://deno.land/x/pkg@1.0.0/types.d.ts" />
-
-如果是ts 源码：
-
-    export { ErrorInfo, PreactContext, Ref as PreactRef } from '../../src/index.d.ts';
-
 ### Using X-TypeScript-Types header
+> https://deno.land/manual@v1.29.1/advanced/typescript/types#using-x-typescript-types-header
 Similar to the triple-slash directive, Deno supports a header for remote modules that instructs Deno to locate the types.
 
     HTTP/1.1 200 OK
@@ -150,15 +187,33 @@ e.g.
     curl -D- -L https://esm.sh/lodash/unescape
     x-typescript-types: https://esm.sh/v97/@types/lodash@^4/unescape~.d.ts
 
+
+对于 Skypack.dev 这个CDN来说, 加`?dts`才会返回`X-TypeScript-Types` 
+
+    import React from "https://cdn.skypack.dev/react?dts";
+
+## Host js with types
+If you are in control of the source code of the module. there are two ways to inform deno of types
+
+### Using the triple-slash reference directive
+
+    /// <reference types="./coolLib.d.ts" />
+
+    // ... the rest source of host the JavaScript ...
+
+也可以是url
+
+    /// <reference types="https://deno.land/x/pkg@1.0.0/types.d.ts" />
+
 ## Using global types
-define global types: https://deno.land/manual@v1.25.2/typescript/types#using-ambient-or-global-types 
+First, define global types: https://deno.land/manual@v1.25.2/typescript/types#using-ambient-or-global-types 
 
     declare global {
         var AGlobalString: string;
     }
 
 
-方法一，在UMD module ts 插入d.ts, By adding the following triple-slash directives near the top of the entry point file
+方法一，在UMD module ts 插入d.ts, By adding the following triple-slash directives near the `top of the entry point file` like `index.js`
 
     /// <reference types="https://deno.land/x/pkg@1.0.0/types.d.ts" />
 
@@ -166,9 +221,9 @@ define global types: https://deno.land/manual@v1.25.2/typescript/types#using-amb
 
     "compilerOptions": {
         "types": [
-        "./types.d.ts", //相对deno.json 所在的目录
-        "https://deno.land/x/pkg@1.0.0/types.d.ts",
-        "/Users/me/pkg/types.d.ts"
+            "./types.d.ts", //相对deno.json 所在的目录
+            "https://deno.land/x/pkg@1.0.0/types.d.ts",
+            "/Users/me/pkg/types.d.ts"
         ]
     }
 
@@ -197,21 +252,12 @@ Another option is to use a configuration file
         "lib": ["deno.worker"]
     }
 
-## bundle types(cdn)
-For a lot of the .d.ts files available on the web, they may not be compatible with Deno.
 
-Some solution providers, like the Skypack CDN, will automatically **bundle type declarations** just like they provide bundles of JavaScript as ESM.
-
-### cdn with types
-Skypack.dev is a CDN which provides type declarations (via the `X-TypeScript-Types header`) when you append `?dts`:
-
-    import React from "https://cdn.skypack.dev/react?dts";
-
-## Behavior of JavaScript when type checking
+# Migrate to/from js
 If you import JavaScript into TypeScript, deno will check types even if set `checkJs:false`
+要么按上面的方法提供.d.ts, 要么使用下面的方法提供types或者忽略检查
 
-# migrate to/from js
-## type check js
+## Enable type checkJs
 Let Deno to infer type information about the JavaScript code by adding the check JavaScript pragma to the file
 
     // @ts-check
@@ -224,13 +270,19 @@ or config with
 
 ## specify js type manually
 
+    /**
+     * @type {React.Context<undefined | Map<string, string>>}
+    */
+    const AssetContext = createContext(undefined);
+
     /** @type {string[]} */
     const a = [];
+
     /** @type{Array.<number>} */
     /** @type{Array<number>} */
     var y = [];
 
-## specify js type via import
+## specify js type via .d.ts
 
     /** @type {import("$fresh/plugins/twind.ts").Options} */  
 
@@ -240,7 +292,6 @@ skip type checking for sigle file(ts/js)
     // @ts-nocheck
 
 skip all type checking via `deno run --no-check`
-
 
 # 参考
 https://deno.land/manual@v1.25.2/typescript/overview

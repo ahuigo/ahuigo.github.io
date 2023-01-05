@@ -6,7 +6,8 @@ private: true
 # unocss
 1. it is inspired by twind.css: 重新构想原子化 CSS
 https://jishuin.proginn.com/p/763bfbd6a89b
-2. doc: 
+2. doc && usage: 
+https://blog.logrocket.com/new-features-unocss-tailwind-css-alternative/
 https://github.com/unocss/unocss
 
 # custom rules

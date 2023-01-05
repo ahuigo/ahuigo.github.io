@@ -303,7 +303,8 @@ Future is Not thread safe!
             data = future.result()
             print('data:', data)
 
-executor 上下文结束是阻塞的
+### pool 上下文是阻塞的
+executor 上下文结束是阻塞的(会等所有任务完成):
 
     from concurrent.futures.thread import ThreadPoolExecutor
     import time
@@ -314,6 +315,18 @@ executor 上下文结束是阻塞的
         for args in [('url1',4), ('url2',1)]:
             pool.submit(load_url, *args)
     print('All tasks has been finished')
+
+### task exception
+默认task 的exception不会被显示，我们可以手动捕获显示异常：
+
+    with ThreadPoolExecutor() as executor:
+        # execute our task
+        future = executor.submit(work)
+        # get the result from the task
+        try:
+            result = future.result()
+        except Exception:
+            print('Unable to get the result')
 
 ## ProcessPoolExecutor
 也支持executor.map(func,urls) 和 executor.submit(func, url, 60) + as_completed()

@@ -7,6 +7,7 @@ date: 2018-09-27
 2. http://freelancer.com
 3. https://www.upwork.com/
 4. http://elance.com
+5. 远程工作: https://weworkremotely.com/remote-jobs/projectdiscovery-io-senior-back-end-developer-golang
 
 然后谈谈入行准备：
 1. 足够的面包。

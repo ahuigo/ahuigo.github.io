@@ -686,6 +686,7 @@ to keep the remote or local file, :
 	git checkout --theirs /path/to/file
 	git checkout --ours /path/to/file
 ### option
+multi commits to one
 
 	git merge --no-commits //告诉 Git 此时无需自动生成和记录(合并)提交.最后一起提交
 	git merge --squash //选项将目标分支上的所有更改全拿来应用到当前分支上

@@ -29,7 +29,9 @@ jq 支持管道，比如我们利用管道生成base64
     {"body":"ZGF0YQ=="}
     > jq -ncM 'while(true; .+1) | {method: "POST", body: {"num":("num"+(.|tostring))} | @base64 }'
 
-## select
+## select/filter
+
+    jq '.data[]  | select(.domain == "domain2") | .prop'
 
     curl -s https://api.github.com/repos/go-swagger/go-swagger/releases/latest | \
     jq -r '.assets[] | select(.name | contains("'"$(uname | tr '[:upper:]' '[:lower:]')"'_amd64")) | .browser_download_url'

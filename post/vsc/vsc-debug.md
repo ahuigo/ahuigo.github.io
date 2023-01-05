@@ -8,6 +8,7 @@ private: true
 ## Launch and Attach 两种配置
 https://code.visualstudio.com/docs/editor/debugging#_launch-versus-attach-configurations
 
+### program
 Launch 是用于server 程序
 
     {
@@ -17,6 +18,7 @@ Launch 是用于server 程序
       "program": "${file}"
     }
 
+### attach
  For Chrome DevTools/other running programs, use attaching mode
 
         {
@@ -26,9 +28,9 @@ Launch 是用于server 程序
             "port":5858,
         }
 
-### Global launch configuration
+### Global launch
 > Tip: If a workspace contains a `"launch.json"`, the global launch configuration is ignored.
-VS Code supports adding a "launch" object inside your User settings. This "launch" configuration will then be shared across your workspaces. For example:
+VS Code supports adding a "launch" object inside your User settings. 
 
     "launch": {
         "version": "0.2.0",
@@ -39,6 +41,10 @@ VS Code supports adding a "launch" object inside your User settings. This "launc
             "program": "${file}"
         }]
     }
+
+### launch runtime
+    "runtimeExecutable": "/opt/homebrew/bin/deno",
+    "runtimeArgs": [ "run", "--config", "./deno.dev.json",]
 
 ## Variable substitution
 
@@ -51,7 +57,8 @@ Such as windows/osx/linux properties
 
       "args": ["myFolder/path/app.js"],
       "windows": {
-        "args": ["myFolder\\path\\app.js"]
+        "args": ["myFolder\\path\\app.js"],
+        "env":{},
       }
 
 ### args and ENV

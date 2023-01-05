@@ -125,11 +125,15 @@ daemonic processes are not allowed to have children!
     print('start join...')
     p.join()
 
-# Pool
+# Pool(高级): ThreadPoolExecutor,ProcessPoolExecutor
+参考 py-asyncio.md 的　Future executor(包装多线程进程future)
+
+# Pool(低级)
 
 ## close sleep child
 daemonPool/noDaemonPool 都可以通过pool.close清理sleeping children
 
+    # 如果没有pool.close 就有sleeping children
     from multiprocessing import Pool
     import time
 
@@ -143,7 +147,10 @@ daemonPool/noDaemonPool 都可以通过pool.close清理sleeping children
         print('main: sleep 20 seconds')
         time.sleep(20)
 
-    main()
+    # 必须有此行，否则fork　会导致RuntimeError: Attempt to start a new process before the current process has finished its bootstrapping phase.
+    # 可能fork 时会循环执行main?
+    if __name__ == '__main__': 
+        main()
 
 ##  NoDaemon
 pool 默认是Deamon 而不是Process默认的 noDaemon
@@ -172,7 +179,7 @@ pool 默认是Deamon 而不是Process默认的 noDaemon
 ## Pool().apply_async()
 如果要启动大量的子进程，可以用进程池的方式批量创建子进程：
 1. multiprocessing.Pool(4) 比fork 简单
-2. multiprocessing.pool.ThreadPool(2) 也是
+2. multiprocessing.pool.ThreadPool(2) 是纯程池
 
 e.g.
 1. p = multiprocessing.Pool(4)
