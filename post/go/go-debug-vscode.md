@@ -4,6 +4,22 @@ date: 2020-04-01
 private: true
 ---
 # vscode 单步debug
+配置launch.json
+
+    mode:"auto"
+    {
+        "name": "main go",
+        "type": "go",
+        "request": "launch",
+        "mode": "debug",
+        "program": "${workspaceFolder}/cmd/main.go",
+        "cwd": "${workspaceFolder}",
+        "env": {
+            "APP_ENV":"dev",
+        },
+        "args": []
+    }
+
 启动项目执行断点
 1. vscode: main.go 加断点
 2. 启动docker 或 docker-compose 或者纯dlv

@@ -252,6 +252,32 @@ Another option is to use a configuration file
         "lib": ["deno.worker"]
     }
 
+# multi version
+https://stackoverflow.com/questions/60361579/how-to-support-several-versions-of-the-same-module-with-typescript
+
+    // discord.js@11.d.ts
+    declare module 'discord.js@11' {
+      ...
+    }
+
+    // discord.js@12.d.ts
+    declare module 'discord.js@12' {
+      ...
+    }
+
+Then you can import the types like this:
+
+    import { Guild as Guild12, version } from "discord.js";
+    import { Guild as Guild11 } from "discord.js@11";
+
+    declare const guild: Guild11 | Guild12 // obviously wouldn't be declared like this in your actual code
+
+    // At the time of writing v12.0.2 has been released
+    if (version === "12.0.2") {
+        (guild as Guild12).iconURL(); // for v12
+    } else {
+        (guild as Guild11).iconURL; // for v11
+    }
 
 # Migrate to/from js
 If you import JavaScript into TypeScript, deno will check types even if set `checkJs:false`

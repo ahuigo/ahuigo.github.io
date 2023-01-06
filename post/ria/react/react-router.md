@@ -52,3 +52,39 @@ loadable 相对lazy 不需要Suspense, 而且支持`SSR`+ `Library code splittin
         </div>
       );
     }
+
+# nested routers
+https://dev.to/tywenk/how-to-use-nested-routes-in-react-router-6-4jhd
+
+    // app.tsx
+    export default function App() {
+        return (
+        <Router>
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='about' element={<About />} />
+                <Route path='posts' element={<Posts />}>
+                    <Route path='new' element={<NewPost />} />
+                    <Route path=':postId' element={<Post />}>
+                        <Route index element={<PostIndex />} />
+                        <Route path='comments' element={<Comments />} />
+                    </Route>
+                </Route>
+            </Routes>
+        </Router>
+        )
+    }
+
+    // layout/menu.tsx
+    import { useNavigate } from "react-router-dom"
+    function Post() {
+        // useNavigate(-1) to go back in history
+        let navigate = useNavigate()
+
+        return (
+            <div>
+                <button onClick={() => navigate("./")}>Go Back One</button>
+                <button onClick={() => navigate("../")}>Go Back Two</button>
+            </div>
+        )
+    }
