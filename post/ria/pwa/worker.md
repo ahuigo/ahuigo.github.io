@@ -22,25 +22,3 @@ Service worker 是浏览器和网络间的代理。通过拦截文档中发出�
 
 ## service worker
 它是网络请求代理，可用处于缓存、请求处理
-
-    /* main.js */
-    navigator.serviceWorker.register('/service-worker.js');
-    /* service-worker.js */
-
-    // Install 
-    self.addEventListener('install', function(event) {
-        // ...
-    });
-
-    // Activate 
-    self.addEventListener('activate', function(event) {
-        // ...
-    });
-
-    // Listen for network requests from the main document
-    self.addEventListener('fetch', function(event) {
-        // Return data from cache
-        event.respondWith(
-            caches.match(event.request);
-        );
-    });

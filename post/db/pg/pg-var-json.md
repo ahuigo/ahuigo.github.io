@@ -62,3 +62,20 @@ add jsonb via `jsonb_set`:
 
     jsonb_set('{"bar":1,"x":{}}'::jsonb, '{x,y}', 1::text::jsonb);
     {"x": {"y": 1}, "bar": 1}
+
+## funtion
+### json_array_elements
+Expands a JSON array to a set of JSON values.	
+
+    select * from json_array_elements('[1,true, [2,false]]');
+    -----------
+    1
+    true
+    [2,false]
+
+Expands a JSON array to a set of text values.	
+
+	select * from json_array_elements_text('["foo", "bar"]')
+    -----------
+    foo
+    bar

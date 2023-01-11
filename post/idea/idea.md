@@ -16,12 +16,16 @@ date: 2018-09-27
 
 # 语言：
 
-deno 生态: https://dev.to/aralroca/from-node-to-deno-5gpn#electron
+## deno 生态:
+- ultra play:
+    1. chrome://inspect/#service-workers
+- node migrate: https://dev.to/aralroca/from-node-to-deno-5gpn#electron
 - pkg manager
     - https://github.com/crewdevio/Trex
 - electron
     - webview_deno or tauri
 - ui library
+    1. https://uiverse.io/mobinkakei/sour-lionfish-18
     1. migrate https://github.com/react-component/field-form to deno(antd)
         1. https://github.com/ahuigo/react-component.github.io
 - markdown static view server:
@@ -45,21 +49,25 @@ deno 生态: https://dev.to/aralroca/from-node-to-deno-5gpn#electron
   1. Alephjs css module
   2. fresh
   3. AdonisJS
-- medium 课程
+## 制作教程
+### medium 课程
     - mac-tool
         - readline
 
-serverless:
-1. expose web:
-    1. https://erisa.dev/exposing-a-web-service-with-cloudflare-tunnel/
+### rust
+    https://github.com/sunface/rust-course
 
 ## 数据服务
 1. stock 数据
-1. 气候数据
-## rust
-https://github.com/sunface/rust-course
+
 
 # 工具类
+1. pwa实现一个文件夹对比工具
+    1. 对比算法：Based on the algorithm proposed in "An O(ND) Difference Algorithm and its Variations" (Myers, 1986).
+    2. 对比库: https://github.com/ahuigo/jsdiff
+    1. ace-diff: https://ace-diff.github.io/ace-diff/demos/demo1/
+1. serverless:
+    1. expose web: https://erisa.dev/exposing-a-web-service-with-cloudflare-tunnel/
 
 1. github pages:
    1. redirect all path to 404.html

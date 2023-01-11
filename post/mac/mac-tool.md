@@ -119,8 +119,9 @@ google in chrome
 http://superuser.com/questions/369934/mac-os-x-lion-chrome-shortcut-for-search-with-google
 > U can also set shortcut for translate in google.
 
-## Alfred2
-比spotlight更强大的高效快捷键工具, 通过它你可以呼起任意的app, url. 而且可以定制呼起关键词, 传递的参数
+## Alfred2/raycast
+> raycast 可替代alfred
+通过它你可以呼起任意的app, url. 而且可以定制呼起关键词, 传递的参数
 
 	wolfram x^2+y^2+z^2=10
 

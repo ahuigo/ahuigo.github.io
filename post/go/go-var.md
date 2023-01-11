@@ -368,7 +368,7 @@ iota可在表达式中(b=iota也是表达式)
 	const (
 	    s   = "abc"
 			x 						// x = "abc"
-			a1 = 1<<iota
+			a1 = 1<<iota            // 1<<2
 			a2
 			a3
 	)

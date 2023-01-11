@@ -533,16 +533,18 @@ err 作用域限定为if/else 内
 
 相当于 throw exception, 可以通过 defer 被 recovery 捕获:
 
+    //golib/func/catch/recover_test.go
     func g(i int) {
     	 fmt.Println("Panic!")
-    	 panic(fmt.Sprintf("%v", i))
+    	 panic(i)
     }
 
-    func f() {
+    func f() (err error) {
     	 defer func() {
             if r := recover(); r != nil {
                 fmt.Println("error:", r)
     			fmt.Println("stacktrace from panic: \n" + string(debug.Stack()))
+                err = fmt.Errorf("recover exception: %v", r)
             }
     	 }()
 
@@ -550,6 +552,7 @@ err 作用域限定为if/else 内
     	fmt.Println("Calling g with ", i)
     	g(i)
     	fmt.Println("Returned normally from g.")
+        return nil
     }
 
 ### panic map/object/...

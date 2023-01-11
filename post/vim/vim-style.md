@@ -7,7 +7,7 @@ date: 2018-10-04
 ---
 # Preface
 
-# show charactors
+# show invisible charactors
 See tab, new line:
 
 	:set list
