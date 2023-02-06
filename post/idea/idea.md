@@ -9,10 +9,6 @@ date: 2018-09-27
 
 1. sideidea.com: http://sideidea.com/article/42
 2. 失物招领: http://www.bjgaj.gov.cn/swzl/index.do
-3. 付费问卷
-4. 目标管理: 甘道图
-5. 企业与知乎合作点评与反馈, 也就是企业Tag 接口
-6. 群通知
 
 # 语言：
 
@@ -50,6 +46,10 @@ date: 2018-09-27
   2. fresh
   3. AdonisJS
 ## 制作教程
+计算机一站式学习网站
+- w3school: 学习js/css/
+- deno环境
+
 ### medium 课程
     - mac-tool
         - readline

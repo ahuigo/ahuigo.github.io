@@ -5,15 +5,21 @@ private: true
 ---
 # react dom form
 
-# select 
-## select placeholder
+# select placeholder
 
-    this.setState({value:""}) //default
-    <select value={value}>
-        <option key="key0" value='' disabled> placeholder</option>
+    <style>
+        select:invalid { color: gray; }
+    </style>
+    <form>
+    <select required>
+        <option value="" disabled selected hidden>Please Choose...</option>
+        <option value="0">Open when powered (most valves do this)</option>
+        <option value="1">Closed when powered, auto-opens when power is cut</option>
     </select>
+    </form>
 
-或者利用 renderValue
+## antd的封装
+或者利用antd renderValue(antd示例)
 
     <Select
         value={value}

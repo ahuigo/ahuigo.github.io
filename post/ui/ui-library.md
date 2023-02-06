@@ -7,8 +7,13 @@ private: true
 https://uiset.com/
 
 ## ui library
+### css lib
 1. https://uiverse.io/
 2. https://boltcss.com/
+3. button https://github.com/eludadev/css-buttons
 
-## button
-https://github.com/eludadev/css-buttons
+### react ui
+Geist: 
+https://geist-ui.dev/en-us
+radix-ui: 
+https://ui.shadcn.com/docs/primitives/menubar

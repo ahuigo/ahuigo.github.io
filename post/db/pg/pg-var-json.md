@@ -4,6 +4,14 @@ date: 2019-06-20
 private:
 ---
 # jsonb
+## json vs jsonb 
+jsonb 更better,
+2. jsonb 以二进制存储，读取高效（不需要解析），json写入更高效(原样存text)
+3. jsonb supports indexing, 包括 GIN (Generalized Inverted Index) indexes:
+    - `CREATE INDEX idxgintags ON api USING GIN ((jdoc -> 'tags'));`
+    - https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING
+    - https://www.postgresql.org/docs/current/gin-intro.html
+
 https://www.postgresql.org/docs/current/static/functions-json.html
 
 ### 定义
@@ -22,9 +30,9 @@ jsonb 即可以直接使用 json 字符串, 插入取出时自动转换成`::jso
     UPDATE users SET counters = counters || CONCAT('{"bar":', COALESCE(counters->>'bar','0')::int + 1, '}')::jsonb WHERE id = 1;
     UPDATE users SET counters = jsonb_set(counters, '{bar}', CONCAT(COALESCE(counters->>'bar')::int + 1)::jsonb) WHERE id = 1;
 
-### 使用
+### 操作
 
-    []->int	 Get JSON array(0, -3)          '[{"a":"foo"},{"b":"bar"},{"c":"baz"}]'::json->2  {"c":"baz"}
+    []->int	 Get JSON object by index        '[{"a":"foo"},{"b":"bar"},{"c":"baz"}]'::json->2  {"c":"baz"}
     {}->'text' Get JSON object field by key   '{"a": {"b":"foo"}}'::json->'a'
     []->>int	as text                     '[1,2,3]'::json->>2	3
     {}->>'text'	as text                     '{"a":1,"b":2}'::json->>'b'	2
@@ -43,11 +51,19 @@ example
     dic?'b' check b key exists
     dic?|array('b','a') check any [a,b] exists
     dic?&array('b','a') check all [a,b] exists
-    a||b merge
-    dic-'key'  delete
+    a||b    merge
+    dic-'key'  delete key
     dic-'{k1,k2}' del
-    arr-2       del 2nd valume
+    arr-2       del 3nd valume
+        '["a", "b"]'::jsonb - 1 → ["a"]
+    jsonb-text[] → jsonb
+        Deletes all matching keys or array elements from the left operand.
+        '{"a": "b", "c": "d"}'::jsonb - '{a,c}'::text[] → {}
     #-path      del by path
+        '["a", {"b":1}]'::jsonb#-'{1,b}' → ["a", {}]
+
+
+
 
 path:
 

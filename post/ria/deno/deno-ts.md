@@ -312,7 +312,7 @@ or config with
 
     /** @type {import("$fresh/plugins/twind.ts").Options} */  
 
-## skip type checking for ts/js
+## skip/ignore type checking for ts/js
 skip type checking for sigle file(ts/js)
 
     // @ts-nocheck

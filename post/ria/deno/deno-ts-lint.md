@@ -48,6 +48,8 @@ To ignore certain diagnostic `// deno-lint-ignore <codes...>` directive should b
 ignore typescript check
 
     // @ts-ignore
+    {/** @ts-ignore */}
+    <div abc={`abc12`}></div>
 
     # including JavaScript if you have check JS enabled, by using the no-check pragma:
     // @ts-nocheck

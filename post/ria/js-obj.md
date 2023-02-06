@@ -346,7 +346,7 @@ new func() 相当于: `{attrs:vals,__proto__:func.prototype}`
     class Animal{
         name = 'dog'
         constructor(name){
-            this.name = name
+            this.name = name; // 如果有construct(public name:string) 且没有`name="dog"` 则可以省略此行
         }
         method1(){
             console.log(this.name)

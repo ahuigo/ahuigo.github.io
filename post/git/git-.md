@@ -616,6 +616,23 @@ Add upstream (tracking) reference:
 
 	git push -u origin master
 
+# git squash
+merge multiple commits to one: https://prasad-k-pawar.medium.com/how-to-combine-multiple-git-commits-into-one-c04c67367a36
+
+e.g merge last 3 commits to one commit
+
+    $ git log 
+    commit8
+    commit7
+    commit6
+    commit5
+    $ git rebase -i HEAD~3
+    pick commit6 merge commit6...commit8 
+    squash commit7 amend commit
+    squash commit8 amend commit
+
+    # git rebase origin/main 比　gl origin main 干净
+
 # git merge
 
 	git merge <branch>

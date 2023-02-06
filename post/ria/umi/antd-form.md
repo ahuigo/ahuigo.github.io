@@ -146,6 +146,20 @@ Store Form Data into Upper Component
         <Input placeholder="请输入规格名称" />
     </Form.Item>
 
+## Item会透传 onChange/value
+
+    <Form.Item label="Alert.reminders" name={["alert", "reminders"]}>
+        <SelectUsers
+            defaultValue={def.alert.reminders || [""]}
+            onChange={(v: any) => null}
+        />
+    </Form.Item>
+
+## 多个Item合并一行
+        <div className={styles.flexItems}>
+          <Form.Item label="Alert.enable" name={["alert", "enable"]}>
+
+
 # Input
 
 自动激活

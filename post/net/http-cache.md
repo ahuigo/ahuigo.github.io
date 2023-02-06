@@ -39,14 +39,42 @@ Cache-Control 或者 Expires (会影响 F5 与 Cmd+R) 在cache 有效期内请�
         M: months (30 days)
         y: years (365 days)
 
-或者Last-modified 无限缓存时间
+### reload cache
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#reload_and_force_reload
+
+A simplified view of the HTTP request sent during a browser reload looks as follows:
+
+    GET / HTTP/1.1
+    Host: example.com
+    Cache-Control: max-age=0
+    If-None-Match: "deadbeef"
+    If-Modified-Since: Tue, 22 Feb 2022 20:20:20 GMT
+
+可以基于version　控制缓存的更新，主页面index.html返回
+对于带有 Accept-Language: en 标头并已缓存的英语内容，不希望再对具有 Accept-Language: ja 请求标头的请求重用该缓存响应
+
+    Version: "123"
+    Accept-Language: en
+
+    Vary: Accept-Language
+    Vary: Version
+
+对于静态资源，最好使用版本控制：
+
+    # version in query
+    bundle.js?v=123
+    # version in path(结合importMap.json)
+    /v123/bundle.js
+
+
+## Last-Modified 与 304
+Last-modified 无限缓存时间
 
     <?php
     header('Last-Modified: Tue, 20 Aug 0088 07:23:37 GMT');
     echo date('H:i:s');
     // fetch('/a.php').then(async r=>console.log(await r.text()))
 
-## Last-Modified 与 304
  304 + Last-Modified(不会受刷新的影响) 关闭浏览器后缓存也是生效的
 
     modifiedSince = headers.get('If-Modified-Since')

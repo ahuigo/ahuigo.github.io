@@ -6,7 +6,7 @@ private: true
 # react root
 > https://blog.saeloun.com/2021/07/15/react-18-adds-new-root-api.html
 
-旧方法
+## 旧方法 ReactDOM.render
 
     import ReactDOM from 'react-dom';
     import App from 'App';
@@ -19,6 +19,7 @@ private: true
     // During an update, React would access the root of the DOM element
     ReactDOM.render(<App name="Saeloun testimonials" />, container);
 
+## 新方法createRoot
 新方法createRoot,　可以复用container
 
     import ReactDOM from "react-dom";
@@ -35,9 +36,9 @@ private: true
     // During an update, there is no need to pass the container again
     root.render(<App name="Saeloun testimonials" />);
 
+## hydrateRoot
 在新的root api中
 In the new root API, hydrate is moved to hydrateRoot API as below -
-
 
     import ReactDOM from 'react-dom';
     import App from 'App';
@@ -46,3 +47,6 @@ In the new root API, hydrate is moved to hydrateRoot API as below -
 
     // Create and render a root with hydration.
     const root = ReactDOM.hydrateRoot(container, <App name="Saeloun blog" />);
+
+    // You can later update it.
+    root.render(<App tab="profile" />);

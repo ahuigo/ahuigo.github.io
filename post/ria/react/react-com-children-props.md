@@ -6,6 +6,8 @@ private: true
 # Add props to childrend
 https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
 
+利用`child=React.cloneElement(children, props)`
+
     const Child = ({ childName, sayHello }) => (
       <button onClick={() => sayHello(childName)}>{childName}</button>
     );
@@ -41,3 +43,10 @@ https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-chi
     }
 
     ReactDOM.render(<App />, document.getElementById("container"));
+
+## children.props
+
+    const child=React.cloneElement(children, {...children.props})
+
+## React.Children.only
+    const child = React.Children.only(children) as React.ReactElement<any>;
