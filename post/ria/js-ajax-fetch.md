@@ -196,8 +196,11 @@ async function with in `then`:
     .then(data=>console.log(data))
 
 ### header
+js查看方法：
 
+    // Note: chrome network 看不到extension 修改的response.headers, 这个方法就可以打印
     .then(async r => console.log(...r.headers)
+    .then(async r => console.log(r.headers.get('x-auth-token'))
 
 you can access only following standard headers:
 

@@ -127,7 +127,7 @@ function gcap(){
     fi
 
     if git remote | grep '\w';then
-        if git remote| grep -vE '^donau|gitee|local|up|other|pmui$' | xargs -L1 -J% git push --follow-tags % HEAD; then
+        if git remote| grep -E '^(origin)$' | xargs -L1 -J% git push --follow-tags % HEAD; then
             cd $(git rev-parse --show-toplevel)
             subdirs=( )
             top_dir=$(pwd)
@@ -154,6 +154,10 @@ function gcap(){
     fi
     cd $ori_dir
 }
+# git rebase fetch
+#alias gpr='git pull --rebase'
+#git fetch $1 $2 && git rebase $1/$2
+
 
 ################ shell cli###########################
 # grep

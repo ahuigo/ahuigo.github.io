@@ -570,23 +570,6 @@ outline-offset 属性对轮廓进行偏移，并在超出边框边缘的位置�
     	outline-offset:15px; //轮廓偏移
     }
 
-# image
-
-e.g. https://codepen.io/handsomeone/pen/Kgmbqg?editors=0100
-
-    Formal grammar: linear-gradient(  [ <angle> | to <side-or-corner> ,]? <color-stop> [, <color-stop>]+ )
-    								  \---------------------------------/ \----------------------------/
-    									Definition of the gradient line         List of color stops
-
-    					  where <side-or-corner> = [left | right] || [top | bottom]
-    						and <color-stop> = <color> [ <percentage> | <length> ]?
-    linear-gradient( 45deg, blue, red );           /* A gradient on 45deg axis starting blue and finishing red */
-    linear-gradient( to left top, blue, red);      /* A gradient going from the bottom right to the top left starting blue and
-    												  finishing red */
-
-    linear-gradient( 0deg, blue, green 40%, red ); /* A gradient going from the bottom to top, starting blue, being green after 40%
-    												  and finishing red */
-
 # Reference
 
 - [matrix]

@@ -64,7 +64,13 @@ Store Form Data into Upper Component
     </Form>
 
 ## 更新field
-用 setFieldsValue
+Note:
+
+    必须用匹配的`<Form.Item> attr`注册attr后， 才能修改值
+    或者用：
+    form.getFieldDecorator('fieldName', { initialValue: your_value })
+
+用 setFieldsValue:
 
     <input 
         onChange={(e)=>form.setFieldsValue({name:e.target.value}}}

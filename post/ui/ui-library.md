@@ -15,5 +15,11 @@ https://uiset.com/
 ### react ui
 Geist: 
 https://geist-ui.dev/en-us
+    1. 基于mdx语法
+    2. story
 radix-ui: 
 https://ui.shadcn.com/docs/primitives/menubar
+
+## ui doc
+mdx
+dmui: 基于umi

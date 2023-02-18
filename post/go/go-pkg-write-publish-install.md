@@ -124,9 +124,17 @@ go install 只用于install
     go list -m -versions github.com/hashicorp/vault/api
     go list -m -versions github.com/ahuigo/requests    
 
+# proxy
 ## goproxy
-
+via goproxy
     export GOPROXY=https://goproxy.io,direct
+    GOPROXY="https://127.0.0.1:8888" 
+    GOPROXY="https://name:pass@xx.com/artifactory/api/go/go"
+
+via HTTP_PROXY
+
+    HTTP_PROXY=socks5://127.0.0.1:1080 go get  github.com/gin-gonic/gin
+
 
 The value of GOPROXY is a list
 
@@ -141,6 +149,22 @@ The value of GOPROXY is a list
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.info
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.mod
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.zip
+
+国内用户在用 golang 的时候麻烦（可以试一下， 先 git clone， 然后 git checkout v1.1.1， 最后 copy 到 mod/pkg@v1.1.1 下）。
+
+不过最简单的方式是 export GOPROXY=https://goproxy.io。
+
+## 404
+因为使用私有的repo 时，无法用sum.golang.org 进行checksum校验. (也可能是GOPROXY路径不对)
+
+请加上：
+
+    $ export GONOSUMDB="github.com/mycompany/*,github.com/secret/*"
+    # 或
+    $ export GOSUMDB=off
+
+    # Dockerfile
+    ENV GOSUMDB=off
 
 # gopath 结构(modulle,package,dir)
 1. module: 是一组package list

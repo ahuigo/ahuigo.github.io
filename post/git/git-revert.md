@@ -4,6 +4,8 @@ date: 2022-03-18
 private: true
 ---
 # git revert
+    -n not commit
+
 ## revet commit
 
     # 只回滚commitA 的修改
@@ -32,21 +34,23 @@ note: `git revert -n` 指not commit, 需要继续的话
 
 
 ## -m
-
-    C1->C2->C3->B2C3->C5->C6->C7->HEAD
-      |-B2->B2/
-
-git revert -m1 B2C3 创建了新分支: `HEAD-(B2-C3)`
-git revert -m2 B2C3 创建了新分支: `HEAD-(C3-C2)`
+git revert C3 会创建新分支: 删除C3的修改
 
     C1->C2->C3->C4->C5->C6->C7->HEAD
 
-git revert C3 会创建新分支: `HEAD-(C3-C2)`
+git revert -m1 B3C3 : 删除`B2-B3`修改(change made to C3)
+git revert -m2 B3C3 : 删除`C2-C3`修改(change made to B3)
+
+    C1->C2->C3->B3C3->C5->C6->C7->HEAD
+      |         /
+      |        /
+      |-B2->B3
+
 
 恢复到HEAD 之前的提交:
 
-	git revert HEAD //Creat a new commit to drop HEAD's modifies. '
-        相当于merge HEAD^ based on HEAD: 
+	git revert HEAD //Creat a new commit to drop HEAD's modifies. 
+        相当于merge HEAD^ 
         git checkout HEAD^ . ; // copy HEAD^ -> working === index 
             git checkout . ; // copy index -> working
         git commit -m 'rever version xxx'
@@ -60,7 +64,7 @@ git revert C3 会创建新分支: `HEAD-(C3-C2)`
          \        /      
           B0-----B1
 
-        -m 1 :merge A1 (Base on A2)
-        -m 2 :merge B1 (Base on A2)
+        -m 1 :delete B0,B1
+        -m 2 :delete A
 
 > Note: git revert is used to record some new commits to reverse the effect of some earlier commits (often only a faulty one).

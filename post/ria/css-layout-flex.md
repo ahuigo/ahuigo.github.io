@@ -4,6 +4,8 @@ date: 2020-07-06
 private: true
 ---
 # flex 属性
+> [demo](/assets/flex.html) 
+
 display:flex, 比 inline-block 简单
 
 	.parent{ display:flex;}
@@ -28,6 +30,10 @@ display:flex, 比 inline-block 简单
         // flex 当做max-width
         width:300px; 
     }
+    <div class="container">
+        <nav/>
+        <div class="items"/>
+    </div>
 
 固定窗口：
 
@@ -41,7 +47,7 @@ display:flex, 比 inline-block 简单
     }
 
 ## flex 容器
-flex 容器有主轴，侧轴之分
+flex 容器有主轴，侧轴之分: 水平的主轴（main axis, main start -> main end）和垂直的交叉轴（cross axis, cross start -> cross end）
 
     display: flex, inline-flex
 
@@ -55,55 +61,31 @@ flex 容器有主轴，侧轴之分
         flex-wrap:wrap;伸缩容器多行显示；伸缩项目每一行的排列顺序由上到下依次。
         flex-wrap:wrap-reverse;伸缩容器多行显示，但是伸缩项目每一行的排列顺序由下到上依次排列。
     [flex-flow]属性为flex-direction（主轴方向）和flex-wrap（侧轴方向）的缩写，两个属性决定了伸缩容器的主轴与侧轴。
-        flex-flow:flex-direction;默认值为row  nowrap；
+        flex-flow:默认值为row  nowrap；
 
-### flex-wrap
-控制item 的wrap
-https://css-tricks.com/almanac/properties/f/flex-wrap/
 
-    nowrap (default): single-line (overflow)
-    wrap: multi-lines, direction is defined by flex-direction
-    wrap-reverse: multi-lines, opposite to direction defined by flex-direction
-    
 ### box对齐:
-justify-content 用于定义`伸缩项目`在`主轴(横轴)`上面的的对齐方式
+justify-content 用于定义`伸缩行content`在`主轴(横轴)`上面的的对齐方式
+align-items 用来定义`伸缩项目item`在`侧轴`的对齐方式
+align-content 属性可以用来调准`伸缩行content`在`伸缩容器`里的对齐方式(
+    1. 优先级高于align-items
+    2. 仅当用flex-wrap:wrap时有效
 
-    flex-start;伸缩项目向主轴的起始位置开始对齐，后面的每元素紧挨着前一个元素对齐。
-    flex-end;伸缩项目向主轴的结束位置对齐，前面的每一个元素紧挨着后一个元素对齐。
-    center;伸缩项目相互对齐并在主轴上面处于居中，并且第一个元素到主轴起点的距离等于最后一个元素到主轴终点的位置。以上3中都是“捆绑”在一个分别靠左、靠右、居中对齐。
-    space-between;伸缩项目平均的分配在主轴上面，并且第一个元素和主轴的起点紧挨，最后一个元素和主轴上终点紧挨，中间剩下的伸缩项目在确保两两间隔相等的情况下进行平分。
-    space-around;伸缩项目平均的分布在主轴上面，并且第一个元素到主轴起点距离和最后一个元素到主轴终点的距离相等，且等于中间元素两两的间距的一半。完美的平均分配，这个布局在阿里系中很常见。
-
-align-items 用来定义`伸缩项目`在`侧轴`的对齐方式
-
-        flex-start;伸缩项目在侧轴起点边的外边距紧靠住该行在侧轴起点的边。
-        flex-end;伸缩项目在侧轴终点边的外边距靠住该行在侧轴终点的边。
-        center;伸缩项目的外边距在侧轴上居中放置。
-        baseline;如果伸缩项目的行内轴与侧轴为同一条，则该值与[flex-start]等效。 其它情况下，该值将参与基线对齐。
-        stretch;伸缩项目拉伸填充整个伸缩容器。此值会使项目的外边距盒的尺寸在遵照「min/max-width/height」属性的限制下尽可能接近所在行的尺寸。
-
-[align-content]属性可以用来调准`伸缩行`在`伸缩容器`里的对齐方式
-1. 与 justify-content属性类似。只不过这里元素是以一行为单位。
-3. 请注意本属性在只有一行的伸缩容器上没有效果。当使用flex-wrap:wrap时候多行效果就出来了。
-
-eg.
-
-        align-content: flex-start || flex-end || center || space-between || space-around || stretch;
 ## flex项目item 属性
 http://www.ruanyifeng.com/blog/2018/10/flexbox-form.html 参考
 
     order
         order控制伸缩项目在伸缩容器中的显示顺序，伸缩容器中伸缩项目从序号最小的开始布局，默认值是0。 优先级
-    flex:
+    flex: 该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。
         flex属性可以用来指定可伸缩长度的部件，是以下属性组合
-        flex-grow:（宽度扩展比例）, 默认0 不扩展 
+        flex-grow:（宽度扩展比例）, 默认0 不扩展 ,可以是百分比
             属性都为1，则它们将等分剩余空间（如果有的话）
             flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍
         flow-shrink: （收缩比例）,默认为1，即如果空间不足，该项目将缩小
-            为1，当空间不足时，都将等比例缩小
-            为0，其他项目都为1，则空间不足时，前者不缩小。
-        flex-basis（伸缩基准值）这个三个属性的缩写写. 默认auto, 可以是百分比30%/30px
-            定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小
+            默认1，当空间不足时，都将等比例缩小
+            为0，其他项目都为1，则空间不足时，它不缩小。
+        flex-basis（伸缩基准值）优先级高于width的width
+            定义了在分配多余空间之前，item占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小
     [align-self] （高度对齐）用来在单独的伸缩项目上覆写默认的对齐方式，这个属性是用来覆盖伸缩容器属性
         align-self: auto | flex-start | flex-end | center | baseline | stretch
 
@@ -339,6 +321,7 @@ flex 能有效传递height percent(前提是指定了`flex:1`)
 Refer:
 http://www.ruanyifeng.com/blog/2018/10/flexbox-form.html
 ## 表单控件
+
     <style>
        .form{ display:block; } 
        input { flex-grow: 1; }

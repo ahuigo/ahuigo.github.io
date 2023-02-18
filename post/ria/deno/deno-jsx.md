@@ -3,14 +3,32 @@ title: jsx deno
 date: 2022-07-29
 private: true
 ---
-# jsx默认配置
+# jsx配置
+## jsx默认配置
 deno 默认jsx 采用react 解析, 配置文件deno.json：
 
-  "compilerOptions": {
-    "jsx": "react",
-    "jsxFactory": "React.createElement",
-    "jsxFragmentFactory": "React.Fragment"
-  }
+    "compilerOptions": {
+        "jsx": "react",
+        "jsxFactory": "React.createElement",
+        "jsxFragmentFactory": "React.Fragment"
+    }
+
+## react 配置
+以下配置使用react, jsx、tsx文件会自动`import {_jsx} "react/jsx-runtime"`, 所以importMap.json 必须有`react`
+
+    //deno.json
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "jsxImportSource": "react"
+    },
+    
+## preact 配置
+以下配置使用react,所以importMap.json 必须有`preact`
+
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact"
+    }
 
 # JSX import source
 ## react's new transform JSX
@@ -19,7 +37,7 @@ https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html
 1. use JSX without importing React
 2. reduce the number of concepts you need to learn React
 
-第一点，为什么它不再import React? 因为旧的react 编译是需要 `React.createElement`:
+第一点，为什么它不再import React? 因为旧的react 编译是需要手动导入 `React.createElement`:
 
     import React from 'react';
     function App() {
@@ -44,9 +62,9 @@ deno 编译jsx时尝试自动加上新的transform：`jsx-runtime` or `jsx-dev-r
 
     import {jsx as _jsx} from 'react/jsx-runtime';
 
-有两种方法指定transform:
-1. specify JSX import source pragma  in source code.
-2. configuring a JSX import source in a configuration file.(默认配置有)
+transform 的代码在哪里呢？有两种方法指定transform　地址:
+1. specify JSX `import source pragma`  in `source code`.
+2. configuring a `JSX import source` in a configuration file `deno.json`.(默认配置是`"jsxImportSource": "react"`)
 
 如果你想使用preact, 你应该指定transform
 1. use https://esm.sh/preact as the JSX import source

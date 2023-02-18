@@ -339,7 +339,7 @@ wm 适合记录对象额外信息， 比如标记对象状态，对象呗回收�
     var merged = new Set([...set1, ...set2, ...set3])
     var merged = new Map([...map1, ...map2, ...map3])
 
-## Set
+## Set crud
 Set中自动被过滤：
 
     var s = new Set([1, 2, 3, 3, '3']);
@@ -350,15 +350,17 @@ Set crud:
     s.add(4);
     s.delete(3);
     s.has(4)
-    s.forEach
+    s.forEach(fn)
 
 ### 交集
     union=new Set([...a,...b]);
     intersect=new Set([...a].filter(x=>b.has(x)))
     diff=new Set([...a].filter(x=>!b.has(x)));
 
-### forEach
+### forEach/values
 只支持 forEach 不支持map
+
+    for(const v of s.values())
 
 ## map/reduce/any:some/all:every
 迭代方法: all:every, any:some, filter, map/forEach

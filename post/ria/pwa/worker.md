@@ -9,7 +9,8 @@ date: 2019-08-14
 Web worker 主要是减轻主线程cpu压力
 2. Service worker
 Service worker 是浏览器和网络间的代理。通过拦截文档中发出的请求，service worker 可以直接请求缓存中的数据，达到离线运行的目的。
-代表：https://playground.esm.sh/
+    1. 代表：https://playground.esm.sh/
+    2. https://github.com/ahuigo/swopr
 3. Worklet
     - Worklet 是浏览器渲染流中的钩子，轻量级的特定的web worker, 可以让我们有浏览器渲染线程中底层的权限，比如样式和布局。
     - 网页渲染要经过 js-> style(样式)-> layout(布局) -> paint(绘画) -> composite(合成)

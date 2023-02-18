@@ -106,6 +106,36 @@ or 优先级更高(不要写这种)
         case sum(1,3): 'code block' ;break;
     }
 
+## Nullish coalescing (??)
+    const foo = null ?? 'default string';
+    console.log(foo);
+    // Expected output: "default string"
+
+    const baz = 0 ?? 42;
+    console.log(baz);
+    // Expected output: 0
+
+## Nullish coalescing assignment (??=)
+    const a = { duration: 50 };
+
+    a.duration ??= 10;
+    console.log(a.duration);
+    // Expected output: 50
+
+    a.speed ??= 25;
+    console.log(a.speed);
+    // Expected output: 25
+
+## Optional chaining (?.)
+    const adventurer = { };
+
+    const dogName = adventurer.dog?.name;
+    console.log(dogName);
+    // Expected output: undefined
+
+    console.log(adventurer.someNonExistentMethod?.());
+    // Expected output: undefined
+
 ## break label
 
 	break [label]; 不支持break numer

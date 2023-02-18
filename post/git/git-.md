@@ -206,7 +206,8 @@ If you want to also remove *directories*, run
 
 checkout 适合working 回滚到某一分支
 - git revert: checkout+add+commit
-    - git revert [倒数第一个提交] [倒数第二个提交]
+    - git revert HEAD ; drop HEAD changes, -(HEAD-HEAD^)
+    - git revert HEAD~5 ; drop HEAD~5 changes, -(HEAD~5-HEAD~6)
 	Revert some existing commits
 - git reset: 改变commit+index: 顺便清理working
  	rollback commit: (clean index)
@@ -227,14 +228,17 @@ checkout 适合working 回滚到某一分支
 
 ## git unadd(git reset)
 
-	git reset file
-	working copy `merge` from commit(Should No working copy or index change)
+	git reset [commitA] -- file
+        history: not changed(重要)
+        index: revert to commitA
+        working: no changed
+
 
 ## git commit(stage to commited)
 
 	git commit -m 'comment' //commited file
 	#auto stage when commit
-	git commit -a -m 'auto stage(except untracked file) '
+	git commit -a -m 'auto stage'
 
 ### git checkout revert
 
@@ -274,7 +278,7 @@ The result is:
 	  ↑
 	master
 
-### git reset(commit+index)
+### git reset(commit+index, keep working)
 undo commit -am 'msg'
 
 	git reset ;	# same as: git reset HEAD .
@@ -299,6 +303,17 @@ undo commit
 	git update-ref refs/heads/master HEAD~1; # 指定其它分支, HEAD是当前分支的SHA
 
 # git checkout
+## ref commit
+    # for merge  commit
+    git checkout HEAD^ #first parent commit
+    git checkout HEAD^2 #second parent commit
+
+    # parent commit
+    git checkout HEAD~ 
+    git checkout HEAD^
+    # parent->2ndParent->2Backward
+    git checkout HEAD~^2~2
+
 
 ## switch branch
 不能有overwritten: index/working/untracked 
@@ -306,21 +321,29 @@ undo commit
     git checkout [-b] <branch>
 	-b new_branch
 		Create a new branch named <new_branch> and start it at <start_point>
-		git checkout [-b] <branch>
-		git checkout [-b] <new_branch> [<start_point>]
+		git checkout <branch>
+		git checkout -b <new_branch> [<start_point>]
 		git checkout -b test origin/test //tracking branch
 	-t, --track
-		git checkout -b master upstream/master, //tracking branch
 		git checkout -b master -t upstream/master, //tracking branch
 
 ##	checkout(index/working)
-override: index -> working
+override: index -> working, 相当于删除working
 
     git checkout -- .
+    # 以下等价
+    git checkout -- file
+    git restore file
 
-override: index+working
+override: index+working, 相当于删除index+working
 
-    git checkout HEAD -- .
+    git checkout HEAD -- file
+    git checkout HEAD -- .  # equal to: git reset --hard HEAD
+
+只恢复: index
+
+    git restore --staged .
+    git reset [HEAD] -- .
 
 # git diff
 [/p/git-diff](/p/git-diff)
@@ -500,6 +523,40 @@ Create an archive of files from a named tree.
 	git archive --format=tar.gz --prefix='project/' <object> > `git describe`.tar.gz
 
 # git branch
+## set branch track remote
+
+    # if local branch dev is the current branch:
+    git branch -u origin/dev
+    # or longer command
+    git branch --set-upstream-to=origin/dev
+
+    # if local branch dev is not the current branch:
+    git branch -u origin/dev dev
+
+创建时设置
+
+    git checkout -b dev origin/dev
+
+git push 也可以设置
+
+    # branch 'dev' set up to track 'origin/dev'.
+    git push -u origin dev
+    git push -u origin HEAD
+
+也可以写到.git/config 中
+
+    # git config branch.dev.remote origin
+    # git config branch.dev.merge refs/heads/dev
+    [branch "dev"]
+        remote = origin
+        merge = refs/heads/dev
+
+## add/del branch
+
+	git branch <new_branch> [<start-point>] //new_branch started from <start_point>
+    git checkout -b <new_branch>
+	git branch -d <branchName> //del
+	git branch -D <branchName> //Force Del
 
 ## rename branch
 
@@ -519,16 +576,26 @@ Create an archive of files from a named tree.
 	git branch --merged
 	git branch --no-merged //the branch not merged
 
-## add/del branch
-
-	git branch <branchName>		//add
-	git branch <new_branch> [<start-point>] //new_branch started from <start_point>
-	git branch -d <branchName> //del
-	git branch -D <branchName> //Force Del
-
 ## move branch to commit
 
 	git branch -f <branch> <commit> //move branch to commit(HEAD必须与master分离)
+
+## track remote branch
+必须是remote/branch
+
+    # set foo to track origin/main
+    git checkout -b foo origin/main; 
+
+    # or
+    git branch -u origin/main foo
+    # or
+    git checkout foo
+    git branch -u origin/main
+
+这样设置了后，git pull/push 就不用带参数了
+
+    git checkout foo
+    git pull && git push
 
 # git fetch
 
@@ -712,7 +779,6 @@ multi commits to one
 
 	git pull //auto fetch and merge the newest vertion of remote branch
 	git pull --rebase //auto fetch and rebase the newest vertion of remote branch
-	git pull <shortname> [<branch>]
 	git pull <repository> [<branch>]
 
 Set default pull branch
@@ -728,6 +794,19 @@ You can do this with a single command:
 	git branch --track master origin/master
     // or auto setup
     git config --global branch.autoSetupMerge always
+
+### pull with src:dest
+`git pull origin bar~1:bugFix; `is equal to
+
+    # 本地的bugFix（如果没有会自动创建） 指向bar~1 (注意bugFix不能被checkout)
+    git fetch origin bar~1:bugFix; 
+    git merge bugFix
+
+git pull origin foo is equal to:
+
+    git fetch origin foo; git merge o/foo
+
+
 
 ### Solove Conflicts
 Use vimdiff(Default)
@@ -796,8 +875,9 @@ Vim's operation:
 # git rebase branch
 
 	git rebase <branchA> //rebase current branch,based on branchA
+        git rebase master # merge apply HEAD to master
 	git rebase <onto branch> <branch>
-	git rebase -i master
+        git rebase master bugfix; # apply bufix to master, and git checkout bugfix
 	git rebase -i <branchA> //rebase current branch, base on branchA (interactively)
 	git rebase --onto master branchA branchB //rebase branchB(but keep commits from branchA being committed), base on master.
 

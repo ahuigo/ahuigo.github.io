@@ -340,7 +340,15 @@ new func() 相当于: `{attrs:vals,__proto__:func.prototype}`
     }
 
 ## class 定义类
+### constructor
+constructor方法默认返回实例对象（即this），完全可以指定返回另外一个对象。
 
+    class Foo {
+        constructor() {
+            return Object.create(null);
+        }
+    }
+#### public 属性
 所有的方法都定义在prototype 上
 
     class Animal{
@@ -364,6 +372,12 @@ new func() 相当于: `{attrs:vals,__proto__:func.prototype}`
         }
     }
     (new Cat('ahui')).say()
+
+除了public 还有readonly ，都代表该值就是属性值，可忽略赋值
+
+    construct(public readonly name:string){
+        console.log(this.name)
+    }
 
 class 定义的方法是不可keys 枚举定义值（除了assign值）, 不过可以用getOwnPropertyNames
 
@@ -465,16 +479,6 @@ ES6 规定，在子类普通方法中通过super调用父类的方法时，方�
         name = 'bar' 
         constructor(){
             this.bar = 1; 
-        }
-    }
-
-### constructor
-
-constructor方法默认返回实例对象（即this），完全可以指定返回另外一个对象。
-
-    class Foo {
-        constructor() {
-            return Object.create(null);
         }
     }
 

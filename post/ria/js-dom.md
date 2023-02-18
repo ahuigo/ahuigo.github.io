@@ -678,6 +678,15 @@ insertAfter:
 
     toc.replaceChild(createToc(this.$el), children[0])
 
+## add js script
+
+    const im = document.createElement('script');
+    document.currentScript.after(im);
+
+document.currentScript is null: 因为它仅指当前被处理的script 节点, 如果要延时引用，可这样
+
+    var thisScript = document.currentScript;
+    setInterval(() => console.log(thisScript.src), 2000);
 ## node type
 
     node.nodeName; //
