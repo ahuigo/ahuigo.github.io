@@ -4,6 +4,7 @@ date: 2022-07-06
 private: true
 ---
 # deno lint
+## lint command
 Deno ships with a built-in code linter for JavaScript and TypeScript.
 
     # lint all JS/TS files in the current directory and subdirectories
@@ -19,8 +20,7 @@ Deno ships with a built-in code linter for JavaScript and TypeScript.
 
 For more detail, run deno lint --help.
 
-# lint rules
-## all lint rules
+## list lint rules
 https://lint.deno.land/
 
 ## Ignore directives
@@ -44,10 +44,16 @@ To ignore certain diagnostic `// deno-lint-ignore <codes...>` directive should b
         // ...
     }
 
+or
+
+    // @ts-ignore: inject APP_ENV to window
+    // @ts-ignore-next
+    window.APP_ENV = 'development';
+
 ### ignore typescript
 ignore typescript check
 
-    // @ts-ignore
+    // @ts-ignore trust me
     {/** @ts-ignore */}
     <div abc={`abc12`}></div>
 

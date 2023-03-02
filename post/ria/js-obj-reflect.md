@@ -4,7 +4,7 @@ date: 2021-01-08
 private: true
 ---
 # js obj reflect
-
+## hasProp?
     const duck = {
       name: 'Maurice',
       color: 'white',
@@ -15,15 +15,25 @@ private: true
 
     Reflect.has(duck, 'color'); // true
 
+## set and get
 Adding a new property to the object
 
     Reflect.set(duck, 'eyes', 'black');
     Reflect.get(duck, 'eyes');
+    duck.eyes// 'black';
 
+## ownKeys
 Returning the object's own keys
 
     Reflect.ownKeys(duck);
-    Object.keys(duck);
+    //等价: Object.keys(duck);
     // [ "eyes","name", "color", "greeting" ]
 
+## apply
+
+    function f(){
+        console.log(...arguments);
+    }
+    // f.apply(null, [1,2,3])
+    Reflect.apply(f,null,[1,2,3])
 

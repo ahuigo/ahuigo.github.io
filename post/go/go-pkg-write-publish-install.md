@@ -150,7 +150,11 @@ The value of GOPROXY is a list
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.mod
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.zip
 
-国内用户在用 golang 的时候麻烦（可以试一下， 先 git clone， 然后 git checkout v1.1.1， 最后 copy 到 mod/pkg@v1.1.1 下）。
+下载指定version
+
+    go get -u github.com/ahuigo/requests@v1.0.28
+
+> 国内用户在用 golang 的时候麻烦（可以试一下， 先 git clone， 然后 git checkout v1.1.1， 最后 copy 到 mod/pkg@v1.1.1 下）。
 
 不过最简单的方式是 export GOPROXY=https://goproxy.io。
 

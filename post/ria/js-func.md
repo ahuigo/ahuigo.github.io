@@ -6,16 +6,18 @@ title: js 的函数
 ## generator
     function* foo() {
         yield 11
+        yield 12
         return 22;//没用
     }
     f=foo()
     f.next(); // {value: 11, done: false}
+    f.next(); // {value: 12, done: false}
     f.next(); // {value: 22, done: true}
     f.next(); // {value: undefined, done: true}
 
-    for(var x of foo())
+    [...foo()] // [11,12]
 
-##  iterator
+###  iterator
     let fibonacci = {
       [Symbol.iterator]() {
         let pre = 0, cur = 1;

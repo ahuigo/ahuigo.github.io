@@ -91,7 +91,7 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
     let status:Status = 0
 
 
-## intersections types, 合并类型 
+## 合并类型，intersections types, merge types
     type Animal = {
         name: string
     }
@@ -101,18 +101,22 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
     }
     const a:Bear={name:'',honey:false}
 
-也可以用
+也可以用extends 合并Animal, Icoords
 
-    interface MergeType extends Animal, ICoords {} 
+    interface MergeType extends Animal, ICoords {
+        (url:string):Promise<Response>
+        age:number
+    } 
 
     // it is string, but has property named __compileTimeOnly
     type FString = string & { __compileTimeOnly: any };
+# 类型语法
+## 类型转换，convert type
+    const a = <A>1
+    // or
+    const a = <A>(1)
 
-## Unit types and const type
-Unit types are subtypes of primitive types that contain exactly one primitive value.
-
-    type X = 'a'|'b'
-    type X = "a" as const;
+    type AjaxFactoryF = AjaxFactory_ & AjaxFactory_['_call']
 
 ## interface vs type
 interface 可以叠加

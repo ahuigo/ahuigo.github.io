@@ -472,16 +472,6 @@ ES6 规定，在子类普通方法中通过super调用父类的方法时，方�
     super.x =3              //相当于this.x =3
     console.log(super.x)    //相当于读取A.prototype.x 是undefined
 
-### property
-
-    //instance
-    class Foo { 
-        name = 'bar' 
-        constructor(){
-            this.bar = 1; 
-        }
-    }
-
 ### method vs function
 
     up(){
@@ -524,6 +514,18 @@ new.target会返回子类
     }
 
     var obj = new Rectangle(3, 4); // 输出 true
+
+### property
+
+    //instance
+    class Foo { 
+        name = 'bar' 
+        #private_prop = "xx"
+        static static_prop = "yy"
+        constructor(){
+            this.bar = 1; 
+        }
+    }
 
 ### private
 

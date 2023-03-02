@@ -23,3 +23,33 @@ https://ui.shadcn.com/docs/primitives/menubar
 ## ui doc
 mdx
 dmui: 基于umi
+
+
+# UI 动画特效
+https://medium.com/@ann.green/loading-indicators-e9d9ac9680b
+
+# color
+普通人的配色方案
+http://www.ruanyifeng.com/blog/2019/03/coloring-scheme.html
+Flat UI 方案
+http://designmodo.github.io/Flat-UI/
+
+# icon
+1. 阿里icon: https://www.iconfont.cn/search/index?q=line
+1. http://compute.vision/nouns/index.html
+1. svg icon:
+    1. https://icons8.com/icons/set/check
+    2. https://tabler-icons.io/ 3400个
+1. 推荐一个icon 资源站点:
+https://www.flaticon.com/free-icon/weibo_408769#term=weibo&page=1&position=5
+
+
+# pic
+一个收集无版权插图的网站，提供 SVG / PNG 格式下载，并且允许更改颜色
+https://gallery.manypixels.co/
+
+# fonts
+http://www.ruanyifeng.com/blog/2008/06/typography_notes.html
+
+# 设计
+https://www.seeseed.com/

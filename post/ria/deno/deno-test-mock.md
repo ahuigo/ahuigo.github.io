@@ -7,6 +7,10 @@ private: true
  deno 提供了以下mock 方法: https://deno.land/manual@v1.29.2/basics/testing/mocking
  
 ## mock spy
+    import { assertSpyCall, assertSpyCalls, spy, } from "https://deno.land/std@0.171.0/testing/mock.ts";
+    // 要测试的对象
+    import { multiply, square} from "https://deno.land/std@0.171.0/testing/mock_examples/parameter_injection.ts";
+
     //mock
     const multiplySpy = spy(multiply);
     //注入mock
@@ -15,13 +19,14 @@ private: true
     assertSpyCall(multiplySpy, 0, { args: [5, 5], returned: 25, });
 
 ## mock internal
-> 如果内部方法必须可修改，否则没法mock
+> 内部方法必须可修改，否则没法mock
 
 如果不能注入mock方法，那么需要修改内方法，执行完毕后再恢复内部方法：
 
-    const multiplySpy = spy(_internals, "multiply");
+    import { _internals, square, } from "https://deno.land/std@0.171.0/testing/mock_examples/internals_injection.ts";
+    const multiplySpy = spy(_internals, "multiply"); // 会mock内部的multiply
     try {
-      assertEquals(square(5), 25);
+      assertEquals(square(5), 25);  //square 调用mock后的_internals.multiply
     } finally {
       // unwraps the multiply method on the _internals object
       multiplySpy.restore();

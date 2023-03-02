@@ -33,7 +33,7 @@ If you look at the source code for json-iterator/go, you’ll see that each file
 go1.14后不能支持多multi-version 依赖.
 以前可以通过 `replace github.com/pkg/errors/081 => github.com/pkg/errors v0.8.1` 别名依赖多个版本
 
-现在的办法是需要包本身能支持multiple version：
+现在的办法是需要包本身能支持multiple version(即mod path as version)：
 
     import (
         redisv1 "gopkg.in/go-redis/redis.v1"
@@ -67,8 +67,15 @@ module 的出现主要是为了解决以下问题：
 
 # go mod 目录与依赖冲突
 ## go mod path
-go get 使用的目录是 $GOROOT/src/github.com/
-go mod 使用的目录是 $GOROOT/pkg/mod/github.com/
+go mod tidy使用的目录是 
+
+    $GOROOT/src/github.com/
+    $GOROOT/pkg/mod/github.com/
+
+go get 用于下载单个包和版本
+
+    go get go.uber.org/fx@v1
+    go get github.com/ahuigo/requests@latest
 
 ## go.mod
 查看环境配置

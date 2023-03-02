@@ -46,9 +46,8 @@ private:
 对函数表达式（Function Expression）的定义
 
     let mySum = function (x: number, y: number): number {
-    return x + y;
-
-};
+        return x + y;
+    };
 
 上面函数是类型推论而推断出来的。手动给函数类型如：
 

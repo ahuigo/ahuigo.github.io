@@ -100,9 +100,30 @@ submit form elements:
         return formData;
     }
 
-## file
+## FileList
+FileList object is "read-only" and has no implementation of its constructor.
+不可用js构建FileList, 不过可以创建File(见后文)
 
-Via FormData and file:
+### loop fileList
+
+    var files = document.getElementById('photos').files;
+    Array.from(files).forEach(file => { ... });
+
+    // or
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      formData.append('photos[]', file, file.name);
+    }
+
+### append FileList to FormData
+    function addFileList(fd: FormData, key: string, fl: FileList) {
+        for (let i = 0; i < fl.length; i++) {
+            const file = fl[i];
+            fd.append(key, file)
+        }
+    }
+
+full example via for expression
 
     var files = document.getElementById('photos').files;
     var formData = new FormData();
@@ -119,6 +140,7 @@ Via FormData and file:
     $.each(files, function(key, value) {
         formData.append(key, value);
     });
+
 
 ### file.attr
 

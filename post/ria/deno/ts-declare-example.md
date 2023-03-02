@@ -53,28 +53,3 @@ private: true
     import echarts from 'echarts/lib/echarts';
     // 或 import echarts from 'echarts';
     var myChart = echarts.init(document.getElementById('mainx') as HTMLDivElement);
-
-### react namespace
-还有一个例子：@types/react/index.d.ts:
-
-    const TimelineChart: React.FC<TimelineChartProps> = props => {
-        return null
-    }
-
-@types/react/index.d.ts:
-
-    export = React;
-    export as namespace React;
-
-    declare namespace React {
-        type FC<P = {}> = FunctionComponent<P>;
-
-        interface FunctionComponent<P = {}> {
-            (props: PropsWithChildren<P>, context?: any): ReactElement | null; //第一个参数props, 第2个是context
-            propTypes?: WeakValidationMap<P>;
-            contextTypes?: ValidationMap<any>;
-            defaultProps?: Partial<P>;
-            displayName?: string;
-        }
-        type PropsWithChildren<P> = P & { children?: ReactNode };
-    }

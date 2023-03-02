@@ -26,6 +26,9 @@ https://ultrajs.dev/styling
 
     const paragraph = css`
       color: turquoise;
+        &:hover {
+            background-color: ${token.colorBgTextHover};
+        }
 
       a {
         border-bottom: 1px solid currentColor;
@@ -37,6 +40,14 @@ https://ultrajs.dev/styling
         Some text. <a>A link with a bottom border.</a>
       </p>
     )
+
+umijs 也支持
+
+          className={css`
+            &:hover {
+              background-color: ${token.colorBgTextHover};
+            }
+          `}
 ## twind 原子css
 
 ## stitches: styled component

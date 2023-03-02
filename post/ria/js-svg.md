@@ -255,6 +255,20 @@ translate 是相对的：
       </g>
     </svg>
 
+# css 操作
+https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element#:~:text=You%20can't%20change%20the,or%20using%20inline.
+
+    .filter-white{
+        filter: brightness(0) invert(1);
+        //First, brightness(0) makes all image black, except transparent parts, which remain transparent.
+        //invert(1) makes the black parts white
+
+    }
+    .filter-green{
+        filter: brightness(0) invert(1);
+    }
+    <img class="filter-white">
+
 # JS 操作
 ## DOM
 svg 可以嵌入到html

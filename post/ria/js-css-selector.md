@@ -218,3 +218,8 @@ css3 才区分
 ### Convert dom node to jquery object:
 
 	 $jqNode = $(Node)
+
+# where
+    :where(.a, .b):hover {
+        outline: 1px solid red;
+    }

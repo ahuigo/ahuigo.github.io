@@ -53,6 +53,7 @@ with query
 
 ### fetch post
 
+    fetch(url, options)
     options:
         credentials: "include"
         method: 'POST',

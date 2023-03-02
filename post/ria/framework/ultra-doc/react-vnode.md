@@ -9,7 +9,7 @@ https://juejin.cn/post/7157888552229928996
 
 ## 什么是ReactNode
 vnode 就是 React.ReactNode, 它包含了：
-> A ReactNode is a ReactElement, a ReactFragment, a string, a number or an array of ReactNodes, or null, or undefined, or a boolean
+> A ReactNode is a `ReactElement`, a `ReactFragment`, a `string`, a `number` or an `array of ReactNodes`, or `null`, or `undefined`, or a `boolean`
 
 另外　`React.ReactElement = JSX.Element`:
 

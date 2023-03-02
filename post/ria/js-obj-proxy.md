@@ -60,7 +60,9 @@ date: 2018-10-04
 
     const handler3 = {
         // receiver ==== handler3
+        // target ===  this
         get: function (target, prop, receiver) {
+            console.log(target)
             if (prop === "message2") {
                 return "world";
             }
@@ -146,9 +148,7 @@ get 与 in 的区别
 This example uses the construct and apply handlers.
 
     function extend(sup, base) {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        base.prototype, 'constructor'
-      );
+      var descriptor = Object.getOwnPropertyDescriptor( base.prototype, 'constructor');
       base.prototype = Object.create(sup.prototype);
       var handler = {
         construct: function(target, args) {
@@ -182,6 +182,24 @@ This example uses the construct and apply handlers.
     console.log(Peter.gender);  // "M"
     console.log(Peter.name);    // "Peter"
     console.log(Peter.age);     // 13
+
+## apply
+Note: Proxy apply 可重新定义function自己, 仅代理function`instanceof Function`有效
+
+    function f(){
+        console.log('origin')
+    }
+    f._name="Alex"
+    f._call=function(){
+        console.log(this._name, ...arguments)
+    }
+
+    const fn = new Proxy(f, {
+        // target是f自己
+        // _this 指fn自己的this　context
+        apply: (target, _this, args) => target._call(_this,...args)
+    })
+    fn.call({x:'this'},1,2,3)
 
 # todo
 There are traps available for all of the runtime-level meta-operations:

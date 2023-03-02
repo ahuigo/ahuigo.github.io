@@ -57,6 +57,7 @@ or use bracket to insert:
 update all array:
 
     UPDATE stus SET phones = '{"(408)-589-5843"}' WHERE ID = 3;
+    update users set reviewers=array['alex','ahuigo'] where id=1;
 
 update one array element:
 

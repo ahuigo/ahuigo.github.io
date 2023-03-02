@@ -18,7 +18,7 @@ private: true
         test2(MyInt(i)) // ok
     }
 
-type alias 不是新类型，一般用于重构需要
+下面的type alias 不是新类型，一般用于重构需要
 
     type T1 = T2
 

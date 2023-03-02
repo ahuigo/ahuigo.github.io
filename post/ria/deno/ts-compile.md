@@ -61,7 +61,7 @@ mime-types:
     application/octet-stream	Attempt to determine that path extension, otherwise unknown
 
 # compilerOptions
-默认deno不需要配置ts, 不建议配置ts不兼容)，deno使用deno.json 中的`compilerOptions` 配置取代`tsconfig.json`
+默认deno不需要配置ts, deno使用deno.json 中的`compilerOptions` 配置取代`tsconfig.json`
 
     $ deno run --config ./deno.json main.ts
     $ cat deno.json
@@ -141,7 +141,7 @@ deno import ts分为两种
     As the importer of a JavaScript module,   I know what types should be applied to the module.
     As the supplier of the JavaScript module, I know what types should be applied to the module.
 
-## import npm with specifier
+## npm specifier types
 Refer to https://deno.land/manual@v1.29.1/node/npm_specifiers , npm包名格式
 
     npm:<package-name>[@<version-requirement>][/<sub-path>]

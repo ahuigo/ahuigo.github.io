@@ -73,8 +73,6 @@ jQuery 的社区声明文件是jQuery in DefinitelyTyped, 我们可以直接下�
 1. 在 npm 包或 UMD 库中扩展全局变量：引用 `npm 包或 UMD` 库后，改变一个全局变量的结构
 1. 模块插件：通过 `<script> 或 import` 导入后，改变另一个模块的结构
 
-## 全局变量
-ts-declare-import.md
 ## npm 包
 一般我们通过 `import foo from 'foo'` 导入一个 npm 包，这是符合 ES6 模块规范的。
 
@@ -438,17 +436,6 @@ jQuery.foo({
 
     'bar'.prependHello();
     ```
-
-或者 用extend
-
-    // custom.window.ts
-    export interface CustomWindow extends Window {
-        customAttribute: any;
-    }
-
-    // app.ts
-    import {CustomWindow} from './custom.window.ts';
-
 
 ## 模块插件 `declare module`
 
