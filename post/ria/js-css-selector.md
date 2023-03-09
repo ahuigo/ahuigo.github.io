@@ -100,6 +100,9 @@ example:
             :nth-of-type(n)	p:nth-of-type(2)	选择属于其父元素第二个 <p> 元素的每个 <p> 元素。	3
             :nth-last-of-type(n)	p:nth-last-of-type(2)	同上，但是从最后一个子元素开始计数。	3
             :last-child	p:last-child	选择属于其父元素最后一个子元素每个 <p> 元素。
+        :scope The :scope pseudo-class represents this scoping root
+            // 等价：#app>
+            getElementById("app").querySelectorAll(":scope > .foo");
     孙、曾孙...
         $('parent grandchild'); //孙子
         $("div").find("span"); //所有孙子中的span节点

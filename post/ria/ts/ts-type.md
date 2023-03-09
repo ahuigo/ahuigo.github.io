@@ -91,13 +91,13 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
     let status:Status = 0
 
 
-## 合并类型，intersections types, merge types
+## 交叉类型，intersections types(merge types)
     type Animal = {
         name: string
     }
 
     type Bear = Animal & { 
-        honey: boolean 
+        honey: boolean;
     }
     const a:Bear={name:'',honey:false}
 
@@ -110,6 +110,18 @@ undefined 和 null 是所有类型的子类型。可以赋值给所有类型的�
 
     // it is string, but has property named __compileTimeOnly
     type FString = string & { __compileTimeOnly: any };
+
+## 联合类型转交叉类型
+    type UnionToIntersection<U> = (U extends any ? (x: U) => void : never) extends (
+            x: infer R
+        ) => void ? R : never;
+    type A = {name:string} 
+    type B = {age:number} 
+    // AB: A&B
+    type AB = UnionToIntersection<A|B> 
+
+这用到了逆变
+
 # 类型语法
 ## 类型转换，convert type
     const a = <A>1

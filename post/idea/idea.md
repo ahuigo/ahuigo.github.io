@@ -54,7 +54,7 @@ date: 2018-09-27
     - mac-tool
         - readline
 
-### rust
+## rust生态
     https://github.com/sunface/rust-course
 
 ## 数据服务
@@ -105,8 +105,14 @@ date: 2018-09-27
       1. client support both send+recv file
       2. check file via md5
       3. session verify via token
+
+10. golang+dist(umi/ultra) 写一个network诊断工具
+    1. 提供tcpstat: 类似 netstat -a
+    2. 流量采样: in/out 流量
+    1. 网络瓶颈分析: listen/established/backlog 分析
+    2. 支持gonic middleware
 10. tcpstat，tcpcapture: go-lib/net/packet
-    1. sniffer
+    1. sniffer 抓包: http, https(eBPF)
     2. tcp packet report
     3. doc: net/tcp-sniffer.md
        1. https://inc0x0.com/tcp-ip-packets-introduction/tcp-ip-packets-3-manually-create-and-send-raw-tcp-ip-packets/

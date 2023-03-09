@@ -54,7 +54,7 @@ private: true
 		z-index: 99999;
 	"></div>
 
-### 遮蔽层
+### gmodal遮蔽层
 如果是用flex遮蔽层(缺点), 实现item center：
 
     <div class="flex-container" style="
@@ -71,6 +71,9 @@ private: true
 		">
         <div style="background:blue">center</div>
     </div>
+
+demo 见[/html/gmodal.html]
+
 
 ## flex center(内部内容居中)
 ### flex container: item center

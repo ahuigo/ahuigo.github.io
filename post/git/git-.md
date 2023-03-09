@@ -692,9 +692,9 @@ e.g merge last 3 commits to one commit
     commit8
     commit7
     commit6
-    commit5
+    commit5  -- HEAD~3
     $ git rebase -i HEAD~3
-    pick commit6 merge commit6...commit8 
+    pick commit6 merge commit6...commit8  # 如果写squash commit6 那么它被合并到commit5
     squash commit7 amend commit
     squash commit8 amend commit
 

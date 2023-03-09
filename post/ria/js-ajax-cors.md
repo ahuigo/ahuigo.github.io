@@ -167,7 +167,7 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
 
 
 ### Samesite=None
-想在跨域时发送 cookie 那么要设置`SameSite=None; Secure` 两者不可分开, 限制https 或 chrome://flags 配置默认None
+想在跨域时发送 cookie 那么要设置`SameSite=None; Secure` (限https) 或 chrome://flags 配置`#same-site-by-default-cookies and #cookies-without-same-site-must-be-secure`.
 
 ## 跨域set-cookie
 1. 通过cors返回set-cookie 时必须开启: `credentials: include`

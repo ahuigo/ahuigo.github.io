@@ -1,0 +1,62 @@
+<style>
+/**gmodal**/
+.gmodal {
+  background-color: rgba(0, 0, 0, 0.45);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gmodal-content {
+  position: relative;
+  background-color: white;
+}
+
+.gmodal-close {
+  position: absolute;
+  font-size: 1.5em;
+  top: 0;
+  right: 0;
+  color: #888;
+  margin-top: 5px;
+  margin-right: 15px;
+}
+
+.gmodal-header {
+  border-bottom: 1px solid #f0f0f0;
+  height: 3em;
+  line-height: 3em;
+  padding-left: 1em;
+}
+
+.gmodal-body {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 1em;
+}
+
+.gmodal-footer {
+  padding: 1em;
+  float: right;
+}
+body{
+    
+}
+</style>
+<body>
+    <div class="gmodal">
+        <div class="gmodal-content">
+          <div class="gmodal-close">X</div>
+          <div class="gmodal-header">
+             <h3>title</h3>
+          </div>
+          <div class="gmodal-body">body</div>
+          <div class="gmodal-footer mform"><button type="button" class="ant-btn ant-btn-primary"><span>Cancel</span></button></div>
+       </div>
+    </div>
+</body>

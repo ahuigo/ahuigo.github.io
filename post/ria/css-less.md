@@ -58,10 +58,41 @@ http://lesscss.org/
 
 ### child
 
-    .panel {
+    .mform {
         ...
-        >.control {
+        >.form-item1, >.form-item2 {
             ...
+            >div{
+
+            }
+        }
+    }
+
+编译结果是(可以看chunk.css)：
+
+    .mform-xx > .form-item1_xxx > div,
+    .mform-xx > .form-item2_xxx > div
+     {
+        ...
+    }
+
+className 的写法
+
+    <div className={styles.mform}>
+        <div className={styles['form-item1']}>
+            <div></div>
+        </div>
+    </div>
+
+如果不想让类名变化：
+
+    .mform {
+        ...
+        >:global(.form-item1), >.form-item2 {
+            ...
+            >div{
+
+            }
         }
     }
 

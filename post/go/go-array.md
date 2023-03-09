@@ -106,12 +106,12 @@ A nil slice has a length and capacity of 0 and has `no underlying array`(no poin
 
     var s []int
     if s == nil {
-        fmt.Println(s, len(s), cap(s))
+        fmt.Println(s, len(s), cap(s)) // output: [] 0 0 
     }
 
 无论是nil 还是非nil, 它们的len/cap都是0
 
-    var s []int // 相当于s=[]int(nil)
+    var s []int // 相当于s=[]int(nil) 它其实不是nil, 可以作为unmarshal 指针
     fmt.Println(s, len(s), cap(s))
 
 nil slice 是可以append的

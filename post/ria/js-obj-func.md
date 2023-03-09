@@ -77,6 +77,7 @@ private: true
         super('...args', 'return this._store._call(...args)')
         // Or without the spread/rest operator:
         // super('return this._store._call.apply(this._store, arguments)')
+
         // 2. thisFunc.person="Hank"
         this._store = this.bind(this)
         this._store.person = 'Hank'
@@ -112,7 +113,7 @@ private: true
     console.log(obj1 instanceof AnotherCallable)  // true
 
 ## Via arguments.callee
-arguments.callee 指向caller，即生成的thisFunc 这个自身的实例
+arguments.callee 指向caller，即实例this
 
     class Callable extends Function {
       constructor() {
@@ -128,7 +129,8 @@ arguments.callee 指向caller，即生成的thisFunc 这个自身的实例
 
 ## Via Closure & Prototype Way
 下例通过`Object.setPrototype`将props, 也就是`new.target.prototype`绑定到新的closure:
-> `new.target===Callable` 相当于self class.
+> `new.target===this.constructor` 就是子类
+> 不要单独使用`console.log(new)` 这是一个关键字，会有语法错误
 
     class Callable extends Function {
       constructor() {
@@ -138,7 +140,7 @@ arguments.callee 指向caller，即生成的thisFunc 这个自身的实例
         //   return closure._call.apply(closure, arguments)
         // }
         return Object.setPrototypeOf(closure, new.target.prototype)
-        // return Object.setPrototypeOf(closure, Callable.prototype)
+        // return Object.setPrototypeOf(closure, <子类>.prototype)
       }
     
       _call(...args) {
@@ -155,17 +157,27 @@ arguments.callee 指向caller，即生成的thisFunc 这个自身的实例
     class Callable extends Function {
       constructor() {
         super()    
+        console.log(this.constructor === Base)  // true
+        console.log(this.constructor === new.target)  // true
+
         return new Proxy(this, {
-            // target 指向第一个proxy参数this, 即function 实例
-            // _this 是实际调用时的 this　context
-          apply: (target, _this, args) => target._call(...args)
+            // target 指向第一个proxy参数this, 即function 实例的this
+            // _this 是实际调用函数时的bindThis，没有binding就是undefined
+          apply: (target, _thisBinding, args) => target._call(...args)
         })
       }
     
       _call(...args) {
-        console.log(this, args)
+        console.log('parent:', args)
       }
     }
+
+    class Base extends Callable{
+      _call(...args) {
+        console.log('child:', args)
+      }
+    }
+    new Base()(1,2,3)
 
 Note: Proxy apply 可重新定义function自己, 参考js-obj-proxy.md
 
@@ -182,7 +194,7 @@ Note: Proxy apply 可重新定义function自己, 参考js-obj-proxy.md
     export AjaxFactory as AjaxFactoryF
     /*
     or:
-    interface AjaxFactoryT extends AjaxFactory {
+    interface AjaxFactoryF extends AjaxFactory {
         (url:string, init?:RequestInit):Promise<Response>
     }
     */
@@ -192,6 +204,36 @@ Note: Proxy apply 可重新定义function自己, 参考js-obj-proxy.md
 
 不确定是否可再简化一下?
 https://stackoverflow.com/questions/69584444/how-to-write-a-generic-function-that-calls-a-method-of-an-object
+
+    class STRING_TYPE {
+      name(): string {
+        return "one";
+      }
+    }
+    class NUMBER_TYPE {
+      name(): number {
+        return 1;
+      }
+    }
+
+    type AnyClass<R> = new (...args: any[]) => R
+
+    // 约束Kclass返回类型, 并用 ReturnType<InstanceType<Klass> 推断类型
+    const foo = <
+      Return extends { name: () => any },
+      Klass extends AnyClass<Return>,
+      >(classType: Klass): ReturnType<InstanceType<Klass>['name']> =>
+      new classType().name()
+
+    foo(NUMBER_TYPE) // number
+    foo(STRING_TYPE) // string
+
+方法：加一个 alias 中间变量AjaxFactoryAlias ，给中间变量带上扩展的类型 AjaxFactoryF
+
+    type AjaxFactoryF = AjaxFactory & AjaxFactory['_call']
+    const AjaxFactoryAlias = AjaxFactory as new ()=>AjaxFactoryF
+    export {AjaxFactoryAlias as AjaxFactory}
+    // export default AjaxFactory as new ()=> AjaxFactoryF
 
 ## Via add prop to func
 > Note: `func.name` 是只读属性，不可更改

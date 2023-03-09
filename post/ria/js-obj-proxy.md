@@ -2,77 +2,34 @@
 title: 用js proxy 继承别的对象
 date: 2018-10-04
 ---
-# object set/get
-
-## obj set 
-
-    var person = {
-        firstName: "John",
-        lastName : "Doe",
-        language : "",
-        set lang(lang) {
-            this.language = lang;
-        }
-    };
-
-    // Set an object property using a setter:
-    person.lang = "en";
-
-## obj get
-
-    const obj = {
-        log: ['a', 'b', 'c'],
-        get latest() {
-            if (this.log.length === 0) {
-            return undefined;
-            }
-            return this.log[this.log.length - 1];
-        }
-    };
-
-    console.log(obj.latest);
-
-## object define
-
-    var o = {}
-    Object.defineProperty(o, 'b', {
-        get() { 
-            return this._b; 
-        },
-        set(newValue) { 
-            console.log(newValue)
-            this._b = newValue; 
-        },
-        enumerable: true,
-        configurable: true
-    });
-
-    o.b = 38
-    console.log(o.b)
-
 # proxy
-## get
+## magic set/get的问题
+参考js-obj-magic 的object set/get有两个问题：
+1. 需要明确指定set/get prop 的值，不能拦截所有的prop
+1. 需要一个缓存对象：`this['_'+prop]=v`，如果这样写就会死循环：`this[prop]=v`
 
-    const target = {
-        message1: "hello",
-        message2: "everyone"
-    };
+而proxy 就可以避免这些问题
 
-    const handler3 = {
-        // receiver ==== handler3
-        // target ===  this
-        get: function (target, prop, receiver) {
-            console.log(target)
-            if (prop === "message2") {
-                return "world";
-            }
-            return target[prop];
-        },
-    };
+## set/get
+    export function withDefautValue<T>(obj:Record<string|symbol, T>, defaultValue:T){
+        return new Proxy(obj, {
+            get: function (target, prop, receiver) {
+                return target[prop]??defaultValue;
+            },
+            // 这里的set 可省略
+            set: function (target, prop, value, receiver) {
+                target[prop] = value
+                return true; // 代表set 成功无异常
+            },
+        })
+    }
 
-    const proxy3 = new Proxy(target, handler3);
-    console.log(proxy3.message1); // hello
-    console.log(proxy3.message2); // world
+    var a={} as Record<string, number>
+    a = withDefautValue(a, 0)
+    console.log(a.flag)
+    a.flag+=10
+    console.log(Object.getOwnPropertyDescriptor(a, "flag"))
+    //{ value: 10, writable: true, enumerable: true, configurable: true }
 
 get 与 in 的区别
 
@@ -88,29 +45,8 @@ get 与 in 的区别
     console.log('c' in p, p.c);
     //  false, 37
 
-## extend object method
 
-    const children = [1,2,3]
-    const ctx = {
-        next(){
-            console.log('child1:',children.shift())
-        }
-    }
-
-    const children2 = [4]
-    const ctx2 = new Proxy(ctx, {
-      get: function(oriobj, prop) {
-        if(prop=="next"){
-            if(children2.length){
-                return ()=> console.log('child2:',children2.shift())
-            }
-        }
-        return oriobj[prop]
-      }
-    });
-
-
-## set validator
+### set validator
     let validator = {
       set: function(obj, prop, value) {
         if (prop === 'age') {
@@ -132,19 +68,42 @@ get 与 in 的区别
     console.log(person.age); // 100
     person.age = 'young';    // Throws an exception
 
-## extend a function apply
+## apply
 
-    var target = function () { return "I am the target"; };
+    var target = function (...args) { 
+        console.log(args)
+        return "I am the target "+`(${args.length}) (${args})`; 
+    };
     var handler = {
-      apply: function (receiver, ...args) {
+      apply: function (receiver, thisBinding, args) {
+        console.log(receiver(...args))
         return "I am the proxy";
       }
     };
 
     var p = new Proxy(target, handler);
-    p() === "I am the proxy";
+    p(1,2,3) === "I am the proxy";
 
-## Extend constructor
+### apply for function
+Note: Proxy apply 可重新定义function自己, 仅代理function`instanceof Function`有效
+
+    function f(){
+        console.log('origin')
+    }
+    f._name="Alex"
+    f._call=function(){
+        console.log(this._name, ...arguments)
+    }
+
+    const fn = new Proxy(f, {
+        // target是f自己
+        // _this 指fn自己的thisBinding
+        apply: (target, _thisBinding, args) => target._call(_thisBinding,...args)
+    })
+    fn.call({x:'this'},1,2,3)
+
+
+## constructor
 This example uses the construct and apply handlers.
 
     function extend(sup, base) {
@@ -183,25 +142,7 @@ This example uses the construct and apply handlers.
     console.log(Peter.name);    // "Peter"
     console.log(Peter.age);     // 13
 
-## apply
-Note: Proxy apply 可重新定义function自己, 仅代理function`instanceof Function`有效
-
-    function f(){
-        console.log('origin')
-    }
-    f._name="Alex"
-    f._call=function(){
-        console.log(this._name, ...arguments)
-    }
-
-    const fn = new Proxy(f, {
-        // target是f自己
-        // _this 指fn自己的this　context
-        apply: (target, _this, args) => target._call(_this,...args)
-    })
-    fn.call({x:'this'},1,2,3)
-
-# todo
+## other hooks
 There are traps available for all of the runtime-level meta-operations:
 
     var handler =
@@ -215,7 +156,7 @@ There are traps available for all of the runtime-level meta-operations:
       // delete target.prop
       deleteProperty: ...,
       // target(...args)
-      apply: ...,
+      apply: (target, thisBindings, ...args),
       // new target(...args)
       construct: ...,
       // Object.getOwnPropertyDescriptor(target, 'prop')
@@ -235,4 +176,13 @@ There are traps available for all of the runtime-level meta-operations:
       preventExtensions: ...,
       // Object.isExtensible(target)
       isExtensible :...
+    }
+
+## Implement `__proto__`
+> `__proto__` is deprecated in es6 and deno. 
+
+    if(!'__proto__' in Object){
+        Object.getPrototypeOf(Object).__proto__ = funtion(){
+            return Object.getPrototypeOf(this)
+        }
     }

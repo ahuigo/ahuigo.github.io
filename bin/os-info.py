@@ -16,6 +16,12 @@ def printNode(short=False):
     print("yarn:", getoutput('yarn -v')+' '+(getoutput('which yarn') if not short else ''))
     print("pnpm:", getoutput('pnpm -v')+' '+(getoutput('which pnpm') if not short else ''))
 
+def printCpuMem():
+    print("code --status:", getoutput('code --status'))
+    print("============================================")
+    print('''1. `code --disable-extensions` to run VS Code without any extensions ''')
+    print('2. Open Activity Monitor.app please for more')
+
 def getCpu():
     lines = getoutput('sysctl -a | grep machdep.cpu').split('\n')
     out = getoutput('uname -mrs')
@@ -40,5 +46,7 @@ def main():
         printNode(short)
     if 'java' in sys.argv:
         printJava()
+    if 'cpu' in sys.argv:
+        printCpuMem()
 main()
     

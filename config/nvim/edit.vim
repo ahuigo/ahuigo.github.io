@@ -11,7 +11,7 @@ function! edit#run()
     elseif ext == 'sh'
         !bash %
     elseif ext == 'js'
-        !deno run %
+        !node %
     elseif ext == 'lua'
         !lua %
     elseif ext == 'ts'

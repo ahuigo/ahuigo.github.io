@@ -4,7 +4,20 @@ date: 2021-01-08
 private: true
 ---
 # js obj reflect
-## hasProp?
+reflect 用得很少，一般自带的方法就足够了
+
+## 反射key 属性
+
+### 反射symbol 属性:ownKeys
+    var O = {a: 1};
+    Object.defineProperty(O, 'b', {value: 2});
+    O[Symbol('c')] = 3;
+
+    Reflect.ownKeys(O); // 输出：['a', 'b', Symbol(c)]
+    Object.keys(O); //输出:　['a']
+    Object.entries(O); //输出[['a',1]]
+
+### has: hasProp?
     const duck = {
       name: 'Maurice',
       color: 'white',
@@ -15,19 +28,31 @@ private: true
 
     Reflect.has(duck, 'color'); // true
 
-## set and get
+
+### 反射 prototype属性
+    obj={
+        __proto__:{f1:1},
+        ['__proto__']:{f2:2},
+    }
+    Object.getPrototypeOf(obj) //{f1}
+    Reflect.getPrototypeOf(obj) //{f1}
+
+## 反射实例化：
+
+    function C(a, b){
+        this.c = a + b;
+    }
+    var instance = Reflect.construct(C, [20, 22]);
+    instance.c; // 42
+
+## set and get props
 Adding a new property to the object
 
+    duck = {}
+    // duck.eyes = 'black';
     Reflect.set(duck, 'eyes', 'black');
+    // duck.eyes // 'black';
     Reflect.get(duck, 'eyes');
-    duck.eyes// 'black';
-
-## ownKeys
-Returning the object's own keys
-
-    Reflect.ownKeys(duck);
-    //等价: Object.keys(duck);
-    // [ "eyes","name", "color", "greeting" ]
 
 ## apply
 

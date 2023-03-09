@@ -46,12 +46,19 @@ Array:
         [ city + 'population' ]: 350000
     };
 
-### define property
+### Object.defineProperty()
+定义特殊属性hook:
+1. 默认enumerable:false, 无法被Object.keys/Object.entries 遍历
+2. 它不会修改`__proto__`, 它是和Array的length一样是实例hook method
 
+比如：
+
+    object1 = {}
     Object.defineProperties(object1, {
         property1: {
             value: 42,
             writable: true,
+            enumerable: false,
             configurable: true,
         },
         property2: {
@@ -59,52 +66,104 @@ Array:
         }
     });
 
-e.g.
+如果想被实例继承，应该定义在`obj.prototype`:
 
-    Object.defineProperties(Array.prototype, {
-        unique: {enumerable:true}
-    })
+    Object.defineProperty(Object.prototype, "__uniqueId", {
+        writable: false,
+    });
+    obj = {}
+    obj.__uniqueID = 1; //invalid
+
+Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现类似 PHP 类的`__get`, `__set`
+
+    Number.prototype = Object.defineProperty(
+      Number.prototype, "double", {
+    	get: function (){return (this + this)}
+      }
+    );
+    3.double;//被当作小数点
+    (3).double;//6
+    3['double'].double;//12
+    3..double;//6 第一个点被解析为小数点，第二个点被解释为操作符
+
+对原始类型做对象操作时，js 会用原始类型的对象wrapper 把变量包装一下，然后在临时对象上操作。
+
+    var a=3; //是数值，不是数值对象
+    a.key=1; //js 数据类型的对象wrapper 会将a 包装为临时的数值对象. 相当于`(new Number(a)).key=1`
+    a.key;//undefined 因为临时对象不存在了
 
 ### clone
 
     const newobj = {...original, prop: newOne}
     const newarr = oldarr.slice(0,5)
 
-### loop: entries(use keys())
-
-like python's .items()
-
-    for(let [key, value] of Object.entries(myObject)) {
-        console.log(key, value); // "first", "one"
-    }
-
 ## keys
+总结：
+1. arr:forEach/for-of/map: 不会遍历属性，而是从index=0到最大index　遍历取值. Try`let a=[];a[100]=0;`
+1. 不含`__proto__`:
+    1. keys/entries: 遍历普通属性+ defineProp为`enumerable:true`的.
+    2. getOwnPropertyNames/obj.hasOwnProperty: 普通属性 + 所有defineProp(比如arr.length)
+1. 包含`__proto__`:
+    1. for-in/in: 遍历普通属性 + `enumerable:true`的(`__proto__`默认true, defineProp 默认是false)
+        1. 遍历`__proto__`是递归遍历的
 
-list forEach
+比如
 
-    Object.keys({a:1, b:2})
-    	["a", "b"]
-    Object.keys(obj).forEach(function(key){
-    	console.log(key, obj[key])
+    const o = [1]
+    o[2]=2
+
+    Object.defineProperty(o, 'def_t', {value:'def_p', enumerable:true})
+    Object.defineProperty(o, 'def_f', {value:'def_p'})
+
+    Array.prototype.proto = 'default'
+    Array.prototype.proto_t = true
+    Array.prototype.proto_f = false
+    Object.defineProperty(Array.prototype, 'proto_t', {enumerable:true})
+    Object.defineProperty(Array.prototype, 'proto_f', {enumerable:false})
+
+    let keys = []
+    for(const v of o) keys.push(v)
+
+    // for-of: [ 1, undefined, 2 ]
+    console.log('for-of:', keys)
+
+    //map: [ 1, <1 empty item>, 2 ]
+    console.log('map:', o.map(v=>v))    
+
+    //keys: [ '0', '2', 'def_t' ]
+    console.log('keys:', Object.keys(o)) 
+
+    keys = []
+    for(const [k] of Object.entries(o)) keys.push(k)
+    console.log('Object.entries:', keys) 
+    //Object.entries: [ '0', '2', 'def_t' ]
+
+    keys = []
+    for(const k in o) keys.push(k)
+    console.log('for-in:', keys)        
+    //for-in: [ '0', '2', 'def_t', 'proto', 'proto_t' ]
+
+    // getOwnPropertyNames: [ '0', '2', 'length', 'def_t', 'def_f' ]
+    console.log('getOwnPropertyNames:', Object.getOwnPropertyNames(o))
+
+    // hasOwnProperty: { '0': true, '1': false, '2': true, '"0"': true, proto_t: false }
+    console.log('hasOwnProperty:',{
+        '"0"':o.hasOwnProperty('0'),
+        0:o.hasOwnProperty(0),
+        1:o.hasOwnProperty(1),  //false
+        2:o.hasOwnProperty(2),
+        'proto_t':o.hasOwnProperty('proto_t'), //false
     })
 
-keys / for-in base proto / getOwnPropertyNames enumerable
-
-    var o = Object.create({base:0})
-    Object.defineProperty(o, 'yes', {enumerable: true})
-    Object.defineProperty(o, 'not', {enumerable: false, value:2})
-
-    console.log(Object.keys(o))
-    // [ 'yes' ]
-
-    //+enumerable
-    console.log(Object.getOwnPropertyNames(o))
-    // [ 'yes', 'not' ]
-
-    //+prototype
-    for (var x in o)
-        console.log(x)
-    // yes, base
+### getOwnPropertyDescriptor
+    var descriptor = Object.getOwnPropertyDescriptor( obj, "prop");
+    var descriptor = Object.getOwnPropertyDescriptor( MyClass.prototype, "prop");
+        {
+        get: [Function: get prop],
+        set: [Function: set prop],
+        enumerable: false,
+        configurable: true
+        }
 
 ### has key
 
@@ -120,13 +179,28 @@ e.g.
     	return obj.hasOwnProperty(key) && obj[key] === value;
     }
 
+`in`、 `for in` 可以判断ownProp 以及继承的props
+
+    > oo={}
+    > oo.__proto__= {a:1}
+    > 'a' in oo
+    true
+
+
 ### delete key
 
     delete variable
     delete obj.name
 
-## values(不含inherits)
+### inner property list
 
+    obj.constructor
+    obj.propertyIsEnumerable('attr')
+        判断给定的属性是否可以用 for...of 语句进行枚举。
+    obj.__proto__ 
+
+
+## values(对应keys)
 values:
 
     Object.values({ one: 1, two: 2 })            //[1, 2]
@@ -148,35 +222,8 @@ update const obj
     const obj = {a:1}
     Object.assign(obj, {b:11})
 
-## Property 属性
-
-property list
-
-    obj.constructor
-    obj.propertyIsEnumerable('attr')
-        判断给定的属性是否可以用 for...in 语句进行枚举。
-    obj.__proto__
-
-### for in prop
-obj.hasOwnProperty('attr'), Object.keys(obj) 都只有ownprop
-
-     static ObjectFlip(obj) {
-        const ret = {};
-        Object.keys(obj).forEach((key) => {
-            ret[obj[key]] = key;
-        });
-        return ret;
-    }
-
-in, `for in` 可以判断ownProp 以及继承的props
-
-    > oo={}
-    > oo.__proto__= {a:1}
-    > 'a' in oo
-    true
-
 ## value
-
+### hasOwnValue
     Object.prototype.hasOwnValue = function(val) {
     	for(var prop in this) {
     		if(this.hasOwnProperty(prop) && this[prop] === val) {
@@ -213,58 +260,20 @@ in, `for in` 可以判断ownProp 以及继承的props
     console.log(a.uniqueId)                     // 1
     console.log(a.hasOwnProperty('__uniqueId')) // true
 
-### Object.defineProperty()
-
-    obj[name] = value;
-    //or
-    Object.defineProperty(obj, name, { 
-        # value: value, 
-        get(){
-            return value
-        },
-        writable: false ,
-        enumerable: false,
-    });
-
-如果想被实例继承，应该定义在`obj.prototype`:
-
-    Object.defineProperty(Object.prototype, "__uniqueId", {
-        writable: false,
-    });
-    obj = {}
-    obj.__uniqueID = 1; //invalid
-
-Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现类似 PHP 类的`__get`, `__set`
-
-    Number.prototype = Object.defineProperty(
-      Number.prototype, "double", {
-    	get: function (){return (this + this)}
-      }
-    );
-    3.double;//被当作小数点
-    (3).double;//6
-    3['double'].double;//12
-    3..double;//6 第一个点被解析为小数点，第二个点被解释为操作符
-
-对原始类型做对象操作时，js 会用原始类型的对象wrapper 把变量包装一下，然后在临时对象上操作。
-
-    var a=3; //是数值，不是数值对象
-    a.key=1; //js 数据类型的对象wrapper 会将a 包装为临时的数值对象. 相当于`(new Number(a)).key=1`
-    a.key;//undefined 因为临时对象不存在了
-
 # 定义与创建
 
-## Object Literal
+## Object Literal prototype
 
+    const proto = {f1(){return 'parent call1'}}
     var obj = {
         // Computed (dynamic) property names
         [ "prop_" + (() => 42)() ]: 42, //obj.prop_42
 
         //obj.f1() === obj.__proto__.f1()
-        __proto__: {f1(){return 'parent call1'}}, 
+        __proto__: , // 它是原型
 
         // duplicate __proto__ properties is not allowed
-        // 这个动态属性['__proto__'] 会阻止后续__proto__继承, 它是普通属性
+        // 这个动态属性['__proto__'] 会阻止直接访问__proto__原型, 它是普通属性
         // 1. does not set prototype: obj.f2 === undefined 
         // 2. obj.__proto__.f2() works
         ['__proto__']: {f2(){return 'parent call2'}}, //
@@ -275,10 +284,20 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
         },
     };
 
+获取属性、原型
+
+    obj.__proto__ //{f2}
+    Object.getPrototypeOf(obj) //{f1}
+    Reflect.getPrototypeOf(obj) //{f1}
+
 ## 对象实例的原型
+1. prototype 是原型独有的属性,也就是有constructor可以实例化对象的方法才有;
+2. `__proto__` 是对象才有的属性, 指向原型属性，实现原型继承.
+    1.  `__proto__.constructor` 则指向构造器
+
+比如：
 
     function A(){}
-
     > A.prototype.constructor === A
         true
     > new A().constructor===A.prototype.constructor
@@ -286,18 +305,36 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
     > new A().__proto__===A.prototype
         true
 
-So:
+特别的：Object.prototype 是所有对象的根原型. (deno 不能直接访问`__proto__`, Deprecated in es6)
 
-1. prototype是原型独有的属性,也就是有constructor可以实例化对象的方法才有;
-2. `__proto__` 是对象才有的属性, 指向原型属性，实现原型继承.
+    Object.prototype.a=1//{} 
+    o={} // o=new Object()
 
-e.g.
+    o.__proto__ === Object.prototype // __proto__ is Deprecated in es6
+    Object.getPrototypeOf(o) === Object.prototype // true
+    Object.getPrototypeOf(Array.prototype) === Object.prototype
 
-    Object.prototype//{} o=new Object() o.__proto__ === Object.prototype
-    Object.__proto__//[function] 这个就别管它了
+    arr = [1,2,3]
+    Object.getPrototypeOf(Object.getPrototypeOf(b)) === Object.prototype
 
-### new 与 Object.create
 
+### Implement `__proto__`
+`__proto__` is deprecated in es6 and deno. 
+
+    if(!('__proto__' in Object)){
+        Object.defineProperty(Object.prototype, '__proto__', {
+            get:function(){
+                return Object.getPrototypeOf(this)
+            },
+            enumerable:false,
+        })
+    }
+    Array.prototype.a=1
+    var a=[]
+    console.log(a.__proto__ === Array.prototype)
+
+
+### new 与 Object.create/setPrototypeOf 本质
 Object.create(func.prototype)相当于: `{__proto__:func.prototype}` 用于cls2 extends
 cls1 Object.create(obj)相当于: `{__proto__:obj}` 相当于对象继承了
 
@@ -307,37 +344,31 @@ cls1 Object.create(obj)相当于: `{__proto__:obj}` 相当于对象继承了
         return new F();
     };
 
-new func() 相当于: `{attrs:vals,__proto__:func.prototype}`
+new func() 相当于: `{[...props]:[...attrs],__proto__:func.prototype}`
 
-    var o1 = new Object();
-        //func.prototype.constructor()
-        o1['__proto__'] = func.prototype;
-        func.call(o1);
+    // var o1 = new func();
+    o1={
+        __proto__: func.prototype, 
+    };
+    func.call(o1);  // func.prototype.constructor 可以被替换, 但是实际执行的还是func自己
 
 > arrow函数不是匿名函数，它没有`[[Construct]] internal method` ，不能进行`new`,
+
+Object.setPrototypeOf 本质
+
+    // 相当于　f.__proto__ = A.prototype; return f
+    function f(){}
+    class A{}
+    var o = Object.setPrototypeOf(f, A.prototype);
+
+    // 经常用于js-obj-fun: 
+    return Object.setPrototypeOf(f, new.target.prototype);
 
 ### 对象继承对象
 
     a={age:10, name:'xiao'}
     b={age:12}
     b.__proto__ = a
-
-### 类继承类
-
-原型继承原型
-
-    function ClassA(sColor){ }
-    function ClassB(){ 
-        //self.prototype = Object.getPrototypeOf(this)
-        self = this.constructor
-        //1. 原型链冒充 原类的静态成员(prototype).
-        if(self.__init === undefined){
-            self.__init === true
-            ClassB.prototype = Object.create(ClassA.prototype) //prototype隔离
-        }
-        // 2. 再冒充ClassB对象.
-        self.call(this, sColor);
-    }
 
 ## class 定义类
 ### constructor
@@ -348,60 +379,6 @@ constructor方法默认返回实例对象（即this），完全可以指定返�
             return Object.create(null);
         }
     }
-#### public 属性
-所有的方法都定义在prototype 上
-
-    class Animal{
-        name = 'dog'
-        constructor(name){
-            this.name = name; // 如果有construct(public name:string) 且没有`name="dog"` 则可以省略此行
-        }
-        method1(){
-            console.log(this.name)
-        }
-    }
-    class Cat extends Animal{
-        constructor(name){
-            super(name) //super 是编译时确定 必须在前
-            super.method1()
-            this.xxx()
-        }
-        say(){
-            return `Hello, ${this.name}!`
-            return super.method1()
-        }
-    }
-    (new Cat('ahui')).say()
-
-除了public 还有readonly ，都代表该值就是属性值，可忽略赋值
-
-    construct(public readonly name:string){
-        console.log(this.name)
-    }
-
-class 定义的方法是不可keys 枚举定义值（除了assign值）, 不过可以用getOwnPropertyNames
-
-    // 等于：Point.prototype = { constructor() {},  func1() {}, };
-    class Point {
-        constructor(){ }
-        func1(){}
-    }
-
-    Object.assign(Point.prototype, {
-        toString(){},
-        toValue(){},
-        func2(){}
-    });
-
-    > Object.keys(Point.prototype)
-    [ 'toString', 'toValue', 'func2' ]
-    > Object.getOwnPropertyNames(Point.prototype)
-    [ 'constructor', 'func1', 'toString', 'toValue', 'func2' ]
-
-属性名可以用变量:
-
-    [methodName]() { }
-
 ### super
 
 https://es6.ruanyifeng.com/#docs/class-extends#super-%E5%85%B3%E9%94%AE%E5%AD%97
@@ -496,13 +473,17 @@ ES6 规定，在子类普通方法中通过super调用父类的方法时，方�
     "prop" in new MyClass()  // true
     Object.hasOwnProperty(new MyClass, "prop"); //false
 
-
+    Object.hasOwnProperty(new MyClass().__proto__, "prop"); //true
     var descriptor = Object.getOwnPropertyDescriptor( MyClass.prototype, "prop");
+        {
+        get: [Function: get prop],
+        set: [Function: set prop],
+        enumerable: false,
+        configurable: true
+        }
 
-    "get" in descriptor  // true
 
-### new.target === class
-
+### new.target === this.constructor
 new.target会返回子类
 
     class Rectangle {
@@ -527,9 +508,62 @@ new.target会返回子类
         }
     }
 
-### private
+#### public 属性
+所有的方法都定义在prototype 上
 
-侵入式的不优雅 1. 只能用this[property], 不能用this.property
+    class Animal{
+        name = 'dog'
+        constructor(name){
+            this.name = name; // 如果有construct(public name:string) 且没有`name="dog"` 则可以省略此行
+        }
+        method1(){
+            console.log(this.name)
+        }
+    }
+    class Cat extends Animal{
+        constructor(name){
+            super(name) //super 是编译时确定 必须在前
+            super.method1()
+            this.xxx()
+        }
+        say(){
+            return `Hello, ${this.name}!`
+            return super.method1()
+        }
+    }
+    (new Cat('ahui')).say()
+
+除了public 还有readonly ，都代表该值就是属性值，可忽略赋值
+
+    construct(public readonly name:string){
+        console.log(this.name)
+    }
+
+class 定义的方法是不可keys 枚举定义值（除了assign值）, 不过可以用getOwnPropertyNames
+
+    // 等于：Point.prototype = { constructor() {},  func1() {}, };
+    class Point {
+        constructor(){ }
+        func1(){}
+    }
+
+    Object.assign(Point.prototype, {
+        toString(){},
+        toValue(){},
+        func2(){}
+    });
+
+    > Object.keys(Point.prototype)
+    [ 'toString', 'toValue', 'func2' ]
+    > Object.getOwnPropertyNames(Point.prototype)
+    [ 'constructor', 'func1', 'toString', 'toValue', 'func2' ]
+
+属性名可以用变量:
+
+    [methodName]() { }
+
+#### private
+private : 只能用`this[property]`, 不能用this.property
 
     var property = Symbol();
     var method = Symbol();
@@ -574,7 +608,7 @@ es7 private:
 
 ### static
 
-static 不可以被实例继承(因为不是prototype), static属于类自己(相当于proto)
+static 不可以被实例继承(因为不是prototype), static属于类自己
 
     Foo.prototype.bar=2 // prototype 才被继承
     class Foo{
@@ -616,6 +650,9 @@ e.g.
     const all = Object.getOwnPropertyNames(Foo)
         .filter(prop => typeof Foo[prop] === "function");
     console.log(all); // ["one", "four"]
+
+##### get all prototype props
+    Object.getOwnPropertyNames(Foo.prototype) 
 
 ##### instance call static method
 
@@ -741,7 +778,7 @@ number、boolean和string都有包装对象. (包装对象一点用处也没有�
     123..toString(); // '123'; #加括号是为了防止解析为小数点
     ''+123
 
-### 对象原型判断
+### 对象原型判断instanceof
 
     arr ----> Array.prototype ----> Object.prototype ----> null
 
@@ -777,16 +814,17 @@ e.g.
     obj = factory(1,2)
 
 ### 构造方式(deprecated)
-
 只避免了factory 的第二个缺点: 复杂性
+每次还会生成新的function.
 
-1. 每次都会生成新的function.
-
-   function construction(v1,v2){ this.p1 = v1; this.p2 = v2; this.func =
-   function(){}; //为避免重复的func, 可在外部定义 } obj = new constructor(1,2)
+   function construction(v1,v2){ 
+        this.p1 = v1; 
+        this.p2 = v2; 
+        this.func = function(){}; //为避免重复的func, 可在提前外部定义 func
+    } 
+    obj = new constructor(1,2)
 
 ### 原型方式(deprecated)
-
 没有工厂方法的缺点，但产生了新的缺点：
 
 - 不能传参数
@@ -794,16 +832,15 @@ e.g.
 e.g.
 
     function Car() { } 
-    Car.prototype.color = "blue"; 
-    Car.prototype.showColor = function() { 
-        alert(this.color); 
+        Car.prototype.color = "blue"; 
+        Car.prototype.showColor = function() { 
+            alert(this.color); 
     }; 
     (new Car) instanceof Car;//true; 
     (new Car) instanceof Object;//true; 
     (new Car) instanceof Number;//false;
 
 ### 静态的构造原型混合
-
 - 构造: 放私有的属性
 - 原型: 放公共的属性
 
@@ -812,11 +849,11 @@ e.g.
 #### 动态构造原型混合
 
     function Car(color){
-    	//private
+    	//private: 构造
     	this.color=color;
 
-    	//public(prototype)
-    	//if (typeof Car._initialized === "undefined") {
+    	//public: prototype 原型
+    	//if (typeof Car._initialized === "undefined") 
     	if (Car._initialized === undefined) {
     		var self = Car;
     		self._initialized = true;//非prototype 的_initialized 不会被继承，但是它相当于Car 内的静态变量
@@ -824,55 +861,12 @@ e.g.
     		  console.log(this.color);
     		};
     	}
-      }
     }
+    new Car('red').showColor()
 
 ## Extends 继承(deprecated)
 
-### 对象冒充
-
-#### 利用this 变化
-
-ClassB 继承 ClassA
-
-    function ClassA(color){
-    	this.color = color;
-    }
-    function ClassB(color, num){
-    	this.method = ClassA; //ClassB就冒充了ClassA中的this
-    	this.method(color)
-    	delete this.method;
-
-    	this.method = ClassA1; //ClassB就冒充了ClassA1中的this(可以多重继承的)
-    	this.method(num);
-    	delete this.method;
-
-    	this.color = value; //Notice; 会覆盖前面的属性. 请确保属性名不冲突
-    }
-    new ClassB('red', 5);
-
-### bind
-
-    i = 'global'
-    obj={i:'local', f:function(){console.log(this.i)}}
-    obj.bind(null)(); // global
-    obj.bind()(); // global
-    obj.bind({i:'haha'})(); // haha
-
-注意： bind 无法改变箭头函数的this
-
-### call()
-
-    function sayColor(sPrefix,sSuffix) {
-    	alert(sPrefix + this.color + sSuffix);
-    };
-
-    var obj = new Object();
-    obj.color = "blue";
-
-    sayColor.call(obj, "The color is ", "a very nice color indeed.");// saycolor中的this会指向obj, obj对象就冒充了saycolor.
-
-#### 用call 实现继承
+### 用call 实现继承
 
     function ClassB(sColor, sName) {
     	//this.newMethod = ClassA;
@@ -887,20 +881,6 @@ ClassB 继承 ClassA
     }
 
 ### apply 方法冒充继承
-
-apply与call方法类似, 除了参数调用形式不一样.
-
-    function sayColor(sPrefix,sSuffix) {
-    	alert(sPrefix + this.color + sSuffix);
-    };
-
-    var obj = new Object();
-    obj.color = "blue";
-
-    sayColor.apply(obj, new Array("The color is ", "a very nice color indeed."));
-
-#### apply 实现继承.
-
     function ClassB(sColor, sName) {
     	//this.newMethod = ClassA;
     	//this.newMethod(color);
@@ -915,9 +895,6 @@ apply与call方法类似, 除了参数调用形式不一样.
 
 还有一个bind 方法，但函数使用bind 时，函数不会执行
 `var get = request.bind(this, 'GET', arg2, ... );` request 就不会执行。
-
-它主要用于定制一个新的 requset 的函数，并默认函数的this 及定制参数:
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
 
 ### 原型链（prototype chaining）
 
@@ -937,81 +914,37 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
     ClassB.prototype = new ClassA(); //继承了啦.
 
 ### 混合方式
-
-对象冒充: 不能冒充静态成员(prototype public) 原型链: 因为prototype 是公共的,
+call/apply对象冒充: 不能冒充静态成员(prototype public) 原型链: 因为prototype 是公共的,
 所以传argument(private)就不合适了.故产生了apply/call + 原型的混合方式.
 
     function ClassA(color) {
     	this.color = color;
-    	if(ClassA.init === undefined){
-    		ClassA.init = true;
-    		ClassA.prototype.sayColor = function () {
-    			console.log(this.color);
-    		};
-    	}
     }
-
-    function ClassB(sColor, sName) {
-    	//var self.prototype = Object.getPrototypeOf(this)
-    	var self = this.constructor
-    	if( self.init === undefined){
-    		self.init = true;
-            // 最好别传new ClassA(sColor),因为sColor应该是每个对象私有的.
-    		//self.prototype = new ClassA(); 
-            
-            //1. 原型链冒充 原类的静态成员(prototype). 
-    		self.prototype = Object.create(ClassA.prototype)
-    		self.prototype = ClassA.prototype
-    	}
-    	ClassA.call(this, sColor);// 2. 再冒充ClasA对象.
-
-        //自身
-    	this.name = sName;
-    }
-
-用Call 继承属性方法初始化，用`Object.create` 继承公共属性与方法 再来一个例子：
-
-    //Shape - superclass
-    function Shape() {
-      this.x = 0;
-      this.y = 0;
-    }
-
-    Shape.prototype.move = function(x, y) {
-    	this.x += x;
-    	this.y += y;
-    	console.info("Shape moved.");
+    ClassA.prototype.sayColor = function () {
+        console.log(this.color);
     };
 
-    // Rectangle - subclass
-    function Rectangle() {
-      Shape.call(this); //call super constructor.
+    function ClassB(sColor, sName) {
+    	const parent = Object.getPrototypeOf(this).constructor // ClassA
+        // 1. 冒充ClassA对象实例.
+    	parent.call(this, sColor); // super(sColor)
+
+        // 2. 自身属性
+    	this.name = sName;
     }
+    (function initClassBPrototype(){
+        const self = ClassB; 
+        //1. 原型链冒充 原类的静态成员(prototype). 
+        self.prototype = Object.create(ClassA.prototype)
+        // self.prototype = {__proto__:ClassA.prototype}
 
-    //不要共享prototype
-    Rectangle.prototype = Object.create(Shape.prototype);
+        //2. 自身的prototype
+        self.prototype.sayName = function(){
+            console.log('my name is:', this.name)
+        }
+    })()
 
-    var rect = new Rectangle();
-
-    rect instanceof Rectangle //true.
-    rect instanceof Shape //true.
-
-    rect.move(1, 1); //Outputs, "Shape moved."
-
-# Reflect
-
-反射属性
-
-    var O = {a: 1};
-    Object.defineProperty(O, 'b', {value: 2});
-    O[Symbol('c')] = 3;
-
-    Reflect.ownKeys(O); // 输出：['a', 'b', Symbol(c)]
-
-反射实例：
-
-    function C(a, b){
-    this.c = a + b;
-    }
-    var instance = Reflect.construct(C, [20, 22]);
-    instance.c; // 42
+    // test
+    const o = new ClassB('red', 'alex')
+    o.sayName()
+    o.sayColor()

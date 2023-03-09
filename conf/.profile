@@ -38,7 +38,7 @@ alias svnst='svn st'
 alias l='ls -lah'
 alias code1=~/'Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 
-# python
+##################### python ##########################################
 export PATH=/opt/homebrew/opt/python@3.10/bin:$PATH
 if [[ -z $LDFLAGS ]];then
     # For compilers to find python@3.10 you may need to set:
@@ -54,7 +54,7 @@ alias pi='pip3'
 alias pip='pip3'
 export PYTHONPATH=.
 
-# docker
+####################### docker ###################################################
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 alias drmi='docker rmi $( docker images --filter "dangling=true" -q --no-trunc)'
 
@@ -77,16 +77,8 @@ function lllllllllzrmv(){
     mv $2 $1;
 }
 
-#alias ts='ts-node'
-function ts () {
-	cwd_dir=$(pwd)
-    tsc $1 && node --inspect ${1/.ts/.js} $@
-    cd $cwd_dir
-}
+###################cicd #####################
 
-function current_repo() {
-    echo -n `git remote -v | gawk 'NR==1{n=split($2,arr,"/"); print arr[n]}'`
-}
 function devops() {
 	cwd_dir=$(pwd)
     repo=`current_repo` 
@@ -117,6 +109,9 @@ function devops2() {
 
 
 ########################## git #####################
+function current_repo() {
+    echo -n `git remote -v | gawk 'NR==1{n=split($2,arr,"/"); print arr[n]}'`
+}
 # git -C dir
 alias gcm='git commit -m'
 function gcap(){
@@ -196,13 +191,22 @@ function mda (){
         sudo chmod a+rwx $1
 }
 
-################ node:cnpm/yarn #################
-#alias for cnpm
-alias cnpm_del="npm --registry=https://registry.npm.taobao.org \
-  --cache=$HOME/.npm/.cache/cnpm \
-  --disturl=https://npm.taobao.org/dist \
-  --userconfig=$HOME/.cnpmrc"
+################ node:cnpm/yarn/pnpm #################
+# pnpm
+export PNPM_HOME=~/Library/pnpm
+export PATH="$PNPM_HOME:$PATH"
+alias pnpx='pnpm exec'
 
+# ts
+#alias ts='ts-node'
+function ts () {
+	cwd_dir=$(pwd)
+    tsc $1 && node --inspect ${1/.ts/.js} $@
+    cd $cwd_dir
+}
+
+#alias yarn=tyarn
+export PATH="$PATH:$(yarn global bin)"
 
 # app
 export APP_ENV=dev
@@ -213,7 +217,10 @@ alias dr='deno run'
 alias dt='deno test'
 export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
-# golang
+################rust###############
+alias cg=cargo
+
+#################### golang ###############################
 export GODEV=local
 export GO111MODULE=on 
 export GOPATH=~/go
@@ -227,7 +234,7 @@ export PATH=/opt/homebrew/opt/go/bin:$PATH:$GOPATH/bin
 alias go17='ln -sf /opt/homebrew/opt/go@1.17/bin /opt/homebrew/opt/go/bin'
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
 
-# java
+################## java ########################
 # export JAVA_HOME="$(/usr/libexec/java_home)"
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
 export JRE_HOME=$JAVA_HOME
@@ -236,12 +243,6 @@ export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH='.:/usr/local/lib/jar/*'
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
-# yarn
-#alias yarn=tyarn
-export PATH="$PATH:$(yarn global bin)"
+######## other conf #############
 [ -f ~/.private ] && source ~/.private
 [ -f ~/.local.rc ] && source ~/.local.rc
-
-# pnpm
-export PNPM_HOME=~/Library/pnpm
-export PATH="$PNPM_HOME:$PATH"

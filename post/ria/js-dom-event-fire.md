@@ -10,7 +10,7 @@ private: true
     });
 ## dispatchEvent
 
-    //mouseenter mouseleave moverover
-    //mouseup mousedown
-    const mouseoverEvent = new Event('mouseover');
-    whateverElement.dispatchEvent(mouseoverEvent);
+    //mouseenter->  moverover->mouseleave
+    //mouseup -> mousedown
+    const mo= new Event('mouseover',{bubbles:true});
+    whateverElement.dispatchEvent(mo);

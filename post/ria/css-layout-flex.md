@@ -134,7 +134,10 @@ flex-shrink属性为0，项目不收缩，
         item-b: 200- 100px*(4/5) = 120
     ```
 
-3. flex-basis: shrink/item扩展宽度前，原宽度受以下优先级影响: `max-width/min-width > flex-basis > width > box`
+3. flex-basis: shrink/item扩展宽度前，原宽度受以下优先级影响: 
+Priority: `max-width|min-width`>`flex-basis(not content)`>`width`>`flex-basis:max-content`
+参考：https://juejin.cn/post/6844904016439148551
+
     ```html
     <div style="width:500px;display:flex">
         <div style="width: 100px;flex-basis:150px">item-a</div>
@@ -142,7 +145,9 @@ flex-shrink属性为0，项目不收缩，
     </div>
     ```
 
-参考：https://juejin.cn/post/6844904016439148551
+flex-item 可能被子元素撑大，对于flex来说`min-width:auto`, 会阻止`flex-basis/flex-shrink`,此时设定item `min-width:0`就不会被撑大了
+(参考: https://stackoverflow.com/questions/49747825/flex-basis-behavior-not-as-expected-but-max-width-works)
+
 
 # 布局
 ## 左右布局

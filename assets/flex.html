@@ -178,7 +178,7 @@ a {
 
 .box-25 .box-item {
 	flex-basis: 200px;
-	width: 400px; // width 灏嗗け鍘讳綔鐢�
+	width: 400px; // width 
 }
 
 .box-26 {
@@ -500,10 +500,11 @@ align-content 属性
 	</div>
 
 	<h3>4、flex-basis属性</h3>
-	<p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。</p>
+	<p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间的（main size）的大小。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。</p>
 	<p>
 		.item {
 		    flex-basis: &lt;length&gt;; | auto; /* default auto */
+		    flex-basis: 33.33%;/*只占1/3*/
 		}
 	</p>
 	<div class="box box-25">
@@ -534,5 +535,43 @@ align-content 属性
 		<div class="box-item end">3<div>flex-end</div></div>
 		<div class="box-item">4</div>
 	</div>
+	<h3>7、form布局</h3>
+    <style>
+   .mform >.form-item{
+    flex-wrap: nowrap;
+    display: flex;
+    flex-basis: 50%;
+   }
+   .form-item>.form-item-right{
+      flex-grow: 1;
+    }
+   .form-item>label{
+        display: inline-flex;
+        justify-content: center; /*左右, text-align在flex中无效*/
+        align-items: center; /*上下*/
+    }
+    </style>
+	<p>
+	</p>
+	<div class="mform">
+		<div class="form-item">
+            <label class="">age:</label>
+            <div class="form-item-right"><input/></div>
+        </div>
+		<div class="form-item">
+            <label class="">name:</label>
+            <div class="form-item-right"><input/></div>
+        </div>
+	</div>
+	<h3>8、text居中</h3>
+    <pre>
+        .text-center{
+            display: inline-flex;
+            justify-content: center; /*左右, text-align在flex中无效*/
+            align-items: center; /*上下*/
+            /Note: vertical-align是所在line-height内的对齐/
+        }
+        <div class="text-center">text</div>
+    </pre>
 </body>
 </html>

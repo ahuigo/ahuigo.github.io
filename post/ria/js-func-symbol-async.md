@@ -4,6 +4,8 @@ date: 2023-03-01
 private: true
 ---
 # symbol iterator
+参考js-func.md 中的async：
+
     const iterable1 = {};
 
     iterable1[Symbol.iterator] = function* () {

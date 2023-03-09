@@ -72,6 +72,7 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
 
     JSON.stringify(data); //默认： text/plain
 
+### fetch json
 example
 
     fetch(url, {
@@ -80,6 +81,7 @@ example
             'X-requested-with': 'XMLHttpRequest',
             "Accept": "application/json", 
         },
+        mode: 'cors',
         credentials: "include",
         body:  JSON.stringify({a:1}),
     }).then(async r=>await r.text())
