@@ -14,10 +14,10 @@ like bootstrap
         url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
     }
     .glyphicon {
-    font-family: 'Glyphicons Halflings';
+        font-family: 'Glyphicons Halflings';
     }
     .glyphicon-plus:before {
-    content: "\e008";
+        content: "\e008";
     }
 
     <span class="glyphicon glyphicon-user"></span>
@@ -39,3 +39,25 @@ like bootstrap
 
     副标题：浅色
         rgba(105,123,140,.6)
+
+
+
+## line-height 与font-size
+默认line-height:1.2 是一个倍数
+
+    font-size: 20px;
+    line-height:1.2; //24px 是一个倍数
+    子元素：font-size:1.5em; // 20*1.5=30px
+
+# content
+
+    content:url(/img/logo.jpg);
+    content:"// ";
+
+一般用于 ::before, ::after
+
+    .cx::before{
+        content:"--"
+        font-weight: bold;
+    }
+

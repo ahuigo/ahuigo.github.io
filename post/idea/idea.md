@@ -13,17 +13,20 @@ date: 2018-09-27
 # 语言：
 
 ## deno 生态:
-- ultra play:
+- ultra playgroud:
     1. chrome://inspect/#service-workers
+- convert npm to esm:
+    1. rust ast parser
 - node migrate: https://dev.to/aralroca/from-node-to-deno-5gpn#electron
 - pkg manager
     - https://github.com/crewdevio/Trex
 - electron
     - webview_deno or tauri
 - ui library
-    1. https://uiverse.io/mobinkakei/sour-lionfish-18
-    1. migrate https://github.com/react-component/field-form to deno(antd)
+    1. ui css demo: https://uiverse.io/mobinkakei/sour-lionfish-18
+    1. antd 移植：migrate https://github.com/react-component/field-form to deno(antd)
         1. https://github.com/ahuigo/react-component.github.io
+    2. ui/ui-library.md
 - markdown static view server:
   - deno run mdview -d www
   - toc:

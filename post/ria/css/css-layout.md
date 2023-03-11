@@ -36,11 +36,6 @@ box 的 horizonal 水平居中
     width: calc(50% - 24px);
     margin-bottom: 24px;
 
-### line-height 与font-size
-默认line-height:1.2 是一个倍数
-
-    font-size: 20px;
-    line-height:1.2; //24px 是一个倍数
 ## column
 吧文本分成 column 3列
 

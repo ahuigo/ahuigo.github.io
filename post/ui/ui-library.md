@@ -8,7 +8,7 @@ https://uiset.com/
 
 ## ui library
 ### css lib
-1. https://uiverse.io/
+1. ui css lib: https://uiverse.io/
 2. https://boltcss.com/
 3. button https://github.com/eludadev/css-buttons
 

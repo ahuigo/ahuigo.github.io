@@ -12,6 +12,8 @@ private: true
     type c6 = c5<string>; // ()=>1
 
 # 协变与逆变, covariance And Contravariance
+> 具有父子关系的多个类型，在通过某种构造关系构造成的新的类型，如果还具有父子关系则是协变的，而关系逆转了（子变父，父变子）就是逆变的
+
 比如Dog是Animal子类型
 
      GreyDog ≼ Dog ≼ Animal
@@ -31,7 +33,7 @@ if `f=(GreyDog):Dog`, it is not safe to accept `const input:GreyDog = Dog, GreyD
 if `f=(Dog):Animal`, it is not safe to accept `const output:Dog = Animal`
 if `f=(Dog):GreyDog`, it is **safe** to accept `const output:Dog = GreyDog`
 
-So, `f(Dog):Dog`的子类型是 `(Animal):Dog` ,`(Dog):GreyDog`. 可以看到
+So, `f(Dog):Dog`的子类型是 `(Animal):Dog` ,`(Dog):GreyDog`. 可以看到:`SubType ≦ SuperType`
 1. 返回值可以接受子类型，`(Dog):GreyDog`, 这个叫协变: `F(SubType) ≦ F(SuperType)`
 1. 参数  可以授受父类型，`(Animal):Dog`, 这个叫逆变: `F(SuperType) ≦ F(SubType)`
 

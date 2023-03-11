@@ -42,6 +42,28 @@ GIN(Generalized Inverted Index, 通用倒排索引) 是一个存储对(key, post
 
 在表中的每一个属性，在建立索引时，都可能会被解析为多个键值，所以同一个元组的tid可能会出现在多个key的posting list中。
 
+
+#### 创建使用gin index
+https://stackoverflow.com/questions/4058731/can-postgresql-index-array-columns
+
+    CREATE TABLE "Test"("Column1" int[]);
+    INSERT INTO "Test" VALUES ('{10, 15, 20}');
+    INSERT INTO "Test" VALUES ('{10, 20, 30}');
+
+    CREATE INDEX idx_test on "Test" USING GIN ("Column1");
+
+    -- To enforce index usage because we have only 2 records for this test... 
+    SET enable_seqscan TO off;
+
+    EXPLAIN ANALYZE SELECT * FROM "Test" WHERE "Column1" @> ARRAY[20];
+
+Result:
+
+    Bitmap Heap Scan on "Test"  (cost=4.26..8.27 rows=1 width=32) (actual time=0.014..0.015 rows=2 loops=1)
+    Recheck Cond: ("Column1" @> '{20}'::integer[])
+    ->  Bitmap Index Scan on idx_test  (cost=0.00..4.26 rows=1 width=0) (actual time=0.009..0.009 rows=2 loops=1)
+            Index Cond: ("Column1" @> '{20}'::integer[])
+
 ## 索引语法
 两种
 - INDEX : 支持lower/condition 表达式

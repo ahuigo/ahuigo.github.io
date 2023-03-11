@@ -16,22 +16,28 @@ There are 3 usages of extends
     }
     // Dog => { name: string; bark(): void }
 
+可以用交叉代替:
+
+    type Dog = { bark(): void } & Animal
 
 ## 泛型约束 
 ### 约束属性
 
-    function getCnames<T extends { name: string }>(entities: T[]):string[] {
-        return entities.map(entity => entity.cname)
+    function getNames<T extends { name: string }>(entities: T[]):string[] {
+        return entities.map(entity => entity.name)
     }
 
 ### 约束Unions 类型
-即约束实例，又约束类型
+即约束实例1/2/3,'a','b'，又约束类型: number|string
+
+    T extends number | string
+
+应用
 
     type NameOrId<T extends number | string> = T extends number ? 'number' : 'string';
     type X = NameOrId<1> // 'number'
     type Y = NameOrId<number> // 'number'
     type Y2 = NameOrId<false> // not ok
-
 
 ## conditional types, 条件判断
 https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
@@ -41,7 +47,28 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
     type X2 = '1' extends number ? 'number' : 'string' // 'string'
     type X3 = boolean extends number ? 'number' : 'string' // 'string'
 
-### 泛型判断
+#### 继承判断
+
+    type Human = {
+        name: string;
+        occupation: string;
+    }
+    type Animal = {
+        name: string;
+    }
+    type Bool = Animal extends Human ? 'yes' : 'no'; // 'no'
+    type Bool2 = Human extends Animal ? 'yes' : 'no'; // 'yes'
+    // Animal 包含Human 集合; Huan继承Animal 所有的属性
+    // Human 属性限制更多,范围更小
+
+约束属性、方法
+
+    // 人属于动物
+    type Bool = Human extends Animal  ? 'yes' : 'no'; // 'yes'
+    // 字符串 属于 string(它继承了string 所有的方法)
+    type Bool = 'x' extends string? 'yes' : 'no'; // 'yes'
+
+### 泛型类型判断
 访问泛型属性前，应该加条件约束
 
     // bad
@@ -50,8 +77,9 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
     // ok
     type MessageOf<T extends { message: unknown }> = T["message"];
     type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
+    type A=MessageOf<{message:string}> 
 
-### 泛型判断infer
+### 泛型推断infer
 判断T数组
 
     type Flatten<T> = T extends any[] ? T[number] : T;
@@ -67,27 +95,6 @@ infer 推断Return
     type GetReturnType<Type> = Type extends (...args: never[]) => infer Return
         ? Return : never;
     type Num = GetReturnType<() => number>;
-
-### 继承判断
-
-    type Human = {
-        name: string;
-        occupation: string;
-    }
-    type Animal = {
-        name: string;
-    }
-    type Bool = Animal extends Human ? 'yes' : 'no'; // 'no'
-    type Bool2 = Human extends Animal ? 'yes' : 'no'; // 'yes'
-    // Animal 包含Human 集合; Huan继承Animal 所有的属性
-    // Human 范围更小，但是属性更多
-
-约束属性、方法
-
-    // 人属于动物
-    type Bool = Human extends Animal  ? 'yes' : 'no'; // 'yes'
-    // 字符串 属于 string(它继承了string 所有的方法)
-    type Bool = 'x' extends string? 'yes' : 'no'; // 'yes'
 
 ### 子集约束(非泛型T)
 子集约束(非泛型)
@@ -122,8 +129,8 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributi
 ### extends unit type to string|number|symbol
 用extends 实现类型分配，否则ts 无法推断泛型`K=typeof T`类型：`Type 'K' is not assignable to type 'string | number | symbol'`
 
-1. `K=keyof T` may be typeof **unit type**: such as 'name'|'age'
-1. use extends to extend K to be assignable type: `string|number|symbol` (扩展类型|扩展子集)
+1. `K=keyof T` may be typeof **unit type**: such as `'name'|'age'`
+1. `K extends keyof T`表示`'name'`,`age`,`'name'|'age'`限定的任意子集
 
 e.g.
 
@@ -131,7 +138,7 @@ e.g.
         [P in K]: T[P]
     }
 
-### never
+### never vs any
 never 属于集合，`空子集`属于`所有父集`
 1. 继承约束. People extends Animal (从集合的视角看，人类属于动物)
 2. 子集约束. 比如：never extends A, A extends any 

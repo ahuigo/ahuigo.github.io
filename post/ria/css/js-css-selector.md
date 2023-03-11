@@ -68,6 +68,14 @@ example:
 	$('div a') //相当于 $('div').find('a')
 	$('p').find('ul li').find('.note')
 
+## find root node
+
+    //html
+    :root{
+        font-size: 16px;
+        line-height: 18px; //+2px
+    }
+
 ### find node via relation
 祖先:
 
@@ -94,14 +102,14 @@ example:
             $("#holder > div:nth-child(2)").before("<div>foobar</div>");
             $("#holder > div:eq(2)").before("<div>foobar</div>");
         # nth 伪类
-            :first-child	p:first-child	选择属于父元素的第一个子元素的每个 <p> 元素。	2
-            :nth-child(n)	p:nth-child(2)	选择属于其父元素的第二个子元素的每个 <p> 元素。	3
+            :first-child	    p:first-child	选择属于父元素的第一个子元素的每个 <p> 元素。	2
+            :nth-child(n)	    p:nth-child(2)	选择属于其父元素的第二个子元素的每个 <p> 元素。	3
             :nth-last-child(n)	p:nth-last-child(2)	同上，从最后一个子元素开始计数。	3
-            :nth-of-type(n)	p:nth-of-type(2)	选择属于其父元素第二个 <p> 元素的每个 <p> 元素。	3
+            :nth-of-type(n)	    p:nth-of-type(2)	选择属于其父元素第二个 <p> 元素的每个 <p> 元素。	3
             :nth-last-of-type(n)	p:nth-last-of-type(2)	同上，但是从最后一个子元素开始计数。	3
             :last-child	p:last-child	选择属于其父元素最后一个子元素每个 <p> 元素。
         :scope The :scope pseudo-class represents this scoping root
-            // 等价：#app>
+            // 下例等价：`#app>.foo`
             getElementById("app").querySelectorAll(":scope > .foo");
     孙、曾孙...
         $('parent grandchild'); //孙子

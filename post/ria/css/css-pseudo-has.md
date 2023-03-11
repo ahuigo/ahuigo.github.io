@@ -10,7 +10,7 @@ private: true
 
     <style>
     figure:has(figcaption) {
-        background: white;
+        background: blue;
     }
     </style>
     <figure>
