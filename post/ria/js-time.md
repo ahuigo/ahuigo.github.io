@@ -80,9 +80,9 @@ Then you can clear it like so:
 	.toLocaleString(); "4/28/2014 11:25:02 PM"
 
 	//date part
-	.getDate(); //1~31 getUTCDate()
-	.getMonth(); //0~11 getUTCMonth()
 	.getFullYear(); //四位数字	getUTCFullYear()
+	.getMonth(); //0~11 getUTCMonth()
+	.getDate(); //1~31 getUTCDate()
 	//day
 	.getDay(); //一周中的某天0~6(0是星期天)
 

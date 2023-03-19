@@ -281,7 +281,7 @@ a {
 都是容器属性:
         justify-content: 主轴对齐
         align-items: 侧轴item对齐(整体)
-        align-content:侧轴行对齐(nowrap无效)
+        align-content:侧轴多行整体对齐(nowrap无效)
     </pre>
 	<p>
 		.box {
@@ -374,8 +374,7 @@ justify-content
 align-items 
     用来定义`伸缩项目item`在`侧轴`的对齐方式
 align-content 属性
-    可以用来调准`伸缩行content`在`伸缩容器`里的对齐方式(
-    1. 优先级高于align-items
+    定义了多根轴线的整体对齐方式。如果项目只有一根轴线，该属性不起作用。
     2. 仅当用flex-wrap:wrap时有效
 	<p>
 		.box {
@@ -513,6 +512,32 @@ align-content 属性
 		<div class="box-item">3</div>
 	</div>
 
+再来一个basis例子:
+默认column-basis 这个item不会占用主轴所有空间,　不过我们可以通过basis占用全部主轴:
+
+    <style>
+    .box-basis {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: space-between;
+    }
+    .column-basis {
+      flex-basis: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+    </style>
+    <div class="box-basis">
+      <div class="column-basis">
+        <div class="box-item">1</div>
+        <div class="box-item">2</div>
+      </div>
+      <div class="column-basis">
+        <div class="box-item">3</div>
+        <div class="box-item">4</div>
+      </div>
+    </div>
+
 	<h3>5、flex属性</h3>
 	<p>flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。</p>
 	<p>该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。</p>
@@ -564,13 +589,25 @@ align-content 属性
         </div>
 	</div>
 	<h3>8、text居中</h3>
-    <pre>
+    <pre class="main-text-center">
         .text-center{
             display: inline-flex;
             justify-content: center; /*左右, text-align在flex中无效*/
             align-items: center; /*上下*/
             /Note: vertical-align是所在line-height内的对齐/
+            /Note2: 如果div不设定长度,不用flex, 用padding 也可实现水平垂直对齐/
         }
+    <style>
+        .text-center{
+            display: inline-flex;
+            justify-content: center; /*左右, text-align在flex中无效*/
+            align-items: center; /*上下*/
+            border: 1px solid;
+            background: lightblue;
+            width: 150px;
+            height: 50px;
+        }
+    </style>
         <div class="text-center">text</div>
     </pre>
 </body>

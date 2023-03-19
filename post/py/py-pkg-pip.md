@@ -38,7 +38,7 @@ python安装路径: sys.prefix
     Uninstalling python-highcharts-0.2.0:
       /usr/local/lib/python3.5/site-packages/highcharts/__init__.py
 
-### mirrors
+### mirrors(pip/pip.conf)
 镜像列表：http://www.pypi-mirrors.org/ 
 - e.pypi.python.org
 - pypi.douban.com
@@ -53,10 +53,14 @@ python安装路径: sys.prefix
     -i, --index-url <url>
     --extra-index-url <url>
 
-在~/.pip/pip.conf配置文件中写入：
+install下载配置在~/.pip/pip.conf配置文件中写入：
 
     [global]
+    trusted-host = pypi.org
+        artifactory.xxx.com
     index-url = http://e.pypi.python.org/simple
+    extra-index-url= https://pypi.org/simple
+        https://artifactory.xxx.com/pipy/simple
 
 ### 另一个程序正在使用此文件，进程无法访问
 打开c:\program files\python36\lib\site-packages\pip\compat\__init__.py约75行

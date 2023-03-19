@@ -54,7 +54,7 @@ private: true
 ### str vs String
 两者都是utf8存储, Rust提到的字符串主要是这两种
 1. str 类型是硬编码进可执行文件，也无法被修改
-2. String 则是一个可增长、可改变且具有所有权(heap)
+2. String 则是一个`可增长`、`可改变`且具有`所有权`(位于内存heap)
 3. `&str` 是对两者的引用切片
 
 Rust之所以这样设计String，是因为变量在离开作用域后，就自动释放其占用的内存:
@@ -64,12 +64,12 @@ Rust之所以这样设计String，是因为变量在离开作用域后，就自�
 Rust 的标准库还提供了其他类型的字符串，例如 OsString， OsStr， CsString 和 CsStr 等
 
 ### &str与String　互转
-to String:
+`&str`to String:
 
     String::from("hello,world")
     "hello,world".to_string()
 
-to `&str`:
+String to `&str`:
 
     let s = String::from("hello,world!");
     say_hello(&s);
@@ -114,7 +114,7 @@ repalce range该方法仅适用于 String 类型: 第一个参数表示替换的
 
     s.replace_range(7..8, "R");
 
-## delete
+## delete(String only)
 与字符串删除相关的方法有 4 个，他们分别是 pop()，remove()，truncate()，clear()。这四个方法仅适用于 String 类型。
 
 ### pop —— 删除并返回字符串的最后一个字符

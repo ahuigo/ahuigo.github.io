@@ -109,11 +109,12 @@ private:
 
     let point3d: Point3d = {x: 1, y: 2, z: 3};
 
-## 接口定义函数
+## 接口定义函数+new constructor
 可以使用接口的方式来定义一个函数需要符合的形状(`type fun = ()=>string`也可以)：
 
     interface SearchFunc {
         (source: string, subString: string): boolean;
+        new(input: RequestInfo | URL, init?: RequestInit): Request;
     }
 
     let mySearch: SearchFunc;

@@ -81,11 +81,6 @@ https://deno.land/manual/jsx_dom/twind
     console.log(ssr());
 
 
-## Composing the Uncomposable with CSS Variables
-https://adamwathan.me/composing-the-uncomposable-with-css-variables/
-
-## css的@apply 语法
-https://www.iwyvi.com/css/css-apply-rule/
 
 # styled-components
 

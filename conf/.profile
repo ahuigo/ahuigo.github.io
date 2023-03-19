@@ -206,7 +206,8 @@ function ts () {
 }
 
 #alias yarn=tyarn
-export PATH="$PATH:$(yarn global bin)"
+#export PATH="$PATH:$(yarn global bin)"
+export PATH="$PATH:~/.yarn/bin"
 
 # app
 export APP_ENV=dev

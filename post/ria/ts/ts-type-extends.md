@@ -7,6 +7,7 @@ private: true
 There are 3 usages of extends
 
 ## 继承
+### 继承(单类型)
     interface Animal {
         kind: string;
     }
@@ -16,18 +17,39 @@ There are 3 usages of extends
     }
     // Dog => { name: string; bark(): void }
 
-可以用交叉代替:
+#### 继承(单类型Array)
+Note: 数组整体是一个类型, 必须每一个元素都一一匹配
+
+    # 数组比较: 必须每一个元素都一一匹配
+    type A1  = ['x'|'y'] extends ['x'] ? true : false; // false
+    type A2  = [never] extends ['x'] ? true : false; // true
+    type A3  = [never] extends ['x','y'] ? true : false; // false
+    type A4  = [never,never] extends ['x','y'] ? true : false; // true
+    type A4  = [never,never] extends ['x','y'] ? true : false; // true
+    type A5  = [1,2] extends [2,1] ? true : false; // false
+    # 数组不继承单元素
+    type A2  = ['x'|'y'] extends 'x' ? string : number; // number
+    type A2  = [never] extends 'x' ? string : number; // number
+
+#### 可以用交叉代替继承:
 
     type Dog = { bark(): void } & Animal
 
+### 继承（Unions 类型）
+Note：1/2/3 继承number, 'a'/'b'继承string
+
+    // 'yes'
+    type A1=1 extends number | string ?'yes':'no'
+    // 'no'
+    type A2= 1|number|'a' extends number | string ?'yes':'no'
+
 ## 泛型约束 
-### 约束属性
 
     function getNames<T extends { name: string }>(entities: T[]):string[] {
         return entities.map(entity => entity.name)
     }
 
-### 约束Unions 类型
+### 约束对象：单类型
 即约束实例1/2/3,'a','b'，又约束类型: number|string
 
     T extends number | string
@@ -35,9 +57,25 @@ There are 3 usages of extends
 应用
 
     type NameOrId<T extends number | string> = T extends number ? 'number' : 'string';
-    type X = NameOrId<1> // 'number'
+    type X = NameOrId<1> // 'number'    因为1继承number
     type Y = NameOrId<number> // 'number'
     type Y2 = NameOrId<false> // not ok
+
+### 约束对象：Unions 类型(分解)
+若extends前面的类型是泛型，且泛型传入的是联合类型时，则会依次判断该联合类型的所有子类型是否可分配给extends后面的类型
+
+    // type A2 = 2
+    type A2 = 'x' | 'y' extends 'x' ? 1 : 2;
+
+    // type A3 = 1 | 2
+    type P<T> = T extends 'x' ? 1 : 2;
+    type A3 = P<'x' | 'y'>
+
+阻止extends关键词对于联合类型的分发特性
+
+    type P<T> = [T] extends ['x'] ? string : number;
+    type A1 = P<'x' | 'y'> // number
+    type A2 = P<never> // string
 
 ## conditional types, 条件判断
 https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
@@ -47,7 +85,7 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
     type X2 = '1' extends number ? 'number' : 'string' // 'string'
     type X3 = boolean extends number ? 'number' : 'string' // 'string'
 
-#### 继承判断
+继承判断对象
 
     type Human = {
         name: string;
@@ -60,6 +98,7 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
     type Bool2 = Human extends Animal ? 'yes' : 'no'; // 'yes'
     // Animal 包含Human 集合; Huan继承Animal 所有的属性
     // Human 属性限制更多,范围更小
+    // never 包含所有属性，继承所有的类型（但是从集合视角，它是空集）
 
 约束属性、方法
 
@@ -73,7 +112,7 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
 
     // bad
     type MessageOf<T> = T["message"];// Type '"message"' cannot be used to index type 'T'.
-
+ype实现继承，则可以使用交叉类型type A = B & C & D。
     // ok
     type MessageOf<T extends { message: unknown }> = T["message"];
     type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
@@ -126,24 +165,53 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributi
 
     type BeLong<T> = string extends T ? {x:1,y:1} : {y:1, z:1};
 
-### extends unit type to string|number|symbol
-用extends 实现类型分配，否则ts 无法推断泛型`K=typeof T`类型：`Type 'K' is not assignable to type 'string | number | symbol'`
+### extends keyof 约束
+用extends keyof实现key约束
 
-1. `K=keyof T` may be typeof **unit type**: such as `'name'|'age'`
-1. `K extends keyof T`表示`'name'`,`age`,`'name'|'age'`限定的任意子集
+1. `K=keyof T` is **unit type**: such as `'name'|'age'`
+1. `K extends keyof T`表示`'name'|'age'`约束的任意子集
 
-e.g.
+有效约束
 
     type Pick<T, K extends keyof T> = {
         [P in K]: T[P]
     }
 
-### never vs any
-never 属于集合，`空子集`属于`所有父集`
-1. 继承约束. People extends Animal (从集合的视角看，人类属于动物)
-2. 子集约束. 比如：never extends A, A extends any 
+下面的K 的默认值是keyof T; K可以是任何类型，所以P in K 报错: 
 
-never 是所有类型的子类型(子集)
+    type Pick2<T, K = keyof T> = {
+        // Type 'K' is not assignable to type 'string | number | symbol'
+        [P in K]: T[P]
+    }
+    type Pick2<T,K =keyof T > = {
+        a:K
+    }
+    type X = Pick2<number,'name'|'age'> // {a:'name'|'age'}
+
+### never vs any
+note：
+
+    // true: never 继承任何类型（空类型）
+    type A1=never extends number?true:false;
+    // false: unknown 不继承任何类型
+    type A2= unknown extends number ?true:false;
+    // 'yes'|'no': any 是泛型，所有类型都可能(分解展开)
+    type A3= any extends number?'yes':'no';
+    // false
+    type A4= number extends never?true:false;
+    // true
+    type A5= number extends unknown?true:false;
+    // true
+    type A6= number extends any?true:false;
+
+区别
+1. never 包含所有属性限制，继承所有的类型（从集合视角，它是空集, 不能分配给别的类型）
+    1. 继承约束. People extends Animal (从集合的视角看，人类属于动物)
+2. unknown 没有属性限制（从集合视角，是超集, 可以分配给任何类型） 
+    1. 成立：never extends A, A extends unknown/any
+3. any 是unknown 的泛型化（会展开分解）
+
+never 是所有类型的子类型:
 
     // never是所有类型的子类型: 'x' 包含空集合never
     type A1 = never extends 'x' ? string : number; // string
@@ -157,25 +225,9 @@ never 是所有类型的子类型(子集)
     type P<T> = T extends 'x' ? string : number;
     type A2 = P<never> // never
 
-any 此时是范型，按分配律展开
+any 是范型，按分配律展开
 
     type A3 = any extends 'x' ? string : number; // string| number
-
-### 阻断类型分配
-在条件判断类型的定义中，将泛型参数使用`[]`括起来(表示数组是一个整体)，即可阻断条件判断类型的分配，此时，传入参数T的类型将被当做一个整体，不再分配。
-
-    type P<T> = [T] extends ['x'] ? string : number;
-    type A1 = P<'x' | 'y'> // number
-    type A2 = P<never> // string
-
-Note: 数组整体是一个类型
-
-    # 数组比较
-    type A1  = ['x'|'y'] extends ['x'] ? string : number; // number
-    type A2  = [never] extends ['x'] ? string : number; // string
-    # 数组不继承单元素
-    type A2  = ['x'|'y'] extends 'x' ? string : number; // number
-    type A2  = [never] extends 'x' ? string : number; // number
 
 # extends 应用
 

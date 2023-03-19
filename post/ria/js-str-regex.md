@@ -121,16 +121,12 @@ js 对断言支持得非常好
     > 'my pre1-word'.match(/my.*(?<!pre-)word/)
     my pre1-word
 
-前缀必须是/a or /a/
+必须是`/a$` or `/a/.*`
 
     '/a/b'.match(/^\/a(?=\/|$)/)
     '/a'.match(/^\/a(?=\/|$)/)
 
-### $,^
-$ 放前面就不会成功
-
-    /($end)/
-    /(head^)/
+    '/a/b'.replace(new RegExp('^/a(?=$|/)'), '/base')
 
 ## regxp func
 

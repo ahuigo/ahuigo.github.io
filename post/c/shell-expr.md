@@ -159,9 +159,13 @@ Example:
     function mcd(){mkdir -p $1; cd $1}
 
 ## Arguments
+Note: 不要用`"$*"`, 它会把空格字符串拆分
+Note: 不要用`$*`, `$@`, 它也把空格字符串拆分
+Note: 要用`"$@"`,`"${@}"`, `"${arr[@]}"`, 不会拆分空格字符串
 
     $@ = $* = "$1 $2 $3 ..."
-    for a in $* ; do
+    for a in "${@}" ; do
+    for a in "$@" ; do
     	echo $a;
     done
 

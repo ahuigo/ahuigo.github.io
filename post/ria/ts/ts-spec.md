@@ -7,6 +7,23 @@ private: true
 ## not null
     let s = e!.name;  // Assert that e is non-null and access name
 
+## keyof
+    interface Eg1 {
+        name: string,
+        readonly age: number,
+    }
+    // T1的类型实则是name | age
+    type T1 = keyof Eg1
+
+    class Eg2 {
+      private name: string;
+      public readonly age: number;
+      protected home: string;
+    }
+    // T2实则被约束为 age
+    // 而name和home不是公有属性，所以不能被keyof获取到
+    type T2 = keyof Eg2
+
 
 ## 元组`T[number]`、`T['length']`
 元组类型是另一种Array类型，它确切地知道它包含多少元素，以及在特定位置包含哪些类型。
@@ -53,6 +70,24 @@ private: true
     type V3 = Eg1[keyof Eg1]
 
 ## & 交叉类型注意点
+如果相同key但是类型不同，则该key为never。
+
+    interface Eg1 {
+      name: string,
+      age: number,
+    }
+    
+    interface Eg2 {
+      color: string,
+      age: string,
+    }
+    
+    /**
+     * T的类型为 {name: string; age: never; color: string}
+     * 注意，age因为Eg1和Eg2中的类型不一致，所以交叉后age的类型是never
+     */
+    type T = Eg1 & Eg2
+
 
 # Reference
 - TS挑战通关技巧总结，助你打通TS奇经八脉 @度123 https://juejin.cn/post/7000560464786620423

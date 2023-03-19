@@ -9,13 +9,36 @@ private: true
 ## :has() selector example
 
     <style>
-    figure:has(figcaption) {
+    figure:has(>figcaption) {
         background: blue;
+    }
+    figure:has(>.main) {
+        background: green;
     }
     </style>
     <figure>
-        <img src="dog.jpg" alt="black dog smiling in the sun">
+        <div>I'm blue</div>
         <figcaption>Maggie loves being outside off-leash.</figcaption>
+    </figure>
+    <figure>
+        <div>I'm not blue</div>
+        <div>
+            <figcaption>second figcaption</figcaption>
+        </div>
+    </figure>
+    <figure>
+        <div>I'm green</div>
+        <div class="main">
+            <figcaption>second figcaption</figcaption>
+        </div>
+    </figure>
+    <figure>
+        <div>I'm not green</div>
+        <div>
+            <div class="main">
+                <figcaption>second figcaption</figcaption>
+            </div>
+        </div>
     </figure>
 
 ## :not() selector example

@@ -26,6 +26,29 @@ commonjs 的语法
 - `declare [global] namespace <name>` 用于命名空间＋及declare　merge
     - 也叫内部模块
 
+## 定义项目全局types 
+参考umijs, 在项目根目录下建立一个`typings.d.ts`
+
+    $ cat ./typings.d.ts
+    type CSSModuleClasses = { readonly [key: string]: string }
+    declare module '*.css' {
+      const classes: CSSModuleClasses
+      export default classes
+    }
+    declare module '*.less' {
+      const classes: CSSModuleClasses
+      export default classes
+    }
+    // declare module "*.png"; 
+
+    $ cat ./typings.d.ts
+       import 'umi/typings';
+
+这样，在引入匹配到的路径时，就有类型了
+
+    // 因为declare module '*.less' 已经声明过类型
+    import styles from './index.less'
+
 ## Ambient Modules: pkg
 > "ambient context" is basically the stuff that doesn't exist at runtime. 指非运行时的东西，像types/modules 就是
 

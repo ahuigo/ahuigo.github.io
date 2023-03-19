@@ -6,6 +6,7 @@ description:
 date: 2018-09-27
 ---
 # English punctuation
+标点符号
 https://zh.wikipedia.org/wiki/%E8%84%B1%E5%AD%97%E7%AC%A6
 
 	punctuation mark	name	example
@@ -21,12 +22,12 @@ https://zh.wikipedia.org/wiki/%E8%84%B1%E5%AD%97%E7%AC%A6
 	.	full stop or period
 	, 	comma
 	;	semi-colon
-	:	colon
+	:	colon 冒号
 	-	hyphen
 	—	dash
 		In each town—London, Paris and Rome—we stayed in youth hostels. It is often diffcult to find on a keyboard and for this reason some people use the easier-to-find but shorter hyphen(-) instead.
 	?	question mark
-	!	exclamation mark
+	!	exclamation mark 感叹号
 	/	slash, forward slash or oblique
 	\ 	backslash
 	""	double quotation marks

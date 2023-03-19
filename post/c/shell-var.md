@@ -430,6 +430,9 @@ local 与 assignment 需要分开：
     $arr[@]: -- 1,2,3,
     "$arr[@]": -- 1 2,3,%
 
+### loop argument
+
+
 ### pass array
 
 	arr=('1 2' 3)
@@ -462,6 +465,7 @@ With Bash4.3, it only creates a reference to the original array, it doesn't copy
 
 	for i in ('1 2', 3); //error
 	for i in ${array[@]}; //3 个(不要用这个)
+	for i in "${@}"; //2 个
 	for i in "${array[@]}";// 2个
 	do
 		echo $i

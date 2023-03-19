@@ -249,41 +249,6 @@ flex 内部，s1 与 s2 之间距不是max(s1,s2) 而是s1+s2
         <div style="margin-top: 45px; "></div>
     </div>
 
-## position
-只有 static 元素它不会被“positioned”
-
-	Inherited: no
-	position:
-		static; 默认(left/top 不生效, 不会被“positioned”)
-		relative; 相对本元素static 的偏移, 会占用父元素的位置
-            不会影响别的兄弟节点
-		absolute; 相对于父级“positioned”祖先元素的偏移, 如果没有则以当前视窗为基准
-            不占用位置，兄弟节点会填补位置，用z-index:-1 不会遮蔽 
-
-		fixed; 以整个视窗为基准,不受鼠标滚动影响
-
-		relative/absolute以parent positioned 结点为基准
-            没有positioned 的话，则以: window.innerWidth/innerHeight 为基准
-
-
-### relative/static + height parent percent
-When you set a percentage height on an element who's parent elements(包括static/relative).
-严重依赖parent height
-
-Summary
-1. absolute: 严格依赖 parent positioned 一定有height
-2. static/relative: 依赖parent, 以下两种parent 的height 都有效
-   1. 依赖parent 的height：`html,body{height:100%}`
-   1. 依赖parent 的`flex:1`
-
-解决有几种方案：
-1. 自己变absolute
-2. set a 100% height on all your parent elements
-
-更好的方案可能是：
-
-    body{height:100vh}
-
 ## media
 “响应式设计（Responsive Design”) 要借助媒体查询
 

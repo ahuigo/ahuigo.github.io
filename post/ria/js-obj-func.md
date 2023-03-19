@@ -204,6 +204,7 @@ Note: Proxy apply 可重新定义function自己, 参考js-obj-proxy.md
 
 不确定是否可再简化一下?
 https://stackoverflow.com/questions/69584444/how-to-write-a-generic-function-that-calls-a-method-of-an-object
+中实现了constructor new 类型
 
     class STRING_TYPE {
       name(): string {
@@ -228,13 +229,26 @@ https://stackoverflow.com/questions/69584444/how-to-write-a-generic-function-tha
     foo(NUMBER_TYPE) // number
     foo(STRING_TYPE) // string
 
+### Function 与class 合并
 方法：加一个 alias 中间变量AjaxFactoryAlias ，给中间变量带上扩展的类型 AjaxFactoryF
 
     type AjaxFactoryF = AjaxFactory & AjaxFactory['_call']
-    const AjaxFactoryAlias = AjaxFactory as new ()=>AjaxFactoryF
+    type AjaxArgs0 = ConstructorParameters<typeof AjaxFactory>
+    const AjaxFactoryAlias = AjaxFactory as new (...args: AjaxArgs0)=>AjaxFactoryF
+
     export {AjaxFactoryAlias as AjaxFactory}
     // export default AjaxFactory as new ()=> AjaxFactoryF
 
+类似的Function 与 list typeof methods 合并
+
+    type FetchFn = typeof fetchFn
+    type FetchFnExt= FetchFn & {
+        get: FetchFn;
+        post: FetchFn;
+        delete: FetchFn;
+        put: FetchFn;
+        patch: FetchFn;
+    }
 ## Via add prop to func
 > Note: `func.name` 是只读属性，不可更改
 > 这种方法得到的func默认this不是自己，必须`f2=f1.bind(f1)`after `add props to f1`

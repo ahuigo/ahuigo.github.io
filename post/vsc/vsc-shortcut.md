@@ -11,6 +11,10 @@ cmd+p
     cmd+j 切换集成终端(ctrl+`)
         ctrl+shift+`
 
+## 多列编辑
+1、按住alt，用鼠标左键点击多个位置，输入的代码可以在光标处同时增加。
+
+
 ## Setting sync
 1. Upload Key : Shift + Alt + U
 2. Download Key : Shift + Alt + D

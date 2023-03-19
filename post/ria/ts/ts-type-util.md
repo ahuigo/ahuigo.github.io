@@ -282,6 +282,8 @@ also:
 The `ConstructorParameters<T>` type lets us extract all parameter types of a constructor function type. 
 t produces a tuple type with all the parameter types (or the type never if T is not a function).
 
+    ConstructorParameters<typeof SomeClass>;  //
+
     type T0 = ConstructorParameters<ErrorConstructor>;  // [(string | undefined)?]
     type T1 = ConstructorParameters<FunctionConstructor>;  // string[]
     type T2 = ConstructorParameters<RegExpConstructor>;  // [string, (string | undefined)?]
