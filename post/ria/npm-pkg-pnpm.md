@@ -21,7 +21,7 @@ private: true
 那么原始文件在哪里呢？
 https://remysharp.com/2014/05/23/where-is-that-console-log
 
-    $ pnpm store path                                                                                           
+    $ pnpm store path
     ~/Library/pnpm/store/v3
     linux: ~/.local/share/pnpm/store
 
@@ -48,7 +48,28 @@ pkgA又依赖pkgB, 然后我们的项目
 避免：确保每个包的代码只会require package.json所声明的依赖
 
 # config
-pnpm config list
+## config path
+    On Windows: ~/AppData/Local/pnpm/config/rc
+    On macOS: ~/Library/Preferences/pnpm/rc
+    On Linux: ~/.config/pnpm/rc
+
+get config:
+
+    pnpm config list
+    pnpm config get global-dir
+
+## cache dir
+get 
+
+    # npm-pkg.md
+    npm config get cache
+
+    # pnpm
+    $ pnpm store path
+
+set
+
+    echo 'store-dir='$HOME/Library/pnpm/store >> /usr/local/etc/npmrc
 
 ## registry
 pnpm willl use `./.npmrc` and `~/.npmrc`

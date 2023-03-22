@@ -212,6 +212,10 @@ http://zh.learnlayout.com/flexbox.html
 	align-items: center;
 	justify-content: center;
 
+简化为：place-center
+
+    place-items: center center;
+    place-items: center;
 ### gloading
 note：100% 仅在父元素长度指定了才生效(参考css-layout.md parent percent)
 

@@ -17,15 +17,17 @@ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 
 ############### system
 ulimit -n 1000
-export ENV_MODE=dev
-export LC_ALL='en_US.UTF-8'
-export LANG='en_US.UTF-8'
-export CLICOLOR="xterm-color"
-export PATH=$PATH:$HOME/www/py-lib/bin:$HOME/www/a/bin:~/bin:/usr/local/sbin
-#$(pyenv root)/shims:
-export GNUTERM=qt
-export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])'$'\n$ '
-# for ssh-host-machine: export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
+if [[ -z $INIT_PROFILE ]]; then
+    export ENV_MODE=dev
+    export LC_ALL='en_US.UTF-8'
+    export LANG='en_US.UTF-8'
+    export CLICOLOR="xterm-color"
+    export PATH=$PATH:$HOME/www/py-lib/bin:$HOME/www/a/bin:~/bin:/usr/local/sbin
+    #$(pyenv root)/shims:
+    export GNUTERM=qt
+    export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])'$'\n$ '
+    # for ssh-host-machine: export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
+fi
 
 
 ###################### nvim #####################
@@ -39,14 +41,16 @@ alias l='ls -lah'
 alias code1=~/'Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 
 ##################### python ##########################################
-export PATH=/opt/homebrew/opt/python@3.10/bin:$PATH
+if [[ -z $INIT_PROFILE ]]; then
+    export PATH=/opt/homebrew/opt/python@3.10/bin:$PATH
+    export PATH="$HOME/.poetry/bin:$PATH"
+fi
 if [[ -z $LDFLAGS ]];then
     # For compilers to find python@3.10 you may need to set:
     #export LDFLAGS="-L/opt/homebrew/opt/python@3.10/lib"
     #For pkg-config to find python@3.10 you may need to set:
     export PKG_CONFIG_PATH="/opt/homebrew/opt/python@3.10/lib/pkgconfig"
 fi
-export PATH="$HOME/.poetry/bin:$PATH"
 alias py='ipython3'
 alias p='python3'
 alias p2='python2'
@@ -194,8 +198,12 @@ function mda (){
 ################ node:cnpm/yarn/pnpm #################
 # pnpm
 export PNPM_HOME=~/Library/pnpm
-export PATH="$PNPM_HOME:$PATH"
+if [[ -z $INIT_PROFILE ]]; then
+    export PATH="$PNPM_HOME:$HOME/.yarn/bin:$PATH:"
+    #export PATH="$PATH:$(yarn global bin)"
+fi
 alias pnpx='pnpm exec'
+
 
 # ts
 #alias ts='ts-node'
@@ -205,9 +213,6 @@ function ts () {
     cd $cwd_dir
 }
 
-#alias yarn=tyarn
-#export PATH="$PATH:$(yarn global bin)"
-export PATH="$PATH:~/.yarn/bin"
 
 # app
 export APP_ENV=dev
@@ -247,3 +252,5 @@ export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 ######## other conf #############
 [ -f ~/.private ] && source ~/.private
 [ -f ~/.local.rc ] && source ~/.local.rc
+
+export INIT_PROFILE=1

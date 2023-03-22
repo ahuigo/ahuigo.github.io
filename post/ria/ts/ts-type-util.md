@@ -166,24 +166,6 @@ via data key
     // type Locale = "se" | "en"
 
 
-### ReturnType获取类型
-https://stackoverflow.com/questions/36015691/obtaining-the-return-type-of-a-function
-
-    const foo = (): FooReturnType => { }
-    
-    // 获取函数类型
-    typeof foo
-
-    // 获取函数返回类型
-    type returnType = ReturnType<typeof foo>; 
-
-更多示例
-
-    type T10 = ReturnType<() => string>;  // string
-    type T11 = ReturnType<(s: string) => void>;  // void
-    type T12 = ReturnType<(<T>() => T)>;  // {}
-    type T13 = ReturnType<(<T extends U, U extends number[]>() => T)>;  // number[]
-
 
 ## Map key type
 
@@ -266,27 +248,6 @@ also:
 ## NonNullable
     type T0 = NonNullable<string | number | undefined>;  // string | number
     type T1 = NonNullable<string[] | null | undefined>;  // string[]
-
-## `Parameters<T>`
-    declare function f1(arg: { a: number, b: string }): void
-    type T0 = Parameters<() => string>;  // []
-    type T1 = Parameters<(s: string) => void>;  // [string]
-    type T2 = Parameters<(<T>(arg: T) => T)>;  // [unknown]
-    type T4 = Parameters<typeof f1>;  // [{ a: number, b: string }]
-    type T5 = Parameters<any>;  // unknown[]
-    type T6 = Parameters<never>;  // never
-    type T7 = Parameters<string>;  // Error
-    type T8 = Parameters<Function>;  // Error
-
-## ConstructorParameters
-The `ConstructorParameters<T>` type lets us extract all parameter types of a constructor function type. 
-t produces a tuple type with all the parameter types (or the type never if T is not a function).
-
-    ConstructorParameters<typeof SomeClass>;  //
-
-    type T0 = ConstructorParameters<ErrorConstructor>;  // [(string | undefined)?]
-    type T1 = ConstructorParameters<FunctionConstructor>;  // string[]
-    type T2 = ConstructorParameters<RegExpConstructor>;  // [string, (string | undefined)?]
 
 # 官方的type utils
 https://www.typescriptlang.org/docs/handbook/utility-types.html#partial

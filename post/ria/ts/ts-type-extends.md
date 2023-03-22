@@ -177,56 +177,53 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributi
         [P in K]: T[P]
     }
 
-下面的K 的默认值是keyof T; K可以是任何类型，所以P in K 报错: 
+下面的K 的`默认值是keyof T`, `K可以是任何类型`，所以P in K 报错: 
 
     type Pick2<T, K = keyof T> = {
         // Type 'K' is not assignable to type 'string | number | symbol'
         [P in K]: T[P]
     }
-    type Pick2<T,K =keyof T > = {
+
+不过我们可以这样
+
+    type ToBool<T> = {
+        [P in keyof T]: boolean
+    }
+    // {a:boolean}
+    type A = ToBool<{a:string}>
+
+
+    type Pick3<T,K =keyof T > = {
         a:K
     }
-    type X = Pick2<number,'name'|'age'> // {a:'name'|'age'}
+    type X = Pick3<{width:string},'name'|'age'> // {a:'name'|'age'}
+    type X1 = Pick3<{width:string}> // {a:'width'}
 
-### never vs any
-note：
-
-    // true: never 继承任何类型（空类型）
-    type A1=never extends number?true:false;
-    // false: unknown 不继承任何类型
-    type A2= unknown extends number ?true:false;
-    // 'yes'|'no': any 是泛型，所有类型都可能(分解展开)
-    type A3= any extends number?'yes':'no';
-    // false
-    type A4= number extends never?true:false;
-    // true
-    type A5= number extends unknown?true:false;
-    // true
-    type A6= number extends any?true:false;
-
+### never vs unknown/any
 区别
 1. never 包含所有属性限制，继承所有的类型（从集合视角，它是空集, 不能分配给别的类型）
     1. 继承约束. People extends Animal (从集合的视角看，人类属于动物)
-2. unknown 没有属性限制（从集合视角，是超集, 可以分配给任何类型） 
+2. any 没有属性限制（从集合视角，是超集, 可以分配给任何类型, 相当于go的`any=interface{}`） 
     1. 成立：never extends A, A extends unknown/any
-3. any 是unknown 的泛型化（会展开分解）
+3. `any extends x`, `never extends x` 都会按泛型展开分解
 
-never 是所有类型的子类型:
+never 是所有类型的子类型: 子类型不可分配给任何父类
 
     // never是所有类型的子类型: 'x' 包含空集合never
     type A1 = never extends 'x' ? string : number; // string
-    // any 是所有类型的联合体
-    type A2 = A1 extends any ? string : number; // string
-    type A3 = string[] extends any[] ? string : number; // string
     type A4 = string[] extends never[] ? string : number; // number
 
-由于never被认为是空的联合类型：结果被认为是never, 而不是string
+unknown/any 是父类型: 相当于空go　interface{}
+
+    type A1= number extends unknown?true:false; // true
+    type A2= unknown extends number ?true:false; // false
+    type A2 = 2 extends any ? string : number; // string
+    type A3 = string[] extends any[] ? string : number; // string
+
+`any extends x`, `never extends x` 都会按泛型展开分解, 
 
     type P<T> = T extends 'x' ? string : number;
     type A2 = P<never> // never
-
-any 是范型，按分配律展开
-
     type A3 = any extends 'x' ? string : number; // string| number
 
 # extends 应用

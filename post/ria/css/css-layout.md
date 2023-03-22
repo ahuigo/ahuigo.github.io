@@ -46,6 +46,9 @@ box 的 horizonal 水平居中
 
 ## hide scrollbar
 
+    .hideScrollBar{ 
+        overflow:auto;
+    }
     .hideScrollBar::-webkit-scrollbar{ 
         width: 0 !important ;
         height: 0 !important ;

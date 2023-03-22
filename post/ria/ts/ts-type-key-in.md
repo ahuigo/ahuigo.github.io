@@ -3,7 +3,7 @@ title: ts type keyin
 date: 2022-09-15
 private: true
 ---
-# ts type in 
+# type in 
 
     [k in UnionType]: OtherType,
 
@@ -14,6 +14,15 @@ e.g.
     }
 
     type result = TupleToObject<'a'|'b'|'c'> 
+
+e.g. 
+
+    // A2: {abc:'abc'}
+    type A2={
+        [K in 'abc']:K;
+        //[K in 'abc'|'bcd']:K;
+    }
+
 
 ## in array
     type TupleToObject<T extends readonly (string|number)[]>={
@@ -52,19 +61,18 @@ remove undefined value
     };
 
     type c0 = FilterOpitionalEmptyValue<{
-        name: string | number | undefined;
-        null?: null | undefined;
-        undefined?: undefined;
+      name: string | number | undefined;
+      age?: string | null | undefined;
+      loc?: undefined;
     }>;
-
-    /* output:
+    /*
     type c0 = {
-    name: string | number | undefined;
-    null: null;
-    undefined: never;
-    */
-
+      name: string | number | undefined;
+      age: string | null;
+      loc: never;
+    }*/
 ## -readonly, remove readonly
+移除key的readonly属性
 
     type FilterReadonly<T extends object> = {
       -readonly[P in keyof T]: T[P]
@@ -74,10 +82,10 @@ remove undefined value
       name: string 
       readonly age: number;
     }>;
+    // type c0 = { name: string; age: number; }
 
 ## in keyof T
-
-如果不是泛型的话，可以直接展开：
+可以直接展开：
 
     const o = { a: 1, b: 1, c: 1 };
     type O = typeof o
@@ -85,20 +93,93 @@ remove undefined value
         [P in keyof typeof o]: O[P]
     };
 
-如果是泛型`K=keyof T`，必须用extends 实现类型分配，否则ts 无法推断K类型：`Type 'K' is not assignable to type 'string | number | symbol'`
-`keyof T` is `unit type`, use extends to convert it to be assignable 
+也可以
 
-    type MyPick<T, K extends keyof T> = {
-        [P in K]: T[P]
+    type X = {
+        [P in 'a'|'b'|'c']: O[P]
     };
 
-或者给T一个约束
-
-    type CopyType<T extends object> = {
-        [P in keyof T]: T[P]
+# keyof
+    interface Eg1 {
+        name: string,
+        readonly age: number,
     }
+    // T1的类型实则是name | age
+    type T1 = keyof Eg1
+
+    class Eg2 {
+      private name: string;
+      public readonly age: number;
+      protected home: string;
+    }
+    // T2实则被约束为 age
+    // 而name和home不是公有属性，所以不能被keyof获取到
+    type T2 = keyof Eg2
+# key as
+## key as Getters
+    type Getters<T> = { [P in keyof T & string as `get${Capitalize<P>}`]: () => T[P] };
+    type T50 = Getters<{ foo: string, bar: number; }>;  
+    /**
+     * type T50 = {
+        getFoo: () => string;
+        getBar: () => number;
+    }
+     */
+
+## key as never
+当as子句中指定的类型解析为never时，不会为该键生成任何属性。因此，as子句可以用作过滤器
+
+    type Methods<T> = { [P in keyof T as T[P] extends Function ? P : never]: T[P] };
+    type Methods<T> = { [P in keyof T as (T[P] extends Function ? P : never)]: T[P] };
+    type T60 = Methods<{ foo(): number, bar: boolean }>;  // { foo(): number }
 
 # example
+## Merge
+    type Merge<T> = {
+      [P in keyof T]: T[P]
+    }
+    type A = Merge<{ x: 1 } & { y: 2 }>
+
+## Equals 的实现
+这个实现有问题(因为any 会匹配所有类型):
+
+    // 加中括号是为了避免分配率
+    export type Equals<T, S> =
+        [T] extends [S] ? (
+            [S] extends [T] ? true : false
+        ) : false
+    ;
+    // any, readonly 是所有类型的超类 
+    type X=Equals<{x:any},{x:number}>;//true
+    type X = Equals<{ x: any; }, { x: number; }>;//true
+    type Y = [any] extends [number] ? true : false; //true
+    type Z = [number] extends [any] ? true : false; //true
+
+改进的`IfEquals`，基于T未知时，条件判断延迟，延迟的条件判断会采用内部的`isTypeIdenticalTo` 比较：it relies on conditional types being deferred when T is not known. Assignability of deferred conditional types relies on an internal isTypeIdenticalTo check. 
+反正是内部实现的，比较复杂
+
+
+    // https://github.com/Microsoft/TypeScript/issues/27024#issuecomment-421529650
+    type IfEquals<X, Y> = 
+        (<T>() => T extends X ? 1 : 2) extends 
+        <T>() => T extends Y ? 1 : 2
+        ? true : false
+
+    // 以下等价
+    <T>() => T extends X ? 1 : 2 
+    <T>() => (T extends X ? 1 : 2 )
+
+不过这种判断方法 不允许交集类型与具有相同属性的对象类型相同
+
+    // false
+    type A = IfEquals<{ x: 1 } & { y: 2 }, { x: 1; y: 2 }>
+
+    // 解决办法是在判断之前合并一下
+    type Merge<T> = {
+      [P in keyof T]: T[P]
+    }
+    // true
+    type A = IfEquals<Merge<{ x: 1 } & { y: 2 }>, { x: 1; y: 2 }>
 
 ## ReadonlyKeys
     /**
@@ -108,17 +189,13 @@ remove undefined value
      * https://stackoverflow.com/questions/52443276/how-to-exclude-getter-only-properties-from-type-in-typescript
      https://github.com/type-challenges/type-challenges/issues/13
      * @example
-     *   type Props = { readonly foo: string; bar: number };
-     *
-     *   // Expect: "foo"
-     *   type Keys = ReadonlyKeys<Props>;
      */
     export type ReadonlyKeys<T extends object> = {
       [P in keyof T]-?: IfEquals<
-        { [Q in P]: T[P] },
-        { -readonly [Q in P]: T[P] },
-        never,
-        P
+        { [Q in P]: T[P] },           // A:
+        { -readonly [Q in P]: T[P] }, // B:移除readonly
+        never,                        //A没有readonly
+        P                             // A有readlonly. 才留下P
       >
     }[keyof T]
 
@@ -126,19 +203,6 @@ remove undefined value
       (<T>() => T extends X ? 1 : 2) extends 
       (<T>() => T extends Y ? 1 : 2) ? A : B
 
-### Equals 的实现
-这个实现有问题(因为any 会匹配所有类型):
-
-    // 加中括号是为了避免分配率
-    export type Equals<T, S> =
-        [T] extends [S] ? (
-            [S] extends [T] ? true : false
-        ) : false
-    ;
-    type X=Equals<{x:any},{x:number}>;//true
-
-改进的`IfEquals`，基于T未知时，条件判断延迟，延迟的条件判断会采用内部的`isTypeIdenticalTo` 比较：it relies on conditional types being deferred when T is not known. Assignability of deferred conditional types relies on an internal isTypeIdenticalTo check, 
-
-    // 以下等价
-    <T>() => T extends X ? 1 : 2 
-    <T>() => (T extends X ? 1 : 2 )
+     type Props = { readonly foo: string; bar: number };
+     // Expect: "foo"
+     type Keys = ReadonlyKeys<Props>;

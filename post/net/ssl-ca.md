@@ -4,109 +4,6 @@ title:	SSL Certificate Authority(CA)
 category: blog
 description: 
 ---
-# 证书概念
-## 证书级别
-http://www.ruanyifeng.com/blog/2016/08/migrate-from-http-to-https.html
-
-## SNI(SSL/TLS Server Name Indication)
-同一IP地址和端口下不同域名HTTPS请求的需要服务端和客户端均支持SNI（Server Name Indication）https://en.wikipedia.org/wiki/Server_Name_Indication 协议，在HTTPS请求握手开始阶段指定要请求的域名，以便服务端选择使用相应的证书。
-
-1. 服务端Nginx配置支持是TSL1.0及以上版本，均支持SNI协议，
-2. 但若客户端不支持SNI协议，即没有指定要请求的域名，Nginx会优先查找default server中的证书配置，
-3. 若没有找到则会按照配置文件字母序查找对应IP端口上第一个配置有证书的域名的证书做为默认证书使用。
-
-### support
-
-	java >= 1.7
-	android web >= 4.*
-
-### SNI in Android SDK
-The current situation is the following:
-
-1. Since the Gingerbread release TLS connection with the HttpsURLConnection API supports SNI.
-2. Apache HTTP client library shipped with Android does not support SNI
-3. The Android web browser does not support SNI neither (since using the Apache HTTP client API)
-4. There is an opened ticket regarding this issue in the Android bug tracker.
-
-It is also possible to test the SNI support by making a connection to this URL: https://sni.velox.ch/
-
-### Debug SNI
-SNI should work completely transparently when running on Java 1.7 or newer. No configuration is required. If for whatever reason SSL handshake with SNI enabled server fails you should be able to find out why (and whether or not the SNI extension was properly employed) by turning on SSL debug logging as described here [1] and here [2]
-
-'Debugging SSL/TLS Connections' may look outdated but it can still be useful when troubleshooting SSL related issues.
-
-[1] http://docs.oracle.com/javase/1.5.0/docs/guide/security/jsse/ReadDebug.html
-
-[2] http://docs.oracle.com/javase/7/docs/technotes/guides/security/jsse/JSSERefGuide.html#Debug
-
-# debug cert
-调试证书
-
-## curl with cert
-    curl -v --cacert /etc/ssl/cert.pem  https://baidu.com
-    curl -v https://baidu.com
-
-## ssl 延迟
-
-    $ curl -w "TCP handshake: %{time_connect}, SSL handshake: %{time_appconnect}\n" -so /dev/null https://www.alipay.com
-
-    TCP handshake: 0.022, SSL handshake: 0.064
-
-## Certificate chain
-
-	$ openssl s_client -connect www.godaddy.com:443
-	...
-	Certificate chain
-	 0 s:/C=US/ST=Arizona/L=Scottsdale/1.3.6.1.4.1.311.60.2.1.3=US
-		 /1.3.6.1.4.1.311.60.2.1.2=AZ/O=GoDaddy.com, Inc
-		 /OU=MIS Department/CN=www.GoDaddy.com
-		 /serialNumber=0796928-7/2.5.4.15=V1.0, Clause 5.(b)
-	   i:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.
-		 /OU=http://certificates.godaddy.com/repository
-		 /CN=Go Daddy Secure Certification Authority
-		 /serialNumber=07969287
-	 1 s:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.
-		 /OU=http://certificates.godaddy.com/repository
-		 /CN=Go Daddy Secure Certification Authority
-		 /serialNumber=07969287
-	   i:/C=US/O=The Go Daddy Group, Inc.
-		 /OU=Go Daddy Class 2 Certification Authority
-	 2 s:/C=US/O=The Go Daddy Group, Inc.
-		 /OU=Go Daddy Class 2 Certification Authority
-	   i:/L=ValiCert Validation Network/O=ValiCert, Inc.
-		 /OU=ValiCert Class 2 Policy Validation Authority
-		 /CN=http://www.valicert.com//emailAddress=info@valicert.com
-
-## Show Ceritificate Info
-Show all information about a certificate:
-
-	openssl x509 -noout -text < crt
-
-Calculate the MD5 fingerprint of a certificate:
-
-	openssl x509 -noout -fingerprint < crt
-
-Calculate the SHA1 fingerprint of a certificate:
-
-	openssl x509 -sha1 -noout -fingerprint < crt
-
-info of crt/pem
-
-    openssl x509 -noout -text -in server.CA.crt
-
-# CA vs Self-Signed
-正常的生产证书：
-1. 在你的服务器上，生成一个CSR文件（也叫SSL证书请求文件，SSL Certificate Signing Request）。
-2. 使用CSR文件，购买SSL证书。
-3. 安装SSL证书。
-
-ssl 证书转移:
-IIS的做法是生成一个可以转移的.pfx文件，并加以密码保护。
-
-Certificate type:
-1. CA: request one from a `certificate authority` like Let’s Encrypt, Comodo, etc. 
-2. self signed: generate a `self-signed certificate` on the command line.
-
 # Self-Signed Certificate
 Refer to: https://deliciousbrains.com/https-locally-without-browser-privacy-errors/
 
@@ -188,7 +85,10 @@ the only question that really needed an answer was Common Name (CN). The answer 
 ## 3.With Subject Alternative Name (SAN)
 RFC 2818 describes two methods to match a domain name against a certificate
 1. using the available names within the subjectAlternativeName extension
-2. or, in the absence of a SAN extension, falling back to the commonName(dprecated, i.e. android browser/IoT(Internet of Thing)). 
+2. or, in the absence of a SAN extension, falling back to the commonName。　This is dprecated, i.e. 
+    1. android browser/IoT(Internet of Thing).  
+    2. go>=1.15也不支持commonName(certificate relies on legacy Common Name field, use SANs instead)
+    3. 参考：https://jfrog.com/knowledge-base/general-what-should-i-do-if-i-get-an-x509-certificate-relies-on-legacy-common-name-field-error/
 
 So now the domain name must be defined in the `Subject Alternative Name (SAN)` section (i.e. `extension`) of the certificate:
 
@@ -375,3 +275,17 @@ For more details:
 - http://datacenteroverlords.com/2012/03/01/creating-your-own-ssl-certificate-authority/
 
 > 根证书(root.pem)本质上是自签名证书，根证书可以用于对其它子证书签名(参考上面的链接)
+
+## CA Bundle Path(system)
+
+| Distro                                                       	| Package         	| Path to CA                               	|
+|--------------------------------------------------------------	|-----------------	|------------------------------------------	|
+| Fedora, RHEL, CentOS                                         	| ca-certificates 	| /etc/pki/tls/certs/ca-bundle.crt         	|
+| Debian, Ubuntu, Gentoo, Arch Linux                           	| ca-certificates 	| /etc/ssl/certs/ca-certificates.crt       	|
+| SUSE, openSUSE                                               	| ca-certificates 	| /etc/ssl/ca-bundle.pem                   	|
+| FreeBSD                                                      	| ca_root_nss     	| /usr/local/share/certs/ca-root-nss.crt   	|
+| Cygwin                                                       	| -               	| /usr/ssl/certs/ca-bundle.crt             	|
+| macOS (MacPorts)                                             	| curl-ca-bundle  	| /opt/local/share/curl/curl-ca-bundle.crt 	|
+| Default cURL CA bunde path (without --with-ca-bundle option) 	|                 	| /usr/local/share/curl/curl-ca-bundle.crt 	|
+| Really old RedHat?                                           	|                 	| /usr/share/ssl/certs/ca-bundle.crt       	|
+

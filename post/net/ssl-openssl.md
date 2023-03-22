@@ -14,30 +14,6 @@ https://blog.filippo.io/mkcert-valid-https-certificates-for-localhost/
 
 # openssl
 
-## DSA
-4.1.1、DSA
-1、私钥：
-
-	openssl dsaparam -out dsaparam.pem 1024
-	openssl gendsa -out private.pem dsaparam.pem
-	openssl pkcs8 -topk8 -nocrypt -in private.pem -outform PEM -out java_private.key
-
-2、公钥
-
-	openssl dsa -in private.pem -out public.pem -pubout
-
-## RSA
-4.1.2、RSA
-1、私钥(一般用.key)
-
-    openssl genrsa -out ./testdata/server.key 2048
-	openssl genrsa -out my_rsa_private_key.pem 1024
-
-
-2、证书、公钥
-
-    openssl req -new -x509 -key ./testdata/server.key -out ./testdata/server.pem -days 365
-	openssl rsa -in my_rsa_private_key.pem -pubout -out my_rsa_public_key.pem
 
 ## self cert(RSA)
 下例生成一个自签名证书(self sign certificate), 而非[ssl-ca](/p/ssl-ca) 中CA 签名证书(`CA -sign`)

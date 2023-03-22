@@ -107,10 +107,21 @@ peer 包（被大量包依赖的，如React）
 
 ## 安装目录
 ### bin path
+npm bin
 
     npm -g bin
     npm -g get prefix
     `npm -g get prefix`/lib/node_modules
+
+yarn bin
+
+    $ yarn global bin            
+    /Users/xx/.yarn/bin
+
+pnpm bin
+
+    $ pnpm bin -g 
+    /Users/xx/Library/pnpm
 
 ### pkg path
     ~/.npm(缓存包)

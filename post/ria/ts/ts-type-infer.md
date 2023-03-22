@@ -4,6 +4,7 @@ date: 2022-09-15
 private: true
 ---
 # infer arguments
+> Refer to: ts-type-func.md 协变
 
 ## infer single type arguments
 如果k 的参数是函数，返回的类型才是交叉类型， 否则，返回 never

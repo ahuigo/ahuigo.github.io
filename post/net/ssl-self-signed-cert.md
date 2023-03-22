@@ -65,20 +65,6 @@ Generation of self-sign a certificate with a private (`.key`) and public key (PE
 * Conversion form to compressed "ECDSA" `-conv_form compressed`
 * "EC" parameters and a private key `-genkey`
 
-## CA Bundle Path
-
-| Distro                                                       	| Package         	| Path to CA                               	|
-|--------------------------------------------------------------	|-----------------	|------------------------------------------	|
-| Fedora, RHEL, CentOS                                         	| ca-certificates 	| /etc/pki/tls/certs/ca-bundle.crt         	|
-| Debian, Ubuntu, Gentoo, Arch Linux                           	| ca-certificates 	| /etc/ssl/certs/ca-certificates.crt       	|
-| SUSE, openSUSE                                               	| ca-certificates 	| /etc/ssl/ca-bundle.pem                   	|
-| FreeBSD                                                      	| ca_root_nss     	| /usr/local/share/certs/ca-root-nss.crt   	|
-| Cygwin                                                       	| -               	| /usr/ssl/certs/ca-bundle.crt             	|
-| macOS (MacPorts)                                             	| curl-ca-bundle  	| /opt/local/share/curl/curl-ca-bundle.crt 	|
-| Default cURL CA bunde path (without --with-ca-bundle option) 	|                 	| /usr/local/share/curl/curl-ca-bundle.crt 	|
-| Really old RedHat?                                           	|                 	| /usr/share/ssl/certs/ca-bundle.crt       	|
-
-
 # 使用证书
 go-lib/net/http2/tls
 1. https://gist.github.com/denji/12b3a568f092ab951456
