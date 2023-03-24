@@ -14,7 +14,6 @@ https://blog.filippo.io/mkcert-valid-https-certificates-for-localhost/
 
 # openssl
 
-
 ## self cert(RSA)
 下例生成一个自签名证书(self sign certificate), 而非[ssl-ca](/p/ssl-ca) 中CA 签名证书(`CA -sign`)
 

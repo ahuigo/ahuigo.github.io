@@ -117,6 +117,14 @@ date: 2018-09-27
 10. tcpstat，tcpcapture: go-lib/net/packet
     1. sniffer 抓包: http, https(eBPF)
     2. tcp packet report
+        1. established number
+        1. listen number
+        1. connected number
+        1. backlog queue
+        2. network 质量
+            2. current bandwidth
+            3. max bandwidth
+            3. packet loss percent
     3. doc: net/tcp-sniffer.md
        1. https://inc0x0.com/tcp-ip-packets-introduction/tcp-ip-packets-3-manually-create-and-send-raw-tcp-ip-packets/
     4. https packet report

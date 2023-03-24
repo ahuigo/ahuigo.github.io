@@ -9,8 +9,8 @@ private: true
 
     证书(Certificate): *.cer *.crt 
         ——BEGIN CERTIFICATE——
-        .cer 是二进制.der(windows) .crt 是ascii(linux常用, 又名.pem)
-        可用用openssl 查看到网站的cert
+        .cer 一般是二进制.der(windows) .crt 一般是ascii 的base64 .pem(linux常用)
+        可用openssl 查看到网站的cert
 
     私钥(Private Key): *.key 
         —–BEGIN RSA PRIVATE KEY—–

@@ -99,7 +99,7 @@ So, `f(Dog):Dog`的子类型是 `(Animal):Dog` ,`(Dog):GreyDog`. 可以看到:`S
     type T10 = Foo<{ a: string; b: string }> // string
     type T11 = Foo<{ a: string; b: number }> // string | number
 
-U1 U2联合类型
+因为同一时刻，只要接受U1 U2中的一种, 所以是联合类型
 
     U:string|number = string
     U:string|number = number
@@ -119,6 +119,7 @@ U1 U2如果是对象，就是联合类型就是父类型
     type T20 = Bar<{ a: (x: string) => void; b: (x: string) => void }> // string
     type T21 = Bar<{ a: (x: string) => void; b: (x: number) => void }> // string & number => never
 
+因为同一时刻，要同时接受U1 U2, 所以是交叉类型
 U1 U2是如果是对象，U就是交叉类型-子类型`Dog &GreyDog = GreyDog`
 
     a: (U:Dog&GreyDog)=> void = (a:Dog)=>0

@@ -17,15 +17,15 @@ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 
 ############### system
 ulimit -n 1000
+export ENV_MODE=dev
+export LC_ALL='en_US.UTF-8'
+export LANG='en_US.UTF-8'
+export CLICOLOR="xterm-color"
+#$(pyenv root)/shims:
+export GNUTERM=qt
+export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])'$'\n$ '
 if [[ -z $INIT_PROFILE ]]; then
-    export ENV_MODE=dev
-    export LC_ALL='en_US.UTF-8'
-    export LANG='en_US.UTF-8'
-    export CLICOLOR="xterm-color"
     export PATH=$PATH:$HOME/www/py-lib/bin:$HOME/www/a/bin:~/bin:/usr/local/sbin
-    #$(pyenv root)/shims:
-    export GNUTERM=qt
-    export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])'$'\n$ '
     # for ssh-host-machine: export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
 fi
 

@@ -43,27 +43,6 @@ nginx.conf
 
 dockerfile 直接用: `nginx:1.16.1`
 
-## makefile
-    version?=0.2.0
-    base_image=antbear-ui-base
-    image_name=antbear-ui
-    docker_hub=registry.momenta.works/hd_map/
-    image-base:
-    	echo build base $(version)
-    	docker image build -t $(base_image):$(version) . -f Dockerfile.base
-    	docker tag $(base_image):$(version) $(docker_hub)$(base_image):$(version)
-    	docker tag $(base_image):$(version) $(docker_hub)$(base_image):latest
-    image:
-    	echo build $(version)
-    	docker image build -t $(image_name):$(version) .
-    	docker tag $(image_name):$(version) $(docker_hub)$(image_name):$(version)
-    push:
-    	docker push $(docker_hub)$(image_name):$(version)
-    run:
-    	echo $(version)
-    	docker run --rm -p 8000:8000 -p 3000:3000 $(image_name):${version}
-    nginx:
-    	docker run --rm -p 8000:8000 -v $(pwd)/dist:/usr/share/nginx/html -v $(pwd)/nginx.conf:/etc/nginx/conf.d/default.conf  nginx:1.16.1
 
 ## compose
 参考： https://github.com/ant-design/ant-design-pro/blob/master/docker/docker-compose.yml

@@ -317,8 +317,21 @@ example:
 
 这是等价实际
 
-    type Omit<T, K extends string | number | symbol> = Pick<T, Exclude<keyof T, K>>
+    type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
     type Omit<T, K extends string | number | symbol> = { [P in Exclude<keyof T, K>]: T[P]; }
+
+注意：`keyof T`会把移除联合类型中不一样的值，
+
+    type A1 = { name: string; loc: string; };
+    type A2 = { Name: string; loc: string; };
+    type A = A1 | A2;
+    type KEYS = keyof A //{loc:string}
+
+Omit不会展开Union, 可以利用extends分布展开后再Omit：
+
+    type DistributiveOmit<T, K extends keyof any> = T extends any
+        ? Omit<T, K> : never; type B = DistributiveOmit<A, 'loc'>;
+    type B = DistributiveOmit<A, 'loc'>;
 
 ## Parameters
     function foo(a: number) {

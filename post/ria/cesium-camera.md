@@ -131,7 +131,6 @@ example:
 
 ## goto position
     viewer.camera.setView({destination: Cesium.Cartesian3.fromDegrees(15, 0, 100)});
-    //momenta
     window.id.map().centerEase([lng, lat, ele])
 
 

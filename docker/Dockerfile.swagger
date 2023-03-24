@@ -2,8 +2,6 @@ FROM golang:1.14.12-alpine3.12 AS build-env
 
 RUN apk update && apk add git && apk --no-cache add tzdata && apk --no-cache add ca-certificates
 
-ENV GOPROXY="https://artifactory.momenta.works/artifactory/api/go/go"
-
 RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger && go get -u github.com/gobuffalo/packr/packr
 
 

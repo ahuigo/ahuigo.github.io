@@ -244,7 +244,7 @@ scoped 包默认发布是私有的，你如果没有权限上面的publish 不�
 ## install npm
 
     npm install <PACKAGE_NAME>
-    npm install <PACKAGE_NAME> --registry https://artifactory.momenta.works/artifactory/api/npm/npm/
+    npm install <PACKAGE_NAME> --registry https://artifactory.xxx.com/artifactory/api/npm/npm/
 
 ### with branch
 

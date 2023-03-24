@@ -52,8 +52,8 @@ static/relative: 依赖parent, 以下两种parent 的height 都有效
 ### fixed: 相对viewport的height
 相当于vw/vh
 
-### flex: 相对于closest　parent which has height
-flex相关:
+### flex: 相对于closest parent which has height
+flex相关, 取决于closest parent which has height
 1. flex-basis: item占用主轴的长度, 优先于width/height 设定
     1. 可以设定: flex-basis:100%; 相对于最近的有height的parent
 2. flex-grow: 基于flex-basis分配

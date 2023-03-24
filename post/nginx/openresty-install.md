@@ -29,7 +29,7 @@ stop:
 conf:
 
     openresty -h 
-    /usr/local/etc/openresty/nginx.conf
+    -c filename   : set configuration file (default: /opt/homebrew/etc/openresty/nginx.conf)
 
 ## mac boot
 

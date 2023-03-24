@@ -3,12 +3,14 @@ title: React Error 边界
 date: 2019-09-07
 ---
 # React Error 边界
+> refer: https://blog.logrocket.com/react-error-handling-react-error-boundary/#error-boundaries-in-react
+
 React 提供Error 捕获，但错误边界无法捕获以下场景中产生的错误(本质就是try-catch)：
 
-    事件处理（了解更多）
-    异步代码（例如 setTimeout 或 requestAnimationFrame 回调函数）
-    服务端渲染
-    它自身抛出来的错误（并非它的子组件）
+    Event handlers
+    Asynchronous code (e.g., setTimeout or requestAnimationFrame callbacks)
+    Server-side rendering
+    Errors thrown in the error boundary itself (rather than its children)
 
 ## ErrorBoundary
 如果一个 class 组件中定义了 `static getDerivedStateFromError() 或 componentDidCatch()` 这两个生命周期方法中的任意一个（或两个）时，
