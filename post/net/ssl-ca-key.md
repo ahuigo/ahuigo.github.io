@@ -18,10 +18,15 @@ https://zhuanlan.zhihu.com/p/365954921
         CHACHA20_POLY1305
         AES_256_GCM: 长度是256bit
 
-## DHE算法
+## DHE算法(一种Diffie-Hellman Key Pair)
+ECDHE（DHE）算法属于DH类密钥交换算法， 私钥不参与密钥的协商，故即使私钥泄漏，客户端和服务器之间加密的报文都无法被解密，这叫 前向安全（forward secrity）
+
     # 若使用DHE密钥协商算法需要配置DHE Param, 不配会报错，DHE-Param要求2048bit
     # 可通过openssl dhparam -out tmp/ssl/dhparam.pem 2048 生成dhparam.pem
     ssl_dhparam tmp/ssl/dhparam.pem;
+
+`DH_RSA` 私钥会存硬盘，`DHE_RSA`临时存内存，更安全
+`ECDHE`的运算是把`DHE`中模幂运算替换成了点乘运算，速度更快，可逆更难
 
 # Key 类型
 ## des3 rsa

@@ -36,16 +36,21 @@ ca和server 共用一个私key，就可生成 self-signed certificate
 # ssl 证书生成
 X.509是密码学里公钥证书的格式标准。X.509证书已应用在包括TLS/SSL在内的众多网络协议
 
+## self-signed certificate
+### Generating the Certficate Signing Request
 
-## 单独生成key+certificate
-Generation of self-signed(x509) public key (PEM-encodings `.pem`|`.crt`) based on the private (`.key`)
+    # csr
+    openssl req -new -sha256 -key server.key -out server.csr
+    # crt
+    openssl x509 -req -sha256 -in server.csr -signkey server.key -out server.crt -days 3650
+
+或者直接生成crt
 
     openssl req -new -x509 -sha256 -key server.key -out server.crt -days 3650
-    >> Common Name (eg, fully qualified host name) []:s
+    # or
+    openssl x509 -req -new -sha256 -key server.key -out server.crt -days 3650
 
-## self-signed certificate
-有很多种非对称算法：RSA，ECDSA,...
-
+### 多种非对称算法：RSA，ECDSA,...
 Generation of self-sign a certificate with a private (`.key`) and public key (PEM-encodings `.pem`|`.crt`) in one command:
 
     ```sh
@@ -62,11 +67,49 @@ Generation of self-sign a certificate with a private (`.key`) and public key (PE
     ln -sf server.rsa.crt server.crt
     ```
 
+### 基于config生成
+localhost.conf: https://www.humankode.com/ssl/create-a-selfsigned-certificate-for-nginx-in-5-minutes/
 
-### Generating the Certficate Signing Request
+    $ cat localhost.conf
+    [req]
+    default_bits       = 2048
+    default_keyfile    = localhost.key
+    distinguished_name = req_distinguished_name
+    req_extensions     = req_ext
+    x509_extensions    = v3_ca
 
-    openssl req -new -sha256 -key server.key -out server.csr
-    openssl x509 -req -sha256 -in server.csr -signkey server.key -out server.crt -days 3650
+    [req_distinguished_name]
+    countryName                 = Country Name (2 letter code)
+    countryName_default         = US
+    stateOrProvinceName         = State or Province Name (full name)
+    stateOrProvinceName_default = New York
+    localityName                = Locality Name (eg, city)
+    localityName_default        = Rochester
+    organizationName            = Organization Name (eg, company)
+    organizationName_default    = localhost
+    organizationalUnitName      = organizationalunit
+    organizationalUnitName_default = Development
+    commonName                  = Common Name (e.g. server FQDN or YOUR name)
+    commonName_default          = localhost
+    commonName_max              = 64
+
+    [req_ext]
+    subjectAltName = @alt_names
+
+    [v3_ca]
+    subjectAltName = @alt_names
+
+    [alt_names]
+    DNS.1   = localhost
+    DNS.2   = 127.0.0.1
+
+生成 certificate
+
+    sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -config localhost.conf
+
+加入系统keychain
+
+    certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n "localhost" -i localhost.crt
 
 # FAQ
 ## ECDSA & RSA — FAQ

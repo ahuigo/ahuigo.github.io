@@ -72,7 +72,7 @@ dev 包
     -D, --save-dev
         npm install -D 
 
-peer 包（被大量包依赖的，如React）
+peer 包（被大量包依赖的，如React）。对当前库打包时，不会被打进去
 
 
 ## registry(mirrors)

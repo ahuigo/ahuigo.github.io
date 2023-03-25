@@ -4,13 +4,14 @@ date: 2020-01-01
 private: 
 ---
 # go import
-import same namespace
+## import same namespace
 
     import (
         . "math"
         "fmt"
     )
 
+    // fmt.Println(math.Pi)
     fmt.Println(Pi)
 
 ## Package names vs. package imports
@@ -41,9 +42,7 @@ go1.14后不能支持多multi-version 依赖.
     )
 
 ## module 解决了什么问题？
-module 机制会在项目的根目录中添加 go.mod， 该文件用来记录项目依赖的 modules 的版本。
-
-module 的出现主要是为了解决以下问题：
+> module 机制会在项目当前目录、父目录中找 go.mo记录依赖版本。
 
 1.版本依赖管理
 要同时使用 foo1 和 foo2 两个包， 那我们应该使用什么版本的 foo3 呢？
@@ -51,14 +50,9 @@ module 的出现主要是为了解决以下问题：
     foo1 依赖 foo3@v1.0.1
     foo2 依赖 foo3@v1.0.2。
 
-2.解除对 GOPATH 的依赖
-在 Go1.11 版本之前，所有的 go 代码都要放到 $GOPATH/src 目录下面， 以便 import 能找到对应的包。
-
-而 module 的出现，可以让我们将 go 代码放到任何地方。
-
 ## 指令
     go mod tidy //拉取缺少的模块，移除不用的模块。
-    go mod download //下载依赖包
+    go mod download //只下载依赖包
     go mod vendor //将依赖复制到vendor下
     go mod verify //校验依赖
     go list -m -json all //依赖详情
@@ -122,7 +116,7 @@ package 定义局部命名空间, 是用于路径查找的：
 ### 为什么有了Go module后“依赖地狱”问题依然存在
 https://tonybai.com/2022/03/12/dependency-hell-in-go/
 
-### indirect 间隔引入(transparent dependency, grandson package)
+### indirect dependency引入(transparent dependency, grandson package)
 > https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
 项目中依赖A, A依赖A1、A1依赖A2@v1.0.0, 则A2是间接引入. 
 
@@ -214,9 +208,9 @@ go: cannot find main module; see 'go help modules'"，因为没有找到go.mod�
 ## 1.semver 规范
 semver 是一个语义化版本规范，是 modules 需要遵从的。
 
-- 主版本号：当你做了**不兼容的** API 修改  v2.x.x
-- 次版本号：当你做了**向下兼容**的功能性新增，v2.1.x
-- 修订号：当你做了向下兼容的**问题修正**。 v2.1.1
+- MAJOR主版本号：当你做了**不兼容的** API 修改  v2.x.x
+- Minor次版本号：当你做了**向下兼容**的功能性新增，v2.1.x
+- PATCH修订号：当你做了向下兼容的**问题修正**。 v2.1.1
 
 例如： 现在最新的版本号如果是 v1.4.9。 在此基础上，主版本应该是v2.x.x
 具体规则可以参考 https://semver.org/
@@ -232,23 +226,15 @@ go get/run/build会在：
 1. 父级级目录找go.mod
 
 ## 3.最小版本选择算法
-在介绍版本选择算法之前， 让我们先了解一下go.mod, 类似`yarn add`和`npm i` 生成的`yarn.lock/package.lock`
-1. 你第一次执行 go build或者 go test 的时候也会创建go.mod `require github.com/other/bar v1.4.9 `
-2. 如果你事先手动在 go.mod 中增加了 `require github.com/other/bar v1.4.8`， 那么此时你执行 `go build 或者 go test` 时， go 会使用 v1.4.8 版本的 module 来编译。
-
-那版本选择算法是什么呢？让我们先回到之前提出的那个问题：bar 依赖foo1+foo2
-
-> foo1 依赖 foo3@v1.0.1， foo2 依赖 foo3@v1.0.2。 现在我们需要实现一个功能，需要同时使用 foo1 和 foo2 两个包， 那我们应该使用什么版本的 foo3 呢？”
-
-那么在编译我们的 module bar 时， 会使用哪个版本的 foo3 呢？ 答案是 v1.0.2。(最小版本选择算法)
+如果依赖foo1+foo2, 它们又依赖不同的foo3, 会使用哪个版本的 foo3 呢？ 答案是 v1.0.2。(最小版本选择算法)
 
 1. 在 foo1 的根目录下， 有一个 go.mod 文件， 包括一行依赖信息； require foo3 v1.0.1。 
 2. 在 foo2 的根目录下， 有一个 go.mod 文件， 包括一行依赖信息； require foo3 v1.0.2。
 
-那么如果 foo2 依赖的是 foo3@v2.1.1， 我们编译 bar 时，会使用哪个版本的 foo3 呢？ 答案是两都选：v1.0.1 和 v2.1.1 。
 
-注意： v1.0.1 和 v2.1.1 使用的是不同的路径:
-一个是 v1.0.1 使用的是 foo3， 而 v2.1.1 使用的是 foo3/v2。 
+那么如果 foo2 依赖的是 foo3@v2.1.1， 我们编译 bar 时，会使用哪个版本的 foo3 呢？ 答案是两都选：v1.0.1 和 v2.1.1 。 注意： v1.0.1 和 v2.1.1 使用的是不同的路径: 
+1. 一个是 v1.0.1 使用的是 foo3， 
+2. 而 v2.1.1 使用的是 foo3/v2。 
 
 关于 最小版本选择算法 的详细信息，参考： https://research.swtch.com/vgo-mvs
 

@@ -6,6 +6,7 @@ description:
 date: 2018-09-28
 ---
 # Preface
+> HTTPS详解 https://zhuanlan.zhihu.com/p/365954921
 参考阮一峰的[ssl运行机制]，TLS/SSL 基于非对称加密，它解决了以下风险：
 
 1. 窃听风险(eavesdropping): 通过私钥加密避免第三方窃取风险

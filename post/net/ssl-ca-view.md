@@ -32,6 +32,10 @@ crt 一般是pem（base64）
 
     openssl s_client -connect baidu.com:443 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > baidu.crt
 
+或者: https://curl.se/docs/sslcerts.html
+
+    openssl s_client -showcerts -servername local.io -connect local.io:443 
+
 ### 解析pem/crt
 
     openssl x509 -in baidu.crt -text -noout
@@ -70,8 +74,12 @@ Calculate the SHA1 fingerprint of a certificate:
     TCP handshake: 0.022, SSL handshake: 0.064
 
 ## Certificate chain
+https://curl.se/docs/sslcerts.html SSL Certificate Verification
 
+
+    $ openssl s_client -showcerts -servername local.io -connect local.io:443
 	$ openssl s_client -connect www.godaddy.com:443
+
 	...
 	Certificate chain
 	 0 s:/C=US/ST=Arizona/L=Scottsdale/1.3.6.1.4.1.311.60.2.1.3=US

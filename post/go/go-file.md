@@ -94,6 +94,15 @@ func Getwd() (pwd string, err error)
     pathStat, err := os.Stat("/path/to/whatever")
     pathStat.IsDir()
 
+### file inode
+
+    pathStat, err := os.Stat("/path/to/whatever")
+    stat, ok := pathStat.Sys().(*syscall.Stat_t)
+    if !ok {
+        return
+    }
+    fileInode = stat.Ino
+
 ### path exists
     if _, err := os.Stat("/path/to/whatever"); !os.IsNotExist(err) {
         // path/to/whatever exists

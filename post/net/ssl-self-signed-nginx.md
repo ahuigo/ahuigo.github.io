@@ -41,9 +41,9 @@ for mac osx
 
 To fix the following error:
 
-    This site is missing a valid, trusted certificate (net::ERR_CERT_COMMON_NAME_INVALID).
+    This site is missing a valid, trusted certificate (NET::ERR_CERT_COMMON_NAME_INVALID).
 
-Add the following to openssl.cnf:
+必须得加一下X509v3: Subject Alternative Names. 可编辑 openssl.cnf:
 
     $ vim openssl.cnf
     [v3_ca]
@@ -74,7 +74,7 @@ this will writing new certificate and key
 
     [alert] 26091#4139815: *1 ignoring stale global SSL error (SSL: error:1408518A:SSL routines:ssl3_ctx_ctrl:dh key too small) while SSL handshaking
 
-## 3. Add the self-signed certificate to the trusted root store
+## 3. Add cert to keychain
 把证书添加到keychain, 两种方法
 add certificate via command line
 

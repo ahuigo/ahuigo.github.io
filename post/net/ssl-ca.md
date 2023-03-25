@@ -241,7 +241,7 @@ Then we create a CSR:
 
     openssl req -new -key dev.deliciousbrains.com.key -out dev.deliciousbrains.com.csr
 
-Create a config file((`dev.deliciousbrains.com.ext`) It define the Subject Alternative Name (SAN) extension 
+Create a config file((`dev.deliciousbrains.com.ext`) It define the `Subject Alternative Name (SAN)` extension 
 
     authorityKeyIdentifier=keyid,issuer
     basicConstraints=CA:FALSE

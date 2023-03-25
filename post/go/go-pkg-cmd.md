@@ -62,12 +62,15 @@ go fmt 命令主要是用来帮你格式化所写好的代码文件。
 
 使用go fmt命令，更多时候是用gofmt，而且需要参数-w，否则格式化结果不会写入文件。gofmt -w src，可以格式化整个项目。
 
-## go get
-go get分成了两步操作：第一步是下载源码包(go clone)，第二步是执行go install。
-1. go get -d library #只下载
-1. go install library #只安装，不下载
+## go get vs go install
+go 1.16起：
 
-## go install (bin)
+    go install github.com/ahuigo/arun@latest
+        build(bin) and install packages
+    go get github.com/ahuigo/requests
+        install packages only
+
+## go install (+bin)
 go install 命令在内部实际上分成了两步操作：
 第一步是生成结果文件(可执行文件或者.a包)，
 第二步会把编译好的结果移到 $GOPATH/pkg 或者 $GOPATH/bin。
@@ -81,6 +84,10 @@ go install 命令在内部实际上分成了两步操作：
 
     go install github.com/swaggo/swag/cmd/swag@latest
     go install github.com/ahuigo/arun@latest
+
+major　version:
+
+    $ go install github.com/ahuigo/arun/v2/main@latest
 
 ## go vet
 vet         report likely mistakes in packages
