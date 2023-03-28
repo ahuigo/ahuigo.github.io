@@ -84,18 +84,3 @@ React 提供Error 捕获，但错误边界无法捕获以下场景中产生的�
 
 > 默认开发模式下，当发生未捕获异常时，也会double 执行 constructor
 
-# Error 问题
-
-## double construct, 组件重新装载
-### excection construct
-当发生异常时，如果不捕获，就会double construct(即组件卸载、并重新render)
-
-    this.undefined.foo
-
-### Render 不要动态生成Hoc
-render 内生成动态高阶组件，将导致高阶组件频繁生成、卸载，无法应用diff 算法
-
-## memory leak
-> Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method
-
-一般都是因为fetch ajax 请求还没有结束

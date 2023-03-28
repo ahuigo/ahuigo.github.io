@@ -29,6 +29,13 @@ ECDHE（DHE）算法属于DH类密钥交换算法， 私钥不参与密钥的协
 `ECDHE`的运算是把`DHE`中模幂运算替换成了点乘运算，速度更快，可逆更难
 
 # Key 类型
+可用file 看key文件类型
+
+    $ file nginx.key 
+    nginx.key: PEM RSA private key
+    $ file nginx.csr 
+    nginx.csr: PEM certificate request
+
 ## des3 rsa
 生成带des3 key(对称)的RSA, 至少4位密码
 
