@@ -45,6 +45,7 @@ Cargo.toml 中使用以下方式引入:
     $ cargo build
         Blocking waiting for file lock on package cache
         Blocking waiting for file lock on package cache
+
 该下载构建还锁住了当前的项目，导致你无法在另一个地方再次进行构建。 解决办法也很简单：
 
 1. 耐心等待持有锁的用户构建完成

@@ -12,12 +12,14 @@ private: true
 3. 通过所有权来管理内存，编译器在编译时会根据一系列规则进行检查
 
 ## 不安全的代码（无所有权）
+    // a.c
     int* foo() {
         int a;          // 变量a的作用域开始
         a = 100;
         char *c = "xyz";   // 变量c的作用域开始
         return &a;
     }  
+
 上面的代码有两个问题：
 1. 函数结束后，a被返回: 但是栈上的a被释放，成为悬空指针(Dangling Pointer). 编译能过但是有问题
 2. c值”xyz“是常量，存储在常量区(非函数自己的栈): 可多次调用函数访问常量，但只有当程序结束才被释放
@@ -60,7 +62,12 @@ String是由堆分配的, 数据可修改:
     println!("{}", s); // 将打印 `hello, world!`
 
 # Move和Copy
-## 转移所有权(Move移动)
+Move 移动: 浅copy(拷贝指针、长度和容量而不拷贝数据)+所有权转移
+    1. String
+Copy: 基础类型、包括不可变常量字符串, 无所有权，也不转移所有权
+    1. &str &String &T (借用)
+
+## 转移所有权(Move)
 基本数据类型，是通过自动拷贝的方式来赋值的，都被存在栈中，完全无需在堆上分配内存。
 
     let x = 5;
@@ -76,6 +83,8 @@ String 类型是一个复杂类型，由存储在`栈`中的: 8bytes堆指针、
     //s1所有权转移后，被drop，无法再使用: 
     println!("{}, world!", s1);
 
+## Copy
+### 基础类型、包括不可变常量字符串: 无所有权，只有copy
 下面的代码合法, 对基础类型、包括不可变常量字符串来说，x并没有所有权，只有引用
 
     let x: &str = "hello, world";
@@ -88,22 +97,43 @@ String 类型是一个复杂类型，由存储在`栈`中的: 8bytes堆指针、
     let y = x;
     println!("x = {}, y = {}", x, y);
 
-## 克隆(深拷贝)
+可copy的基本类型和组合——不需要heap 内存分配，尺寸固定, 包括如下：
+
+    i32, f64, 
+    char, 
+    bool
+    元组: 仅当元组元素都有Copy特征，比如`(u32,f64)`, 而`(i32,String)`就不是
+    不可变引用`&T`：比如&str 字面字符串常量, &String
+
+Note：`let s1 = String::from("hello");`中 s1是不可变变量，但不是引用 
+
+### Copy trait
+目前所有基本类型，如整数、浮点数和字符都是Copy类型。默认情况下，struct/enum 不是Copy，但你可以派生 Copy trait:
+
+    #[derive(Copy, Clone)]
+    struct Point {
+        x: i32,
+        y: i32,
+    }
+
+    #[derive(Copy, Clone)]
+    enum SignedOrUnsignedInt {
+        Signed(i32),
+        Unsigned(u32),
+    }
+
+### 克隆(深拷贝)
 Rust 永远也不会自动创建数据的 “深拷贝”, 需要实现clone,(clone内部必须是Copy, 不然涉及所有权转换Move)
 
     let s1 = String::from("hello");
     let s2 = s1.clone();
     println!("s1 = {}, s2 = {}", s1, s2);
 
-可copy的基本类型和组合——不需要heap 内存分配，尺寸固定
-
-    i32, f64, 
-    char, 
-    bool
-    元组，仅当元组元素都有Copy特征，比如`(u32,f64)`, 而`(i32,String)`就不是
-    不可变引用`&T`：比如&str 字面字符串常量
-
-Note：`let s1 = String::from("hello");`中 s1是不可变变量，但是不是引用 
+    impl Clone for String {
+        fn clone(&self) -> Self {
+            String { vec: self.vec.clone() }
+        }
+    }
 
 # 函数传值与返回
 ## 函数传参时的move/copy

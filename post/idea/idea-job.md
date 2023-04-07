@@ -14,10 +14,10 @@ date: 2018-09-27
 2. 个人网站： 一个显示你个人涵养，介绍你过往经验，展示你个人项目的平台。我挺喜欢weebly的。
 3. skype，facebook，paypal账号，用以沟通与付费。（国外）
 
-# 程序员私活
+## 程序员私活
 https://github.com/easychen/howto-make-more-money/issues
 
-# 知乎: 程序员在哪能接到私单
+## 知乎: 程序员在哪能接到私单
 https://www.zhihu.com/question/28196848
 
 # AD 广告推广
@@ -94,8 +94,8 @@ https://www.zhihu.com/question/28196848
 
 
 如果你对国外广告联盟感兴趣，欢迎关注我 @陈辰地盘 ，我不定期会在我的知乎上分享一些相关的内容。
-
-# 加拿大优缺点
+# 各国工作
+## 加拿大优缺点
 https://www.bilibili.com/video/BV1R24y1e7LE/?spm_id_from=333.1007.tianma.6-3-21.click&vd_source=c19c4980a244fedcc729762ff654bbc9
 
 总结一下，为什么人们要离开加拿大：
@@ -112,3 +112,9 @@ https://www.bilibili.com/video/BV1R24y1e7LE/?spm_id_from=333.1007.tianma.6-3-21.
 2.　温哥华华人很多
 3.　空气质量好、夏天不热
 4.　滑雪场丰富且条件好、便宜
+
+# AI工作
+## Mid journey
+1. 上传Redubble 服装设计的网站（如上传自己设计的服装、茶杯、贴纸、海报），只要有人买了你上传的设计就会有佣金，它的用户量很大，平均每份设计10美元。
+2. 在Easty上卖自己的设计：像家装、壁画、风景等设计
+3. Fiverr上接单，完成客户要求的美术作品（好多是插画、未来艺术类），每单一般是10~20美元

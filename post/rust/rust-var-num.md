@@ -37,7 +37,7 @@ private: true
 e.g.
 
     let a : u8 = 255;
-    let b = a.wrapping_add(20);
+    let b = a.wrapping_add(20);//19
 
 ## float type
 default f64
@@ -46,7 +46,7 @@ default f64
     let y: f32 = 3.0; // f32
 
 ### 无法compare
-因为float没有实现std::cmp::Eq ,而是 std::cmp::PartialEq. f64比较的精度深
+因为float没有实现std::cmp::Eq ,而是 std::cmp::PartialEq. f64比较的精度更高一点
 
       assert!(0.1_f32 + 0.2_f32 == 0.3_f32);//ok
       assert!(0.1 + 0.2 == 0.3);//assert panic
@@ -54,7 +54,7 @@ default f64
 16进制打印
 
     let xyz: (f64, f64, f64) = (0.1, 0.2, 0.3);
-    println!("   0.1 + 0.2: {:x}", (abc.0 + abc.1).to_bits());
+    println!("   0.1 + 0.2: {:x}", (xyz.0 + xyz.1).to_bits());
 
 ## NaN
     let x = (-42.0_f32).sqrt();
@@ -71,6 +71,15 @@ default f64
     // 打印数组中第一个值，并控制小数位为2位
     println!("{:.2}", forty_twos[0]);
 
+## Print num
+### print hex
+    println!("   0.1 + 0.2: {:x}", (xyz.0 + xyz.1).to_bits());
+### print binary
+    println!("{:b}", 10u8);
+### print float
+    println!("{:.2}", forty_twos[0]);
+
+
 # 运算
 ## bits clac
 ### 与或非运算符
@@ -81,8 +90,8 @@ default f64
 
 ### 移位运算
 
-    >> >>= (右位补0)
-    << <<= (带符号)
+    << <<= (无视符号位)
+    >> >>= (符号位补1)
 
     println!("bits:{:b}", 127i8 << 3); //-8: 1111 1000
     println!("bits:{:b}", (-1i8 >> 3)); //-1:1111 1111

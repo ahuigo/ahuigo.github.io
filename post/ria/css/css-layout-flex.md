@@ -6,46 +6,6 @@ private: true
 # flex 属性
 > [demo](/assets/flex.html) 
 
-display:flex, 比 inline-block 简单
-
-	.parent{ display:flex;}
-        .children1{ flex:1;}
-        .children2{ flex:2;} //宽度自适应 比例2
-
-它分为容器container, 和 items
-
-    .container {
-        display: flex;
-        white-space:pre-wrap; normal, pre,
-        flex-wrap:wrap;
-    }
-    nav {
-        width: 200px; //先占有左边，右边的剩余空间给items 
-    }
-    .items{
-        flex: 1;
-
-        // 避免长度溢出
-        overflow:auto;
-        // flex 当做max-width
-        width:300px; 
-    }
-    <div class="container">
-        <nav/>
-        <div class="items"/>
-    </div>
-
-固定窗口：
-
-    .container{
-        flex: 1 1;
-
-        display: flex;
-        flex-direction: column;
-        overflow: auto;
-        margin: 5px;
-    }
-
 ## flex 容器
 flex 容器有主轴，侧轴之分: 水平的主轴（main axis, main start -> main end）和垂直的交叉轴（cross axis, cross start -> cross end）
 
@@ -159,15 +119,28 @@ flex-item 可能被子元素撑大，对于flex来说`min-width:auto`, 会阻止
 right div 可能会超出父div 的width, 此时`flex-shrink:1` 会失效，应该用 `min-width: 0`
 
 ```html
-    <div id="root" style="
-       border: 1px solid red;
-       flex-direction: row;
-       display: flex;
-       width:400px;
-       ">
-       <div id="left" style="width: 25%;background: red;flex-shrink: 0;">left</div>
-       <div id="right" style="flex:1;flex-shrink: 1; ">
-          <div id="header" style="line-height: 28px;background:lightpink">
+    <style>
+        #root{
+            border: 1px solid red;
+            flex-direction: row;
+            display: flex;
+            flex-wrap:wrap;
+        }
+        #left{
+            width: 25%;background: red;flex-shrink: 0;
+        }
+        #right{
+            flex:1;
+            overflow:auto;
+        }
+        #header{
+            line-height: 28px;background:lightpink
+        }
+    </style>
+    <div id="root">
+       <div id="left">left</div>
+       <div id="right">
+          <div id="header">
              <div>header</div>
           </div>
           <div id="main">
@@ -190,7 +163,6 @@ right div 可能会超出父div 的width, 此时`flex-shrink:1` 会失效，应�
 
     3. 可以使用overflow:auto, 防止main 被撑大覆盖head，
 ```
-
 ## 右对齐布局
     .main { display: flex; }
     .a, .b, .c { background: #efefef; border: 1px solid #999; }

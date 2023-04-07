@@ -1,0 +1,54 @@
+<html style="color-scheme: dark; "><head><style>
+.block{
+	--border-radius:12px;
+	--border-size:1px;
+	--padding:1px;
+	--border-bg:conic-gradient(from 180deg at 50% 50%,#e92a67 0deg,#a853ba 112.5deg,#2a8af6 228.75deg,rgba(42,138,246,0) 360deg);
+    margin:1em;
+    width:500px;
+    height:500px;
+	padding:calc(var(--padding) + var(--border-size));
+	transform:translateZ(0)
+}
+.block i{
+	position:absolute;
+	top:var(--border-size);
+	right:var(--border-size);
+	bottom:var(--border-size);
+	left:var(--border-size);
+	padding:2px;
+	-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+	mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+	-webkit-mask-composite:xor;
+	mask-composite:exclude;
+	z-index:-1;
+	border-radius:3em;
+}
+.block i:before{
+	content:"";
+	background:var(--border-bg);
+	width:calc(100% * 1.41421356237);
+	padding-bottom:calc(100% * 1.41421356237);
+	position:absolute;
+	left:50%;
+	top:50%;
+    transform: translate(-50%,-50%) rotate(25deg);
+	animation:landing_spin__awkoQ 5s linear infinite
+}
+@keyframes landing_spin__awkoQ{
+	0%{
+		transform:translate(-50%,-50%) rotate(1turn)
+	}
+	to{
+		transform:translate(-50%,-50%) rotate(0)
+	}
+}
+
+    
+</style></head>
+<body class="block">
+     <i>abc</i>
+</body>
+
+
+</html>

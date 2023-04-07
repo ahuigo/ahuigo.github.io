@@ -205,10 +205,12 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributi
     1. 继承约束. People extends Animal (从集合的视角看，人类属于动物)
 2. any 没有属性限制（从集合视角，是超集, 可以分配给任何类型, 相当于go的`any=interface{}`） 
     1. 成立：never extends A, A extends unknown/any
-3. `any extends x`, `never extends x` 都会按泛型展开分解
+3. unknown: 接受所有类型, 但是不能assign 给其它类型
+3. `any extends x`, `never extends x` 都成立，都会按泛型展开分解
 
-never 是所有类型的子类型: 子类型不可分配给任何父类
+never 是所有类型的子类型: 子类型可分配给所有类型
 
+    const a:string = 1 as never
     // never是所有类型的子类型: 'x' 包含空集合never
     type A1 = never extends 'x' ? string : number; // string
     type A4 = string[] extends never[] ? string : number; // number
@@ -219,6 +221,18 @@ unknown/any 是父类型: 相当于空go　interface{}
     type A2= unknown extends number ?true:false; // false
     type A2 = 2 extends any ? string : number; // string
     type A3 = string[] extends any[] ? string : number; // string
+
+any 任何类型、无类型限制; unknown 代表未知的任何类型（超父类): 接受所有类型, 但是不能assign 给其它类型
+
+    const a:父类　＝　子类
+    let vany: any = 10;          // we can assign anything to any
+    let vunknown: unknown =  10; // we can assign anything to unknown just like any 
+
+    let s1: string = vAny;     // Any is assignable to anything 
+    let s2: string = vUnknown; // Invalid; we can't assign vUnknown to any other type (without an explicit assertion)
+
+    vAny.method();     // Ok; anything goes with any
+    vUnknown.method(); // Not ok; we don't know anything about this variable
 
 `any extends x`, `never extends x` 都会按泛型展开分解, 
 

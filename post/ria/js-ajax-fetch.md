@@ -38,6 +38,9 @@ Detect Ajax(php 为例)：
 
 # fetch
 
+## Back/forward cache
+https://web.dev/bfcache/
+chrome:  go to Application > Back-forward Cache. 
 ## request
 
     fetch('http://localhost:5001').then(response=>response.json()).then(json=>{
@@ -220,19 +223,6 @@ you can access only following standard headers:
     r.ok //true if staus range 200-299
     then(r=>if(r.ok) ..)
 
-# axios
-
-    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
-    axios.defaults.withCredentials=true;//让ajax携带cookie
-
-    axios.get('https://yesno.wtf/api')
-          .then(function (response) {
-            vm.answer = _.capitalize(response.data.answer)
-          })
-          .catch(function (error) {
-            error.response.status
-            vm.answer = '错误！API 无法处理。' + error.response.data 
-          })
 
 # vue-resource
 

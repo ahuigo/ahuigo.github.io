@@ -11,6 +11,10 @@ private: true
     let hello = &s[0..5];
     let world = &s[6..11];
 
+    &s[..] // &str  部分引用
+    &s     // &String 引用全部String
+    s[..] // str 部分（不引用，无borrowing）
+
 ## slice语法
 ### from 0 index
 

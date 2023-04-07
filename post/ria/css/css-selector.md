@@ -61,8 +61,6 @@ example:
         padding: 8px;
     }
 
-## find
-
 ## find sub node
 
 	$('div a') //相当于 $('div').find('a')
@@ -120,6 +118,8 @@ example:
 
 	$('label + input');//匹配位于label 后的input
 	$('label ~ input');//匹配位于label 后的所有input
+        .space-x-4>:not([hidden])~:not([hidden])
+        // all child except first
 	.siblings()
 	.next()
 	.nextAll()

@@ -18,3 +18,12 @@ private: true
 
 		relative/absolute以parent positioned 结点为基准
             没有positioned 的话，则以: window.innerWidth/innerHeight (viewport)为基准
+
+## inset-inline-end
+类似right
+   
+    .button{
+        position:absolute;
+        inset-inline-end:16px;
+        right:16px;
+    }

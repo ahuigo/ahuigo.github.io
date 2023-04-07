@@ -85,7 +85,7 @@ go install 命令在内部实际上分成了两步操作：
     go install github.com/swaggo/swag/cmd/swag@latest
     go install github.com/ahuigo/arun@latest
 
-major　version:
+install with `major　version`:
 
     $ go install github.com/ahuigo/arun/v2/main@latest
 

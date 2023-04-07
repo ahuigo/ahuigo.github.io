@@ -302,7 +302,8 @@ With `space` to move region.
 
 ## copy path
 
-	cmd+c in finder
+    option+cmd+c in finder
+        cmd+c copy file or filename in finder
 	cmd+v in termial
 
 ## Action

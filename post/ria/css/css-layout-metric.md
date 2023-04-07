@@ -91,6 +91,13 @@ flex: 相对于closest　parent which has height, example:
     </div>
 </div>
 
+### aspect-ratio
+宽度高度比
+
+    aspect-ratio: width / height;
+    aspect-ratio: 1 / 1;
+    aspect-ratio: 16 / 9;
+
 ## rem/em
 em和rem都是相对长度单位
 

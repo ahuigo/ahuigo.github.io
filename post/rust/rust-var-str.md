@@ -13,7 +13,7 @@ private: true
 
 ### 转义
 
-   // 通过 \ + 字符的十六进制表示，转义输出一个字符
+   // 通过 \x + 字符的十六进制表示，转义输出一个字符
     let byte_escape = "I'm writing \x52\x75\x73\x74!";
     println!("What are you doing\x3F (\\x3F means ?) {}", byte_escape);
 
@@ -46,7 +46,7 @@ private: true
     println!("{}", longer_delimiter);
 
 ## Define `String`
-不可变字符串，但是`String`不是引用
+`String`不是引用, 如果没有加mut 就是不可变字符串
 
     let s1 = String::from("hello");
     let s1 = "hello".to_string();
@@ -72,9 +72,12 @@ Rust 的标准库还提供了其他类型的字符串，例如 OsString， OsStr
 String to `&str`:
 
     let s = String::from("hello,world!");
+    s[..] // str
+    &s[..] // &str
     say_hello(&s);
     say_hello(&s[..]);
     say_hello(s.as_str());
+
 
 这种灵活用法是因为 `deref` 隐式强制转换
 
@@ -91,18 +94,21 @@ define `char` via single quotes, 它是4bytes Unicode
     println!("'A'占用了{}字节",std::mem::size_of_val(&y));
 
 # 字符串操作
-用切片操作字符串是危险的，正确的方法如下
-## push
+用切片操作字符串是危险的，正确的方法如下. Note:
+1. inplace 方法仅适用于`String`
 
+## push(inplace)
+
+    let s= String::from("rust, rust!");
     s.push_str("rust"); //追加字符串
     s.push('!'); //追加字符char
 
-## insert
+## insert(inplace)
     s.insert_str(6, " I like");
     s.insert(5, ',');
 
 ## replace
-    let s= String::from("rust, rust!");
+    let s= "rust rust!"
     let new_str= s.replace("rust", "RUST"); //RUST, RUST!
     dbg!(new_str);
 

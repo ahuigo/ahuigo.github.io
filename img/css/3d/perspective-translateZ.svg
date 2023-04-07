@@ -1,0 +1,16 @@
+<svg width="442" height="417" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>Layer 1</title>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_1" y="168" x="255" stroke-width="0" stroke="#000" fill="#000000">translateZ(-10px)</text>
+  <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_2" y2="383.00001" x2="228" y1="96.99999" x1="228" fill="none"/>
+  <ellipse ry="39" rx="11" id="svg_3" cy="243" cx="419" stroke="#000" fill="#fff"/>
+  <line stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_6" y2="204" x2="418" y1="250" x1="27" stroke="#000" fill="none"/>
+  <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_7" y2="282" x2="416" y1="251" x1="29.99998" fill="none"/>
+  <ellipse ry="17.5" rx="9.5" id="svg_8" cy="246.5" cx="228.5" stroke="#000" fill="none"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_12" y="171" x="41" stroke="#000" fill="#000000">perspective:10px</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_13" y="22" x="159" stroke-width="0" stroke="#000" fill="#000000">
+  </text>
+  <text transform="matrix(6.49426 0 0 5.57198 -2314.57 -326.12)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="5" id="svg_14" y="71.62131" x="385.71884" stroke-width="0" fill="#000000">screen</text>
+ </g>
+</svg>

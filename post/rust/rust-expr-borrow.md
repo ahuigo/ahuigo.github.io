@@ -125,7 +125,7 @@ mutable borrow 和 immutable borrow
     5 | fn dangle() -> &'static String {
     |                ~~~~~~~~
 
-一个解决方法是Move，　所有权被转移给外面的调用者
+一个解决方法是Move，　所有权被转移给外面的调用者(非引用就会Move)
 
     fn no_dangle() -> String {
         let s = String::from("hello");

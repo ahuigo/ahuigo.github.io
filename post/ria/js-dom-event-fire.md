@@ -3,6 +3,7 @@ title: fire event
 date: 2023-02-02
 private: true
 ---
+# event
 ## create event
     const eventAwesome = new CustomEvent('awesome', {
         bubbles: true,
@@ -14,3 +15,6 @@ private: true
     //mouseup -> mousedown
     const mo= new Event('mouseover',{bubbles:true});
     whateverElement.dispatchEvent(mo);
+
+## link event
+   link.click();
