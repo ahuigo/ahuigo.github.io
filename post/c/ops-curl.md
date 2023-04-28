@@ -55,6 +55,15 @@ modify host for https:
 		robots=off if you don’t want wget to obey by the robots.txt file
     -A 'Chrome/xxxx, ....'
 
+## redirect location(-L)
+    curl -L api.com
+    # 限制跳转次数
+    curl --max-redirs 5 api.com
+
+默认curl location 到新的host不会带cookie. 除非
+
+    curl --location-trusted api.com
+
 ## -I
 
 	-I, --head

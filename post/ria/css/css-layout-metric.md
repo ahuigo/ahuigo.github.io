@@ -4,6 +4,23 @@ date: 2023-01-19
 private: true
 ---
 # css 度量
+## 布局示例：
+1. ahuigo.github.io/demo/html/layout/header-left-right.html
+
+## width/height 优先级
+Priority: `min-width`>`max-width`>`flex-basis(not content)`>`width`>`flex-basis:max-content`
+参考：https://juejin.cn/post/6844904016439148551
+
+    ```html
+    <div style="width:500px;display:flex">
+        <div style="width: 100px;flex-basis:150px">item-a</div>
+        <div style="flex-basis:200px; max-width:150px">item-b</div>
+    </div>
+    ```
+
+flex-item 可能被子元素撑大，对于flex来说`min-width:auto`, 会阻止`flex-basis/flex-shrink`收缩, 此时设定item `min-width:0`就不会被撑大了
+(参考: https://stackoverflow.com/questions/49747825/flex-basis-behavior-not-as-expected-but-max-width-works)
+
 
 ## height(100%)
 ### static/relative相对父元素(不是祖父)的height.
@@ -36,6 +53,7 @@ static/relative: 依赖parent, 以下两种parent 的height 都有效
     </div>
 
 ### absolute: 相对positioned parent的height
+positioned parent：离得最近的relative/absolute/transform: translateZ(0) 的父元素
 
     #root {
         height: 500px;
@@ -53,11 +71,19 @@ static/relative: 依赖parent, 以下两种parent 的height 都有效
 相当于vw/vh
 
 ### flex: 相对于closest parent which has height
-flex相关, 取决于closest parent which has height
+flex item相关(主轴): 取决于closest parent which has height
 1. flex-basis: item占用主轴的长度, 优先于width/height 设定
     1. 可以设定: flex-basis:100%; 相对于最近的有height的parent
 2. flex-grow: 基于flex-basis分配
 2. flex-shrink: 同上
+4. flex: 1; //占用比例
+
+flex item相关(副轴) 当容器为默认的`align-items:stretch`，item为height:auto 时，item会占用全部副轴长度
+
+    // https://ahuigo.github.io/demo/html/flex.html
+    .container{align-items:'stretch'} //默认值
+    .item{height:'auto'}
+
 
 flex: 相对于closest　parent which has height, example:
 

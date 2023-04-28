@@ -44,7 +44,7 @@ private: true
 
     linear-gradient(90deg, red, blue)
     linear-gradient(90deg, red 0%, blue 100%)
-        表是0％位置是red，100%位置变成纯blue
+        0％-100%: 从red到纯blue
     linear-gradient(90deg, red 0%, 50%, blue 100%)
         表是0％位置是red，50%变成red+blue的混合色，100%位置变成纯blue
 
@@ -148,9 +148,12 @@ e.g.
 
 ## 渐变色的起点
     background-image: radial-gradient(cyan 0%, transparent 20%, salmon 40%);
+        0-20%: cyan 到 transparent
+        20-40%: transparent 到salmon
 
 ## 渐变边缘的size
 https://www.w3schools.com/css/tryit.asp?filename=trycss3_gradient-radial_size
+
 ```css
 <style>
 #grad1 {

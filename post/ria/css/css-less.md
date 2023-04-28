@@ -106,7 +106,11 @@ className 的写法
 or:
 
     :global {
-        .ant-tabs-bar {}
+        .ocssContainer{
+            .ui_column {
+                padding-left: 0;
+            }
+        }
     }
 
 And this is what it compiles to:
@@ -123,7 +127,7 @@ umijs 下 src/global.less
     }
 
 ## merge 合并
-合并为`.largeImageStep1`
+合并为`.largeImageStep1`:
 
     :global(.largeImage) {
         &Step1{

@@ -14,6 +14,9 @@ pecify an overrides property in your package.json to override and enforce nested
         }
       }
     }
+
+或
+
     {
       "overrides": {
         "awesome-typescript-loader": {

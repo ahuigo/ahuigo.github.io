@@ -23,7 +23,7 @@ export LANG='en_US.UTF-8'
 export CLICOLOR="xterm-color"
 #$(pyenv root)/shims:
 export GNUTERM=qt
-export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])'$'\n$ '
+export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])🌈 🏂 🏡  🌤️  🔥'$'\n$ '
 if [[ -z $INIT_PROFILE ]]; then
     export PATH=$PATH:$HOME/www/py-lib/bin:$HOME/www/a/bin:~/bin:/usr/local/sbin
     # for ssh-host-machine: export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
@@ -223,8 +223,27 @@ alias dr='deno run'
 alias dt='deno test'
 export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
-################rust###############
+################ rust ###############
 alias cg=cargo
+
+################ flutter dart###############
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+export PATH="$PATH:$HOME/flutter/bin"
+## android sdk
+export ANDROID_SDK_ROOT=~/Library/Android/sdk
+export ANDROID_HOME=$ANDROID_SDK_ROOT; #已弃用
+# https://developer.android.com/tools
+export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+
+################## java ########################
+# export JAVA_HOME="$(/usr/libexec/java_home)"
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
+export JRE_HOME=$JAVA_HOME
+export PATH=$JAVA_HOME/bin:$PATH
+#export CLASSPATH=.:/usr/local/lib/jar:~/jar/json-simple-1.1.jar:/usr/local/lib/jar/java-json.jar
+export CLASSPATH='.:/usr/local/lib/jar/*'
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
 #################### golang ###############################
 export GODEV=local
@@ -239,15 +258,6 @@ export GONOSUMDB=*.corp.example.com,rsc.io/private
 export PATH=/opt/homebrew/opt/go/bin:$PATH:$GOPATH/bin
 alias go17='ln -sf /opt/homebrew/opt/go@1.17/bin /opt/homebrew/opt/go/bin'
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
-
-################## java ########################
-# export JAVA_HOME="$(/usr/libexec/java_home)"
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
-export JRE_HOME=$JAVA_HOME
-export PATH=$JAVA_HOME/bin:$PATH
-#export CLASSPATH=.:/usr/local/lib/jar:~/jar/json-simple-1.1.jar:/usr/local/lib/jar/java-json.jar
-export CLASSPATH='.:/usr/local/lib/jar/*'
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
 ######## other conf #############
 [ -f ~/.private ] && source ~/.private

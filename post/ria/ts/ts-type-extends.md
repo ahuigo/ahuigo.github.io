@@ -201,11 +201,11 @@ https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributi
 
 ### never vs unknown/any
 区别
-1. never 包含所有属性限制，继承所有的类型（从集合视角，它是空集, 不能分配给别的类型）
-    1. 继承约束. People extends Animal (从集合的视角看，人类属于动物)
-2. any 没有属性限制（从集合视角，是超集, 可以分配给任何类型, 相当于go的`any=interface{}`） 
+1. any 没有属性限制（从集合视角，是超集, 可以分配给任何类型, 相当于go的`any=interface{}`） 
     1. 成立：never extends A, A extends unknown/any
-3. unknown: 接受所有类型, 但是不能assign 给其它类型
+2. never: 超级子类， 包含所有属性限制，继承所有的类型（从集合视角，它是空集, 不能分配给别的类型）
+    1. 继承约束. People extends Animal (从集合的视角看，人类属于动物)
+3. unknown: 越级父类，接受所有类型, 不能assign 给其它类型(相当于`go interface{}`)
 3. `any extends x`, `never extends x` 都成立，都会按泛型展开分解
 
 never 是所有类型的子类型: 子类型可分配给所有类型

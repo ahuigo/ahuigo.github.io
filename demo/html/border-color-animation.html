@@ -4,14 +4,17 @@
 	--border-size:1px;
 	--padding:1px;
 	--border-bg:conic-gradient(from 180deg at 50% 50%,#e92a67 0deg,#a853ba 112.5deg,#2a8af6 228.75deg,rgba(42,138,246,0) 360deg);
+    background:lightgray;
     margin:1em;
-    width:500px;
-    height:500px;
+    width:200px;
+    height:200px;
 	padding:calc(var(--padding) + var(--border-size));
+    position: relative;
 	transform:translateZ(0)
 }
 .block i{
 	position:absolute;
+    text-align: center;
 	top:var(--border-size);
 	right:var(--border-size);
 	bottom:var(--border-size);
@@ -46,9 +49,9 @@
 
     
 </style></head>
-<body class="block">
+<div class="block">
      <i>abc</i>
-</body>
+</div>
 
 
 </html>

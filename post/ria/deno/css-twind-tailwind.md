@@ -8,7 +8,7 @@ private: true
 > https://www.tailwindcss.cn/docs/functions-and-directives
 
 ## @apply
-实现类的复用, 参考　https://tailwindcss.com/docs/reusing-styles#extracting-classes-with-apply　我们扩展一下`@layer components`
+实现类的组合复用, 参考　https://tailwindcss.com/docs/reusing-styles#extracting-classes-with-apply　我们扩展一下`@layer components`
 
     <!-- After extracting a custom class -->
     <button class="btn-primary">
@@ -25,10 +25,22 @@ private: true
         @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
       }
       .btn-blue:hover {
-          @apply bg-blue-700;
+        @apply bg-blue-700;
+        @apply font-bold;
       }
     }
 
+不使用配置，直接在行内使用apply
+
+    <style>
+      .btn {
+        @apply py-2 px-4 font-semibold rounded-lg shadow-md;
+      }
+      .btn-green {
+        @apply text-white bg-green-500 hover:bg-green-700;
+      }
+    </style>
+    <button class="btn btn-green"> Button </button>
 
 ## 其它tailwind 指令
 1. @tailwind：使用 @Tailwind 指令将 Tailwind 的 base, components, utilities 插入到 CSS 中。

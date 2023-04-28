@@ -126,15 +126,15 @@ right div 可能会超出父div 的width, 此时`flex-shrink:1` 会失效，应�
             display: flex;
             flex-wrap:wrap;
         }
+        #header{
+            line-height: 28px;background:lightpink
+        }
         #left{
             width: 25%;background: red;flex-shrink: 0;
         }
         #right{
             flex:1;
             overflow:auto;
-        }
-        #header{
-            line-height: 28px;background:lightpink
         }
     </style>
     <div id="root">

@@ -80,6 +80,22 @@ go get 用于下载单个包和版本
 ### 指定包版本
     go get go.uber.org/fx@v1
 
+### indirect dependency引入(transitive dependency, grandson package)
+> https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
+项目中依赖A, A依赖A1、A1依赖A2@v1.0.0, 则A2是间接引入. 
+
+不过此时：
+1.　如果A2 有重大bug，要升级到A2@v1.0.1，
+2. A1 不能及时升级
+
+则需要显式通过indirect 间接引入A2 v1.0.1
+
+    require (
+        A2 v1.0.1//indirect 是间接引入
+        golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
+    )
+
+
 ### 查看所用的go.mod
 go在运行时，会在上层目录中查找go.mod 
 
@@ -115,21 +131,6 @@ package 定义局部命名空间, 是用于路径查找的：
 
 ### 为什么有了Go module后“依赖地狱”问题依然存在
 https://tonybai.com/2022/03/12/dependency-hell-in-go/
-
-### indirect dependency引入(transparent dependency, grandson package)
-> https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
-项目中依赖A, A依赖A1、A1依赖A2@v1.0.0, 则A2是间接引入. 
-
-不过此时：
-1.　如果A2 有重大bug，要升级到A2@v1.0.1，
-2. A1 不能及时升级
-
-则需要显示通过indirect 间隔引入A2 v1.0.1
-
-    require (
-        A2 v1.0.1//indirect 是间接引入
-        golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
-    )
 
 ## go.mod init
 使用步骤：

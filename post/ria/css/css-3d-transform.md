@@ -116,10 +116,12 @@ perspective example:
         <div class="item"></div>
     </div>
 
-### perspective vs transform: perspective();
+### perspective vs perspective();
+perspective()用于单个元素独立的三维透视: transform 顺序不一样，透视效果就很不一样（一般不这样做）
+一般使用　perspective, 即父容器上的透视属性，创建一个由其所有子元素共享的三维空间;
 
     perspective: 61px; //on parent element, apply to every child
-    transform: perspective(61px); //on the individual elements
+    transform: rotate3d(1, 1, 1, 89deg) perspective(61px); //on the individual elements
 
 ##  transform-style
 > 由于这个属性不会被继承，因此必须为元素的所有非叶子子元素设置它。

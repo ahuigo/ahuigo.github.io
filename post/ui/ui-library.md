@@ -40,6 +40,7 @@ http://designmodo.github.io/Flat-UI/
 1. svg icon:
     1. https://icons8.com/icons/set/check
     2. https://tabler-icons.io/ 3400个
+    3. https://www.svgrepo.com/svg/13653/like
 1. 推荐一个icon 资源站点:
 https://www.flaticon.com/free-icon/weibo_408769#term=weibo&page=1&position=5
 
