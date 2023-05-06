@@ -203,5 +203,5 @@ format! 的用法与 print! 的用法类似，详见格式化输出。
     }
 
 ## slice 字串
-标准库做不到，得用
+标准库做不到，得用这个
 https://crates.io/crates/utf8_slice

@@ -48,6 +48,10 @@ full slice:
 # int slice:`&[i32]`
 该数组切片的类型是 &[i32]
 
+## compare
+切片比较是元素级比较的
+
     let a = [1, 2, 3, 4, 5];
     let slice = &a[1..3];
+    println!("{}", slice== &[2, 3]); // true
     assert_eq!(slice, &[2, 3]);

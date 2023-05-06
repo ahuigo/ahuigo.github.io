@@ -29,14 +29,6 @@ KK 使用类IPA 国际英标标系统，常用 KK 音标标注美式发音
 
 Rerfer to : http://www.zhihu.com/question/19798685
 
-# 连读
-辅音结尾+元音开头
-
-	She's in our math class.
-		in+our /inaʊə/
-	He's over there.
-		is+over səʊvə
-
 # 闭音节
 - 闭音节指的是以一个或几个 *辅音音素结尾* (r除外)，而中间 *只有一个元音音素* 的音节。
     重读闭音节是闭音节的一种。例：sit/sit/，film/film/, pen/pen/，dog/dɔg/，map/mæp/，desk/desk/，apple/ˈæpl/。

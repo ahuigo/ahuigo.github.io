@@ -157,7 +157,7 @@ right div 可能会超出父div 的width, 此时`flex-shrink:1` 会失效，应�
     1. flex-item 加上`min-width: 0;`, 不需要`flex-shrink:1`
     参考： https://stackoverflow.com/questions/36230944/prevent-flex-items-from-overflowing-a-container
     解释：对于flex-item来说，默认的`min-width: auto;`就是会被子div撑大
-    2.  (无用)使用flex-shrink:1 没有作用，因为它不是基于元素内容放缩，而是基于其它flex-items 放缩的
+    2.  (无用)item使用flex-shrink:1 没有作用，因为它不是基于元素内容放缩，而是基于其它flex-items 放缩的
     参考：https://stackoverflow.com/questions/59553888/flex-items-do-not-overflow
     https://stackoverflow.com/questions/22429003/how-to-right-align-flex-item
 
