@@ -13,8 +13,8 @@ private: true
 
     //mouseenter->  moverover->mouseleave
     //mouseup -> mousedown
-    const mo= new Event('mouseover',{bubbles:true});
-    whateverElement.dispatchEvent(mo);
+    const mu= new Event('mouseover',{bubbles:true});
+    $0.dispatchEvent(mu);
 
 ## link event
    link.click();
