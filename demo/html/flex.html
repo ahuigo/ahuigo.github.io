@@ -327,7 +327,7 @@ a {
 	</div>
 
 	<h3>5、align-items属性</h3>
-	<p>align-items属性定义项目在交叉轴上如何对齐。</p>
+	<p>align-items属性定义项目在交叉轴上如何对齐(默认 stretch铺满)。</p>
 	<p>
 		.box {
 		 	align-items: flex-start | flex-end | center | baseline | stretch;
@@ -373,11 +373,12 @@ a {
 	<h3>6、align-content属性</h3>
 justify-content 
     用于定义`伸缩行content`在`主轴(横轴)`上面的的对齐方式
-align-items 
+align-items(twind: )
     用来定义`伸缩项目item`在`侧轴`的对齐方式
-align-content 属性
-    定义了多根轴线的整体对齐方式。如果项目只有一根轴线，该属性不起作用。
+align-content 属性(twind: content-center)
+    1. 定义了多根轴线的整体对齐方式。如果项目只有一根轴线，该属性不起作用。
     2. 仅当用flex-wrap:wrap时有效
+    content-center
 	<p>
 		.box {
 		  align-content: flex-start | flex-end | center | space-between | space-around | stretch;
@@ -601,17 +602,17 @@ align-content 属性
             /Note: vertical-align是所在line-height内的对齐/
             /Note2: 如果div不设定长度,不用flex, 用padding 也可实现水平垂直对齐/
         }
-    <style>
-        .text-center{
-            display: inline-flex;
-            justify-content: center; /*左右, text-align在flex中无效*/
-            align-items: center; /*上下*/
-            border: 1px solid;
-            background: lightblue;
-            width: 150px;
-            height: 50px;
-        }
-    </style>
+        <style>
+            .text-center{
+                display: inline-flex;
+                justify-content: center; /*左右, text-align在flex中无效*/
+                align-items: center; /*上下*/
+                border: 1px solid;
+                background: lightblue;
+                width: 150px;
+                height: 50px;
+            }
+        </style>
         <div class="text-center">text</div>
     </pre>
 </body>

@@ -6,6 +6,9 @@ private: true
 # React portal
 Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点, 并且让事件冒泡到父节点的优秀的方案。
 
+    //import ReactDOM from 'react-dom';
+    import ReactDOM from 'react-dom/client';
+
     const child = <div/>
     // 类似　ReactDOM.render(child, container)
     ReactDOM.createRoot(container).render(child)

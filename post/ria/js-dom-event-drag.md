@@ -43,7 +43,7 @@ export class MouseDrag {
      * @param {*} moveCallback 
      */
     static onMouseDrag(e: MouseEvent, ele: HTMLDivElement, moveCallback: any, endCall: any = undefined) {
-        let oldX = e.clientX;
+        let oldX = e.clientX;//mouse　position
         let oldY = e.clientY;
         e.preventDefault();
         ele.onmousemove = e => {

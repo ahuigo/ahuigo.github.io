@@ -106,7 +106,7 @@ or 优先级更高(不要写这种)
         case sum(1,3): 'code block' ;break;
     }
 
-## Nullish coalescing (??)
+## Nullish coalescing 双问号(??)
     const foo = null ?? 'default string';
     console.log(foo);
     // Expected output: "default string"
@@ -114,6 +114,10 @@ or 优先级更高(不要写这种)
     const baz = 0 ?? 42;
     console.log(baz);
     // Expected output: 0
+
+经常用于:
+
+    opt.value ?? opt.defaultValue
 
 ## Nullish coalescing assignment (??=)
     const a = { duration: 50 };
