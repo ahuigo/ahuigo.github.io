@@ -30,6 +30,10 @@ export function appendMapDom(id: string, ele: JSX.Element) {
 
 /**
  * 鼠标拖动
+ *   
+ * document.onmousemove = null;
+   document.onmouseup = null;
+
  */
 export class MouseDrag {
     static onMouseDragPosition(e: MouseEvent, ele: HTMLDivElement) {
