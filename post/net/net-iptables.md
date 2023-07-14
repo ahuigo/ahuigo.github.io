@@ -6,6 +6,8 @@ description:
 ---
 # 原理
 参考[Iptables防火墙原理详解](http://segmentfault.com/a/1190000002540601)
+https://thiscute.world/posts/iptables-and-container-networks/
+https://www.bilibili.com/video/BV1LE411J72q/
 
 ## netfilter/iptables
 Netfilter是Linux操作系统核心层内部的一个数据包处理模块，它具有如下功能：
@@ -24,6 +26,7 @@ Netfilter 所设置的规则是存放在内核内存中的，而 iptables 是一
 2. Chains: 这个XXtables由`表tables`、`链chains`、`规则rules`组成，iptables在应用层负责修改这个规则文件。类似的应用程序还有 firewalld 。
 
 ![iptables-framework](/img/iptables-framework.png)
+![iptables-framework2](/img/net/iptables-packetflow.webp) refer to wiki
 
 ## Tables(filter、nat、mangle等规则表)
 4个表:filter,nat,mangle,raw,security，默认表是filter（没有-t 指定表的时候就是filter表）。
@@ -79,7 +82,30 @@ iptables中数据包和4种被跟踪连接的4种不同状态：
 list rules of chain:
 
     iptables -S INPUT
+
 ![chains-flow](/img/net/iptables-flow.gif)
+
+
+### 自定义链
+> 作者：zhjwang 链接：https://www.jianshu.com/p/4ac00aa88ec3
+为了方便管理规则，我们可以自定义链，将不同的规则放在不同的链中。
+
+    # 1.创建自定义链
+    iptables -t filter -N IN_WEB
+
+    # 2.在自定义链上设置规则
+    iptables -t filter -A IN_WEB -s 192.168.1.1 -j REJECT
+    # 在filter表中的IN_WEB链上创建一个规则，对原地址为192.168.1.1这个的连接进行阻止。
+
+    # 3.这时候自定义链的规则还不能使用，必须借助于默认链来是实现。
+    iptables -A INPUT -p tcp --dport 80 -j IN_WEB
+    我们在INPUT链中添加了一些规则，访问本机80端口的tcp报文将会被这条规则匹配到。-j IN_WEB表示：访问80端口的tcp报文将由自定义链“IN_WEB”中的规则处理，没错，在之前的例子中-j 表示动作，当我们将动作替换成自定义链时，
+
+    # 4.重命名自定义链
+    iptables -E IN_WEB WEB
+
+    # 5.删除自定义链
+    iptables -X WEB
 
 ### 遍历链 （Traversing Chains）
 关于匹配：
@@ -192,8 +218,10 @@ other:
 ## 规则查看
 以下都可以
 
-    iptables -L
-    iptables --line -vnL
+    sudo iptables -L
+    sudo iptables --line -vnL
+    # 默认是filter, 而不是nat
+    sudo iptables --line -vnL -t nat
     /etc/init.d/iptables status
 
 参数：
@@ -231,12 +259,16 @@ other:
 # 命令
 ![cli](/img/iptables-cli.png)
 
-## table
+## table && chain
+四表五链
 
-    [-t 表名]：该规则所操作的哪个表，可以使用filter、nat等，如果没有指定则默认为filter
+    -t 表名：
+        该规则所操作的哪个表，可以使用filter、nat等，如果没有指定则默认为filter
+    -I chain名 number：
+        指定规则表的哪个链，如INPUT、OUPUT、FORWARD、PREROUTING等
+        -I INPUT 5 插入到第5条
 
-## command
-
+## CRUD rules
     -A：新增一条规则，到该规则链列表的最后一行(优先级最低)
     -I：插入一条规则，原本该位置上的规则会往后顺序移动，没有指定编号则为1
     -D：从规则链中删除一条规则，要么输入完整的规则，或者指定规则编号加以删除
@@ -256,24 +288,56 @@ other:
     -N 新建用户自定义的规则链
     -X 删除用户自定义的规则链
 
-### 默认动作
-查看默认:
+### view rules of table chain
+-S 以iptables-save 形式打印原始命令
+-L 以人类友好形式打印
+
+    sudo iptables -t nat -S
+    sudo iptables -t nat -nL
+        -n 端口用数字表示，不走dns
+    sudo iptables -t nat -S PREROUTING
+
+### add rules
+    # --add 允许 80 端口通过
+    iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+add 转发规则
+
+    # 在匹配条件前面使用感叹号表示取反
+    # 如下规则表示接受所有来自 docker0，但是目标接口不是 docker0 的流量
+    iptables -A FORWARD -i docker0 ! -o docker0 -j ACCEPT
+
+#### 链的默认规则
+##### 查看默认:
 
     iptables -nL -v |grep policy
         Chain INPUT(policy ACCEPT)
         ...
 
-设置默认
-
+##### 设置默认
+    --policy 设置某个链的默认规则
+    # 很多系统管理员会习惯将连接公网的服务器，默认规则设为 DROP，提升安全性，避免错误地开放了端口。
+    # 但是也要注意，默认规则设为 DROP 前，一定要先把允许 ssh 端口的规则加上，否则就尴尬了。
     iptables --policy INPUT ACCEPT
     iptables -P INPUT DROP
 
+### delete rules
+    # ---delete 通过编号删除规则
+    iptables -D 1
+    # 或者通过完整的规则参数来删除规则
+    iptables -D INPUT -p tcp --dport 80 -j ACCEPT
 
-## chain
-- chain名：指定规则表的哪个链，如INPUT、OUPUT、FORWARD、PREROUTING等
-- [规则编号]：插入、删除、替换规则时用，--line-numbers显示号码
+#### flush rules
 
-    -I INPUT 5 插入到第5条
+    # --flush 清空 INPUT 表上的所有规则
+    iptables -F INPUT
+
+### replace & insert
+    # --replace 通过编号来替换规则内容
+    iptables -R INPUT 1 -s 192.168.0.1 -j DROP
+
+    # --insert 在指定的位置插入规则，可类比链表的插入
+    iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT
 
 ## Parameter & Xmatch
 
@@ -374,6 +438,18 @@ port
     <-j 动作>：处理数据包的动作，包括ACCEPT、DROP(timeout)、REJECT(Destination port unreachable)等
     -j targetname [per-target-options]
 
+数据在按优先级经过四个表的处理时，一旦在某个表中匹配到一条规则 A,下一条处理规则就由规则 A 的 target 参数指定，后续的所有表都会被忽略。target 有如下几种类型：
+
+    ACCEPT: 直接允许数据包通过
+    DROP: 直接丢弃数据包，对程序而言就是 100% 丢包
+    REJECT: 丢弃数据包，但是会给程序返回 RESET。这个对程序更友好，但是存在安全隐患，通常不使用。
+    MASQUERADE: （伪装）将 src ip 改写为网卡 ip，和 SNAT 的区别是它会自动读取网卡 ip。路由设备必备。
+    SNAT/DNAT: 顾名思义，做网络地址转换
+    REDIRECT: 在本机做端口映射
+    LOG: 在 /var/log/messages 文件中记录日志信息，然后将数据包传递给下一条规则，也就是说除了记录以外不对数据包做任何其他操作，仍然让下一条规则去匹配。
+    其他自定义链的名称：表示将数据包交给该链进行下一步处理。
+    RETURN: 如果是在子链（自定义链）遇到 RETURN，则返回父链的下一条规则继续进行条件的比较。如果是在默认链 RETURN 则直接使用默认的动作（ACCEPT/DROP）
+
 拒绝 17500 端口的任何数据包, 但是返回一个错误回应: unreachable：
 
     # iptables -R INPUT 2 -p tcp --dport 17500 -j REJECT --reject-with icmp-port-unreachable
@@ -462,6 +538,26 @@ I would like for clients connected to wlan1 to be able to access the internet on
     iptables -t nat -A OUTPUT -p tcp -d 127.0.0.1      --dport 80 -j DNAT --to 127.0.0.1:8080
     iptables -t nat -A OUTPUT -p tcp  --dport 80 -j DNAT --to 127.0.0.1:8080
 
+#### 将外部访问转发到127.0.0.1
+
+    $ iptables -t nat -I PREROUTING -p tcp -d 192.168.1.0/24 --dport 2222 -j DNAT --to-destination 127.0.0.1:2222
+    $ iptables -t nat -I PREROUTING -p tcp -d 10.0.0.0/8 --dport 2222 -j DNAT --to-destination 127.0.0.1:2222
+
+以上值生效的前提, 要设定route_localnet=1： (默认是0, not route external traffic destined to 127.0.0.0/8)
+
+    sysctl -w net.ipv4.conf.eth0.route_localnet=1
+    sysctl -w net.ipv4.conf.ens192.route_localnet=1
+
+确认:
+
+    $ sudo iptables --line -vnL  -t nat | ag 2222
+    num   pkts bytes target     prot opt in     out     source               destination
+    1     0    0     DNAT       tcp  --  *      *       0.0.0.0/0            10.0.0.0/8           tcp dpt:2222 to:127.0.0.1:2222
+
+删除编号1：
+
+    $ sudo iptables -t nat -D PREROUTING 1
+
 ### 异机端口转发
 要实现的是所有访问 192.168.10.100:81 的请求，转发到 172.29.88.56:80 上，在 192.168.10.100 是哪个添加规则:
 
@@ -515,9 +611,9 @@ LOG 目标可以用来记录匹配某个规则的数据包。和 ACCEPT 或 DROP
 
 使用 -m limit，可以使用 --limit 来设置平均速率或者使用 --limit-burst 来设置起始触发速率。在上述 logdrop 例子中：
 
+    # 添加一条记录所有通过其的数据包的规则。开始的连续10个数据包将会被记录，之后每分钟只会记录5个数据包。
     iptables -A logdrop -m limit --limit 5/m --limit-burst 10 -j LOG
 
-添加一条记录所有通过其的数据包的规则。开始的连续10个数据包将会被记录，之后每分钟只会记录5个数据包。
 
 vi /etc/rsyslog.conf 编辑日志配置文件，添加kern.=notice /var/log/iptables.log，可以将日志记录到自定义的文件中。
 

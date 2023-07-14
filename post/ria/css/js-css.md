@@ -268,6 +268,7 @@ https://www.zhihu.com/question/19895400
 
 ### wrap
 
+    # text-wrap: wrap; # 字符极别的wrap，主流浏览器不支持
     word-wrap:
     	break-word; //对长单词不截断，强制换行, 短单词不受影响(配合 word-break 生效)
     word-break: 	;控制`字符与单词`的换行
@@ -293,6 +294,10 @@ https://stackoverflow.com/questions/64699828/css-property-white-space-example-fo
 
       Test</span>
     </div>
+
+#### text nowrap
+
+      white-space: nowrap;
 
 ### overflow
 

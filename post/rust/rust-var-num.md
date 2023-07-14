@@ -38,6 +38,8 @@ e.g.
 
     let a : u8 = 255;
     let b = a.wrapping_add(20);//19
+    let b = a.checked_add(20);//None
+
 
 ## float type
 default f64

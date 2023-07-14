@@ -9,6 +9,7 @@ private: true
         bubbles: true,
         detail: { text: () => textarea.value }
     });
+
 ## dispatchEvent
 
     //mouseenter->  moverover->mouseleave

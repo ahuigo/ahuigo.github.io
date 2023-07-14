@@ -36,6 +36,9 @@ http://designmodo.github.io/Flat-UI/
 
 # icon
 1. 阿里icon: https://www.iconfont.cn/search/index?q=line
+2. byteIcon可定制: https://iconpark.oceanengine.com/official
+    1. https://bytedance.feishu.cn/wiki/wikcnwQdWRdkFovOEC4hrvw7BMf#
+3. opensource:http://remixicon.com/
 1. http://compute.vision/nouns/index.html
 1. svg icon:
     1. https://icons8.com/icons/set/check

@@ -69,13 +69,31 @@ Result:
 - INDEX : 支持lower/condition 表达式
 - CONSTRAINT: 不支持表达式
 
-create table constraint:
+### create table constraint:
 
     CREATE TABLE table_name(
         id bigserial PRIMARY KEY,
         column_name data_type UNIQUE,
         UNIQUE ( column_name [, ... ] ) 
         PRIMARY KEY ( column_name [, ... ] ) 
+    );
+
+create table constraint(foreign key): 没有区别
+
+    // "master_con_id_key" UNIQUE CONSTRAINT, btree (con_id)
+    // "master_unique_idx" UNIQUE, btree (ind_id)
+    create table master (
+        con_id integer unique,
+        ind_id integer
+    );
+    create unique index master_unique_idx on master (ind_id);
+
+    // 都可用于 foreign key, 没有区别
+    create table detail (
+        con_id integer,
+        ind_id integer,
+        constraint detail_fk1 foreign key (con_id) references master(con_id),
+        constraint detail_fk2 foreign key (ind_id) references master(ind_id)
     );
 
 ### add index/constraint
@@ -88,13 +106,13 @@ add index(recommended)
     CREATE INDEX ON films ((lower(title)));
     Drop INDEX index_name
 
-add constraint (好像没有index)
+add constraint 
 
     \h alter table
-    alter table users add UNIQUE(name,id);
-    alter table users add CONSTRAINT uesrs_pkey  UNIQUE(name,id);
-    alter table t add CONSTRAINT uesrs_pkey PRIMARY KEY(id)
-    alter table t add CONSTRAINT uesrs_pkey UNIQUE (id)
+    alter table t add UNIQUE(name,id);
+    alter table t add CONSTRAINT uesrs_pkey PRIMARY KEY(id);
+    alter table t add CONSTRAINT uesrs_pkey UNIQUE (id);
+    alter table t add CONSTRAINT uesrs_pkey UNIQUE(name,id);
     # if not exists
     alter table t DROP CONSTRAINT  IF EXISTS uesrs_pkey;
     column_constraint:
@@ -117,6 +135,8 @@ constraint vs index(unique) 区别, 很多情况下二者基本是一样的，�
 https://pg.sjk66.com/postgresql/unique-constraint.html
 https://stackoverflow.com/questions/23542794/postgres-unique-constraint-vs-index
 
+constraint 可基于 index：
+
     alter table t add CONSTRAINT uesrs_pkey UNIQUE USING INDEX index_name;
 
 ### Rename index/constraint
@@ -130,6 +150,17 @@ rename index/constraint:
 
     ALTER TABLE table DROP CONSTRAINT products_pkey;
     DROP INDEX index_name;
+
+### list all constraint
+
+SELECT con.*
+       FROM pg_catalog.pg_constraint con
+            INNER JOIN pg_catalog.pg_class rel
+                       ON rel.oid = con.conrelid
+            INNER JOIN pg_catalog.pg_namespace nsp
+                       ON nsp.oid = connamespace
+       WHERE nsp.nspname = '<schema name>'
+             AND rel.relname = '<table name>';
 
 ## 约束各类
 索引也是属于约束，约束不代表有索引，比如 `NOT NULL`, `CHECK`
@@ -274,6 +305,12 @@ table 独立的unique:
         id SERIAL PRIMARY KEY,
         name VARCHAR NOT NULL
     );
+
+注意，手动添加ID的话，seq不会自增，下一次insert 会报id重复
+
+    ahuigo=# INSERT INTO "users" ("username","id") VALUES ('Alex3',20);
+    ahuigo=# INSERT INTO "users" ("username") VALUES ('Alex3') RETURNING "id";
+    ERROR:  duplicate key value violates unique constraint "users_pkey"
 
 # optimize,优化
 

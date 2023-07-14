@@ -8,8 +8,9 @@ rustlib/str/fmt
 
 ## raw print`:?`
     let a: u8 = 255;
-    let b = a.checked_add(20);
-    println!("{:?}, {:#?}", b, b);
+    let b = a.checked_add(20); // Option<u8>
+    println!("b:{:?}, b:{:#?}", b, b);
+    // b:None, b:None
 
 ## hex print
     let xyz: (f64, f64, f64) = (0.1, 0.2, 0.3);

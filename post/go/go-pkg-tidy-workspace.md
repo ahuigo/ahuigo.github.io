@@ -51,3 +51,12 @@ private:
         ../fx
         ./requests
     )
+
+## pkg/v2
+比如 github.com/ahuigo/requests/v2 的根目录文件中存在
+
+    package requests
+
+我们不能改写成 package v2, 但是我们可以设定工作区
+
+    requests $ go work init .

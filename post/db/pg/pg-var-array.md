@@ -182,6 +182,39 @@ any array
 
     SELECT 'ab%' <~~ ANY('{"abc","def"}');
     SELECT not 'ab%' <~~ ALL('{"abc","def"}');
+## 集合索引
+为了加速集合交集运算，我们给字段加GIN 索引(或GIST索引，有类型限制)
+
+    $ CREATE INDEX manual_task_info_entity_ids_gin_idx ON table USING gin(entity_ids);
+
+可以看到用上了索引：`manual_task_info_entity_ids_gin_idx`
+
+    $ EXPLAIN select a.id from task_infos a where a.space_id = 1 and entity_ids && '{"67505","69284"}'
+     Bitmap Heap Scan on manual_task_infos a  (cost=19.06..72.40 rows=17 width=8)
+       Recheck Cond: (entity_ids && '{67505,69284}'::text[])
+       Filter: (space_id = 1)
+       ->  Bitmap Index Scan on manual_task_info_entity_ids_gin_idx  (cost=0.00..19.06 rows=48 width=0)
+             Index Cond: (entity_ids && '{67505,69284}'::text[])
+
+但是如果输入array非常长（上万个元素），求交集就无法用上GIN 索引
+
+    $ EXPLAIN select a.id from task_infos a where a.space_id = 1 and entity_ids && '{"67505","69284",...,"27501"}'
+     Seq Scan on manual_task_infos a  (cost=0.00..40545.43 rows=51245 width=8)
+        Filter: ((entity_ids && '{67505,69284,27501,27067,2....}'))
+
+此时可以考虑使用bloomFilter 过滤器、Elasticsearch等, 
+或者使用JOIN，将ARRAY拆分成单个元素, 再求交集`entity_ids && ARRAY[ids.id]` 就可以利用索引了(Note: JOIN表的数量也不能太大，否则JOIN也会很慢)
+
+    # CREATE TEMP TABLE ids AS ( SELECT unnest(ARRAY[...]) as element);
+    $ EXPLAIN WITH ids(id) AS ( VALUES('67505'),('69284'), ...)
+    select a.id from manual_task_infos a JOIN ids ON entity_ids && ARRAY[ids.id] where  a.space_id = 1 ;
+        Nested Loop  (cost=27.18..713748.04 rows=9425121 width=8)
+       ->  Values Scan on "*VALUES*"  (cost=0.00..89.80 rows=7184 width=32)
+       ->  Bitmap Heap Scan on manual_task_infos a  (cost=27.18..86.22 rows=1312 width=40)
+             Recheck Cond: (entity_ids && ARRAY["*VALUES*".column1])
+             Filter: (space_id = 1)
+             ->  Bitmap Index Scan on manual_task_info_entity_ids_gin_idx  (cost=0.00..26.85 rows=3570 width=0)
+                   Index Cond: (entity_ids && ARRAY["*VALUES*".column1])
 
 # Array function
 
@@ -220,7 +253,7 @@ A function that works for any array type is:
 
 ## 聚合array
 
-### expand array
+### expand array(反聚合unnest)
 
     > WITH T(id, uids)
     AS (SELECT 1,array[1,2] UNION ALL
@@ -259,7 +292,7 @@ string_agg with order by
 
     string_agg(phone::char, ', ' order by phone desc)
 
-### array_agg
+### array_agg(unnest反向)
 
     ahuigo=# SELECT name, array_agg(phone) AS ps FROM   stus group by 1;
     ahui     | {NULL,NULL,3,4,4,5}
@@ -278,6 +311,22 @@ array_agg 后判断集合
     // select 与 having 中的`array_agg()` 不会重复计算
     SELECT name, array_agg(distinct phone) AS ps FROM   stus group by 1 having 3=any(array_agg(distinct phone));
 
+### merge array
+    select array_agg(c)
+    from (
+        select unnest(column_name) from table_name
+    ) as dt(c);
+
+或者使用 AGGREGATE
+
+    CREATE AGGREGATE array_cat_agg(anyarray) (
+        SFUNC=array_cat,
+        STYPE=anyarray
+    );
+
+    WITH v(a) AS ( VALUES (ARRAY[1,2,3]), (ARRAY[4,5,6,7]))
+    SELECT array_cat_agg(a) FROM v;
+
 ## compare
 
 ### is empty array
@@ -290,6 +339,7 @@ array:
 compare it to an empty array:
 
     id_clients = '{}'
+    id_clients is NULL
 
 That's all. You get:
 

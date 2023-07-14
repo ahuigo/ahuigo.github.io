@@ -96,6 +96,12 @@ background+gui:
     print(cmd)
     code, out = subprocess.getstatusoutput(cmd)
 
+check command exists
+
+    def isCmdExisted(cmd):
+        from subprocess import getstatusoutput
+        return getstatusoutput('hash '+cmd)[0]==0
+
 ### subprocess.check_output
 
     import subprocess

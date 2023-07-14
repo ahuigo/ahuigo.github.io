@@ -32,12 +32,26 @@ def getCpu():
             out += line.split(':')[1]
     return out
 
+def isCmdExisted(cmd):
+    from subprocess import getstatusoutput
+    return getstatusoutput('hash '+cmd)[0]==0
+
+def getOs():
+    if isCmdExisted('sw_vers'):
+        out=getoutput('sw_vers')
+        m = re.search(r'ProductVersion:\s+?(?P<ver>[\w\.]+)', out)
+        return "macOSX "+m.group('ver')
+    elif isCmdExisted('hostnamectl'):
+        out=getoutput('hostnamectl')
+        return out
+    else:
+        out=open('/etc/os-release').read()
+        return out
 
 def main():
     short = True if '-s' in sys.argv else False
-    out=getoutput('sw_vers')
-    m = re.search(r'ProductVersion:\s+?(?P<ver>[\w\.]+)', out)
-    print("macOsx:",m.group('ver'))
+    print("kernel:",getoutput('uname -r'))
+    print("os:",getOs())
     print("cpu:",getCpu())
     print("vscode:", getoutput('code -v').replace('\n', ' '))
     if 'deno' in sys.argv:

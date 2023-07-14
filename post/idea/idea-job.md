@@ -2,25 +2,32 @@
 title: 接活网站：
 date: 2018-09-27
 ---
-# 接活网站： 
+# remote work
+1. gitlab: https://gitlab.cn/careers/
+2. find remote job: https://www.reddit.com/r/remotework/comments/11e0r64/best_online_resources_for_finding_remote_work/
+4. Indeed：https://www.indeed.com/ 
+5. https://weworkremotely.com/remote-jobs/projectdiscovery-io-senior-back-end-developer-golang
+6. 远程工作指南: https://v2ex.com/t/931316
+
+# 接活： 
 1. http://odesk.com
 2. http://freelancer.com
 3. https://www.upwork.com/
 4. http://elance.com
-5. 远程工作: https://weworkremotely.com/remote-jobs/projectdiscovery-io-senior-back-end-developer-golang
+6. 程序员私活大全 https://github.com/easychen/howto-make-more-money/issues
 
 然后谈谈入行准备：
 1. 足够的面包。
 2. 个人网站： 一个显示你个人涵养，介绍你过往经验，展示你个人项目的平台。我挺喜欢weebly的。
 3. skype，facebook，paypal账号，用以沟通与付费。（国外）
 
-## 程序员私活
-https://github.com/easychen/howto-make-more-money/issues
 
 ## 知乎: 程序员在哪能接到私单
 https://www.zhihu.com/question/28196848
 
-# AD 广告推广
+# 工作idea
+## 素颜相亲app
+## AD 广告推广
 7年时间白手变现4000万的前公务员来回答这个问题。
 
 这是我美国银行账户的后台，支票账户存款192万美金，储蓄账户有11万美金，按今天的汇率合人民币 大概1370万。

@@ -10,7 +10,7 @@ private: true
 
 # 取值
 
-    form  = use
+    form  = Form.useForm<type>()
     form.getFieldValue("key")
     form.getFieldsValue()
     const data = form.getFieldsValue();

@@ -57,22 +57,28 @@ get config:
 
     pnpm config list
     pnpm config get global-dir
+        global-dir=~/.pnpm
 
 ## cache dir
-get 
+get: 
 
-    # npm-pkg.md
+    # 与npm 是不一样的(npm-pkg.md)
     npm config get cache
 
     # pnpm
     $ pnpm store path
 
+    #docker 中默认：/root/.local/share/pnpm/store/v3
+
 set
 
     echo 'store-dir='$HOME/Library/pnpm/store >> /usr/local/etc/npmrc
 
+### clean cache
+    pnpm store prune
+
 ## registry
-pnpm willl use `./.npmrc` and `~/.npmrc`
+pnpm will use `./.npmrc` and `~/.npmrc`
 
     # npm
     npm config set registry https://registry.npmjs.org/
@@ -81,3 +87,4 @@ pnpm willl use `./.npmrc` and `~/.npmrc`
     # or
     pnpm config set registry https://registry.npmjs.org/
     pnpm config delete registry
+    pnpm config get registry

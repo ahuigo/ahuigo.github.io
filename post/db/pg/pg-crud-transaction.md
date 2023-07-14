@@ -27,3 +27,9 @@ private: true
     ahuigo=!# insert into t1 values(2);
     ERROR:  current transaction is aborted, commands ignored until end of transaction block
     ```
+
+quit:
+
+    > rollback
+    > commit
+

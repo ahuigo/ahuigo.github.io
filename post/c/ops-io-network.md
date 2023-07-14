@@ -8,6 +8,34 @@ date: 2016-09-27
 # network tool
 https://www.binarytides.com/linux-commands-monitor-network/
 
+
+    iftop 是一个实时流量监测工具，可以用于检测当前网络IO瓶颈。
+    nethogs 是一个以进程为单位展示实时网络流量使用情况的监视器。
+    iperf 是一个广泛使用的网络性能测试工具。您可以运行网络速度测试来找到性能瓶颈。
+    sysctl 是一个用于读取和修改内核参数的命令行工具，可帮助您调整与网络性能相关的参数。
+    tcptrack 
+        tcptrack 监视TCP连接，并显示每个连接的统计信息，以便找到潜在的瓶颈。
+
+根据实际需求优化以下参数：
+
+    backlog
+
+        增加 listen() 函数的 backlog 参数值以增加等待队列大小，从而支持更多的并发连接。
+
+    ulimit
+
+        使用 ulimit -n 命令查看和设置文件描述符的上限。增加这个值可以允许更多的文件、sockets 和其他资源被打开。
+
+    sysctl 参数优化: 以下是一些建议的网络相关内核参数调整：
+
+        在 /etc/sysctl.conf 中修改或添加以上参数，然后执行 sysctl -p 应用更改
+        net.core.netdev_max_backlog = 5000
+        net.ipv4.tcp_max_syn_backlog = 30000
+        net.ipv4.tcp_mem = 50576   64768   98152
+        net.ipv4.tcp_fin_timeout = 30
+        net.ipv4.tcp_keepalive_time = 1800
+        net.ipv4.tcp_sack = 1
+
 # Interface speed between two server
 > https://linuxaria.com/article/tool-command-line-bandwidth-linux
 有几个工具：

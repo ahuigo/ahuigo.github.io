@@ -125,6 +125,16 @@ pading 间接实现了vertical 居中（不指定height）
         text-align: center;
     "> haha</div>
 
+tailwindcss
+
+    place-items-center
+        justify-items: center; /*horizontally: justify-center*/
+        align-items: center; /*vertical: align-center */
+    text-center	
+        text-align: center;
+    align-middle	
+        vertical-align: middle;
+
 ## 使用line-height 居中 vertical
     <style>
     p {
@@ -167,6 +177,6 @@ The vertical-align 只用于 `inline/inline-block`+`table-cell`.
         <img style="vertical-align:top">
     </div>
 
-# other
+# other ui
 ## button center
 button 自带`text-align:center`, `lineHeight:100%`

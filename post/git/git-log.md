@@ -10,6 +10,11 @@ description:
 
 # 日志过滤
 
+## show diff commit
+显示两者的差集：
+
+    git log --pretty=%B dev...main
+
 ## by branch
 1. `^` means not in
 1. `A..B` means from A to B(exclude A)

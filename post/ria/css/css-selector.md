@@ -38,6 +38,21 @@ checked, checkbox
 	$(':checkbox')
 	$('input:checked')
 
+## prop/data selector
+
+    .button[class*="large-"] {
+        font-size: 0.9em;
+    }
+
+    document.querySelectorAll("[data-foo]")
+    document.querySelectorAll("[data-foo='1']")
+    document.querySelectorAll("[data-selector='more-menu']")
+
+## multiple selectors(同一级)
+there should not be a space between the 2 selectors
+
+    document.querySelector('[data-point-id="123"][data-period="123"]')
+
 ## fitler multiple attribute
 
     document.querySelector('input[placeholder="Enter a title"][type="text"]')
