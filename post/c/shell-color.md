@@ -106,30 +106,43 @@ zsh color list
 
 
 # rgb/rgba/hsl/hsv color
-## 
-mac:
+## color expression
+mac color tool:
 1. digital color meter
 1. ColorSync Utility
 2. chrome color picker
 
 在计算机中经常使用rgb/rgba 三原色来表示所有的颜色。 
-在做艺术设计时，经常使用另一种更多允观的HSL或者叫HSV 来表示。对于HSL 来说， 
+在做艺术设计时，经常使用另一种更多允观的HSL或者叫HSV 来表示。
 
+对于HSL 来说， demo: https://codepen.io/AdamGiese/full/YBaOYX
 
     hsl(359, 100%, 50%)
     hsla(239, 100%, 50%, 0.36)
 
 	H: Hue 色相(0~359)
 	S: Saration 饱和度,(0%是灰色,100%是饱和)
-	V/L: 明度/亮度. (0%是黑色，50%是普通亮度，100%白色)
+	V/L: Lightness 明度/亮度. (0%是黑色，50%是普通亮度，100%白色)
     A: 透明度
 
-对于HSL(h,s,l)来说, 如果色相本身对应(hr,hg,hb):
+    求出最大值和最小值：
+    max_value = max(R, G, B)
+    min_value = min(R, G, B)
 
-	r = 50%+(hr-50%)*s + {-50% + s*(hr-50%) } *[(l-50%)/50%]
-	r = 2 * {l + [s*(hr-0.5)+0.5] - l*[s*(hr-0.5)+0.5]} -1
-	g = 2 * {l + [s*(hg-0.5)+0.5] - l*[s*(hg-0.5)+0.5]} -1
-	b = 2 * {l + [s*(hb-0.5)+0.5] - l*[s*(hb-0.5)+0.5]} -1
+    计算亮度（L）：
+    L = (max_value + min_value) / 2
+
+    计算饱和度（S）：
+    如果max_value = min_value，则S = 0
+    否则，如果L <= 0.5，则 S = (max_value - min_value) / (max_value + min_value)
+    否则，S = (max_value - min_value) / (2 - max_value - min_value)
+
+    计算色相（H）：
+    如果max_value = min_value，则H = 0（色相未定义）
+    否则，如果max_value = R，则 H = (G - B) / (max_value - min_value)
+    否则，如果max_value = G，则 H = 2 + (B - R) / (max_value - min_value)
+    否则，如果max_value = B，则 H = 4 + (R - G) / (max_value - min_value)
+    将H的结果乘以60，并加上360（模运算），以确保结果在0到360之间。
 
 色相表示人类能感知的颜色(rgb 两两组合的颜色)
 饱和度0表示灰色: 即`(50%,50%,50%)=rgb(#888)`

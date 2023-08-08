@@ -103,7 +103,7 @@ add index(recommended)
     CREATE [ UNIQUE | FULLTEXT | SPATIAL ] INDEX [index_name]
         ON table_name (col_name [length],…) [ASC | DESC]
 
-    CREATE INDEX ON films ((lower(title)));
+    CREATE INDEX [index_name] ON films ((lower(title)));
     Drop INDEX index_name
 
 add constraint 

@@ -8,6 +8,8 @@ private:
 
 1. lastpass: 适合web 网站, 远端存储密码
 2. keepass: 开源，需要自己在本地存储密码, 可以同步到网盘
+    1. keepass 官方只有Windows版本(c#)，在linux系统上要借助mono运行
+    2. keepassXC: 基于c++/qt 的跨平台开源版本
 3. pass: standard unix password manager for cli terminal.
    1. brew install pass
 4. 用qq/weibo快捷登录：不适合不支持qq/weibo 的网站

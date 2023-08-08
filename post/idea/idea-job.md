@@ -8,6 +8,7 @@ date: 2018-09-27
 4. Indeed：https://www.indeed.com/ 
 5. https://weworkremotely.com/remote-jobs/projectdiscovery-io-senior-back-end-developer-golang
 6. 远程工作指南: https://v2ex.com/t/931316
+6. 外包：https://www.huntsbot.com/telework.html
 
 # 接活： 
 1. http://odesk.com
@@ -26,7 +27,10 @@ date: 2018-09-27
 https://www.zhihu.com/question/28196848
 
 # 工作idea
+## AI ide
+1. 两个月 8 万行代码， 我是如何写出 GPT-Runner 直接对话文件和管理运行 AI 预设的 https://v2ex.com/t/956900#reply16
 ## 素颜相亲app
+1. 实拍
 ## AD 广告推广
 7年时间白手变现4000万的前公务员来回答这个问题。
 

@@ -17,3 +17,7 @@ private: true
     TTI(Time To Interactive): 可交互时间 - 页面变为可交互的时间（比如可响应事件等）
 
     FSP 约等于 FCP 或 LCP。
+
+
+    |--------|----------|---|---|------------------|------
+            TTFB   html FP FCP LCP     (main.js)  TTI 

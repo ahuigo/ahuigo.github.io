@@ -14,6 +14,8 @@ private: true
 
     <Select allowClear>
 
+
+
 ## allow input
 
     const handleSelectStatus= (newValue: string) => {
@@ -39,6 +41,7 @@ filter key and value "children"
 
         onSearch={onSearch}
         // 自定义搜索函数
+        filterOption={(input, option) => (option?.label ?? '').includes(input)}
         filterOption={(input, option) =>  
             option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 
             || option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0

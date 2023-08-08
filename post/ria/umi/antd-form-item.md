@@ -4,7 +4,7 @@ date: 2023-03-21
 private: true
 ---
 # antd form item
-## item shoulUpdate
+## item shoulUpdate 联动
 demo: https://codesandbox.io/s/ji-ben-shi-yong-antd-4-22-5-forked-qk5yhj?file=/demo.js
 
     import { Form, Input } from "antd";

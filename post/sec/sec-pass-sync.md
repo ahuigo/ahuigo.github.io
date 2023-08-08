@@ -1,26 +1,22 @@
 ---
-title: 安全的密码管理软件keepass
+title: file sync(rclone)
 date: 2019-02-27
 private:
 ---
-# 安全的密码管理软件keepass
-1. lastpass: 适合web 网站, 远端存储密码
-2. keepass: 开源，需要自己在本地存储密码, 可以同步到网盘
-    1. keepass 官方只有Windows版本(c#)，在linux系统上要借助mono运行
-    2. keepassXC: 基于c++/qt 的跨平台开源版本
-2. pass: standard unix password manager for cli terminal.
-    1. brew install pass
+# rclone 
+rclone支持 onedrive/dropbox/googledrive/...
 
+    # brew 版本编译M1 可能会有问题：it requires the beta version of the Go compiler
+    brew install rclone
+    # 推荐直接用
+    sudo -v; curl https://rclone.org/install.sh | sudo bash
 
-# install keepassXC
+# config onedrive
+利用rclone 同步到onedrive
 
-    brew install keepassxc
-
-# install rclone (support onedrive/googledrive)
-利用rclone 同步到onedrive/googledrive
-
+```bash
 $ rclone config 
-2023/08/08 22:31:33 NOTICE: Config file "/Users/ahui/.config/rclone/rclone.conf" not found - using defaults
+2023/08/08 22:31:33 NOTICE: Config file "~/.config/rclone/rclone.conf" not found - using defaults
 No remotes found, make a new one?
 n) New remote
 s) Set configuration password
@@ -97,17 +93,6 @@ Press Enter for the default (onedrive).
  2 / Root Sharepoint site
    \ (sharepoint)
    / Sharepoint site name or URL
- 3 | E.g. mysite or https://contoso.sharepoint.com/sites/mysite
-   \ (url)
- 4 / Search for a Sharepoint site
-   \ (search)
- 5 / Type in driveID (advanced)
-   \ (driveid)
- 6 / Type in SiteID (advanced)
-   \ (siteid)
-   / Sharepoint server-relative path (advanced)
- 7 | E.g. /teams/hr
-   \ (path)
 config_type> 1
 
 Option config_driveid.
@@ -128,3 +113,26 @@ n) No
 y/n> 
 
 Configuration complete.
+```
+
+# mount dir
+例如我要把一个名为 myonedrive 的配置根目录/挂载到本地的 `~/onedrive` 目录，我可以这样写：
+
+    # 最好不要加 --no-check-certificate
+    mkdir ~/onedrive
+    rclone mount myonedrive:/ ~/onedrive --copy-links --no-gzip-encoding --allow-other --allow-non-empty --umask 000
+    # rclone mount myonedrive:/ ~/onedrive --copy-links --no-gzip-encoding --vfs-cache-mode=full --allow-other --allow-non-empty --umask 000
+
+可能会报错：
+
+    Fatal error: failed to mount FUSE fs: mount stopped before calling Init: mount failed: cgofuse: cannot find FUSE
+
+解决办法是：install macFUSE (https://osxfuse.github.io/)
+
+    $ rclone version
+    brew install macfuse; # or install from website
+
+
+
+
+

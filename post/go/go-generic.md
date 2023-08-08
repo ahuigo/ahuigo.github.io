@@ -42,29 +42,54 @@ private:
 
     $ go run -gcflags=-G=3 ./main.go
 
-## comparable
-除了使用 `[T any]`的形式，还可以是其它约束，比如使用 `[T comparable]`的形式，comparable是一个接口类型，其约束了我们的类型需要支持 == 的操作
+## 约束类型参数
+https://juejin.cn/post/7183613424230727740
 
-    func find[T comparable] (arr []T, elem T) int {
-      for i, v := range arr {
-        if  v == elem {
-          return i
-        }
-      }
-      return -1
+    type MySlice[T int | int32 | float32] []T
+    // 用法
+    var a MySlice[int] = []int{1, 2, 3}
+    var b MySlice[float32] = []int{1.0, 2.0}
+
+## 约束函数参数
+
+    func Add[T int | int32 | float64 | string] (a, b T) T {
+        return a + b
     }
+    var intA int = 1
+    var intB int = 2
+    var int32A int32 = 3
+    var int32B int32 = 4
+    ​
+    Add(intA, intB) // 可以直接类型推断
+    Add[int32](int32A, int32B)
+    Add("a","b")
 
-## 泛型约束语法
+## 约束constraint（底层类型约束）
 定义 constraint 的时候支持一种特殊的语法
 
     type Float interface {
     	~float32 | ~float64
     }
 
-这里的`~`表示底层类型为float32或者float64。也就是说，如果你定义`type MyFloat float32`，也是可以匹配Float的。但如果不加`~`，那就无法匹配。
+这里的`~`表示底层类型为float32或者float64。
+也就是说，如果你定义`type MyFloat float32`，`MyFloat`是可以匹配`Float`的(虽然MyFloat和float32是不同的类型)。 但如果不加`~`，那就无法匹配。
 
-说明: golang是用interface 来约束的，关键词`any`来代替`interface{}`的
+    type Slice[T int | int32] []T
+    type MyInt int
+    var a Slice[MyInt] // 错误, 因为MyInt 和int不是同一个类型
 
+    // 可以使用 ~int 的写法，表示所有以int为底层类型的类型都可以用于实例化。(比如MyInt)
+    type Slice[T ~int | ~int32] []T
+
+比如map Invert 反转：
+
+    func Invert[M ~map[K]V, K, V comparable](m M) map[V]K {
+        result := make(map[V]K)
+        for k, v := range m {
+            result[v] = k
+        }
+        return result
+    }
 ## 官方内置约束包
 参考 https://taoshu.in/go/no-change-lib-in-go-1.18.html
 
@@ -104,6 +129,19 @@ private:
     // 任意类型的 channel
     type Chan[Elem any] interface {
     	~chan Elem
+    }
+
+### comparable/any 内置约束 
+说明: golang是用interface 来约束的，关键词`any`来代替`interface{}`的
+除了使用 `[T any]`的形式，还可以是其它约束，比如使用 `[T comparable]`的形式，comparable是一个接口类型，其约束了我们的类型需要支持 `==`和`!=` 的操作
+
+    func find[T comparable] (arr []T, elem T) int {
+      for i, v := range arr {
+        if  v == elem {
+          return i
+        }
+      }
+      return -1
     }
 
 
