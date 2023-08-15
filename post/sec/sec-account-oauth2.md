@@ -24,7 +24,6 @@ private: true
 2. HTTP Serive: google/weibo/weixin/qq
 2. Resource server: google/weibo/weixin/qq
 2. Authorization server: google/weibo/weixin/qq
-2. Resource server: google/weibo/weixin/qq
 
 ## Protocol Flow
 oAuth2.0 认证流程

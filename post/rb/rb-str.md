@@ -10,6 +10,13 @@ private: true
 
     'a\nb'
 
+### 双绰号值插入：
+
+    age=1
+    p "age: #{a}"
+
+但是对于全局变量、实例变量和类变量，Ruby 提供了一个简写形式：#$global, #@instance 和 #@@class
+
 ### 双绰号转义：
 
     "a\nb"

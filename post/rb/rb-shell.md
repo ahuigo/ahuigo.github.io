@@ -15,6 +15,10 @@ e.g
     #!/usr/bin/ruby -w
     puts "yes"
 
+执行rb文件
+
+    ruby a.rb
+    # -e 是执行内联代码，a.rb 会被忽略
     ruby -e 'printf "sss"' a.rb
 
 # exec shell

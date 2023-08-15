@@ -3,79 +3,8 @@ title: Ruby class
 date: 2020-03-02
 private: true
 ---
-# Ruby class
-
-## 类定义与实例
-
-    class Customer
-       @@no_of_customers=0
-       def initialize(id, name, addr)
-          @cust_id=id
-          @cust_name=name
-          @cust_addr=addr
-       end
-       def display_details()
-          puts "Customer id #@cust_id"
-          puts "Customer name #@cust_name"
-          puts "Customer address #@cust_addr"
-       end
-       def total_no_of_customers()
-          @@no_of_customers += 1
-          puts "Total number of customers: #@@no_of_customers"
-       end
-    end
-    
-Note: 除了局部变量/常量之外的其它变量, 在字符串中的拼接时不用加`{}`
-
-    puts "#@cust_id #@@no_of_customers"
-
-### 类实例
-    cust1 = Customer.new
-    cust2 = Customer. new
-    cust3 = Customer. new(arg1,arg2)
-    cust1=Customer.new("1", "John", "Wisdom Apartments, Ludhiya")
-    cust2=Customer.new("2", "Poul", "New Empire road, Khandala")
-
-### 访问成员属性
-默认不可以直接访问成员变量, 只能这样访问
-
-    obj = Hello.new
-    p obj.instance_variable_get(:@hello) 
-
-如果想以`obj.name`的方式访问成员属性，可以这样`attr_reader`创建`getter`
-
-    class Hello
-        attr_reader :name
-        def initialize
-            @name='ahui'
-        end
-    end
-    obj = Hello.new
-    p obj.name
-
-Calling `attr_accessor` will create a `getter` AND a `setter` for the given variable:
-
-    attr_accessor :name
-
-
-检查属性是否存在：
-
-    if obj and obj.name and obj.name and defined? obj.name.bc then 
-        p obj.name 
-    end
-
-### 冻结对象
-让对象只读
-
-    # 让我们冻结该对象
-    box.freeze
-    if( box.frozen? )
-        puts "Box object is frozen object"
-    else
-        puts "Box object is normal object"
-    end
-
-## 类常量
+# 变量与常量
+## 常量
 
     MR_COUNT = 0        # 定义在主 Object 类上的常量
     module Foo
@@ -85,12 +14,12 @@ Calling `attr_accessor` will create a `getter` AND a `setter` for the given vari
     puts MR_COUNT       # 这是全局常量
     puts Foo::MR_COUNT  # 这是 "Foo" 的局部常量
 
-## 类变量 vs instance var
+## 变量
 Ruby 提供了5种类型的变量：
 
     一般小写字母、下划线开头：变量（Variable）。
     $开头：全局变量（Global variable）。
-    @开头：实例变量（Instance variable）。 类似this.@xx
+    @开头：实例变量（Instance variable, 且是私有的）。 类似this.@xx
     @@开头：类变量（Class variable）类变量被共享在整个继承链中
     大写字母开头：常数（Constant）
 
@@ -98,81 +27,6 @@ Ruby 提供了5种类型的变量：
 
 类变量与实例变量的用法：
 https://stackoverflow.com/questions/15773552/ruby-class-instance-variable-vs-class-variable
-
-### instance var on class
-access `instance var` via `class/self.class method`:
-
-    class Parent
-        @ths = []
-        def self.things
-          @ths
-        end
-        def things
-          self.class.things
-        end
-      end
-  
-    class Child < Parent
-        @ths = []
-    end
-
-    Parent.things << :car
-    Child.things  << :doll
-    mom = Parent.new
-    chi = Child.new
-
-    p Parent.things #=> [:car]
-    p Child.things  #=> [:doll]
-    p mom.things    #=> [:car]
-    p chi.things    #=> [:doll]
-
-Note: class 与 instance实例之间的`@var` 是相互独立的变量副本
-
-### 类变量
-access `class var` via `class/instance method`:
-
-    class Parent
-      @@ths = []
-      def self.things
-        @@ths
-      end
-      def things
-        @@ths
-      end
-    end
-
-    class Child < Parent
-    end
-
-    Parent.things << :car
-    Child.things  << :doll
-
-    p Parent.things #=> [:car,:doll]
-    p Child.things  #=> [:car,:doll]
-    p Parent.new.things  #=> [:car,:doll]
-    p Child.new.things  #=> [:car,:doll]
-
-### class/instance 是不同对象
-class 与实例本质都是对象:
-class 与 instance实例之间的`@var` 是相互独立的变量副本
-
-    class A
-      @name="ahui"
-      def echo
-        p @name
-      end
-      def self.echo
-        p @name
-      end
-      def mod
-        @name = 'hilo'
-      end
-    end
-    a = A.new
-    A.echo #=> ahui
-    a.echo #=> nil
-    a.mod 
-    a.echo #=> hilo
 
 ## 变量作用域
 下例中:`attr_accessor` 会将`self.name`指针指向`@name`. 只能修改实例的self, 而不是类的self
@@ -196,31 +50,37 @@ e.g.
     a = A.new
     a.echo #=> "self.name, self.name, self.name"
 
-## method
+下面会细讲
+
+# Ruby class
+
+## 类定义与实例
+### instance method(实例方法)
 方法名总是`以小写字母`开始
+Class名是`以大小字母`开始
 
-### 构造方法 initialize
-    class Customer
-        @@no_of_customers=0
-        def initialize(id, name, addr)
-            @cust_id=id
-            @cust_name=name
-            @cust_addr=addr
-        end
+Note: 定义在private 后的方法是私有的
+
+    class MyClass
+      def initialize
+        @my_instance_variable = 'Hello, world!'
+      end
+
+      private # 这个关键字定义私有方法
+      def private_method
+        @my_instance_variable
+      end
+
+      def public_method
+        puts private_method
+      end
     end
-    cust1=Customer.new("1", "John", "Wisdom Apartments, Ludhiya")
 
-### 类方法(静态方法)
-类方法使用 def self.methodname() 定义
+    obj = MyClass.new
+    obj.public_method      # 输出: Hello, world!
+    obj.private_method     # 错误: private method `private_method' called for...
 
-    class Account
-        def self.return_date(str)
-            puts "return #{str}"
-        end
-    end
-    Account.return_date('hello')
-
-### setter/getter
+#### setter/getter method
     class Box
        def initialize(w,h)
           @width, @height = w, h
@@ -230,6 +90,7 @@ e.g.
           @width
        end
     
+       # box.setWidth = 30这样的代码，实际上是在调用一个名为setWidth=的方法
        def setWidth=(value)
           @width = value
        end
@@ -242,6 +103,208 @@ e.g.
     # 使用访问器方法
     p box.getWidth()
 
+#### 构造方法 initialize
+    class Customer
+        @@no_of_customers=0
+        def initialize(id, name, addr)
+            @cust_id=id
+            @cust_name=name
+            @cust_addr=addr
+        end
+    end
+    cust1=Customer.new("1", "John", "Wisdom Apartments, Ludhiya")
+
+### instance property(实例属性@)
+1. @代表属性, 属性只能是私有的; 
+2. 如果外部方法属性， 则要提供getter/setter 方法; 这些方法也可以变成private
+
+#### 通过setter/getter访问属性
+默认不可以直接访问成员变量, 可这样 `instance_variable_get` 访问成员属性
+
+    obj = MyClass.new
+    p obj.instance_variable_get(:@my_variable) 
+
+不过最方便的还是通过setter/getter访问属性
+
+    class MyClass
+      attr_reader :my_variable   # 定义一个公开的 getter 方法
+
+      def initialize(name)
+        @my_variable = name  # 实例变量，默认私有
+      end
+
+      private
+      attr_writer :my_variable   # 定义一个私有的 setter 方法
+    end
+
+    obj = MyClass.new("Alex")
+    p obj.my_variable # 输出: Alex
+    obj.my_variable="John" # 错误: private method
+
+Calling `attr_accessor` will create a `getter` AND a `setter` for the given variable:
+
+    attr_accessor :my_variable
+
+#### 在方法内访问属性
+对于全局变量、实例变量和类变量，在字符串中的拼接时不用加`{}`, Ruby 提供了一个简写形式：`$global, @instance 和 @@class`
+
+    class Customer
+       @@no_of_customers=0
+       def initialize(id, name, addr)
+          @cust_id=id
+          @cust_name=name
+          @cust_addr=addr
+       end
+       def display_details()
+          puts "Customer id #@cust_id"
+          puts "Customer name #@cust_name"
+          puts "Customer address #@cust_addr"
+       end
+       def total_no_of_customers()
+          @@no_of_customers += 1
+          puts "Total number of customers: #@@no_of_customers"
+       end
+    end
+
+#### 检查属性是否存在：
+
+    if obj and obj.name and obj.name and defined? obj.name.bc then 
+        p obj.name 
+    end
+
+### class method(类方法,静态方法)
+类方法使用 def self.methodname() 定义
+
+    class Account
+        def self.return_date(str)
+            puts "return #{str}"
+        end
+    end
+    Account.return_date('hello')
+
+#### 静态方法setter/getter
+
+    class Parent
+        @ths = []
+        def self.things
+          p "self:"
+          @ths
+        end
+        def things
+          p "instance:"
+          self.class.things
+        end
+      end
+  
+    class Child < Parent
+        @ths = []
+    end
+
+    # setter，<< 是数组追加元素
+    Parent.things << :car
+    Child.things  << :doll
+
+    mom = Parent.new
+    chi = Child.new
+
+    # getter
+    p Parent.things #=> [:car]
+    p Child.things  #=> [:doll]
+    p mom.things    #=> [:car]
+    p chi.things    #=> [:doll]
+
+Note: class 与 instance实例之间的`@var` 是相互独立的变量副本
+
+### class property(类属性@@ 静态属性)
+
+    class MyClass
+      @@my_class_variable = "Hello, world!"  # 这是一个类变量
+
+      def self.print_variable
+        puts @@my_class_variable
+      end
+
+      def change_variable(value)
+        @@my_class_variable = value
+      end
+    end
+
+    MyClass.print_variable  # 输出: Hello, world!
+
+    obj1 = MyClass.new
+    obj1.change_variable("New value")
+
+    MyClass.print_variable  # 输出: New value
+
+#### 类变量setter/getter
+access `class var` via `class/instance method`:
+
+    class Parent
+      @@ths = []
+      def self.things
+        @@ths
+      end
+      def things
+        @@ths
+      end
+    end
+
+    class Child < Parent
+    end
+
+    Parent.things << :car
+    Child.things  << :doll
+
+    p Parent.things #=> [:car,:doll]
+    p Child.things  #=> [:car,:doll]
+    p Parent.new.things  #=> [:car,:doll]
+    p Child.new.things  #=> [:car,:doll]
+
+#### class/instance 是不同对象
+class 与实例本质都是对象:
+class 与 instance实例之间的`@var` 是相互独立的变量副本
+
+    class A
+      @name="ahui"
+      def echo
+        p @name
+      end
+      def self.echo
+        p @name
+      end
+      def mod
+        @name = 'hilo'
+      end
+    end
+    a = A.new
+    A.echo #=> ahui
+    a.echo #=> nil
+    a.mod 
+    a.echo #=> hilo
+
+## 使用类
+### 类实例化
+    cust1 = Customer.new
+    cust2 = Customer. new
+    cust3 = Customer. new(arg1,arg2)
+    cust1=Customer.new("1", "John", "Wisdom Apartments, Ludhiya")
+    cust2=Customer.new("2", "Poul", "New Empire road, Khandala")
+
+### 冻结对象
+让对象只读
+
+    # 让我们冻结该对象
+    box.freeze
+    if( box.frozen? )
+        puts "Box object is frozen object"
+    else
+        puts "Box object is normal object"
+    end
+
+# deep class
+> ask chatgpt
+
+## method
 ### include vs extend
 1. `include`: methods are imported as `instance methods`.
 1. `extend` methods are imported as `class methods`.
@@ -279,7 +342,6 @@ Now, for include module.
     p '4.exec hello'
     Bar.new.hello
     Bar.new().hello
-
 
 ### to_s(toString)
     class Box

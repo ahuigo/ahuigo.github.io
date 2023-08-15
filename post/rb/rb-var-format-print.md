@@ -36,7 +36,7 @@ print does not append a new line.
     > print 1,2,3
     123 => nil
 
-## puts
+## puts(println)
 puts is similar to print – calling `to_s` – but adds a newline to the output.
 
     > puts q
@@ -47,7 +47,7 @@ puts is similar to print – calling `to_s` – but adds a newline to the output
     2
     3
 
-## p
+## p(值的表达式，相当于golang 的printf("%#v\n",v))
 > p variable is a shortcut for puts variable.inspect
 `p` adds a newline, but rather than calling to_s, p calls `inspect`.
 
@@ -62,6 +62,11 @@ p 会返回原值
     2
     3
     => [1, 2, 3]
-    > p '1'
+
+    irb(main):003:0> p [1,2,3]
+    [1, 2, 3]
+    => [1, 2, 3]
+
+    irb(main):003:0> p '1'
     "1"
     => "1"

@@ -187,12 +187,38 @@ create date:
 	--relative-date
 	--pretty //same as --format
 
+## sort
+### sort by author time
+sort by author time
+
+    git log --graph --author-date-order
+
+the AuthorDate and CommitDate:
+
+    # --format="commit %cD author %aD"
+    git log --graph --author-date-order --pretty=fuller
+    commit 3a5912f90dc5227f308e99f95152fbee2301c59a
+    Author:     <hidden>
+    AuthorDate: Fri Jun 15 10:57:22 2012 +0800
+    Commit:     <hidden>
+    CommitDate: Fri Jun 15 11:14:37 2012 +0800
+
+不同的order:
+
+    --date-order: 
+        show commits in the commit timestamp order.
+        The commit date is being modified, for example when rebasing 
+    --author-date-order: 
+        show commits in the author timestamp order.
+    --topo-order(default with --graph): 
+        avoid showing commits on multiple lines of history intermixed.
+        对于merges 提交: 显示完一个分支所有commits 后，再显示另一个分支所有commits
+
+
 ## context
 
     git log -U5
         like: grep -B5 -A5
-
-
 
 # git grep code
 搜索所有的commit的 code diff

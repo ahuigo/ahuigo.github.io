@@ -130,9 +130,4 @@ Configuration complete.
 解决办法是：install macFUSE (https://osxfuse.github.io/)
 
     $ rclone version
-    brew install macfuse; # or install from website
-
-
-
-
-
+    brew install macfuse; # 或者官网 install from website

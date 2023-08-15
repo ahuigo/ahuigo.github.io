@@ -303,18 +303,30 @@ symbol value: `:symbol` 是一种symbol类型数据
 
     options = {:key=>:value}
     options = {key: :value}
+    # 判断相等
     options[:key]==:value
 
 ### 传值
 
-    # 等价
+    # 以下等价
     fun({k:1,f:2}, arg2,arg3)
     fun ({k:1,f:2}), arg2,arg3
 
-    # 等价
+    # 以下等价
     fun({k:1,f:2})
     fun(k:1,f:2)
     fun k:1,f:2
+
+symbol
+
+    fun({key:=> :value, k2:=>:v2})
+    fun key: :value, k2: :v2
+
+    # ruby 中的一段代码, :exception 的意思是当 CSRF 攻击被检测到时，Rails 应该抛出一个异常
+    protect_from_forgery with: :exception
+
+    # 这里有两个参数，第二个参数也是dict，key 是`only:`, 值是3元素数组
+    skip_before_action :verify_authenticity_token, only: [:create, :update, :delete]
 
 ## access dict
 

@@ -161,6 +161,10 @@ https://github.com/ahuigo/a/blob/master/config/karabiner/assets/complex_modifica
 如果导入不生效，原因可能是:
 1. 可能是由于在系统键盘keyboard 内交换了 ctrl-caps, 无法识别`leftctrl`
 1. 改成由karabiner 交换 leftctrl-caps 
+2. 或者检查 mac osx 的setting - `Security & Privacy` - `Input Monitoring` 检查
+
+### 检查权限
+mac osx 的setting - `Security & Privacy` - `Input Monitoring` 要开启 Karabiner
 
 ### app 绑定
 上面的readline 配置会在所有的app 生效。 如果我们想让karabiner keys只应用于某个app 怎么办呢？
@@ -193,6 +197,8 @@ https://github.com/ahuigo/a/blob/master/config/karabiner/assets/complex_modifica
 使用上面的readline 快捷键对iterm2是有影响的
 1. 设置`ctrl+w` 映射到`option+DeleteBackward`. 此时iterm2会失效. 
 2. 设置`ctrl+u` 映射到`cmd+DeleteBackward`. 此时iterm2会失效. 
+
+解决方法如下：
 
 ### ctrl+w: option 映射esc
 ctrl+w解决方法是设置option发送真正的escape：

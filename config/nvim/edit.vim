@@ -14,6 +14,8 @@ function! edit#run()
         !node %
     elseif ext == 'lua'
         !lua %
+    elseif ext == 'rb'
+        !ruby %
     elseif ext == 'ts'
         let filepath = expand('%')
         if filepath =~ '_test.ts$'
