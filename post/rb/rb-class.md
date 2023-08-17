@@ -312,7 +312,7 @@ class 与 instance实例之间的`@var` 是相互独立的变量副本
 For example 
 
     module Module_test
-        def func
+        def echo
             puts "M - in module"
         end
     end
@@ -322,14 +322,14 @@ Now, for include module.
     class A
         include Module_test
     end
-    A.new.func
+    A.new.echo
 
 ## 类生命周期
-    class Foo
+    class Bar
         p "1. before new instance....."
         def self.make_hello_method
             class_eval do
-            p "3.生成实例方法hello..."
+                p "3.生成实例方法hello..."
                 def hello
                     puts "HELLO"
                 end
@@ -343,6 +343,18 @@ Now, for include module.
     Bar.new.hello
     Bar.new().hello
 
+注意`class_eval` 相当于python 的with, 其内部所有定义的方法或属性，都会挂到所在的self class上. 有点像extend class的功能
+在实例中也可以用它（实际通过class访问的）
+
+    class Bar
+      def make_hello_method
+        self.class.class_eval do
+          def hello
+            puts "HELLO"
+          end
+        end
+      end
+    end
 ### to_s(toString)
     class Box
        # 构造器方法

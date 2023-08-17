@@ -4,6 +4,30 @@ date: 2019-08-23
 private:
 ---
 # Go profiler
+## 生成pb 文件
+
+    // https://jvns.ca/blog/2017/09/24/profiling-go-with-pprof/
+    package main
+    import "runtime"
+    import "runtime/pprof"
+    import "os"
+    import "time"
+
+    func main() {
+        go leakyFunction()
+        time.Sleep(500 * time.Millisecond)
+        f, _ := os.Create("/tmp/profile.pb.gz")
+        defer f.Close()
+        runtime.GC()
+        pprof.WriteHeapProfile(f);
+    }
+
+    func leakyFunction() {
+        s := make([]string, 3)
+        for i:= 0; i < 10000000; i++{
+            s = append(s, "magical pprof time")
+        }
+    }
 
 ## Go profiler 指标
 使用Go 内置的profiler我们能获取以下的样本信息：
@@ -226,17 +250,13 @@ cpu+mem
     go tool pprof -http=:4501   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
 
 ### pprof CPU 分析
-先安装：
+先执行压测试
 
-    brew install graphviz
-
-采集 profile 数据之后，可以分析 CPU 热点代码。 先执行压测试
-
-    $ go-wrk  -d=50 -c=50  http://localhost:4500/cpu/5
+    $ echo "GET http://localhost:4500/cpu/5" | vegeta attack  -rate=10000  -duration=10s |vegeta report
     Running 50s test @ http://localhost:4500/cpu/5
     50 goroutine(s) running concurrently
 
-再执行下面采集 30s 的 profile 数据，30s之后进入终端交互模式，输入 top 指令, `top -cum`。
+为了分析 CPU 热点代码。 执行下面采集 30s 的 profile 数据，30s之后进入终端交互模式，输入 top 指令, `top -cum`。
 
     $ go tool pprof http://localhost:4500 ;# 简写
     $ go tool pprof http://localhost:4500/debug/pprof/profile
@@ -282,24 +302,9 @@ http 用法有:
 ![](/img/go/profile/pprof-simple.png)
 
 ### pprof mem 分析
-pprof 支持内存分析，找出内存消耗大的代码
+pprof 支持内存分析，找出内存消耗大的代码:
 
-    inuse_space	
-        amount of memory allocated and not released yet
-    inuse_objects
-    	amount of objects allocated and not released yet
-    alloc_space
-    	total amount of memory allocated (regardless of released)
-    alloc_objects
-    	total amount of objects allocated (regardless of released)
-
---inuse_space 分析常驻内存
-
-    $ go tool pprof -inuse_space http://localhost:4500/debug/pprof/heap
-
---alloc_objects 分析临时内存
-
-    $ go tool pprof -alloc_space http://localhost:4500/debug/pprof/heap
+    $ go tool pprof -http=:4501 http://localhost:4500/debug/pprof/heap
     Saved profile in /Users/ahui/pprof/pprof.alloc_objects.alloc_space.inuse_objects.inuse_space.002.pb.gz
     Type: alloc_space
     Time: Jun 1, 2021 at 4:14pm (CST)
@@ -319,6 +324,13 @@ pprof 支持内存分析，找出内存消耗大的代码
         1MB     5.21% 74.58%        3MB 15.62%  net/http.readRequest
         1MB     5.21% 79.79%        1MB  5.21%  net/http.(*Server).newConn
     (pprof)
+
+指标说明, 可以在Sample菜单中切换`inuse_space/inuse_objects/alloc_space`, alloc 包含所有被释放的内存, inuse是指正在使用的内存
+
+    -inuse_space      Display in-use memory size(important)
+    -inuse_objects    Display in-use object counts
+    -alloc_space      Display allocated memory size
+    -alloc_objects    Display allocated object counts
 
 ## Memory leak(内存泄露分析)
 参考【大彬】的[实战Go内存泄露]https://segmentfault.com/a/1190000019222661
@@ -358,7 +370,7 @@ go test -bench 支持几个参数:
 
     git clone https://github.com/ahuigo/playflame
     cd playflame/stats
-    gco slow
+    git checkout slow
     $ go test -bench . -benchmem -cpuprofile=cpu.pprof
     BenchmarkAddTagsToName-4   	 1000000	      2138 ns/op	     487 B/op	      18 allocs/op
 

@@ -3,7 +3,7 @@ title: ruby except
 date: 2020-05-17
 private: true
 ---
-# ruby except
+# except
 Ruby 提供了一个完美的处理异常的机制。我们可以在 begin/end 块中附上可能抛出异常的代码，并使用 rescue 子句告诉 Ruby 完美要处理的异常类型。
 
 ## except 语法
@@ -119,6 +119,15 @@ Ruby 的标准类和模块抛出异常。所有的异常类组成一个层次，
     end
 
 # caller stack
+你可以使用 caller 方法来打印当前的调用栈。这将返回一个数组，其中包含了从当前执行点到最顶层的所有方法和代码行数。
+
+    def some_method
+      puts caller
+      # 如果你只想要查看特定数量的堆栈帧，你可以给 caller 方法提供一个参数。例如，caller(5) 只会返回前5个堆栈帧。
+      puts caller(5)
+    end
+
+
 ## caller
     def a(skip)
       caller(skip)
