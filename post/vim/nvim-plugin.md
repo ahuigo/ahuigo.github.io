@@ -27,6 +27,12 @@ vim-plug 是用于安装vim/nvim 插件的
     nvim +PluginInstall +PluginClean   +qall
     nvim +CheckHealth
 
+## uninstall plugin
+1. Remove the line from your config,
+2. Quit and restart Vim, and then
+2. Run `:PlugClean`. You will be prompted to delete the directory, type Y.
+
+If the above does not work for some reason, you can delete the directory manually from the `~/.config/plugged` directory.
 ## config reload
 
     :so %
@@ -54,7 +60,7 @@ let ack use ag:
 
     :Ack [options] {pattern} [{directories}]
 
-# Denite
+# Denite(ctrl+p)
 文件切换
 
     nnoremap <C-p> :Denite file/rec buffer<CR>

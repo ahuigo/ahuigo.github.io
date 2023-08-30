@@ -6,15 +6,21 @@ private: true
 # kibana 搜索
 ## 全文搜索
 使用双引号包起来作为一个短语搜索
+
     "like Gecko"
+    'like Gecko'
+
 
 ## 字段
 也可以按页面左侧显示的字段搜索
-限定字段全文搜索：field:value
+
+## 限定字段全文搜索：field:value
 精确搜索：关键字加上双引号 filed:"value"
 http.code:404 搜索http状态码为404的文档
 
-字段本身是否存在
+    host : "a.com" and url : "/api/v1/health"
+
+## 字段本身是否存在
 _exists_:http：返回结果中需要有http字段
 _missing_:http：不能含有http字段
 

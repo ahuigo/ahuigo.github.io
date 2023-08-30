@@ -33,6 +33,9 @@ private: true
     > string(string(output))
     "hello"
 
+    > call str
+    "hello"
+
 # dlv 命令用法
 Delve is full featured debugging tool for Go. 
 

@@ -86,6 +86,7 @@ ldflags/gcflags 都是linker 链接器选项。可以用于设定静态链接、
 ### ldflags 控制编译变量
 
     // go-lib/build/ldflags-var.go
+    package main
     var Version = "development"
 
     func main() {
@@ -96,6 +97,10 @@ run: main 入口注入变量
 
     go run -ldflags="-X 'main.Version=注入version'" ldflags-var.go
         Version:注入version
+
+其它入口 common/types 包下的变量也如此
+
+    RUN go build -ldflags=-s -w -X common/types.BuildDate=$(date -I'seconds') -X common/types.BuildVer=$(git rev-parse HEAD)
 
 # build tag
 refer: https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags

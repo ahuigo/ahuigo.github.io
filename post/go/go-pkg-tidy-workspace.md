@@ -24,7 +24,7 @@ private:
         ./requests
         ./fx
 
-那么只需要这样，就可以啦
+那么只需要按以下操作，就可以直接require fx 和requests了（不需要入侵改代码）
 
     $ cd work 
     $ go work init requests fx
@@ -35,6 +35,16 @@ private:
         ./fx
     )
 
+也可添加
+
+    go work use ./fx
+    go work use requests
+
+注意，如果项目本身要独立运行main 或 go test, 目录本身也要设定为 项目
+
+    go work use .
+    # 或一次加全
+    go work init requests fx .
 
 ## 单module
     /proj1/
@@ -53,8 +63,9 @@ private:
     )
 
 ## pkg/v2
-比如 github.com/ahuigo/requests/v2 的根目录文件中存在
+比如 github.com/ahuigo/requests/v2 的这个包的根目录文件中存在
 
+    // proj/response.go
     package requests
 
 我们不能改写成 package v2, 但是我们可以设定工作区

@@ -1,6 +1,0 @@
-openjdk:12-alpine
-#COPY --from=alpine /bin/sh /bin/sh
-ENTRYPOINT [ "sleep", "360000" ]
-#ENTRYPOINT ["/bin/sh"]
-
-

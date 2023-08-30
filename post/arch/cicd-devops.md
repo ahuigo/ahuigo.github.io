@@ -5,8 +5,8 @@ private: true
 ---
 # devops
 ## PAT(personal access tokens)
+> 利用PAT，可以在临时的开发机上访问devops 仓库
 
-nbiwxqvspdmuegqp2ef4mbvuo25hxevmpypbq5k6jlbzf2opk5la
 git clone with PAT:
 
     MY_PAT=yourPAT # replace "yourPAT" with ":PatStringFromWebUI"

@@ -4,31 +4,6 @@ date: 2019-08-23
 private:
 ---
 # Go profiler
-## 生成pb 文件
-
-    // https://jvns.ca/blog/2017/09/24/profiling-go-with-pprof/
-    package main
-    import "runtime"
-    import "runtime/pprof"
-    import "os"
-    import "time"
-
-    func main() {
-        go leakyFunction()
-        time.Sleep(500 * time.Millisecond)
-        f, _ := os.Create("/tmp/profile.pb.gz")
-        defer f.Close()
-        runtime.GC()
-        pprof.WriteHeapProfile(f);
-    }
-
-    func leakyFunction() {
-        s := make([]string, 3)
-        for i:= 0; i < 10000000; i++{
-            s = append(s, "magical pprof time")
-        }
-    }
-
 ## Go profiler 指标
 使用Go 内置的profiler我们能获取以下的样本信息：
 
@@ -106,10 +81,38 @@ pprof 其它输出格式
     (pprof) top20 -cum (包含函数调用的时间)
 
 
-## runtime/pprof
-如果是常规的程序,  需要在代码执行前开启生成`pprof` 文件代码, 可参考:[go-lib/gotest/pprof/runtime-pprof.go](https://github.com/ahuigo/go-lib/blob/master/test/pprof/runtime-pprof.go)
+## runtime/pprof 生成prof 文件
 
-运行程序后可以得到 cpu.prof 和 mem.prof 文件，使用 go tool pprof 分析。
+### 生成prof 文件
+如果是常规的程序,  需要在代码执行前开启生成`pprof` 文件代码, 可参考:[golib/perf/pprof/runtime-pprof.go](https://github.com/ahuigo/golib/blob/master/perf/pprof/runtime-pprof.go)
+
+
+    // https://jvns.ca/blog/2017/09/24/profiling-go-with-pprof/
+    package main
+    import "runtime"
+    import "runtime/pprof"
+    import "os"
+    import "time"
+
+    func main() {
+        pprof.StartCPUProfile(os.Stdout)
+        defer pprof.StopCPUProfile()
+        go leakyFunction()
+        time.Sleep(500 * time.Millisecond)
+        f, _ := os.Create("/tmp/profile.pb.gz")
+        defer f.Close()
+        runtime.GC()
+        pprof.WriteHeapProfile(f);
+    }
+
+    func leakyFunction() {
+        s := make([]string, 3)
+        for i:= 0; i < 10000000; i++{
+            s = append(s, "magical pprof time")
+        }
+    }
+
+运行程序后可以得到 cpu.prof 和 mem.prof 文件，然后使用 go tool pprof 分析。
 
     go tool pprof [binary] cpu.prof
     go tool pprof [binary] mem.prof
@@ -168,7 +171,7 @@ cpu+mem
         defer profile.Start(profile.MemProfile, profile.CpuProfile, profile.MemProfileRate(1)).Stop()
 
 ## net/http/pprof
-> 示例：github.com/ahuigo/go-lib/gonic/ginapp/gin-pprof.go
+> 示例：github.com/ahuigo/golib/gonic/ginapp/gin-pprof.go
 如果程序为 web 服务， 我们则可借助`net/http/pprof`包 来完成profile 采样:
 
 如果是`http` server, 只需要引入`import _ "net/http/pprof"` 就可监控性能采样请求
@@ -286,7 +289,7 @@ cpu+mem
 http 用法有:
 
     go tool pprof [-http=":4501"] [binary] <profile
-    go tool pprof -http=:4501   /Users/ahui/pprof/pprof.samples.cpu.005.pb.gz
+    go tool pprof -http=:4501   ~/pprof/pprof.samples.cpu.005.pb.gz
     go tool pprof -http=:4501  'http://localhost:9090/debug/pprof/heap?seconds=30'
     go tool pprof -http=:4502 -inuse_space  'http://localhost:9090/debug/pprof/heap?seconds=30'
 
@@ -305,7 +308,7 @@ http 用法有:
 pprof 支持内存分析，找出内存消耗大的代码:
 
     $ go tool pprof -http=:4501 http://localhost:4500/debug/pprof/heap
-    Saved profile in /Users/ahui/pprof/pprof.alloc_objects.alloc_space.inuse_objects.inuse_space.002.pb.gz
+    Saved profile in ~/pprof/pprof.alloc_objects.alloc_space.inuse_objects.inuse_space.002.pb.gz
     Type: alloc_space
     Time: Jun 1, 2021 at 4:14pm (CST)
     Entering interactive mode (type "help" for commands, "o" for options)
@@ -346,14 +349,14 @@ pprof 支持内存分析，找出内存消耗大的代码:
 ### 观察goroutine 阻塞
 http://ip:port/debug/pprof/goroutine?debug=1 可查看阻塞数`goroutine profile: total 107`
 
-    goroutine profile: total 107 (当前goroutine阻塞数)
-    40 @ 0x42f7cf 0x42aeda 0x42a4c6 0x4c482b 0x4c563b 0x4c561c 0x527b4f 0x53c9b9 0x6f5797 0x5557bf 0x55591f 0x6f745a 0x6fb02d 0x45cf71 (40个goroutine停止在这个调用栈)
+    goroutine profile: total 107 (当前goroutine阻塞数量)
+    40 @ 0x42f7cf 0x42aeda 0x42a4c6 0x4c482b 0x4c563b 0x4c561c 0x527b4f 0x53c9b9 0x6f5797 0x5557bf 0x55591f 0x6f745a 0x6fb02d 0x45cf71 (40个goroutine停止在这个调用栈, 一个常见的原因是读写chan 死锁或者网络等待)
     #	0x42a4c5	internal/poll.runtime_pollWait+0x55		/usr/local/go/src/runtime/netpoll.go:182
     #	0x4c482a	internal/poll.(*pollDesc).wait+0x9a		/usr/local/go/src/internal/poll/fd_poll_runtime.go:87
 
 http://ip:port/debug/pprof/goroutine?debug=2 可查看阻塞原因、阻塞多久:
 
-    goroutine 1 [chan receive, 1406 minutes]:
+    goroutine 1 [chan receive, 1406 minutes]:(阻塞了1406 分钟)
     main.main() /go/src/app/cmd/main.go:39 +0x29f
 
 # benchmark 生成profile

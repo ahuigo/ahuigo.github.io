@@ -249,15 +249,17 @@ Note: Error/Fatal 都会导致bench 不被执行
 # bench test
 
 ## bench test rule
-
-1.go test不会默认执行压力测试的函数，如果要执行压力测试需要带上参数`-test.bench`，语法:
-
-    go test -test.bench="Benchmark_*"    #表示匹配所有的`Benchmark_`或`Benchmark`打头的压力测试函数
-
-2.XXX可以是任意字母数字的组合，但是首字母不能是小写字母
+1.XXX可以是任意字母数字的组合，但是首字母不能是小写字母. 而且必须是 `Benchmark`打头
 
     func Benchmark_XXX(b *testing.B) { ... }
     func BenchmarkXXX(b *testing.B) { ... }
+
+2.go test不会默认执行压力测试的函数，如果要执行压力测试需要带上参数`-test.bench`，语法:
+
+    go test -test.bench="Benchmark_*"    #表示匹配所有的`Benchmark_`或`Benchmark`打头的压力测试函数(这是正则表示式)
+    go test -test.bench="Be"    #表示包含有`Be`的压力测试函数(正则)
+    go test -test.bench="Fib$"    #表示`Fib`结尾的压力测试函数(正则)
+    go test -test.bench="^BenchmarkCalc$"   
 
 ## write bench
 
@@ -287,8 +289,8 @@ b.N 从 1 开始，如果该用例能够在 1s 内完成，b.N 的值便会增�
     # 测试单个文件
     $ go test -v -bench=. benchmark_test.go
     # 测试指定函数
-    $ go test -v -bench='Benchmark_calc.*'
-    $ go test -v -bench='calc'
+    $ go test -v -bench='Benchmark_Divi.*'
+    $ go test -v -bench='Divi'
     Benchmark_Division-4           20000000         0.33 ns/op
     PASS
     ok          command-line-arguments        0.700s
@@ -298,6 +300,7 @@ b.N 从 1 开始，如果该用例能够在 1s 内完成，b.N 的值便会增�
 BenchmarkDivision-4 中的 -4 即 GOMAXPROCS，默认等于 CPU 核数。可以通过 -cpu 参数改变
 GOMAXPROCS，-cpu 支持传入一个列表作为参数，例如：
 
+    # 分别用2cpu、4cpu压测
     $ go test -cpu=2,4 .
 
 ### 自定义bench 时间
@@ -318,14 +321,21 @@ GOMAXPROCS，-cpu 支持传入一个列表作为参数，例如：
 
     go test -bench=".*" -count=5
 
+## bench profile
+testing 支持生成 CPU、memory 和 block 的 profile 文件。
+
+-cpuprofile=$FILE
+-memprofile=$FILE, -memprofilerate=N 调整记录速率为原来的 1/N。
+-blockprofile=$FILE
+
 ### bench cpu.profile
 
-    //go-lib/gotest/bench_test.go
+    //golib/perf/bench/bench_test.go
     $ go test -bench=".*" -cpuprofile=cpu.profile ./popcnt -o popcnt.test
     $ ls
     cpu.profile popcnt.test
 
-#### 进入交互
+#### 进入pprof 交互分析cpu.pprof
 
 进入command 交互模式
 
@@ -349,7 +359,7 @@ text模式top
 
 更多: 运行 go tool pprof 来得到最完整的列表
 
-## -benchmem bench memory
+### -benchmem bench memory
 
 可以 从help 找到memory profile 的说明
 
@@ -363,15 +373,16 @@ text模式top
         }
     }
 
-然后我们用 `-memprofile mem.out` 输出分析文件
+然后我们用 `-memprofile mem.pprof` 输出分析文件
 
-    $ go test -v -bench=Alloc -memprofile mem.out benchmark_test.go
+    $ go test -v -bench=Alloc -memprofile=mem.pprof benchmark_test.go
 
-或者用`-benchmem参数`显示内存分配情况:
+或者用`-benchmem`显示内存分配情况:
 
     $ go test -bench=Alloc -benchmem
     Benchmark_Alloc-4   	20000000	       107 ns/op	      
                             16 B/op	       2 allocs/op
+                            第次op，分配两次内存（16B）
 
 ## ResetTimer 忽略无关的耗时
 

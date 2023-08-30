@@ -213,7 +213,16 @@ man date可以发现其参数众多。看起来有些乱，归纳一下：
 			%T   time; same as %H:%M:%S
 			%r   locale's 12-hour clock time (e.g., 11:11:04 PM)
 			%R   24-hour hour and minute; same as %H:%M
-
+    -I Complex:
+        [-I[date | hours | minutes | seconds]]
+        date -I date
+            2023-08-30
+        date -I hours
+            2023-08-30T21+08:00
+        date -I minutes
+            2023-08-30T21:46+08:00
+        date -I seconds
+            2023-08-30T21:46:55+08:00
 	Century:
 		%C   century; like %Y, except omit last two digits (e.g., 20)
 	Other:
@@ -222,6 +231,7 @@ man date可以发现其参数众多。看起来有些乱，归纳一下：
 		%t   a tab
 		%z   +hhmm numeric time zone (e.g., -0400)
 		%Z   alphabetic time zone abbreviation (e.g., EDT)
+
 
 By default，date pads numeric fields with zeroes.
 The following optional flags may follow '%':
