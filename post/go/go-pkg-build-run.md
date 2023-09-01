@@ -98,9 +98,16 @@ run: main 入口注入变量
     go run -ldflags="-X 'main.Version=注入version'" ldflags-var.go
         Version:注入version
 
-其它入口 common/types 包下的变量也如此
+其它入口 conf 包下的变量也如此
 
-    RUN go build -ldflags=-s -w -X common/types.BuildDate=$(date -I'seconds') -X common/types.BuildVer=$(git rev-parse HEAD)
+    // project/go.mod
+    module mod1
+
+    // cat project/conf/var.go
+    var BuildDate="2020.01.01..."
+
+    // dockerfile
+    RUN go build -ldflags=-s -w -X mod1/conf.BuildDate=$(date -I'seconds') -X mod1/conf.BuildVer=$(git rev-parse HEAD)
 
 # build tag
 refer: https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags

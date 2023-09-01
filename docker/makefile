@@ -20,3 +20,10 @@ jre-test-build:
 jre-test:
 	docker run --rm --entrypoint="/bin/sh" --name jre-test jre-test
 
+
+export MY_VAR = foo  # Available for all targets
+t:
+	echo $$MY_VAR
+	echo $(MY_VAR)
+	echo $(shell date)
+

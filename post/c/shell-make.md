@@ -49,14 +49,13 @@ private:
         echo $(FLAG)
 
 ### 定义变量
-
-变量定义时`=`两边可以有空格，这一点不像shell 那样严格
+变量定义时`=`两边可以`有空格`，这一点不像shell 那样严格
 https://www.gnu.org/software/make/manual/html_node/Setting.html#Setting
 
-    # Variables defined with ‘=’ are recursively expanded variables
+    # Variables defined with ‘=’ are recursively expanded variables (在被引用时才展开，递归的)
     VARIABLE = value
 
-    # 在定义时扩展, Variables defined with ‘:=’ or ‘::=’ are simply expanded variables;
+    # 在定义时扩展, Variables defined with ‘:=’ or ‘::=’ are simply expanded variables;(定义时展开，不递归)
     VARIABLE := value
 
     # 只有在该变量为空时才设置值。
@@ -82,12 +81,17 @@ e.g:
     echo $(HOME)
     echo ${HOME}
 
-make 变量与shell 变量语法不同
+make 变量与shell 变量语法不同, make的变量相当是宏展开
 
     LDFLAGS += -X "main.Version=$(shell git rev-parse HEAD)"
     GO := GO111MODULE=on go
 
 #### define multiple line
+多行字符串定义方法1：
+
+
+多行字符串定义方法2：
+
     define BODY
         home:$(HOME)
         test:123
@@ -101,12 +105,11 @@ make 变量与shell 变量语法不同
         # failed， 因为BODY提前解析为多行参数了
         echo "$(BODY)" > index.md
 
-
 #### Array 变量
 
-    CMDS =
-    CMDS += init
-    CMDS += start
+    BINS =
+    BINS += init
+    BINS += start
 
     all: $(BINS)
 
@@ -123,13 +126,19 @@ make 变量与shell 变量语法不同
     file_list := $(shell find . -name "*.c")
 
 ### 环境变量, shell 变量
+You can export individual variables with:
 
-As MadScientist pointed out, you can export individual variables with:
-
+    # make 变量展出为shell 变量
     export MY_VAR = foo  # Available for all targets
-    t:
+    target:
+        # 这个被识别为shell 变量
         echo $$MY_VAR
+
+        # 这个被识别为make 变量，会被提前展开
         echo $(MY_VAR)
+
+        # 这个被识别为shell
+        echo $(shell date)
 
 Or export variables for a specific target (target-specific variables):
 

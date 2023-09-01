@@ -65,9 +65,9 @@ pprof 其它输出格式
 
 ### top sort
 
+    cum 包含函数调用的时间，比如cpuFunc 就包含了longRun 的时间
     flat 是函数自身的cpu 占用
     sum% 之前累加每一行flat%的累加（见top方法）
-    cum 包含函数调用的时间，比如cpuFunc 就包含了longRun 的时间
 
     top20 -cum
 
@@ -285,6 +285,15 @@ cpu+mem
     sum% 之前累加每一行flat%的累加（见top方法）
     cum 包含函数调用的时间，比如cpuFunc 就包含了longRun 的时间
 
+#### profile: view peek/source
+点source 可以查看top点的源码
+点peek 可以查看top点的调用栈及路径(calls% 表示cum消耗 在所在函数中的比分比)
+
+    ----------------------------------------------------------+-------------
+        0.63MB  5.54% |   github.com/swaggo/files.init.16 /github.com/swaggo/files@v1.0.1/b0xfile__swagger-ui.css.map.go:21
+        0.57MB  5.03% |   github.com/swaggo/files.init.15 /github.com/swaggo/files@v1.0.1/b0xfile__swagger-ui.css.go:21
+   11.40MB  0.49% 99.83%    11.40MB  0.49%                | golang.org/x/net/webdav.(*memFile).Write /golang.org/x/net@v0.10.0/webdav/file.go:601
+
 #### profile: http 查看火焰图 
 http 用法有:
 
@@ -295,7 +304,13 @@ http 用法有:
 
 然后点击: `view->flamegraph` 访问火焰图: `http://localhost:4501/ui/flamegraph`
 
-#### profile: web 生成调用关系图
+说明：
+
+    graph:
+        节点连线表示函数调用，如果是虚线表示省略了一些节点
+        带有inline字段表示该函数被内联进了调用方
+
+##### profile: web 生成调用关系图
 
     $ go tool pprof --seconds 10 http://localhost:9090/debug/pprof/profile
     Please wait... (10s)
@@ -305,6 +320,9 @@ http 用法有:
 ![](/img/go/profile/pprof-simple.png)
 
 ### pprof mem 分析
+    go tool pprof -http=:4503 -inuse_space  http://m:8085/debug/pprof/heap
+    go tool pprof -http=:4503 -alloc_space  http://m:8085/debug/pprof/heap
+
 pprof 支持内存分析，找出内存消耗大的代码:
 
     $ go tool pprof -http=:4501 http://localhost:4500/debug/pprof/heap
@@ -328,12 +346,24 @@ pprof 支持内存分析，找出内存消耗大的代码:
         1MB     5.21% 79.79%        1MB  5.21%  net/http.(*Server).newConn
     (pprof)
 
+#### 关于alloc/inuse 显示
+释放data 内存后:(示例参考 golib/gonic/ginapp/server/stat/stat-os.go), alloc/inuse 不同的工具看到的结果不一样 
+
+1. debug/pprof/heap?debug=1 会看到 heapAlloc/heapInuse 减少(实时)
+2. go tool pprof debug/pprof/heap 则看到 Alloc_space 未减少，而heap_space 减少(有采样延时，要等一下看到)
+
 指标说明, 可以在Sample菜单中切换`inuse_space/inuse_objects/alloc_space`, alloc 包含所有被释放的内存, inuse是指正在使用的内存
 
     -inuse_space      Display in-use memory size(important)
     -inuse_objects    Display in-use object counts
     -alloc_space      Display allocated memory size
     -alloc_objects    Display allocated object counts
+
+命令行中, 可直接这样切换：
+
+    > sample_index=alloc_objects
+    > sample_index=alloc_space
+    > top -cum 
 
 ## Memory leak(内存泄露分析)
 参考【大彬】的[实战Go内存泄露]https://segmentfault.com/a/1190000019222661

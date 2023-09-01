@@ -182,7 +182,11 @@ any array
 
     SELECT 'ab%' <~~ ANY('{"abc","def"}');
     SELECT not 'ab%' <~~ ALL('{"abc","def"}');
+
 ## 集合索引
+> where entity_ids && '{"67505","69284"}' 能用集合索引
+> where '67505'=any(entity_ids) 不能用集合索引
+
 为了加速集合交集运算，我们给字段加GIN 索引(或GIST索引，有类型限制)
 
     $ CREATE INDEX manual_task_info_entity_ids_gin_idx ON table USING gin(entity_ids);
