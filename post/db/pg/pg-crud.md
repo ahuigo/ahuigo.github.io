@@ -335,9 +335,9 @@ https://stackoverflow.com/questions/7747327/sql-rank-versus-row-number
 
 可以看到:
 
-1. ROW_NUMBER 对分区排序的row是唯一编号的
-1. RANK 对分区排序的row，相等的row用相同编号, 不相等的row才自增(相等时也会计数)
-1. DENSE_RANK 对分区排序的row，相等row用相同编号, 不相等的row才自增(无计数)
+1. ROW_NUMBER 对分区内row是自增排序编号
+1. RANK 对分区排序的row，相等的row用`相同编号`, 不相等的row编号才改变(不相等时使用ROW_NUMBER 计数)
+1. DENSE_RANK 对分区排序的row，相等row用`相同编号`, 不相等的row才改变(不相等编号自增)
 
 ##### delete duplicated row
 

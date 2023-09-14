@@ -38,6 +38,27 @@ And this??
 > http://www.ruanyifeng.com/blog/2016/09/csp.html
 CSP 的实质就是白名单制度，开发者明确告诉客户端，哪些外部资源可以加载和执行
 
+## 加载CSP js
+如果没有设置正确的CSP，你可能会遇到:
+> Refused to load the script 'http://localhost:8000/_frsh/js/main.js' because it violates the following Content Security Policy directive: "script-src 'nonce-49079xx'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+解决方法：
+
+    1. 方法1: 添加正确的nonce
+    <script nonce="490790d741e24e19b2a41c042b754e67" src="http://localhost:8000/_frsh/js/main.js"></script>
+
+    2. 方法2: 在server 端返回首页html时，CSP 头指定允许加载的js nonce
+    Content-Security-Policy: script-src 'nonce-490790d741e24e19b2a41c042b754e67' http://localhost:8000;
+    // 或者允许所有
+    Content-Security-Policy: script-src *;
+    // 或者 script-src-elem
+    Content-Security-Policy: script-src 'self' https://localhost:8000; script-src-elem 'self' https://localhost:8000; 
+
+
+注意：
+1. 默认使用：script-src-elem：这个指令适用于 `<script src="xx">` 
+2. fallback script-src：这个指令适用于所有的脚本，包括内联脚本和动态插入的脚本等
+
 ## 加载方法
 两种
 

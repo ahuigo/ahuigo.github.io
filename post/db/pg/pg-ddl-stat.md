@@ -5,7 +5,7 @@ private: true
 ---
 # sql status
 ## find running sql
-find long runing sql
+find long runing sql via `pg_stat_activity`
 
     SELECT
         pid,

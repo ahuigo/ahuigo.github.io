@@ -33,9 +33,10 @@ testing package.
         -bench=Alloc ; 表示运行所有基准测试: Benchmark_Alloc
 
 ## command faq
+### failfast
 
+    go test -failfast ./...
 ### testcache
-
 禁用cache 的方法有多个
 
     go clean -testcache
@@ -43,7 +44,6 @@ testing package.
     go test -count=1
 
 ### test cwd
-
 默认go test会改变cwd 到测试文件所在的目录
 
     package xtesting

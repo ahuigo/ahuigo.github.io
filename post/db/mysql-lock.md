@@ -141,5 +141,3 @@ CAS指令在Intel CPU上称为`CMPXCHG`指令，它的作用是:
 	SELECT @@global.tx_isolation;
 	SELECT @@session.tx_isolation;
 	SELECT @@tx_isolation;
-
-# 事务与锁
