@@ -714,10 +714,7 @@ WARNING when update with struct, GORM will only update those fields that with no
     db.Model(&user).Updates(User{Name: "", Age: 0, Actived: false}).Updates("age", 0).Error
 
 ### select/omit 更新空值
-或者用下面的map/interface/pointer 或 select /omit方法:
-
-    db.Model(&user).Omit("name").Updates(map[string]interface{}{"name": "hello", "age": 18, "active": false})
-    // UPDATE users SET age=18, active=false, updated_at='2013-11-17 21:34:10' WHERE id=111;
+select /omit方法:
 
     // 使用 Struct 进行 Select（会 select 零值的字段）
     db.Model(&user).Select("Name", "Age").Updates(User{Name: "new_name", Age: 0})
@@ -726,10 +723,22 @@ WARNING when update with struct, GORM will only update those fields that with no
     // Select 除 Role 外的所有字段（包括零值字段的所有字段）
     db.Model(&user).Select("*").Omit("Role").Update(User{Name: "jinzhu", Role: "admin", Age: 0})
 
+注意，这招对nil 不管用: (只能使用下面的 update map了)
+
+    start := time.Now()
+    user := &User{ID:1, StartTime: &start}
+    // 不会更新StartTime 为NULL
+    db.Model(user).Updates(user)
+
 ### update map
+或者用下面的map/interface/pointer
 
     db.Model(&user).Updates(map[string]interface{}{"name": "hello", "age": 18, "actived": false})
     //// UPDATE users SET name='hello', age=18, actived=false, updated_at='2013-11-17 21:34:10' WHERE id=111;
+
+    db.Model(&user).Omit("name").Updates(map[string]interface{}{"name": "hello", "age": 18, "active": false})
+    // UPDATE users SET age=18, active=false, updated_at='2013-11-17 21:34:10' WHERE id=111;
+
 
 ### update interface
 

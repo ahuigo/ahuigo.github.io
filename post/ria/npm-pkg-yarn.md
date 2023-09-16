@@ -8,6 +8,11 @@ https://zhuanlan.zhihu.com/p/137535779
 1. pnpm 采用flat
 2. go get -u ext3.com/module3@v0.0.4 https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
 
+## upgrade pnpm
+> corepack 是node20自带
+
+    corepack prepare pnpm@latest --activate
+
 # yarn
 ## install yarn binary
 
