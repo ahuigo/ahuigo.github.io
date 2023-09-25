@@ -75,7 +75,7 @@ With it, you could extract some generic logics, to write more reusable libraries
     db.Scopes(AmountGreaterThan1000, OrderStatus([]string{"paid", "shipped"})).Find(&orders)
     // Find all paid, shipped orders that amount greater than 1000
 
-# Model
+# Model with hook
     func (s *DB) Model(value interface{}) *DB
 
 Model specify the model you would like to run db operations
@@ -85,7 +85,6 @@ Model specify the model you would like to run db operations
     // if user's primary key is non-blank, will use it as condition, then will only update the user's name to `hello`
     db.Model(&user).Update("name", "hello")
 
-# Hooks
 hooks 绑定了(User/Product..)等model, 而plugin 是全局的
 
 ## Creating an object
@@ -94,6 +93,7 @@ Available hooks for creating
     // begin transaction
     BeforeSave
     BeforeCreate
+
     // save before associations
     // update timestamp `CreatedAt`, `UpdatedAt`
     // save self
@@ -114,8 +114,8 @@ Code Example:
 
     func (u *User) AfterCreate(scope *gorm.Scope) (err error) {
         if u.ID == 1 {
-        scope.DB().Model(u).Update("role", "admin")
-    }
+            scope.DB().Model(u).Update("role", "admin")
+        }
         return
     }
 
@@ -192,7 +192,7 @@ Code Example:
         return
     }
 
-# Plugin
+# Plugin(global hooks)
 1. 跟hooks 不同，plugin 不绑定Model, plugin是全局的
 2. GORM本身由Callbacks提供支持，plugin也是(基于Scope )
 
@@ -277,5 +277,5 @@ Test:
 ## Column
 
     if scope.HasColumn("Created"){
-        scope.SetColumn("Created", "Created by ahuigo")
+        scope.SetColumn("Created", "Created by ahuigo") // 修改字段的值
     }

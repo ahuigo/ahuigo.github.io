@@ -5,6 +5,27 @@ private: true
 ---
 
 # antd table
+## col witdh
+antd protable 控制宽度的话
+
+    type User = {name:string}
+    const columns :ProColumns<User>= [
+        {
+        title: "xx",
+        dataIndex: 'name',
+        width: 600,// 指定宽度
+        search: false,
+        render: (v: ReactNode) => <span className="break-all">超宽可加break-all{v}</span>,
+        },
+    ]
+
+    return 
+    <ProTable<User, Params>
+        columns={columns}
+        scroll={{ x: 1200, }} 
+
+    />
+
 
 # pagination
 

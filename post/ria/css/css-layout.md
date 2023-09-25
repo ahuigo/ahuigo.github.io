@@ -80,7 +80,7 @@ https://css-tricks.com/almanac/properties/t/table-layout/
         width="pixels|%"
     }
 
-td 内容有时会撑大单元格，可以加word-break: 
+td 内容有时会撑大单元格，可以加break-word: 
 
     td{
         overflow-wrap: break-word;

@@ -31,7 +31,11 @@ private:
 ### array from select
 
     // sort array
-    SELECT ARRAY(SELECT unnest(phones) ORDER BY 1)
+    SELECT ARRAY(SELECT unnest(phones) ORDER BY 1) -- order by first column
+
+    // covert text[] to integer[]
+    SELECT ARRAY(SELECT CAST(unnest(array['200','301']::text[]) AS integer));
+
 
 ## empty array
 
@@ -223,10 +227,10 @@ any array
 # Array function
 
 ## array length
-
 第二个参数代表维度1维数组
 
-    select array_length(string_to_array(name, 'o'), 1) - 1
+    select array_length(string_to_array(name, 'o'), 1) + 100;
+    select array_length(string_to_array('a,b,c', ','), 1);
     where phones is null
 
 ## split string
@@ -298,7 +302,7 @@ string_agg with order by
 
 ### array_agg(unnest反向)
 
-    ahuigo=# SELECT name, array_agg(phone) AS ps FROM   stus group by 1;
+    > SELECT name, array_agg(phone) AS ps FROM stus group by 1;
     ahui     | {NULL,NULL,3,4,4,5}
 
 agg 可能为null
@@ -316,8 +320,9 @@ array_agg 后判断集合
     SELECT name, array_agg(distinct phone) AS ps FROM   stus group by 1 having 3=any(array_agg(distinct phone));
 
 ### merge array
-    select array_agg(c)
-    from (
+合并array：
+
+    select array_agg(c) from (
         select unnest(column_name) from table_name
     ) as dt(c);
 
@@ -330,6 +335,23 @@ array_agg 后判断集合
 
     WITH v(a) AS ( VALUES (ARRAY[1,2,3]), (ARRAY[4,5,6,7]))
     SELECT array_cat_agg(a) FROM v;
+## 转换为特定类型的数组
+利用CAST 类型转换，将text[] 转换成 integer[]:
+
+    SELECT ARRAY(SELECT CAST(unnest(array['200','301']::text[]) AS integer));
+
+这在alter column 时很方便： https://dba.stackexchange.com/a/331422/279664
+
+    -- func--
+    CREATE OR REPLACE FUNCTION convert_text_array_to_int_array(text[])
+    RETURNS integer[] AS $$
+        SELECT ARRAY(SELECT CAST(unnest($1) AS integer));
+    $$ LANGUAGE SQL IMMUTABLE;
+
+    ALTER TABLE apis ALTER COLUMN codes DROP DEFAULT;
+    ALTER TABLE t ALTER COLUMN codes TYPE integer[] USING convert_text_array_to_int_array(codes);
+    ALTER TABLE apis ALTER COLUMN codes SET DEFAULT '{}';
+
 
 ## compare
 
@@ -339,6 +361,8 @@ array_length() requires two parameters, the second being the dimension of the
 array:
 
     array_length(id_clients, 1) > 0
+    SELECT array_length('{{1,2,3},{4,5,6}}'::integer[][] , 2); -- 3
+    SELECT array_length('{}'::integer[] , 1); -- null
 
 compare it to an empty array:
 
@@ -347,6 +371,9 @@ compare it to an empty array:
 
 That's all. You get:
 
-    TRUE .. id_clients is empty
-    NULL .. id_clients is NULL
-    FALSE .. any other case
+    select array[]::text[]='{}'; //true
+    select array[]::text[] is NULL; //false
+    select array[]::text[]=NULL; //null (不能这样比较, 用等号永远得到空集)
+
+    select null::text[]='{}'; //null
+    select null::text[] is NULL; //true

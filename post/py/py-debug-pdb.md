@@ -11,6 +11,17 @@ date: 2018-09-28
 
 # ipdb: ipython + pdb
 
+## start shell
+插入以下代码进入断点调试，相当于js debugger:
+
+    from IPython import embed
+    embed()
+
+或者：
+
+    import pdb; 
+    pdb.set_trace()
+
 ## via sys.excepthook
 创建一个sys.excepthook, 当异常出现时，就调用ipython+pdb 调试: (from @Rui L on zhihu)
 ```
@@ -82,13 +93,20 @@ b      commands   disable   ignore  next  pinfo2  restart  u        whatis
 break  condition  down      j       p     pp      return   unalias  where 
 ```
 
-# pdb
+# pdb(debugger)
 python -m pdb test_pdb.py
 
     import pdb
     ....code...
-    pdb.set_trace()      # This introduces a breakpoint
+    pdb.set_trace()      # This introduces a breakpoint like js debugger
     ... code...
+
+在调试器模式下，您可以使用以下命令执行代码：
+
+    n：执行下一行代码。
+    s：进入当前行的函数。
+    c：继续执行代码，直到下一个断点。
+    q：退出调试器模式。
 
 ## example
 run:

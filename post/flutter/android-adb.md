@@ -33,14 +33,26 @@ ADB是android sdk里的一个工具, 用这个工具可以直接操作管理andr
     计算机和设备之间上传/下载文件
     将本地apk软件安装至模拟器或android设备
 
-## download adb and fastboot(platform-tools)
-https://developer.android.com/studio/releases/platform-tools#download
+## install adb and fastboot(platform-tools)
+下载方法：
 
+    # 1. 如果用android studio.app 下载android sdk会解压到：
+    # 2. 或者 https://developer.android.com/studio/releases/platform-tools#download
+    ~/Library/Android/sdk/platform-tools/
+
+设定变量
+
+    export ANDROID_SDK_ROOT=~/Library/Android/sdk
+    export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:
 
 ## set phone debug mode
+1. my advice -> 全部参数与信息-> miui version
 1. Tap the About Phone option 
 2. Then tap the Build Number option 7 times to enable Developer Mode. 
 3. enable the USB Debugging mode option.
+
+进入debug mode(miui14):
+1. 更多设备->developer options -> enable debug
 
 ## 查看adb 设备
 	$ adb devices #在手机上点authorized this device
@@ -69,12 +81,24 @@ reboot:
     adb reboot bootloader
     adb reboot recovery
 
+### uninstall app
+比如uninstall guard
+
+    adb shell pm list package | grep com.miui.guardprovider
+    adb uninstall --user 0 com.miui.guardprovider
+
+如果有分身系统需要查看一下设备用户资料 ID 命令为
+
+    adb shell pm list users
+
 ### backup
-adb backup 
 Function: Create a full backup of your phone and save to the computer.
 
-adb restore restorefile.zip
+    adb backup 
+
 Function: Restore a backup to your phone.
+
+    adb restore restorefile.zip
 
 ### ROM
 adb sideload
@@ -94,15 +118,15 @@ adb 不能访问bootloader 区，fastboot可以：
     fastboot flash recovery
     Function: Flash a custom recovery image to your phone.
 
-
-
 # 刷机
-hammerhead D820(H) 16G
-HW Version rev_11
-Bootloader version: HHZ12h
-BASEBAND VERSION: M8974A-2.0.50.2.26
-SECURE BOOT: enabled
-Lock state: unlocked (原来是locked)
+以nexus 5为例：
+
+    hammerhead D820(H) 16G
+    HW Version rev_11
+    Bootloader version: HHZ12h
+    BASEBAND VERSION: M8974A-2.0.50.2.26
+    SECURE BOOT: enabled
+    Lock state: unlocked (原来是locked)
 
 1. platfrom sdk: adb+fastboot 
     0. PATH=$PATH:~/Download/n5/platform-tools
@@ -127,9 +151,7 @@ https://dl.twrp.me/hammerhead/
 
     fastboot flash recovery twrp-2.8.x.x-xxx.img
 
-
-# software
-## fastboot
+## fastboot 刷机命令
 Fastboot 类似BIOS 固件。
 1. fastboot可以将电脑上的recovery镜像（非手机上），加载到手机。
 2. 不需要依赖于recovery，甚至linux底层刷坏了recovery模式
@@ -141,16 +163,9 @@ Fastboot 类似BIOS 固件。
 1. Bootloader 更为原始的BIOS，然后选择进入fastboot还是recovery/rom
 
 
-# java sdk
-/Library/Java/Home/lib/
-
 # Reference
 - [adb on Mac][] 
 - [android on mac]
 
 [adb on Mac]: http://www.izhangheng.com/mac-os-x-homebrew-install-android-sdk/
 [android on mac]: http://forum.xda-developers.com/showthread.php?t=1917237
-
-
-# root
-http://www.androidrootz.com/2013/11/nexus-5-one-click-toolkit-for-mac.html

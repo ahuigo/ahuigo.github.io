@@ -21,6 +21,8 @@ private: true
       } ...
 
 ## return OUT variable
+`$$` 是block label（参考pg-expr-block.md）
+
     CREATE OR REPLACE FUNCTION f2(_tbl regclass, OUT result integer) 
     AS $$
     BEGIN
@@ -37,9 +39,9 @@ AS 多个输出:
 ## return value with sqlbody
 
     create or replace function f(n int) 
-    returns int as $$ 
+        returns int 
+    AS $$ 
     begin 
-        -- n:=5; 
         return n; 
     end; 
     $$language 'plpgsql';

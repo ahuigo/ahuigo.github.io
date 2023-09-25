@@ -39,6 +39,7 @@ alias cp='cp -i'
 alias svnst='svn st'
 alias l='ls -lah'
 alias code1=~/'Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+alias code.='code .'
 
 ##################### python ##########################################
 if [[ -z $INIT_PROFILE ]]; then
@@ -234,7 +235,7 @@ export PATH="$PATH:$HOME/flutter/bin"
 export ANDROID_SDK_ROOT=~/Library/Android/sdk
 export ANDROID_HOME=$ANDROID_SDK_ROOT; #已弃用
 # https://developer.android.com/tools
-export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:
 
 ################## java ########################
 # export JAVA_HOME="$(/usr/libexec/java_home)"

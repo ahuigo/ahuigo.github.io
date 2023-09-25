@@ -13,4 +13,8 @@ private: true
 
 如果你关闭了github authentiction, 打开方式是：
 
-    Code->Preferences -> Profiles(default) -> Show Contents
+    OSX:
+        Code->Preferences -> Profiles(default) -> Show Contents
+        找到 github authentiction， 点enable
+    Linux:
+        File -> Preferences -> Profiles -> Show Contents

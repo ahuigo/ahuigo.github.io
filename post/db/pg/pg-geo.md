@@ -25,12 +25,15 @@ Refer to : https://postgis.net/install/
 空间字段可以分为geometry和geography两种，大部分情况使用满足opengis标准的geometry(point,line,polygon...)。
 
 # 空间数据标准
-1. EPSG：European Petroleum Survey Group, 目前已有的椭球体，投影坐标系等不同组合都对应着不同的ID号
-[其中 EPSG:4326是比较著名的一个，GPS系统就是在用它，别名叫作WGS84，WGS(World Geodetic System)是世界大地测量系统](https://www.zhihu.com/question/52220968)
-2. SRID：OGC标准中的参数SRID，也是指的空间参考系统的ID，与EPSG一致；如EPSG:4326
-3. WKT: 只是空间参考系统的文字描述, 无论是参考椭球、基准面、投影方式、坐标单位等，都有相应 的EPSG值表示
-4. EWKT and EWKB – Extended Well-Known Text/Binary: wkt+srid(up to 2D (x, y), 3D (x, y, z), 4D (x, y, z, m))
-    1. for example: SRID=4326;POINT(-44.3 60.1)
+1. EPSG：European Petroleum Survey Group, 目前已有的椭球体，投影坐标系等不同组合都对应着不同的ID号(相当于unicode)
+    - EPSG:4326表示WGS84坐标系(经纬高坐标)，EPSG:3857表示Web墨卡托投影坐标系(无法显示极地，离赤道越远越大)
+    - [其中 EPSG:4326是比较著名的一个，GPS系统就是在用它，别名叫作WGS84，WGS(World Geodetic System)是世界大地测量系统](https://www.zhihu.com/question/52220968)
+2. SRID(Spatial Reference ID)：OGC标准中的参数,标识空间数据的坐标系，与EPSG一致；如EPSG:4326 (相当于utf8/utf16/utf32)
+    - 例如，SRID 4326表示WGS84坐标系，SRID 3857表示Web墨卡托投影坐标系。在PostGIS中，SRID用于将空间数据从一个坐标系转换为另一个坐标系
+3. WKT: Well-Known Text的缩写，是一种用于描述空间数据的文本格式. (相当于存储字符的实际编码)
+    - e.g.: POINT (30 10)
+4. EWKT and EWKB – Extended Well-Known Text/Binary: 在WKT基础中增加了SRID标识。（相当于txt文件加BOM头）
+    1. e.g.: SRID=4326;POINT(30 10)
 
 WKT 表示样表：https://www.cnblogs.com/tiandi/archive/2012/07/18/2598093.html
 
@@ -119,12 +122,50 @@ make geom from lng/lat
 
     ST_X(the_geom), ST_Y(the_geom) FROM cities;
 
-## where 
-### within box
+# ST 空间函数
+postgis中的空间函数都是以ST 打头的
+
+    ST_Transform函数用于将几何对象从一个坐标系转换为另一个坐标系
+    ST_Intersects函数用于测试两个几何对象是否相交，
+    ST_Distance函数用于计算两个几何对象之间的距离等等。
+
+## geometry
+postgis使用ST_GeomFromText函数将WKT或EWKT格式的文本字符串转换为geometry类型的几何对象(二进制)。
+
+    SELECT ST_GeomFromText('POINT (30 10)', 4326);
+
+## ST_Transform 坐标转换
+将几何对象从一个坐标系转换为另一个坐标系。它的语法如下：
+
+    ST_Transform(geometry, srid)
+
+比如：
+
+    # 4326 坐标EWKT:
+    SELECT ST_GeomFromEWKT('SRID=4326;POINT (30 10)');
+
+    # 转换成3857 Web墨卡托投影坐标系
+    select ST_Transform(ST_GeomFromEWKT('SRID=4326;POINT (30 10)'), 3857);
+
+## ST_MakeEnvelope
+函数用于创建一个矩形区域的几何对象
+
+    ST_MakeEnvelope(minx, miny, maxx, maxy, srid)
+    srid: 表示坐标系
+        4326：WGS84坐标系，用于表示地球表面的经纬度坐标。
+        3857：Web墨卡托投影坐标系，用于表示地球表面的平面坐标。
+        900913：Google墨卡托投影坐标系，与3857坐标系相同。
+        27700：英国国家网格坐标系，用于表示英国境内的坐标。
+        2154：法国国家坐标系，用于表示法国境内的坐标。
+
+    ST_MakeEnvelope(-122.271189, 37.804339, -122.275244, 37.808264, 4326),
+
+## within box
 REfer : 
 https://gis.stackexchange.com/questions/223828/select-all-points-within-a-bounding-box/223955
 
-#### ST_Contains
+### ST_Contains
+判断goem位于box内
 
     SELECT *
     FROM planet_osm_roads
@@ -142,7 +183,7 @@ or change it to this:
             ST_MakeEnvelope(-122.271189, 37.804339, -122.275244, 37.808264, 4326),3857)
         ,planet_osm_roads.geom);
 
-#### ST_SetSRID
+### ST_SetSRID
 1.Sets the SRID on a geometry to a particular integer value. Useful in constructing bounding boxes for queries.
 
     geometry ST_SetSRID(geometry geom, integer srid);
@@ -152,3 +193,61 @@ or change it to this:
     WHERE (geom && ST_SETSRID(ST_MakeBox2D(ST_POINT(116, 39),ST_POINT(117, 40)), 4326)) 
     //或者
     WHERE ST_INTERSECTS(geom , ST_SETSRID(ST_MakeBox2D(ST_POINT(116, 39),ST_POINT(117, 40)), 4326)) 
+
+### ST_Buffer创建几何对象的缓冲区
+缓冲区是指在几何对象周围创建一个固定距离的区域，通常用于空间分析和空间查询。ST_Buffer函数的语法如下：
+
+    # ST_Buffer函数返回一个新的几何对象，其类型与输入几何对象的类型相同。
+    ST_Buffer(geometry, radius, [num_segments])
+    其中:
+        geometry是要创建缓冲区的几何对象，
+        radius是缓冲区的半径，
+        num_segments是可选参数，用于指定缓冲区的圆弧段数。
+
+这个查询语句将返回一个WGS84坐标系下的点对象缓冲区，其半径为10度。
+
+    SELECT ST_Buffer(ST_GeomFromText('POINT(30 10)', 4326), 10);
+
+### st_intersects,求交集
+这个查询语句的含义是：查询与经度为(121,30) 的点的 30000 米缓冲区相交的边界。
+
+    WHERE st_intersects(boundary, st_transform(st_buffer(st_transform(st_geomfromtext('point(121 30)', 4326), 3857),30000),4326))
+
+    st_geomfromtext('point(121 30)', 4326)：//WGS84 坐标系（EPSG 4326）表示。
+    st_transform(..., 3857)：将几何对象从 WGS84 坐标系转换为 Web Mercator 投影坐标系（EPSG 3857）。
+    st_buffer(..., 30000)：将几何对象的缓冲区设置为 30000 米。
+    st_transform(..., 4326)：将几何对象从 Web Mercator 投影坐标系转换回 WGS84 坐标系。
+    st_intersects(boundary, ...)：查询与指定几何对象相交的边界。boundary 是一个几何对象，表示边界。
+
+以上语句的 boundary 可以加GIST索引, `explain analyze` 就可以看到会使用`-> Index Scan using counties_boundary_gist on table_name ...: Index Cond:`
+
+    > \d table_name
+    "counties_boundary_gist" gist (boundary)
+
+
+### st_distance 几何距离
+    ST_Distance(geom1, geom2)
+    ST_Distance(boundary, ST_GeomFromText('POINT(121 30)', 4326))
+
+ST_Distance 函数计算两个几何对象之间的平面距离，即忽略地球的曲率和椭球形状，仅仅计算两个几何对象之间的直线距离。
+这个函数的计算速度比 ST_DistanceSphere 快，但是在计算大范围距离时，由于忽略了地球的曲率和椭球形状，可能会导致计算结果不够精确。
+
+### st_distancespheroid/ST_DistanceSphere 几何距离
+用于计算两个几何对象之间的距离，考虑地球的椭球形状。这个函数使用指定的椭球体参数来计算距离，可以更准确地计算两个点之间的距离。
+
+    ST_DistanceSpheroid(geometry1, geometry2, spheroid)
+    参数：
+        1. geometry1 和 geometry2 是要计算距离的两个几何对象，
+        2. spheroid 是一个字符串，表示要使用的椭球体参数。常用的椭球体参数包括：
+            SPHEROID["WGS 84",6378137,298.257223563]：WGS 84 椭球体参数，用于计算 GPS 坐标系下的距离(米) 
+            SPHEROID["GRS 1980",6378137,298.257222101]：GRS 1980 椭球体参数，用于计算国际标准坐标系下的距离(米)
+    返回：
+        返回两个几何对象之间的距离，单位与椭球体参数有关，通常是米或千米。
+
+查询点到边界的距离(结果是米):
+
+    st_distancespheroid(boundary,st_geomfromtext('point(121 30)', 4326),'spheroid["wgs84",6378137,298.257223563]')
+
+如果不需要特别高的精度，使用默认是WGS 84，不指spheroid 椭球体参数，可以用这个ST_DistanceSphere 代替：
+
+    ST_DistanceSphere(boundary, ST_GeomFromText('POINT(121 30)', 4326))

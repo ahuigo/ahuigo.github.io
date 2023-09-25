@@ -7,6 +7,7 @@ description:
 # Preface
 网络调试，可以用 wireshark，tshark 或 ngrep。
 
+## 基础抓包工具
 - wireshark 和 tshark：抓包和网络调试
 同类工具有微软的network monitor,sniffer
 - ngrep：从网络层摘取信息
@@ -15,6 +16,18 @@ description:
 它被设计成一个稳定的后门工具，能够直接由其它程序和脚本轻松驱动。同时，它也是一个功能强大的网络调试和探测工具，
 - mitmproxy: Use mitmproxy to read and modify HTTPS traffic
 - tcpdump
+
+## 应用抓包(https)
+- macosx:
+    1. httptoolkit 支持linux/mac/windows
+    https://github.com/httptoolkit/httptoolkit
+
+- android: targetSdkVersion >= 24 的应用
+    1. 平行空间 + HttpCanary https://www.sohu.com/a/651138468_121124365
+        - 使用 HttpCanary 平行空间或 VMOS App 等虚拟系统，在手机上虚拟出 Android 7.0 以下系统环境
+    2. Root + CA + HttpCanary: 参考 [从原理到实战，全面总结Android HTTPS 抓包](https://segmentfault.com/a/1190000041674464)
+- ios
+    1. storm-sniffer-packet-capture
 
 # mitmproxy
 https://blog.heckel.xyz/2013/07/01/how-to-use-mitmproxy-to-read-and-modify-https-traffic-of-your-phone/#Attacking-HTTP-connections

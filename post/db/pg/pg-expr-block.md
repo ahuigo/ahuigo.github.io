@@ -6,7 +6,7 @@ private: true
 # pg block
 http://www.postgres.cn/docs/9.3/plpgsql-structure.html
 
-Syntax:
+codeblock's Syntax:
 
     [ <<label>> ]
     [ DECLARE
@@ -18,7 +18,7 @@ Syntax:
         Exception handler ]
     END [ label ];
 
-## do without label
+## do block without label
 
     DO [ LANGUAGE lang_name ] codeblock
 

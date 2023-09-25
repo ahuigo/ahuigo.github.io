@@ -58,17 +58,27 @@ map 转数组：
     { "key": "k1", "value": { "name": "ahui" } }
 
 
-### 数组取值 props
+### 数组取值 prop
     curl url | jq '.executions[]|.closeTime'
     curl url | jq '.executions[].closeTime'
     curl url | jq '.stus.names[]._source["@timestamp"]'
 
     jq -c '.[]|.task_name'
 
+### 取多个props
+
+    $ echo '[{"user":"Alex", "age":1,"extra":{"no":1}},{"user":"John","age":2,"extra":{"father":"Li"}}]' | jq '.[] | "\(.user): \(.age)"'
+    "Alex: 1"
+    "John: 2"
+
 ### 数组map
 对数组每一item 取`keys(item['mappings'])`
 
     curl -s 'es:49200/_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'
+
+## 对象
+### 获取keys:
+    echo '[{"user":"Alex", "age":1,"extra":{"no":1}},{"user":"John","age":2,"extra":{"father":"Li"}}]' | jq '.[].extra | keys
 
 ## inner json
     echo '{"data":"{\"age\":1}"}' |  jq '.data|fromjson|.age'

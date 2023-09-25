@@ -212,6 +212,46 @@ https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
     >>> datetime.datetime.combine(datetime.date.today(), datetime.time.max)
     datetime.datetime(2015, 1, 12, 23, 59, 59, 999999)
 
+## last month/day/year/hour/minute/seconds
+如果想得到上一个month的同一天(自动处理30/31), 就用 relativedelta:
+
+    from datetime import datetime
+    from dateutil.relativedelta import relativedelta
+
+    # 获取当前日期
+    now = datetime.now()
+
+    # 得到上一个月的同一天
+    last_month = now - relativedelta(months=1)
+
+    print(last_month)
+
+它不会对齐时间，如果想对齐时间day：
+
+    import datetime
+
+    today = datetime.date.today()
+    yesterday = today - datetime.timedelta(days=1)
+    start_time_of_yesterday = datetime.datetime.combine(yesterday, datetime.time.min)
+
+    print(start_time_of_yesterday)
+
+它不会对齐时间，如果想对齐时间month：
+
+    import datetime
+
+    today = datetime.date.today()
+    first_day_of_last_month = datetime.date(today.year, today.month - 1, 1)
+    # datetime.time.min 指00:00:00
+    start_time_of_last_month = datetime.datetime.combine(first_day_of_last_month, datetime.time.min)
+    print(start_time_of_last_month)
+
+注意，datetime.datetime.combine 是time对齐函数
+
+    date = datetime.date(2022, 1, 1)
+    time = datetime.time(12, 0, 0)
+    datetime_obj = datetime.datetime.combine(date, time) # 2022-01-01T12:00:00
+
 ## set time
 ### by datetime：
 

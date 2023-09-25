@@ -36,6 +36,8 @@ go run 与 go build 都可以编译源码，只是go build 可生成二进制文
     $ go get -u github.com/gobuffalo/packr/packr
     $ packr build -o /bin/hello ./hello.go
 
+> 建议用官方自带的embed
+
 # build option
 
 ## GOOS and GOARCH

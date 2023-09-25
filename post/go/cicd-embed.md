@@ -6,6 +6,8 @@ private: true
 # go embed
 Go 1.16 is the support for **embedding files and folders into the application binary** at compile-time without using an external tool. 
 
+> demo 见ginapp 或者 golib/cicd
+
 ## embed FS
 参考go-lib/cicd/embed/embed.go 编译时将resouce 目录打包里res 变量
 
