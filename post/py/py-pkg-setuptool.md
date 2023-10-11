@@ -53,8 +53,11 @@ setuptools 与 disutils
 ### 命名
 在setup 中的命名
 
-    name = 'xlparser_py',
-    packages = ['xlparser'],
+    # pip install 的包名
+    name = 'xlparser_py', 
+
+    # import时的包名(只能字母、数字、下划线)
+    packages = ['xlparser'], 
     # or py_modules = ['xlparser'],
 
 对应实际使用时的命名为：

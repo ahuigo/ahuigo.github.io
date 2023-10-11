@@ -22,6 +22,7 @@ date: 2018-09-27
     - https://github.com/crewdevio/Trex
 - electron
     - webview_deno or tauri
+    - golang https://wails.io
 - ui library
     1. ui css demo: https://uiverse.io/mobinkakei/sour-lionfish-18
     1. antd 移植：migrate https://github.com/react-component/field-form to deno(antd)

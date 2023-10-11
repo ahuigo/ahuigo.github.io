@@ -19,6 +19,7 @@ private: true
 http.code:404 搜索http状态码为404的文档
 
     host : "a.com" and url : "/api/v1/health"
+    kubernetes.container_name: "name" and "keyword .." 
 
 ## 字段本身是否存在
 _exists_:http：返回结果中需要有http字段

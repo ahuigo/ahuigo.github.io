@@ -100,9 +100,9 @@ Refer: https://www.liaoxuefeng.com/wiki/1252599548343744/1255941599809248
 
 # str func
 ## equal
-
-1. == tests for reference equality (whether they are the same object).
-2. .equals() tests for value equality (whether they are logically "equal").
+不用于`s=="test"`判断字符串相等
+1. `==` tests for reference equality (whether they are the same object).
+2. `.equals()`,`.equalsIgnoreCase()` tests for value equality (whether they are logically "equal").
 
 Consequently, if you want to test whether two strings have the same value you will probably want to use `Objects.equals()`.
 
@@ -122,6 +122,10 @@ Consequently, if you want to test whether two strings have the same value you wi
     // ... but you should really just call Objects.equals()
     Objects.equals("test", new String("test")) // --> true
     Objects.equals(null, "test") // --> false
+
+## startsWith
+    String str = "Hello, world!";
+    str.startsWith("Hello")
 
 ## preg
 matcher 隐含了"^$"

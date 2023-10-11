@@ -30,7 +30,7 @@ if [[ -z $INIT_PROFILE ]]; then
 fi
 
 
-###################### nvim #####################
+###################### nvim + vscode #####################
 export EDITOR="nvim"
 alias vi='nvim'
 alias vim='nvim'
@@ -40,6 +40,9 @@ alias svnst='svn st'
 alias l='ls -lah'
 alias code1=~/'Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 alias code.='code .'
+jc () {
+        j ${1} && code .
+}
 
 ##################### python ##########################################
 if [[ -z $INIT_PROFILE ]]; then

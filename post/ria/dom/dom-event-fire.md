@@ -17,6 +17,12 @@ private: true
     const mu= new Event('mouseover',{bubbles:true});
     $0.dispatchEvent(mu);
 
+还有一种，是css:
+
+    .groupbox:hover{
+        display: block;
+    }
+
 ## link event
    link.click();
 
