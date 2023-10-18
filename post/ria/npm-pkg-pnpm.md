@@ -4,12 +4,17 @@ date: 2023-02-28
 private: true
 ---
 # pnpm
+## upgrade
+    npm uninstall -g corepack
+    # corepack upgrade pnpm
+    npm i -g pnpm
+
 ## 硬链接
 使用pnpm 后
 
     node_modules/
         umi -> ./.pnpm/.../umi
-        .pnpm/
+
 
 观察一下，可以看到，umi.js被链接了 st_nlink=13 次
 
@@ -67,12 +72,19 @@ get:
 
     # pnpm
     $ pnpm store path
-
-    #docker 中默认：/root/.local/share/pnpm/store/v3
+        # docker 中默认：/root/.local/share/pnpm/store/v3
+        # mac: ~/Library/pnpm/store/v3
+    # 或(可能为空)
+    $ pnpm config get store-dir
 
 set
 
     echo 'store-dir='$HOME/Library/pnpm/store >> /usr/local/etc/npmrc
+    pnpm config set store-dir ~/pnpm
+
+delete:
+
+    pnpm config delete store-dir
 
 ### clean cache
     pnpm store prune

@@ -46,3 +46,27 @@ demo: https://codesandbox.io/s/ji-ben-shi-yong-antd-4-22-5-forked-qk5yhj?file=/d
       );
     };
 
+# ProForm
+手动添加form item 项
+
+    import { ProFormText, ProFormDatePicker, ProForm } from '@ant-design/pro-components';
+    const onFinish = async (data: Params) => {
+        await tosApi.addDef(data);
+        message.success('successful!');
+        history.back();
+    };
+
+    <ProForm<Params>
+        request={async () => {
+            const response = await getApi();
+            return response;
+          }}
+          onFinish={onFinish}
+    >
+         <Col {...colSpan} md={12}>
+              <ProForm.Item shouldUpdate noStyle>
+                {(form) => (
+                    <CustomInput label={form.getFieldValue('label')} />
+                )}
+              </ProForm.Item>
+        </Col>

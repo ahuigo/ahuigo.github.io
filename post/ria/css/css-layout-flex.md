@@ -182,7 +182,13 @@ http://zh.learnlayout.com/flexbox.html
     //parent
 	display:flex;
 	align-items: center;
+	justify-items: center;
+
+	align-content: center;
 	justify-content: center;
+
+    flex-wrap: wrap; /*align-items 失效*/
+
 
 简化为：place-center
 

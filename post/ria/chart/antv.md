@@ -6,11 +6,13 @@ private: true
 # antv
 antv家族: Ant Design Charts
 
+@ant-design/plots 包含了以下所有的图
+
 ## 常规数据
-G2: 基础图表库. 
-1. BizCharts: React 版 G2
-2. G2plot：开箱即用、易于配置、极致体验的通用图表库。
-S2: 基于canvas的table
+1. G2: 基础图表库. 
+    1. BizCharts: React 版 G2
+    2. G2plot：开箱即用、易于配置、极致体验的通用图表库。
+2. S2: 基于canvas的table
 
 ## 关系数据
 G6: 树、图(流程图, Grid网络图)

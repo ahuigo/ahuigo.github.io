@@ -12,6 +12,16 @@ https://uiset.com/
 2. https://boltcss.com/
 3. button https://github.com/eludadev/css-buttons
 
+### web components
+- https://lit.dev/playground/
+lit:Simple.  Fast.  Web Components
+- https://github.com/luwes/sinuous
+Sinuous is a low-level UI library with a tiny footprint.
+- https://github.com/material-components/material-web
+https://codelabs.developers.google.com/codelabs/lit-2-for-react-devs?hl=zh-cn#0
+Material Design Web Components (based on lite)
+
+
 ### react ui
 Geist: 
 https://geist-ui.dev/en-us

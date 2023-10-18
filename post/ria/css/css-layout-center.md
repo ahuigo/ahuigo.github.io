@@ -80,9 +80,10 @@ demo 见[/html/gmodal.html]
 one: flex 
 
     display: flex
-    align-items: center; /*vertical*/
-    justify-content: center; /*horizontal*/
+    align-items: center; /*vertical 所有网络item*/
+    justify-items: center; /*horizontal 所有网格item项*/
 
+    justify-content: center; /*horizontal 所有网格行*/
     align-content: center; /*替代align-items, 合并多行*/
     flex-wrap: wrap; /*align-items 失效*/
 
