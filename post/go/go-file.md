@@ -178,10 +178,15 @@ Open access:
     n1, err := io.ReadFull(f, buf)
 
 
-### readFile
+### readAll
+
+    io.ReadAll(reader) // 只要实现了Read 方法的接口
+
+##### readFile
 
     "io/ioutil"
-    content, err := ioutil.ReadFile(filename)
+    content, err := ioutil.ReadFile(filename) // string only
+
 
 ### ReadAtLeast
 

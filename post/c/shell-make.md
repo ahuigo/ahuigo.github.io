@@ -86,9 +86,22 @@ make 变量与shell 变量语法不同, make的变量相当是宏展开
     LDFLAGS += -X "main.Version=$(shell git rev-parse HEAD)"
     GO := GO111MODULE=on go
 
+make变量数组, 变成shell 变量dir:
+
+    TEST_DIRS = dir1 dir2
+	for dir in $(TEST_DIRS); do \
+		echo '这里的dir是shell变量':$$dir;\
+	done;
+
 #### define multiple line
 多行字符串定义方法1：
 
+    X1="\
+    THIS IS A VERY LONG\
+    TEXT STRING IN A MAKE VARIABLE"
+
+    aaa:
+        echo $(X1)
 
 多行字符串定义方法2：
 
@@ -125,17 +138,20 @@ make 变量与shell 变量语法不同, make的变量相当是宏展开
     hash := $(shell printf '\043')
     file_list := $(shell find . -name "*.c")
 
-### 环境变量, shell 变量
+### 读取：make变量/环境变量(shell 变量)
 You can export individual variables with:
 
     # make 变量展出为shell 变量
     export MY_VAR = foo  # Available for all targets
     target:
-        # 这个被识别为shell 变量
-        echo $$MY_VAR
-
         # 这个被识别为make 变量，会被提前展开
         echo $(MY_VAR)
+
+        # 这个被识别为环境变量, 当make 变量不存在时
+        echo $(HOME)
+
+        # 这个被识别为env/shell 变量
+        echo $$MY_VAR
 
         # 这个被识别为shell
         echo $(shell date)
@@ -391,8 +407,20 @@ Example: clean 清除编译文件 这一target 不需要条件。
 # 控制语法
 
 ## error exit
+执行多句的话， 退出方法有许多种，默认是有set -e (refer: c/shell-env-set.md)
 
-refer: c/shell-env-set.md
+    test:  
+        cmd1
+        cmd2    #如果有error会退出
+        exit 1  #或者直接退出
+        cmd3
+
+如果发生错误想继续执行，就手动加set -e, 且将多条语句合成一条
+
+    test:  
+        set +e;\
+        cmd1;\
+        cmd2; cmd3
 
 ## 判断
 

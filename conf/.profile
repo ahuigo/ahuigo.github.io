@@ -43,6 +43,7 @@ alias code.='code .'
 jc () {
         j ${1} && code .
 }
+alias cj=jc
 
 ##################### python ##########################################
 if [[ -z $INIT_PROFILE ]]; then

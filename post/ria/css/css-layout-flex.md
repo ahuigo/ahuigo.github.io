@@ -177,15 +177,18 @@ right div 可能会超出父div 的width, 此时`flex-shrink:1` 会失效，应�
 # flex 居中实践
 ## flex center
 http://zh.learnlayout.com/flexbox.html
-控制父容器中item的位置
+控制父容器中item的位置: https://segmentfault.com/q/1010000042615748
 
     //parent
 	display:flex;
-	align-items: center;
-	justify-items: center;
+	align-content: center;  /*控制子元素整体*/
+	justify-content: center; 
 
-	align-content: center;
-	justify-content: center;
+	align-items: center;    /*每个item对齐*/
+	justify-items: center;  
+
+    align-self: center;     /*控制items 整体*/
+    justify-self: center;
 
     flex-wrap: wrap; /*align-items 失效*/
 
@@ -257,15 +260,61 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
 [对齐弹性容器中的弹性项目](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container#%E8%BD%B4%E5%AF%B9%E9%BD%90%E5%86%85%E5%AE%B9%E2%80%94%E2%80%94_align-content%E5%B1%9E%E6%80%A7)
 
 ## flex 被子div 放大
+### inline-flex 让container 承子元素child放大
 
     .container{
         flex: 1 1;
-        display: flex;
+        display: inline-flex;
         flex-direction: column;
     }
     <div class='container'>
         <div></div>
     </div>
+
+如果不生效，检查一下parent的
+Priority: `min-width`>`max-width`>`flex-basis(not content)`>`width`>`flex-basis:max-content`
+
+#### flex-shrink:0 影响放大
+```html
+<div class="parent" style="
+    flex-wrap: nowrap;
+    display: inline-flex;
+    border: 1px solid;
+ ">
+    <div class="child1" style="flex: 0 0 80px;">child1</div>
+    <div class="child2" style="
+        width: 40px;
+        height: 22px;
+        background: #1677ff;
+    ">child2</div>
+</div>
+```
+There is an inline-flex parent example: 
+1. Parent has two child, and this parent's display is inline-block.
+2. Child1's width is 80px, and child2's width is 40px.
+3. Parent's width is 80px(why not 120px?)
+
+原因: 这是一个browser bug.
+> flex items using `flex-basis` and `white-space: nowrap` overflow `inline-flex` container. but `width` works.(https://stackoverflow.com/questions/34352140/what-are-the-differences-between-flex-basis-and-width)
+
+修正方法：
+- method1: just remove `flex: 0 0 80px` and add `width: 80px` to child1. 
+- method2: Add `min-width: 80px` to child1: 
+
+### 容器大小跟随子元素变化 方法2：fit-content
+
+    <pre>
+        .container {
+            display: flex;
+            min-width: fit-content;
+            max-width: fit-content;
+          }
+          
+          .child {
+            /* other styles */
+          }
+    </pre>
+
 
 
 ## flex vs height percent

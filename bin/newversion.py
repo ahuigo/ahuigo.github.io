@@ -30,8 +30,12 @@ def upgradePlainFile(versionFile):
     if len(sys.argv)==3:
         v = sys.argv[2]
     else:
-        version = open(versionFile).read().strip()
-        v = re.sub(r'(?<=\.)(-)?\d+$',incrNum, version)
+        try:
+            version = open(versionFile).read().strip()
+            v = re.sub(r'(?<=\.)(-)?\d+$',incrNum, version)
+        except FileNotFoundError:
+            # 如果文件不存在，则写入默认版本号
+            v = "v0.0.1"
 
     newversion = v
     open(versionFile,'w').write(v)

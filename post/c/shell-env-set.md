@@ -68,7 +68,6 @@ exit when any command fails
     set +e; cmd123; echo "will run"
 
 ### pipefail
-
 Refer to:
 https://unix.stackexchange.com/questions/14270/get-exit-status-of-process-thats-piped-to-another
 

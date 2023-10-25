@@ -104,6 +104,23 @@ Find original owning process of a Linux socket
 		selects  the  listing  of  files any of whose Internet address matches the address specified in i.
 		46	ipv4 or ipv6
 
+显示所有tcp:
+
+    $ sudo lsof -iTCP -sTCP:ESTABLISHED,LISTEN -n -P
+    COMMAND     PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+    postgres    530 ahui    8u  IPv4 0x803b407c764b7f2b      0t0  TCP 127.0.0.1:5432 (LISTEN)
+    参数：
+        -iTCP：选择列出所有 TCP 网络文件。
+        -sTCP:ESTABLISHED,LISTEN。选择TCP状态 ESTABLISHED 和 LISTEN 状态的 TCP 连接。
+        -n：阻止尝试将网络编号转换为名称。
+        -P：阻止尝试将端口号转换为名称。
+    输出：
+        SIZE/OFF 代表常规文件的偏移，对于网络socket无意义。
+        NODE    文件inode 或 TCP/UDP
+        NAME    文件或socket链接
+
+
+
 example
 
 	lsof -i :portNumber
@@ -152,7 +169,7 @@ find all listen port
 	$lsof +d mydir1/
 
 # 系统相关
-## /proc(procfs File System)
+## /proc(procfs File System, linux only)
 /proc (or procfs) is a pseudo-file system that it is dynamically generated after each reboot. It is used to access kernel information.
 
     /proc/PID/cmdline : process arguments
@@ -165,10 +182,25 @@ find all listen port
 
 ## List File Descriptors in Kernel Memory
 
+    # linux
     $ sysctl fs.file-nr
     fs.file-nr = 1020	0	70000
+        第一个值（1020）：当前系统已分配（已打开）的文件描述符数量。
+        第二个值（0）：系统中当前在使用但还未关闭（也就是“孤立”了）的文件描述符数量。这种情况可能发生在文件被删除或文件系统被卸载，但相关进程尚未关闭对应文件描述符的情况下。
+        第三个值（70000）：系统配置的最大文件描述符数量。
     # or
     $ cat /proc/sys/fs/file-nr
+
+    # mac
+    $ sysctl kern.num_files
+    kern.num_files: 8927 (当前打开的文件描述符)
+    $ launchctl limit maxfiles (每个进程所允许的最大打开文件数量的限制)
+    maxfiles    256            unlimited
+        256: （soft limit），指单个用户或进程在没有特殊权限的情况下能够打开的最大文件数。
+        unlimited（hard limit），表示系统级别的最大值，即系统允许一个进程最多可以打开的文件数量。
+        soft limit 用户可以修改; 而hard limit 只能sudo/root 才可以修改
+
+
 
 Where:
 

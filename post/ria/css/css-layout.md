@@ -66,7 +66,7 @@ https://css-tricks.com/almanac/properties/t/table-layout/
 
 ### border
     table{
-        border-collapse: collapse
+        border-collapse: collapse; /*合并边框*/
     }
 
 ### row

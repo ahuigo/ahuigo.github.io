@@ -4,7 +4,7 @@ date: 2023-02-23
 private: 
 ---
 # go 本地模块支持
-参考go-pkg-tidy.md 我们引用本地包可以这样
+参考go-pkg-tidy-version.md 我们引用本地包可以这样
 
     require (
         github.com/ahuigo/requests v0.0.0
@@ -15,6 +15,8 @@ private:
 
 这种方式replace依赖本地文件系统的路径。不是太通用。此时可以用go1.18的workspace
 # workspace
+workspace提供了 replace 简化的、集中管理的方法
+
 ## 多目录管理
 假设我们目录结构, proj1, proj2 都依赖requests, fx两个module
 
@@ -35,7 +37,7 @@ private:
         ./fx
     )
 
-也可添加
+也可通过cli 添加
 
     go work use ./fx
     go work use requests
@@ -61,13 +63,3 @@ private:
         ../fx
         ./requests
     )
-
-## pkg/v2
-比如 github.com/ahuigo/requests/v2 的这个包的根目录文件中存在
-
-    // proj/response.go
-    package requests
-
-我们不能改写成 package v2, 但是我们可以设定工作区
-
-    requests $ go work init .

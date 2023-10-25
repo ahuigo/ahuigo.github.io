@@ -310,7 +310,28 @@ go.mod 中增加了对应的 require:
     require github.com/sirupsen/logrus v1.2.0 // indirect
 
 
-### go get 升级
+### go get 安装依赖
+    go get -u 则主要升级依赖
+    go mod tidy 
+        不升级依赖 + 整理go.mod（自动下载缺失的包, 不用的包移除go.mod）
+    go get 
+        不升级依赖包，只下载依赖包到缓存，且安装到$GOPATH
+    go mod download 
+        只下载依赖包到缓存，不安装到$GOPATH
+
+#### go get -u升级现有依赖
+
+    go get -u 
+        只更新主要模块，忽略单元测试
+    go get -u ./... 
+        递归更新子目录模块，忽略单元测试
+    go get -u -t
+        只更新主要模块，包括单元测试
+    go get -u -t ./...
+        递归更新子目录模块，+单元测试
+    go get -u all
+        所有
+
 `go get -u github.com/some/pkg` 更新次版本号，由于主版本号的不兼容，所以不会更新主版本号。还有其它命令:
 
     go get -u=patch 更新修订号

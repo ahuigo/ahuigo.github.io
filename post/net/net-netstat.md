@@ -31,6 +31,7 @@ ss：套接口统计数据(-n 以端口号统计)
 # netstat
 > http://billie66.github.io/TLCL/book/zh/chap17.html
 
+## tcp vs unix domain sockets
 netstat的输出结果可以分为两个部分：
 
 1. 一个是Active Internet connections，称为有源TCP连接，其中"Recv-Q"和"Send-Q"指%0A的是接收队列和发送队列。这些数字一般都应该是0。如果不是则表示软件包正在队列中堆积。这种情况只能在非常少的情况见到。
@@ -41,6 +42,24 @@ netstat的输出结果可以分为两个部分：
 	1. Types显示套接口的类型,
 	1. State显示套接口当前的状态,
 	1. Path表示连接到套接口的其它进程使用的路径名。
+
+## linux vs mac (netstat)
+mac的限制比较多：
+> mac 的netstat 不是显示pid/cmd
+> mac 下推荐用lsof 代替netstat: 不过lsof 不能的显示recv-Q/send-Q
+
+mac netstat 一些选项:
+1. 进程：linux 使用 -p 选项来显示进程 ID 和进程名。 
+2. 统计： mac -i 选项来显示网络接口的统计信息。
+3. tcpv6: acOS 中netstat默认只显示 IPv4 的连接信息，如果你想要显示 IPv6 的连接信息，你需要使用 -f inet6 选项。
+
+mac lsof 代替netstat:
+
+    sudo lsof -iTCP -sTCP:ESTABLISHED,LISTEN -n -P
+        -iTCP：选择列出所有 TCP 网络文件。
+        -sTCP:ESTABLISHED,LISTEN：显示 ESTABLISHED 和 LISTEN 状态的 TCP 连接。
+        -n：阻止尝试将网络编号转换为名称。
+        -P：阻止尝试将端口号转换为名称。
 
 ## format
 

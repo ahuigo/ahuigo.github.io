@@ -30,14 +30,6 @@ go run 与 go build 都可以编译源码，只是go build 可生成二进制文
     $ go build 包
         包名是相对于 src 目录开始算，go build -o main directory/go-project
 
-### packr
-也可以用`packr build` 替换`go build` 将静态文件编译时二进制。注意：go build 不会编译进静态文件：
-
-    $ go get -u github.com/gobuffalo/packr/packr
-    $ packr build -o /bin/hello ./hello.go
-
-> 建议用官方自带的embed
-
 # build option
 
 ## GOOS and GOARCH
