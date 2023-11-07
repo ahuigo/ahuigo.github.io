@@ -178,6 +178,35 @@ The vertical-align 只用于 `inline/inline-block`+`table-cell`.
         <img style="vertical-align:top">
     </div>
 
+# right align
+
+## via float:right
+    <div class="title">
+        <span>Cumulative performance</span>
+        <span style="float:right">20/02/2011</span>
+    </div>
+
+不过容易被挤出来
+
+## 左侧利用flex-1
+    <div class="title">
+        <span>Cumulative performance</span>
+        <span>20/02/2011</span>
+    </div>
+
+    .title {
+        display: flex;
+    }
+
+    span:first-of-type {
+        flex: 1;
+    }
+
+## via justify-content: space-between;
+    .title{
+        display: flex;
+        justify-content: space-between;
+    }
 # other ui
 ## button center
 button 自带`text-align:center`, `lineHeight:100%`

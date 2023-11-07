@@ -12,31 +12,36 @@ private: true
     # or: brew install openresty 
     brew install openresty/brew/openresty-debug
 
-start:
+## start:
 
+    # mac
     brew services start openresty/brew/openresty
     brew services start openresty/brew/openresty-debug
 
     # start with conf
     openresty -c ./nginx.conf
 
-stop:
-
-    brew services info openresty/brew/openresty
-    brew services stop openresty/brew/openresty
-    brew services restart openresty/brew/openresty
-
-conf:
-
-    openresty -h 
-    -c filename   : set configuration file (default: /opt/homebrew/etc/openresty/nginx.conf)
-
-## mac boot
+### mac boot
 
     brew services
     $ cat ~/Library/LaunchAgents/homebrew.mxcl.openresty-debug.plist
     /opt/homebrew/opt/openresty-debug/bin/openresty -g 'daemon off;'
     /opt/homebrew/opt/openresty-debug/bin/openresty -h
+
+
+## stop:
+
+    brew services info openresty/brew/openresty
+    brew services stop openresty/brew/openresty
+    brew services restart openresty/brew/openresty
+
+## restart
+linux:
+
+## conf:
+
+    openresty -h 
+    -c filename   : set configuration file (default: /opt/homebrew/etc/openresty/nginx.conf)
 
 # 源码安装
 

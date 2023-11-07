@@ -57,6 +57,7 @@ A named type may be:
 
 Other value types are called unnamed types:
 1. An unnamed type must be: **a composite type** (Struct, Map, Pointer...)
+2. **a composite type** may not be unamed type
 
 不过，复合类型未必是unamed type. 比如:
 

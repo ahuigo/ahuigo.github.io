@@ -47,3 +47,13 @@ Otherwise, a fulfilled promise would not fail the test.
         fetchData().catch(e => expect(e).toMatch('error'));
         fetchData().catch(e => expect(e).toMatch('error'));
     },10);
+
+
+# jest with vscode
+vscode 要安装jest 插件。
+
+写完test case 后，jest 插件会提示可以点`click to run tests`的按钮。
+
+如点击 run tests, 会执行：
+
+    cross-env TS_NODE_TRANSPILE_ONLY=yes jest --env=node --passWithNoTests --testLocationInResults --json --useStderr --outputFile /var/folders/w6/gn/T/jest_runner_pmui_501_2.json --testNamePattern test config factory --no-coverage --reporters default --reporters /Users/ahui/.vscode/extensions/orta.vscode-jest-5.2.3/out/reporter.js --colors --watchAll=false --testPathPattern /home/user123/jsproj/src/conf/factory\.test\.ts

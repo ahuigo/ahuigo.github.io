@@ -98,8 +98,10 @@ Key chains:
 
 
 ### enable ssl parse
-Click:
+Click menu:
+
     Proxy -> SSL Proxying Setting ->
+        # 如果不配置，就不会解析包
         select: enable SSL Proxing
         add:    *.443 or domain:443
 

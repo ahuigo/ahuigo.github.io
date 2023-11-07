@@ -77,10 +77,11 @@ go get 用于下载单个包和版本
     go env | grep MOD
     GO111MODULE="on"
     GOMOD="/Users/ahui/www/go.mod"
-### 指定包版本
+
+### 指定下载包版本
     go get go.uber.org/fx@v1
 
-### indirect dependency引入(transitive dependency, grandson package)
+### 强制版本：indirect dependency引入(transitive dependency, grandson package)
 > https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
 项目中依赖A, A依赖A1、A1依赖A2@v1.0.0, 则A2是间接引入. 
 
@@ -311,7 +312,8 @@ go.mod 中增加了对应的 require:
 
 
 ### go get 安装依赖
-    go get -u 则主要升级依赖
+    go get -u 
+        升级主要的依赖包，子目录、测试文件的包不升级
     go mod tidy 
         不升级依赖 + 整理go.mod（自动下载缺失的包, 不用的包移除go.mod）
     go get 
@@ -330,7 +332,7 @@ go.mod 中增加了对应的 require:
     go get -u -t ./...
         递归更新子目录模块，+单元测试
     go get -u all
-        所有
+        升级所有包
 
 `go get -u github.com/some/pkg` 更新次版本号，由于主版本号的不兼容，所以不会更新主版本号。还有其它命令:
 
