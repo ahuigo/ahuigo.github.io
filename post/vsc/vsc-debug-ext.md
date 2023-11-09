@@ -41,4 +41,4 @@ When the Java extension fails to start, the first thing to look at is the VS Cod
 
 # cpu/mem 占用
 ## 进程占用process explorer
-vscode　输入命令`> Open Process Explorer`可查看进程占用
+vscode 按`Cmd+p`,　输入命令`> Open Process Explorer`可查看main+plugin进程占用

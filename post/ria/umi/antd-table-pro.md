@@ -87,6 +87,11 @@ return <ProTable<DataItem, Params>
 ```
 
 ## form initialValues
+method1:
+
+    initialValue={}
+
+method2:
 
     form={{
         syncToUrl: (values, type) => {
@@ -95,6 +100,36 @@ return <ProTable<DataItem, Params>
             }
         }
     }}
+
+## custom form
+column:
+
+    title: '动态表单',
+    key: 'direction',
+    hideInTable: true,
+    dataIndex: 'direction',
+    renderFormItem: (
+      _,
+      { type, defaultRender, formItemProps, fieldProps, ...rest },
+      form,
+    ) => {
+      if (type === 'form') {
+        return null;
+      }
+      const status = form.getFieldValue('state');
+      if (status !== 'open') {
+        return (
+          // value 和 onchange 会通过 form 自动注入。
+          <Input
+            // 组件的配置
+            {...fieldProps}
+            // 自定义配置
+            placeholder="请输入test"
+          />
+        );
+      }
+      return defaultRender(_);
+    };
 
 ## request mock data
     request={async () => ({
@@ -107,3 +142,46 @@ return <ProTable<DataItem, Params>
           ],
         })}
 
+## syncToUrl
+    <ProTable
+      form={{ syncToUrl: true, }}
+
+# Toolbar 
+
+## Toolbar 自定义
+
+    <ProTable<TableListItem>
+      columns={columns}
+      toolbar={{
+        filter: (
+          <LightFilter>
+            <ProFormDatePicker name="startdate" label="响应日期" />
+          </LightFilter>
+        ),
+        menu: {
+          type: 'tab',
+          activeKey: activeKey,
+          items: [
+            {
+              key: 'tab1',
+              label: <span>应用{renderBadge(99, activeKey === 'tab1')}</span>,
+            },
+            {
+              key: 'tab2',
+              label: <span>项目{renderBadge(30, activeKey === 'tab2')}</span>,
+            },
+            {
+              key: 'tab3',
+              label: <span>文章{renderBadge(30, activeKey === 'tab3')}</span>,
+            },
+          ],
+          onChange: (key) => {
+            setActiveKey(key as string);
+          },
+        },
+        actions: [
+          <Button key="primary" type="primary">
+            新建应用
+          </Button>,
+        ],
+      }}

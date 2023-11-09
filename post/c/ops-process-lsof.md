@@ -111,6 +111,8 @@ Find original owning process of a Linux socket
     postgres    530 ahui    8u  IPv4 0x803b407c764b7f2b      0t0  TCP 127.0.0.1:5432 (LISTEN)
     参数：
         -iTCP：选择列出所有 TCP 网络文件。
+            -iTCP:$PORT 选择端口
+            -i:80 只选择端口
         -sTCP:ESTABLISHED,LISTEN。选择TCP状态 ESTABLISHED 和 LISTEN 状态的 TCP 连接。
         -n：阻止尝试将网络编号转换为名称。
         -P：阻止尝试将端口号转换为名称。

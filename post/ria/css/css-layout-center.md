@@ -77,14 +77,14 @@ demo 见[/html/gmodal.html]
 
 ## flex center(内部内容居中)
 ### flex container: item center
-one: flex 
+one: flex, justify 是主轴方向. `justify-items(justify-self)`/`align-self` 仅用于grid
 
     display: flex
-    align-items: center; /*vertical 所有网络item*/
-    justify-items: center; /*horizontal 所有网格item项*/
+    justify-items: center; /*horizontal 所有网格item项(其实就是批量的justify-self), 仅能用于grid*/
+    justify-content: center; /*horizontal 所有网格行(整体)*/
 
-    justify-content: center; /*horizontal 所有网格行*/
-    align-content: center; /*替代align-items, 合并多行*/
+    align-items: center; /*vertical居中，仅限flex-nowrap, 所有网格item项(单个)*/
+    align-content: center; /*垂直居中，仅限flex-wrap, 会合并多行(整体)*/
     flex-wrap: wrap; /*align-items 失效*/
 
 居中:
