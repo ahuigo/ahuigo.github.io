@@ -38,6 +38,7 @@ private: true
 https://www.zhihu.com/question/19895400
 
 ### wrap
+https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
 
     # text-wrap: wrap; # 字符极别的wrap，主流浏览器不支持
     word-wrap:
@@ -53,8 +54,18 @@ https://www.zhihu.com/question/19895400
     	//回车换行
     	pre;	不合空格| 回车换行 | 长句不拆行(会导致超出边界)
     	pre-wrap;不合空格| 回车换行 | 长句要拆行(长空白不拆行)
-            break-spaces;不合空格| 回车换行 | 长句\长空白全要拆行
+            break-spaces;不合空格| 回车换行 | 长句\长空白全要拆行!!!
     	pre-line;合并空格| 回车换行 | 长句要拆行(最紧凑)
+    overflow-wrap: break-word;
+        hyphens: manual;
+
+万能的方法：
+
+    white-space: pre-wrap; /* CSS3 whitespace-pre-wrap in tailwindcss */    
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */    
+    white-space: -o-pre-wrap; /* Opera 7 */    
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
 
 示例:
 https://stackoverflow.com/questions/64699828/css-property-white-space-example-for-break-spaces
