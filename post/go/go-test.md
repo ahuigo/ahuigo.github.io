@@ -165,6 +165,14 @@ In package list mode ，successful package test result will be cached and reused
     # 不会包含*_test.go
     go run  ./cmd/samples/recipes/helloworld/
 
+## test cover
+    test:
+        go test -coverprofile cover.out -covermode=atomic -failfast ./...
+        go test -coverprofile cover.out -coverpkg ".,./examples" -failfast ./...
+        go test -coverprofile cover.out -coverpkg "./..." -failfast ./...
+    cover: test
+        go tool cover -html=cover.out
+
 ## unit test 介绍
 
 github.com/ahuigo/go-lib/gotest
@@ -246,6 +254,13 @@ Note: Error/Fatal 都会导致bench 不被执行
 	dir := t.TempDir() // string
 
 
+# race test
+    race: 
+        go test -race -failfast ./...
+
+ignore test flag:
+
+    //go:build !race
 # bench test
 
 ## bench test rule

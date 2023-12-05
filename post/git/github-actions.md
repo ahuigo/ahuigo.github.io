@@ -28,12 +28,36 @@ private: true
         paths-ignore:
           - README.md
 
-# jobs
-## steps
-### use other step rule
+    jobs:
+        task1:
+            ...
+        task2:
+            ...
 
-    docker:
-      #uses: ./docker.yml
-      uses: ahuigo/arun/.github/workflows/docker.yml@master
-      with: 
-        run_on: ubuntu-latest
+# jobs.task.steps
+## task
+### strategy
+这是task局部的配置变量
+
+    jobs:
+      test:
+        runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            redis-version: [6, 7]
+        steps:
+        - uses: actions/checkout@v2
+        - name: Start Redis
+          uses: supercharge/redis-github-action@1.7.0
+          with:
+            redis-version: ${{ matrix.redis-version }}
+        ....
+### steps
+#### use other step rule
+
+    jobs:
+      job-docker:
+          #uses: ./docker.yml
+          uses: ahuigo/arun/.github/workflows/docker.yml@master
+          with: 
+            run_on: ubuntu-latest

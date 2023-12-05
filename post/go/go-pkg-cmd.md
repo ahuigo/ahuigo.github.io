@@ -62,6 +62,10 @@ go fmt 命令主要是用来帮你格式化所写好的代码文件。
 
 使用go fmt命令，更多时候是用gofmt，而且需要参数-w，否则格式化结果不会写入文件。gofmt -w src，可以格式化整个项目。
 
+    gofmt -w .
+    # -s `[]T{T{}, T{}}` will be simplified to: `[]T{{}, {}}`
+    gofmt -s -w .
+
 ## go get vs go install
 go 1.16起：
 
