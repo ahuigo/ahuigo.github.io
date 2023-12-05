@@ -51,6 +51,7 @@ filter key and value "children"
     </Select>
 
 # show search
+## filter local
     <Select
         showSearch
         onSearch={handleSelectStatus}
@@ -83,3 +84,12 @@ filter key and value "children"
             }
           }}
         >
+
+## filter with api
+
+    filterOption={false} // 必须关，否则下拉列表会显示自搜索结果
+    onSearch={(search)=>{
+        getList(search).then(res=>{
+            setOptions(res)
+        })
+    }}

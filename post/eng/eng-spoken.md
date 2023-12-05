@@ -6,12 +6,10 @@ description:
 date: 2018-09-27
 ---
 # Preface
-
-Prime Linking:
-	this is Alex
-
-Geminates:
-	Oh hey, what's up man?
+## modern family
+【重磅回归】沉浸式英语学习-看美剧学英语-Modern Family 摩登家
+https://space.bilibili.com/2018739039/channel/collectiondetail?sid=165232
+https://www.bella-languages.com/tag/modern-family-mo-deng-jia-ting/page/2/
 
 # insertion
 Okey, See you in an hour.

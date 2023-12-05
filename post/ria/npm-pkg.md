@@ -110,6 +110,7 @@ peer 包（被大量包依赖的，如React）。对当前库打包时，不会�
 npm bin
 
     npm -g bin
+        echo $(npm -g get prefix)/bin
     npm -g get prefix
     `npm -g get prefix`/lib/node_modules
 

@@ -4,6 +4,8 @@ date: 2022-07-06
 private: true
 ---
 # deno lint
+> https://docs.deno.com/runtime/manual/tools/linter
+
 ## lint command
 Deno ships with a built-in code linter for JavaScript and TypeScript.
 
@@ -17,6 +19,7 @@ Deno ships with a built-in code linter for JavaScript and TypeScript.
     deno lint --json
     # read from stdin
     cat file.ts | deno lint -
+    # deno lint --config=...
 
 For more detail, run deno lint --help.
 
@@ -36,7 +39,7 @@ You can also ignore certain diagnostics in the whole file
         // ...
     }
 
-### Diagnostics
+### ignore line
 To ignore certain diagnostic `// deno-lint-ignore <codes...>` directive should be placed before offending line. 
 
     // deno-lint-ignore no-explicit-any
@@ -50,7 +53,7 @@ or
     // @ts-ignore-next
     window.APP_ENV = 'development';
 
-### ignore typescript
+### ignore typescript(deno not support it)
 ignore typescript check
 
     // @ts-ignore trust me
@@ -70,7 +73,7 @@ ignore typescript check
         },
         "rules": {
           "tags": ["recommended"],
-          "include": ["ban-untagged-todo"],
-          "exclude": ["no-unused-vars"]
+          "include": ["ban-untagged-todo","no-unused-vars"],
+          "exclude": ["no-explicit-any"]
         }
       },

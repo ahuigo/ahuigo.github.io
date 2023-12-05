@@ -134,6 +134,11 @@ Increment/decrement digit:
     <C-x>
 
 # replace
+## v/V块替换
+ctrl+V 块替换, V 块替换 v 块替换
+1. 选按`Ctrl+V`/`V`/`v` 块选择
+2. 输入`:'<,'>s#\%Vword#WORD#g` 不是`:'<,'>s#word#WORD#g`
+
 ## dos unix format
     :e ++ff=dos
     :e ff=dos

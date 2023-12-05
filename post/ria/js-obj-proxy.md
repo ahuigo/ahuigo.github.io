@@ -102,7 +102,6 @@ Note: Proxy apply 可重新定义function自己, 仅代理function`instanceof Fu
     })
     fn.call({x:'this'},1,2,3)
 
-
 ## constructor
 This example uses the construct and apply handlers.
 

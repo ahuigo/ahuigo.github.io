@@ -11,6 +11,11 @@ private: true
     }
 
 # children
+## tailwind >=3.1
+
+    <div class="[&>*]:p-4">...</div>
+    <div class="[&>p]:mt-0 ">...</div>
+
 ## via plugin
 in tailwind.config.js, demo: https://play.tailwindcss.com/h7eDGStsE9?file=config
 
@@ -20,6 +25,8 @@ in tailwind.config.js, demo: https://play.tailwindcss.com/h7eDGStsE9?file=config
             addVariant('child-hover', '& > *:hover');
         }
     ],
+
+then use:
 
     children:p-4 children:text-white 
     child-hover:text-blue-500
@@ -31,8 +38,3 @@ in tailwind.config.js, demo: https://play.tailwindcss.com/h7eDGStsE9?file=config
     .odd:children:bg-gray-100 > *:nth-child(odd) {
         background-color: rgb(243 244 246);
     }
-
-## tailwind >=3.1
-
-    <div class="[&>*]:p-4">...</div>
-    <div class="[&>p]:mt-0 ">...</div>

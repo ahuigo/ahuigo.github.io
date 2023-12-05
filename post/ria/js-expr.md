@@ -131,6 +131,8 @@ or 优先级更高(不要写这种)
     // Expected output: 25
 
 ## Optional chaining (?.)
+Optional Chaining Operator
+
     const adventurer = { };
 
     const dogName = adventurer.dog?.name;

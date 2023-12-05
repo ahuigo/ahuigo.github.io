@@ -193,7 +193,7 @@ npm install 下载scoped 包时，就会去关联到的私有库下载
 
     $ npm token list
 
-## publish
+## publish config
 
 ### include publish files
 
@@ -238,6 +238,9 @@ scope 是包的命名空间：比如 `@babel/core` 在安装后，会被放在`n
 scoped 包默认发布是私有的，你如果没有权限上面的publish 不会成功。我们可以改成
 
     npm publish --access=public
+## publish command
+    # 发布ts前有一个make build 生成 lib/*
+    npm publish --registry https://my.com/artifactory/api/npm/npm-repo1/
 
 # 安装包
 
@@ -250,3 +253,7 @@ scoped 包默认发布是私有的，你如果没有权限上面的publish 不�
 
     npm install webpack@beta
     npm install webpack/webpack#<tagname/branchname>
+
+### with @scope
+
+    @my:registry=https://npm.my.com

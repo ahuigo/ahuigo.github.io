@@ -80,10 +80,10 @@ demo 见[/html/gmodal.html]
 one: flex, justify 是主轴方向. `justify-items(justify-self)`/`align-self` 仅用于grid
 
     display: flex
-    justify-items: center; /*horizontal 所有网格item项(其实就是批量的justify-self), 仅能用于grid*/
-    justify-content: center; /*horizontal 所有网格行(整体)*/
+    justify-items: center; /*主轴：horizontal 所有网格item项(其实就是批量的justify-self), 仅能用于grid*/
+    justify-content: center; /*主轴：horizontal 所有网格行(整体)*/
 
-    align-items: center; /*vertical居中，仅限flex-nowrap, 所有网格item项(单个)*/
+    align-items: center; /*副轴：vertical居中，仅限flex-nowrap, 所有网格item项(单个)*/
     align-content: center; /*垂直居中，仅限flex-wrap, 会合并多行(整体)*/
     flex-wrap: wrap; /*align-items 失效*/
 
