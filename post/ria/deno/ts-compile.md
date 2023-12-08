@@ -85,7 +85,7 @@ mime-types:
 ## lib 选项
 默认是
 
-    "compilerOptions": {
+    "compilerOptions": 
         "lib": ["deno.window"],
 
 Setting the "noLib" option to true
@@ -99,7 +99,7 @@ if you use the --unstable flag, Deno will change the "lib" option to
 The built-in libraries that are of interest to users:
 
     "deno.ns" - This includes all the custom Deno global namespace APIs (+import.meta). 
-    "deno.window" - This is the "default" library(includes the "deno.ns"
+    "deno.window" - This is the "default" library(includes the "deno.ns")
             This library will conflict with lib like "dom" and "dom.iterable" 
     "deno.unstable" - This includes the addition unstable Deno global namespace APIs.
     "deno.worker" - This is the library used when checking a Deno web worker script
@@ -130,6 +130,14 @@ Deno could works in both Deno and the browser:
         "target": "esnext",
         "lib": ["dom", "dom.iterable", "dom.asynciterable", "deno.ns"]
     }
+
+或者引入jsx也会包含dom:
+
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact"
+    }
+
 
 # Type resolution
 > refer: https://deno.land/manual@v1.25.2/typescript/types#using-ambient-or-global-types

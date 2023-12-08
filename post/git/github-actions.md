@@ -27,6 +27,10 @@ private: true
           - "*"
         paths-ignore:
           - README.md
+    
+      # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+      pull_request:
+        branches: [ main ]
 
     jobs:
         task1:

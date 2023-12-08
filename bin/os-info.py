@@ -9,6 +9,9 @@ def printJava():
 def printDeno():
     print(getoutput('deno --version'))
     print("deno extensions:", getoutput('code --show-versions --list-extensions |grep deno'))
+def printVscode():
+    print("vscode:", getoutput('code -v').replace('\n', ' '))
+    print("vscode extensions:\n", getoutput('code --list-extensions --show-versions'))
 
 def printNode(short=False):
     print("node:", getoutput('node -v')+' '+(getoutput('which node') if not short else ''))
@@ -53,7 +56,6 @@ def main():
     print("kernel:",getoutput('uname -r'))
     print("os:",getOs())
     print("cpu:",getCpu())
-    print("vscode:", getoutput('code -v').replace('\n', ' '))
     if 'deno' in sys.argv:
         printDeno()
     if 'node' in sys.argv:
@@ -62,5 +64,7 @@ def main():
         printJava()
     if 'cpu' in sys.argv:
         printCpuMem()
+    if 'vsc' in sys.argv:
+        printVscode()
 main()
     

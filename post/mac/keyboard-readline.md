@@ -4,21 +4,13 @@ date: 2020-05-08
 ---
 # 加快按键速度(mac osx )
 ## keyboard settings
+### key repeat 
+> https://support.apple.com/guide/mac-help/set-how-quickly-a-key-repeats-mchl0311bdb4/mac
 In `System Preferences`, enter `Keyboard`, click `Keyboard Tab`. 
 1. Drag the `Delay Until Repeat` to shortest
 1. Drag the `Key Repeat` to fastest
 
-Open terminal：
-```bash
-# mac osx 12 Moterey:
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-defaults read NSGlobalDomain ApplePressAndHoldEnabled 
-# mac osx 11: 
-defaults write -g ApplePressAndHoldEnabled -bool false
-defaults get -g ApplePressAndHoldEnabled
-```
-
-### key repeat 不生效
+You can also Open terminal：
 ```
 # mac osx 12 Moterey:
 defaults write NSGlobalDomain InitialKeyRepeat  10
@@ -31,6 +23,18 @@ defaults write -g InitialKeyRepeat -int 15
 defaults write -g KeyRepeat -int 2
 ```
 
+### key repeat 不生效
+mac14 可能默认了重音符
+https://support.apple.com/guide/mac-help/enter-characters-with-accent-marks-on-mac-mh27474/14.0/mac/14.0
+
+```bash
+# mac osx 12 Moterey:
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+defaults read NSGlobalDomain ApplePressAndHoldEnabled 
+# mac osx 11: 
+defaults write -g ApplePressAndHoldEnabled -bool false
+defaults get -g ApplePressAndHoldEnabled
+```
 ## Touchpad Mouse Setting
 Open Touchpad Setting:
 1. click `Point & Click` Tab

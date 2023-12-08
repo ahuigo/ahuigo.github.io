@@ -87,7 +87,6 @@ function lllllllllzrmv(){
 }
 
 ###################cicd #####################
-
 function devops() {
 	cwd_dir=$(pwd)
     repo=`current_repo` 
@@ -106,14 +105,6 @@ function goclean() {
     sudo rm -rf ~/go/pkg/mod/$1@*
     echo 'rm -rf ~/go/pkg/mod/cache/download/'$1
     rm -rf ~/go/pkg/mod/cache/download/"$1"
-}
-function devops2() {
-	cwd_dir=$(pwd)
-    repo=`current_repo` 
-    from=`current_branch` 
-    cd /Users/ahui/www/auto-devops/
-    tsc devops2.ts && node --inspect devops2.js repo=$repo from=$from $@
-    cd $cwd_dir
 }
 
 

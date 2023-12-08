@@ -261,6 +261,16 @@ Note: Error/Fatal 都会导致bench 不被执行
 ignore test flag:
 
     //go:build !race
+
+# coverage test
+
+	go test -race -coverprofile cover.out -coverpkg "./..." -failfast ./...
+	go test -race -coverprofile cover.out -coverpkg ".,./examples" -failfast ./...
+
+coverage 统计使用atomic 计数
+
+    go test covermode=atomic ./...
+
 # bench test
 
 ## bench test rule

@@ -27,6 +27,23 @@ jest 是最全面，0配置的测试框架
       expect(t).toThrow("UNKNOWN ERROR");
     });
 
+## 输出 console.log
+默认正常是不会输出console.log 的, error时才会输出
+
+method1：
+
+    npm run test -- --silent=false
+    npm test -- --silent=false
+
+method2:
+
+    $ vim ./jest.config.js
+    module.exports = {
+        //...
+        verbose: true,
+    };
+
+
 # Test async
 refer: https://jestjs.io/docs/asynchronous
 
@@ -57,3 +74,5 @@ vscode 要安装jest 插件。
 如点击 run tests, 会执行：
 
     cross-env TS_NODE_TRANSPILE_ONLY=yes jest --env=node --passWithNoTests --testLocationInResults --json --useStderr --outputFile /var/folders/w6/gn/T/jest_runner_pmui_501_2.json --testNamePattern test config factory --no-coverage --reporters default --reporters /Users/ahui/.vscode/extensions/orta.vscode-jest-5.2.3/out/reporter.js --colors --watchAll=false --testPathPattern /home/user123/jsproj/src/conf/factory\.test\.ts
+
+如有失败，可查看problems or `Test Results` or `Terminal`

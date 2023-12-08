@@ -244,6 +244,19 @@ scoped 包默认发布是私有的，你如果没有权限上面的publish 不�
 
 # 安装包
 
+### with @scope
+在~/.npmrc中加入
+
+    @my:registry=https://npm.my.com/xxx/
+
+或用命令加入
+
+   npm config set @my:registry https://npm.my.com/xxx/
+
+如果有密码的话：
+
+    npm login --registry=https://npm.my.com/xxx/ --scope=@my
+
 ## install npm
 
     npm install <PACKAGE_NAME>
@@ -253,7 +266,3 @@ scoped 包默认发布是私有的，你如果没有权限上面的publish 不�
 
     npm install webpack@beta
     npm install webpack/webpack#<tagname/branchname>
-
-### with @scope
-
-    @my:registry=https://npm.my.com

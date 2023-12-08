@@ -49,9 +49,13 @@ or:
     export ALL_PROXY=socks5://127.0.0.1:1080
 
 ### 替换及重置Homebrew默认源
+> brew 源：https://juejin.cn/post/7201517884131196965
+method 1:
 
     git -C "$(brew --repo)" remote set-url origin https://mirrors.ustc.edu.cn/brew.git
     git -C "$(brew --repo)/Library/Taps/homebrew/homebrew-core" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
+
+method 2:
 
     # 或
     git -C "$(brew --repo)" remote set-url origin https://mirrors.ustc.edu.cn/brew.git
@@ -59,7 +63,8 @@ or:
         git -C $(brew --repo homebrew/$tap) remote set-url origin https://mirrors.ustc.edu.cn/homebrew-${tap}.git
     done
 
-    # 或
+method 3(recommend)
+
     export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.ustc.edu.cn/brew.git"
     export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.ustc.edu.cn/homebrew-core.git"
     # 或用二进制预编译包的Bottles镜像

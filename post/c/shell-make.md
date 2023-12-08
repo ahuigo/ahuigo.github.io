@@ -535,6 +535,10 @@ patsubst 函数用于模式匹配的替换，格式如下。
     clean:
             rm *.o temp
 
+声明多个目标：
+
+    .PHONY: clean test start
+
 ## 隐含规则和模式规则
 
 默认情况下我们不需要为*.o 编写规则：

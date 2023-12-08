@@ -155,6 +155,7 @@ test 命令使用: setup.cfg （放在setup.py 同级根目录）指定测试命
     3. have the server generate a new password for you (and email it to you), or
     Your selection [default 1]:
 
+## .pypirc
 Once this is done, `~/.pypirc `(其中的user/password也用于`~/.pip/pip.conf`) file will store the login name and the password. 
 
     [distutils]

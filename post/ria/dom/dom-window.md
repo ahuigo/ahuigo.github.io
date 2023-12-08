@@ -48,28 +48,49 @@ device-width(jquery)
 
 ![dom-offset](/img/ria-dom-offset.gif)
 
-div 的长宽度:
+<div style="
+    padding: 10px;
+    background: red;
+    display: flex;
+    width: 100px;
+    height: 100px;
+    border: 10px solid;
+    margin: 10px;
+    box-sizing: content-box;/*默认content-box, */
+">1</div>
 
-    padding + border + width(clientHeight)
-    如果加 box-sizing: border-box; width 就相当于scrollWidth, 包括border+padding
+div 的自身宽度: 100px
 
-不含border, and margin.(clientWidth)
+    content-box: $0.style.height
+    box-box: $0.style.height - pad - border
 
-    document.body.clientWidth .clientHeight body本身的宽/高
+
+div 的自身宽度 + padding: clientHeight
+
+    $0.clientHeight: 120px
+    document.body.clientHeight .clientHeight body本身的宽/高
     ele.clientWidth, ele.clientHeight; //=padding+[ele.style.width, ele.style.height] (css的style必须指明:height:50px)
 
-含border: offsetWidth = clientWidth + (clientLeft + cleintRight(没有这个属性)).:
-clientLeft 就是 border-left
+div 的自身宽度 + padding + border(20px): offsetHeight
 
-    document.body.offsetWidth .offsetHeight; //padding+border
-    ele.offsetWidth, ele.offsetHeight; //padding+border
+   $0.offsetHeight： 100+20+20=140px
 
-含border + margin
+scrollHeight: 内部元素实际长度（包括了内部元素的margin）+滚动条长度
+
+    clientHeight 相对scrollHeight 不包含滚动条
+    如果不滚出，两者scrollHeight与clientHeight 相同
+
+body 的自身宽度 + padding + border + margin(外边距): 
 
     document.body.scrollWidth .scrollHeight
     960,11473	 11473 = 10742+731
     	body.scrollHeight(固定) >= document.body.scrollTop(变化) + window.innerHeight
     	body.scrollWidth(固定) >= document.body.scrollLeft(变化) + window.innerWidth
+
+clientLeft 就是 border-left
+
+    $0.clientLeft == widht of border-left
+
 
 #### 滚动偏移
 

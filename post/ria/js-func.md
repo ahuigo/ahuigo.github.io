@@ -160,7 +160,9 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
 
     buildDate({ more: 'hahah', year: 2017, month: 1, day: 1 });
 
-### 解构传值 ...rest array
+### 解构传值 ...rest array(variadic arguments)
+> 类似golang的variadic arguments `func(args ...*Stu)`
+
 unpack func args: rest 当参数不足时为`[]`
 
     function foo(a, b, ...rest) {
