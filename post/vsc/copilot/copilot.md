@@ -11,20 +11,19 @@ private: true
 
 # vsc copilot
 ## 快捷键 
-cmd+K cmd+s 
+vscode 为例(cmd+K cmd+s)
 
-    cmd+I 
-        generate copilot code
-    ctrl+cmd+I 
-        toggle copilot chat sidebar
-    shift+cmd+I
-        ask copilot chat
-    trigger auto completion
+    Tab             接受当前建议
+    Esc             取消当前行的建议
+    Alt + ]         展示下一个建议
+    Alt + [         展示上一条建议
+    Ctl + Shift + P  GitHub Copilot 指令命令选择
+    Cmd+I           generate copilot code
+    Ctrl+Cmd+I      toggle copilot chat sidebar
+    Shift+Cmd+I     ask copilot chat
+    Trigger auto completion
         Alt + \  触发当前行的建议(Trigger inline suggestion)
         Ctrl + Enter 打开GitHub Copilot建议面板
         ctrl+/  accept panel suggestion
-    Tab 接受当前建议
-    Esc 取消当前行的建议
-    Alt + ] 展示下一个建议
-    Alt + [ 展示上一条建议
-    Ctl + Shift + P  GitHub Copilot 指令命令选择
+
+另外，在copilot chat 中按 `Up/Down` 键，可以切换历史输入

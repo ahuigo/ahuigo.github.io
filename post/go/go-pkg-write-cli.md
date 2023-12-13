@@ -5,7 +5,6 @@ private: true
 ---
 # go pkg cli
 1. 只需要在module 目录下写: package main + main() 
-2. 在build 时生成file 同名的bin
 2. 在go install/get  时生成go.mod中module 同名的bin 并放到公共的path
 
 # go install

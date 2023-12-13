@@ -71,6 +71,9 @@ alias drmi='docker rmi $( docker images --filter "dangling=true" -q --no-trunc)'
 # brew
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 #export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+export HOMEBREW_NO_AUTO_UPDATE=1
+#export HOMEBREW_CASK_OPTS=/opt/homebrew-cask/Caskroom
+
 
 #git
 #sh ~/.git.bash
@@ -92,7 +95,7 @@ function devops() {
     repo=`current_repo` 
     from=`current_branch` 
     cd /Users/ahui/www/auto-devops/
-    tsc devops.ts && node --inspect devops.js repo=$repo from=$from $@
+    deno run -A devops.ts repo=$repo from=$from $@
     cd $cwd_dir
 }
 function goclean() {

@@ -22,7 +22,7 @@ cls1 后定义优先于cls2
     <a class="cls1 cls2">
     <a class="cls2 cls1">
 
-位置靠后优先级更高（跟加载顺序无关), app1.css比app2.css优先级高
+位置靠后优先级更高(跟加载顺序无关), app1.css比app2.css优先级高
 
     <body>
         <link href="/app2.css" rel="stylesheet" />

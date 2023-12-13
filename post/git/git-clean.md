@@ -3,7 +3,7 @@ title: git clean
 date: 2023-12-09
 private: true
 ---
-# git clean
+# clean untracked
 clean files
 
 	git clean " clean untracked files only
@@ -16,3 +16,11 @@ clean files
 If you want to also remove *directories*, run
 
 	git clean -f -d or git clean -fd
+
+# clean history
+/tool/gitclean.sh
+
+# git config files 
+/tool/gitfile
+# git sync branch
+/tool/git-sync

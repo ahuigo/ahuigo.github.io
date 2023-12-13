@@ -50,13 +50,16 @@ Open Accessibility Setting:
     2. Drag the `Scrolling Speed` to Fast
 
 # 使用mac osx 所支持的readline 快捷键
-可能很少有人知道mac 是支持全局readline快捷键, 它可以极大的提升编辑效率.
+> Readline cheat sheet: https://readline.kablamo.org/emacs.html
 
-mac osx 下，大部分app 支持常规的readline的。对不同的app 来说，支持程度不一样
-1. 对于terminate/iterm2来说，基本都支持。
+善用快捷键的人应该知道mac 是支持全局readline快捷键, 它可以极大的提升编辑效率.
+
+mac osx 下，大部分app 支持常规的readline的。不过，对第三方app 来说，支持程度不一样
+1. 对于terminate/iterm2来说，基本的readline 都支持(可以修改配置完整的支持)。
 1. 对于chrome/safari app来说， 不支持`ctrl+w/u`
+1. 对于vim 可以配置map 实现readline 支持
 
-## 移动快捷键
+## readline 移动快捷键
 
     方向键(字符)
         相当于readline的 ctrl+f/b/n/p
@@ -152,8 +155,9 @@ mac 不支持的有
 ![](/img/shell/keyboard/karabiner-ecs68-layout.png)
 
 ## 全局readline 快捷键
-我写了一份mac 下的readline 快捷键映射配置
-https://github.com/ahuigo/a/blob/master/config/karabiner/assets/complex_modifications/niz.json 
+mac 下的readline 快捷键映射可使用此配置文件：
+https://github.com/ahuigo/a/blob/master/config/karabiner/assets/complex_modifications/readline.json 
+
 它提供了mac osx所缺失的全局readline 支持
 
     ctrl+p up

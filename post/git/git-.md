@@ -159,19 +159,6 @@ Now you need to define which files/folders you want to actually check out.
     git pull origin master
 
 
-# git clean
-clean files
-
-	git clean " clean untracked files only
-        -X  "ignore only
-        -x  "ignore and untrack
-        -d  "directory
-        -f  "force
-        -n -f " with check
-
-If you want to also remove *directories*, run
-
-	git clean -f -d or git clean -fd
 
 # file status convert
 
