@@ -61,7 +61,7 @@ server build
         Build()
 
 ## Functional Options
-Optional Parameters/Variadic Functions in Go
+Rest Parameters/Optional Parameters/Variadic Functions in Go
 
 
 For example:

@@ -43,6 +43,12 @@ Mac OSX Image 不可以修改路径：
     <missing>           7 weeks ago         /bin/sh -c set -ex;  apt-get update;  apt-ge…   562MB
     <missing>           7 weeks ago         /bin/sh -c #(nop) ADD file:843b8a2a9df1a0730…   101M
 
+注意：
+
+    ADD file:843b8a2a9df1a0730 in /
+    # 对应原始的语句可能是：
+    ADD xxx.tgz /
+
 ### dockerfile of image
 
     docker history --no-trunc image_id:version

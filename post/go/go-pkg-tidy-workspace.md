@@ -14,6 +14,7 @@ private:
     )
 
 这种方式replace依赖本地文件系统的路径。不是太通用。此时可以用go1.18的workspace
+
 # workspace
 workspace提供了 replace 简化的、集中管理的方法
 

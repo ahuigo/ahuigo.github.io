@@ -6,13 +6,19 @@ description:
 date: 2018-10-04
 ---
 # Preface
-list all plugins
+## list all plugins
 
     " where was an option set  
     :scriptnames            : list all plugins, _vimrcs loaded (super)  
     :verbose set history?   : reveals value of history and where set  
     :function               : list functions  
     :func SearchCompl       : List particular function
+
+还可以用：
+
+    :echo &runtimepath
+    " 或者
+    :set runtimepath
 
 # Plugin Layout
 
@@ -55,7 +61,9 @@ list all plugins
 The Pathogen plugin automatically adds paths to your runtimepath when you load Vim. Any directories inside `~/.vim/bundle/` will each be added to the runtimepath.
 
 	:set runtimepath+=~/.vim/bundle/{name}
+    " 或
+    :let &runtimepath = &runtimepaht .. "," .. "<path_to_plugin>"
 
-`:color mycolor` 就会在`runtimepath` 中查找`colors/mycolor.vim`:
+执行`:color mycolor`时 会在`runtimepath` 中查找`colors/mycolor.vim`:
 
 	:color mycolor

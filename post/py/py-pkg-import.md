@@ -83,6 +83,8 @@ locals(): is unused(不使用).
 ## import dot
 The . is a shortcut that tells it search in current package(not process's cwd) before rest of the PYTHONPATH:
 
+    from .user import User
+    from .dir import Dir #__init__.py
 	from .submodule import sth
         # 本质是 from __name__.submodule import sth
         # 不过直接执行会出问题 from '__main__'.submodule import sth
@@ -173,7 +175,7 @@ module find path
 	['', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5','/usr/local/lib/python3.5/site-packages']
 	 /usr/local/lib/python3.5/site-packages/pip/_vendor/requests/cookies.py
 
-#### PYTHONPATH
+#### PYTHONPATH(warn)
 相当于: sys.path.insert(1,'.'): 注意不是0个，第0个是执行入口文件所在的目录, 比如flask/gunicorn 所在的目录
 
 	export PYTHONPATH=. ;# 当前的working 目录

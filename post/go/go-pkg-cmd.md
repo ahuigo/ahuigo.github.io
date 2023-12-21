@@ -94,7 +94,7 @@ install with `major　version`:
     $ go install github.com/ahuigo/arun/v2/main@latest
 
 ## go vet
-vet         report likely mistakes in packages
+    vet   report likely mistakes in packages
 
 ## go list 
 查看指定目录所属于的包名

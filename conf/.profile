@@ -23,6 +23,9 @@ export LANG='en_US.UTF-8'
 export CLICOLOR="xterm-color"
 #$(pyenv root)/shims:
 export GNUTERM=qt
+export PS1="%m:%~%$ " # host
+#export PS1="$(hostname -I | cut -d' ' -f1):%~%$ " # ip
+#export PS1="$(hostname -I | cut -d' ' -f1):%~%$ $(git_prompt_info) "
 export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])🌈 🏂 🏡  🌤️  🔥'$'\n$ '
 if [[ -z $INIT_PROFILE ]]; then
     export PATH=$PATH:$HOME/www/py-lib/bin:$HOME/www/a/bin:~/bin:/usr/local/sbin
@@ -61,7 +64,7 @@ alias p='python3'
 alias p2='python2'
 alias pi='pip3'
 alias pip='pip3'
-export PYTHONPATH=.
+#export PYTHONPATH=.
 
 ####################### docker ###################################################
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
@@ -91,12 +94,10 @@ function lllllllllzrmv(){
 
 ###################cicd #####################
 function devops() {
-	cwd_dir=$(pwd)
+	#cwd_dir=$(pwd)
     repo=`current_repo` 
     from=`current_branch` 
-    cd /Users/ahui/www/auto-devops/
-    deno run -A devops.ts repo=$repo from=$from $@
-    cd $cwd_dir
+    deno run -A ~/www/auto-devops/devops.ts repo=$repo from=$from $@
 }
 function goclean() {
     if [[ -z $1 ]]; then

@@ -27,6 +27,7 @@ defaults write -g KeyRepeat -int 2
 mac14 可能默认了重音符
 https://support.apple.com/guide/mac-help/enter-characters-with-accent-marks-on-mac-mh27474/14.0/mac/14.0
 
+全局配置：
 ```bash
 # mac osx 12 Moterey:
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
@@ -34,6 +35,15 @@ defaults read NSGlobalDomain ApplePressAndHoldEnabled
 # mac osx 11: 
 defaults write -g ApplePressAndHoldEnabled -bool false
 defaults get -g ApplePressAndHoldEnabled
+```
+
+vscode vim:
+```bash
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false              # For VS Code
+defaults write com.microsoft.VSCodeInsiders ApplePressAndHoldEnabled -bool false      # For VS Code Insider
+$ defaults write com.vscodium ApplePressAndHoldEnabled -bool false                      # For VS Codium
+$ defaults write com.microsoft.VSCodeExploration ApplePressAndHoldEnabled -bool false   # For VS Codium Exploration users
+$ defaults delete -g ApplePressAndHoldEnabled 
 ```
 ## Touchpad Mouse Setting
 Open Touchpad Setting:
