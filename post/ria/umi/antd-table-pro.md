@@ -4,7 +4,7 @@ date: 2023-10-20
 private: true
 ---
 # antd pro table
-example
+example: umi-demo/antd/table-form-custom.tsx
 ```
 interface DataItem{
     id:number;
@@ -145,7 +145,10 @@ column:
 ## syncToUrl
     <ProTable
       form={{ syncToUrl: true, }}
+## onFinish && onChange
 
+    // onFinish={async (values) => { }}
+    onValuesChange={(changedValues, allValues) => {}}
 # Toolbar 
 
 ## Toolbar 自定义

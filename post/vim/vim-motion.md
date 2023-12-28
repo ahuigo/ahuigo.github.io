@@ -213,6 +213,23 @@ cmd:
 
     :[range]v[global]/{pattern}/[cmd]
 
+## Ack 搜索
+    brew install the_silver_searcher
+    " nvim: ack with ag
+    Plug 'mileszs/ack.vim'
+    let g:ackprg = 'ag --vimgrep'
+    let g:ackhighlight = 1
+
+用法：
+
+    " search current directories
+    :Ack [options] {pattern} [{directories}]
+
+    " serch current file(buffer)
+    :Ack [options] {pattern} %
+    " 映射到\af
+    :nnoremap <Leader>af :Ack  %<Left><Left>
+
 ## argdo/bufdo
 
     "将要扫描的文件加入argument list (filelist)

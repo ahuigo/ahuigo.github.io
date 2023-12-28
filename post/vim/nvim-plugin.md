@@ -52,13 +52,15 @@ a code search cli tool with focus on speed.
 
     $ brew install the_silver_searcher
 
+## Ack搜索：默认ack, 支持ag
+    Plug 'mileszs/ack.vim'
+
 let ack use ag:
 
     $ .vimrc
     let g:ackprg = 'ag --vimgrep'
-
-
     :Ack [options] {pattern} [{directories}]
+    :Ack [options] {pattern} %
 
 # Denite(ctrl+p)
 文件切换

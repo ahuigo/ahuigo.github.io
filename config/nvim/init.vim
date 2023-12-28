@@ -2,7 +2,7 @@
 " Plugin: plug
 """"""""""""""""""""""
 call plug#begin('~/.local/share/nvim/plugged')
-		" auto complete: coc > YouCompleteMe
+		" auto complete: coc better than YouCompleteMe
 		"coc.vim:　基于 LSP 的插件，具备了代码补全，语法检查，标签跳转等功能。
 		"YouCompleteMe: 整合了:clang_complete、AutoComplPop 、Supertab 、neocomplcache 、Syntastic(c/c++/obj-c代码)
 		":h coc-config-suggest
@@ -24,12 +24,15 @@ call plug#begin('~/.local/share/nvim/plugged')
     " new async syntax lint
     Plug 'neomake/neomake'
 
+		" ack 搜索
+		" use :Ack [options] {pattern} [{directories}] // custom: let g:ackprg = 'ag --vimgrep'
+		Plug 'mileszs/ack.vim'
 
-    " ctrlp
+
+    " ctrlp 目录
     "Plug 'Shougo/denite.nvim'
+		Plug 'Shougo/ddu.vim'
 
-		" ack
-    "Plug 'mileszs/ack.vim'
 
 		"autoformat
 		"let g:autoformat_verbosemode=1
@@ -37,10 +40,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 call plug#end()
 """"""""""""""""""
 " coc.nvim press <CR>  select first popup item
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 """"""""""""""""""
-
-
 
 """"""""""""""""""
 " autoformat
@@ -49,14 +50,14 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR
 nnoremap = :Autoformat<CR>
 vnoremap = :Autoformat<CR>
 
-
 """"""""""""""
-" ag
+" Ack use ag to search, install 
+" :Ack [options] {pattern} [{directories}]
 """"""""""""
 let g:ackprg = 'ag --vimgrep'
 
 """"""""""""
-" denite.nvim
+" denite.nvim ctrlp
 " -----------
 ""exec "source ".fnameescape(expand('<sfile>:p:h').'/denite.vim')
 "exec "source ".expand('<sfile>:p:h').'/denite.vim'

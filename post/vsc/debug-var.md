@@ -7,6 +7,7 @@ https://code.visualstudio.com/docs/editor/variables-reference
 
 Available variables which can be used inside of strings.
 
+    // "program": "${workspaceFolder}/cmd/main.go",
     ${workspaceFolder} - the path of the folder opened in VS Code
     ${workspaceFolderBasename} - the name of the folder opened in VS Code without any slashes (/)
     ${file} - the current opened file
@@ -21,8 +22,6 @@ Available variables which can be used inside of strings.
     ${selectedText} - the current selected text in the active file
     ${execPath} - the path to the running VS Code executable
     ${defaultBuildTask} - the name of the default build task
-
-
 
         // ${file}: the current opened file
         // ${fileBasename}: the current opened file's basename

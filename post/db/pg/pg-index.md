@@ -271,7 +271,7 @@ create table 语句不支持
 其中，GIN复合索引不会受到查询条件中使用了哪些索引字段子集的影响，无论是哪种组合，都会得到相同的效率, 因为它是同时索引多个值
 
 ### 唯一索引
-3种方法建立 Unique index, (在postgre 中index 是table 共享的
+3种方法建立 Unique index, (在postgre 中index 是table 共享的)
 
     CREATE UNIQUE INDEX unique_idx1 ON table (column [, ...]);
     id int   UNIQUE,

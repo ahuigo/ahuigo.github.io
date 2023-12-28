@@ -95,6 +95,7 @@ vscode有可能提示delve 版本太低，可以升级下
                 "request": "launch",
                 "mode": "auto",
                 "program": "${workspaceFolder}/cmd/main.go",
+                //"program": "${fileDirname}"
                 "args": [],
                 "showLog": true
             }

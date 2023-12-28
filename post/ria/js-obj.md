@@ -375,6 +375,10 @@ Object.setPrototypeOf 本质
 constructor方法默认返回实例对象（即this），完全可以指定返回另外一个对象。
 
     class Foo {
+        id
+        name = 'bar' 
+        #private_prop = "xx"
+        static static_prop = "yy"
         constructor() {
             return Object.create(null);
         }

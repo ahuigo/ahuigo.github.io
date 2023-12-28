@@ -124,12 +124,17 @@ function gcap(){
     if test $? != 0;then
         return
     fi
+    top_dir=$(git rev-parse --show-toplevel)
+    origin_url=$(git remote get-url origin)
+    if [[ $origin_url == ssh://devops.* ]]; then
+        pathname=$(basename $top_dir)
+        echo $pathname $1 >> ~/todo.md
+    fi
 
     if git remote | grep '\w';then
-        if git remote| grep -E '^(origin)$' | xargs -L1 -J% git push --follow-tags % HEAD; then
-            cd $(git rev-parse --show-toplevel)
+        if git remote| grep -E '^(origin)$' | xargs -L1 -I% git push --follow-tags % HEAD; then
+            cd $top_dir
             subdirs=( )
-            top_dir=$(pwd)
             echo "check top_dir $top_dir"
             for subdir in "${subdirs[@]}"; do
                 echo "check subdir $subdir"

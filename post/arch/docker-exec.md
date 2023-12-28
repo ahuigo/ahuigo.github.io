@@ -8,6 +8,10 @@ date: 2019-08-15
     docker run --name debian -it -d debian bash
     docker exec -it debian bash
 # Docker exec 
+## limit resource
+    # 运行一个 Deno 脚本，限制 CPU 使用率为 0.5 核，内存使用为 100m
+    docker run -it --cpus=".5" --memory="100m" hayd/deno:alpine-1.10.2 run https://deno.land/std/examples/welcome.ts
+
 ## exec exited container
 如果想exec 一个exited container, 应该先让它先启动
 
