@@ -23,7 +23,7 @@ private:
 > 更多调试的使用，可以阅读Go Blog的 Profiling Go Programs: https://go.dev/blog/pprof
 
 # go tool pprof 的使用
-`go tool pprof` 可以采集并生成 `.prof` 文件、下载prof并生成分析结果（火焰图、调用栈等）. 下面具体总结一下
+`go tool pprof` 可以采集并生成 `.pprof` 文件、下载prof并生成分析结果（火焰图、调用栈等）. 下面具体总结一下
 
 ## pprof 命令的基本用法
 `go tool pprof`的基本用法见:https://github.com/google/pprof， 常用的指令有：
@@ -95,11 +95,12 @@ pprof 其它输出格式
     import "time"
 
     func main() {
-        pprof.StartCPUProfile(os.Stdout)
+        //pprof.StartCPUProfile(os.Stdout)
+        pprof.StartCPUProfile(os.Create("cpu.prof"))
         defer pprof.StopCPUProfile()
         go leakyFunction()
         time.Sleep(500 * time.Millisecond)
-        f, _ := os.Create("/tmp/profile.pb.gz")
+        f, _ := os.Create("mem.prof")
         defer f.Close()
         runtime.GC()
         pprof.WriteHeapProfile(f);
@@ -166,9 +167,6 @@ pkg/profile 是对 runtime/pprof 的封装，更易用一点儿
 
     cpu profiling ..., /tmp/profile068616584/cpu.pprof
 
-cpu+mem
-
-        defer profile.Start(profile.MemProfile, profile.CpuProfile, profile.MemProfileRate(1)).Stop()
 
 ## net/http/pprof
 > 示例：github.com/ahuigo/golib/gonic/ginapp/gin-pprof.go

@@ -46,7 +46,11 @@ You can verify that the swap file is active by running the free command again.
 
     free -m
 
-# Step 5: Enable swap on reboot
+### Step 6: disable swap 
+    sudo swapoff /mnt/.swapfile
+    rm -rf /mnt/.swapfile
+
+## Step 5: Enable swap on reboot
 nano /etc/fstab, Add the following line at the end of the file:
 
     /swapfile   none    swap    sw    0   0

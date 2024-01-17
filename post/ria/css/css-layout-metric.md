@@ -203,6 +203,13 @@ vw、vh、vmax、vmin这四个单位都是基于视口
       box-sizing : border-box;
     }
 
+## p 的高度
+> chrome line-height default: 1.15
+
+p 的高度为 font-size * line-height = 100px * 1.15 = 115px
+
+    <p>3 </p>
+
 # calc & var
 
     :root {

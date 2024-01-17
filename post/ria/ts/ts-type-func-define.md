@@ -180,7 +180,7 @@ note，函数交叉类型 infer 返回值时，只会取最后一个
         // with more items than desired
     }
 
-不是这样, 会有error
+不要这样, 会有error
 
     function goto({x: number, y: number}) {
         ....

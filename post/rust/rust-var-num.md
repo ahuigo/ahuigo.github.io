@@ -73,15 +73,6 @@ default f64
     // 打印数组中第一个值，并控制小数位为2位
     println!("{:.2}", forty_twos[0]);
 
-## Print num
-### print hex
-    println!("   0.1 + 0.2: {:x}", (xyz.0 + xyz.1).to_bits());
-### print binary
-    println!("{:b}", 10u8);
-### print float
-    println!("{:.2}", forty_twos[0]);
-
-
 # 运算
 ## bits clac
 ### 与或非运算符
@@ -105,7 +96,7 @@ default f64
         println!("{}",i); //1,2,3,4,5
     }
 
-char 所以也可以 (序列只允许用于数字或字符类型)
+char 也可以 (序列只允许用于数字或字符类型)
 
     for i in 'a'..='z' {
         println!("{}",i); //'a',...,'z'
@@ -124,9 +115,9 @@ Rust 的标准库相比其它语言，准入门槛较高，因此有理数和复
 
 e.g.
 
-    use num::complex::Complex;
 
     fn main() {
+        use num::complex::Complex;
       let a = Complex { re: 2.1, im: -1.2 };
       let b = Complex::new(11.1, 22.2);
       let result = a + b; 

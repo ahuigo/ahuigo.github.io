@@ -139,6 +139,11 @@ The default format for %v is:
 	chan:                    %p
 	pointer:                 %p
 
+### position arg(`%[1]`)
+
+    a:=[]int{1}
+    fmt.Printf("source slice: %[1]v, address: %[1]p\n", a)
+
 ### other flag
 Other flags:
 

@@ -103,6 +103,17 @@ run: main 入口注入变量
     // dockerfile
     RUN go build -ldflags=-s -w -X mod1/conf.BuildDate=$(date -I'seconds') -X mod1/conf.BuildVer=$(git rev-parse HEAD)
 
+### ldflags skip debug(缩小体积)
+    $ go build -ldflags="-s -w" -o server main.go
+    -s：忽略符号表和调试信息。
+    -w：忽略DWARFv3调试信息，使用该选项后将无法使用gdb进行调试。
+
+其实还可以通过upx 缩小体积：压缩动态库和可执行文件的工具(一般压缩50％～70％)。原理是将程序压缩、并在程序开头或其他合适的地方插入解压代码
+
+    $ brew install upx
+    # 1 代表最低压缩率，9 代表最高压缩率。
+    $ go build -ldflags="-s -w" -o server main.go && upx -9 server
+
 # build tag
 refer: https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags
 see go-lib/build

@@ -305,7 +305,7 @@ coverage 统计使用atomic 计数
 b.N 从 1 开始，如果该用例能够在 1s 内完成，b.N 的值便会增加，再次执行。b.N 的值大概以 1, 2, 3, 5, 10, 20, 30, 50,
 100 这样的序列递增
 
-## 测试bench
+## Run bench
 
 -bench regex
 
@@ -349,22 +349,22 @@ GOMAXPROCS，-cpu 支持传入一个列表作为参数，例如：
 ## bench profile
 testing 支持生成 CPU、memory 和 block 的 profile 文件。
 
--cpuprofile=$FILE
--memprofile=$FILE, -memprofilerate=N 调整记录速率为原来的 1/N。
--blockprofile=$FILE
+    -cpuprofile=$FILE
+    -memprofile=$FILE, -memprofilerate=N 调整记录速率为原来的 1/N。
+    -blockprofile=$FILE
 
-### bench cpu.profile
+### bench cpu.pprof
 
     //golib/perf/bench/bench_test.go
-    $ go test -bench=".*" -cpuprofile=cpu.profile ./popcnt -o popcnt.test
+    $ go test -bench=".*" -cpuprofile=cpu.pprof ./popcnt -o popcnt.test
     $ ls
-    cpu.profile popcnt.test
+    cpu.pprof popcnt.test
 
 #### 进入pprof 交互分析cpu.pprof
 
 进入command 交互模式
 
-    $ go tool pprof popcnt.test cpu.profile
+    $ go tool pprof popcnt.test cpu.pprof
     Entering interactive mode (type "help" for commands)
     (pprof) top10
       flat  flat%   sum%        cum   cum%
@@ -376,11 +376,11 @@ testing 支持生成 CPU、memory 和 block 的 profile 文件。
 
 web 打开svg:
 
-    $ go tool pprof -web cpu.profile
+    $ go tool pprof -web cpu.pprof
 
 text模式top
 
-    $ go tool pprof -text cpu.profile
+    $ go tool pprof -text cpu.pprof
 
 更多: 运行 go tool pprof 来得到最完整的列表
 

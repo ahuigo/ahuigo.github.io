@@ -157,7 +157,7 @@ replace 比较特别：
 
 
 ## multi
-default nomagic, need `\\` backslash
+default nomagic, need `\` backslash 
 
 	    'magic'        'nomagic'    matches of the preceding atom ~
 	\*	0 or more	    as many as possible
@@ -181,15 +181,14 @@ default nomagic, need `\\` backslash
 
 
 ## magic, very magic,nomagic
+:h magic, 默认是magic
 
-            magic   nomagic	matches ~
-    |/\m|	\m	    \m	'magic' on for the following chars in the pattern
+Vim 中的 "magic" 模式决定了正则表达式中特殊字符的行为。Vim 提供了四种 "magic" 模式：
 
-    |/\M|	\M	    \M	'magic' off for the following chars in the pattern
-
-    |/\v|	\v	    \v	the following chars in the pattern are "very magic"
-
-    |/\V|	\V	    \V	the following chars in the pattern are "very nomagic" 
+    \v (very magic)：在这种模式下，大多数字符都有特殊含义，只有少数字符被视为普通字符。这种模式最接近 Perl 和其他现代正则表达式语言的行为。
+    \m (magic)：这是 Vim 的默认模式。在这种模式下，一些字符有特殊含义，而其他字符被视为普通字符。
+    \M (nomagic)：在这种模式下，几乎所有字符都被视为普通字符，只有少数字符有特殊含义。
+    \V (very nomagic)：在这种模式下，所有字符都被视为普通字符，除非它们被转义。
 
 总结一下
 
@@ -198,8 +197,6 @@ default nomagic, need `\\` backslash
 
     Use of "\V" means that after it, only a backslash and the terminating
     character (usually / or ?) have special meaning: "very nomagic"
-
-
 
 
 like perl and php:

@@ -10,7 +10,7 @@ private: true
     "runtime/debug"
     )
     ...    
-    debug.PrintStack()
+    debu
 
 ## err trace
 

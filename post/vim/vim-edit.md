@@ -56,6 +56,14 @@ d系列与c系列两大删除命令,　与t、f两大字符转命令，结合后
 
 ## copy & paste
 
+速记：
+
+    copy:
+        nomral: "ay
+        visiual: ""d
+    paste:
+        ""p
+
 ### Copy
 常见的有两种复制方法
 1. 删除(del命令)本身就是删除的同时带复制

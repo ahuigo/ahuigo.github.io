@@ -56,6 +56,11 @@ or use bracket to insert:
     INSERT INTO stus (name, names) VALUES ( 'alex', '{"alex1","alex2"}');
     INSERT INTO stus (name, names) VALUES ( 'alex', '{alex1,alex2}');
 
+## array_append
+    UPDATE table_name
+    SET array_field = array_append(array_field, 'new_element')
+    WHERE condition;
+
 # update array
 
 update all array:

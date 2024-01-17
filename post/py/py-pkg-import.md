@@ -80,9 +80,10 @@ fromlist:
 globals(): is only used to determine the context; they are not modified.  
 locals(): is unused(不使用).
 
-## import dot
+## import dot(.)
 The . is a shortcut that tells it search in current package(not process's cwd) before rest of the PYTHONPATH:
 
+    # 从当前file所在目录中，导入user.py
     from .user import User
     from .dir import Dir #__init__.py
 	from .submodule import sth
@@ -134,7 +135,12 @@ The reason `import .foo` is prohibited is because:
 
 以上方法仅用于 module:  `python -m pkg.moddule1`
 
-如果不是module, 可以用这个办法：
+### 如果不是module, 可以用这个办法：
+在Python中，相对导入是基于当前模块的`__name__`属性的。当你直接运行一个模块时，它的`__name__`属性被设置为`__main__`，并且没有父包, 会报错
+ ImportError: attempted relative import with no known parent package
+
+你可以
+
 
     if __name__ == "__main__":
         sys.path.append(".")
@@ -142,6 +148,34 @@ The reason `import .foo` is prohibited is because:
 
     import src.c.d
 
+或者
+
+    PYTHONPATH=. p a.py
+
+
+或者可以去掉`if __name__ == "__main__"`, 改成一个包, 然后执行
+
+    my_package/
+    __init__.py
+    user/
+        __init__.py
+        user_operations.py
+    scripts/
+        __init__.py
+        user_add_role.py
+
+内部：
+
+    # File: my_package/scripts/user_add_role.py
+    from ..user.user_operations import addUser
+
+    def addRoleToUser(name, role):
+        addUser(name)
+        print(f"Role {role} added to user {name}.")
+
+为了使相对导入工作，你需要从包的外部运行你的脚本，例如：
+
+    python -m my_package.scripts.user_add_role
 
 ## path
 此PATH 与 SHELL PATH 是独立的

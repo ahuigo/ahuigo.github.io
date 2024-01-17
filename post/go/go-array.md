@@ -264,6 +264,11 @@ The returned slice will point to the newly allocated array.
     b = append(b,4,5);  # newcap(b)= 2*cap(b) = 6 
 ```
 
+## insert slice
+insert `a[i]`: `O(n)`
+
+    a = append(a[:i], append([]T{x}, a[i:]...))
+
 ## delete slice
 delete `a[i]`: `O(n)`
 
@@ -292,8 +297,15 @@ delete `a[i]`: `O(n)`
 
 ## pop push
 
-    s = s[:len(s)-1]
+    // pop 
+    x, s := s[len(s)-1],s[:len(s)-1]
+    // shift
+    x, s := s[0],s[1:]
+
+    // push 
     s=append(s, x)
+    // unshift// O(n)
+    s=append([]T{x},s...) 
 
 ## loop slice and array
 The `range` form the `for loop iterates` over a `array, slice, string or map`, or values received on a channel.

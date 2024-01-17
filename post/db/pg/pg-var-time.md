@@ -65,6 +65,25 @@ get datetime(timestamp)
 
     > select  TIMESTAMP 'yesterday' ;
 
+### trunc 对齐
+    > select date_trunc( 'day', '2024-01-03 23:59:59' :: timestamp);
+    2024-01-03 00:00:00
+    > select date_trunc( 'week', TIMESTAMP WITH TIME ZONE '2024-01-03 23:59:59' :: timestamp);
+    2024-01-01 00:00:00
+
+### get serials
+    select *  FROM generate_series(
+            date_trunc( 'day', '2023-12-30 00:00:00' :: timestamp), 
+            date_trunc( 'day', '2024-01-03 23:59:59' :: timestamp), 
+            '1 day'
+        ) AS start_time;
+    ---------------------
+    2023-12-30 00:00:00
+    2023-12-31 00:00:00
+    2024-01-01 00:00:00
+    2024-01-02 00:00:00
+    2024-01-03 00:00:00
+
 ## Set time
 
     show timezone;
