@@ -105,6 +105,7 @@ deepcopy:
     myCopy = deepcopy(myDict)
 
 ## sequence unpacking assign(解包赋值)
+> 参考: js-func.md: Destructuring/ unpacking/模式匹配 解构赋值
 
     >>> person = ('Bob', 20, 50, (11, 20, 2000))
     >>> name, *_, (*_, year) = person

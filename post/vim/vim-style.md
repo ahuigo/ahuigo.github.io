@@ -7,10 +7,13 @@ date: 2018-10-04
 ---
 # Preface
 
-# show invisible charactors
+# show invisible charactors(special chars)
 See tab, new line:
 
 	:set list
+    " not　show
+	:set nolist 
+    " 设置显示的点位符
 	:set listchars=tab:>-,eol:<,nbsp:%
 	:set lcs=tab:\|\ ,trail:-
 
@@ -28,9 +31,10 @@ carriage return:
 Ctrl-V tells vi that the next character typed should be inserted literally 
 ctrl-m is the keystroke for a carriage return
 
-## expand tabl
+## expand tab
 
     :set expandtab
+    :set noexpandtab
 
 # style
 

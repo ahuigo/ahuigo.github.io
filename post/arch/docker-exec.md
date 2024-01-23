@@ -7,6 +7,7 @@ date: 2019-08-15
 
     docker run --name debian -it -d debian bash
     docker exec -it debian bash
+
 # Docker exec 
 ## limit resource
     # 运行一个 Deno 脚本，限制 CPU 使用率为 0.5 核，内存使用为 100m

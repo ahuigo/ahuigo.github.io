@@ -3,7 +3,7 @@ title: rust borrowing 借用(引用)
 date: 2023-03-06
 private: true
 ---
-# 引用 vs 借用
+# 引用(借用)
 如何避免传参、返回时发生Move呢？就是borrowing：**获取变量的引用，称之为借用(borrowing)**
 
 ## 引用与解引用

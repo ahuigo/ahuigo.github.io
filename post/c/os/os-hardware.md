@@ -40,6 +40,8 @@ RISC 精简指令集主要有三种
     
 ## memory
     free -h
+    shared：被多个进程共享的内存量。
+    buff/cache：被系统用作缓存和缓冲区的内存量。(如读取fs缓存)这部分内存可以被重新分配给应用程序使用，所以在某种程度上，它也可以被视为可用内存。
 
 ## disk
 You should get 1 for hard disks and 0 for a SSD

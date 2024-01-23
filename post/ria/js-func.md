@@ -115,6 +115,10 @@ arguments本身不是Array, 如果想让 arguments 支持数组函数:
     f.bind(null,...[1,2,3])()
 
 ### 解构赋值(不要求数量一致`_`)
+> rust:用模式匹配 解构赋值 元组 https://course.rs/basic/compound-type/tuple.html
+> go: _,b, _ = funcA()
+> py-var.md: `name, *_, (*_, year) = ('Bob', 20, 50, (11, 20, 2000))`
+
 析构array
 
     var [x, y, z] = ['hello', 'JavaScript', 'ES6'];

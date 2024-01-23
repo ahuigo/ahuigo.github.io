@@ -5,6 +5,9 @@ private: true
 ---
 # zsh 命令补全原理
 参考：
+## 补全脚本
+    $ echo $FPATH
+    /opt/homebrew/share/zsh/site-functions:$HOME/.oh-my-zsh/plugins/deno:$HOME/.oh-my-zsh/plugins/autojump:$HOME/.oh-my-zsh/plugins/git:$HOME/.oh-my-zsh/functions:$HOME/.oh-my-zsh/completions:$HOME/.oh-my-zsh/cache/completions:/usr/local/share/zsh/site-functions:/usr/share/zsh/site-functions:/usr/share/zsh/5.8.1/functions
 
 ## 参数自动补全
 补全命令

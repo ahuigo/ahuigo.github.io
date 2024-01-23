@@ -373,8 +373,9 @@ a {
 	<h3>6、align-content属性</h3>
 justify-content 
     用于定义`伸缩行content`在`主轴(横轴)`上面的的对齐方式
-align-items(twind: )
+align-items(twind: items-center)
     用来定义`伸缩项目item`在`侧轴`的对齐方式
+    align-items:center 
 align-content 属性(twind: content-center)
     1. 定义了多根轴线的整体对齐方式。如果项目只有一根轴线，该属性不起作用。
     2. 仅当用flex-wrap:wrap时有效
@@ -409,7 +410,7 @@ align-content 属性(twind: content-center)
 		<div class="box-item">8</div>
 		<div class="box-item">9</div>
 	</div>
-	<p>center：与交叉轴的中点对齐。</p>
+	<p>center：与交叉轴的中点对齐(实现`<span>txt</span>` 文字或块垂直居中, 如果没有flex, 文字要设置line-height＝$height)。</p>
 	<div class="box box-tall box-18">
 		<div class="box-item">1</div>
 		<div class="box-item">2</div>

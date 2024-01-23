@@ -35,11 +35,46 @@ def getCpu():
             out += line.split(':')[1]
     return out
 
+def getOs():
+    import subprocess
+    import re
+
+    # Get process info
+    ps = subprocess.Popen(['ps', '-caxm', '-orss,comm'], stdout=subprocess.PIPE).communicate()[0].decode()
+    vm = subprocess.Popen(['vm_stat'], stdout=subprocess.PIPE).communicate()[0].decode()
+
+    # Iterate processes
+    processLines = ps.split('\n')
+    sep = re.compile('[\s]+')
+    rssTotal = 0 # kB
+    for row in range(1,len(processLines)):
+        rowText = processLines[row].strip()
+        rowElements = sep.split(rowText)
+        try:
+            rss = float(rowElements[0]) * 1024
+        except:
+            rss = 0 # ignore...
+        rssTotal += rss
+
+    # Process vm_stat
+    vmLines = vm.split('\n')
+    sep = re.compile(':[\s]+')
+    vmStats = {}
+    for row in range(1,len(vmLines)-2):
+        rowText = vmLines[row].strip()
+        rowElements = sep.split(rowText)
+        vmStats[(rowElements[0])] = int(rowElements[1].strip('\.')) * 4096
+
+    print('Wired Memory:\t\t%d MB(系统核心和其他代码需要使用的内存，不能被移动到swap)' % (vmStats["Pages wired down"]/1024/1024))
+    print('Active Memory:\t\t%d MB(正在运行的应用程序的数据)' % (vmStats["Pages active"]/1024/1024))
+    print('Inactive Memory:\t%d MB(这部分内存目前没有被使用，内存不足时可放到硬盘swap缓存/paging out)' % (vmStats["Pages inactive"]/1024/1024))
+    print('Free Memory:\t\t%d MB' % (vmStats["Pages free"]/1024/1024))
+    print('Real Mem Total (ps):\t%.3f MB' % (rssTotal/1024/1024))
 def isCmdExisted(cmd):
     from subprocess import getstatusoutput
     return getstatusoutput('hash '+cmd)[0]==0
 
-def getOs():
+def getMem():
     if isCmdExisted('sw_vers'):
         out=getoutput('sw_vers')
         m = re.search(r'ProductVersion:\s+?(?P<ver>[\w\.]+)', out)
@@ -56,6 +91,7 @@ def main():
     print("kernel:",getoutput('uname -r'))
     print("os:",getOs())
     print("cpu:",getCpu())
+    print("mem:",getMem())
     if 'deno' in sys.argv:
         printDeno()
     if 'node' in sys.argv:

@@ -62,10 +62,10 @@ String是由堆分配的, 数据可修改:
     println!("{}", s); // 将打印 `hello, world!`
 
 # Move和Copy
-Move 移动: 浅copy(拷贝指针、长度和容量而不拷贝数据)+所有权转移
-    1. String
-Copy: 基础类型、包括不可变常量字符串, 无所有权，也不转移所有权
-    1. &str &String &T (借用)
+赋值时有三种行为：
+1. Move 移动: 浅copy(拷贝指针、长度和容量而不拷贝数据)+所有权转移:  String赋值时就是move(浅copy)
+1. Copy: 基础类型、包括不可变常量字符串, 无所有权，也不转移所有权
+1. 引用： &str &String &T,引用会被借用，但是不转移所有权，也不会copy　数据
 
 ## 转移所有权(Move)
 基本数据类型，是通过自动拷贝的方式来赋值的，都被存在栈中，完全无需在堆上分配内存。
@@ -100,12 +100,11 @@ String 类型是一个复杂类型，由存储在`栈`中的: 8bytes堆指针、
 可copy的基本类型和组合——不需要heap 内存分配，尺寸固定, 包括如下：
 
     i32, f64, 
-    char, 
+    char, 字面字符串常量
     bool
     元组: 仅当元组元素都有Copy特征，比如`(u32,f64)`, 而`(i32,String)`就不是
-    不可变引用`&T`：比如&str 字面字符串常量, &String
 
-Note：`let s1 = String::from("hello");`中 s1是不可变变量，但不是引用 
+不可变引用`&T`：比如 &str以及 &String 会传引用，而非copy 值
 
 ### Copy trait
 目前所有基本类型，如整数、浮点数和字符都是Copy类型。默认情况下，struct/enum 不是Copy，但你可以派生 Copy trait:

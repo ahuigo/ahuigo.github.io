@@ -219,7 +219,8 @@ or:
         foo.counter += 1
 
 # args
-## destruct args
+## destruct args 
+
     *args, **kw
 
     l = [*l1, *l2]
