@@ -180,6 +180,10 @@ Calling `attr_accessor` will create a `getter` AND a `setter` for the given vari
             puts "return #{str}"
         end
     end
+    class A < Account
+        return_data "hi"
+        p return_data "hi"
+    end
     Account.return_date('hello')
 
 #### 静态方法setter/getter
@@ -218,6 +222,7 @@ Note: class 与 instance实例之间的`@var` 是相互独立的变量副本
 ### class property(类属性@@ 静态属性)
 
     class MyClass
+      p "这是一个@@类变量"
       @@my_class_variable = "Hello, world!"  # 这是一个类变量
 
       def self.print_variable
@@ -282,6 +287,12 @@ class 与 instance实例之间的`@var` 是相互独立的变量副本
     a.mod 
     a.echo #=> hilo
 
+### class 定义时的代码
+    # 定义时的代码在A.new() 前就会执行
+    class A
+        p 123
+    end
+
 ## 使用类
 ### 类实例化
     cust1 = Customer.new
@@ -326,7 +337,7 @@ Now, for include module.
 
 ## 类生命周期
     class Bar
-        p "1. before new instance....."
+        p "1. static method: before new instance....."
         def self.make_hello_method
             class_eval do
                 p "3.生成实例方法hello..."
@@ -335,6 +346,9 @@ Now, for include module.
                 end
             end
         end
+    end
+    class BarExt < Bar
+        make_hello_method "abc"
     end
 
     p "2.生成实例方法hello...outer"

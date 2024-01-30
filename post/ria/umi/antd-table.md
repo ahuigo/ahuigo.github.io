@@ -92,3 +92,4 @@ antd protable 控制宽度的话
       title: '资源',
       dataIndex: 'resources',
       width: '300px',
+    }

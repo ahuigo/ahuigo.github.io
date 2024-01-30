@@ -96,9 +96,17 @@ use moral 例子:
 require 模块搜索的目录是是
 
     `$LOAD_PATH << '.'` 在当前目录中搜索
+    # print Gem PATH
     puts $LOAD_PATH
+    # search in $LOAD_PATH
+    require_relative "path"
 
 还可以使用 `require_relative` 来从一个相对目录引用文件。
+
+    # require "./path"
+    require_relative "path"
+    require_relative('path')
+    require(File.expand_path('path', File.dirname(__FILE__)))
  
 还有以下两个环境变量，有文档说会用到，实际的发现是空的`p ENV['RUBYLIB']`
 

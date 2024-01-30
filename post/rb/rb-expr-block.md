@@ -11,9 +11,38 @@ block 形式：`{}`或者 `do ...end`两种
         statement2
         ..........
     }
+
     do [|arg1,arg2|]
         statement1
         statement2
+    end
+
+## do block
+    # Array#each 方法接受一个块，对数组中的每个元素执行块中的代码
+    [1, 2, 3].each do |num|
+        puts num
+    end
+
+    # File#open 方法接受一个块，打开一个文件并将文件对象传递给块
+    File.open("example.txt", "w") do |file|
+        file.write("Hello, world!")
+    end
+
+    # Hash#each 方法接受一个块，对哈希中的每个键值对执行块中的代码
+    {a: 1, b: 2, c: 3}.each do |key, value|
+        puts "#{key}: #{value}"
+    end
+
+使用 `times` 方法重复执行一个操作
+
+    5.times do
+        puts "Hello, world!"
+    end
+
+    # 使用 `loop` 方法创建一个无限循环
+    loop do
+        puts "This will print forever until interrupted"
+        sleep 1
     end
 
 ## block vs dict
