@@ -1,0 +1,58 @@
+<style>
+dialog::backdrop{
+    background: rgb(9 160 209 / 50%);
+    backdrop-filter: blur(2px);
+}
+</style>
+<div> example</div>
+<dialog id="favDialog">
+  <form method="dialog">
+    <p>
+      <label>Favorite animal:
+        <select>
+          <option value="default">Choose…</option>
+          <option>Brine shrimp</option>
+          <option>Red panda</option>
+          <option>Spider monkey</option>
+        </select>
+      </label>
+    </p>
+    <div>
+      <button value="cancel123">Cancel123(只要是button都会关闭,返回button.value)</button>
+      <button id="confirmBtn" value="default">Confirm(default)</button>
+    </div>
+  </form>
+</dialog>
+<p>
+  <button id="updateDetails">Update details</button>
+</p>
+<output></output>
+
+    <script>
+        const updateButton = document.getElementById("updateDetails");
+const favDialog = document.getElementById("favDialog");
+const outputBox = document.querySelector("output");
+const selectEl = favDialog.querySelector("select");
+const confirmBtn = favDialog.querySelector("#confirmBtn");
+// "Update details" button opens the <dialog> modally
+updateButton.addEventListener("click", () => {
+  if (typeof favDialog.showModal === "function") {
+    favDialog.showModal();
+  } else {
+    outputBox.value =
+      "Sorry, the <dialog> API is not supported by this browser.";
+  }
+});
+// "Favorite animal" input sets the value of the submit button
+selectEl.addEventListener("change", (e) => {
+    console.log(selectEl.value);
+  confirmBtn.value = selectEl.value;
+});
+// "Confirm" button of form triggers "close" on dialog because of [method="dialog"]
+favDialog.addEventListener("close", () => {
+  outputBox.value = `${
+    favDialog.returnValue
+  } button clicked - ${new Date().toString()}`;
+});
+
+    </script>

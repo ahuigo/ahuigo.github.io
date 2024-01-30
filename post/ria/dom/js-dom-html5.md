@@ -75,6 +75,15 @@ Datalist-Option:
     <details open>
         <summary>Header</summary>
     </details>
+    <style>
+        [open] summary::marker{
+            content:"<";
+            font-size:2em;
+        }
+    </style>
+
+## dialog
+
 
 ##　video
 
