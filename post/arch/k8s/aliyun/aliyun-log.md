@@ -14,6 +14,8 @@ private: true
 ## 查询语法
 https://help.aliyun.com/zh/sls/user-guide/search-syntax?spm=a2c4g.11186623.0.i1#concept-tnd-1jq-zdb
 
+    host:x.cn
+
 ### fulltext
 
     Method:Get* and not status:200

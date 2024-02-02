@@ -24,7 +24,7 @@ kill -l 查看系统定义的信号列表:
 
 > 1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL
  5) SIGTRAP      6) SIGABRT      7) SIGBUS       8) SIGFPE
- 9) SIGKILL     10) SIGUSR1     11) SIGSEGV     12) SIGUSR2
+ 9) SIGKILL(9)  10) SIGUSR1     11) SIGSEGV     12) SIGUSR2
 13) SIGPIPE     14) SIGALRM     15) SIGTERM     16) SIGSTKFLT
 17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
 21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU
@@ -34,9 +34,10 @@ kill -l 查看系统定义的信号列表:
 
 这些信号的宏定义位于signal.h, 编号34 以上的是实时信号，34以下的为非实时信号.
 
-1. Ctrl-c会发送SIGINT(2)(这在Python中其实被封装成了KeyboardInterrupt异常)，
-2. `Ctrl-\`发送SIGQUIT，
-3. kill pid 则是SIGTERM(15)
+3. SIGTERM(15): Terminatted, (kill pid 默认就是15)
+1. SIGINT(2): interrupt, Ctrl-c会发送(这在Python中其实被封装成了KeyboardInterrupt异常)，
+2. SIGQUIT(3): quit, `Ctrl-\`发送SIGQUIT，
+4. SIGKILL(9): force killed,cannot be ignored
 3. SIGCHLD: 进程退出，向父进程发出SIGCHLD (chldhandler)
 4. SIGTTIN 当后台进程读tty时，tty将发送该信号给相应的进程组，默认行为是暂停进程组中进程的执行
 5. SIGCONT: `kill -SIGCONT PID`: Send a continue signal To continue a stopped process via PID
@@ -45,20 +46,19 @@ kill -l 查看系统定义的信号列表:
     2. see: linux-nohup.md
 7. SIGTSTP: 输入CTRL+Z时，tty收到后就会发送SIGTSTP给前端进程组，其默认行为是将前端进程组放到后端，并且暂停进程组里所有进程的执行。(Terminal Stop)
 3. SIGSTOP: `kill -SIGSTOP pid` cannot be ignored. SIGTSTP might be.
-4. SIGKILL: cannot be ignored
+5. SIGTRAP
 
 其中有些信号是不可被忽略的, 但无论是否可忽略，handler 依然可以执行:
 1. SIGKILL=9和SIGSTOP = 17这种是不可忽略的。这就是为什么程序卡死的时候按Ctrl-z之后再kill比按Ctrl-c好使的原因了。
 
 # 信号的产生与处理
-
-signal(7) 有对signal 产生条件和默认动作 的说明：
+`man 3 signal` 有对signal 产生条件和默认动作 的说明：
 
 	Signal     Value     Action   Comment
 	-------------------------------------------------------------------------
 	SIGHUP        1       Term    Hangup detected on controlling terminal
 								  or death of controlling process
-	SIGINT        2       Term    Interrupt from keyboard
+	SIGINT        2       Term    Interrupt from keyboard(ctrl+c, 默认信号)
 	SIGQUIT       3       Core    Quit from keyboard
 	SIGILL        4       Core    Illegal Instruction
 

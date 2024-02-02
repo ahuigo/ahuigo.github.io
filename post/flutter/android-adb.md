@@ -82,7 +82,7 @@ reboot:
     adb reboot recovery
 
 ### uninstall app
-比如uninstall guard
+比如uninstall guard(会导致短信没有通知)
 
     adb shell pm list package | grep com.miui.guardprovider
     adb uninstall --user 0 com.miui.guardprovider
