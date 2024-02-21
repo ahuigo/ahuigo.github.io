@@ -7,12 +7,20 @@ call plug#begin('~/.local/share/nvim/plugged')
 		"YouCompleteMe: 整合了:clang_complete、AutoComplPop 、Supertab 、neocomplcache 、Syntastic(c/c++/obj-c代码)
 		":h coc-config-suggest
 		Plug 'neoclide/coc.nvim', {'branch': 'release'}
-		"init:
-		":CocInstall coc-json coc-tsserver
-		"
 		"config: https://github.com/neoclide/coc.nvim/wiki/Using-the-configuration-file
 		"open config and write: {"suggest.noselect":true}
 		":CocConfig
+		"" use <tab> to trigger completion and navigate to the next complete item
+		function! CheckBackspace() abort
+			let col = col('.') - 1
+			return !col || getline('.')[col - 1]  =~# '\s'
+		endfunction
+		inoremap <silent><expr> <Tab>
+					\ coc#pum#visible() ? coc#pum#next(1) :
+					\ CheckBackspace() ? "\<Tab>" :
+					\ coc#refresh()
+		inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
 
     " 基于jedi 可以提示obj 属性: sys.path.
 		"Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }

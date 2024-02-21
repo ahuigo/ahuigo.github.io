@@ -1,9 +1,7 @@
 ---
-layout: page
-title: IP
+title: vpn ss
 category: blog
-description: 
-date: 2018-09-28
+private: true
 ---
 # IP security
 webrtc会暴露自己的真实ips
@@ -14,16 +12,14 @@ https://chrome.google.com/webstore/detail/webrtc-block/nphkkbaidamjmhfanlpblblca
 
 # 科学上网
 ## ss
-给shadowsocks插上tcptun,bbr这对翅膀
-http://farwmarth.com/vultr/
-https://home4love.com/3154.html
+## clash
+
+    clash
+    clash.meta 
+    clash verge (v2ex推荐)
 
 ## VPS
-oneasiahost, 12$/3 month
-vultr, at japanese, 30RMB/month
-
-## lantern
-127.0.0.1:8787
+一元机场
 
 ## 其它网站的科学上网
 如果你所访问的网站被q了，你可以通过以下地址查找网站对应的ip, 选择一个速度快一点ip 并在hosts中做绑定，可以实现对绝大部分网站的访问（除了facebook/twitter 等, 无论ipv4还是ipv6都不行）

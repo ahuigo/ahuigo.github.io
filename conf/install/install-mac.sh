@@ -22,3 +22,6 @@ ln -s ~/conf/.gitconfig ~
 
 # lnmp
 brew install mariadb nginx php node
+
+# translate-shell: https://github.com/soimort/translate-shell
+wget git.io/trans -O ~/bin/trans

@@ -163,6 +163,10 @@ compile with modifier:
     re.IGNORECASE
     re.UNICODE
 
+### methods
+    pattern.match
+    pattern.search
+    pattern.sub
 ## replace, sub
 
     re.sub(r'helo', 'hello', 'helo world', flags=re.IGNORECASE)
