@@ -7,6 +7,8 @@ date: 2018-09-28
 
     pip install pycrypto
 
+源码：golib/sec/{aes,rsa}
+
 # AES
 
 ## aes-256-cbc 算法实例

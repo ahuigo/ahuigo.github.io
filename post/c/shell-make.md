@@ -195,6 +195,20 @@ THINGS!!!:(不用加`export`前缀)
 
 ### global env
 
+#### global env1
+    DSN=1g
+    export DSN 
+    tt:
+        bash a.sh
+
+then: 
+
+    make tt
+    # or change default env to 2g
+    make tt DSN=2g
+
+#### global env2
+
 export individual variables with:
 
     export MY_VAR = foo  # Available for all targets

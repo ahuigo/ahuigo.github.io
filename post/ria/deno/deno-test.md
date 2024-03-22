@@ -87,6 +87,25 @@ Pass additional arguments to the test file
       }
     }
 
+## test debug with vscode
+以fresh 为例
+
+        {
+            "request": "launch",
+            "name": "Launch Program",
+            "type": "node",
+            "program": "${workspaceFolder}/main.ts",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "/opt/homebrew/bin/deno",
+            "runtimeArgs": [
+                "run",
+                "--inspect-wait",
+                "--allow-all"
+            ],
+            "attachSimplePort": 9229
+        }
+
+
 # Test Coverage
 https://deno.land/manual@v1.29.2/basics/testing/coverage
 

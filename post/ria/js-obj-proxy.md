@@ -68,6 +68,20 @@ get 与 in 的区别
     console.log(person.age); // 100
     person.age = 'young';    // Throws an exception
 
+### get
+
+    location = new Proxy(window.location, {
+        get: function(target, property) {
+            if (property === 'replace') {
+            return function(url) {
+                console.log("Intercepted location.replace call with url:", url);
+                // You can add your custom logic here
+            };
+            }
+            return target[property];
+        }
+    });
+
 ## apply
 
     var target = function (...args) { 

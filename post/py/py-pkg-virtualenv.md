@@ -21,7 +21,9 @@ date: 2018-10-04
     (blog_pyenv) ➜ umi3$ git:(dev) ✗ 
     $ deactivate   
 
-# pyenv(Recommend)
+# pyenv(Recommend python版本切换)
+用于管理python
+
     brew install pyenv
     pyenv install --list
     pyenv local 3.7.2

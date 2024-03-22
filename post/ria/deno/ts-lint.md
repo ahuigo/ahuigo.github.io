@@ -77,3 +77,12 @@ ignore typescript check
           "exclude": ["no-explicit-any"]
         }
       },
+
+# class type
+
+## prop init type with exclamation mark(!)
+`!` not check uninitiated value's type
+
+    class A{
+        _onAfterRepaint!: () => void;
+    }

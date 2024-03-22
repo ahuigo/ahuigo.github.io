@@ -7,17 +7,30 @@ date: 2018-09-26
 这里推荐一本加密算法入门书crypto101：https://www.crypto101.io/
 
 # Symmetric-key Cryptography 对称密钥加密
-1. 对称密钥加密，又称对称加密、私钥加密、共享密钥加密，与非对称密钥相比它快得多
+对称密钥加密，又称对称加密、私钥加密、共享密钥加密，与非对称密钥相比它快得多。它分为
 1. 分组加密（Block cipher，又称分块加密、块密码），是一种对称密钥算法。
     1. 它将明文分成多个等长的模块（block），使用确定的算法和对称密钥对每组分别加密解密。
+2. 流式加密: RC4(也叫)
+    1. 一次加密一个字节或一个比特。明文的每一个字节或比特与一个伪随机密钥流（也称为密钥流）的相应字节或比特进行操作（通常是异或操作）以生成密文
+    2. 密钥流的生成可以是依赖于明文的，也可独立
+    1. 它可以实现非常高的加密速度，因为它可以在硬件级别进行优化，并且可以在任何时候生成和使用密钥流
 
 其中典型的块加密有：
 
 1. DES: 早期的DES 作为美国政府核定的标准加密算法.
 2. AES: 标准高级加密标准（AES）被美国国家标准与技术研究院（NIST）采纳，即将逐渐取代DES目前的位置。
-3. blowfish: 加密算法在加密速度上就超越了DES加密算法, 而且它没有注册专利，不需要授权。
+3. blowfish: 加密算法在加密速度上就超越了DES/AES加密算法, 而且它没有注册专利，不需要授权。
+    1. 比AES/DES快
+    2. 密钥长度可以变化，从32位到448位
+    2. 它的块大小只有64位: 这使得它在处理大量数据时可能会出现安全问题，因为同一个密钥加密的块的数量越多，攻击者破解的可能性就越大(不如AES安全)
+建议不要使用Blowfish来加密大于4GB的文件
 
-其它如 IDEA、RC5、RC6 属于对称加密，但是不是块加密
+其它如 IDEA、RC5、RC6 属于流加密：
+1. RC4(不安全)：也被称为ARC4或ARCFOUR，它是最广泛使用的流加密算法之一。然而，由于已知的安全问题，它现在已经不再建议使用。
+1. Salsa20/ChaCha：这是一种流加密算法，设计简单，速度快，安全性高。ChaCha是Salsa20的改进版本，它在一些场景下比Salsa20更安全。
+1. A5/1和A5/2：这两种算法都被用于GSM（全球移动通信系统）的通信加密，但都存在已知的安全问题。
+1. ISAAC：这是一种快速的流加密算法，但其安全性尚未被充分研究。
+
 
 目前为止AES比Blowfish有更广的知名度。
 
@@ -194,7 +207,7 @@ Blowfish 主要包括关键的几个S盒和一个复杂的核心变换函数。
 ## AES加密
 See java-lib
 
-	class AESMcrypt {
+	class AesCrypt {
 
 		public $iv = null;
 		public $key = null;
@@ -238,7 +251,7 @@ See java-lib
 
 	}
 
-	$aes = new AESMcrypt($bit = 128, $key = 'abcdef1234567890', $iv = '0987654321fedcba', $mode = 'cbc');
+	$aes = new AesCrypt($bit = 128, $key = 'abcdef1234567890', $iv = '0987654321fedcba', $mode = 'cbc');
 	$c = $aes->encrypt('数据');
 	var_dump($aes->decrypt($c));
 
@@ -249,11 +262,14 @@ See java-lib
 常见的公钥加密算法有:
 
 1. RSA
-2. EIGamal
-3. 背包算法
-4. Rabin （RSA 特例）
-5. 迪菲-赫尔曼密钥交换(Diffie-Hellman key exchange, D-H)协议中的公钥加密
-6. 椭圆曲线加密算法(Elliptic Curve Cryptography, ECC)
+2. DH 迪菲-赫尔曼密钥交换(Diffie-Hellman key exchange, D-H)协议中的公钥加密。主要用于密钥交换，而不是加密或签名。
+3. ECC椭圆曲线加密算法(Elliptic Curve Cryptography, ECC) ECC基于椭圆曲线数学的加密算法，提供相对于其他方法更小的密钥大小和更快的速度。
+4. DSA (Digital Signature Algorithm)：主要用于数字签名，不用于加密。
+5. EIGamal：在DH基础上构建，可以用于加密和数字签名，但比RSA更慢。
+6. Rabin （RSA 特例）
+3. 背包算法(不安全): 最著名的实现是Merkle-Hellman背包加密算法。
+然而，1984年，Adi Shamir发现了一个可以在多项式时间内破解Merkle-Hellman背包加密算法的方法，从那时起，这种算法就不再被认为是安全的
+背包加密系统背包问题假定一个背包可以承重W，现在有n 个物品，其重量分别为a1,a2,a3,...,an
 
 ## RSA
 > RSA Encryption: Java to PHP , please refer to : http://stackoverflow.com/questions/1662769/rsa-encryption-java-to-php

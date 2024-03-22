@@ -14,7 +14,12 @@ private: true
 ## 查询语法
 https://help.aliyun.com/zh/sls/user-guide/search-syntax?spm=a2c4g.11186623.0.i1#concept-tnd-1jq-zdb
 
+    "/api/v1" and "keyword"
+
     host:x.cn
+    request_time>60 and request_method:Ge*
+    (request_method:GET or request_method:POST) and status in [200 299]
+
 
 ### fulltext
 
@@ -26,3 +31,5 @@ https://help.aliyun.com/zh/sls/user-guide/search-syntax?spm=a2c4g.11186623.0.i1#
     * | select * from log where status=502
     * | select * from log where host like 'x.cn' and url like '/path%' and status != 200
     * | select host,client_ip,url,COUNT(*) as count from log where url like '/p/product/%' GROUP BY host,client_ip,url ORDER BY count DESC LIMIT 1000000
+    * | select * from log where key like '192.168.%.%'
+

@@ -1,9 +1,9 @@
 ---
-title: golang generation
+title: golang generate
 date: 2021-11-22
 private: true
 ---
-# golang generation
+# golang generate
 Go语方的类型检查
 因为Go语言目前并不支持真正的泛型，所以，只能用 interface{} 这样的类似于 void* 这种过度泛型来玩这就导致了我们在实际过程中就需要进行类型检查。Go语言的类型检查有两种技术，一种是 Type Assert，一种是Reflection。
 
@@ -54,7 +54,7 @@ Go语方的类型检查
     fmt.Printf("%v (%T)\n", g, g) //3.1415926 (float64)
     fmt.Println(c.s.Index(0)) //1.4142135623
 
-我们可以看到，UnShift 不用Type Assert，但是用反射写出来的代码还是有点复杂的。那么有没有什么好的方法？
+我们可以看到，用反射写出来的代码还是有点复杂的。那么有没有什么替代的方法？
 
 ## C++泛型 Template
 对于泛型编程最牛的语言 C++ 来说，这类的问题都是使用 Template来解决的。
