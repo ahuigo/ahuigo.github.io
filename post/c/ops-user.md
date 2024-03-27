@@ -16,7 +16,8 @@ id：用户/组身份信息
     su -c 'whoami' - root
     /bin/su -c '/usr/bin/autossh -M 5678 -NR 1234:localhost:2223 user1@123.123.123.123 -p2221' - user1
 
-# useradd
+# user add
+## useradd
 
 	useradd www -s /sbin/nologin -d /home/www
 	echo '123456' | passwd www --stdin
@@ -26,7 +27,7 @@ id：用户/组身份信息
 
     sudo mkhomedir_helper www
 
-# usermod(group)
+## usermod(group)
 User Modifier
 
     # add group to user "ahui"
@@ -42,10 +43,21 @@ Lock a user's password. This puts a '!' in front of the encrypted password
 
 	usermod -L username 
 
-## add user to group
+### add user to group
     usermod -a -G examplegroup username
 
-# umask
+## visudo
+    root   ALL=(ALL) ALL 
+    myuser ALL=(ALL) NOPASSWD: ALL 
+    %mygroup ALL=(ALL:ALL) NOPASSWD: ALL 
+        ALL：第一个 ALL 表示这个规则适用于所有的主机。
+        (ALL)：括号中的 ALL 表示 可以以所有用户的身份执行命令。
+        (ALL:ALL)：括号中的 ALL 表示可以以所有用户、用户组的身份执行命令。
+        NOPASSWD：这表示 myuser 在执行 sudo 命令时不需要输入密码。
+        ALL：最后的 ALL 表示 myuser 可以执行所有的命令。
+
+# permission
+## umask
 设定新建文件的默认权限:
 	for file: 666 - umask
 	for dir: 777 - umask
@@ -54,7 +66,7 @@ Lock a user's password. This puts a '!' in front of the encrypted password
 	umask -S #显示
 	umask 022 # group -w-x other -w-x
 
-# permission
+### permission
 
 	r (read contents in directory)： ls
 	w (modify contents of directory)：touch rm mkdir mv (这些命令都需要x 权限做access)
@@ -72,7 +84,7 @@ Lock a user's password. This puts a '!' in front of the encrypted password
 	$ ls --color=auto dir
 	ls: cannot access dir/a: Permission denied
 
-# chattr
+## chattr
 Refer to [selinux](/p/linux-selinux)
 
 	chattr [+-=][ASacdistu] 檔案或目錄名稱
@@ -94,7 +106,7 @@ lsattr
 	-d ：如果接的是目錄，僅列出目錄本身的屬性而非目錄內的檔名；
 	-R ：連同子目錄的資料也一併列出來！
 
-# suid,sgid,sbit
+## suid,sgid,sbit
 suid/sgid 用于执行命令时转换用户/组身份. 但是用户原来的rwx权限不会改变. 以前不能r(read) 照样不能read
 适用: suid只适用binary file(只适合binary file)
 作用: 用户具备并且创建/改写/执行文件时，*uid身份*被替换成了*file 所属的用户*(创建文件的euid, 也会改变)
@@ -158,7 +170,7 @@ sbit: sticky bit
 	sudo chmod g+s,o+t dir
 	其中 SUID 為 u+s ，而 SGID 為 g+s ，SBIT 則是 o+t 囉！
 
-# chmod
+## chmod
 Clone ownership and permissions from another file?
 
 	chown --reference=otherfile thisfile

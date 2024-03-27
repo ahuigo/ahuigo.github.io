@@ -53,10 +53,10 @@ or
     // @ts-ignore-next
     window.APP_ENV = 'development';
 
-### ignore typescript(deno not support it)
+### ignore typescript(deno support it partially)
 ignore typescript check
 
-    // @ts-ignore trust me
+    // @ts-ignore: trust me
     {/** @ts-ignore */}
     <div abc={`abc12`}></div>
 

@@ -32,6 +32,16 @@ while read -r db ; do
   done < <(clickhouse-client -q "SHOW TABLES FROM $db") 
 done < <(clickhouse-client -q "SHOW DATABASES")
 ```
+
+## copy table
+在目标实例云数据库ClickHouse中，通过如下SQL进行数据迁移。
+
+    INSERT INTO <new_database>.<new_table> SELECT * FROM remote('old_endpoint', <old_database>.<old_table>, '<username>', '<password>');
+
+20.8版本优先使用remoteRaw函数进行数据迁移，如果失败可以申请小版本升级。
+
+    INSERT INTO <new_database>.<new_table> SELECT * FROM remoteRaw('old_endpoint', <old_database>.<old_table>, '<username>', '<password>');
+
 # restore
     clickhouse-client -n < "${OUTDIR}/${db}_${table}_schema.sql"
     cat "${OUTDIR}/${db}_${table}_schema.sql" | clickhouse-client -n 
@@ -51,3 +61,4 @@ done < <(clickhouse-client -q "SHOW DATABASES")
     GRANT SELECT(timestamp, env, serviceName, httpCode, count) ON mydb.mytable TO 'user1'
 ### grant table:select
     GRANT SELECT(timestamp, env, serviceName, httpCode, count) ON mydb.mytable TO 'user1'
+

@@ -25,7 +25,7 @@ export CLICOLOR="xterm-color"
 export GNUTERM=qt
 export PS1="%m:%~%$ " # host
 #export PS1="$(hostname -I | cut -d' ' -f1):%~%$ " # ip
-#export PS1="$(hostname -I | cut -d' ' -f1):%~%$ $(git_prompt_info) "
+#export PS1="$(hostname -I | cut -d' ' -f1):%~%$ $(git_prompt_info) "$'\n> '
 export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])🌈 🏂 🏡  🌤️  🔥'$'\n$ '
 if [[ -z $INIT_PROFILE ]]; then
     export PATH=$PATH:$HOME/www/py-lib/bin:$HOME/www/a/bin:~/bin:/usr/local/sbin

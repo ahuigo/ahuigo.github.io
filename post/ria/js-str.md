@@ -47,6 +47,17 @@ es有这样的语法 string raw
     tw`${button} w-20 ${f}`
     // output: [button, ' w-20 ', f]
 
+
+
+原理是:
+
+    function f(...arg){
+        console.log(arg)
+    }
+    // equal to
+    f`a${1}@${[2]}b`; 
+    f(['a','@','b'], 1, [2]);
+
 ### charcode(unicode)
 length/slice/substr/都是基于字符的
 

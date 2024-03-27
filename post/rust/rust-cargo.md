@@ -80,6 +80,8 @@ export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_pr
 ## 包依赖配置
 Cargo.toml 可定义各种依赖: https://course.rs/cargo/reference/specify-deps.html
 
+以下增加4个包：
+
     [dependencies]
     rand = "0.3"
     hammer = { version = "0.5.0"}

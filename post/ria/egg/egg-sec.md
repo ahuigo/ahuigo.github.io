@@ -23,26 +23,6 @@ date: 2018-10-04
         <a href="http://ww.safe.com&lt;script&gt;" />
 
 
-### CSP
-W3C 的 Content Security Policy，简称 CSP，主要是用来定义页面可以加载哪些资源，减少 XSS 的发生
-
-    exports.security = {
-      xframe: {
-        enable: false,
-      },
-    };
-
-想开启针对某一路径，则配置 match/ignore 选项，例如只针对 /example 开启 CSP：
-
-    exports.security = {
-      csp: {
-        match: '/example',
-        xframe: {
-          //...
-        },
-      },
-    };
-
 ## csrf
 Cross-site request forgery跨站请求伪造
 
