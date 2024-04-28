@@ -2,4 +2,5 @@ def /(delimiter)
     split(delimiter)
 end
 
-p / '.' 
+'a.b.c' / '.' 
+'a.b.c'/'.' 

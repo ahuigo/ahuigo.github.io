@@ -126,15 +126,13 @@ go install 只用于install
 
 # proxy
 ## goproxy
-via goproxy
+The default proxy is: https://proxy.golang.org 
+
+via GOPROXY:
+
     export GOPROXY=https://goproxy.io,direct
     GOPROXY="https://127.0.0.1:8888" 
     GOPROXY="https://name:pass@xx.com/artifactory/api/go/go"
-
-via HTTP_PROXY
-
-    HTTP_PROXY=socks5://127.0.0.1:1080 go get  github.com/gin-gonic/gin
-
 
 The value of GOPROXY is a list
 
@@ -142,21 +140,26 @@ The value of GOPROXY is a list
     “off” : it means turn off the feature
     “direct” : it instructs the tool to download it directly from the code hosting server.
 
-代理服务的endpoint
+via HTTP_PROXY:
 
+    HTTP_PROXY=socks5://127.0.0.1:1080 go get  github.com/gin-gonic/gin
+
+
+## 代理服务的endpoint url
+
+    # https://proxy.golang.org
     https://goproxy.io/github.com/ahuigo/requests/@v/list
     https://goproxy.io/github.com/ahuigo/requests/@latest
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.info
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.mod
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.zip
 
-下载指定version
-
-    go get -u github.com/ahuigo/requests@v1.0.28
-
-> 国内用户在用 golang 的时候麻烦（可以试一下， 先 git clone， 然后 git checkout v1.1.1， 最后 copy 到 mod/pkg@v1.1.1 下）。
+### 下载指定version
+> 国内用户在用 golang 的时候可以手动下载（可以试一下， 先 git clone， 然后 git checkout v1.1.1， 最后 copy 到 mod/pkg@v1.1.1 下）。
 
 不过最简单的方式是 export GOPROXY=https://goproxy.io。
+
+    go get -u github.com/ahuigo/requests@v1.0.28
 
 ## 404
 因为使用私有的repo 时，无法用sum.golang.org 进行checksum校验. (也可能是GOPROXY路径不对)

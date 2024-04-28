@@ -20,6 +20,7 @@ private: true
 
 或者不要csr 直接生成crt
 
+    DOMAIN=local.self
     openssl req -new -x509 -sha256 -key nginx.key -out nginx.crt -days 3650 -addext "subjectAltName = DNS:local.self"
     > Common Name (e.g. server FQDN or YOUR name) []:local.self
 

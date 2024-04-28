@@ -5,4 +5,5 @@ private:
 ---
 # Chrome 文件系统
 https://web.dev/native-file-system/
+https://googlechromelabs.github.io/text-editor/
 https://stackoverflow.com/questions/50716986/open-file-with-system-application-in-a-progressive-web-app

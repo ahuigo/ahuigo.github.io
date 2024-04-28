@@ -50,14 +50,6 @@ go1.14后不能支持多multi-version 依赖.
     foo1 依赖 foo3@v1.0.1
     foo2 依赖 foo3@v1.0.2。
 
-## 指令
-    go mod tidy //拉取缺少的模块，移除不用的模块。
-    go mod download //只下载依赖包
-    go mod vendor //将依赖复制到vendor下
-    go mod verify //校验依赖
-    go list -m -json all //依赖详情
-    go mod graph //打印模块依赖图
-    go mod why //解释为什么需要依赖
 
 # go mod 目录与依赖冲突
 ## go mod path
@@ -252,14 +244,13 @@ go get/run/build会在：
 https://segmentfault.com/a/1190000021854441?
 Refer: https://windmt.com/2018/11/08/first-look-go-modules/
 
-    go mod init	生成 go.mod 文件
-    go mod download	下载 go.mod 文件中指明的所有依赖
-    go mod tidy	整理现有的依赖
-    go mod graph	查看现有的依赖结构
-    go mod edit	编辑 go.mod 文件
-    go mod vendor	导出项目所有的依赖到vendor目录
-    go mod verify	校验一个模块是否被篡改过
-    go mod why	查看为什么需要依赖某模块
+    go mod tidy //拉取缺少的模块，移除不用的模块。
+    go mod download //只下载依赖包
+    go mod vendor //将依赖复制到vendor下
+    go mod verify //校验依赖
+    go list -m -json all //依赖详情
+    go mod graph //打印模块依赖图
+    go mod why //解释为什么需要依赖
 
 ## go mod init
 `go mod init github.com/my/mod` 用来初始化一个 module 并且生成一个 go.mod 文件。

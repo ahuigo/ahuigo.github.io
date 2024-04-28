@@ -35,7 +35,7 @@ int to strhex
 
 ### str2hex
 
-    'abc'.encode().hex()
+    b'abc'.hex()
         '616263'
     bytes.fromhex('6162')
         b'abc'

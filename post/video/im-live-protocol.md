@@ -22,13 +22,17 @@ OBS（Open Broadcaster Software）是开源的推流器软件， 支持 rtmp 推
 ### rtmp
 rtmp 默认使用1935 端口拉流，穿透性不如flv 的80端口。使用较少。
 
-### FLV(Flash Video)
+### FLV(Flash Video)(被HLS淘汰)
 flv 也是应用层协议，不过是基于HTTP 长连接, 穿透性较好。
 视频里边的原始图像数据会采用 H.264 (added to MP4 and FLV)编码格式进行压缩，音频采样数据会采用 AAC 或者 MP3编码格式进行压缩
 
 FLV协议是公有协议拉流播放的主流选择: http://domain.com/xx.flv
 
 ### HLS(HTTP Live Streaming)
+HLS是苹果推出的一种视频协议，他是在H5端采用的一种去flash化的视频协议，
+他的原理是: 
+1. 对视频采取很小的ts切面，m3u8文件是视频切片的索引(它包含了ts URI)
+2. 他的优势是非常明显的: 切片后，只需要搭建静态下载服务器就能支撑hls的播放，对服务器的环境依赖很小。
 
   Filename extension	.m3u8
   Internet media type	application/vnd.apple.mpegurl[1]
@@ -37,9 +41,6 @@ FLV协议是公有协议拉流播放的主流选择: http://domain.com/xx.flv
   Type of format	Playlist
   Extended from	extended M3U
 
-HLS是苹果推出的一种视频协议，他是在H5端采用的一种去flash化的视频协议，
-他的原理是: 对视频采取很小的ts切面，m3u8是视频切片的索引。
-他的优势是非常明显的: 切片后，只需要搭建静态下载服务器就能支撑hls的播放，对服务器的环境依赖很小。
 
 # 优化
 移动直播技术秒开优化经验（含PPT） 徐立

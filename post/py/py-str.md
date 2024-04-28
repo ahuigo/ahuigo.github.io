@@ -259,8 +259,9 @@ python 内存中string 全部是以unicode编码的，而bytes则可以任何特
     >>> chr(25991)
     '文'
 
-### Bytes
+### bytes
 bytes对象b'\xa420'只是一堆比特位而已。define bytes
+#### bytes vs str
 
     >>> '\x00\x01\x61'.encode()
     >>> bytes([0, 1, 0x61])
@@ -279,6 +280,12 @@ bytes对象b'\xa420'只是一堆比特位而已。define bytes
 对于字符串操作，我们并不关心它们内部编码。除非需要字节包用于传输时
 1. str 是关编码的unicode: utf8,gbk, 是纯字符串表示: python3 采用unicode
 1. bytes 是无关编码: utf8,gbk, 是纯字符经过编码过后的二进制数据
+
+#### bytes vs binstr
+    b'abc'.hex()
+        '616263'
+    bytes.fromhex('6162')
+        b'abc'
 
 #### int to byte
     (0xff).to_bytes(1, byteorder='big') + b'\x00'

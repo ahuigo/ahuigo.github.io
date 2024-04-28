@@ -242,8 +242,8 @@ any array
 
     # 2是最后一个(不是从0开始)
     SELECT string_to_array('ordno-#-orddt-#-ordamt', '-#-');
-    SELECT split_part('par1-#-par2-#-part3', '-#-', 2);
-        part2
+    SELECT split_part('par1-#-par2-#-part3', '-#-', 3);
+        part3
 
 ## array_to_string
 
@@ -323,6 +323,10 @@ array_agg 后判断集合
 
     // select 与 having 中的`array_agg()` 不会重复计算
     SELECT name, array_agg(distinct phone) AS ps FROM   stus group by 1 having 3=any(array_agg(distinct phone));
+
+### uniq array
+
+    SELECT ARRAY(SELECT DISTINCT unnest(array_field)) AS unique_array_field FROM your_table;
 
 ### merge array
 合并array：

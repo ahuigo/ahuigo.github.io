@@ -126,7 +126,6 @@ example:
     $ sed '1 a sth.' pets.txt
 
 ## search insert(s+a)
-
 利用匹配追加与插入
 
     $ sed  '/my/a sth.' a.txt

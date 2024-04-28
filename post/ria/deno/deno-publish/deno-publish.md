@@ -4,6 +4,7 @@ date: 2022-07-11
 private: true
 ---
 # Publishing Modules
+> https://docs.deno.com/runtime/manual/advanced/publishing/
 ## Publishing on deno.land/x
 A common way to publish Deno modules is via the official https://deno.land/x hosting service.
 
@@ -13,6 +14,8 @@ To use it:
     1. Then accesse it by a url in the following format: `https://deno.land/x/<module_name>@<tag_name>/<file_path>`
 
 Adding a Module here: https://deno.land/add_module
+> refer to webhook: https://github.com/ahuigo/deno-fetchx/settings/hooks/470173259
+> To upload a version, create a new tag/release in the repository.
 
 ## Publishing Deno modules for Node.js
 See dnt - Deno to Node Transform.

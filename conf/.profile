@@ -26,6 +26,7 @@ export GNUTERM=qt
 export PS1="%m:%~%$ " # host
 #export PS1="$(hostname -I | cut -d' ' -f1):%~%$ " # ip
 #export PS1="$(hostname -I | cut -d' ' -f1):%~%$ $(git_prompt_info) "$'\n> '
+#export PS1="%{$fg_bold[green]%}$(hostname -I | cut -d' ' -f1):%~%$ $(git_prompt_info) %{$reset_color%}%(?..[%?])"$'\n> '
 export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])🌈 🏂 🏡  🌤️  🔥'$'\n$ '
 if [[ -z $INIT_PROFILE ]]; then
     export PATH=$PATH:$HOME/www/py-lib/bin:$HOME/www/a/bin:~/bin:/usr/local/sbin
@@ -162,6 +163,15 @@ function gcap(){
 #alias gpr='git pull --rebase'
 #git fetch $1 $2 && git rebase $1/$2
 
+################################node #################################
+function mocha1(){
+    file=$1
+    npx tsc -p $file && npx mocha --require "@babel/register" $file
+}
+function mocha(){
+    npx mocha --require "@babel/register" $1
+}
+
 
 ################ shell cli###########################
 # grep
@@ -222,7 +232,8 @@ function ts () {
 # app
 export APP_ENV=dev
 
-# deno
+###########################deno & fresh######################
+export FRESH_WATCH=1
 export PATH=$PATH:~/.deno/bin:~/www/js-lib/bin
 alias dr='deno run'
 alias dt='deno test'

@@ -1,4 +1,35 @@
-# dump
+# ddl
+## connect
+
+    clickhouse client -h host --port 3306 -u username --password password 
+    clickhouse client -h host --port 3306 -u username --password password -d database
+
+## database
+    SHOW DATABASES;
+    create database test;
+
+show current database
+
+    SELECT currentDatabase(); //default
+    use test;
+    SELECT currentDatabase(); //test
+
+## table
+### create table
+    CREATE TABLE test.orders (
+        `OrderID` Int64, `CustomerID` Int64, 
+        `OrderDate` DateTime, `Comments` String, `Cancelled` Bool) 
+    ENGINE = MergeTree PRIMARY KEY (OrderID, OrderDate)
+    ORDER BY (OrderID, OrderDate, CustomerID)
+    SETTINGS index_granularity = 8192;
+
+drop
+
+    DROP TABLE database_name.table_name;
+    DROP TABLE table_name;
+
+# dump & restore
+## dump
 
 ```
 alias clickhouse-client="clickhouse-client -h <host> --port <port> -u <username> --password <password> "
@@ -32,6 +63,22 @@ while read -r db ; do
   done < <(clickhouse-client -q "SHOW TABLES FROM $db") 
 done < <(clickhouse-client -q "SHOW DATABASES")
 ```
+### dump a database:
+```
+OUTDIR=./tmp
+mkdir -p $OUTDIR
+
+DATABASE_NAME=$db
+rm $OUTDIR/database_schema.sql
+TABLES=$(clickhouse-client --database=$DATABASE_NAME --query="SHOW TABLES")
+while read -r TABLE; do
+    echo "/* Table: $TABLE */" >> $OUTDIR/database_schema.sql
+    clickhouse-client --database=$DATABASE_NAME --query="SHOW CREATE TABLE $TABLE" --format=TSVRaw| gsed -r "s/$DATABASE_NAME\.//g" >> $OUTDIR/database_schema.sql
+    echo $';\n' >> $OUTDIR/database_schema.sql
+done <<< $TABLES
+
+```
+
 
 ## copy table
 在目标实例云数据库ClickHouse中，通过如下SQL进行数据迁移。
@@ -42,23 +89,8 @@ done < <(clickhouse-client -q "SHOW DATABASES")
 
     INSERT INTO <new_database>.<new_table> SELECT * FROM remoteRaw('old_endpoint', <old_database>.<old_table>, '<username>', '<password>');
 
-# restore
+## restore
+-n 才支持multiple sql:
+
     clickhouse-client -n < "${OUTDIR}/${db}_${table}_schema.sql"
     cat "${OUTDIR}/${db}_${table}_schema.sql" | clickhouse-client -n 
-
-## grant 
-    GRANT ALL ON *.* TO default WITH GRANT OPTION
-    GRANT ALL ON mydb.* TO default WITH GRANT OPTION
-    GRANT ALL ON mydb.mytable TO user1;
-
-### copy role to user
-
-    GRANT  role [,...] TO {user | another_role | CURRENT_USER} 
-    GRANT  privilege[(column_name [,...])]  ON {db.table|db.*|*.*|table|*} TO {user | role | CURRENT_USER} ;
-
-
-### grant table
-    GRANT SELECT(timestamp, env, serviceName, httpCode, count) ON mydb.mytable TO 'user1'
-### grant table:select
-    GRANT SELECT(timestamp, env, serviceName, httpCode, count) ON mydb.mytable TO 'user1'
-

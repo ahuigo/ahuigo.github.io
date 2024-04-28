@@ -114,6 +114,11 @@ npm bin
     npm -g get prefix
     `npm -g get prefix`/lib/node_modules
 
+查找preact 命令：
+
+    npx which preact
+        ./node_modules/.bin/preact
+
 yarn bin
 
     $ yarn global bin            

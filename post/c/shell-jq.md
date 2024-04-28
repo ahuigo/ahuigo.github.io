@@ -76,9 +76,30 @@ map 转数组：
 
     curl -s 'es:49200/_mapping?pretty=true' | jq 'to_entries | .[] | {(.key): .value.mappings | keys}'
 
+### 数组filter
+
+    jq '.data.users[] | select(.name=="Alex")'
+    jq '.data.users[] | select(.name=="Alex") | "name=\(.name) \(.job)"'
+
+### map merge other jq query
+
+    $ cat a.json
+        {
+        "id": 1,
+        "name": "ox",
+        "items": [
+            {"key":1,"name":"alex"},
+            {"key":2,"name":"alex2"}
+        ],
+        }                        
+    $ jq '"id=\(.id) item=\(.items[] | "\(.key)\(.name)")"' a.json
+    "id=1 item=1alex"
+    "id=1 item=2alex2"
+
 ## 对象
 ### 获取keys:
     echo '[{"user":"Alex", "age":1,"extra":{"no":1}},{"user":"John","age":2,"extra":{"father":"Li"}}]' | jq '.[].extra | keys
 
 ## inner json
     echo '{"data":"{\"age\":1}"}' |  jq '.data|fromjson|.age'
+    echo '"{\"age\":1}"' |  jq -r 'fromjson|.age'
