@@ -29,6 +29,7 @@ def Usage():
             -i  Intersection set
         OPTIONS
             -h  For help
+            -t  trim space
 
     Example:
         $  cat a.csv
@@ -46,24 +47,28 @@ def Usage():
         Lily:18
         Lilei:19
 
-        $  fset a.csv:1 - b.csv:1:\|
+        # diff 1st column of a.csv and b.csv
+        $  fset a.csv:1 - b.csv:1:'|'
         Xiaohua
 
-        $  fset a.csv:1 + b.csv:1:\|
+        # union 1st column of a.csv and b.csv
+        $  fset a.csv:1 + b.csv:1:'|'
         Lilei
         James
         Lily
         Xiaohua
 
-        $  fset a.csv:1 -i b.csv:1:\|
+        # intersection 1st column of a.csv and b.csv
+        $  fset a.csv:1 -i b.csv:1:'|'
         Lily
         Lilei
 
-        $  cat a.csv | fset :1 -i b.csv:1:\|
+        # intersection 1st column of a.csv and b.csv
+        $  cat a.csv | fset :1 -i b.csv:1:'|'
         Lily
         Lilei
 
-        $  cat a.csv | fset :1 -i c.csv:1:\:
+        # intersection 1st column of a.csv and b.csv
         $  cat a.csv | fset :1 -i c.csv:1::
         Lily
         Lilei
@@ -76,12 +81,16 @@ if len(argv) == 1 or '-h' in argv:
     Usage()
 
 act = None
+trim_space = False
 argv.pop(0)
 s = set()
 while len(argv):
     arg = argv.pop(0)
     if arg in ['-', '+', '-i']:
         act = arg
+        continue
+    if arg == '-t':
+        trim_space = True
         continue
     arr = arg.split(':', 2)
     if len(arr) == 1:
@@ -98,12 +107,13 @@ while len(argv):
     for line in fp:
         row = line.strip().split(delimiter)
         if len(row) > index:
+            item = row[index].strip() if trim_space else row[index]
             if act in [None, '+']:
-                s.add(row[index])
-            elif act == '-' and row[index] in s:
-                s.remove(row[index])
+                s.add(item)
+            elif act == '-' and item in s:
+                s.remove(item)
             elif act == '-i':
-                tmp_s.add(row[index])
+                tmp_s.add(item)
     if act == '-i':
         s &= tmp_s
 

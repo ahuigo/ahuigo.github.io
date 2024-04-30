@@ -114,28 +114,6 @@ execute order:
     HAVING for limit resulting groups (不能使用select 中的别名，不过`having sum(cost)>50`不会重复计算)
     ORDER BY for order results
 
-### is null
-
-see https://www.postgresql.org/docs/current/functions-comparison.html
-
-    select 1 is null;  -- alias: expression ISNULL
-    where column is null; -- alias: expression NOTNULL
-
-not 'C' but include null
-
-    SELECT * FROM "A" WHERE "B" != 'C'; -- not include B is null
-
-not 'C': `IS DISTINCT FROM`(Not equal), treating null as a comparable value.
-
-    SELECT * FROM "A" WHERE "B" != 'C' OR "B" IS NULL
-    -- or
-    SELECT * FROM "A" WHERE "B" is distinct from 'C'
-
-IS NULL in PostgreSQL is not value:
-
-    // error
-    select 1 is 1
-
 ### 字段引号
 
 双引号 反引号。表示特殊的字段：
@@ -156,6 +134,84 @@ IS NULL in PostgreSQL is not value:
 
     page=0
     limit 10 offset 10*page
+
+
+### join
+#### inner join(default)
+    WITH T1(uid, age) AS (
+        SELECT 1,1 UNION ALL
+        SELECT 2,2 UNION ALL
+        SELECT 3,3
+    ),
+    T2(uid, name) AS (
+        SELECT 1,'John' UNION ALL
+        SELECT 1,'John2' UNION ALL
+        SELECT 2,'Alex' UNION ALL
+        SELECT 4,'Jane'
+    )
+    SELECT * FROM T1
+    INNER JOIN T2 ON T1.uid = T2.uid;
+
+     uid | age | uid | name
+    -----+-----+-----+-------
+    1 |   1 |   1 | John
+    1 |   1 |   1 | John2
+    2 |   2 |   2 | Alex
+#### Left join
+    WITH T1(uid, age) AS (
+        SELECT 1,1 UNION ALL
+        SELECT 2,2 UNION ALL
+        SELECT 3,3
+    ),
+    T2(uid, name) AS (
+        SELECT 1,'John' UNION ALL
+        SELECT 1,'John2' UNION ALL
+        SELECT 2,'Alex' UNION ALL
+        SELECT 4,'Jane'
+    )
+    SELECT * FROM T1
+    LEFT JOIN T2 ON T1.uid = T2.uid;
+
+     uid | age | uid | name
+    -----+-----+-----+-------
+    1 |   1 |   1 | John
+    1 |   1 |   1 | John2
+    2 |   2 |   2 | Alex
+    3 |   3 |     |
+
+#### right join
+省略
+
+#### all join
+    WITH T1(uid, age) AS (
+        SELECT 1,1 UNION ALL
+        SELECT 2,2 UNION ALL
+        SELECT 3,3
+    ), T2(uid, name) AS (
+        SELECT 1,'John' UNION ALL
+        SELECT 1,'John2' UNION ALL
+        SELECT 2,'Alex' UNION ALL
+        SELECT 4,'Jane'
+    )
+    SELECT * FROM T1
+    FULL JOIN T2 ON T1.uid = T2.uid;
+
+     uid | age | uid | name
+    -----+-----+-----+-------
+    1 |   1 |   1 | John
+    1 |   1 |   1 | John2
+    2 |   2 |   2 | Alex
+        |     |   4 | Jane
+    3 |   3 |     |
+
+#### join with using
+
+Sometimes this is fastest. Often shortest. Often results in the same query plan
+as NOT EXISTS.
+
+    SELECT l.ip FROM   login_log l 
+    LEFT   JOIN ip_location i USING (ip)  -- short for: ON i.ip = l.ip
+    WHERE  i.ip IS NULL;
 
 ### where
 
@@ -179,17 +235,37 @@ Only good without NULL values or if you know to handle NULL properly.
         FROM   ip_location
     );
 
-### left join/is null
+#### is not
+    WHERE your_field NOT LIKE '%keyword%';
 
-Sometimes this is fastest. Often shortest. Often results in the same query plan
-as NOT EXISTS.
+#### is bool
 
-    SELECT l.ip FROM   login_log l 
-    LEFT   JOIN ip_location i USING (ip)  -- short for: ON i.ip = l.ip
-    WHERE  i.ip IS NULL;
+    WHERE your_field = FALSE;
+    WHERE not your_field;
+
+#### is null
+
+see https://www.postgresql.org/docs/current/functions-comparison.html
+
+    select 1 is null;  
+    where column is null; 
+
+not 'C' but include null
+
+    SELECT * FROM "A" WHERE "B" != 'C'; -- not include B is null
+
+not 'C': `IS DISTINCT FROM`(Not equal), treating null as a comparable value.
+
+    SELECT * FROM "A" WHERE "B" != 'C' OR "B" IS NULL
+    -- or
+    SELECT * FROM "A" WHERE "B" is distinct from 'C'
+
+IS NULL in PostgreSQL is not value:
+
+    // error
+    select 1 is 1
 
 ### Except
-
 Short. Not as easily integrated in more complex queries.
 
     SELECT ip 
@@ -417,6 +493,12 @@ PostgreSQL won't calculate the sum twice
     select group,count(*) from (select group, uid from tmp group by group, uid) tmp group by group;
     # better
     select group, count(distinct uid) from tmp group by group;
+
+不分组，join＋distinct：
+
+    SELECT COUNT(DISTINCT a.id) FROM current_ways a
+        INNER JOIN way_tags b ON a.id = b.way_id
+        WHERE a.visible = TRUE AND b.k = 'highway';
 
 
 
