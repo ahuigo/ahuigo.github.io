@@ -85,6 +85,27 @@ until
 
     declare -i i=0; until (($i>=3)); do  echo $i;let i++; done #output: 0 1 2
 
+## read file
+IFS= 是内部字段分隔符，设置为空可以保证每一行的前后空白不被去除。-r 参数防止反斜杠转义
+
+    while IFS= read -r line
+    do
+        echo "$line"
+    done < "file.txt"
+
+加上行号：
+
+    lineno=0
+    while IFS= read -r line
+    do
+        lineno=$((lineno + 1))
+        if (( lineno < 10 )); then
+            continue
+        fi
+        echo "$lineno: $line"
+    fi
+    done < "file.txt"
+
 ## break
 
     break;

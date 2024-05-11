@@ -149,24 +149,27 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
 # Cookie
 ## 发送cookie的Samesite 机制
 > 参考 ruanyifeng https://www.ruanyifeng.com/blog/2019/09/cookie-samesite.html
+
 ### Samesite=Strict
 1. 到第三方网站不可发送cookie
 2. 子域名(二级域名及其子域名间是可以共享cookie的)、端口号不一样 都可以发cookie, 
 
-### Samesite=Lax(默认)
+### Samesite=Lax(chrome 默认)
+> Lax规则稍稍放宽，大多数情况也是不发送第三方 Cookie，但是导航到目标网址的 Get 请求除外。
 跨域名发cookie 仅限以下特定场景
 
-    请求类型	示例	正常情况	Lax
-    链接	<a href="..."></a>	发送 Cookie	发送 Cookie
-    预加载	<link rel="prerender" href="..."/>	发送 Cookie	发送 Cookie
-    GET 表单	<form method="GET" action="...">	发送 Cookie	发送 Cookie
-    POST 表单	<form method="POST" action="...">	发送 Cookie	不发送
-    iframe	<iframe src="..."></iframe>	发送 Cookie	不发送
-    AJAX	$.get("...")	发送 Cookie	不发送
-    Image	<img src="...">	发送 Cookie	不发送
+    请求类型	示例	                        正常情况	            Lax
+    链接	<a href="..."></a>	                发送 Cookie	        发送 Cookie
+    预加载	<link rel="prerender"/>	            发送 Cookie	        发送 Cookie
+    GET 表单	<form method="GET" action="...">发送 Cookie	        发送 Cookie
 
+    POST 表单	<form method="POST" action="...">发送 Cookie	    不发送
+    iframe	<iframe src="..."></iframe>	        发送 Cookie	        不发送
+    AJAX	$.get("...")	                    发送 Cookie	        不发送
+    Image	<img src="...">	                    发送 Cookie	        不发送
 
-### Samesite=None
+### Samesite=None(Secure=true)
+> Secure=true 指的是 cookie 只能通过 HTTPS 协议发送
 想在跨域时发送 cookie 那么要设置`SameSite=None; Secure` (限https) 或 chrome://flags 配置`#same-site-by-default-cookies and #cookies-without-same-site-must-be-secure`.
 
 ## 跨域set-cookie

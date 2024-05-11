@@ -141,8 +141,15 @@ for example:
 `RETURN NEXT` and `RETURN QUERY` do not actually return from the function — 
 1. they simply append zero or more rows to the function's result set, 参考for loop query
 
-# case
+# case when
     select CASE 'r' 
         WHEN 'r' THEN 'table'
         WHEN 'v' THEN 'view' 
         ELSE 'other' END as "Type";
+
+    UPDATE t1 
+    SET status = CASE 
+        WHEN score <= 0 THEN 'false' 
+        WHEN score < 100 THEN 'ok' 
+        ELSE 'n/a' 
+    END;

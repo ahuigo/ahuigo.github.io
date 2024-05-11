@@ -204,6 +204,101 @@ execute order:
         |     |   4 | Jane
     3 |   3 |     |
 
+#### join where not(坑)
+    WITH T1(uid, age) AS (
+        SELECT 1,1 UNION ALL
+        SELECT 2,2 UNION ALL
+        SELECT 3,3
+    ),
+    T2(uid, name) AS (
+        SELECT 1,'John' UNION ALL
+        SELECT 1,'John2' UNION ALL
+        SELECT 2,'Alex' UNION ALL
+        SELECT 4,'Jane'
+    )
+    SELECT * FROM T1
+    INNER JOIN T2 ON T1.uid = T2.uid where name!='John2';
+
+    uid | age | uid | name
+    -----+-----+-----+------
+    1 |   1 |   1 | John
+    2 |   2 |   2 | Alex
+
+想排除 name!='John2' 对应的所有uid。怎么修改？
+
+##### join where not in(慢)
+> 每一行执行子查询，会非常的慢
+
+    WITH T1(uid, age) AS (
+        SELECT 1,1 UNION ALL
+        SELECT 2,2 UNION ALL
+        SELECT 3,3
+    ), T2(uid, name) AS (
+        SELECT 1,'John' UNION ALL
+        SELECT 1,'John2' UNION ALL
+        SELECT 2,'Alex' UNION ALL
+        SELECT 4,'Jane'
+    ), ExcludedUIDs(uid) AS (
+        SELECT uid FROM T2 WHERE name = 'John2'
+    )
+    SELECT * FROM T1
+    INNER JOIN T2 ON T1.uid = T2.uid
+    WHERE T1.uid NOT IN (SELECT uid FROM ExcludedUIDs);
+
+##### join where not exists(慢)
+> 每一行执行子查询，会非常的慢
+> not exists可正确处理NULL, 且性能好点儿;　not in　在比较null时都不会成立
+
+    WITH T1(uid, age) AS (
+        SELECT 1,1 UNION ALL
+        SELECT 2,2 UNION ALL
+        SELECT 3,3
+    ), T2(uid, name) AS (
+        SELECT 1,'John' UNION ALL
+        SELECT 1,'John2' UNION ALL
+        SELECT 2,'Alex' UNION ALL
+        SELECT 4,'Jane'
+    ), ExcludedUIDs(uid) AS (
+        SELECT uid FROM T2 WHERE name = 'John2'
+    )
+    SELECT * FROM T1
+    INNER JOIN T2 ON T1.uid = T2.uid
+    WHERE  Not Exists (SELECT null FROM ExcludedUIDs where uid=T1.uid);
+
+    # or ...
+    #WHERE  Not Exists (SELECT 1 FROM ExcludedUIDs where uid=T1.uid);
+    #WHERE  Not Exists (SELECT 2 FROM ExcludedUIDs where uid=T1.uid);
+
+ExcludedUIDs　特别大时，可以创建一个带索引的`物化视图`：
+
+    CREATE MATERIALIZED VIEW ExcludedUIDs AS SELECT uid FROM T2 WHERE name = 'John2';
+    CREATE INDEX idx_ExcludedUIDs ON ExcludedUIDs(uid);
+
+ExcludedUIDs　特别大时，也可以创建一个带索引的`Temp表`：
+
+    CREATE TEMP TABLE ExcludedUIDs AS SELECT uid FROM T2 WHERE name = 'John2';
+    CREATE INDEX idx_ExcludedUIDs ON ExcludedUIDs(uid);
+
+或者利用left join where E.uid is null 取反(还是慢)
+> 还是很慢：E.uid　是没有索引的
+> 不过比子表查询: `WHERE  Not Exists (SELECT null FROM ExcludedUIDs where uid=T1.uid)` 稍快一点
+
+    WITH T1(uid, age) AS (
+        SELECT 1,1 UNION ALL
+        SELECT 2,2 UNION ALL
+        SELECT 3,3
+    ), T2(uid, name) AS (
+        SELECT 1,'John' UNION ALL
+        SELECT 1,'John2' UNION ALL
+        SELECT 2,'Alex' UNION ALL
+        SELECT 4,'Jane'
+    ), ExcludedUIDs(uid) AS (
+        SELECT uid FROM T2 WHERE name = 'John2'
+    )
+    SELECT T1.* FROM T1
+    LEFT JOIN ExcludedUIDs E ON T1.uid = E.uid
+    WHERE E.uid IS NULL;
+
 #### join with using
 
 Sometimes this is fastest. Often shortest. Often results in the same query plan
@@ -445,10 +540,11 @@ PostgreSQL won't calculate the sum twice
     SELECT  SUM(points) AS total FROM table GROUP BY username HAVING  SUM(points) > 25
 
 ### concat rows
-
 合并为array
 
     select code, ARRAY_AGG(label) l from t group by code;
+    select code, ARRAY_AGG(label) l from t group by code
+        HAVING NOT 'boy' = ANY(array_agg(label));
     SELECT family, ARRAY_AGG (first_name || ' ' || last_name) fullname FROM users group by family; 
 
 合并为字符串：

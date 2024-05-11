@@ -22,6 +22,7 @@ jq 参数：
 
     while(true; .+1) 中对.这个变量进行自增
 
+
 # 管道
 jq 支持管道，比如我们利用管道生成base64
 
@@ -103,3 +104,9 @@ map 转数组：
 ## inner json
     echo '{"data":"{\"age\":1}"}' |  jq '.data|fromjson|.age'
     echo '"{\"age\":1}"' |  jq -r 'fromjson|.age'
+
+## string
+how to trim quotes?
+
+    echo '"abc"' | jq
+    echo '"abc"' | jq -r .

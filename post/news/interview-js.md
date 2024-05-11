@@ -8,6 +8,11 @@ private:
 1. 时间有限，所有的题都是选答题。请选择最能反映你的经验、能力的问题作答。
 3. 所有题使用js/ts 语言作答，也可用伪代码。尽量写出实际可执行的代码。
 
+面试平台：
+- https://codeinterview.io/
+- https://codepen.io/pen
+- IDE
+
 ## dom/css 操作: 消息居中
 1.请给下面的html代码加上css，让消息提示框居中显示：
 ![](../../img/news/js-interview-css-center.png)
