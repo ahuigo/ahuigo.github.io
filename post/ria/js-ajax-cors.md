@@ -158,7 +158,7 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
 > Lax规则稍稍放宽，大多数情况也是不发送第三方 Cookie，但是导航到目标网址的 Get 请求除外。
 跨域名发cookie 仅限以下特定场景
 
-    请求类型	示例	                        正常情况	            Lax
+    请求类型	示例	                           None	            Lax
     链接	<a href="..."></a>	                发送 Cookie	        发送 Cookie
     预加载	<link rel="prerender"/>	            发送 Cookie	        发送 Cookie
     GET 表单	<form method="GET" action="...">发送 Cookie	        发送 Cookie
@@ -169,13 +169,32 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
     Image	<img src="...">	                    发送 Cookie	        不发送
 
 ### Samesite=None(Secure=true)
-> Secure=true 指的是 cookie 只能通过 HTTPS 协议发送
-想在跨域时发送 cookie 那么要设置`SameSite=None; Secure` (限https) 或 chrome://flags 配置`#same-site-by-default-cookies and #cookies-without-same-site-must-be-secure`.
+> 要求设置Secure=true 指的是 cookie 只能通过 HTTPS 协议发送(http 页面也是可以访问https的)
+
+想在跨域时发送 cookie 那么要设置`SameSite=None; Secure` (限https) 或 chrome://flags 配置`#cookies-without-same-site-must-be-secure`.
+
+1. 这个可能会导致恶意网站利用`Samesite=None` 构造恶意的js 请求，实现post数据修改
+2. `SameSite=None; Secure`设置后，就无法通过http访问再种cookie了，只能访问https接口种cookie
 
 ## 跨域set-cookie
 1. 通过cors返回set-cookie 时必须开启: `credentials: include`
-2. 想在跨域时发送 cookie 那么要设置`SameSite=None; Secure` 两者不可分开
-    2. Secure 只支持通过https 连接中设置，所以无法用ajax http 发送`SameSite=None; Secure`
+2. 想在跨域时发送 cookie 那么要设置`SameSite=None; Secure` None必须带Secure
+    2. Secure 只支持通过https 连接中设置，所以无法用ajax http 发送`SameSite=None; Secure`的cookie
 2. 隐身模式下，跨域（包括端口号不一样）不可`set-cookie`, 除非**同子域名且同端口**: 
     1. 比如: `m:8001` 通过ajax 访问`m:8085`（注意端口不一样算跨域）时，`set-cookie:Domain=m; Max-Age=604800; SameSite=None` 会报`Set-Cookie was blocked due to user preferences`, 2023年这个限制会被引入到正式模式
     2. 参考 https://stackoverflow.com/questions/62578201/how-to-fix-this-set-cookie-was-blocked-due-to-user-preferences-in-chrome-sta
+
+## http访问https 接口set/get cookie接口cors限制(端口不一样，就是cors)
+> 一旦使用https接口set　cookie，那么能用`fetch('http://api/get-include-cookie')`(不一定)，但是不能用`fetch('https://api/get-include-cookie')`
+
+如果访问https://auth.ahuigo.com/cookie 种了cookie
+那么在`http页面`(http://mail.ahuigo.com:8001 )访问`ajax https` 接口会遇到无法传cookie(肯定)
+
+    fetch('https://auth.ahuigo.com',{credentials: 'include',mode:"cors"})
+
+那么在`http页面`(http://mail.ahuigo.com:8001 )访问`ajax http` 接口可能会遇到 preflight cors error(某些证书限制, 要清清理下证书):
+
+    fetch('http://auth.ahuigo.com',{credentials: 'include',mode:"cors"})
+    > blocked by CORS policy: Response to preflight request doesn't pass access control check 
+    >某些证书限制,通不过preflight 预检, 浏览器不会真正的请求OPTIONS, 直接返回(307 Internal Redirect) ，正常应该返回(204 No Content)
+
