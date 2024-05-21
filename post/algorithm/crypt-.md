@@ -86,7 +86,8 @@ date: 2018-09-26
 
 	/**
 	 * if blocksize = 8, it is pkcs5
-	 * mcrypt 默认的填充值为 null （'\0'），java或.NET 默认填充方式为 PKCS7, AES CBC blocksize = 16 bytes
+	 * The pkcs7 is for range blocksize (from 1 to 255 bytes)
+	 * mcrypt 默认的填充值为 null （'\0'），java或.NET 默认填充方式为 PKCS7, 特别的：AES CBC blocksize = 16 bytes
 	 */
 	function pkcs7_pad($text, $blocksize) {
 	   $pad = $blocksize - (strlen($text) % $blocksize);
@@ -127,7 +128,7 @@ date: 2018-09-26
 
 
 ## PKCS
-[pks5,pks7]: http://zhiwei.li/text/2009/05/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%9A%84pkcs5%E5%92%8Cpkcs7%E5%A1%AB%E5%85%85/
+[pkcs5,pkcs7]: http://zhiwei.li/text/2009/05/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%9A%84pkcs5%E5%92%8Cpkcs7%E5%A1%AB%E5%85%85/
 https://chrismckee.co.uk/handling-tripledes-ecb-pkcs5padding-php/
 
 http://crypto.stackexchange.com/questions/9043/what-is-the-difference-between-pkcs5-padding-and-pkcs7-padding
@@ -135,21 +136,31 @@ http://crypto.stackexchange.com/questions/9043/what-is-the-difference-between-pk
 The difference between the PKCS#5 and PKCS#7 padding mechanisms is the block size;
 
 1. PKCS#5 padding is defined for 8-byte block sizes,
-2. PKCS#7 padding would work for any block size from 1 to 255 bytes.
-
-This is the definition of PKCS#5 padding (6.2) as defined in the RFC:
-
-> The padding string PS shall consist of 8 - (||M|| mod 8) octets all having value 8 - (||M|| mod 8).
-
-The RFC that contains the PKCS#7 standard is the same except that it allows block sizes up to 255 bytes in size (10.3 note 2):
-
-> For such algorithms, the method shall be to pad the input at the trailing end with k - (l mod k) octets all having value k - (l mod k), where l is the length of the input.
+2. PKCS#7 padding would work for any block size from 1 to 255 bytes. 主要用于AES
+3. PKCS#1：定义了RSA公钥加密标准，包括RSA加密和签名算法的定义，以及相关的填充方案。PKCS#1 v1.5是一种常用的填充方案　它是随机方案
 
 So fundamentally **PKCS#5 padding is a subset of PKCS#7 padding for 8 byte block sizes**. Hence, **PKCS#5 padding can not be used for AES. PKCS#5 padding was only defined with (triple) DES operation in mind**.
 
 Many cryptographic libraries use an identifier indicating PKCS#5 or PKCS#7 to define the same padding mechanism. The identifier should indicate PKCS#7 if block sizes other than 8 are used within the calculation. Some cryptographic libraries such as the SUN provider in Java indicate PKCS#5 where PKCS#7 should be used - "PKSC5Padding" should have been "PKCS7Padding".
 
-Note that both PKCS#5 and PKCS#7 are not standards for padding mechanisms. The padding part is only a small subset of the defined functionality. PKCS#5 is a standard for Password Based Encryption or PBE, and PKCS#7 defines the Cryptographic Message Syntax or CMS.
+
+    # pkcs7
+	function pkcs7_pad($text, $blocksize) {
+	   $pad = $blocksize - (strlen($text) % $blocksize);
+	   return $text . str_repeat(chr($pad), $pad);
+	}
+
+    # pkcs1 v1.5 这个示例它没有实现PKCS#1的所有特性
+    def pkcs1_5_pad(message:bytes, key_size):
+        max_msg_size = key_size // 8 - 11  # key_size is in bits, convert to bytes and subtract overhead for PKCS#1 v1.5
+        if len(message) > max_msg_size:
+            raise ValueError("Message is too long.")
+        
+        padding_string = os.urandom(max_msg_size - len(message))
+        while len(padding_string) < max_msg_size - len(message):  # Ensure padding string is correct length
+            padding_string += os.urandom(1)
+        
+        return b'\x00\x02' + padding_string + b'\x00' + message
 
 
 ## BlowFish 算法

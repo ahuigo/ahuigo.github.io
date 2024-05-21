@@ -75,6 +75,19 @@ body: 不能是 object, 只能是: (是`body` 不是`data`)
 
     JSON.stringify(data); //默认： text/plain
 
+#### Post form
+> 参考　dom/js-dom-file.md　手动生成blob、form 
+
+    //body: new FormData() //注意key不是data, 值类型也不能是object!!!!! 
+    file1 = new File(['content....'],'a.py', {type : 'plain/text'});
+    fd = new FormData()
+    fd.set('file1', file1)
+    fd.set('name','ahuigo')
+    fetch('http://m:4500/dump/upload', {
+        body: fd,
+        method:'post'
+    }).then(async d=>console.log(await d.text()))
+
 ### fetch json
 example
 
@@ -180,7 +193,6 @@ credential 发送include cookie时，allow-origin 不能是`*`
 ## response
 
 ### data
-
 json(), text(), blob(), arrayBuffer()
 
     response.json().then

@@ -163,6 +163,10 @@ full example via for expression
     fr.readAsDataURL
 
 ## blob
+### new blob
+
+    blob = new Blob(['str'], {type : 'application/json'});
+    blob.slice(start, end)
 
 ### blob as form
 
@@ -219,7 +223,7 @@ full example via for expression
         console.log(base64data);
     }
 
-### blob=file.slice
+### blob=file.slice(file to blob)
 
     if(navigator.appVersion.match('Chrome/'))
     	blob = file.slice(start, length);
@@ -231,6 +235,14 @@ full example via for expression
     function blobSlice(file, start, end) {
         let blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice;
         return blobSlice.call(file, start, end);
+    }
+
+### blob2file
+
+    function blob2file(blobData) {
+        const fd = new FormData();
+        fd.set('a', blobData);
+        return fd.get('a');//name:blob, type:''
     }
 
 ## FileReader
@@ -256,18 +268,7 @@ file is blob, split file to small blob
     blob = blobSlice(file, start, end)
     fileReader.readAsBinaryString(blob_or_file);
 
-# Blob
 
-    blob = new Blob(['str'], {type : 'application/json'});
-    blob.slice(start, end)
-
-## blob2file
-
-    function blob2file(blobData) {
-        const fd = new FormData();
-        fd.set('a', blobData);
-        return fd.get('a');//name:blob, type:''
-    }
 
 # File
 

@@ -4,13 +4,24 @@ date: 2023-03-22
 private: true
 ---
 # 证书操作
-## 证书扩展名
+## 证书扩展名(证书格式)
+X.509 格式
+
+    X.509 是一个最基本的公钥格式标准(PKCS,  Public-Key Cryptography Standards)，里面规定了证书需要包含的各种信息
+
 扩展名：
 
-    证书(Certificate): *.cer *.crt 
-        ——BEGIN CERTIFICATE——
-        .cer 一般是二进制.der(windows) .crt 一般是ascii 的base64 .pem(linux常用)
+    证书(Certificate): *.cer *.crt 都是X509证书格式（包含的是公钥）
         可用openssl 查看到网站的cert
+        ——BEGIN CERTIFICATE——
+
+        # 二者可以互转: 
+        .cer 是二进制 
+        .crt 是ascii 
+
+        # 二者没有固定的编码格式，都可以用选用下面的方法编码
+        二进制编码的 .pem(linux常用)
+        base64编码的 .der(windows) 
 
     私钥(Private Key): *.key 
         —–BEGIN RSA PRIVATE KEY—–
@@ -24,11 +35,9 @@ private: true
     der: 二进制编码
     pem: base64编码
 
-X.509是一个最基本的公钥格式标准(PKCS,  Public-Key Cryptography Standards)，里面规定了证书需要包含的各种信息
-
 ## 查看证书
 ### 查看网站crt 
-crt 一般是pem（base64）
+crt 一般是pem编码（base64）
 
     openssl s_client -connect baidu.com:443 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > baidu.crt
 

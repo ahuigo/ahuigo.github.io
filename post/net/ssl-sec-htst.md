@@ -8,7 +8,16 @@ private: true
 
     Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-
 如果想清除的话：
 
     chrome://net-internals/#hsts
+
+## nginx 配置HSTS
+
+    add_header Strict-Transport-Security 'max-age=31536000; includeSubDomains' always;
+
+## golang 配置HSTS
+    func handler(w http.ResponseWriter, r *http.Request) {
+      w.Header().Add("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
+      // ...
+    }

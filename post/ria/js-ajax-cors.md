@@ -185,14 +185,14 @@ CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服
     2. 参考 https://stackoverflow.com/questions/62578201/how-to-fix-this-set-cookie-was-blocked-due-to-user-preferences-in-chrome-sta
 
 ## http访问https 接口set/get cookie接口cors限制(端口不一样，就是cors)
-> 一旦使用https接口set　cookie，那么能用`fetch('http://api/get-include-cookie')`(不一定)，但是不能用`fetch('https://api/get-include-cookie')`
+> 一旦使用https接口set　cookie，那么能用`fetch('http://api/get-include-cookie')`(没有加HSTS)，但是不能用`fetch('https://api/get-include-cookie')`
 
 如果访问https://auth.ahuigo.com/cookie 种了cookie
 那么在`http页面`(http://mail.ahuigo.com:8001 )访问`ajax https` 接口会遇到无法传cookie(肯定)
 
     fetch('https://auth.ahuigo.com',{credentials: 'include',mode:"cors"})
 
-那么在`http页面`(http://mail.ahuigo.com:8001 )访问`ajax http` 接口可能会遇到 preflight cors error(某些证书限制, 要清清理下证书):
+那么在`http页面`(http://mail.ahuigo.com:8001 )访问`ajax http` 接口可能会遇到 preflight cors error(加了HSTS时，net/ssl-sec-htst.md):
 
     fetch('http://auth.ahuigo.com',{credentials: 'include',mode:"cors"})
     > blocked by CORS policy: Response to preflight request doesn't pass access control check 
