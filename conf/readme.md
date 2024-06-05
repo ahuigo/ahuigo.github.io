@@ -38,6 +38,7 @@ local:
         #export PATH=$PATH:$HOME/www/a/bin:~/bin:/usr/local/sbin
     ln -s ~/www/a/conf/.gitconfig ~/
     ln -s ~/www/a/conf/.gitmessage ~/
+    ln -s ~/www/autotool/git_template ~/.git_template
     cd prixx/conf && make init
 
 ## link conf
