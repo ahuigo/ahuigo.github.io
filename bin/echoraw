@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-# cmd=ls;print -r -- $cmd:c
+# 类似：cmd=ls;print -r -- $cmd arg2 arg3 
 import sys
-if len(sys.argv)<2:
-    quit("no arg!!!!")
-
-if sys.argv[1]=='-s':
-    e = sys.argv[-1]
-    for v in sys.argv[2:-1]:
-        v = v.replace('%', e)
-        print("'"+v+"' ", end="")
-    print("")
-    quit("")
+print(len(sys.argv),sys.argv)
+if not sys.stdin.isatty():
+    print("stdin:")
+    for line in sys.stdin:
+        print(line,end="")
 else:
-    print("there is ",len(sys.argv), " args!")
-    print(sys.argv)
-    print("each one:")
-    for v in sys.argv:
-        print(v)
+    print("no stdin")

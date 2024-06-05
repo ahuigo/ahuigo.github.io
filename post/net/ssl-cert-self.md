@@ -4,28 +4,32 @@ date: 2022-05-26
 private: true
 ---
 # ssl selfsigned 证书生成
-没有ca的自签名证书，在keychain中会显示`Self-signed root certificate`
+没有ca的自签名证书，在keychain中System会显示`Self-signed root certificate`
 
 ## Generating the Certficate Signing Request
-先准备好
+先准备好key
 
     openssl genrsa -out nginx.key 1024
 
-再生成csr + crt
+再生成csr + crt (openssl.custom.cnf 文件参考: ssl-cert-ca.md)
 
     # csr
     openssl req -new -sha256 -key nginx.key -out nginx.csr
-    # crt
+    # 自己给自己签发crt
     openssl x509 -req -sha256 -in nginx.csr -signkey nginx.key -out nginx.crt -days 3650 -extensions v3_ca -extfile openssl.custom.cnf
 
-或者不要csr 直接生成crt
+或者不要csr 直接生成crt(ca证书就是这样的: req -new -x509)
 
-    DOMAIN=local.self
-    openssl req -new -x509 -sha256 -key nginx.key -out nginx.crt -days 3650 -addext "subjectAltName = DNS:local.self"
-    > Common Name (e.g. server FQDN or YOUR name) []:local.self
+    DOMAIN=local.self2
+    openssl req -new -x509 -sha256 -key nginx.key -out nginx.crt -days 3650 -subj "/C=CN/ST=Some-Province/O=Internet Widgets, Inc./CN=$DOMAIN" -addext "subjectAltName = DNS:$DOMAIN"
 
-    # or
+    # or with x.cnf
     openssl x509 -req -new -sha256 -key nginx.key -out nginx.crt -days 3650  -extensions v3_ca -extfile openssl.custom.cnf
+
+或一键生成key+crt: req -x509 -nodes -newkey
+
+    DOMAIN=local.self2
+    openssl req -x509 -nodes -newkey rsa:1024    -keyout nginx.key -out nginx.crt -days 3650 -subj "/C=CN/ST=Some-Province/O=Internet Widgets, Inc./CN=$DOMAIN" -addext "subjectAltName = DNS:$DOMAIN"
 
 ## 一键生成key +crt
 ### 多种非对称算法：RSA，ECDSA,...一健生成
@@ -33,12 +37,14 @@ Generation of self-sign a certificate with a private (`.key`) and public key (PE
 
     ```sh
     # ECDSA recommendation key ≥ secp384r1
-    # List ECDSA the supported curves (openssl ecparam -list_curves)
+    # openssl ecparam -list_curves: List ECDSA the supported curves 
     # openssl req -x509 -nodes -newkey ec:secp384r1 -keyout server.ecdsa.key -out server.ecdsa.crt -days 3650
     openssl req -x509 -nodes -newkey ec:<(openssl ecparam -name secp384r1) -keyout server.ecdsa.key -out server.ecdsa.crt -days 3650
+
     # -pkeyopt ec_paramgen_curve:… / ec:<(openssl ecparam -name …) / -newkey ec:…
     ln -sf server.ecdsa.key nginx.key
     ln -sf server.ecdsa.crt nginx.crt
+
     # RSA recommendation key ≥ 2048-bit
     openssl req -x509 -nodes -newkey rsa:2048 -keyout server.rsa.key -out server.rsa.crt -days 3650
     ln -sf server.rsa.key nginx.key
@@ -53,19 +59,16 @@ Generation of self-sign a certificate with a private (`.key`) and public key (PE
     -x509 -nodes -days 365 -newkey rsa:2048 \
     -subj "/CN=$domain" \
     -keyout ./nginx.key \
-    -out ./nginx.crt -addext "subjectAltName = DNS:local.self"
+    -out ./nginx.crt -addext "subjectAltName = DNS:$domain"
 
 ### Add cert to keychain
-    sudo security add-trusted-cert -d  -k /Library/Keychains/System.keychain nginx.crt
-
-删除：
-
-    sudo security remove-trusted-cert    -d   ./nginx.crt
-    sudo security delete-certificate -c local.self
+> refer: ssl-cert-keychin.md
 
 ## 基于config生成(未经测试)
 openssl.my.conf: https://www.humankode.com/ssl/create-a-selfsigned-certificate-for-nginx-in-5-minutes/
 
+### 准备 openssl.cnf
+    # cp /etc/ssl/openssl.cnf (旧)
     # cp /System/Library/OpenSSL/openssl.cnf openssl.cnf
     $ cat openssl.my.conf
     [req]

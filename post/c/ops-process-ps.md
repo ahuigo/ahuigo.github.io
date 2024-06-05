@@ -198,9 +198,23 @@ print command name (not path)
 	NI — nice值。负值表示高优先级，正值表示低优先级
 
 #### MEM
+内存占用：
+- 进程独立申请的内存USS
+- 进程之间共享的内存 shared library
+- 缓存：
+    1. 文件系统缓存(读文件的缓存)
+        操作系统为了提高磁盘访问速度，会将读取的数据缓存在内存中。这种机制使得频繁访问的文件不需要每次都从慢速的磁盘读取，而可以直接从快速的 RAM 中获取，大幅提升性能。文件系统缓存通常会占据大量的内存空间。
+    2. Slab 分配器缓存：
+        Linux 内核使用 slab 分配器来管理内核对象（如进程描述符、文件对象等）的内存分配和回收。Slab 缓存可以提高内存分配的效率，并减少内存碎片。
+    3. Buffers：
+        Buffers 是内核用来存放有关 I/O 操作的原始块设备数据的内存区域。比如说，在写入数据到磁盘之前，数据可能会先被暂存到 buffers 中。
+    4. 临时文件（tmpfs/shm）：
+        如果应用程序使用共享内存（例如 POSIX 共享内存）或者 tmpfs（一种基于内存的文件系统），这些内存映射的文件和共享内存段也会被包括在 working_set_bytes 中。
+- 交换空间（SWAP）
+
 参考 [PSS/USS 和 RSS 其实是一回事，吗？](https://changkun.de/blog/posts/pss-uss-rss/)
-- USS: Unique Set Size, the physical memory occupied by the process, does not calculate the memory usage of the shared library.
-- PSS: Proportion Set Size, the actual physical memory used, shared libraries, etc. are allocated proportionally.
+- USS: Unique Set Size, the physical memory occupied by the process, does not calculate the memory usage of the `shared library`.
+- PSS: Proportion Set Size, the actual physical memory used, shared libraries, etc. are allocated `proportionally`.
 - VSS: Virtual Set Size, virtual memory footprint, including shared libraries.
 - RSS: Resident Set Size, actual physical memory usage, including shared libraries.
 

@@ -17,8 +17,11 @@ https://help.aliyun.com/zh/sls/user-guide/search-syntax?spm=a2c4g.11186623.0.i1#
     "/api/v1" and "keyword"
 
     host:x.cn
-    request_time>60 and request_method:Ge*
+    uri: "/api/v1/sss" # 不支持* ，字符也不会转义
+    user_agent: Chrome* # 支持*
+    request_time>60 and request_method:Ge* #支持*
     (request_method:GET or request_method:POST) and status in [200 299]
+
 
 
 ### fulltext

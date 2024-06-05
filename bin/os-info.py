@@ -45,7 +45,7 @@ def getOs():
 
     # Iterate processes
     processLines = ps.split('\n')
-    sep = re.compile('[\s]+')
+    sep = re.compile(r'[\s]+')
     rssTotal = 0 # kB
     for row in range(1,len(processLines)):
         rowText = processLines[row].strip()
@@ -58,12 +58,12 @@ def getOs():
 
     # Process vm_stat
     vmLines = vm.split('\n')
-    sep = re.compile(':[\s]+')
+    sep = re.compile(r':[\s]+')
     vmStats = {}
     for row in range(1,len(vmLines)-2):
         rowText = vmLines[row].strip()
         rowElements = sep.split(rowText)
-        vmStats[(rowElements[0])] = int(rowElements[1].strip('\.')) * 4096
+        vmStats[(rowElements[0])] = int(rowElements[1].strip(r'\.')) * 4096
 
     lines = [
     ('Wired Memory:\t\t%d MB(系统核心和其他代码需要使用的内存，不能被移动到swap)' % (vmStats["Pages wired down"]/1024/1024)),

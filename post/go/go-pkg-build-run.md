@@ -114,6 +114,12 @@ run: main 入口注入变量
     # 1 代表最低压缩率，9 代表最高压缩率。
     $ go build -ldflags="-s -w" -o server main.go && upx -9 server
 
+### UPX
+以上`-ldflags="-s -w"`减少的体积一般是15%~23％　想进一步减少体积就要用upx了，它能在此基础上再减少%50的体积。
+
+upx与go无关， 它可以减少任何二进制文件的体积： https://www.reddit.com/r/golang/comments/g74b03/is_upx_compression_a_good_option_for_a_go_server/
+
+
 # build tag
 refer: https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags
 see go-lib/build

@@ -99,9 +99,13 @@ readlines:
 		print line.strip()
 
 # std io
-
     for l in sys.stdin.readlines():
         sys.stdout.write(l[::-1])
+
+stdin 的iterate 实现了按行读取
+
+    for l in sys.stdin:
+        print("line:"+l, end="")
 
 ## input
 输入一行，不含换行

@@ -6,6 +6,8 @@ date: 2018-09-26
 本文是对常见加密算法的总结。
 这里推荐一本加密算法入门书crypto101：https://www.crypto101.io/
 
+
+
 # Symmetric-key Cryptography 对称密钥加密
 对称密钥加密，又称对称加密、私钥加密、共享密钥加密，与非对称密钥相比它快得多。它分为
 1. 分组加密（Block cipher，又称分块加密、块密码），是一种对称密钥算法。
@@ -267,13 +269,12 @@ See java-lib
 	var_dump($aes->decrypt($c));
 
 # Asymmetric Cryptography, 非对称加密
-公开密钥加密(public-key cryptography), 又称非对称密钥加密（asymmetric cryptography）.
-[公开密钥加密](http://zh.wikipedia.org/zh/%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86)
+> 公开密钥加密(public-key cryptography), 又称非对称密钥加密（asymmetric cryptography）.  [公开密钥加密](http://zh.wikipedia.org/zh/%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86)
 
 常见的公钥加密算法有:
 
 1. RSA
-2. DH 迪菲-赫尔曼密钥交换(Diffie-Hellman key exchange, D-H)协议中的公钥加密。主要用于密钥交换，而不是加密或签名。
+2. DH(Diffie-Hellman key exchange) 迪菲-赫尔曼密钥交换协议中的公钥加密。主要用于密钥交换，而不是加密或签名。
 3. ECC椭圆曲线加密算法(Elliptic Curve Cryptography, ECC) ECC基于椭圆曲线数学的加密算法，提供相对于其他方法更小的密钥大小和更快的速度。
 4. DSA (Digital Signature Algorithm)：主要用于数字签名，不用于加密。
 5. EIGamal：在DH基础上构建，可以用于加密和数字签名，但比RSA更慢。
@@ -292,8 +293,9 @@ refer [openssl](/p/net-ssl-tool)
 ## sign 签名
 
 ### DSA/RSA sign
-DSA（Digital Signature Algorithm）：数字签名算法，是一种标准的 DSS（数字签名标准）；
-DSA是基于整数有限域离散对数难题的，其安全性与RSA相比差不多。DSA的一个重要特点是两个素数公开，这样，当使用别人的p和q时，即使不知道私钥，你也能确认它们是否是随机产生的，还是作了手脚。RSA算法却作不到。
+DSA（Digital Signature Algorithm）：非对称的数字签名算法，是一种标准的 DSS（数字签名标准）；
+- RSA 可以用于加密和数字签名，而 DSA 仅设计用于数字签名。
+- DSA是基于整数有限域离散对数难题的，其安全性与RSA相比差不多。DSA的一个重要特点是两个素数公开，这样，当使用别人的p和q时，即使不知道私钥，你也能确认它们是否是随机产生的，还是作了手脚。RSA算法就做不到。
 
 > openssl 非对称加密DSA,RSA区别与使用介绍
 http://www.51know.info/system_base/openssl.html

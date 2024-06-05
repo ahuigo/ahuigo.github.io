@@ -16,3 +16,6 @@ private: true
 ## list installed package files
     dpkg-query -L <package_name>
     dpkg-deb -c <package_name.deb>
+
+    apt-get install docker
+    dpkg-query -L docker

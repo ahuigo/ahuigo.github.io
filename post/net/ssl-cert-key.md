@@ -37,29 +37,32 @@ ECDHE（DHE）算法属于DH类密钥交换算法， 私钥不参与密钥的协
     nginx.csr: PEM certificate request
 
 ## des3 rsa
-生成带des3 key(对称)的RSA, 至少4位密码
+生成带des3 key(对称)的RSA, 至少4位密码des对私钥加密
 
     openssl genrsa -des3 -out server.key 2048
 
-去除des3密码，转成不带密码的rsa：
+去除des3密码，转成不带密码的rsa(非des)：
 
     openssl rsa -in server.key -out server.key
 
 ## DSA(todo)
-1、私钥：一般命名`*.key`, 很少用`*.pem`
+### 1、私钥：一般命名`*.key`, 很少用`*.pem`
+Key considerations for algorithm "ECDSA" (X25519 || ≥ secp384r1)
 
-    # Key considerations for algorithm "ECDSA" (X25519 || ≥ secp384r1)
     # https://safecurves.cr.yp.to/
     # List ECDSA the supported curves (openssl ecparam -list_curves)
     openssl ecparam -genkey -name secp384r1 -out server.key
 
-    # Key considerations for algorithm "DSA"
+Key considerations for algorithm "DSA"
+
 	openssl dsaparam -out dsaparam.pem 1024
 	openssl gendsa -out private.pem dsaparam.pem
 
+将私钥转成pkcs8 pem格式
+
 	openssl pkcs8 -topk8 -nocrypt -in private.pem -outform PEM -out java_private.key
 
-2、公钥
+### 2、公钥
 
 	openssl dsa -in private.pem -out public.pem -pubout
 
@@ -71,8 +74,18 @@ ECDHE（DHE）算法属于DH类密钥交换算法， 私钥不参与密钥的协
     openssl genrsa -out ./server.key 2048
 	openssl genrsa -out ./server_rsa.pem 1024
 
-
 2、公钥
 
 	openssl rsa -in ./server_rsa.pem -pubout -out ./my_rsa_public_key.pem
+
+# Certificate
+## apache 合并key和cert(不建议)
+> apache 允许key与cert 合并
+
+	cat my_nopass.pem mydomain.crt > apache.pem
+
+one cli line:
+
+    $ openssl req -x509 -config openssl-ca.cnf -newkey rsa:4096 -sha256 -nodes -out cacert.pem -outform PEM
+
 

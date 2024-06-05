@@ -16,6 +16,7 @@ mac 自带的词典APP, 名叫 Dictionary.app, 非常方便，本文我简写Dic
 ## 选择你需要使用词典
 Dict.app 支持非常多的词典，你按`Command+,` 就可以选择自己需要的词典，以及查词的顺序了. 如图
 
+### 词典目录
 Dict.app 的字典文件在: /Library/Dictionaries ~/Library/Dictionaries 这两个目录
 
 	$ du -sh /Library/Dictionaries/*
@@ -32,8 +33,22 @@ Dict.app 的字典文件在: /Library/Dictionaries ~/Library/Dictionaries 这两
 2. GoldenDict
 3. 欧陆词典...
 
+mac 系统字典路径：
+
+    /System/Library/AssetsV2/com_apple_MobileAsset_DictionaryServices_dictionaryOSX/6b98409a6f704b07449c95dead92a7911dba87d6.asset/AssetData/New Oxford American Dictionary.dictionary/Contents/Resources/Body.data
+
+### 拼写检查文件
+这些文件通常被用作拼写检查和其他需要单词列表的程序。
+
+    /usr/share/dict/words 是一个在 Unix 和 Unix-like 系统（如 Linux，macOS）上常见的文件，它包含了一个英文单词列表，每行一个单词。
+    /usr/share/dict/web2 (Webster's Second International)
+    /usr/share/dict/connectives
+    /usr/share/dict/web2a
+    /usr/share/dict/propernames
+    在某些系统上，可能还会有其他的词典文件，例如 /usr/share/dict/american-english 或 /usr/share/dict/british-english。
+
 ## 安装langdao 词典
-我自己打包了langdao 的词典, 两种下载方式
+我自己打包了langdao 的词典, 两种下载方式:
 1. [在baidu pan下载](链接: https://pan.baidu.com/s/17lP-y4cR18o8l6mL0B88qA 提取码: d4kd ),
 2. https://github.com/ahuigo/eng-dict
 
@@ -71,16 +86,35 @@ Mac 提供了一个非常方便的三指查词功能
     2. alfred workflow 下载：https://github.com/alanhg/alfred-workflows/tree/master/eudic-tools
 2. https://wongdean.github.io/2019/10/11/Mac-%E7%AB%AF%E8%AF%8D%E5%85%B8%E6%8A%98%E8%85%BE%E5%B0%8F%E8%AE%B0/
 
+# mac字典逆向
+> Reverse-Engineering Apple Dictionary: https://fmentzer.github.io/posts/2020/dictionary/
+> https://gist.github.com/josephg/5e134adf70760ee7e49d
+
+parse mac dictionary 脚本：
+
+    https://github.com/ahuigo/eng-dict/blob/master/parse-db.py
+
+需要使用的工具
+
+    from nltk.stem import WordNetLemmatizer
+    lemmatizer = WordNetLemmatizer()
+    print("rocks :", lemmatizer.lemmatize("rocks"))
+    print("corpora :", lemmatizer.lemmatize("corpora"))
+    # help(lemmatize) Valid options are `"n"` for nouns, `"v"` for verbs, `"a"` for adjectives, `"r"` for adverbs and `"s"` for satellite adjectives.
+    print("better :", lemmatizer.lemmatize("better", pos="a"))
+
 # 欧陆词典
 非常强大。 安装后可以设置很多快捷键。我常用的有：
 1. 选中文字后，快捷键翻译 `Ctrl+Option+D`，类似于`Ctrl+Command+D` 使用Dict.app 查词
 
-
-# F5:word completion.
-绝大部分mac app 都支持用F5完成 word completion.
+# 编辑
+## F5:word completion.
+绝大部分mac 下的应用都支持用F5完成 word completion.
 
 >Word completion seems to only work in Apple crafted cocoa apps, so you’ll be able to use the feature in Safari, Pages, Keynote, TextEdit, iCal, etc, but in a browser like Chrome you’re out of luck.
 
+# cli
+    curl https://api.dictionaryapi.dev/api/v2/entries/en/throes |jq
 # text to voice
 让 Mac 朗读屏幕上的文本， 可参考
 https://support.apple.com/zh-cn/guide/mac-help/mh27448/mac

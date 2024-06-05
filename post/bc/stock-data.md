@@ -6,6 +6,17 @@ private:
 # 数据获取
 通用数据
     https://www.dydata.io/
+    歪枣网: http://www.waizaowang.com/
+    tushare
+更专业的数据：
+    choice 和 wind 
+自定义量化图：
+    乌龟量化\乐咕乐咕\理杏仁这些网站
+多策略提醒：
+    https://v2ex.com/t/1031232
+        策引 - 我的 AI 投资助手 网址： https://www.myinvestpilot.com/
+
+
 查询PE/PB等：
     http://www.licaidashiye.com/tools/value/ad_to_stock_page.php
     http://www.51shiyinglv.com/dist/index.html#/main/index
@@ -95,8 +106,6 @@ d. 其他关注点
 
 
 ### 接口
-比如THS的、TDX的消息接口、模拟键鼠、Web的爬虫接口
-还有安卓接口、DLL调用接口
 
 ### 数据
 下载股票历史数据

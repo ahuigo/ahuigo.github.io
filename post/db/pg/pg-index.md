@@ -104,9 +104,10 @@ add index(recommended)
         ON table_name (col_name [length],…) [ASC | DESC]
 
     CREATE INDEX [index_name] ON films ((lower(title)));
+    CREATE UNIQUE INDEX idx_group_name ON project (project_group_id, name);
     Drop INDEX index_name
 
-add constraint 
+add constraint (属于表的一部分，所以要用alter table)
 
     \h alter table
     alter table t add UNIQUE(name,id);
