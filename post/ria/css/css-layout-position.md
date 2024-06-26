@@ -15,6 +15,7 @@ private: true
             不占用位置，兄弟节点会填补位置，用z-index:-1 不会遮蔽 
 
 		fixed; 以整个视窗为基准,不受鼠标滚动影响
+        sticky: 元素在滚动范围内的行为类似于 position: relative，而当页面滚动超出设定的阈值时，元素的位置表现得像是 position: fixed
 
 		relative/absolute以parent positioned 结点为基准
             没有positioned 的话，则以: window.innerWidth/innerHeight (viewport)为基准

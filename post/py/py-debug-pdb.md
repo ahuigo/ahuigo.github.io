@@ -14,13 +14,19 @@ date: 2018-09-28
 ## start shell
 插入以下代码进入断点调试，相当于js debugger:
 
-    from IPython import embed
-    embed()
+    import os
+    def is_debug():
+        return os.getenv('DEBUG_PDB')!=None
 
-或者：
+    if is_debug():
+        import pdb; 
+        pdb.set_trace()
 
-    import pdb; 
-    pdb.set_trace()
+或者进入shell：
+
+    if is_debug():
+        from IPython import embed
+        embed()
 
 ## via sys.excepthook
 创建一个sys.excepthook, 当异常出现时，就调用ipython+pdb 调试: (from @Rui L on zhihu)

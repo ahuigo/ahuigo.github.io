@@ -7,12 +7,13 @@ private: true
 以golang 项目为例子: https://github.com/ahuigo/gofnext/tree/main/.github/workflows
 
 # codecov
-1. add repe secrets
+## 1. add repe secrets
 https://github.com/ahuigo/gofnext/settings/secrets/actions/new
 
+    #{{secrets.CODECOV_TOKEN}}
     CODECOV_TOKEN=xxx
 
-2. add Codecov to your GitHub Actions workflow yaml file: `.github/workflows/[task].yml`
+## 2. add Codecov to your GitHub Actions workflow yaml file: `.github/workflows/[task].yml`
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
@@ -36,5 +37,5 @@ uses action.yml 文件实际位于: https://github.com/codecov/codecov-action/bl
       color: 'red'
       icon: 'umbrella'
     runs:
-      using: 'node16'
+      using: 'node16' # 设置成node16环境(action主机会预先安装了node16)
       main: 'dist/index.js'

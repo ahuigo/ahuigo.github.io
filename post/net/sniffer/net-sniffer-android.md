@@ -7,6 +7,10 @@ date: 2019-02-13
 2. tcpdump: -i eth0 or -i tiwlan0 - or use -i any to log all interfaces
 3. HttpCanary:capture and injection tool for the Android platform. It supports multiple protocols such as HTTP, HTTP2, HTTPS and WebSocket.
 
+4. ecapture: android>=12, based on EBPF
+    1. https://github.com/gojue/ecapture
+    4. https://mp.weixin.qq.com/s/KWm5d0uuzOzReRtr9PmuWQ 
+
 
 如果在同一个wifi下采用 以下工具监听网卡接口：
 1. wireshark: 

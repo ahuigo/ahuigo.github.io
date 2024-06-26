@@ -18,12 +18,12 @@ private: true
     # 自己给自己签发crt
     openssl x509 -req -sha256 -in nginx.csr -signkey nginx.key -out nginx.crt -days 3650 -extensions v3_ca -extfile openssl.custom.cnf
 
-或者不要csr 直接生成crt(ca证书就是这样的: req -new -x509)
+或者不要csr 直接生成crt(这个本身就是ca x509证书: req -new -x509)
 
-    DOMAIN=local.self2
-    openssl req -new -x509 -sha256 -key nginx.key -out nginx.crt -days 3650 -subj "/C=CN/ST=Some-Province/O=Internet Widgets, Inc./CN=$DOMAIN" -addext "subjectAltName = DNS:$DOMAIN"
+    DOMAIN1=local.self1; DOMAIN2=local.self2;
+    openssl req -new -x509 -sha256 -key nginx.key -out nginx.crt -days 3650 -subj "/C=CN/ST=Some-Province/O=Internet Widgets, Inc./CN=$DOMAIN" -addext "subjectAltName = DNS.1:$DOMAIN1, DNS.2:$DOMAIN2"
 
-    # or with x.cnf
+    # or with custom.cnf
     openssl x509 -req -new -sha256 -key nginx.key -out nginx.crt -days 3650  -extensions v3_ca -extfile openssl.custom.cnf
 
 或一键生成key+crt: req -x509 -nodes -newkey
@@ -53,13 +53,18 @@ Generation of self-sign a certificate with a private (`.key`) and public key (PE
 
 ### 一键生成rsa key + crt
 
-    # note：也可以　-config ./openssl.cnf 
+    # note：mac 自带的LibreSSL的只支持用　-config ./openssl.cnf 
     domain=local.self
     openssl req \
     -x509 -nodes -days 365 -newkey rsa:2048 \
     -subj "/CN=$domain" \
     -keyout ./nginx.key \
     -out ./nginx.crt -addext "subjectAltName = DNS:$domain"
+
+多个subjectAltName:
+
+    -addext "subjectAltName = DNS.1:$DOMAIN1, DNS.2:$DOMAIN2"
+    -addext "subjectAltName = DNS:$DOMAIN1, DNS:$DOMAIN2"
 
 ### Add cert to keychain
 > refer: ssl-cert-keychin.md
@@ -101,7 +106,8 @@ openssl.my.conf: https://www.humankode.com/ssl/create-a-selfsigned-certificate-f
 
     [alt_names]
     DNS.1   = localhost
-    DNS.2   = 127.0.0.1
+    DNS.3   = local.self
+    IP.1 = 127.0.0.1
 
 生成 key + certificate 
 

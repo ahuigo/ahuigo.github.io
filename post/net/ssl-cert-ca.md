@@ -77,6 +77,7 @@ X.509是密码学里公钥证书的格式标准。X.509证书已应用在包括T
     [alt_names]
     DNS.1 = dev.local.com
     DNS.2 = dev2.local.com
+    IP.1 = 127.0.0.1
 
     $ openssl x509 -req \
         -in nginx.csr -CA ca.crt -CAkey ca.key -out nginx.crt -days 365 -CAcreateserial \

@@ -17,6 +17,9 @@ Large Language Models（LLMs）是在自然语言处理（NLP）和自然语言�
 有非常多的llm 模型：
 baichuan-13b chatglm-6b-int4-qe chatglm-6b-int4 chatglm-6b-int8 chatglm-6b chatglm2-6b chatyuan moss vicuna-13b-hf fastchat-chatglm-6b fastchat-chatglm2-6b fastchat-vicuna-13b-hf
 
+## llm 排名
+https://chat.lmsys.org/?leaderboard
+
 ## 大模型集成
 多模式api集成：https://github.com/sunner/ChatALL
 Open Prompt :https://v2ex.com/t/934197

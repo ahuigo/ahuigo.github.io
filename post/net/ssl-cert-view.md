@@ -112,15 +112,24 @@ msg: 用于显示所有 SSL/TLS 协议消息体。这些消息包括握手过程
 ### Show Ceritificate Info
 Show all information about a certificate:
 
-	openssl x509 -noout -text < crt
+	openssl x509 -noout -text < x.crt
+	openssl x509 -noout -text -in x.crt
 
 Calculate the MD5 fingerprint of a certificate:
 
-	openssl x509 -noout -fingerprint < crt
+	openssl x509 -noout -fingerprint < x.crt
 
 Calculate the SHA1 fingerprint of a certificate:
 
-	openssl x509 -sha1 -noout -fingerprint < crt
+	openssl x509 -sha1 -noout -fingerprint < x.crt
+
+### 查看SAN(Subject Alternative Name)
+SAN取代了CN(Common Name)
+
+    # csr(请求文件)
+    openssl req -text -in server.csr | grep "X509v3 Subject Alternative Name"
+    # crt
+    openssl x509 -noout -text -in server.crt | grep "X509v3 Subject Alternative Name"
 
 ## 格式转换
 .pem(.crt), .der

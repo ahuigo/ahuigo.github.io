@@ -25,8 +25,3 @@ clockhosue-local(standalone 独立版，不需要full server)
 
     ./clickhouse -q "SELECT * FROM 'reviews.tsv'"
     ./clickhouse -q "show databases"
-
-
-
-
-

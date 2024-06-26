@@ -3,6 +3,38 @@ title: github actions
 date: 2022-04-24
 private: true
 ---
+> refer：　ahuigo/arun/.github/workflows
+
+# workflow结构
+    on:
+      push:
+        branches:
+          - "*"
+        paths-ignore:
+          - README.md
+    
+      pull_request:
+        branches: [ main ]
+
+    jobs:
+        task1:
+            ...
+        task2:
+            ...
+
+## on event
+> on push, on pull_request
+https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+
+    on:
+      push:
+        branches:
+          - "*"
+        paths-ignore:
+          - README.md
+      pull_request:
+        branches: [master]
+
 # 内变量
 
     jobs:
@@ -19,29 +51,12 @@ private: true
             ls ${{ github.workspace }}
         - run: echo "${{ job.status }}."
 
-# on event
-## exclude files
-    on:
-      push:
-        branches:
-          - "*"
-        paths-ignore:
-          - README.md
-    
-      # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
-      pull_request:
-        branches: [ main ]
-
-    jobs:
-        task1:
-            ...
-        task2:
-            ...
-
 # jobs.task.steps
+task 由steps构成
+
 ## task
 ### strategy
-这是task局部的配置变量
+这是task局部的配置变量, 这里表示将会在 Redis 6 和 Redis 7 环境中各运行一次
 
     jobs:
       test:

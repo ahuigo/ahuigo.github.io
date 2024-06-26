@@ -75,8 +75,10 @@ modify host for https:
 
 ## output
 
-    -o, --output
+    -o, --output path
         -o /dev/null 
+    -O, --remote-name
+        local file named like the remote file we get
 # request Data
 ## post form
 post 默认是:application/x-www-form-urlencoded, 则不是multipart

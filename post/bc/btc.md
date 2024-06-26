@@ -29,8 +29,9 @@ http://www.8btc.com/vc
 参考：https://zhuanlan.zhihu.com/p/61324778
 
 USDT-OMNI地址是以1开头 贵，最安全，慢(0.6-2h)
-USDT-ERC20地址是以0x开头 较贵，次安全，较快(10min)
-USDT-TRC20地址是以T开头 便宜，不那么安全，最快(5s~5min)
+USDT-ERC20(ETH/Ethereum) 地址是以0x开头 较贵，次安全，较快(10min)
+USDT-TRC20(Tron)地址是以T开头 便宜，不那么安全，最快(5s~5min)
+BEP20(BSC/BEP smart chain) 最便宜？？
 
 ### Omni (安全、慢)
 Omni USDT是2014年在比特币区块链上基于OMNI Layer协议发行的

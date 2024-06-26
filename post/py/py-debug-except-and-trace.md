@@ -19,12 +19,24 @@ getframe(0) 是`debug_info`本身，getframe(1) 是caller
 
     import sys
     def debug_info():
+        frame = sys._getframe(1)
         return {
-            'file':sys._getframe().f_code.co_filename,
-            'fileno':sys._getframe().f_lineno,
-            'funcname':sys._getframe(0).f_code.co_name,
-            'caller':sys._getframe(1).f_code.co_name,
+            'file':frame.f_code.co_filename,
+            'fileno':frame.f_lineno,
+            'funcname':frame.f_code.co_name,
+            'caller':frame.f_code.co_name,
         }
+
+## print line no(inspect)
+参考: py-debug-log-inspect.md
+
+    import inspect
+    def debug_lineno():
+        from datetime import datetime
+        callerframerecord = inspect.stack()[1] 
+        frame_info = callerframerecord[0]
+        now = datetime.now()
+        print(now, frame_info.f_code.co_filename, frame_info.f_lineno)
 
 ## 异常捕捉
 参考: py-lib/debug/trace.py 中的sys.settrace

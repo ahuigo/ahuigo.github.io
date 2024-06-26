@@ -149,7 +149,7 @@ eg:
 
 simple get filename: `__file__` or `sys.argv[0]`
 
-via `getframeinfo(frame)`:
+via `getframeinfo(frame)`获取结构化:
 
       info = inspect.getframeinfo(frame)
       print info.filename                       # Test.py

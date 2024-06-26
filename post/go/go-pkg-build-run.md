@@ -104,21 +104,39 @@ run: main 入口注入变量
     RUN go build -ldflags=-s -w -X mod1/conf.BuildDate=$(date -I'seconds') -X mod1/conf.BuildVer=$(git rev-parse HEAD)
 
 ### ldflags skip debug(缩小体积)
+https://github.com/xaionaro/documentation/blob/master/golang/reduce-binary-size.md
+
     $ go build -ldflags="-s -w" -o server main.go
     -s：忽略符号表和调试信息。
     -w：忽略DWARFv3调试信息，使用该选项后将无法使用gdb进行调试。
 
-其实还可以通过upx 缩小体积：压缩动态库和可执行文件的工具(一般压缩50％～70％)。原理是将程序压缩、并在程序开头或其他合适的地方插入解压代码
+#### Disable function inlining
+Add flag -gcflags=all=-l:
+
+    $ go build -ldflags="-s -w" -gcflags=all=-l; stat -c %s helloworld
+    1437696
+
+#### Disable bounds checks
+Add flag -gcflags=all=-B:
+
+    $ go build -a -gcflags=all="-l -B" -ldflags="-w -s"; stat -c %s helloworld
+    1404928
+
+### UPX
+以上`-ldflags="-s -w"`减少的体积一般是15%~23％　想进一步减少体积就要用upx了，它能在此基础上再减少%50~70%的体积。
+原理是将程序压缩、并在程序开头或其他合适的地方插入解压代码
 
     $ brew install upx
     # 1 代表最低压缩率，9 代表最高压缩率。
     $ go build -ldflags="-s -w" -o server main.go && upx -9 server
 
-### UPX
-以上`-ldflags="-s -w"`减少的体积一般是15%~23％　想进一步减少体积就要用upx了，它能在此基础上再减少%50的体积。
-
 upx与go无关， 它可以减少任何二进制文件的体积： https://www.reddit.com/r/golang/comments/g74b03/is_upx_compression_a_good_option_for_a_go_server/
 
+But:
+
+1. The binary will be much slower.
+1. It will consume more RAM.
+1. It will be almost useless if you already store your binary in a compressed state (for example in initrd, compressed by xz).
 
 # build tag
 refer: https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags

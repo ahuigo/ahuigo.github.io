@@ -3,6 +3,7 @@
 
     clickhouse client -h host --port 3306 -u username --password password 
     clickhouse client -h host --port 3306 -u username --password password -d database
+    dev_clk='clickhouse client -h host --port 3306 -u username --password password -d database'
 
 ## database
     SHOW DATABASES;
