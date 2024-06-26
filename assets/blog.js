@@ -1,8 +1,12 @@
 import * as toclib from './toc.js';
-import styles from "/assets/main.css" assert { type: "css" };
+//import styles from "/assets/main.css" assert { type: "css" };
+//document.adoptedStyleSheets = [...document.adoptedStyleSheets, styles];
+const cssModule = await import('/assets/main.css', {
+  assert: { type: 'css' }
+});
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, cssModule.default];
 import "https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.10/vue.min.js";
 import "https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.6.5/vue-router.min.js";
-document.adoptedStyleSheets = [...document.adoptedStyleSheets, styles];
 window.$ = document.querySelector.bind(document);
 window.$$ = document.querySelectorAll.bind(document);
 window.searchBlog = (kword) => {
