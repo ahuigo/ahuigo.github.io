@@ -18,6 +18,8 @@ curl 转换器: https://curl.trillworks.com/
               (HTTP) Fail silently (no output at all)
         -fLo to.sh
 	-s Silent (no progress bar)
+    -S Show error
+    -C, --continue-at 断点下载
 	-k, --insecure (SSL)
     -m seconds
         timeout

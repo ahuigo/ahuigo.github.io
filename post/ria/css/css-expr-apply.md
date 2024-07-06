@@ -7,6 +7,7 @@ private: true
 > https://hospodarets.com/css_apply_rule
 @apply 已经被chrome放弃支持，
 可使用::part() 代替，它支持继承
+
 ## Define  rule
 Let’s just define set of properties:
 

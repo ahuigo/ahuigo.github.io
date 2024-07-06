@@ -40,6 +40,16 @@ trap-demo2 : simple signal handling demo
 	done
 
 # process
+## 异步与同步命令: `&` and `;` 
+> https://stackoverflow.com/questions/51943502/shell-execute-multiple-commands-from-string-with-ampersandbackground-process
+
+Asynchronous lists:
+
+    command1 & [command2 & ... ]
+
+sequential list
+
+    command1 ; [command2 ; ... ]
 
 ## 子进程退出
 shell 本身启动的`cmd &`, 会随着shell 的退出而退出。

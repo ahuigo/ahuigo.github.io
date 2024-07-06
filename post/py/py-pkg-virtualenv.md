@@ -10,7 +10,12 @@ date: 2018-10-04
 - virtualenv 提供了 Python 虚拟环境的隔离，但是命令复杂，目录的管理也比较混乱，
 - VirtualEnvWrapper 基于它提供了更简易的命令和操作。
 - venv, python3 自带，类似于virtualenv
+
+python 版本切换:
+- pyenv
+
 # venv
+
     python3 -m venv blog_dir
     #不带pip
     pyvenv --without-pip blog_dir
@@ -21,12 +26,46 @@ date: 2018-10-04
     (blog_pyenv) ➜ umi3$ git:(dev) ✗ 
     $ deactivate   
 
-# pyenv(Recommend python版本切换)
+# pyenv(python版本切换)
 用于管理python
 
-    brew install pyenv
+    # mac
+    brew install pyenv 
+
+    # linux
+    curl https://pyenv.run | bash
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)" # 自动补全
+
+    ＃如果你用virtualenv
+    eval "$(pyenv virtualenv-init -)" # 启用 pyenv-virtualenv 的自动激活和取消激活虚拟环境的功
+    ＃如果你用 virtualenvwrapper 
+    pyenv-virtualenvwrapper 
+
+
+显示当前版本
+
     pyenv install --list
-    pyenv local 3.7.2
+    pyenv global
+        > system
+
+pyenv 会修改环境变量, 通过在 PATH 环境变量的最前面添加一个 shims 目录来实现版本切换, shims 会自动读取当前目录的.python-version
+
+    > 安装到 ~/.pyenv/versions/ 目录下
+    pyenv install 3.6.4
+    pyenv install 3.7.9
+    > shim 通过./.python-version 指向3.7.9
+    pyenv local 3.7.9
+    pyenv local 3.6.4
+    python3.7
+
+恢复到没有 pyenv 时的原始环境变量，你可以删除这个 .python-version 文件：
+
+    # 将回到 pyenv global 设置的版本，或者如果没有设置 pyenv global，则回到系统默认的 Python 版本
+    rm .python-version
+    pyenv global
+    > system
 
 # virtualenv
 ## install

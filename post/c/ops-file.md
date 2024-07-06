@@ -12,6 +12,11 @@ description:
 	ll -S 按文件大小排序
 	ll -i 查看文件的inode
 
+# file 查看文件构架
+
+    $ file -L $(python -c 'import sys; print(sys.executable)')
+    /.../bin/python3.12: Mach-O 64-bit executable arm64
+
 # find
 
 	find [-H | -L | -P] [-EXdsx] [-f path] path ... [expression]

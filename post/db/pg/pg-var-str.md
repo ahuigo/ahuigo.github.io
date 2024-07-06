@@ -252,4 +252,16 @@ help:
 ## contains strpos
 
     where strpos(name, '@') > 0
-    where name ~ '@'
+    > select 'name@' ~ '@';
+    true
+
+## regex
+The `~*` is for a case insensitive match, `~` is case sensitive.
+
+    select * from table where value ~* 'foo|bar|baz';
+
+Another option is to use ANY:
+
+    select * from table where value  like any (array['%foo%', '%bar%', '%baz%']);
+    select * from table where value ilike any (array['%foo%', '%bar%', '%baz%']);
+

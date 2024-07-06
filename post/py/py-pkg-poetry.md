@@ -12,6 +12,8 @@ pipenv
 ## install
 
     curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+    python3 -m pip install poetry
+    alias poetry='python3 -m poetry'
 
 确认：
 
@@ -175,8 +177,9 @@ simple run
 ## publish config(全局)
 > 配置是通常是 ls ~/Library/Application\ Support/pypoetry/config.toml 
 
-第一次发布前配置仓库与用户帐号 To publish to PyPI, you can set your credentials for the
-repository named pypi. like .pypirc
+第一次发布前要配置仓库与用户帐号 
+> To publish to PyPI, you can set your credentials for the repository named pypi. (~/.pypirc)
+> 不过poetry 不会读取pypirc, 它必须使用：poetry config http-basic.pypi <username> <password>　配置
 
 官方的
 
@@ -194,6 +197,7 @@ ali的
     $ poetry config repositories.mypypi https://artifactory.yourapp.com/artifactory/api/pypi/pypi-dev
     $ poetry config http-basic.mypypi <username> <password>
     $ poetry config --list
+
 ## config项目的源(局部)
 
     # Sources without a priority are considered primary sources, too.

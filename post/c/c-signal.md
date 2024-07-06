@@ -43,7 +43,7 @@ kill -l 查看系统定义的信号列表:
 5. SIGCONT: `kill -SIGCONT PID`: Send a continue signal To continue a stopped process via PID
 6. SIGHUP: 当tty的另一端挂掉的时候，比如ssh的session断开了，
     1. 于是sshd关闭了和ptmx关联的fd，内核将会给和该tty相关的所有进程发送SIGHUP信号，进程收到该信号后的默认行为是退出进程。
-    2. see: linux-nohup.md
+    2. see: /c/service/ops-init.md nohup
 7. SIGTSTP: 输入CTRL+Z时，tty收到后就会发送SIGTSTP给前端进程组，其默认行为是将前端进程组放到后端，并且暂停进程组里所有进程的执行。(Terminal Stop)
 3. SIGSTOP: `kill -SIGSTOP pid` cannot be ignored. SIGTSTP might be.
 5. SIGTRAP

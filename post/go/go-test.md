@@ -267,9 +267,17 @@ ignore test flag:
 	go test -race -coverprofile cover.out -coverpkg "./..." -failfast ./...
 	go test -race -coverprofile cover.out -coverpkg ".,./examples" -failfast ./...
 
+    # 显示
+    go tool cover -html=cover.out
+
 coverage 统计使用atomic 计数
 
+    # Go 的测试覆盖率有三种模式：set，count 和 atomic。
     go test covermode=atomic ./...
+        set：这是默认模式，只记录代码是否被执行过，不记录执行的次数。
+        count：记录代码被执行的次数。
+        atomic：类似于 count，但是它会安全地增加计数，即使在并发的情况下也是如此。这意味着如果你的测试是并发的（例如，你使用了 t.Parallel() 或者你的代码中有并发的 goroutine），那么你应该使用 atomic 模式来确保覆盖率的准确性。
+
 
 # bench test
 

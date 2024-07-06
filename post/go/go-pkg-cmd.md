@@ -99,10 +99,15 @@ install with `major　version`:
 ## go list 
 查看指定目录所属于的包名
 
-    $ go list
+    # 列出当前目录包名
+    $ go list 
     github.com/ahuigo/requests
 
+    # 列出指定目录包名
     $ go list dir
+
+    # 
+    go list ./...
 
 注意： go list 会检查dir 中的go 文件，如果没有go 文件的话，就找不到package path
 

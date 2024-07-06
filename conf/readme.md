@@ -1,10 +1,13 @@
 # 目录说明
 	config
 		ln ~/.config
-	conf
+	conf(app)
 		install-conf.sh 安装常用的配置
 		install/	安装脚本
 	tool/	工具库
+        gitclean.sh
+            export PATH=$PATH:~/www/a/tool
+    bin/
 
 # my repo
     cd www
@@ -57,7 +60,7 @@ local:
 
     /bak
 
-# app
+# app(/conf)
 ## nvim
 see nvim-plugin.md
 

@@ -17,5 +17,7 @@ private: true
     dpkg-query -L <package_name>
     dpkg-deb -c <package_name.deb>
 
+比如:
+
     apt-get install docker
     dpkg-query -L docker

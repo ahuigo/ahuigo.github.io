@@ -89,11 +89,13 @@ date: 2018-09-26
 
 那我们可以考虑把tail operation 放到前面！构成尾递归：
 
-	func fn(){
+	func fn(n){
 		//some general operation
 		//some tail operation
-		fn()
+		return fn(m)
 	}
+
+> 把对自身的调用放到尾部，编译器就能识别到它可以用尾递归优化
 
 ### 迭代递归中的尾处理: 广义的尾递归
 如果递归函数本身包含迭代语句，并且迭代语句会调用递归本身。那么这种递归函数只能改成广义的尾递归.

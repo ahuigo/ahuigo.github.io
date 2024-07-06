@@ -11,6 +11,13 @@ github 中的input 其实是被隐藏的，被span 覆盖。通过`style="pointe
             Attach files 
         </span>
 
+## input type
+
+    input[type="submit"] {
+    	background: limegreen;
+    	color: black;
+    	border:0;
+    }
 # input color 
 ## input color with text
 https://stackoverflow.com/questions/76717877/why-does-inputtype-color-interfere-with-the-position-of-text-line

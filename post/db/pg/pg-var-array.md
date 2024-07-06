@@ -147,7 +147,26 @@ any array
 
 ### like any
 
-    SELECT 'abc' LIKE ANY('{"ab%","def"}')
+    SELECT 'abc' LIKE ANY('{"ab%","def"}');
+        true
+
+### any like
+如果想实现　`where any(array) like 'prefix%'`, 不能用这个
+
+    SELECT 'pre%' LIKE ANY('{"prefix-a","def"}');
+        false
+
+要用这个:
+
+    SELECT * FROM your_table
+    WHERE EXISTS (
+        SELECT 1 FROM unnest(your_array_column) element
+        WHERE element LIKE 'prefix%'
+    );
+
+或者
+
+    where array_to_string(pub_types, ',') like '%Journal%'
 
 ### insersection 交集
 

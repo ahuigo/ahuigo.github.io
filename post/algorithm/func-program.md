@@ -3,23 +3,21 @@ title: 函数式编程
 date: 2020-05-15
 private: true
 ---
-# 函数式编程
+# currying 科里化
+currying 也叫部分求值
 
-# Curring 科里化
-curring 也叫部分求值
+很多语言都提供了实现currying的函数：如js的bind, python的partial
 
+或者自己通过闭包实现currying
 
-很多语言都提供了实现curring的函数：如js的bind, python的partial
-
-或者自己通过闭包实现
-
-## js 版非固定参数的科里化
+## js 版参数的科里化
 实现一个function sum，使
+
     sum(1)(2)(3)()返回6；
     sum(4)()返回4；
     sum(7)(1)()返回8；
 
-通过bind 实现(实时计算)
+### 通过bind 实现(实时计算)
 
     f=(v, n)=>{
         if(n===undefined){
@@ -30,7 +28,8 @@ curring 也叫部分求值
     }
     sum=f.bind(null,0)
 
-通过闭包通用的curring(柯里化):
+### 通过闭包实现通用的currying(柯里化):
+缓存args
 
     function sum(...arg1){
         return (...args2)=>{
@@ -56,6 +55,22 @@ curring 也叫部分求值
         }
     }
 
+#### 通过call/bind实现通用的currying
+将多参数的函数转换成单参数的形式(柯里化), 这时我们用 factorial 为例
+
+    function currying(fn, n) {
+        return function (m) {
+            return fn.call(this, m, n);
+        };
+    }
+
+    function tailFactorial(n, total) {
+        if (n === 1) return total;
+        return tailFactorial(n - 1, n * total);
+    }
+
+    const factorial = currying(tailFactorial, 1);
+    factorial(5) // 120
 
 ## python 实现固定参数的科里化
 

@@ -157,6 +157,11 @@ because cloned version of `original-project` still says `module github.com/uber-
     $ go mod edit -replace github.com/uber-go/atomic=go.uber.org/atomic@v1.9.0
     replace github.com/uber-go/atomic => go.uber.org/atomic v1.9.0
 
+指定本地：
+
+    require ahui1 v0.0.0
+    replace ahui1 v0.0.0 => ./ahui1
+
 ## 依赖不同的包
 ### 依赖本地包
 1.在项目根下用go.mod 配置本地依赖包: 

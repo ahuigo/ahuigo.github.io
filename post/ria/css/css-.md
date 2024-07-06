@@ -179,14 +179,6 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
     background-repeat: no-repeat;
     background-attachment: fixed; //do not scroll with the page
 
-## input
-
-    input[type="submit"] {
-    	background: limegreen;
-    	color: black;
-    	border:0;
-    }
-
 ## boder
 
 ### box-shadow

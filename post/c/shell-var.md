@@ -249,7 +249,7 @@ substr is beginning:
 
     #...%
 	变量配置方式(#df)	说明
-    ${path#prefix}  a=pre-world; echo ${a#pre}
+    ${path#prefix}  a=pre:pad:world; echo ${a#pre*:}
 	${变量#关键词}	若变量内容从头开始的数据符合『关键词』，则将符合的最短数据删除 
 	${变量##关键词}	若变量内容从头开始的数据符合『关键词』，则将符合的最长数据删除 
 
@@ -282,21 +282,21 @@ substr is beginning:
 
 #### var-test 变量测试
 
-	- 不存在则设置默认值expr, 否则用原值
+    - 不存在则设置默认值expr, 否则用原值
         :- 不为空值则设置
-	+ 不存在则清空，否则用替换值expr
+    + 不存在则清空，否则用替换值expr
         :+ 不为空值则
-	= 在- 的基础上 使用默认值
-	? 在- 的基础上 不存在则产生错误errno=1, expr输出至stderr 
-	变量配置方式	str 没有配置	str 为空字符串	str 已配置为非空字符串
-	var=${str-expr}	var=expr		var=$str		var=$str
-	var=${str:-expr}var=expr		var=expr		var=$str
-	var=${str+expr}	var=			var=expr		var=expr
-	var=${str:+expr}var=			var=			var=expr
-	var=${str=expr}		same as: str=${str-expr}; var=str;
-	var=${str:=expr}	same as: str=${str:-expr}; var=str;
-	var=${str?expr}	expr输出至stderr var=$str		var=$str
-	var=${str:?expr}expr输出至stderr expr输出stderr	var=$str
+    = 在- 的基础上 使用默认值
+    ? 在- 的基础上 不存在则产生错误errno=1, expr输出至stderr 
+    变量配置方式	          str 没有配置	    str 为空字符串	str 已配置为非空字符串
+    var=${str-expr}	        var=expr		var=$str		var=$str
+    var=${str:-expr}        var=expr		var=expr		var=$str
+    var=${str+expr}	        var=			var=expr		var=expr
+    var=${str:+expr}        var=			var=			var=expr
+    var=${str=expr}		    same as: str=${str-expr}; var=str;
+    var=${str:=expr}	    same as: str=${str:-expr}; var=str;
+    var=${str?expr}	        expr输出至stderr var=$str		var=$str
+    var=${str:?expr}        expr输出至stderr expr输出stderr	var=$str
 
 ## Number 数字
 
