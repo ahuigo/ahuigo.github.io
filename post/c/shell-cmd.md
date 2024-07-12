@@ -6,39 +6,6 @@ priority:
 # Shell Programming
 Shell 编程笔记
 
-# Signal, 信号(trap)
-Refer to:
-http://billie66.github.io/TLCL/book/zh/chap37.html
-
-signal handling:
-
-	trap argument signal [signal...]
-
-demo1: press`Ctrl+C` to send interrupt signal
-
-	trap "echo 'I am ignoring interrupted and kill!'" SIGINT SIGTERM
-	for i in {1..5}; do
-		echo "Iteration $i of 5"
-		sleep 5
-	done
-
-trap-demo2 : simple signal handling demo
-
-	exit_on_signal_SIGINT () {
-		echo "Script interrupted." 2>&1
-		exit 0
-	}
-	exit_on_signal_SIGTERM () {
-		echo "Script terminated(kill)." 2>&1
-		exit 0
-	}
-	trap exit_on_signal_SIGINT SIGINT
-	trap exit_on_signal_SIGTERM SIGTERM
-	for i in {1..5}; do
-		echo "Iteration $i of 5"
-		sleep 5
-	done
-
 # process
 ## 异步与同步命令: `&` and `;` 
 > https://stackoverflow.com/questions/51943502/shell-execute-multiple-commands-from-string-with-ampersandbackground-process
@@ -126,6 +93,7 @@ type 用于查看命令的属性
 ## alias
 
 	unalias rgrep
+
 # exec cmd
 ## sh -c cmdstr
 

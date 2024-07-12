@@ -81,6 +81,27 @@ globals(): is only used to determine the context; they are not modified.
 locals(): is unused(不使用).
 
 ## import dot(.)
+### dot. 相对引用示例
+在 Python 中，你可以使用相对导入或绝对导入。在你的情况下，如果你的项目结构如下：
+
+    project_root/
+    ├── __init__.py
+    ├── core
+    │   ├──  core.py
+    ├── sdk
+    │   ├── client.py
+
+你可以在 client.py 文件中使用以下代码来导入 core.py：
+注意：这种导入方式需要你的项目是一个包，也就是说在你的项目根目录下需要有一个 `__init__.py` 文件。这个文件可以是空的，但必须存在，以便 Python 将这个目录识别为包。
+
+    # 这里，.. 表示父目录。这种导入方式称为相对导入，它是基于当前模块的文件路径。
+    from ..core import core
+
+如果 sdk路径很深，可以是多级
+
+    from ....core import core
+
+### dot. 相对引用说明
 The . is a shortcut that tells it search in current package(not process's cwd) before rest of the PYTHONPATH:
 
     # 从当前file所在目录中，导入user.py
@@ -135,7 +156,7 @@ The reason `import .foo` is prohibited is because:
 
 以上方法仅用于 module:  `python -m pkg.moddule1`
 
-### 如果不是module, 可以用这个办法：
+### 如果不是module, 可以用通过设置sys.path
 在Python中，相对导入是基于当前模块的`__name__`属性的。当你直接运行一个模块时，它的`__name__`属性被设置为`__main__`，并且没有父包, 会报错
  ImportError: attempted relative import with no known parent package
 

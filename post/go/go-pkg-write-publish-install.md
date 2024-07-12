@@ -148,11 +148,17 @@ via HTTP_PROXY:
 ## 代理服务的endpoint url
 
     # https://proxy.golang.org
+    # export GOPROXY='https://goproxy.io,direct'
     https://goproxy.io/github.com/ahuigo/requests/@v/list
     https://goproxy.io/github.com/ahuigo/requests/@latest
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.info
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.mod
     https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.zip
+
+
+
+如果是
+
 
 ### 下载指定version
 > 国内用户在用 golang 的时候可以手动下载（可以试一下， 先 git clone， 然后 git checkout v1.1.1， 最后 copy 到 mod/pkg@v1.1.1 下）。

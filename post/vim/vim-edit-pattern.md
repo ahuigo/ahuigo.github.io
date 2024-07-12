@@ -5,8 +5,6 @@ category: blog
 description: 
 date: 2018-10-04
 ---
-# Preface
-
 # pattern
 
 	:h pattern
@@ -275,14 +273,15 @@ Here two example are equal
 
 	:%s/\([^-]*\)-\(.*\)/\2 \r \1/gc   "vim中的替换也可以用到正则反引用\2\1
 
-
 # search 搜索
 高亮/搜索时定位/循环搜索时的配置
 
     " 大小写不敏感匹配
     :set ignorecase 
+    :set noignorecase 
     " 当搜索的字母只有小写时, 就大小写敏感. 否则,就大小写不敏感
     :set smartcase
+    :set nosmartcase
 
 	#高亮搜索关键字
 	:set hls 或 :set hlsearch

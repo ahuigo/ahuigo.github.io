@@ -6,25 +6,13 @@ description:
 date: 2018-10-04
 ---
 # python env
-本文介绍数种python 虚拟环境
-- virtualenv 提供了 Python 虚拟环境的隔离，但是命令复杂，目录的管理也比较混乱，
-- VirtualEnvWrapper 基于它提供了更简易的命令和操作。
-- venv, python3 自带，类似于virtualenv
-
 python 版本切换:
 - pyenv
 
-# venv
-
-    python3 -m venv blog_dir
-    #不带pip
-    pyvenv --without-pip blog_dir
-
-使用：
-
-    $ . blog_dir/bin/activate
-    (blog_pyenv) ➜ umi3$ git:(dev) ✗ 
-    $ deactivate   
+python pip虚拟环境:
+- virtualenv 提供了 Python 虚拟环境的隔离，但是命令复杂，目录的管理也比较混乱，
+- VirtualEnvWrapper 基于它提供了更简易的命令和操作。
+- venv, python3 自带，类似于virtualenv
 
 # pyenv(python版本切换)
 用于管理python
@@ -43,13 +31,19 @@ python 版本切换:
     ＃如果你用 virtualenvwrapper 
     pyenv-virtualenvwrapper 
 
-
-显示当前版本
+## 显示当前版本
 
     pyenv install --list
     pyenv global
         > system
 
+    > pyenv versions
+        * system (set by /home/user/.pyenv/version)
+        3.6.4
+        3.7.9
+        3.8.19
+
+## 切换
 pyenv 会修改环境变量, 通过在 PATH 环境变量的最前面添加一个 shims 目录来实现版本切换, shims 会自动读取当前目录的.python-version
 
     > 安装到 ~/.pyenv/versions/ 目录下
@@ -66,6 +60,23 @@ pyenv 会修改环境变量, 通过在 PATH 环境变量的最前面添加一个
     rm .python-version
     pyenv global
     > system
+
+## vscode pyenv
+Open the command palette  by typing `Ctrl + Shift + P`. Then type **python: select interpreter** 
+
+Or You can find the same option by simply clicking and selecting the interpreter from the bottom right corner of the VSCode as shown in the image below.
+
+# venv
+
+    python3 -m venv blog_dir
+    #不带pip
+    pyvenv --without-pip blog_dir
+
+使用：
+
+    $ . blog_dir/bin/activate
+    (blog_pyenv) ➜ umi3$ git:(dev) ✗ 
+    $ deactivate   
 
 # virtualenv
 ## install
@@ -111,7 +122,7 @@ pyenv 会修改环境变量, 通过在 PATH 环境变量的最前面添加一个
 
 在venv环境下，用pip安装的包都被安装到venv这个环境下，系统Python环境不受任何影响。也就是说，venv环境是专门针对myproject这个应用创建的。
 
-## exit
+## *exit*
 退出当前的venv环境，使用deactivate命令：
 
 	(venv)Mac:myproject michael$ deactivate

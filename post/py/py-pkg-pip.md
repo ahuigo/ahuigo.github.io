@@ -13,6 +13,9 @@ wheel：Python 分发的新标准，意在取代 eggs。官网
 ## 查看包路径
 
     python -c "print('\n'.join(__import__('pkg').file))"
+    # or
+    import site
+    print(site.getsitepackages())
 
 # pip
 
