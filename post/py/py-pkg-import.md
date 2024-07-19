@@ -166,7 +166,7 @@ python安装路径: sys.prefix
     >>> inspect.getfile(__class__)
 
 ### sys.path
-> 示例： cat pylib/app/pkg/readme.md, 演示了python执行时的sys.path
+> 示例： cat pylib/app/pkg/doc.md, 演示了python执行时的sys.path
 
 module find path
 
