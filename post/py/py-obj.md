@@ -13,6 +13,13 @@ pythone 一切皆对象: var, class, metaclass
 
 	id(any object)
 
+示例:
+
+    import sys
+    print(id(sys))
+    import sys
+    print(id(sys))
+
 # Class expression
 class property without assigned
 

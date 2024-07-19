@@ -2,32 +2,55 @@
 title: py-import
 date: 2018-09-28
 ---
-# Preface
 
-## package vs module
-import pkg/modules 时，引入的object type 是`module`，但它们不同点是
-1. `pkg/__init__.py` is package, 优先级高 包含多个module
-2. mod.py is module, 优先级低
+# package vs module
+> 示例： cd pylib/app/pkg/
 
-python 主要是通过import 实现模块化的, 每个文件就是一个module:
+## package vs module 定义
+> 示例： cd pylib/app/pkg/
 
-	pkg/
-		__init__.py
-		mod1.py
-		mod2.py
-	
-mod必须要显式引入:
+`import pkg/module` 时，引入的虽然object type 都是`module`，但它们不同点是
 
-    # 引入__init__
-    import pkg
+1. mod.py is module, 优先级低(同名时选pkg) (a single file)
+2. `pkg/` is package(python3.3前必须要有`pkg/__init__.py`,), 优先级高. (a collection of modules in directory)
 
-    # 引入__init__+mod1
-    from pkg import mod1; 
-    from pkg.mod1 import func; 
+示例： cd pylib/app/pkg/:
 
-    # 引入__init__+mod1+mod2
-    from pkg import mod1,mod2; 
+    > import mypkg
+    <module 'mypkg' (namespace) from ['/mypkg']>
 
+    > from mypkg import version
+    <module 'mypkg.version' from '/mypkg/version.py'>
+
+## 运行package或module 的方法
+运行package:
+
+    python -m tests 
+    # 1. 先运行 tests/__init__.py
+    # 2. 再运行　tests/__main__.py
+
+    python tests ;#文件夹也是可以运行的,　它本身就是package, 只是sys.path 插入的是"./tests"
+    #运行 tests/__main__.py
+
+运行 module
+
+    python -m tests.test_client 
+    # 运行的  python tests/test_client.py
+
+## package name and parent package
+打印包名：`print("name:" + __name__, "package:"+__package__)`(参考:pylib/app/pkg/)
+
+    $ p tests/test_client.py
+    name:__main__ package: None
+    mypkg: {'name': 'mypkg', 'package': 'mypkg'}
+
+    $ p -m tests.test_client
+    name:__main__ package: tests 
+    mypkg: {'name': 'mypkg', 'package': 'mypkg'}
+
+Note: mypkg 的父包就是 tests(相对引用必须要有parent package),
+> 如果没有父包的文件，调用`from .mypkg import Client` 就会报:
+> ImportError: attempted relative import with no known parent package
 
 # import
 
@@ -40,7 +63,7 @@ import 的包都会缓存到sys.modules
     sys.modules['conf'] = {user:"ahui"}
 
 ## import function
-A目录下必须放`__init__.py`才被被作为pkg 引入import
+A目录下必须放`__init__.py`才被作为pkg 引入import
 
 import 函数原型：
 
@@ -80,148 +103,71 @@ fromlist:
 globals(): is only used to determine the context; they are not modified.  
 locals(): is unused(不使用).
 
-## import dot(.)
-### dot. 相对引用示例
-在 Python 中，你可以使用相对导入或绝对导入。在你的情况下，如果你的项目结构如下：
-
-    project_root/
-    ├── __init__.py
-    ├── core
-    │   ├──  core.py
-    ├── sdk
-    │   ├── client.py
-
-你可以在 client.py 文件中使用以下代码来导入 core.py：
-注意：这种导入方式需要你的项目是一个包，也就是说在你的项目根目录下需要有一个 `__init__.py` 文件。这个文件可以是空的，但必须存在，以便 Python 将这个目录识别为包。
-
-    # 这里，.. 表示父目录。这种导入方式称为相对导入，它是基于当前模块的文件路径。
-    from ..core import core
-
-如果 sdk路径很深，可以是多级
-
-    from ....core import core
-
-### dot. 相对引用说明
+## import dot. 相对引用
 The . is a shortcut that tells it search in current package(not process's cwd) before rest of the PYTHONPATH:
 
     # 从当前file所在目录中，导入user.py
+    from . import user
     from .user import User
     from .dir import Dir #__init__.py
 	from .submodule import sth
-        # 本质是 from __name__.submodule import sth
-        # 不过直接执行会出问题 from '__main__'.submodule import sth
 	from ..parentmodule import sth
+	from ......parentmodule import sth
 
-wrong:
+bad　usage:
 
     import .pkg
-    import .mod
+    import ..pkg
 
-current working path
+以下用法中，查找的目录是什么呢？
 
-	from mod.pkg;   # entrance file's directory (not process's cwd) 见sys.path
-	from .mod.pkg;  # current file's directory (not process's cwd)
-	from . import a,b,c ; current file's directory (not process's cwd)
+	from mod.pkg;   # find in sys.path
+	from .mod.pkg;  # find in current file's directory (not process's cwd)
+	from . import a,b,c ; find in current file's directory (not process's cwd)
 
-比如：
+## reload vs import
+ 多次重复使用import语句(其实是`__import__`)时，*不会重新加载执行* 被指定的模块，只是把对该模块的内存地址给引用到本地变量环境。
 
-    package/
-        __init__.py
-        subpackage1/
-            __init__.py
-            moduleX.py
-            moduleY.py
-        subpackage2/
-            __init__.py
-            moduleZ.py
-        moduleA.py
+	import sys
+ 	print(id(sys))
+	import sys
+ 	print(id(sys))
 
-Assuming that the current file is either `moduleX.py or subpackage1/__init__.py`, following are correct usages of the new syntax:
+reload 对已经加载的模块进行重新加载(不含子模块)，一般用于原模块有变化等特殊情况，reload前该模块必须已经import过。
 
-    from .moduleY import spam
-    from .moduleY import spam as ham
-    from . import moduleY
-    from ..subpackage1 import moduleY
-    from ..subpackage2.moduleZ import eggs
-    from ..moduleA import foo
-    from ...package import bar
-    from ...sys import path
-    # Note that while that last case is legal, it is certainly discouraged (“insane” was the word Guido used).
-
-Relative imports must always use from `<> import`, `import <>` is always absolute. 
-Of course, absolute imports can use `from <> import x` by omitting the leading dots. 
-The reason `import .foo` is prohibited is because:
-1. after `import XXX.YYY.ZZZ` then `XXX.YYY.ZZZ` is usable in an expression. 
-2. But after `import .moduleY`, then `.moduleY` is not usable in an expression.
-
-以上方法仅用于 module:  `python -m pkg.moddule1`
-
-### 如果不是module, 可以用通过设置sys.path
-在Python中，相对导入是基于当前模块的`__name__`属性的。当你直接运行一个模块时，它的`__name__`属性被设置为`__main__`，并且没有父包, 会报错
- ImportError: attempted relative import with no known parent package
-
-你可以
-
-
-    if __name__ == "__main__":
-        sys.path.append(".")
-        #sys.path.remove(".")
-
-    import src.c.d
-
-或者
-
-    PYTHONPATH=. p a.py
-
-
-或者可以去掉`if __name__ == "__main__"`, 改成一个包, 然后执行
-
-    my_package/
-    __init__.py
-    user/
-        __init__.py
-        user_operations.py
-    scripts/
-        __init__.py
-        user_add_role.py
-
-内部：
-
-    # File: my_package/scripts/user_add_role.py
-    from ..user.user_operations import addUser
-
-    def addRoleToUser(name, role):
-        addUser(name)
-        print(f"Role {role} added to user {name}.")
-
-为了使相对导入工作，你需要从包的外部运行你的脚本，例如：
-
-    python -m my_package.scripts.user_add_role
+	from importlib import reload
+	reload(sys);	# 因为setdefaultencoding函数在被系统调用后被删除了，所以通过import引用进来时其实已经没有了，所以必须reload
+	sys.setdefaultencoding('utf8')  ##调用setdefaultencoding函数
 
 ## path
-此PATH 与 SHELL PATH 是独立的
+sys.path 与 SHELL PATH 是独立的
 
 1. Shell path: `os.environ['PATH']`, `os.getenv('PATH', default_value)`
-2. PATH: sys.path, 会包括 `export PYTHONPATH`, 用于搜索python的模块
+2. sys.path: 会包括 `export PYTHONPATH`, 用于搜索python的模块
 
-### sys.prefix 
+### sys.prefix 安装路径
 python安装路径: sys.prefix
 
-### module path
+### site-packages path
+    # 这个不全: 只有一个
+    python -c 'import site;print(site.getsitepackages())'
+    # 这个全
+    python -m site
+
+### find package path
 
 	import a_module
 	print a_module.__file__
+
     >>> c.__class__
     <class 'http.cookiejar.Cookie'>
     >>> c.__class__.__module__
     'http.cookiejar'
     >>> inspect.getfile(__class__)
 
-use module in command line:
-
-    python -m easy_install pyyaml
-
 ### sys.path
+> 示例： cat pylib/app/pkg/readme.md, 演示了python执行时的sys.path
+
 module find path
 
 	>>> import sys
@@ -282,7 +228,7 @@ module `store.py` is used as store
 	`__class__.__name__`
 
 3. `_xxx和__xxx`
-    import M import * 不会引入下划线属性
+    import M import * #不会引入下划线属性
 	这样的函数或变量就是非公开的（private），不应该被直接引用，比如_abc，__abc等；
 	`FOO.__xxx` 通过改名为`FOO._FOO__xxx` 隐藏自己
 
@@ -340,19 +286,3 @@ Python 靠一套需要大家自觉遵守的”约定“下工作。 比如下划
 1. `__all__` must be list
 2. `__all__` must be static(not dynamic)
 3. `__all__` must be under import
-
-# reload vs import
- 多次重复使用import语句(其实是`__import__`)时，*不会重新加载执行* 被指定的模块，只是把对该模块的内存地址给引用到本地变量环境。
-
-	import sys
- 	print(id(sys))
-	import sys
- 	print(id(sys))
-
-reload 对已经加载的模块进行重新加载(不含子模块)，一般用于原模块有变化等特殊情况，reload前该模块必须已经import过。
-
-	from importlib import reload
-	reload(sys);	# 因为setdefaultencoding函数在被系统调用后被删除了，所以通过import引用进来时其实已经没有了，所以必须reload
-	sys.setdefaultencoding('utf8')  ##调用setdefaultencoding函数
-
-see: py-import.md

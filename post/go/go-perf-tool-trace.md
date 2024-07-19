@@ -22,8 +22,8 @@ https://mp.weixin.qq.com/s/I9xSMxy32cALSNQAN8wlnQ
 
 # 生成trace.out
 ## web 生成
-    curl localhost:8181/debug/pprof/trace?seconds=10 > trace.out
-    go tool trace --http=':8080' trace.out
+    curl 'localhost:4500/debug/pprof/trace?seconds=10' > trace.out
+    go tool trace --http=:8080 trace.out
 
 ## cli 生成
     // golib/perf/pprof/runtime-pprof.go
@@ -50,5 +50,81 @@ https://mp.weixin.qq.com/s/I9xSMxy32cALSNQAN8wlnQ
     4 Scheduler latency profiler  
     为调度器级别的信息提供计时功能，显示调度在哪里最耗费时间
 
-## View Trace by proc
+## 1. View Trace by proc
+> 按`?` 获取快捷键帮助
 
+1 Timeline  
+显示执行的时间，根据跟踪定位的不同，时间单位可能会发生变化。你可以通过使用键盘快捷键（WASD键，就像视频游戏一样😊）来导航时间轴。
+
+2 Heap  
+在执行期间显示内存分配，这对于发现内存泄漏非常有用，并检查垃圾回收在每次运行时能够释放多少内存。
+
+3 Goroutines  
+在每个时间点显示有多少goroutines在运行，有多少是可运行的（等待被调度的）。大量可运行的goroutines可能显示调度竞争，例如，当程序创建过多的goroutines，会导致调度程序繁忙。
+
+4 OS Threads  
+显示有多少OS线程正在被使用，有多少个被syscalls阻塞。
+
+5 Virtual Processors(PROC)
+每个虚拟处理器显示一行。虚拟处理器的数量由GOMAXPROCS环境变量控制（默认为内核数）。
+
+6 Goroutines and events  
+显示在每个虚拟处理器上有什么goroutine在运行。连接goroutines的连线代表事件。
+
+### 分析trace chan
+```
+// golib/perf/pprof/trace/trace-chan
+func main() {
+	trace.Start(os.Stderr)
+	defer trace.Stop()
+	ch := make(chan int)
+	go func() {
+		ch <- 42
+	}()
+	<-ch
+}
+```
+![Alt text](/img/go/profile/trace-chan-view1.webp)
+
+在示例图片中，我们可以看到goroutine "G1.runtime.main"衍生出了4个不同的goroutines:
+- G5和G6、G7 都是负责收集trace数据的goroutine
+- G8是我们使用“go”关键字启动的那个。
+
+事件：处理器Proc的第二行可能显示额外的事件，比如syscalls和运行时事件以及gc 处理
+
+点击第1段G1 main.main可看到：
+1. Start: 0ns
+1. Wall Duration: 128ns
+1. Self Duration: 116ns
+1. 4个outgoing flow event: 启动了4个go routinue
+
+outgoing/incoming flow event:
+- 点击outgoing flow 的go event可查看启动其它go的start 位置;
+- 点击incomming flow 的go event可查看启动self的start 位置
+
+### trace sleep
+```
+// golib/perf/pprof/trace/trace-chan
+func main() {
+	trace.Start(os.Stderr)
+	defer trace.Stop()
+	time.Sleep(time.Microsecond * 200)
+	time.Sleep(time.Microsecond * 200)
+	time.Sleep(time.Microsecond * 200)
+}
+```
+sleep self Duration 很短，要放大时间尺度才能看到:
+- sleep 启动时应该是proc end，然后是不断的中断检查proc　start/proc end
+- sleep 结束时会有proc start
+
+
+## 2. Goroutine analysis
+示例：
+
+	Start location	                            Count	Total execution time
+    main.main	                                1	    327.169µs
+    runtime.traceStartReadCPU.func1	            1	    163.2µs
+    runtime.(*traceAdvancerState).start.func1	1	    54.72µs
+    runtime/trace.Start.func1	                1	    1.728µs
+    main.main.func1	                            1	    1.024µs go func(){}()
+    (Inactive, no stack trace sampled)	4	

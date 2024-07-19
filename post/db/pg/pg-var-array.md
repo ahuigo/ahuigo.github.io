@@ -28,6 +28,12 @@ private:
         m   varchar[];
         arr varchar[] := array[['key1','val1'],['key2','val2']];
 
+### convert `[]text` to `[]varchar(100)`
+    ALTER TABLE user1 ALTER domains TYPE varchar(100)[];
+    ALTER TABLE user1 ALTER domains TYPE varchar(100)[]
+        USING ARRAY[ARRAY_TO_STRING(domains, ',')::varchar(100)];
+
+
 ### array from select
 
     // sort array
@@ -37,7 +43,9 @@ private:
     SELECT ARRAY(SELECT CAST(unnest(array['200','301']::text[]) AS integer));
 
 
+
 ## empty array
+### default empty
 
     ALTER TABLE t1 add friends text[] DEFAULT array[]::varchar[];
 
@@ -45,6 +53,29 @@ private:
 
     array[]::varchar[]
     '{}'::text[]
+
+### is empty array
+
+array_length() requires two parameters, the second being the dimension of the
+array:
+
+    array_length(id_clients, 1) > 0
+    SELECT array_length('{{1,2,3},{4,5,6}}'::integer[][] , 2); -- 3
+    SELECT array_length('{}'::integer[] , 1); -- null
+
+compare it to an empty array:
+
+    id_clients = '{}'
+    id_clients != '{}'
+
+注意null 也空集是不同的:
+
+    select array[]::text[]='{}'; //true
+    select array[]::text[] is NULL; //false
+    select array[]::text[]=NULL; //null (不能这样比较, 用等号永远得到空集)
+
+    select null::text[]='{}'; //null
+    select null::text[] is NULL; //true
 
 # insert array
 
@@ -380,28 +411,3 @@ array_agg 后判断集合
     ALTER TABLE t ALTER COLUMN codes TYPE integer[] USING convert_text_array_to_int_array(codes);
     ALTER TABLE apis ALTER COLUMN codes SET DEFAULT '{}';
 
-
-## compare
-
-### is empty array
-
-array_length() requires two parameters, the second being the dimension of the
-array:
-
-    array_length(id_clients, 1) > 0
-    SELECT array_length('{{1,2,3},{4,5,6}}'::integer[][] , 2); -- 3
-    SELECT array_length('{}'::integer[] , 1); -- null
-
-compare it to an empty array:
-
-    id_clients = '{}'
-    id_clients is NULL
-
-That's all. You get:
-
-    select array[]::text[]='{}'; //true
-    select array[]::text[] is NULL; //false
-    select array[]::text[]=NULL; //null (不能这样比较, 用等号永远得到空集)
-
-    select null::text[]='{}'; //null
-    select null::text[] is NULL; //true

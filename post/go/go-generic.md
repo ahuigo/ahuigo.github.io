@@ -50,7 +50,7 @@ https://juejin.cn/post/7183613424230727740
     var a MySlice[int] = []int{1, 2, 3}
     var b MySlice[float32] = []int{1.0, 2.0}
 
-## 约束函数参数
+## 约束函数的'参数'
 
     func Add[T int | int32 | float64 | string] (a, b T) T {
         return a + b
@@ -90,6 +90,14 @@ https://juejin.cn/post/7183613424230727740
         }
         return result
     }
+
+还比如：
+
+    // f1, f2 匹配参数类型时, 会看低层实现
+    func Pipe2[F1 ~func(T0) T1, F2 ~func(T1) T2,  T0, T1, T2 any](t0 T0, f1 F1, f2 F2) T2 {
+        return f2(f1(t0))
+    }
+
 ## 官方内置约束包
 参考 https://taoshu.in/go/no-change-lib-in-go-1.18.html
 

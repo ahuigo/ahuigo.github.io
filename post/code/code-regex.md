@@ -85,7 +85,8 @@ BRE 并非是ERE的子集.以下是它们的交集:
 	* 匹配任意数目的字符(可以为0)
 	^ 匹配出现在行首或字符串开始位置的空字符串。ERE：置于任何位置都具特殊含义；BRE：仅在正则表达式的开头具有此特殊含义。
 	$ 匹配出现在行末的空字符串。
-	[...] 元字符 比如:
+	[...] 元字符 
+	[^...] 元字符取反:
 		[a-z] [^1-9]
 		[[:space:]] 空白符	也相当于perl中的\s
 		[^[:space:]] 非空白符	也相当于perl中的\S
@@ -99,6 +100,16 @@ BRE 并非是ERE的子集.以下是它们的交集:
 		[[:<:]] 匹配单词的开始 	perl中的\b代表单词边界
 		[[:>:]] 匹配单词的结束
 		[:graph:] Characters that are printable and are also visible. (A space is printable, but not visible, while an `a' is both.)
+    注意ERE/BRE不支持元字符转义：
+        元字符是：`\`,`.` 
+            echo '\.' | grep   '[\.]' 
+            echo '\.' | grep  -E '[\.]' 
+        对`]` 取反
+            $ echo 'a]' | grep  -o '[^]]'
+            a 
+        对`\`,`]` 取反
+            $ echo 'a\]ab]' | grep -E -o '[^\]]'
+            b]
 
 	\w
 		a short-hand for [[:alnum:]]
@@ -122,27 +133,24 @@ BRE 并非是ERE的子集.以下是它们的交集:
 	\{n,m\} \{n,\} 限制它之前的元字符或者子模式重现的次数区间
 	\( \) 子模式
 	\| 或
-    \+
+    \? \+
 
 ## ERE 专有
+在 ERE 中，特殊字符无需转义就能表示其特殊含义。例如，(abc)+ 匹配一个或多个 "abc"。
 
     {n,m}
+    | 或
+    () 子模式
     ? 0/1个元字符或子模式
     + 1个或多个元字符或子模式
 		+? 去贪婪(不生效)
-    | 或
-    () 子模式
-	^ 行首
-	$ 行尾
+        $ echo -n $'baa123' | gsed -nr '/ba+123/p'
+        baa123%
+
+另外ERE 独家还支持
+
 	\num 反引用
-	[^]]
-		不要用转义[^\]]
-
-Example:
-
-    echo -n ' ./alxxxxal 1.txt' | grep -E './(al).+\1'
-    $ echo -n $'ba123' | gsed -nr '/ba?123/p'
-    ba123%
+        echo -n ' ./alxxxxal 1.txt' | grep -E './(al).+\1'
 
 ERE,BRE 都不支持：
 

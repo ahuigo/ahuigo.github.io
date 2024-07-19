@@ -74,7 +74,7 @@ mac lsof 代替netstat:
 	-p 显示进程信息(PID/PNAME)
 	-e 显示扩展信息，例如uid等(linux only)
 
-## loop
+## loop seconds
 
 	-c <seconds> 每隔一个固定时间，执行该netstat命令(linux only)
 
@@ -156,7 +156,7 @@ http://www.cyberciti.biz/faq/what-process-has-open-linux-port/
 	lrwxrwxrwx 1 hilojack hilojack 0 Jun  8 17:09 /proc/10557/exe -> /usr/bin/php
 
 ### fuser port/protocol
-1. fuser - a command line tool to identify processes using files or sockets.
+fuser - a command line tool to identify processes using files or sockets.
 
     # sudo fuser port/protocol
     # sudo fuser 80/tcp
@@ -171,3 +171,18 @@ Task: Find Out Current Working Directory Of a Process
 	lrwxrwxrwx 1 vivek vivek 0 2010-10-29 12:04 /proc/3813/cwd -> /home/vivek
 	$ pwdx 3813
 	lrwxrwxrwx 1 vivek vivek 0 2010-10-29 12:04 /proc/3813/cwd -> /home/vivek
+
+## listen port 说明
+ncat 默认是监听0.0.0.0:
+
+    > nc -l 8091
+    > netstat -antp
+    Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+    tcp        0      0 0.0.0.0:8091            0.0.0.0:*               LISTEN      47026/nc
+
+ncat 默认监听指定ip 网卡
+
+    > nc -l 10.9.67.9 8089
+    > netstat -antp
+    Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+    tcp        0      0 10.9.67.9:8089          0.0.0.0:*               LISTEN      47024/nc

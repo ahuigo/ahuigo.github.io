@@ -61,6 +61,20 @@ Example
 
 # Variable
 
+## 变量参数
+
+BEGIN　需要的变量，要用-v 设置
+
+    awk -v var=10 'BEGIN {print var}'
+
+    # 内置变量可以
+    awk -v OFS=: 'BEGIN {print 1,2}'
+
+非BEGIN　需要的变量, 可以在后面设置，并且可以省略-v
+
+    $ awk 'NR==1 {print NR,$1,$2,$3,var}' OFS=":" var=10  <(echo a b c)
+    1:a:b:c:10
+
 ## Inner Variables
 说到了内建变量，我们可以来看看awk的一些内建变量：
 

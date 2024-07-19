@@ -94,6 +94,7 @@ secrets.GITHUB_TOKEN 是内置的:
             env:
               mascot: Octocat
 
+### 通过shell写入环境变量
 通过GIHTUB_ENV 文件指定ENV：https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
 
       - name: Set GOVERSION

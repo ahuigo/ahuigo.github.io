@@ -5,6 +5,8 @@ private: true
 ---
 # Advanced python requests
 https://findwork.dev/blog/advanced-usage-python-requests-timeouts-retries-hooks/#retry-on-failure
+## example
+> pylib/net/http/request-form-multipart.py 
 
 ## session cookie
 ### save cookie

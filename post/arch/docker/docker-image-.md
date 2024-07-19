@@ -69,6 +69,10 @@ Delete all images
 
 # create image
 
+## build with no-cache
+
+    sudo docker build --no-cache -f Dockerfile -t $IMG .
+
 ## rename image
 
     docker tag server:latest myname/server:latest

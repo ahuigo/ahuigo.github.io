@@ -514,6 +514,7 @@ Create an archive of files from a named tree.
 
     # if local branch dev is the current branch:
     git branch -u origin/dev
+    git branch -u origin/dev dev
     # or longer command
     git branch --set-upstream-to=origin/dev
 
