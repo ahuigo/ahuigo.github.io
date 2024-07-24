@@ -11,8 +11,10 @@ python 版本切换:
 
 python pip虚拟环境:
 - virtualenv 提供了 Python 虚拟环境的隔离，但是命令复杂，目录的管理也比较混乱，
-- VirtualEnvWrapper 基于它提供了更简易的命令和操作。
+    - VirtualEnvWrapper 基于 virtualenv 的一组扩展, 它提供了更简易的命令和操作。
 - venv, python3 自带，类似于virtualenv
+    - pyvenv 实际上是 Python 3.x 的一个模块 venv，等价于 python -m venv。
+    - pyvenv 与 pyenv 不一样
 
 # pyenv(python版本切换)
 用于管理python
@@ -67,9 +69,11 @@ Open the command palette  by typing `Ctrl + Shift + P`. Then type **python: sele
 Or You can find the same option by simply clicking and selecting the interpreter from the bottom right corner of the VSCode as shown in the image below.
 
 # venv
+venv 是python自带的依赖隔离管理
 
+    # 新隔离环境的配置./blog_dir
     python3 -m venv blog_dir
-    #不带pip
+    #或者(如果没带pip)
     pyvenv --without-pip blog_dir
 
 使用：

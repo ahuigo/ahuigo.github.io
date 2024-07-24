@@ -1,9 +1,13 @@
 ---
-title: Docker slim vs alpine
+title: Docker slim vs alpine vs bullseye
 date: 2019-12-06
 private: true
 ---
-# Docker slim vs alpine
+# Docker slim vs alpine vs bullseye
+## 区别
+- alpine: 5m
+- Slim: debian 轻量级, 它移除了一些不常用的软件包以减小镜像的大小, 比alpine 大点
+- debian　发行版: bullseye11, bookworm 12 稍大. 比如　golang:1.22.5-bullseye
 
 ## Alpine
 dockerfile

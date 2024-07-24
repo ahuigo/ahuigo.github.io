@@ -95,3 +95,9 @@ date: 2018-10-04
     >   object.__gt__(self, other)
 
     filter(User.id==5) ORM SQLAlchemy 中看到这里我还以为写错了。。。原来不是相等的意思。而是magic
+
+## 对象属性
+
+    def __getattribute__(self, name):
+        attr = object.__getattribute__(self, name)
+        if hasattr(attr, '__call__'):

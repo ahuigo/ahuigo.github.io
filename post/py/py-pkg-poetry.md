@@ -158,13 +158,15 @@ simple run
     /Users/ahui/Library/Caches/pypoetry/virtualenvs/xlparser-Lh_J4C-L-py3.10 (Activated)
 
 # Publish
+> 参考ahuigo/xlparser, ahuigo/pylib/app/pkg
 
-## init
+## create project
 
     # 新建
     poetry new new-proj
-    # 用于在现有的目录中初始化一个新的 Poetry 项目
-    poetry init
+
+    # 或者
+    mcd new-proj && poetry init
 
 ## 指定打包include目录
 
@@ -179,50 +181,114 @@ simple run
 
 第一次发布前要配置仓库与用户帐号 
 > To publish to PyPI, you can set your credentials for the repository named pypi. (~/.pypirc)
-> 不过poetry 不会读取pypirc, 它必须使用：poetry config http-basic.pypi <username> <password>　配置
+> 不过poetry 不会读取 ~/.pypirc, 它必须使用：poetry config http-basic.pypi <username> <password>　配置
 
-官方的
+### 官方的源配置
+二选1：
 
-    # recommended: https://pypi.org/help/#apitoken
+    # recommended: 参考：https://python-poetry.org/docs/repositories/#configuring-credentials
     poetry config pypi-token.pypi my-token
+
     # not recommended
     poetry config http-basic.pypi <username> <password>
 
-ali的
+twine 上传会读取~/.pypi
 
-    poetry config repositories.ali https://mirrors.aliyun.com/pypi/simple/
+    [pypi]
+    repository: https://upload.pypi.org/legacy/
+    username = __token__
+    password = pypi-xxxxxxxxxxxxxxxxxxxxxxx
 
-私有：
+poetry 则配置
+
+    poetry config pypi-token.pypi pypi-xxxxxxxxxxxxxxxxxxxxxxx
+
+运行poetry publish 后 https://pypi.org/manage/account/#modal-close 可以看到官方的token 访问记录
+
+### 发包private源配置(poetry config repositories)
+pypi 源是默认的地址，可配置要指定一个其它三方源地址
 
     $ poetry config repositories.mypypi https://artifactory.yourapp.com/artifactory/api/pypi/pypi-dev
     $ poetry config http-basic.mypypi <username> <password>
     $ poetry config --list
 
-## config项目的源(局部)
+ali的
+
+    poetry config repositories.ali https://mirrors.aliyun.com/pypi/simple/
+
+查看源的包list：
+
+    https://artifactory.yourapp.com/artifactory/api/pypi/pypi-dev/simple/
+    https://mirrors.aliyun.com/pypi/simple/
+
+## 下载源(局部)
+https://python-poetry.org/docs/repositories/
+
+### 配置下载源(局部)
+源分几个等级：每个等级可配置多个源
+
+    primary sources （primary is highest）
+    implicit PyPI (unless disabled by another primary source)
+    supplemental sources.
+
+增加源：
 
     # Sources without a priority are considered primary sources, too.
     $ poetry source add foo https://foo.bar/simple/
-    [[tool.poetry.source]]
-    name = "foo"
-    url = "https://foo.bar/simple/"
-    priority = "primary"
+        [[tool.poetry.source]]
+        name = "foo"
+        url = "https://foo.bar/simple/"
+        priority = "primary"
 
-    # 其它源
-    $ poetry source add --priority=supplemental foo https://foo.bar/simple/
+    # 其它备选源
     $ poetry source add --priority=explicit foo https://foo.bar/simple/
+    $ poetry source add --priority=supplemental foo https://foo.bar/simple/
+
+增加primary sources 会让implicit pypi 源失效
+
+    # Omit the url when specifying PyPI explicitly.(It's inner config)
+    poetry source add --priority=primary PyPI
+
+### show source list:
+
+    poetry source show
+        name      : pypi-my
+        url       : https://artifactory.xx.com/artifactory/api/pypi/pypi-my
+        priority  : primary                                                                     
+
+        name      : PyPI    
+        priority  : primary 
+
+check source:
+
+    poetry check
+
+### 安装包
+指定配置的源：
+
+    poetry config http-basic.foo <username>
+        # poetry config http-basic.foo <username> <password>
+    poetry add --source foo private-package
+
+
+## 下载源(全局)
+
+    poetry config repositories.pypi https://.../+simple/
 
 ## build and publish
 
-    # build to dist
+    # build  dist
     # --format (-f): 限制打包的格式为 wheel(whl) 或 sdist(tar.gz).  但目前只支持纯python的wheel。
     poetry build
+
+    # publish 到pypi(默认)
+    poetry publish 
 
     # publish 到ali
     poetry publish --repository ali
     poetry publish -r ali
 
 ## add published pkg
+如果是局部源：
 
     poetry add --source ali private-package
-
-

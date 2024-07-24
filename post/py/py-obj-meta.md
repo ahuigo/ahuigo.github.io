@@ -78,7 +78,7 @@ class ListMetaclass(type):
 print('1. start define MyList')
 class MyList(list, metaclass=ListMetaclass):
     print('1.1 define MyList static')
-    a=1
+    a=1 # 每定义一个属性，就触发一次 ins=MyList.__new__(); ins.__init__(1)
     def bar(self):
         print('test');
     def __new__(new_cls, *args):
@@ -131,6 +131,9 @@ ListMetaclass 的继承了type, 我们也可以看到MyList实例化关系：
 
 ### 使用metaclass 动态创建ORM 字段属性
 demo: /demo/py/metaclass_orm.py
+### 使用__new__ 创建enum 的label
+
+demo: pylib/spec/enum/enum-list.py
 
 ### metaclass inheritance
 #### metaclass 可以被subclass(mro继承)

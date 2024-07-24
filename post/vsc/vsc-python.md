@@ -16,11 +16,12 @@ https://www.zhihu.com/question/339718367
         "version": "0.2.0",
         "configurations": [
             {
-                // 运行模块 python -m hello
+                // 运行模块 python -m tests.hello
                 "name": "Python: 模块",
                 "type": "python",
                 "request": "launch",
-                "module": "hello"
+                "justMyCode": false,
+                "module": "tests.hello"
             },
             {
                 // 该配置用于运行当前窗口打开的文件 python file.py

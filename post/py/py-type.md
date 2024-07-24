@@ -2,10 +2,42 @@
 title: Python 的类型注解
 date: 2019-10-03
 ---
-# todo
-需要完善
+# vscode python type check
+## install pylance
+https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance
+
+    Type checking mode
+    Signature help, with type information
+    Parameter suggestions
+    Code completion
+    Auto-imports (as well as add and remove import code actions)
+    As-you-type reporting of code errors and warnings (diagnostics)
+    Code outline
+    Code navigation
+    Native multi-root workspace support
+    IntelliCode compatibility
+    Jupyter Notebooks compatibility
+    Semantic highlighting
+
+## open pylance
+
+    "python.analysis.typeCheckingMode": "basic"
+
+## ignore warning
+在行后面加：`# type: ignore `
+
+    import _io # type: ignore
+
+vscode 中：
+
+    "reportUnusedImport": "information",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "none",
+        "reportAttributeAccessIssue":"none"
+    },
 
 # Python 的类型注解
+> 代码参考 pylib/spec/types/
 python 也向typescript 学习 也自己加类型系统了。本文对此做个笔记
 
 ## 类型系统

@@ -46,7 +46,7 @@ def upgradePyprojectToml(filename):
         v = sys.argv[2]
     else:
         filetext = open(versionFile).read().strip()
-        filetext = re.sub(r'(?<=version = ")\d+\.\d+\.\d+(?=")',incrVersion, filetext, count=1)
+        filetext = re.sub(r'(?<=\nversion = ")\d+\.\d+\.\d+(?=")',incrVersion, filetext, count=1)
 
     open(versionFile,'w').write(filetext)
     return newversion

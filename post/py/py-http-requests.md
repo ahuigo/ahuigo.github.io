@@ -1,124 +1,376 @@
 ---
-title: Advanced python requests
-date: 2020-04-24
-private: true
+layout: page
+title: py-http
+category: blog
+description: 
+date: 2018-09-28
 ---
-# Advanced python requests
-https://findwork.dev/blog/advanced-usage-python-requests-timeouts-retries-hooks/#retry-on-failure
-## example
-> pylib/net/http/request-form-multipart.py 
+# Request
 
-## session cookie
-### save cookie
-
-    import requests, pickle
-    session = requests.session()
-
-    with open('somefile', 'wb') as f:
-        pickle.dump(session.cookies, f)
-
-Loading is then:
-
-    session = requests.session()  # or an existing session
-
-    with open('somefile', 'rb') as f:
-        session.cookies.update(pickle.load(f))
-
-### set cookie
-
+## to_curl
+    import curlify
     import requests
-    s = requests.session()
-    # Note that domain keyword parameter is the only optional parameter here
-    cookie_obj = requests.cookies.create_cookie(domain='www.domain.com',name='COOKIE_NAME',value='the cookie works')
-    s.cookies.set_cookie(cookie_obj)
 
-or:
+    response = requests.get("http://google.ru")
+    print(curlify.to_curl(response.request, compressed=False))
+    # curl -X 'GET' -H 'Accept: */*' -H 'Accept-Encoding: gzip, deflate' -H 'Connection: keep-alive' -H 'User-Agent: python-requests/2.18.4' --compressed 'http://www.google.ru/'
 
-    my_cookie = {
-        "version":0,
-        "name":'COOKIE_NAME',
-        "value":'true',
-        "port":None,
-        # "port_specified":False,
-        "domain":'www.mydomain.com',
-        # "domain_specified":False,
-        # "domain_initial_dot":False,
-        "path":'/',
-        # "path_specified":True,
-        "secure":False,
-        "expires":None,
-        "rest":{},
-        "rfc2109":False
+## Non Block
+If you are concerned about the use of blocking IO, there are lots of projects out there that combine Requests with one of Python’s asynchronicity frameworks. Two excellent examples are grequests and requests-futures.
+
+## install
+
+	easy_install requests //2.7
+	pip3 install requests
+	import requests
+
+## use ipv6
+
+    import socket
+    import requests.packages.urllib3.util.connection as urllib3_cn
+
+    urllib3_cn.allowed_gai_family = lambda: socket.AF_INET6
+
+## request
+
+	>>> r = requests.request('GET', 'https://127.0.0.1:8000/a.php')
+	>>> r = requests.get('https://127.0.0.1:8000/a.php')
+	>>> r = requests.post("http://httpbin.org/post", data = {"key":"value"})
+	>>> r = requests.post("http://httpbin.org/post", data = (("key","value",),))
+	>>> r = requests.put("http://httpbin.org/put", data = {"key":"value"})
+	>>> r = requests.delete("http://httpbin.org/delete")
+	>>> r = requests.head("http://httpbin.org/get")
+	>>> r = requests.options("http://httpbin.org/get")
+
+### params in url
+Passing Parameters In URLs
+
+	>>> r = requests.get("http://httpbin.org/get", params={'key':'val'})
+	>>> print(r.url)
+		http://httpbin.org/get?key=val
+
+	>>> r = requests.get("http://httpbin.org/get", params="key=val&key2=val2"})
+
+### post data(form-data type)
+data 转为input(raw)会自动encode 
+
+	>>> print(s.post('http://hilo.sinaapp.com/header.php', data={'a':1, 'b':2}).text)
+	>>> print(s.post('http://hilo.sinaapp.com/header.php', data='a=1&b=2').text)
+	 ["input"]=> string(7) "a=1&b=2"
+	 'post'=>{a:1,b:2}
+
+### post data(unknown type)
+data 转为input(raw)会自动encode 
+
+	>>> print(s.post('http://localhost:7777/header.php',headers={'Content-Type':'x'} data='a=1&b=2').text)
+	>>> print(s.post('http://localhost:7777/header.php',headers={'Content-Type':'x'} data={'a':1,'b':2}).text)
+	只有php://input => string(7) "a=1&b=2"
+
+### post json(json type)
+只是RAW: ["Content-Type"]=> string(16) "application/json
+json 转为input 时, 会自动json.dumps
+
+	>>> r.post('http://0:8000/header.php', json={'ahui5':1}).text
+	["input"]=> "{"ahui5": 1}"
+	>>> r.post('http://0:8000/header.php', json='ahui6=6').text
+	["input"]=> ""ahui6=6""
+
+### post a Multipart-Encoded File
+
+	>>> files = {'file': open('report.xls', 'rb')}
+	>>> r = requests.post(url, files=files)
+
+You can set the filename, content_type and headers explicitly:
+
+	>>> files = {'file': ('report.xls', open('report.xls', 'rb'), 'application/vnd.ms-excel', {'Expires': '0'})}
+	>>> r = requests.post(url, files=files)
+
+If you want, you can send strings to be received as files:
+
+	>>> files = {'file': ('report.csv', 'some,data,to,send\nanother,row,to,send\n')}
+	>>> r = requests.post(url, files=files)
+
+#### post file stream(bytes):
+
+    files = {'file': b'io.BytesIO().getvalue()'}
+    # post_params在前，files在后
+    requests.post(url, data=post_params, files=files)
+
+### post data
+
+	data=urllib.parse.parse_qs('a=1&b=1')
+	>>> r = requests.post("http://httpbin.org/post", data = data)
+
+### dump curl
+    def dump_curl(req):
+        command = "curl -X {method} -H {headers} -d '{data}' '{uri}'"
+        method = req.method
+        uri = req.url
+        data = req.body.decode()
+        headers = ['"{0}: {1}"'.format(k, v) for k, v in req.headers.items()]
+        headers = " -H ".join(headers)
+        return command.format(method=method, headers=headers, data=data, uri=uri)
+    req = response.request
+    dump_curl(req)
+
+### disable redirects
+    r = requests.get('http://github.com', allow_redirects=False)
+    print(r.status_code, r.headers['Location'])
+
+## proxy
+代理
+
+    proxies = {
+      "http": "http://127.0.0.1:8888",
+      "https": "http://127.0.0.1:8888", #necessary
     }
 
-    s = requests.Session()
-    s.cookies.set(**my_cookie)
+    requests.get("http://example.org", proxies=proxies, verify=False)
 
-### Adding a custom cookie to requests session
+你也可以通过环境变量 HTTP_PROXY 和 HTTPS_PROXY 来配置代理。
 
-    >>> import requests
-    >>> s = requests.session()
-    >>> required_args = {
-            'name':'COOKIE_NAME',
-            'value':'the cookie works'
-        }
-    >>> optional_args = {
-        'version':0,
-        'port':None,
-    #NOTE: If domain is a blank string or not supplied this creates a
-    # "super cookie" that is supplied to all domains.
-        'domain':'www.domain.com',
-        'path':'/',
-        'secure':False,
-        'expires':None,
-        'discard':True,
-        'comment':None,
-        'comment_url':None,
-        'rest':{'HttpOnly': None},
-        'rfc2109':False
+    $ export HTTP_PROXY="http://10.10.1.10:3128"
+    $ export HTTPS_PROXY="http://10.10.1.10:1080"
+
+若你的代理需要使用HTTP Basic Auth，可以使用 http://user:password@host/ 语法：
+
+    proxies = {
+        "http": "http://user:pass@10.10.1.10:3128/",
     }
-    >>> my_cookie = requests.cookies.create_cookie(**required_args,**optional_args)
-    # Counter-intuitively, set_cookie _adds_ the cookie to your session object,
-    #  keeping existing cookies in place
-    >>> s.cookies.set_cookie(my_cookie)
-    >>> s.cookies
 
-### Bonus: Lets add a super cookie then delete it
+要为某个特定的连接方式或者主机设置代理，使用 scheme://hostname 作为 key， 它会针对指定的主机和连接方式进行匹配。
 
-    >>> my_super_cookie = requests.cookies.create_cookie('super','cookie')
-    >>> s.cookies.set_cookie(my_super_cookie)
+    proxies = {'http://10.20.1.128': 'http://10.10.1.10:5323'}
+    # 访问10.20.1.128时使用代理10.10.1.10:5323
 
-### delete cookie
-delete by name
-
-    >> s.cookies.set(name="id_token",value="hahah2", domain='httpbin.org')
-    >> del s.cookies['id_token']
-
-delete all
-
-    >>> s.cookies.clear()
-    >>> s.cookies.keys()
-    []
+### HTTPS CA
+You can pass verify the path to a CA_BUNDLE file or directory with certificates of trusted CAs:
 
 
-## retry
+    >>> requests.get('https://github.com', verify='/path/to/charles.pem')
 
-    from requests.adapters import HTTPAdapter
-    from requests.packages.urllib3.util.retry import Retry
+也可以忽略ssl_verify
 
-    retry_strategy = Retry(
-        total=3,
-        status_forcelist=[429, 500, 502, 503, 504],
-        method_whitelist=["HEAD", "GET", "OPTIONS"]
-    )
-    adapter = HTTPAdapter(max_retries=retry_strategy)
-    http = requests.Session()
-    http.mount("https://", adapter)
-    http.mount("http://", adapter)
+    >>> requests.get('https://kennethreitz.com', verify=False)
 
-    response = http.get("https://en.wikipedia.org/w/api.php")
+### SOCKS
+除了基本的 HTTP 代理，Request 还支持 SOCKS 协议的代理。这是一个可选功能，若要使用， 你需要安装第三方库。
 
-retry+timeout
+    $ pip install requests[socks]
 
-    retries = Retry(total=3, backoff_factor=1, status_forcelist=[429, 500, 502, 503, 504])
-    http.mount("https://", TimeoutHTTPAdapter(max_retries=retries))
+安装好依赖以后，使用 SOCKS 代理和使用 HTTP 代理一样简单：
+
+    proxies = {
+        'http': 'socks5://user:pass@host:port',
+        'https': 'socks5://user:pass@host:port'
+    }
+
+## Custom Headers
+For example, we didn’t specify our user-agent in the previous example:
+
+	>>> url = 'https://api.github.com/some/endpoint'
+	>>> headers = {'user-agent': 'my-app/0.0.1'}
+
+	>>> r = requests.get(url, headers=headers)
+
+
+## Response Content
+
+### response text
+
+	>>> r.text
+	u'[{"repository":{"open_issues":0,"url":"https://github.com/...
+	>>> r.encoding
+	'utf-8'
+	>>> r.encoding = 'ISO-8859-1'
+
+### response binary content("bytes")
+
+	>>> r.content
+	b'[{"repository":{"open_issues":0,"url":"https://github.com/...
+
+	 //to create an image from binary data returned by a request, you can use the following code:
+	>>> from PIL import Image
+	>>> from StringIO import StringIO
+	>>> i = Image.open(StringIO(r.content))
+
+### Response json
+
+	r.json()['key']
+
+### Raw Response Content
+In the rare case that you’d like to get the raw socket response from the server, you can access r.raw. If you want to do this, make sure you set stream=True in your initial request. Once you do, you can do this:
+
+	>>> r = requests.get('https://api.github.com/events', stream=True)
+	>>> r.raw
+	<requests.packages.urllib3.response.HTTPResponse object at 0x101194810>
+	>>> r.raw.read(10)
+	'\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\x03'
+
+In general, however, you should use a pattern like this to save what is being streamed to a file:
+
+    r = requests.get(...)
+	with open(filename, 'wb') as fd:
+		for chunk in r.iter_content(chunk_size): # bytes
+			fd.write(chunk)
+
+### response status_code
+
+	>>> r.status_code
+	200
+
+	>>> r.status_code == requests.codes.ok == 200
+    >>> r.ok
+	True
+
+### Response Headers
+We can view the server’s response headers using a Python dictionary:
+
+	>>> r.headers
+	{
+		'content-encoding': 'gzip',
+		'transfer-encoding': 'chunked',
+		'connection': 'close',
+		'content-type': 'application/json'
+	}
+
+The dictionary is special, though: it’s made just for HTTP headers. According to RFC 7230, HTTP Header names are *case-insensitive*.
+
+	>>> r.headers['Content-Type']
+	'application/json'
+
+	>>> r.headers.get('content-type')
+	'application/json'
+
+### Redirection and History
+By default Requests will perform location redirection for all verbs except HEAD.
+
+The Response.history list contains the Response objects that were created in order to complete the request. The list is sorted from the oldest to the most recent response.
+
+	>>> r = requests.get('http://github.com')
+	>>> r.url
+	'https://github.com/'
+	>>> r.status_code
+	200
+	>>> r.history
+	[<Response [301]>]
+
+If you’re using GET, OPTIONS, POST, PUT, PATCH or DELETE, you can disable redirection handling with the allow_redirects parameter:
+
+	>>> r = requests.get('http://github.com', allow_redirects=False)
+	>>> r.status_code
+	301
+	>>> r.history
+	[]
+
+If you’re using HEAD, you can enable redirection as well:
+
+	>>> r = requests.head('http://github.com', allow_redirects=True)
+
+## Timeouts
+You can tell Requests to stop waiting for a response after a given number of seconds with the timeout parameter:
+
+	>>> requests.get('http://github.com', timeout=0.001)
+	Traceback (most recent call last):
+	  File "<stdin>", line 1, in <module>
+	requests.exceptions.Timeout: HTTPConnectionPool(host='github.com', port=80): Request timed out. (timeout=0.001)
+
+## Cookie
+### get cookie
+get Cookies(instance of RequestsCookieJar)
+
+	>>> r.cookies['example_cookie_name']
+	'example_cookie_value'
+    >>> print(r.cookies.get_dict())
+
+
+### send cookie
+To send your own cookies
+
+	>>> r = requests.get(url, cookies={'key':'value'})
+	>>> r = requests.get(url, cookies='key=value') # wrong!!!!
+
+	>>> r1 = requests.post('http://www.yourapp.com/login')
+    pickle.dumps(r1.cookies)
+	>>> r2 = requests.post('http://www.yourapp.com/somepage',cookies=r1.cookies)
+
+### requests.cookies.RequestsCookieJar() usage:
+RequestsCookieJar
+
+	>>> cookies.get(key)
+	>>> cookies.get_dict() or items() list
+	>>> cookies.__getstate__() # for pickle
+    >>> help(cookies)
+        .item()
+        .iteritem()
+        .set(self, name, value, **kwargs)
+           Dict-like set() that also supports optional domain and path args in..
+
+    for cookie in cookies:
+        print(cookie.domain, cookie.path, cookie.expires)
+
+### cookie, http.cookiejar.Cookie
+
+    cookies.set('key', 123)
+    cookie = http.cookiejar.Cookie( version=0, name='a', value='b1', port=None, port_specified=False, domain='', domain_specified=False, domain_initial_dot=False, path='/', path_specified=True, secure=False, expires=1507376934, discard=True, comment=None, comment_url=None, rest={'HttpOnly': None}, rfc2109=False)
+
+    cookies.set_cookie(cookie)
+
+# Session
+> both session and cookie is pickle
+
+Use a session object instead, it'll persist cookies and send them back to the server:
+
+	with requests.Session() as s:
+		r = s.get(URL1)
+		r = s.post(URL2, params="username and password data payload")
+
+取设headers,cookies:
+
+	s = requests.Session()
+	s.auth = ('user', 'pass')
+	// send both 'x-test' and 'x-test2' 
+	s.headers.update({'x-test': 'true'})
+	s.get('http://httpbin.org/headers', headers={'x-test2': 'true'})
+
+	s.cookies.set('a',1)
+
+如果你要手动为会话添加 cookie，就是用 [Cookie utility] 函数 来操纵 Session.cookies。
+[Cookie utility]: http://docs.python-requests.org/zh_CN/latest/api.html#api-cookies
+
+## session auth
+	s = requests.Session()
+	s.auth = ('user', 'pass')
+
+## Session Cookie
+python 2/3:
+
+	from six.moves import http_cookiejar as cookielib
+
+	session.cookies = cookielib.LWPCookieJar(COOKIE_FILE)
+	session.cookies.load(ignore_discard=True, ignore_expires=True)
+
+	session.get(url)...
+	session.cookies.save(COOKIE_FILE, ignore_discard=True, ignore_expires=True)
+
+iterate
+
+    for cookie in session.cookies:
+        print(cookie.name, cookie.value, cookie.domain)
+
+### save/load cookie
+	session.cookies.save(COOKIE_FILE, ignore_discard=True, ignore_expires=True)
+
+other: save cookie
+
+    import requests, requests.utils, pickle
+    session = requests.session()
+    # Make some calls
+    with open('somefile', 'w') as f:
+        pickle.dump(requests.utils.dict_from_cookiejar(session.cookies), f)
+
+Loading is then :
+
+    with open('somefile') as f:
+        cookies = requests.utils.cookiejar_from_dict(pickle.load(f))
+        session = requests.session(cookies=cookies)
