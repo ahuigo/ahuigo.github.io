@@ -3,6 +3,32 @@ title: 关于go dns 解析：cgo vs go
 date: 2021-07-06
 private: true
 ---
+# dns 配置
+## 添加修改dns
+修改 vim /etc/systemd/resolved.conf 
+
+```
+[Resolve]
+DNS=8.8.8.8 8.8.4.4
+```
+
+执行：`sudo systemctl restart systemd-resolved`：
+1. reload生成: /run/systemd/resolve/resolv.conf
+2. 默认不变的： /etc/resolv.conf -> /run/systemd/resolve/stub-resolv.conf
+    1. 修改默认dns: sudo ln -sf /run/systemd/resolve/resolv.conf   /etc/resolv.conf
+
+检查dns
+
+    dig baidu.com
+
+## docker build dns
+修改dns文件后，docker 需要重新启动 dns才生效
+
+    # 本机的docker 
+    sudo systemctl restart docker
+    # minibue 的docker
+    minikube stop && minikube start
+
 # dns 解析：
 ## dns 解析：cgo vs go
 根据官方说明, go 存在两种dns解析：

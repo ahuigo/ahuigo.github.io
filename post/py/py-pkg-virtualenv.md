@@ -32,7 +32,7 @@ python pip虚拟环境:
     eval "$(pyenv virtualenv-init -)" # 启用 pyenv-virtualenv 的自动激活和取消激活虚拟环境的功
     ＃如果你用 virtualenvwrapper 
     pyenv-virtualenvwrapper 
-
+a
 ## 显示当前版本
 
     pyenv install --list

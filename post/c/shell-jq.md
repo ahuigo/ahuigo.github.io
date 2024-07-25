@@ -6,6 +6,8 @@ private: true
 # jq
 > 最近同事用jq 配合做压测，做一个笔记
 
+
+## format
 常规用法
 
     jq -ncM '{key:"v"}'
@@ -13,15 +15,20 @@ private: true
 jq 参数：
 
     -n 无输入
-    -c 紧凑输出（无换行）
+    -c 紧凑输出（json无换行）
     -M 输出无终端color
+
+### 解析字符串
+
+    # -r 解析字符串
+    printf %s '"a\nv"'  | jq 
+    printf %s '"a\nv"'  | jq -r
 
 ## 随机数据
 
     jq -ncM 'while(true; .+1) | {method: "POST", body: {"num":("num"+(.|tostring))}}'
 
     while(true; .+1) 中对.这个变量进行自增
-
 
 # 管道
 jq 支持管道，比如我们利用管道生成base64
@@ -41,6 +48,19 @@ note:
 
     $ echo "$(uname | tr '[:upper:]' '[:lower:]')" 
     darwin
+
+## nested pipe
+    cat <<-MM | jq -r '.|{name:.metadata.name, ip:.status.addresses[] | select(.type=="InternalIP") .address}'
+    {
+    "metadata": { "name": "minikube"},
+    "status": {
+        "addresses": [
+            { "address": "192.168.49.2",  "type": "InternalIP" },
+            { "address": "193.168.49.3",  "type": "OuterIP" }
+        ]
+    }}
+    MM
+
 
 ## to_entries
 map 转数组：
