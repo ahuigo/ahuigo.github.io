@@ -7,6 +7,7 @@ private: true
 以golang 项目为例子: 
 - https://github.com/ahuigo/gofnext/tree/main/.github/workflows
 - https://github.com/ahuigo/selfhttps/tree/main/.github/workflows
+- https://github.com/ahuigo/ginapp/tree/main/.github/workflows
 
 # codecov
 ## 1. add repe secrets
@@ -47,11 +48,11 @@ uses action.yml 文件实际位于: https://github.com/codecov/codecov-action/bl
 
 # gorelease package
 ## 选择github token 与权限
-可使用两种TOKEN:
-1. 创建PAT　token, 先在 https://github.com/settings/tokens 生成token(classic) 选择write package 等权限
-2. 使用默认的`secrets.GITHUB_TOKEN`，如果写定需要发release 包，就要`contents: write` 权限
+可使用两种github TOKEN:
+- 创建PAT　token, 先在 https://github.com/settings/tokens 生成token(classic) 选择write package 等权限
+- 使用**默认**的`secrets.GITHUB_TOKEN`，如果需要发release 包，就要`contents: write` 权限
 
-示例：在action 中发release包，需要`contents: write` 权限
+示例：在action 中发release包，需要增加`contents: write` 权限
     
     task1:
       #修改权限：https://docs.github.com/en/actions/security-guides/automatic-token-authentication

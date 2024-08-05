@@ -145,8 +145,8 @@ compose 有很多命令，
     logs               View output from containers
         
     # start services
-    start              Start services
-    stop               Stop services
+    start              Start services(docker start)
+    stop               Stop services(docker stop)
     restart            Restart services
     scale              Set number of containers for a service
 

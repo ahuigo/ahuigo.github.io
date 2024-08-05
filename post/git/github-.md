@@ -15,7 +15,10 @@ private: true
 - Github packages: 发布和安装各种语言和平台的软件包，比如 npm、RubyGems、Docker 等。
 - Github App: https://github.com/settings/apps 充当机器人，用来对repo操作issues, pr等
     - webhook
-- OAuth App: https://github.com/settings/developers 提供三方登录
+- Github applications: https://github.com/settings/applications
+    - Authorized OAuth Apps: 你登录过的oauth apps
+        - github cli(`gh auth login`): you can revoke access to the GitHub CLI application.
+- OAuth App: https://github.com/settings/developers 提供三方登录注册
 - 项目相关
     - Github Environments: 用于管理项目的不同部署环境, 例如环境保护规则（例如需要特定的人员审查和批准部署）、环境变量
     - Actions secrets and variables
@@ -26,7 +29,7 @@ private: true
 
 ## 发packages /release 包权限
 两种token:
-- 如果你用github atciton workflow : use `GITHUB_TOKEN` to publish, install, delete, and restore packages in GitHub Packages without needing to store and manage a personal access token(PAT).
+- 推荐用github atciton workflow : use `GITHUB_TOKEN` to publish, install, delete, and restore packages in GitHub Packages without needing to store and manage a personal access token(PAT).
 - 否则，使用PAT token(classic): 给 read/write/delete:packages　权限
 
 ## container registry

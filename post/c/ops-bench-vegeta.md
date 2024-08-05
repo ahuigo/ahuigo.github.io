@@ -13,13 +13,18 @@ vegeta 是golang 写的压测工具
     echo "GET http://host.com/api/v1/tasks" | vegeta attack  -rate=10000  -duration=10s |vegeta report
     echo "GET http://host.com/api/v1/tasks" | vegeta attack  -rate=10000  -duration=10s > result.bin
 
-header(要加json):
+#### header(要加json):
 
     jq -ncM '{method: "POST", url: "http://m:8099", header: {"Content-Type": ["text/plain"]}}' | vegeta attack -format=json -rate=100 | vegeta report
 
+
+也可以能过　`-header`加：
+
+
+#### 构造body json
 必须通过base64传body json
 
-    jq -ncM '{method: "POST", url: "http://m:8099", body: {a:{b:[1,2]}} | @base64, header: {"Content-Type": ["application/json"]}}' | vegeta attack -format=json -rate=100 | vegeta report
+    jq -ncM '{method: "POST", url: "http://m:8099", body: {a:{b:[1,2]}} | @base64, header: {"Content-Type": ["application/json"]}}' | vegeta attack -format=json -rate=10 -duration=10s | vegeta report
 
 以上jq脚本的解释：
 
@@ -51,7 +56,8 @@ vegeta attack 参数：
 Note: 
 1. 没有`-lazy`
     1. 如果stdin的请求数不够的话. 会重复请求. `cat a.txt| vegeta ....`
-    2. 会因为read stdin buffer阻塞。（比如: jq -ncM while(true; .+1) 是无限的）
+    2. 会因为read stdin buffer阻塞。（jq -ncM while(true; .+1) 是无限的，就会阻塞）
+    $ jq -ncM 'while(true; .+1) | {method: "GET", header: {"Content-Type": ["application/json"]}, url: "http://0:4500/sleep/3", body: {"name":"wf_yxh1","input":{}} | @base64 }'  | vegeta attack -format=json -rate=2  -duration=5s | vegeta report
 1. 有`-lazy`表示
     1. 如果stdin的请求数不够的话，不会重复请求. 有多少就请求多少: `cat a.txt| vegeta ....`
 
@@ -83,4 +89,19 @@ vegeta plot： 生成 html 格式的折线图，使用浏览器打开文件。
     Success       [ratio]                    100.00%
     Status Codes  [code:count]               200:10
     Error Set:
-    $ jq -ncM 'while(true; .+1) | {method: "GET", header: {"Content-Type": ["application/json"]}, url: "http://0:4500/sleep/3", body: {"name":"wf_yxh1","input":{}} | @base64 }'  | vegeta attack -format=json -rate=2  -duration=5s | vegeta report
+
+# config
+## common config
+    -workers 10
+        initial number of workers
+
+## httpClient 
+### Timeout
+    -timeout 30s
+        httpClient.Timeout(connect + response time)
+### -keepalive
+Specifies whether to reuse TCP connections between HTTP requests.
+
+
+# Debug
+## 

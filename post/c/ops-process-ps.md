@@ -105,61 +105,11 @@ mac:
     -u the processes belonging to the specified usernames.(default own)
         -u user1,user1,...
         -U uid1,uid2,...
+
+### filter 
 	-p pid,pid,...
 
-## sort
-
-	-r      Sort by current CPU usage
-
-## format
-
-### hide title(h)
-
-	 ps -C php -O args h
-
-### info field
-
-	-f
-		UID   PID  PPID   C STIME   TTY           TIME CMD
-	-u,
-		USER  PID  %CPU %MEM      VSZ    RSS   TT  STAT STARTED      TIME COMM
-	-l
-		UID   PID  PPID   F CPU PRI NI       SZ    RSS WCHAN     S             ADDR TTY           TIME CMD
-	-w,w
-		Use 132 columns to display information.
-		If the -w option is specified more than once(-ww,ww), ps will use as many columns as necessary without regard for your window size
-
-#### get process name
-
-    NAME=`ps -q $PID -o comm=`
-
-查看挂载点：
-
-    MNTNS=`readlink /proc/$PID/ns/mnt`
-
-#### specify field
-
-	ps -o rss,vsz
-	ps -o args
-	ps -L "list all field
-	ps -p 2624 -o lstart; #列出进程创建时间
-
-##### print time
-
-	stime start time
-	etime elapsed time
-
-example
-
-	$ ps -p "$$" -o etime=
-		11:28 //11 min 28 sec
-	$ ps -o stime= "$$"
-		21:10 //start at 21:10:00
-	$ ps -o stime "$$"
-		STIME
-		21:10 //start ast 21:10:00
-
-#### specify cmdlist
+### filter cmdlist
 
 	-C cmdlist      Select by command name.
 		This selects the processes whose executable name is given in cmdlist.
@@ -172,13 +122,13 @@ Example
 	 \_ php-fpm: pool www       459152  7732  3304
 	 \_ php-fpm: pool www       459152  7732  3304
 
-### 打印指令
-print command name (not path)
+## sort
 
-	ps c
-		Show the true command name. not from argv
+	-r      Sort by current CPU usage
 
-### 字段说明
+## 字段说明
+
+### CPU/CMD 
 
 	USER: 行程拥有者
 	PID: pid
@@ -197,7 +147,7 @@ print command name (not path)
 	PR — 进程优先级
 	NI — nice值。负值表示高优先级，正值表示低优先级
 
-#### MEM
+### MEM(KB): RSS/VSS
 内存占用：
 - 进程独立申请的内存USS
 - 进程之间共享的内存 shared library
@@ -245,6 +195,62 @@ top 中的MEM：
 	RES — 进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA
 	VIRT — 进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES
 	SHR — 共享内存大小，单位kb(物理内存)
+
+
+## format 指定显示字段
+### hide title(h)
+if you wanna hide title:
+
+	 ps -C php -O args h
+
+### specify field
+
+	ps -o rss,vsz
+	ps -o args
+	ps -L "list all field
+	ps -p 2624 -o lstart; #列出进程创建时间
+
+#### get process name
+
+    NAME=`ps -q $PID -o comm=`
+
+查看挂载点：
+
+    MNTNS=`readlink /proc/$PID/ns/mnt`
+
+#### show time
+时间相关的字段：
+
+	stime start time
+	etime elapsed time
+
+指定显示字段时，如果有`=` 代表不显示header title
+
+	$ ps -p "$$" -o etime=
+		11:28 //11 min 28 sec
+	$ ps -o stime= "$$"
+		21:10 //start at 21:10:00
+	$ ps -o stime "$$"
+		STIME
+		21:10 //start ast 21:10:00
+
+#### show command name
+print command name (without path)
+
+	ps c
+		Show the true command name. not from argv
+
+### 常用字段集合
+
+	-f
+		UID   PID  PPID   C STIME   TTY           TIME CMD
+	-u,
+		USER  PID  %CPU %MEM      VSZ    RSS   TT  STAT STARTED      TIME COMM
+	-l
+		UID   PID  PPID   F CPU PRI NI       SZ    RSS WCHAN     S             ADDR TTY           TIME CMD
+	-w,w
+		Use 132 columns to display information.
+		If the -w option is specified more than once(-ww,ww), ps will use as many columns as necessary without regard for your window size
 
 # 查看进程
 

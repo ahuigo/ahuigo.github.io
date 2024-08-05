@@ -199,7 +199,7 @@ The general format of a tcp protocol line is:
 	src > dst: flags data-seqno ack window urgent options
 
 1. Flags are some combination of:
-  S (SYN), F (FIN), P (PUSH), R (RST), U (URG), W (ECN CWR), E (ECN-Echo) or `.' (ACK), or `none' if no flags are set. 
+  S (SYN), F (FIN), P (PUSH), R (RST), U (URG), W (ECN CWR), E (ECN-Echo) or `.(ACK)`, or `none` if no flags are set. 
   
 2. Data-seqno: \
 	describes the portion of sequence space covered  by  the  data in this packet . 

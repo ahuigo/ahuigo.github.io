@@ -22,7 +22,7 @@ private:
 
 > 更多调试的使用，可以阅读Go Blog的 Profiling Go Programs: https://go.dev/blog/pprof
 
-# go tool pprof 的使用
+# pprof 的使用
 `go tool pprof` 可以采集并生成 `.pprof` 文件、下载prof并生成分析结果（火焰图、调用栈等）. 下面具体总结一下
 
 ## pprof 命令的基本用法
@@ -186,23 +186,7 @@ pkg/profile 是对 runtime/pprof 的封装，更易用一点儿
 如果是gonic, 由于它没有使用`http`, 我们要手动注册路由——监控性能采样请求
 
 ### gonic pprof
-以gonic 为例, 我们需要增加几个路由完成profile 采样读取:
-
-    import "net/http/pprof"
-
-    router := gin.Default()
-	router.Handle("GET", "/debug/pprof/", func(ctx *gin.Context) {
-        pprof.Index(ctx.Writer, ctx.Request)
-    })
-	router.Handle("GET", "/debug/pprof/profile", func(ctx *gin.Context) {
-        pprof.Profile(ctx.Writer, ctx.Request)
-    })
-	router.Handle("GET", "/debug/pprof/heap", func(ctx *gin.Context) {
-        pprof.Handler("heap").ServeHTTP(ctx.Writer, ctx.Request)
-    })
-    ....
-
-实际上 https://github.com/DeanThompson/ginpprof 为我们提供了上述代码的封装：
+https://github.com/DeanThompson/ginpprof 为我们提供了api：
 
     import "github.com/DeanThompson/ginpprof"
     ...
@@ -227,7 +211,7 @@ pkg/profile 是对 runtime/pprof 的封装，更易用一点儿
 点击对应的 profile 可以查看具体信息，通过浏览器查看的数据不能直观反映程序性能问题，go tool pprof 命令行工具提供了丰富的工具集:
 
     # 下载 cpu profile，默认从当前开始收集 30s 的 cpu 使用情况，需要等待 30s
-    go tool pprof http://localhost:4500/debug/pprof/profile
+    go tool pprof -http=:4550 http://localhost:4500/debug/pprof/profile
     # wait 120s
     go tool pprof http://localhost:4500/debug/pprof/profile?seconds=120     
     go tool pprof -seconds=120 http://localhost:4500
