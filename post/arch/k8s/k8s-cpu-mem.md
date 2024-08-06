@@ -1,21 +1,9 @@
 ---
-title: K8s debug
+title: K8s cpu mem
 date: 2019-11-26
 private: true
 ---
-# K8s debug
-by twitter @haoel :
-这篇K8s网丢包调查的文章真是篇Debug雄文，强烈推荐，导读如下：
-
-1）如何分段查找网络丢包问题【基础技能】
-2）内核软中断、NAPI和ksoftirqd进程【高级知识】
-3）调试诊断内核。【超高级技能】
-4）如何调试相关进程【高级技能】
-5）结论：把Linux 内核升级到  4.19 +以上
-
-https://github.blog/2019-11-21-debugging-network-stalls-on-kubernetes/
-
-## limit requests
+# limit requests
 > 深入理解 Kubernetes 资源限制：CPU: https://www.cnblogs.com/sunsky303/p/11544540.html
 > 一文读懂Kubernetes 的 Limit 和 Request: https://zhuanlan.zhihu.com/p/114765307
 > http://dockone.io/article/2509
@@ -57,24 +45,21 @@ Requests 用于在调度时通知调度器 Pod 需要多少资源才能调度，
     2. busybox：1000m*0.1cores≅100m
 2. 关于redis
     1. 如果 Redis 容器尝试分配超过 600MB 的 RAM，就会被 OOM-killer；
-    2. 如果 Redis 容器尝试每 100ms 使用 100ms 以上的 CPU，那么 Redis 就会受到 CPU 限制（一共有 4 个内核，可用时间为 400ms/100ms），从而导致性能下降；
+    2. 如果 Redis 容器尝试每 100ms 使用 100ms 以上的 CPU，那么 Redis 就会受到 CPU 限制，从而导致性能下降；
 3. busybox同理
     1. 如果 busybox 容器尝试分配 200MB 以上的 RAM，也会引起 OOM；
     2. 如果 busybox 容器尝试每 100ms 使用 30ms 以上的 CPU，也会使 CPU 受到限制，从而导致性能下降。
 
-CPU resources are defined in millicores. If your container needs two full cores to run, you would put the value “2000m”. 
- If your container only needs ¼ of a core, you would put a value of “250m”.
-
 ### 实例
 现在让我们先看看设置 CPU limits 时会发生什么：
 
-    $ kubectl run limit-test --image=busybox --requests "cpu=50m" --limits "cpu=100m" --command -- /bin/sh -c "while true; do
+    $ kubectl run pod-test --image=busybox --requests "cpu=50m" --limits "cpu=100m" --command -- /bin/sh -c "while true; do
 sleep 2; done"
-    deployment.apps "limit-test" created
+    deployment.apps "pod-test" created
  
 再一次使用 kubectl 验证我们的资源配置：
 
-    $ kubectl get pods limit-test-5b4fb64549-qpd4n -o=jsonpath='{.spec.containers[0].resources}'
+    $ kubectl get pods pod-test-5b4fb64549-qpd4n -o=jsonpath='{.spec.containers[0].resources}'
     map[limits:map[cpu:100m] requests:map[cpu:50m]]
  
 查看对应的 Docker 容器的配置：

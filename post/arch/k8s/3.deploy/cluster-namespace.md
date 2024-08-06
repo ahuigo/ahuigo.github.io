@@ -12,7 +12,7 @@ private: true
 
 ## list namespace
 
-    >  kubectl get namespaces
+    >  kubectl get namespace
     NAME                   STATUS   AGE
     default                Active   47d
     staging                Active   47d

@@ -11,8 +11,9 @@ Service 的作用有点像建立了一个`反向代理和负载均衡器`，负�
 
 ## get service
 
-    kubectl get services
-    kubectl get service ginapp
+    #kubectl get services
+    kubectl get svc
+    kubectl get svc ginapp
 
 ## delete
     kubectl delete service ginapp
@@ -49,6 +50,7 @@ type分类
 
     $ kubectl get nodes -o json | jq -r '.items[] | {name:.metadata.name, ip:.status.addresses[] | select(.type=="InternalIP") .address}'
     { "name": "minikube-node", "ip": "192.168.49.2" }
+    # 或
     $ minikube ip
     192.168.49.2
 
@@ -67,6 +69,7 @@ minikube/k8s 宿主机的流量默认不会转发　nodePort, 也不会转发到
     # 端口转发
     sudo iptables -t nat -A PREROUTING -p tcp --dport 30080 -j DNAT --to-destination $(minikube ip):30080
     sudo iptables -t nat -A POSTROUTING -j MASQUERADE
+
     # 清理
     sudo iptables -t nat -D PREROUTING -p tcp --dport 30080 -j DNAT --to-destination $(minikube ip):30080
     sudo iptables -t nat -D POSTROUTING -j MASQUERADE

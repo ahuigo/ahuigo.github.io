@@ -62,8 +62,25 @@ deployment中，ReplicaSet 是管理 Pod副本创建删除的
     $ kubectl rollout undo deployment ginapp --to-revision=1
     deployment "ginapp" rolled back
 
+## edit deployment
+修改完后，会自动重新部署apply
+
+    kubectl edit deployment/ginapp
+
+### 暂停k8s deployment更新
+    # 暂停运行，暂停后，对 deployment 的修改不会立刻生效，恢复后才应用设置
+    kubectl rollout pause deployment test-k8s
+    # 恢复
+    kubectl rollout resume deployment test-k8s
+### 重新部署 deployment
+    kubectl rollout restart deployment ginapp
+
 ## delete deployment
+    # via label name
     kubectl delete deployment ginapp
+
+    # via yaml file
+    kubectl delete -f k8s/deploy.yml
 
 ## get deployment
     kubectl get deployment ginapp
@@ -74,8 +91,10 @@ deployment中，ReplicaSet 是管理 Pod副本创建删除的
     NAMESPACE              NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
     default                ginapp                      0/1     1            0           4s
     kube-system            coredns                     1/1     1            1           47d
-    kubernetes-dashboard   dashboard-metrics-scraper   1/1     1            1           47d
     kubernetes-dashboard   kubernetes-dashboard        1/1     1            1           47d
+
+### get deployment config
+    kubectl get deployment ginapp -o yaml > my.yaml
 
 ## 部署问题FAQ
 ### BadRequest: failing to pull image
@@ -104,6 +123,8 @@ minibue的dashboard 可监控
     podname=$(kubectl get pods -l app=ginapp | tail -1 | gawk '{print $1}')
 
 ### get all pods (namespace)
+Note: ginapp-7c4c9c4769-95fh8 名中　95fh8 是hash 值
+
     $ kubectl get pods
     NAME                      READY   STATUS             RESTARTS   AGE
     ginapp-7c4c9c4769-95fh8   0/1     ImagePullBackOff   0          7m44s
@@ -115,12 +136,22 @@ minibue的dashboard 可监控
     kube-system   etcd-minikube              1/1     Running            1 (7h32m ago)   7d16h
 
 ## get pod logs
-kubectl logs
+### kubectl logs
 
-    $ kubectl logs  ginapp-7c4c9c4769-95fh8
+    # 一个pod 内可能有多个container
+    $ kubectl logs ginapp-7c4c9c4769-95fh8 --all-containers=true
+
+    # via deployment label
+    kubectl logs -l app=ginapp 
+    kubectl logs deployment/ginapp
+
+    # tail
+    kubectl logs --tail=20 deployment/ginapp
+
+    $ kubectl logs ginapp-7c4c9c4769-95fh8
     > Error from server (BadRequest): container "ginapp" in pod "ginapp-7c4c9c4769-95fh8" is waiting to start: trying and failing to pull image
 
-kubectl describe
+### kubectl describe
 
     $ kubectl describe pods
     $ kubectl describe pod ginapp-7c4c9c4769-95fh8
@@ -141,3 +172,21 @@ kubectl describe
 
     podname=$(kubectl get pods -l app=ginapp | tail -1 | gawk '{print $1}')
     kubectl exec -it $podname -- /bin/sh
+
+specify container
+
+    $ kubectl exec -it ginapp-pod -- /bin/sh
+    Defaulted container "ginapp" out of: ginapp, ginapp2
+    $ kubectl exec -it ginapp-pod -c ginapp2 -- /bin/sh
+
+list containers
+
+### copy pod file
+copy file to pod
+
+     kubectl cp ./source.yaml <pod-name>:<target-path>
+
+## delete pod
+
+    $ kubectl delete pod k8s-demo
+    pod "k8s-demo" deleted
