@@ -181,6 +181,8 @@ specify container
 
 list containers
 
+    kubectl get pods -l app=<deployment-name> -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.name}{", "}{end}{end}'
+
 ### copy pod file
 copy file to pod
 
