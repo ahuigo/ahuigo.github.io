@@ -16,6 +16,8 @@ private: true
 通过cli参数创建 `deployment(pods资源)` 
 
     kubectl create deployment ginapp --image=ginapp
+    # service
+    kubectl expose deployment ginapp --type=NodePort --port=4501
 
 显示发布的实时状态：
 
@@ -45,19 +47,24 @@ deployment中，ReplicaSet 是管理 Pod副本创建删除的
     ginapp-68b6df999d-ss29n   1/1     Running   0          28s
 
 
-## 版本与回滚
+## 版本与回滚(rollout)
 运行下面的命令开始更新：
 
     $ kubectl apply -f deployment.yml --record=true
     --record=true 让 Kubernetes 把这行命令记到发布历史中备查。
 
-查看发布历史版本:
+### 查看发布历史版本:
 
     $ kubectl rollout history deployment ginapp
     1         <none> # 这行就没有加--record=true
     2         kubectl apply --cluster=minikube --filename=k8s/deployment.yaml --record=true
 
-回滚到版本1:
+### 显示发布的实时状态：
+
+    $ kubectl rollout status deployment ginapp
+    Waiting for rollout to finish: 1 old replicas are pending termination...
+
+### 回滚到版本1:
 
     $ kubectl rollout undo deployment ginapp --to-revision=1
     deployment "ginapp" rolled back
@@ -84,7 +91,7 @@ deployment中，ReplicaSet 是管理 Pod副本创建删除的
 
 ## get deployment
     kubectl get deployment ginapp
-	kubectl get deployments
+	kubectl get deploy
 
 	$ kubectl get deployments -A
 	$ kubectl get deployments --all-namespaces
@@ -94,6 +101,8 @@ deployment中，ReplicaSet 是管理 Pod副本创建删除的
     kubernetes-dashboard   kubernetes-dashboard        1/1     1            1           47d
 
 ### get deployment config
+show deployment config and sartup status:
+
     kubectl get deployment ginapp -o yaml > my.yaml
 
 ## 部署问题FAQ
@@ -140,6 +149,7 @@ Note: ginapp-7c4c9c4769-95fh8 名中　95fh8 是hash 值
 
     # 一个pod 内可能有多个container
     $ kubectl logs ginapp-7c4c9c4769-95fh8 --all-containers=true
+    $ kubectl logs ginapp-7c4c9c4769-95fh8 -c ginapp2
 
     # via deployment label
     kubectl logs -l app=ginapp 
@@ -173,15 +183,16 @@ Note: ginapp-7c4c9c4769-95fh8 名中　95fh8 是hash 值
     podname=$(kubectl get pods -l app=ginapp | tail -1 | gawk '{print $1}')
     kubectl exec -it $podname -- /bin/sh
 
-specify container
+### specify container
 
     $ kubectl exec -it ginapp-pod -- /bin/sh
     Defaulted container "ginapp" out of: ginapp, ginapp2
+
     $ kubectl exec -it ginapp-pod -c ginapp2 -- /bin/sh
 
-list containers
+### list containers
 
-    kubectl get pods -l app=<deployment-name> -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.name}{", "}{end}{end}'
+    kubectl get pods -l app=ginapp -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.name}{", "}{end}{end}'
 
 ### copy pod file
 copy file to pod

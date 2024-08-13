@@ -305,6 +305,11 @@ Explanation.
     $ echo -n '1\r\n2' |gsed 's#\r##' | xxd
     00000000: 310a 32                                  1.2
 
+## 批量特殊字符转义
+    NAME='c1&c2'
+    ESCAPED_NAME=$(printf '%q\n' "$NAME"); # c1\&c2
+    echo 'CLK' | gsed "s/CLK/$ESCAPED_NAME/g"
+
 # Reference
 
 - [sed 简明教程]

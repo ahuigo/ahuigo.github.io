@@ -4,15 +4,17 @@ date: 2024-08-08
 private: true
 ---
 # gonic http 阻塞
-可能因为请求时的 'Content-Length: ' 超过了实际的body大小.
+可能因为请求时的 'Content-Length: N' 超过了实际的body大小.
 这导致　gonic　清空reqBody时被阻塞在这一句：
 
     ////go/1.22.1/libexec/src/net/http/server.go:1408
     _, err := io.CopyN(io.Discard, w.reqBody, maxPostHandlerReadBytes+1)
+    // // reqBody会一直等待client发完N字节
 
 ## 内部实际阻塞在
 实际阻塞在netpollblock
 
+    ```
     //libexec/src/net/net.go:179
     n,err:=c.fd.Read(b)
 
@@ -38,6 +40,7 @@ private: true
 			return errcode
 		}
 	}
+    ```
 
 ## Content-Length　是怎么触发阻塞的呢？
 go是通过 LimitedReader 去读取 reqBody 的.
@@ -56,4 +59,3 @@ N过大、过小都会有问题：
     1. 当Read(reqBody)后，N变成0，err就会变成EOF，不再读取bytes。(正常)
     2. 但是, unmarsh(json bytes) 就会得到  `unexpected EOF(io.ErrUnexpectedEOF)`
         1. 正常情况下，stateEndValue(&dec.scan, ' ') == scanEnd　得到true
-

@@ -18,10 +18,10 @@ Service 的作用有点像建立了一个`反向代理和负载均衡器`，负�
 ## delete
     kubectl delete service ginapp
 
-# service type
-type分类
+# service type分类(ginapp为例)
 1. NodePort: k8s node 间访问
 2. LoadBalancer: 外部访问
+2. servicePort(即ClusterIP): 在不同 Service 下的 Pod 节点在集群间可以通过 ClusterIP 相互访问
 
 ## type: NodePort
 ### 给node 分配一个port(30080), 转发
@@ -37,14 +37,19 @@ type分类
       selector:
         app: ginapp
 
-检查node ip 是否关联port
+也可以用cli 方法：
+
+    kubectl expose deployment ginapp --type=NodePort --port=4501
+
+### get nodePort
+检查nodeIp:NodePort
 
     $ kubectl get services ginapp
     NAME     TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
     ginapp   NodePort   10.106.234.54   <none>        4501:30080/TCP   2s
 
-    # minikube 也可以查看
-    minikube service ginapp
+    # minikube 可以查看nodip:nodePort
+    minikube service ginapp --url
 
 通过nodeIp+port 访问 pod
 
@@ -54,10 +59,25 @@ type分类
     $ minikube ip
     192.168.49.2
 
-    $ curl 192.168.49.2:30080/echo/1
+    $ curl -D- '192.168.49.2:30080/proxy/echo/1?host=localhost:5500'
 
-### 宿主机转发请求到 service port
-minikube/k8s 宿主机的流量默认不会转发　nodePort, 也不会转发到 service port
+## type: servicePort(默认) 
+servicePort(即ClusterIP对应的port)
+只有集群内可以通过 ClusterIP/serviceName 相互访问
+
+### 访问serviceName(短域名)
+> 只有集群内部可访问service name。
+service name 解析的ip 是clusterIP:
+
+    $ kubectl get services ginapp
+    NAME     TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+    ginapp   NodePort   10.106.234.54   <none>        4501:30080/TCP   2s
+
+    $ curl -D- '192.168.49.2:30080/proxy/echo/1?host=ginapp:4501'
+    $ curl -D- '192.168.49.2:30080/proxy/echo/1?host=10.106.234.54:4501'
+
+### 宿主机访问service port
+> 默认minikube/k8s 宿主机的流量不会转发　nodePort, 也不会转发到 service port
 
 让宿主机127.0.0.1:4502流量转发到 servicePort 4501
 
@@ -73,6 +93,16 @@ minikube/k8s 宿主机的流量默认不会转发　nodePort, 也不会转发到
     # 清理
     sudo iptables -t nat -D PREROUTING -p tcp --dport 30080 -j DNAT --to-destination $(minikube ip):30080
     sudo iptables -t nat -D POSTROUTING -j MASQUERADE
+
+## targetPort(pod)
+list pod ip:
+
+    $ kubectl get pods -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{": "}{.status.podIP}{end}'
+    ginapp-5b5b6bc568-npp7q: 10.244.0.29
+
+Pod 的 IP 地址只能在集群内部访问:
+
+    curl -D- '192.168.49.2:30080/proxy/echo/1?host=10.244.0.29:5500'
 
 ## type: LoadBalancer
 > LoadBalancer: 这种类型的 Service 除了具有 NodePort 的所有功能外.
