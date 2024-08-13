@@ -9,6 +9,7 @@ private: true
 - Ingress：更复杂、更灵活的流量路由机制。
   - 提供 SSL/TLS 、域名称基础的虚拟主机等
   - Ingress　controller: 内置inginx或使用支厂商的(如AWS ALB)
+
 ## install
 
     minikube addons enable ingress 
@@ -16,7 +17,7 @@ private: true
 
 
 # 使用ingress
-## 编写ingress
+## edit ingress.yml
 > 参考：https://github.com/ahuigo/ginapp/blob/main/k8s/ingress.yml
 类似nginx location路由:
 
@@ -57,7 +58,7 @@ delete ingress
 ### ingress status
 查看ingress信息
 
-    $ kubectl get ingress
+    $ kubectl get ingress ginapp-ingress
     NAME             CLASS   HOSTS          ADDRESS        PORTS   AGE
     ginapp-ingress   nginx   ginapp.local   192.168.49.2   80      4m30s
 
@@ -92,8 +93,11 @@ delete ingress
         rewrite "(?i)/v2/(.*)" /$1 break; 
     }
 
+nginx.conf 内空可参考　nginx/nginx-router.md
+
 ## access ingress
 
+    # kubectl get ingress ginapp-ingress 可得到ip
     echo '192.168.49.2 ginapp.local' >> /etc/hosts
     kubectl logs -l app=ginapp -f
 

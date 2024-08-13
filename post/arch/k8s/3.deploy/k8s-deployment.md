@@ -158,8 +158,8 @@ Note: ginapp-7c4c9c4769-95fh8 名中　95fh8 是hash 值
     # tail
     kubectl logs --tail=20 deployment/ginapp
 
-    $ kubectl logs ginapp-7c4c9c4769-95fh8
-    > Error from server (BadRequest): container "ginapp" in pod "ginapp-7c4c9c4769-95fh8" is waiting to start: trying and failing to pull image
+    # watch tail
+    $ kubectl logs -f ginapp-7c4c9c4769-95fh8
 
 ### kubectl describe
 
