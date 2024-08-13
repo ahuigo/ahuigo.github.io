@@ -112,9 +112,11 @@ Like `rewrite`, `try_files` has the same behaves.
 A option 'flag' parameter can be one of: 默认是last
 
 - `last` **restarts**  `all locations matching with the changed URI`
+    last：表示本条规则匹配完成后继续向下匹配。
 - `break` 如果在location内：直接加载相应静态资源或echo 输出
-- `permanent` 301
-- `redirect` 302
+    break：表示本条规则匹配完成后停止匹配。
+- `permanent` 301 表示永久重定向
+- `redirect` 302 表示临时重定向
 
 #### break rewrite
 rewrite会跳出rewrite阶段, 这个例子为例：
