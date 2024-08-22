@@ -3,7 +3,7 @@ title: go module and import
 date: 2020-01-01
 private: 
 ---
-# go import
+# go import 语法
 ## import same namespace
 
     import (
@@ -28,31 +28,40 @@ If you look at the source code for json-iterator/go, you’ll see that each file
     var json = jsoniter.ConfigCompatibleWithStandardLibrary
     json.Marshal(&data)
  
-# go module
+# go module 管理
+> module 机制会在项目当前目录、父目录中找 go.mod/go.sum 确定依赖版本。
 
-## 多版本支持 multiple version
+## 版本的选择
+> https://tonybai.com/2022/03/12/dependency-hell-in-go/ Go module后“依赖地狱”问题依然存在: 因为有的包没有遵守path(v2) as major
+要同时使用 foo1 和 foo2 两个包， 如果major 相同，就选择大版本foo3@v1.0.2
+
+    foo1 依赖 foo3@v1.0.1
+    foo2 依赖 foo3@v1.0.2。
+
+如果 MAJOR主版本号 不一样，就会有版本冲突
+
+### 多版本支持 multiple version
 go1.14后不能支持多multi-version 依赖.
 以前可以通过 `replace github.com/pkg/errors/081 => github.com/pkg/errors v0.8.1` 别名依赖多个版本
 
-现在的办法是需要包本身能支持multiple version(即mod path as version)：
+现在的办法是需要包本身能支持multiple version(即mod path as major version)：
 
     import (
         redisv1 "gopkg.in/go-redis/redis.v1"
         redisv2 "gopkg.in/go-redis/redis.v2"
     )
 
-## module 解决了什么问题？
-> module 机制会在项目当前目录、父目录中找 go.mo记录依赖版本。
+### 怎么发布不兼容版本？
+根据前文的介绍，如果新版本不能兼容旧版本，那么就要使用新的主版本号和新的导入路径 。
 
-1.版本依赖管理
-要同时使用 foo1 和 foo2 两个包， 那我们应该使用什么版本的 foo3 呢？
+那么怎么来提供新的导入路径呢？有两种方式：
 
-    foo1 依赖 foo3@v1.0.1
-    foo2 依赖 foo3@v1.0.2。
+1. 只需要将 `go.mod` 中的 module github.com/you/mod 修改成 `github.com/you/mod/v2` 。
+2. 然后修改本 module 内的所有 `import 语句`，添加 /v2。如 `import "github.com/you/mod/v2/mypkg`"。
+3. 在 module 下创建一个 `v2 目录`， 然后将所有文件移动 v2 中，并且修改 `go.mod` 。 同时也需要修改`所有相关的 import 语句`。
 
-
-# go mod 目录与依赖冲突
-## go mod path
+## module 路径
+### module pkg　path
 go mod tidy使用的目录是 
 
     $GOROOT/src/github.com/
@@ -63,16 +72,14 @@ go get 用于下载单个包和版本
     go get go.uber.org/fx@v1
     go get github.com/ahuigo/requests@latest
 
-## go.mod
-查看环境配置
+### go.mod path
+go在运行时，会在上层目录中查找go.mod , 查看环境配置
 
     go env | grep MOD
     GO111MODULE="on"
-    GOMOD="/Users/ahui/www/go.mod"
+    GOMOD="~/www/go.mod"
 
-### 指定下载包版本
-    go get go.uber.org/fx@v1
-
+## 版本冲突
 ### 强制版本：indirect dependency引入(transitive dependency, grandson package)
 > https://stackoverflow.com/questions/70100325/force-a-transitive-dependency-version-in-golang
 项目中依赖A, A依赖A1、A1依赖A2@v1.0.0, 则A2是间接引入. 
@@ -88,11 +95,66 @@ go get 用于下载单个包和版本
         golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
     )
 
+### module path conflict
+> 原因：go.mod 内的module path 改变了，但是引用的代码还是用的旧的path
+The original package `github.com/uber-go/atomic` was renamed to `go.uber.org/atomic` and 
+I getting this error:
 
-### 查看所用的go.mod
-go在运行时，会在上层目录中查找go.mod 
+    go: github.com/uber-go/atomic: github.com/uber-go/atomic@v1.9.0: parsing go.mod:
+            module declares its path as: go.uber.org/atomic
+                    but was required as: github.com/uber-go/atomic
 
-### go.mod中的module与package
+because cloned version of `original-project` still says `module github.com/uber-go/atomic`. You should use the go.mod replace directive. 
+
+    $ cat go.mod
+    module go.uber.org/atomic
+
+    $ go mod edit -replace github.com/uber-go/atomic=go.uber.org/atomic@v1.9.0
+    replace github.com/uber-go/atomic => go.uber.org/atomic v1.9.0
+
+也可以指向本地包：
+
+    require ahui1 v0.0.0
+    replace ahui1 v0.0.0 => ./ahui1
+
+### 依赖本地包
+> 此时不能提交代码，更好的做法是使用go workspace
+1.在项目根下用go.mod 配置本地依赖包: 
+
+    require (
+        mytest v0.0.0
+    )
+    replace (
+        mytest v0.0.0 => ./mytest
+        github.com/ugorji/go v1.1.4 => github.com/ugorji/go v0.0.0-20181204163529-d75b2dcb6bc8
+    )
+
+2.本地包mytest 的限制(非本地包则没有这个限制)：
+1. 项目根和本地包都必须要有go.mod
+
+示例代码见：https://github.com/ahuigo/go-lib/tree/master/import-local-mod
+
+### ambiguous import
+	github.com/ugorji/go/codec: ambiguous import: found package github.com/ugorji/go/codec in multiple modules:
+        github.com/ugorji/go v1.1.4 (/Users/ahui/go/pkg/mod/github.com/ugorji/go@v1.1.4/codec)
+        github.com/ugorji/go/codec v0.0.0-20181204163529-d75b2dcb6bc8 (/Users/ahui/go/pkg/mod/github.com/ugorji/go/codec@v0.0.0-20181204163529-d75b2dcb6bc8)
+
+由于同步依赖ugorji/go/codec `不同的两个版本` + `module path` 变更了，解决方法是在go.mod 指定一个唯一版本:
+
+    replace github.com/ugorji/go => github.com/ugorji/go/codec v1.1.7
+    // 或
+    replace github.com/ugorji/go v1.1.4 => github.com/ugorji/go v0.0.0-20181204163529-d75b2dcb6bc8
+
+k8s　经常出现问题：
+
+    replace(
+        k8s.io/api => k8s.io/api v0.19.0
+        k8s.io/apimachinery => k8s.io/apimachinery v0.19.0
+        k8s.io/client-go => k8s.io/client-go v0.19.0
+    }
+
+## package 是什么
+### module与package
 module 定义全局命名空间. 里面可以有很多package
 
     // 这module 全局空间，可以跟实际的path 不一样. 执行时必须cd 到项目go-lib根目录执行
@@ -122,10 +184,7 @@ package 定义局部命名空间, 是用于路径查找的：
     $ go run main.go
     main.go:3:8: found packages godemo1 (fault1.go) and godemo2 (fault2.go) in
 
-### 为什么有了Go module后“依赖地狱”问题依然存在
-https://tonybai.com/2022/03/12/dependency-hell-in-go/
-
-## go.mod init
+## 通过go.mod 管理包
 使用步骤：
 1.`export GO111MODULE=on ` 
 
@@ -140,55 +199,6 @@ https://tonybai.com/2022/03/12/dependency-hell-in-go/
     // 同时它们都会安装pkg/mod/*. 
     $ go build 
     $ go mod tidy  
-
-## declared required conflict
-The original package `github.com/uber-go/atomic` was renamed to `go.uber.org/atomic` and 
-I getting this error:
-
-    go: github.com/uber-go/atomic: github.com/uber-go/atomic@v1.9.0: parsing go.mod:
-            module declares its path as: go.uber.org/atomic
-                    but was required as: github.com/uber-go/atomic
-
-because cloned version of `original-project` still says `module github.com/uber-go/atomic`. You should use the go.mod replace directive. 
-
-    $ cat go.mod
-    module go.uber.org/atomic
-
-    $ go mod edit -replace github.com/uber-go/atomic=go.uber.org/atomic@v1.9.0
-    replace github.com/uber-go/atomic => go.uber.org/atomic v1.9.0
-
-指定本地：
-
-    require ahui1 v0.0.0
-    replace ahui1 v0.0.0 => ./ahui1
-
-## 依赖不同的包
-### 依赖本地包
-1.在项目根下用go.mod 配置本地依赖包: 
-
-    require (
-        mytest v0.0.0
-    )
-    replace (
-        mytest v0.0.0 => ./mytest
-        github.com/ugorji/go v1.1.4 => github.com/ugorji/go v0.0.0-20181204163529-d75b2dcb6bc8
-    )
-
-2.本地包mytest 的限制(非本地包则没有这个限制)：
-1. 项目根和本地包都必须要有go.mod
-
-示例代码见：https://github.com/ahuigo/go-lib/tree/master/import-local-mod
-
-### ambiguous import
-	github.com/ugorji/go/codec: ambiguous import: found package github.com/ugorji/go/codec in multiple modules:
-        github.com/ugorji/go v1.1.4 (/Users/ahui/go/pkg/mod/github.com/ugorji/go@v1.1.4/codec)
-        github.com/ugorji/go/codec v0.0.0-20181204163529-d75b2dcb6bc8 (/Users/ahui/go/pkg/mod/github.com/ugorji/go/codec@v0.0.0-20181204163529-d75b2dcb6bc8)
-
-由于同步依赖ugorji/go/codec `不同的两个版本` + `module path` 变更了，解决方法是在go.mod 指定一个唯一版本:
-
-    replace github.com/ugorji/go => github.com/ugorji/go/codec v1.1.7
-    // 或
-    replace github.com/ugorji/go v1.1.4 => github.com/ugorji/go v0.0.0-20181204163529-d75b2dcb6bc8
 
 ## debug
 ### mod error
@@ -256,6 +266,7 @@ Refer: https://windmt.com/2018/11/08/first-look-go-modules/
     go list -m -json all //依赖详情
     go mod graph //打印模块依赖图
     go mod why //解释为什么需要依赖
+
 
 ## go mod init
 `go mod init github.com/my/mod` 用来初始化一个 module 并且生成一个 go.mod 文件。
@@ -341,14 +352,110 @@ go.mod 中增加了对应的 require:
     运行 go get -u=patch 将会升级到最新的修订版本
     运行 go get package@version 将会升级到指定的版本号 version
 
-# 怎么发布不兼容版本？
-根据前文的介绍，如果新版本不能兼容旧版本，那么就要使用新的主版本号和新的导入路径 。
 
-那么怎么来提供新的导入路径呢？有两种方式：
+# install/get package
+## go install
+安装本地包/远程包
 
-1. 只需要将 `go.mod` 中的 module github.com/you/mod 修改成 `github.com/you/mod/v2` 。
-2. 然后修改本 module 内的所有 `import 语句`，添加 /v2。如 `import "github.com/you/mod/v2/mypkg`"。
-3. 在 module 下创建一个 `v2 目录`， 然后将所有文件移动 v2 中，并且修改 `go.mod` 。 同时也需要修改`所有相关的 import 语句`。
+    # install binary
+    go install 
+    go install ./path/src
+    go install github.com/ahuigo/arun@latest
+    go install github.com/swaggo/swag/cmd/swag@latest
+
+    # add dependencies + download + install
+    go get github.com/ahuigo/xxx
+
+其它命令
+
+	run         compile and run Go program (no bin)
+	build       compile packages and dependencies(with bin)
+                生成与file 同名的bin
+	install     compile and install packages and dependencies(with bin)
+                生成与module同名的bin (不会缓存到pkg目录)
+	get         add dependencies to current module and install them
+                go.mod+download+install
+        -u      update
+        -d      only download
+
+go get 可以用于：download+install 或者只download
+go install 只用于install
+
+## private package:GOSUMDB
+默认通过GOSUMDB 指定服务器对下载包进行签名校验：
+
+    $ go env |ag sum
+    GOSUMDB="sum.golang.org"
+
+如果是install private package, 比如artifactory, 由于没有签名会失败. 可以指定私有库, 避免检查sumdb：
+
+    GOPRIVATE="*.internal.mycompany.com" go install github.com/ahuigo/arun
+    GOPRIVATE="*.internal.mycompany.com,github.com" go install github.com/ahuigo/arun
+
+在`.zshrc`或`.bashrc` 中设定私有
+
+    export GOPRIVATE="*.internal.mycompany.com,github.com" 
+    # for go.sum
+    export GOSUMDB=off
+
+如果使用goproxy.io 应该可以用以下签名（官方的无法连接）: https://goproxy.io/zh/docs/GOSUMDB-env.html
+
+    export GOPROXY=https://goproxy.io,direct
+    export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
+
+## 查看版本
+    go list -m -versions github.com/hashicorp/vault/api
+    go list -m -versions github.com/ahuigo/requests    
+
+# proxy
+## goproxy
+The default proxy is: https://proxy.golang.org 
+
+via GOPROXY:
+
+    export GOPROXY=https://goproxy.io,direct
+    GOPROXY="https://127.0.0.1:8888" 
+    GOPROXY="https://name:pass@xx.com/artifactory/api/go/go"
+
+The value of GOPROXY is a list
+
+    The list is separated by commas “,” or pipes “|”
+    “off” : it means turn off the feature
+    “direct” : it instructs the tool to download it directly from the code hosting server.
+
+via HTTP_PROXY:
+
+    HTTP_PROXY=socks5://127.0.0.1:1080 go get  github.com/gin-gonic/gin
+
+
+## 代理服务的endpoint url
+
+    # https://proxy.golang.org
+    # export GOPROXY='https://goproxy.io,direct'
+    https://goproxy.io/github.com/ahuigo/requests/@v/list
+    https://goproxy.io/github.com/ahuigo/requests/@latest
+    https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.info
+    https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.mod
+    https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.zip
+
+### 下载指定version
+> 国内用户在用 golang 的时候可以手动下载（可以试一下， 先 git clone， 然后 git checkout v1.1.1， 最后 copy 到 mod/pkg@v1.1.1 下）。
+
+不过最简单的方式是 export GOPROXY=https://goproxy.io。
+
+    go get -u github.com/ahuigo/requests@v1.0.28
+
+## 404
+因为使用私有的repo 时，无法用sum.golang.org 进行checksum校验. (也可能是GOPROXY路径不对)
+
+请加上：
+
+    $ export GONOSUMDB="github.com/mycompany/*,github.com/secret/*"
+    # 或
+    $ export GOSUMDB=off
+
+    # Dockerfile
+    ENV GOSUMDB=off
 
 # 参考
 - 浅析 golang module https://zhuanlan.zhihu.com/p/59549613

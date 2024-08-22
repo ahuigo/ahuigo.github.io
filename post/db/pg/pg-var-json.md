@@ -22,6 +22,10 @@ jsonb 即可以直接使用 json 字符串, 插入取出时自动转换成`::jso
     select '1' intger
     select '"1"' char
 
+#### 表字段定义
+
+    ALTER TABLE jsonb_tables ADD COLUMN config JSONB NOT NULL DEFAULT '{}';
+
 ### increment
 1. with ||jsonb, 只适合第一层级, 更好的办法是使用jsonb_set(col, path, data)
 2. `->>` 将jsonb 属性取出并转换成text, 转成数字还需要`::int`, 并且`::`与`+`优先级都高于`->>`
@@ -61,9 +65,6 @@ example
         '{"a": "b", "c": "d"}'::jsonb - '{a,c}'::text[] → {}
     #-path      del by path
         '["a", {"b":1}]'::jsonb#-'{1,b}' → ["a", {}]
-
-
-
 
 path:
 

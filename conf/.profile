@@ -23,11 +23,11 @@ export LANG='en_US.UTF-8'
 export CLICOLOR="xterm-color"
 #$(pyenv root)/shims:
 export GNUTERM=qt
-export PS1="%m:%~%$ " # host
+export PS1="%m:%~%$ 🌈 🏂 🏡  🌤️  🔥📌👋❌✅" # host
 #export PS1="$(hostname -I | cut -d' ' -f1):%~%$ " # ip
 #export PS1="$(hostname -I | cut -d' ' -f1):%~%$ $(git_prompt_info) "$'\n> '
 #export PS1="%{$fg_bold[green]%}$(hostname -I | cut -d' ' -f1):%~%$ $(git_prompt_info) %{$reset_color%}%(?..[%?])"$'\n> '
-export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])🌈 🏂 🏡  🌤️  🔥'$'\n$ '
+export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])🌈 🏂 🏡  🌤️  🔥  ✅'$'\n$ '
 if [[ -z $INIT_PROFILE ]]; then
     export PATH=$PATH:$HOME/www/py-lib/bin:$HOME/www/a/bin:~/bin:/usr/local/sbin
     # for ssh-host-machine: export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
@@ -277,6 +277,6 @@ alias go17='ln -sf /opt/homebrew/opt/go@1.17/bin /opt/homebrew/opt/go/bin'
 
 ######## other conf #############
 [ -f ~/.private ] && source ~/.private
-[ -f ~/.local.rc ] && source ~/.local.rc
+[ -f ~/.profile.local ] && source ~/.profile.local
 
 export INIT_PROFILE=1

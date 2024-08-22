@@ -14,13 +14,17 @@ private: true
     WHERE NOT (client_ip > inet '192.168.100.0' AND
             client_ip < inet '192.168.100.255');
 
-一个可以使用这个索引的典型的查询像这样：
+    # enum 型 
+    CREATE INDEX users_status_idx ON users(status)
+    WHERE status IN ('inited', 'running');
+
+一个可以触发这个索引的典型的查询像这样：
 
     SELECT *
     FROM access_log
     WHERE url = '/index.html' AND client_ip = inet '212.78.10.32';
 
-一个不能使用这个索引的查询是：
+一个不能触发这个索引的查询是：
 
     SELECT *
     FROM access_log

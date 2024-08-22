@@ -330,8 +330,7 @@ b.N 从 1 开始，如果该用例能够在 1s 内完成，b.N 的值便会增�
 
 2000000000 表示测试的次数，也就是 testing.B 结构中提供给程序使用的 N。“0.33 ns/op”表示每一个操作耗费多少时间（纳秒）。
 
-BenchmarkDivision-4 中的 -4 即 GOMAXPROCS，默认等于 CPU 核数。可以通过 -cpu 参数改变
-GOMAXPROCS，-cpu 支持传入一个列表作为参数，例如：
+BenchmarkDivision-4 中的 -4 即 GOMAXPROCS，默认等于 CPU 核数。可以通过 -cpu 参数改变 GOMAXPROCS:
 
     # 分别用2cpu、4cpu压测
     $ go test -cpu=2,4 .
@@ -360,6 +359,7 @@ testing 支持生成 CPU、memory 和 block 的 profile 文件。
     -cpuprofile=$FILE
     -memprofile=$FILE, -memprofilerate=N 调整记录速率为原来的 1/N。
     -blockprofile=$FILE
+        "block" 指的是 goroutine 在等待同步原语（如锁、channel 操作等）时的阻塞情况。
 
 ### bench cpu.pprof
 
@@ -400,7 +400,7 @@ text模式top
 
 测试代码
 
-    func Benchmark_Alloc(b *testing.B) {
+    func BenchmarkAlloc(b *testing.B) {
         for i := 0; i < b.N; i++ {
             fmt.Sprintf("%d", i)
         }
@@ -408,14 +408,14 @@ text模式top
 
 然后我们用 `-memprofile mem.pprof` 输出分析文件
 
-    $ go test -v -bench=Alloc -memprofile=mem.pprof benchmark_test.go
+    $ go test -v -bench=Alloc -memprofile=mem.pprof bench/bench_test.go
 
 或者用`-benchmem`显示内存分配情况:
 
     $ go test -bench=Alloc -benchmem
-    Benchmark_Alloc-4   	20000000	       107 ns/op	      
+    BenchmarkAlloc-4   	20000000	       107 ns/op	      
                             16 B/op	       2 allocs/op
-                            第次op，分配两次内存（16B）
+                            每次op，分配2次内存（16B）
 
 ## ResetTimer 忽略无关的耗时
 

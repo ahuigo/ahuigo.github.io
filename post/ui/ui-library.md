@@ -54,9 +54,9 @@ http://designmodo.github.io/Flat-UI/
     1. https://icons8.com/icons/set/check
     2. https://tabler-icons.io/ 3400个
     3. https://www.svgrepo.com/svg/13653/like
+    4. https://icon-sets.iconify.design/pajamas/
 1. 推荐一个icon 资源站点:
 https://www.flaticon.com/free-icon/weibo_408769#term=weibo&page=1&position=5
-
 
 # pic
 一个收集无版权插图的网站，提供 SVG / PNG 格式下载，并且允许更改颜色

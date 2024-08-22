@@ -102,4 +102,3 @@ nginx.conf 内空可参考　nginx/nginx-router.md
     kubectl logs -l app=ginapp -f
 
     curl ginapp.local/dump/1
-

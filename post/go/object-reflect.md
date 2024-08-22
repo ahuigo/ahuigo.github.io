@@ -207,6 +207,12 @@ The `Elem()` example:
 ## reflect.ValueOf
 获取变量反射值的ValueOf: 类型`%T`都是`reflect.Value`
 
+### rv.IsValid()
+可能导致 IsValid 返回 false 的情况：
+
+1. reflect.Value 是零值。例如，如果你创建了一个 reflect.Value 变量但没有初始化，
+2. reflect.Value 是通过调用某些方法（如 MapIndex 或 FieldByIndex）得到的。例如，如果你试图从一个不存在的 map 键
+
 ### rv.Type() vs Kind()
 
     Kind() -> slice

@@ -70,115 +70,6 @@ clean 命令清：
     -modcache remove the entire module download cache
         rm -r $GOPATH/pkg/mod
 
-# install/get package
-## go install
-安装本地包/远程包
-
-    # install binary
-    go install 
-    go install ./path/src
-    go install github.com/ahuigo/arun@latest
-    go install github.com/swaggo/swag/cmd/swag@latest
-
-    # add dependencies + download + install
-    go get github.com/ahuigo/xxx
-
-其它命令
-
-	run         compile and run Go program (no bin)
-	build       compile packages and dependencies(with bin)
-                生成与file 同名的bin
-	install     compile and install packages and dependencies(with bin)
-                生成与module同名的bin (不会缓存到pkg目录)
-	get         add dependencies to current module and install them
-                go.mod+download+install
-        -u      update
-        -d      only download
-
-go get 可以用于：download+install 或者只download
-go install 只用于install
-
-## private package:GOSUMDB
-默认通过GOSUMDB 指定服务器对下载包进行签名校验：
-
-    $ go env |ag sum
-    GOSUMDB="sum.golang.org"
-
-如果是install private package, 比如artifactory, 由于没有签名会失败. 可以指定私有库, 避免检查sumdb：
-
-    GOPRIVATE="*.internal.mycompany.com" go install github.com/ahuigo/arun
-    GOPRIVATE="*.internal.mycompany.com,github.com" go install github.com/ahuigo/arun
-
-在`.zshrc`或`.bashrc` 中设定私有
-
-    export GOPRIVATE="*.internal.mycompany.com,github.com" 
-    # for go.sum
-    export GOSUMDB=off
-
-如果使用goproxy.io 应该可以用以下签名（官方的无法连接）: https://goproxy.io/zh/docs/GOSUMDB-env.html
-
-    export GOPROXY=https://goproxy.io,direct
-    export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
-
-## 查看版本
-    go list -m -versions github.com/hashicorp/vault/api
-    go list -m -versions github.com/ahuigo/requests    
-
-# proxy
-## goproxy
-The default proxy is: https://proxy.golang.org 
-
-via GOPROXY:
-
-    export GOPROXY=https://goproxy.io,direct
-    GOPROXY="https://127.0.0.1:8888" 
-    GOPROXY="https://name:pass@xx.com/artifactory/api/go/go"
-
-The value of GOPROXY is a list
-
-    The list is separated by commas “,” or pipes “|”
-    “off” : it means turn off the feature
-    “direct” : it instructs the tool to download it directly from the code hosting server.
-
-via HTTP_PROXY:
-
-    HTTP_PROXY=socks5://127.0.0.1:1080 go get  github.com/gin-gonic/gin
-
-
-## 代理服务的endpoint url
-
-    # https://proxy.golang.org
-    # export GOPROXY='https://goproxy.io,direct'
-    https://goproxy.io/github.com/ahuigo/requests/@v/list
-    https://goproxy.io/github.com/ahuigo/requests/@latest
-    https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.info
-    https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.mod
-    https://goproxy.io/github.com/ahuigo/requests/@v/v0.1.24.zip
-
-
-
-如果是
-
-
-### 下载指定version
-> 国内用户在用 golang 的时候可以手动下载（可以试一下， 先 git clone， 然后 git checkout v1.1.1， 最后 copy 到 mod/pkg@v1.1.1 下）。
-
-不过最简单的方式是 export GOPROXY=https://goproxy.io。
-
-    go get -u github.com/ahuigo/requests@v1.0.28
-
-## 404
-因为使用私有的repo 时，无法用sum.golang.org 进行checksum校验. (也可能是GOPROXY路径不对)
-
-请加上：
-
-    $ export GONOSUMDB="github.com/mycompany/*,github.com/secret/*"
-    # 或
-    $ export GOSUMDB=off
-
-    # Dockerfile
-    ENV GOSUMDB=off
-
 # gopath 结构(modulle,package,dir)
 1. module: 是一组package list
 2. package: 只是一个包. 
@@ -268,8 +159,6 @@ j go-lib
     func init() {
         fmt.Printf("since: %v\n", time.Now().Sub(now))
     }
-
-
 
 # 包的发布
 ## 发版本

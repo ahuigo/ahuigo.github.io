@@ -3,9 +3,119 @@ title: pg transaction
 date: 2021-05-20
 private: true
 ---
-# pg transaction
+# Preface
+## 锁与事务、隔离级别
+- 事务: 是一组需要作为一个整体执行的 SQL 操作,要么全部成功，要么全部失败. 原子性、一致性、隔离性和持久性（ACID）
+    - 如果不加BEGIN, 就是一次性事务的锁（隐式事务，自动commit）
+- 锁: 事务中获取的所有锁（无论是显式获取的还是由 PostgreSQL 自动获取的）都会在事务结束时自动释放
+- 事务隔离级别：决定了事务中的操作如何与其他并发事务中的操作交互. 分为读未提交、读已提交、可重复读和串行化。
 
-# FAQ
+# 锁的类型
+## 默认锁
+select　默认无锁，不会获取锁，不受for share, for update 影响
+
+    select * from stocks where condition; 
+
+下文会介绍, update 自动会获取排它锁(row Exclusive lock):
+
+    update 会被其它语句select for update, 以及select for share 阻塞
+
+## 共享锁(for share: row share lock)
+pg 共享锁（Share Locks）：这种锁允许多个事务同时读取同一行数据，但阻止任何事务修改数据（包括获取排他锁）。
+
+    BEGIN;
+    select * from stocks where price<20 for share;
+    -- 其他操作...
+    COMMIT;
+
+如果其它语句在write 以上满足条件的行, 那么以上语句会补阻塞，为了避免补阻塞，可以写：
+
+    select * from stocks where price<20 for share SKIP LOCKED;
+
+
+### 共享更新排他锁（Share Update Exclusive Locks）
+这种锁阻止其他事务同时执行相同类型的 ALTER TABLE 语句. 但是不阻止读
+
+    BEGIN;
+    ALTER TABLE your_table SET (fillfactor = 70);
+    -- 其他操作...
+    COMMIT;
+
+
+## 排他锁（Exclusive Locks）
+在 PostgreSQL 中，可以通过 LOCK TABLE 命令或者在修改数据的语句（如 UPDATE、DELETE 或 INSERT）中隐式地获取 ExclusiveLock。以下是一些示例：
+
+### For update 排它锁(Row Exclusive Lock)
+for update 锁阻止其他事务读read或write 同一行数据
+
+    BEGIN;
+        SELECT * FROM your_table WHERE condition FOR UPDATE;
+        -- 其他操作...
+    COMMIT;
+
+如果满足以上condition的行正在被别的sql读写，那么以上语句会被阻塞，如果想跳过阻塞的话，就加 SKIP LOCKED
+
+        SELECT * FROM your_table WHERE condition FOR UPDATE SKIP LOCKED;
+
+
+### Update 排他锁（Row Exclusive Locks）
+下面的 UPDATE 语句中，PostgreSQL 也会为被修改的行获取 Row ExclusiveLock。
+这个锁同样会在事务结束后释放，释放前其它的共享锁
+
+    BEGIN;
+    UPDATE table_name SET column = value WHERE some_column = some_value;
+    -- 更多的 SQL 操作
+    COMMIT;
+
+### 访问排他锁（Access Exclusive Locks）
+这是最重量级的锁，它阻止其他事务读取或修改表。当你执行 ALTER TABLE、DROP TABLE 或 TRUNCATE 等修改表结构的语句时,
+
+它会阻止其他事务读取或修改 your_table。这个锁会一直持续到当前事务结束
+
+
+    BEGIN;
+    ALTER TABLE your_table DROP COLUMN column_name;
+    -- 其他操作...
+    COMMIT;
+
+### LOCK TABLE (table lock)
+lock table 命令显式获取 Table ExclusiveLock , 只有当事务结束 (COMMIT 或 ROLLBACK) 的时候，才会释放这个锁。
+
+    BEGIN;
+    LOCK TABLE table_name IN EXCLUSIVE MODE;
+    -- 你的 SQL 操作
+    COMMIT;
+
+# 锁的管理
+## 查看所有行锁
+    SELECT
+        a.datname,
+        l.relation::regclass AS "table",
+        a.state,
+        a.query,
+        l.transactionid,
+        l.mode,
+        l.GRANTED,
+        a.usename,
+        a.query_start,
+        age(now(), a.query_start) AS "age",
+        a.pid
+    FROM
+        pg_stat_activity a
+    JOIN
+        pg_locks l ON l.pid = a.pid
+    WHERE
+        l.mode in ('RowShareLock','ExclusiveLock');
+
+输出示例：
+
+    table| state|     query                        |     mode 
+    stocks| idle |LOCK TABLE stocks IN EXCLUSIVE MODE;| ExclusiveLock
+
+Note:
+> 在 pg_stat_activity.state 列可以告诉我们当前查询的状态: idel/active/...
+> age 计算时间差
+
 ## current transaction is aborted
 当发生问题却没有rollback 就会这样，比如
 
@@ -33,79 +143,50 @@ quit:
     > rollback
     > commit
 
-# For update(行锁/写锁)
-for update是写锁, 会阻止其它连接`写`或者获取`写锁for update`，以下：
+# 事务隔离级别
+PostgreSQL 隔离级别决定了事务中的操作如何与其他并发事务中的操作交互. 
+分为: 读未提交、读已提交、可重复读和串行化。 默认事务隔离级别是 "Read Committed"（读已提交）。
 
-    //不阻塞：select * from addresses where uid =1
-    //阻塞：
-    select * from addresses where uid =1 for update;
-    select * from addresses where uid =1 for update SKIP LOCKED;
-    update addresses set address1='add4' where uid=1;
-    delete from addresses where uid=1;
-
-例子：
-
-    // 1.connect1 行锁：
-    begin;
-    select * from addresses where uid=1 for update;
-
-    // 2. connect2：(会因为行锁等待)
-    update addresses set address1='add2' where uid=1;
-
-    // 3. 仅当connect1结束事务, connect才开始：
-    commit; -- 或 rollback
-
-> 如果想连select也禁止， 在 PostgreSQL 中，默认情况下，只有 ALTER TABLE, DROP TABLE, TRUNCATE, REINDEX, CLUSTER, 或者 VACUUM FULL 命令才会获取访问排他锁。也就是说，没有办法通过类似 SELECT FOR UPDATE 的方式获取这种锁。
-
-## SKIP LOCKED
-如果加行锁时，不想阻塞, 执行以下语句
-
-    // 如果查询没有结果，说明行锁失败(或没有行被锁)
-    select * from addresses where uid =1 for update SKIP LOCKED;
-
-## 查看所有行锁
-    SELECT
-        a.datname,
-        l.relation::regclass AS "table",
-        a.state,
-        a.query,
-        l.transactionid,
-        l.mode,
-        l.GRANTED,
-        a.usename,
-        a.query_start,
-        age(now(), a.query_start) AS "age",
-        a.pid
-    FROM
-        pg_stat_activity a
-    JOIN
-        pg_locks l ON l.pid = a.pid
-    WHERE
-        l.mode in ('RowShareLock','ExclusiveLock');
-
-> 在 pg_stat_activity.state 列可以告诉我们当前查询的状态。
-> age 计算时间差
-
-# ExclusiveLock(读写锁)
-在 PostgreSQL 中，可以通过 LOCK TABLE 命令或者在修改数据的语句（如 UPDATE、DELETE 或 INSERT）中隐式地获取 ExclusiveLock。以下是一些示例：
-
-## 使用 LOCK TABLE 命令显式获取 ExclusiveLock：
+## 修改隔离级别
+你可以将 "SERIALIZABLE" 替换为 "READ UNCOMMITTED"、"READ COMMITTED" 或 "REPEATABLE READ" 来设置为其他的隔离级别。
 
     BEGIN;
-    LOCK TABLE table_name IN EXCLUSIVE MODE;
-    -- 你的 SQL 操作
+    SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+    -- 你的 SQL 语句...
     COMMIT;
 
-这个命令会在整个事务期间锁定整张表。只有当事务结束 (COMMIT 或 ROLLBACK) 的时候，才会释放这个锁。
+## 读未提交: 脏读
+PostgreSQL 设置 "读未提交" 时，会将其视为 "读已提交". 
+1. 因为 PostgreSQL 使用了多版本并发控制（MVCC），这意味着每个事务都在一个快照中运行，这个快照包含了事务开始时所有已经提交的数据
+2. 所以一个事务无法看到其他并发事务的未提交的更改
 
-## 通过修改数据隐式获取 ExclusiveLock：
-下面的 UPDATE 语句中，PostgreSQL 也会为被修改的行获取 ExclusiveLock。这个锁同样会在事务结束后释放。
+## 读已提交(read committed): 不可重复读和幻读问题
+一个事务只能看到其他事务已经提交的更改。这可以防止脏读，但可能导致不可重复读和幻读问题。
+
+## 可重复读(REPEATABLE READ): 幻读问题
+一个事务在整个过程中都能看到一个一致的快照。这可以防止脏读和不可重复读，但可能导致幻读问题。
+
+## 串行化 
+它通过完全序列化事务来防止所有并发问题
+
+## 隔离的问题分类
+### 脏读
+脏读允许事务看到其他事务未提交的更改
+
+### 不可重复读（Nonrepeatable Read）
+这是指在同一事务中，多次读取同一数据返回的**结果**不一致。这通常是因为在两次读取之间，其他事务**修改**了这些数据
 
     BEGIN;
-    UPDATE table_name SET column = value WHERE some_column = some_value;
-    -- 更多的 SQL 操作
+    SELECT * FROM your_table WHERE id = 1; -- 返回 {id: 1, value: 'old'}
+    -- 此时，另一个事务修改了 id 为 1 的行的 value 并提交
+    SELECT * FROM your_table WHERE id = 1; -- 返回 {id: 1, value: 'new'}
     COMMIT;
 
-如果不加BEGIN, 就是一次性事务的锁（隐式事务，自动commit）
+### 幻读（Phantom Read）
+这是指在同一事务中，多次执行同一查询返回的**结果集**不一致。这通常是因为在两次查询之间，其他事务**插入或删除**了满足查询条件的行。
 
-    UPDATE table_name SET column = value WHERE some_column = some_value;
+    BEGIN;
+    SELECT * FROM your_table WHERE value > 100; -- 返回 10 行
+    -- 此时，另一个事务插入了一个 value 大于 100 的行并提交
+    SELECT * FROM your_table WHERE value > 100; -- 返回 11 行
+    COMMIT;

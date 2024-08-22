@@ -197,7 +197,7 @@ any array
 
 或者
 
-    where array_to_string(pub_types, ',') like '%Journal%'
+    where array_to_string(pub_types, ',') like '%Journal%'; -- 不严谨
 
 ### insersection 交集
 

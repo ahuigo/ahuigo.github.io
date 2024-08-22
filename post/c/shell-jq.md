@@ -126,7 +126,9 @@ map 转数组：
     echo '"{\"age\":1}"' |  jq -r 'fromjson|.age'
 
 ## string
-how to trim quotes?
+### concat　string
+    jq -r '.data.users[] | select(.name=="Alex") | "name=\(.name) \(.job)"'
+### how to trim quotes?
 
     echo '"abc"' | jq
     echo '"abc"' | jq -r .
