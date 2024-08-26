@@ -105,6 +105,10 @@ msg: 用于显示所有 SSL/TLS 协议消息体。这些消息包括握手过程
 
 或者在chrome 的地址栏点证书安全图标，切换到Detail，再点export
 
+### 解析证书请求文件csr
+
+    openssl req -in server.csr -text -noout
+
 ### 解析pem/crt
 
     openssl x509 -in baidu.crt -text -noout

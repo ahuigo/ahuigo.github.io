@@ -4,6 +4,8 @@ date: 2022-05-26
 private: true
 ---
 # ssl selfsigned 证书生成
+> 本项目封装在ahuigo/selfhttps
+
 没有ca的自签名证书，在keychain中System会显示`Self-signed root certificate`
 
 ## Generating the Certficate Signing Request

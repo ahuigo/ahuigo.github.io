@@ -5,6 +5,21 @@ category: blog
 description:
 ---
 # log
+## find log path
+via lsof:
+
+	sudo lsof -p `ps aux |grep nginx | grep master | awk '{print $2}'` | grep log
+
+check for default log path assigned by compile:
+
+	openresty -V | grep log
+        /opt/homebrew/var/log/nginx/error.log
+	openresty -V 2>&1 | ag log
+	nginx -V
+	--prefix=/usr/local/nginx; 相对日志路径
+    --http-log-path=/opt/homebrew/var/log/nginx/access.log 
+    --error-log-path=/opt/homebrew/var/log/nginx/error.log
+
 ## log scope
 
 	main, http, server, location
@@ -64,20 +79,6 @@ http:
 
     access_log  /dev/stdout  main;
     error_log  /dev/stdout notice;
-
-## find log path
-via lsof:
-
-	sudo lsof -p `ps aux |grep nginx | grep master | awk '{print $2}'` | grep log
-
-check for default log path assigned by compile:
-
-	openresty -V | grep log
-	openresty -V 2>&1 | ag log
-	nginx -V
-	--prefix=/usr/local/nginx; 相对日志路径
-    --http-log-path=/opt/homebrew/var/log/nginx/access.log 
-    --error-log-path=/opt/homebrew/var/log/nginx/error.log
 
 # Debug
 
