@@ -31,6 +31,7 @@ date: 2018-10-04
         See :help Ex-mode
 
 # ex mode
+Ex 模式是一种命令行模式，它允许你一次输入并执行多个 Ex 命令。
 
     Q or gQ ex mode
 	gv	reselect previouse area
@@ -108,6 +109,9 @@ Syntax:
 
 	+/{pat}
 
+    -e, -E                Ex mode
+    -es, -Es              Silent (batch) mode
+
 	+{command} or
 	-c {command}
 			   vim -c 'cmd1|cmd2|cmd3'
@@ -132,7 +136,12 @@ Syntax:
 
 ### exect command from shell
 	vim +PluginInstall +qall
-	vim +PluginInstall +qall
+	vim -c PluginInstall -c qall
+	vim -c 'set expandtab' -c quit
+
+-es 避免进入交互模式(否则vim 不停刷新屏幕)，使用-c quit 退出vim(否则要按:visual |quit才能退出)
+
+	vim -es -c 'set expandtab?' -c quit
 
 ## external bang command
 Syntax:

@@ -24,31 +24,22 @@ If you do not see any output from swapon, then proceed to step 2.
 
 ## Step 2: Create swap file
 
-    dd if=/dev/zero of=/swapfile count=2048 bs=1M
+    # or: dd if=/dev/zero of=/swapfile count=2048 bs=1M
+    sudo fallocate -l 2G /swapfile # 创建 2G 空文件
+    sudo mkswap /swapfile    # 转换为交换分区文件
 
-## Step 3: Activate the swap file
-As a security measure, update the swapfile permissions to only allow R/W for root and no other users. Run:
-
-    chmod 600 /swapfile
-
-Next, tell the server to setup the swap file by running:
-
-    $ mkswap /swapfile
+## Step 3: Turn swap on
+    $ sudo chmod 600 /swapfile # 修改权限为 600
+    $ sudo swapon /swapfile    # 激活交换分区
     Setting up swapspace version 1, size = 2097148 KiB
     no label, UUID=ff3fc469-9c4b-4913-b653-ec53d6460d0e
 
-## Step 4: Turn swap on
-Once your file is ready to be used as swap, you need to enable it by running:
+    $ free -m # 查看当前内存使用情况(包括交换分区)
 
-    swapon /swapfile
 
-You can verify that the swap file is active by running the free command again.
-
-    free -m
-
-### Step 6: disable swap 
-    sudo swapoff /mnt/.swapfile
-    rm -rf /mnt/.swapfile
+### Step 6: disable swap (if you need)
+    sudo swapoff /swapfile
+    rm -rf /swapfile
 
 ## Step 5: Enable swap on reboot
 nano /etc/fstab, Add the following line at the end of the file:

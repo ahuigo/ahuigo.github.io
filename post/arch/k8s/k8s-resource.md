@@ -3,10 +3,12 @@ title: K8s cpu mem
 date: 2019-11-26
 private: true
 ---
-# limit requests
+# resource(limit requests)
+
 > 深入理解 Kubernetes 资源限制：CPU: https://www.cnblogs.com/sunsky303/p/11544540.html
 > 一文读懂Kubernetes 的 Limit 和 Request: https://zhuanlan.zhihu.com/p/114765307
 > http://dockone.io/article/2509
+## resource 配置
 Requests 用于在调度时通知调度器 Pod 需要多少资源才能调度，而 Limits 用来告诉 Linux 内核什么时候你的进程可以为了清理空间而被杀死。
 
     spec:
@@ -75,4 +77,4 @@ sleep 2; done"
     100000
     
     $ sudo cat /sys/fs/cgroup/cpu,cpuacct/kubepods/burstable/pod2f1b50b6-db13-11e8-b1e1-42010a800070/f0845c65c3073e0b7b0b95ce0c1eb27f69d12b1fe2382b50096c4b59e78cdf71/cpu.cfs_quota_us
-10000
+    10000

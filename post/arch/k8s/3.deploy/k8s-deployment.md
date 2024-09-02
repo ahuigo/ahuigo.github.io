@@ -6,6 +6,8 @@ private: true
 # k8s Deployment 
 以部署ginapp为例
 
+	kubectl get deploy
+
 ## create deployment
 通过yaml 声明创建: deployment 
 > apply 相比create, 支持存在就更新
@@ -35,7 +37,9 @@ private: true
     kubectl autoscale deployment/nginx-deployment --min=10 --max=15 --cpu-percent=80
 
 ### get ReplicaSet
-deployment中，ReplicaSet 是管理 Pod副本创建删除的
+> ReplicaSet 替代了Replication Controller(Rc 是k8s的早期概念) 都是用于管理pod副本的。 `kubectl get rc,services` rc 吩用根据标签完全匹配选择pod，不好用。
+
+deployment中，ReplicaSet 是管理 Pod副本创建删除的副本
 > 68b6df999d 是 ginapp commit的hash
 
     > kubectl get rs
@@ -69,18 +73,19 @@ deployment中，ReplicaSet 是管理 Pod副本创建删除的
     $ kubectl rollout undo deployment ginapp --to-revision=1
     deployment "ginapp" rolled back
 
-## edit deployment
+## edit deployment && restart
 修改完后，会自动重新部署apply
 
     kubectl edit deployment/ginapp
+
+### 重新部署 deployment
+    kubectl rollout restart deployment ginapp
 
 ### 暂停k8s deployment更新
     # 暂停运行，暂停后，对 deployment 的修改不会立刻生效，恢复后才应用设置
     kubectl rollout pause deployment test-k8s
     # 恢复
     kubectl rollout resume deployment test-k8s
-### 重新部署 deployment
-    kubectl rollout restart deployment ginapp
 
 ## delete deployment
     # via label name

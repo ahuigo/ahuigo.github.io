@@ -16,8 +16,15 @@ date: 2018-09-27
 记帐
 
 ## deno 生态:
+- golang+dist(umi/ultra) 写一个network诊断工具
+    1. 封装go tool pprof
+    2. 自动分析golang 的io/net/cpu/mem瓶颈
+        1. 提供tcpstat: 类似 netstat -a
+        2. 流量采样: in/out 流量
+        1. 网络瓶颈分析: listen/established/backlog 分析
+    2. 支持gonic middleware
 - ultra playgroud:
-    1. chrome://inspect/#service-workers
+    1. 基于worker chrome://inspect/#service-workers
 - convert npm to esm:
     1. rust ast parser
 - node migrate: https://dev.to/aralroca/from-node-to-deno-5gpn#electron
@@ -113,11 +120,6 @@ date: 2018-09-27
       2. check file via md5
       3. session verify via token
 
-10. golang+dist(umi/ultra) 写一个network诊断工具
-    1. 提供tcpstat: 类似 netstat -a
-    2. 流量采样: in/out 流量
-    1. 网络瓶颈分析: listen/established/backlog 分析
-    2. 支持gonic middleware
 10. tcpstat，tcpcapture: go-lib/net/packet
     1. sniffer 抓包: http, https(eBPF)
         2. 跨平台网络监测工具: https://github.com/GyulyVGC/sniffnet

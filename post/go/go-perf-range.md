@@ -7,7 +7,8 @@ private: true
 ## range　会copy 副本
 如果不用pointer, range 就会copy values
 
-    //go-lib/struct/range-copy-pointer.go
+    // perf/perf/for-range-bench_test.go
+    // spec/array/range-copy-struct.go
     type Role struct{
         Users []string
     }

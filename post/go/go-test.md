@@ -314,7 +314,7 @@ b.N 从 1 开始，如果该用例能够在 1s 内完成，b.N 的值便会增�
 100 这样的序列递增
 
 ## Run bench
-
+### bench report
 -bench regex
 
     # 测试全部
