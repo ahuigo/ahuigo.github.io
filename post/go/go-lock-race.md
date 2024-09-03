@@ -1,8 +1,9 @@
 ---
-title: go routines 与原子
+title: go lock race问题
 date: 2020-07-18
 ---
-# golang 原子问题
+# golang race 问题
+> 建议使用 go test -race 或　go run -race
 
 ## 问题发现的过程
 字节的同学在[踩坑记： Go 服务灵异 panic](v2ex.com/t/691145)提到，json 序列化字符串经常遇到 nil address:

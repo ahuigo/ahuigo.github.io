@@ -1,3 +1,6 @@
+# lexer
+lex.yy.c
+*.bin
 # test file
 /a.go
 /a.rb

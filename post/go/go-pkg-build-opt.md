@@ -161,3 +161,70 @@ see go-lib/build
 注意还有另一种写法
 
     //go:build !disableredis
+
+# Build 优化
+## 死码消除
+### 常量死码消除
+    // maxconst.go
+    func max(num1, num2 int) int {
+        if num1 > num2 {
+            return num1
+        }
+        return num2
+    }
+
+    const a, b = 10, 20
+
+    func main() {
+        if max(a, b) == a {
+            fmt.Println(a)
+        }
+    }
+
+我们使用 -gcflags=-m 参数看一下编译器做了哪些优化：
+
+    go build -gcflags=-m  -o maxvar maxvar.go
+    # command-line-arguments
+    ./maxconst.go:7:6: can inline max
+    ./maxconst.go:17:8: inlining call to max
+
+max 函数被内联了，即被展开了，手动展开后如下：
+
+	var result int
+	if a > b {
+		result = a
+	} else {
+		result = b
+    }
+	if result == a {
+		fmt.Println(a)
+	}
+
+如果改成const 以上判断、比较都会被消除
+
+### 可推断的局部变量
+另一种情况，a、b 作为局部变量呢？
+
+    func main() {
+        var a, b = 10, 20
+        if max(a, b) == a {
+            fmt.Println(a)
+        }
+    }
+
+编译后的体积与 varconst 一致，即 a、b 作为局部变量时，编译器死码消除是生效的
+
+### debug 模式用全局const 表示
+
+    const debug = false
+    func main() {
+        if debug {
+            log.Println("debug mode is enabled")
+        }
+    }
+
+
+### 条件编译 死码消除
+有没有不修改源代码，也能编译出 debug 版本的方式呢？
+
+可结合 build tags 来实现条件编译。Refer: golib/build/build-tag/
