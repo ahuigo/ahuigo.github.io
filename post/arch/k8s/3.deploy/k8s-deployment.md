@@ -158,7 +158,7 @@ Note: ginapp-7c4c9c4769-95fh8 名中　95fh8 是hash 值
 
     # via deployment label
     kubectl logs -l app=ginapp 
-    kubectl logs deployment/ginapp
+    kubectl logs deploy/ginapp
 
     # tail
     kubectl logs --tail=20 deployment/ginapp

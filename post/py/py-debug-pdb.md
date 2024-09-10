@@ -167,3 +167,23 @@ pdb，让程序以单步方式运行，可以随时查看运行状态。
 breakponint on frame:
 
     pdb.Pdb().set_trace(frame)
+
+## pdb 操作
+### pdb help
+     (Pdb) help
+    Documented commands (type help <topic>):
+    ========================================
+    EOF    c          d        h         list      q        rv       undisplay
+    a      cl         debug    help      ll        quit     s        unt      
+    alias  clear      disable  ignore    longlist  r        source   until    
+    args   commands   display  interact  n         restart  step     up       
+    b      condition  down     j         next      return   tbreak   w        
+    break  cont       enable   jump      p         retval   u        whatis   
+    bt     continue   exit     l         pp        run      unalias  where    
+
+### (Pdb) next
+### (Pdb) c, continue
+
+    (Pdb) help c
+      Usage: c(ont(inue))
+      Continue execution, only stop when a breakpoint is encountered.

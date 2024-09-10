@@ -116,7 +116,7 @@ or use any part which is hash-able:
 
 	[1,2] + [2,3,]
 	(1,) + (2,)
-	list.extend([2,3]) # 改变自己
+	list.extend([2,3]) # 改变自己(like append(*list))
 
 merge to set, 利用`*args` 展开
 

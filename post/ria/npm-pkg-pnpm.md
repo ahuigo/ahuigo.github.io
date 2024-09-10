@@ -8,6 +8,7 @@ private: true
     npm uninstall -g corepack
     # corepack upgrade pnpm
     npm i -g pnpm
+    pnpm --version
 
 ## 硬链接
 使用pnpm 后

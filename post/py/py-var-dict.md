@@ -250,27 +250,30 @@ or with collections.Counter:
 
     'one' in d.values()
 
-## dict+object 
+## dict2object 
+> code: pylib/spec/dict/dict2object.py
+
+1.via `__dict__`:
+
     class AttrDict(dict):
         def __init__(self, *args, **kwargs):
             super(AttrDict, self).__init__(*args, **kwargs)
             self.__dict__ = self
     obj = AttrDict(**{'a':1,'b':2}) 
 
-或者
+2.Via `__getattr__` and `__setattr__`:
 
     class AttributeDict(dict): 
         __getattr__ = dict.__getitem__
         __setattr__ = dict.__setitem__
 
-## dict2object
-method1:
+3.method3: via `__dict__.update()`
 
     class Struct:
         def __init__(self, **entries):
             self.__dict__.update(entries)
 
-method2:
+4.method4: via `setattr()`
 
 	class Dict2Obj(object):
 		def __init__(self, initial_data):
@@ -283,7 +286,7 @@ method2:
                     setattr(self, key, dictionary[key])
             for key in kwargs:
                 setattr(self, key, kwargs[key])
-    Employee(dict1,d2,d3,k1=v1,k2=v2)
+    Employee(dict1,dict2,dict3,k1=v1,k2=v2)
 
 ### ChainMap
     collections.ChainMap(d1,d2,d3)
