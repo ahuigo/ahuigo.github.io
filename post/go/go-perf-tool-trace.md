@@ -94,7 +94,7 @@ func main() {
 
 点击第1段G1 main.main可看到：
 1. Start: 0ns
-1. Wall Duration: 128ns
+1. Wall Duration: 128ns (墙钟时间, 包括暂停时间)
 1. Self Duration: 116ns
 1. 4个outgoing flow event: 启动了4个go routinue
 
@@ -127,4 +127,31 @@ sleep self Duration 很短，要放大时间尺度才能看到:
     runtime.(*traceAdvancerState).start.func1	1	    54.72µs
     runtime/trace.Start.func1	                1	    1.728µs
     main.main.func1	                            1	    1.024µs go func(){}()
-    (Inactive, no stack trace sampled)	4	
+    (Inactive, no stack trace sampled)	4	(非活动状态的，也就是说它们在采样期间没有执行任何代码)
+
+Inactive(no stack trace sampled) 指非活动状态的goroutine，它们在采样期间没有执行任何代码. 一般代表：
+1. Goroutine 在采样开始前就已经完成了它的任务。
+2. Goroutine 在整个采样期间都在等待某个事件，比如等待 I/O 操作完成，等待锁释放，等待 channel 数据等。
+4. Goroutine 在采样结束后才开始执行。
+
+
+然后点开任意一个goroutine group, 可以看到：
+
+    Goroutine	Total		Execution time	Block time	Block time (syscall)	Sched wait time	Syscall execution time	Unknown time
+
+    Goroutine：这是 Goroutine 的标识符，用于区分不同的 Goroutine。
+    Total：这是 Goroutine 的总运行时间，包括所有的执行时间和等待时间。
+    Execution：这是 Goroutine 在执行（即 CPU 运行）状态下的时间。
+    Sched wait time：这是 Goroutine 在等待被 Go 调度器调度到运行队列的时间。
+        Scheduler wait：旧版本
+
+    Block time：这是 Goroutine 在等待同步原语（如互斥锁或条件变量）的时间。
+        Block time syscall：这是 Goroutine 在执行阻塞系统调用的时间。
+        Syscall execution time：这是 Goroutine 在执行系统调用的时间。
+
+旧版本：
+
+    Network wait：这是 Goroutine 在等待网络 I/O 操作完成的时间。
+    GC sweeping：这是 Goroutine 在执行垃圾回收的清扫阶段的时间。
+    GC pause：这是 Goroutine 在等待垃圾回收的暂停阶段的时间。
+

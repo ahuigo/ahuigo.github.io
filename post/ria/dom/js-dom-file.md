@@ -175,7 +175,7 @@ full example via for expression
     var blob = new Blob([content], { type: "text/xml"});
     formData.append("webmasterfile", blob);
 
-### blob as data:url
+### blob as data:url (download file)
 
     var blob = new Blob(['content'], { type: 'text/csv;charset=utf-8;' });
     var link = document.createElement("a");

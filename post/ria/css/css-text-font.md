@@ -59,12 +59,16 @@ https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-conta
     overflow-wrap: break-word;
         hyphens: manual;
 
-中文+英文+长字串换行：
+英文+长字串换行：
+
+    word-break: break-all; 按字符换行(对中文无效)
+
+中文+长字串换行：
 
     display: flex 
     height: auto
 
-万能的方法：
+其它浏览器hack方法：
 
     white-space: pre-wrap; /* CSS3 whitespace-pre-wrap in tailwindcss */    
     white-space: -moz-pre-wrap; /* Mozilla, since 1999 */

@@ -14,9 +14,11 @@ private: true
         if bound < 0 {
             Fatalf("NewArray: invalid bound %v", bound)
         }
-        t := New(TARRAY)
-        t.Extra = &Array{Elem: elem, Bound: bound}
-        t.SetNotInHeap(elem.NotInHeap())
+        t := newType(TARRAY)
+        t.extra = &Array{Elem: elem, Bound: bound}
+        if elem.HasShape() {
+            t.SetHasShape(true)
+        }
         return t
     }
 
@@ -185,6 +187,7 @@ Go 静态类型检查判断数组越界，cmd/compile/internal/gc.typecheck1 会
 ### ssa 查看
 当数组的访问操作 OINDEX 成功通过编译器的检查后，会被转换成几个 SSA 指令，假设我们有如下所示的 Go 语言代码，通过如下的方式进行编译会得到 ssa.html 文件：
 
+    $ cat a.go
     package check
     func outOfRange() int {
         arr := [3]int{1, 2, 3}
@@ -193,12 +196,19 @@ Go 静态类型检查判断数组越界，cmd/compile/internal/gc.typecheck1 会
         return elem
     }
 
-    $ GOSSAFUNC=outOfRange go build array.go
+    $ GOSSAFUNC=outOfRange go14 build a.go
     dumped SSA to ./ssa.html
 
 start 阶段生成的 SSA 代码就是优化之前的第一版中间代码，`elem := arr[i]` 对应的中间代码如下，
 
     //Go 为数组生成了越界检查指令 IsInBounds, 当条件不满足时触发程序崩溃的 PanicBounds 指令：
+    /*
+    v22、v23 和 v26 是 SSA 形式的变量。它没有特殊的含义，只是 SSA 形式的表示方法。这些变量在代码中只被赋值一次。
+        v22 是一个指向数组 arr 的指针。
+        v23 是一个布尔值，表示数组索引是否在数组边界内。这是通过 IsInBounds 指令计算得出的。
+        v26 是通过 PtrIndex 指令计算得出的，表示数组 arr 中索引为 v21 的元素的指针。
+    */
+
     b1:
         ...
         v22 (6) = LocalAddr <*[3]int> {arr} v2 v20
@@ -228,7 +238,7 @@ start 阶段生成的 SSA 代码就是优化之前的第一版中间代码，`el
         v23 (5) = Load <int> v22 v20 (elem[int])
         ...
 
-数组的赋值和更新操作 a[i] = 2 也会生成 SSA 生成期间计算出数组元素的内存地址，然后修改当前内存地址的内容. ssa 如下：
+数组的赋值和更新操作 `a[i] = 2` 也会生成 SSA 生成期间计算出数组元素的内存地址，然后修改当前内存地址的内容. ssa 如下：
 
     b1:
         ...
@@ -237,4 +247,4 @@ start 阶段生成的 SSA 代码就是优化之前的第一版中间代码，`el
         v23 (5) = Store <mem> {int} v22 v20 v19
         ...
 
-赋值的过程中会先确定目标数组的地址，再通过 PtrIndex 获取目标元素的地址，最后使用 Store 指令将数据存入地址中(上面的SSA 代码中可以看出这些是在编译期中进行的）
+赋值的过程中会先确定目标数组的地址，再通过 PtrIndex 获取目标元素的地址，最后使用 Store 指令将数据存入地址中(上面的SSA 代码中可以看出这些是在编译期中进行的)
