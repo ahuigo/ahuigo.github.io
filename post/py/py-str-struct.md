@@ -57,12 +57,13 @@ struct的pack函数把任意数据类型变成bytes：
 	>>> import struct
 	>>> struct.pack('>I', 8) # big-endian
     b'\x00\x00\x00\x08'
-	>>> struct.pack('<I', 8) # big-endian
+	>>> struct.pack('<I', 8) # little-endian
     b'\x08\x00\x00\x00'
 
 pack的第一个参数是处理指令，`>I`的意思是：
 
 	> 表示字节顺序是big-endian，也就是网络序，
+    < 表示字节顺序是little-endian，也就是网络序，
 	I 表示4字节无符号整数。
 
 后面的参数个数要和处理指令一致。

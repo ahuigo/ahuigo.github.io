@@ -110,7 +110,8 @@ check command exists
     print(res.decode()) # 默认返回值为 bytes 类型
         -rw-r--r-- ...
 
-### subprocess.Popen
+### subprocess.Popen(支持异步)
+> subprocess.call 等，内部使用的就是Popen
 Popen 是最基础的类, 它是非阻塞的(除非执行`.stdout.read()`)
 
 	subprocess.Popen('sleep 61') #wrong
@@ -118,7 +119,7 @@ Popen 是最基础的类, 它是非阻塞的(除非执行`.stdout.read()`)
 
 	subprocess.Popen(['echo','12'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 
-read output
+#### read output
 
 	proc = subprocess.Popen(['ls','-l'],stdout=subprocess.PIPE)
 	line = proc.stdout.readline();
@@ -131,6 +132,10 @@ read output
 2. 可以执行multiple commands
 
 	subprocess.Popen('sleep 5;echo abc',shell=True, stdout=subprocess.PIPE).stdout.read()
+#### 异步执行
+    import subprocess
+    # 这里程序会继续执行，不会等待 'ls' 命令结束
+    process = subprocess.Popen(['ls', '-l'])
 
 #### subprocess.Popen().communicate
 如果子进程还需要输入，则可以通过communicate()方法输入(其实是向stdin 写)：

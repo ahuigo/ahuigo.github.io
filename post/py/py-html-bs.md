@@ -35,10 +35,10 @@ bs4 install:
     ...:     soup.div.findAll('p')[1]
 
 ## 解释器
-但是要处理html/xml，就要上工具了:
-2. xml 性能差，麻烦
-3. lxml cpython 写的性能好
-1. BS 是最方便的胶水
+处理html/xml　的工具比较
+1. xml 性能差，麻烦
+2. lxml cpython 写的性能好
+3. BS 是最方便的胶水: 可以使用lxml
 
 Python的内置标准库, 速度中等, 容错能力强
 
@@ -58,6 +58,19 @@ which parser should I use?
 
     from bs4.diagnose import diagnose
     diagnose(data)
+
+## loop
+
+    # '<d:entry> <span class="hwg">...</span><d:entry>'
+    for tag in soup.body.find('d:entry'):
+        if tag.name:  # this will exclude string nodes
+            print(tag.name)
+
+loop children:
+
+    for span in soup.body.find('d:entry'):
+        if tag in span.children:
+            print(tag.name)
 
 ## findNode(findTag)
 都支持select/find/find_all 这些方法(Note: findAll === find_all)
@@ -312,6 +325,10 @@ has attr
 
 	tag.has_attr('name')
 
+has class:
+
+    'x-1' in div.attrs.get('class',[])
+
 ### set attr
 
 	>>> soup.div['class'] = ['class1', 'class2']
@@ -354,7 +371,8 @@ pythone3 text 真只读
 	'red'
 	'456'
 
-## save to file
+## output
+### save to file
 remove body
 
     next(soup.body.children)
@@ -381,4 +399,4 @@ By default parser like lxml, html.parser, they will wrap it with html/body
 
     BS(data, 'lxml-xml')
 
-xml 不能创建CDATA: `[![CDATA]xxxx]]`
+xml 不能创建CDATA: `[![CDATA]xxxx]]`

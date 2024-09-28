@@ -48,7 +48,15 @@ jq 参数：
     echo '{"value": 10}' | jq 'if .value > 5 then . as $obj | "greater " + ($obj | tostring) else . as $obj | "smaller " + ($obj | tostring) end'
 
 # 管道
-jq 支持管道，比如我们利用管道生成base64
+
+##　jq内建方法
+> jq 不能调用shell, 只有调用内建方法
+
+    echo '{"name":"aGk="}' | jq '.name|@base64d'
+    echo '{"name":"hi"}' | jq '.name|@base64'
+    echo '[{"name":"hi", "age":1}]' | jq '.[]|{name:.name|@base64, age:.age}'
+
+jq 支持管道方法，比如我们利用管道生成base64
 
     > jq -ncM '{body: "data" | @base64 }'
     {"body":"ZGF0YQ=="}
@@ -82,7 +90,6 @@ note:
         ]
     }}
     MM
-
 
 ## to_entries
 map 转数组：
@@ -199,7 +206,18 @@ how to print `id:issue_bag_md5[]`
 
 ## string
 ### concat　string
+    echo '[{"name":"hi", "age":1}]' | jq '.[]|"your name:"+(.name)'
+    echo '[{"name":"hi", "age":1}]' | jq '.[]|"your name:"+.name' 
+
+concat + 表达式
+
+    echo '[{"name":"hi", "age":1}]' | jq '.[]|"your name:"+(.name|@base64)'
+    echo '[{"name":"hi", "age":1}]' | jq '.[]|"your name:"+.name|@base64'
+
+在字符串内引用jq值:
+
     jq -r '.data.users[] | select(.name=="Alex") | "name=\(.name) \(.job)"'
+
 ### how to trim quotes?
 
     echo '"abc"' | jq

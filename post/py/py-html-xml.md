@@ -5,7 +5,7 @@ date: 2018-09-28
 # python lxml 的使用
 BeautifulSoup 可以使用lxml 解释器，lxml 这个解释器的使用并不复杂。
 
-今天了解一下lxml 用法后，发现BS 完全可以代替它了. 而且BS 还提供了统一的接口
+今天了解一下lxml 用法后，发现BS 完全可以代替它了. 而且BS 还提供了统一的接口
 
 > 参考: https://www.cnblogs.com/dahu-daqing/p/6749666.html
 

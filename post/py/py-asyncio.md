@@ -4,11 +4,12 @@ date: 2018-09-28
 ---
 # asyncio
 asyncio是基于coroutine 的，包括了:
-1. 事件循环(event loop)
+1. 事件循环(event loop):
+   1. 全局有一个event loop: 所以可以在全局使用 await task
 2. Task: 对coroutine 的封装，包含各种状态
     1. Pending Running Done Cancelled
 
-4. Future: 将来执行或没有执行的任务的结果. task就是Future实例
+3. Future: 将来执行或没有执行的任务的结果. task就是Future实例
 
 ## asyncio 生态
 同类
@@ -35,40 +36,82 @@ Aysncio protocol twisted-like:
             supper().connection_lost(exc)
 
 # asyncio task 
-## create task
-single task: 包装的coroutine
-1. 两种方式等价：
-   1. `loop.create_task()`
-   1. `asyncio.ensure_future()`
+注意：由于协程是单线程的，只有像corountine=asyncio.sleep(1) 交出执行权才能实现异步。
+
+## task 的创建
+task包装的是coroutine, 是Future的子类
+1. 创建task：
+   1. python>=3.7:`task = asyncio.create_task(coroutine)`
+   1. python<=3.6: `asyncio.ensure_future()`
 2. task有pending、runing、done、cancel状态
 3. task 是Future的子类：isinstance(task, asyncio.Future)
 
-e.g. create task
+### 创建coroutine
+执行环境event loop：
+1. 只能在async 内调用await, 它是异步的阻塞的
+2. 只能在event loop 中执行coroutine:　可使用`asyncio.run`代替以前的`asyncio.get_event_loop()` 创建event_loop 环境
+
+没有await coroutine 就不会执行, await会阻塞
 
     import asyncio
-    loop = asyncio.get_event_loop()
-    async def do_some_work(x):
-        print('Waiting: ', x)
-    
-    coroutine = do_some_work(2)
-    # task = asyncio.ensure_future(coroutine)
-    task = loop.create_task(coroutine)
-    loop.run_until_complete(task)
+    async def fn():
+        print("2. task start...")
+        await asyncio.sleep(1)
+        print("3. task end")
+    async def main():
+        co = fn()
+        print("1. main pepare")
+        await co
+        print("4. main end")
 
-## task 回调
+    asyncio.run(main()) # blocking call
+
+Note： ipython 本身就是event_loop，支持命令行写await：
+
+    全局await coroutine (不await 不执行)
+    全局await task
+
+### 创建task：异步执行task 不返回(创建task)
+> 只能在event_loop 内，调用: create_task
+
+asyncio.create_task(coroutine) 会创建一个 Task 对象，这个 Task 对象是 Future 类的一个子类。
+(一旦创建task，　就会马上执行)
 
     import asyncio
+    async def func(i=2):
+        await asyncio.sleep(i)
+        print(f'func{i} done')
+        return i
+
+    async def main():
+        coroutines = [func(1),func(2),func(3)]
+        # 1. 只要创建就马上执行
+        tasks = [asyncio.create_task(coroutine) for coroutine in coroutines]
+        # 2. 等task执行结束, 不用await
+        print("1. wait tasks(不等待的话，tasks 会中断退出)")
+        await asyncio.sleep(4) 
+    asyncio.run(main())
+
+## await task 回调返回(创建task)
+create_task 会将coroutine 包装成task：　task可以被await ，也可以关联回调
+
+    import asyncio
+
     async def func(x):
         return x+1
     def callback(future):
         print('Callback: ', future.result())
-    
-    loop = asyncio.get_event_loop()
-    task = asyncio.ensure_future(func(1))
-    task.add_done_callback(callback)
 
-    loop.run_until_complete(task)
-    print(task.result()) # future == task
+    async def main():
+        # 异步任务，关联 callback 处理返回
+        task = asyncio.create_task(func(1))
+        task.add_done_callback(callback)
+
+        # main 本身是async 任务，只能在异步任务内await 等其它任务执行
+        await task
+        print(task.result())
+
+    asyncio.run(main())
 
 ## task with async/await
 
@@ -101,157 +144,52 @@ e.g. create task
     main()
 
 ## task 并行
-借助wait 封装
+借助wait 封装, asyncio.wait 只能接收tasks 不接收coroutines 
 
     import asyncio 
+
     async def func(i=2):
         print('sleep: ',i)
         await asyncio.sleep(i)
-        #future.set_result('future is done')
         return i
 
-    loop = asyncio.get_event_loop() # 默认的loop
+    async def main():
+        tasks = [asyncio.create_task(func(1)), asyncio.create_task(func(3))]  # Convert coroutines to tasks
+        done, pending = await asyncio.wait(tasks)
+        # await asyncio.gather(*tasks)
+        for task in done:
+            print(task.result())
 
-    # asyncio.wait 封装多个tasks 为coroutine
-    tasks_coroutine = asyncio.wait([
-        asyncio.ensure_future(func(1)),
-        asyncio.ensure_future(func(3)),
-    ])
+    asyncio.run(main())
 
-    # block for all tasks
-    dones, pendings = loop.run_until_complete(tasks_coroutine) 
-    for task in dones: 
-        print(task.result()) # 顺序不定. pendins = set() 空集合. 除非ctrl-c中断
-    #loop.close(1)
+利用gather 合并tasks
 
-wait 会自动将 coroutine 封装为task
-
-    tasks_coroutine = asyncio.wait([func(1), func(3)]) 
+    await asyncio.gather(*tasks)
 
 ## task 中断
 
     import asyncio
-    loop = asyncio.get_event_loop()
     async def func(i=2):
-        await asyncio.sleep(i)
+        try:
+            await asyncio.sleep(i)
+        except asyncio.CancelledError:
+            print(f'func{i} was cancelled')
+        print(f'func{i} done')
         return i
 
-    try:
-        loop.run_until_complete(asyncio.wait([func(1),func(20),func(33)]))
-    except KeyboardInterrupt as e:
-        # dones + pendings + cancels + runnings
-        for task in asyncio.Task.all_tasks():
-            # 有4个task: 3个func, 1个wait
+    async def main():
+        coroutines = [func(1),func(2),func(3)]
+        tasks = [asyncio.create_task(coroutine) for coroutine in coroutines]
+
+        await asyncio.sleep(2)
+        for task in tasks:
             print('cancel: ',task.cancel(), task)  
-    finally:
-        pass #loop.close() 
 
-利用gather 全部执行：
+    asyncio.run(main())
 
-    print(asyncio.gather(*asyncio.Task.all_tasks()).cancel())
+利用gather 合并tasks
 
-# asyncio loop event
-    loop.run_until_complete()
-    loop.stop()
-    loop.run_forever() # 即使所有的任务done 也不停止, 除非loop.stop()
-    loop.close()
-
-## 阻塞loop (普通func)
-用`loop.call_soon_threadsafe`往loop 添加普通函数（非coroutine）, 由于time.sleep 阻塞，执行要花3+3=6s
-
-    from threading import Thread
-    import asyncio, time
- 
-    def start_loop(loop):
-        asyncio.set_event_loop(loop)
-        print('start_loop')
-        loop.run_forever()
-    
-    def more_work(x):
-        print('More work {}'.format(x))
-        time.sleep(x)
-        print(f'Finished more work {x} at ',time.time() - start)
-    
-    start = time.time()
-    new_loop = asyncio.new_event_loop()
-    t = Thread(target=start_loop, args=(new_loop,))
-    t.start()
-    new_loop.call_soon_threadsafe(more_work, 3)
-    new_loop.call_soon_threadsafe(more_work, 3)
-
-线程本身相当于master-worker中，执行more_work 的worker
-
-## 非阻塞loop (coroutine)
-用`loop.call_soon_threadsafe`往loop 添加coroutine, 执行要花3s
-
-    from threading import Thread
-    import asyncio, time
-
-    def start_loop(loop):
-        asyncio.set_event_loop(loop)
-        loop.run_forever()
-
-    async def do_some_work(x):
-        print('Waiting {}'.format(x))
-        await asyncio.sleep(x)
-        print(f'Finished more work {x} at ',time.time() - start)
-
-    start = time.time()
-    new_loop = asyncio.new_event_loop()
-    t = Thread(target=start_loop, args=(new_loop,))
-    t.start()
-    print('TIME: {}'.format(time.time() - start))
-
-    asyncio.run_coroutine_threadsafe(do_some_work(3), new_loop)
-    asyncio.run_coroutine_threadsafe(do_some_work(3), new_loop)
-
-## task 自动加入loop
-新创建的task 会自动放到 loop
-
-    import asyncio
-    import time
-    now = time.time
-    start = now()
-    async def worker(task=1):
-        print('Start worker')
-        await asyncio.sleep(task)
-        print('Done ', task, now() - start)
-    
-    loop = asyncio.get_event_loop()
-
-    asyncio.ensure_future(worker())
-    asyncio.ensure_future(worker())
-    loop.create_task(worker())
-    try:
-        loop.run_forever()
-    except KeyboardInterrupt as e:
-        print(asyncio.gather(*asyncio.Task.all_tasks()).cancel())
- 
-
-## 停止event loop
-
-    new_loop = asyncio.new_event_loop()
-    t = Thread(target=start_loop, args=(new_loop,))
-    t.setDaemon(True)    # 设置子线程为守护线程, 不用等待
-    t.start()
-    try:
-        while True:
-            task = rcon.rpop("queue")
-            if not task:
-                time.sleep(1)
-                continue
-            asyncio.run_coroutine_threadsafe(do_some_work(int(task)), new_loop)
-    except KeyboardInterrupt as e:
-        print(e)
-        new_loop.stop()
-
-## create_subprocess_exec
-
-    p = await asyncio.create_subprocess_exec('ping', '-c', '4', ip, stdout=asyncio.subprocess.PIPE)
-    async for line in p.stdout:
-        print(line)
-    await p.wait()
-
+    print(asyncio.gather(*tasks).cancel())
 
 # Future executor(包装多线程进程future)
 coroutine 本身不能并行（parallel cpu），但是可以封装成thread/process.

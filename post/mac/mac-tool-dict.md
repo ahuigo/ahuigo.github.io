@@ -129,6 +129,17 @@ https://support.apple.com/zh-cn/guide/mac-help/mh27448/mac
     $ say 'word'
 	$ say -f mynovel.txt -o myaudiobook.aiff
 
+say 默认根据系统设置选择英音或美音，你可以手动切换英美音:
+
+    # man say
+    $ say -v '?' | grep en_
+    Alex                en_US    # Most people recognize me by my voice.
+    Daniel              en_GB    # Hello, my name is Daniel. I am a British-English voice.
+    Moira               en_IE    # Hello, my name is Moira. I am an Irish-English voice.
+    Rishi               en_IN    # Hello, my name is Rishi. I am an Indian-English voice.
+
+    say -v Daniel "Hello, how are you?"
+
 ## Voice Files Dir
 可以选择其它发音文件，
 所有的下载语音文件都是放在这里的：

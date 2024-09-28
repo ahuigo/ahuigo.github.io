@@ -284,12 +284,14 @@ bytes对象b'\xa420'只是一堆比特位而已。define bytes
 #### bytes vs binstr
     b'abc'.hex()
         '616263'
-    bytes.fromhex('6162')
+    bytes.fromhex('616263')
         b'abc'
 
 #### int to byte
     (0xff).to_bytes(1, byteorder='big') + b'\x00'
     # b'\xff\x00'
+    (2**7).to_bytes(2,'big').hex()
+    # '0080'
 
 #### byte to int
 以大端读字节：

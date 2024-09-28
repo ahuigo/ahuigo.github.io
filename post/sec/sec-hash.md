@@ -9,6 +9,7 @@ description:
 # hash in php
 crc32() - Calculates the crc32 polynomial of a string
 hash() - Generate a hash value (message digest)
+    python默认算法是SipHash，这是一种加密哈希函数
 md5() - Calculate the md5 hash of a string
 sha1() - Calculate the sha1 hash of a string
 crypt() - One-way string hashing

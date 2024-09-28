@@ -162,13 +162,28 @@ caller:
     sys._getframe(1).f_code.co_name
     inspect.stack()[1][3]
 
-current function:
+### current function
+current function name:
 
-    def what_is_my_name():
+    import inspect
+    def current_fn_name():
         print(inspect.stack()[0][0].f_code.co_name)
         print(inspect.stack()[0][3])
         print(inspect.currentframe().f_code.co_name)
         print(sys._getframe().f_code.co_name)
+    
+current function:
+
+    def self_func():
+        from inspect import currentframe, getframeinfo
+        cframe = currentframe()
+        callerFrame = cframe.f_back
+        func_name = getframeinfo(callerFrame)[2]
+        callerFrame = callerFrame.f_back
+        func = callerFrame.f_locals.get( # type: ignore
+                func_name, callerFrame.f_globals.get( func_name) # type: ignore
+        )
+        return func
 
 ## inspect function args
     print(inspect.getargspec(func)[0])

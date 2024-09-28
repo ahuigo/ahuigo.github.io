@@ -208,6 +208,7 @@ which will return the first match or raise a StopIteration if none is found. Alt
 exclude end
 
 	list[start:end:step]
+	list[start:end]
 	list[0:3]
 	   list[:3]
 	list[:-1]

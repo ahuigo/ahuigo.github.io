@@ -282,10 +282,10 @@ frozenset() 返回一个冻结的不可变集合
 
 默认从1开始计数。
 
-> from enum import Enum Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr',
-> 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) for name, member in
-> Month.**members**.items(): ... print(name, '=>', member, ',', member.value)
-> ... Jan => Month.Jan , 1 Feb => Month.Feb , 2
+    from enum import Enum
+    Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) 
+    for name, member in Month: 
+        print(name, '=>', member, ',', member.value)
 
 如果需要更精确地控制枚举类型，可以从Enum派生出自定义类： @unique装饰器可以帮助我们检查保证没有重复值。
 
