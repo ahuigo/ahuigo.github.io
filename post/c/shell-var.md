@@ -11,15 +11,25 @@ shell 主要支持字符串 和 数组 两种数据类型。数组功能很弱�
     VAR='hello'
 	unset VAR
 
-## String, 字符串
+# String, 字符串
 
-### string color
+## string color
     RED='\033[0;31m'
     NC='\033[0m' # No Color
     printf "I ${RED}love${NC} Stack Overflow\n"
     echo "I ${RED}love${NC} Stack Overflow\n"
 
-### heredoc and nowdoc
+## read string
+read 命令用于从标准输入（或其他文件描述符）
+
+    $ read -r -d '' CONTENT <<-'EOF'
+    some text
+    EOF
+
+    -r 选项告诉 read 命令不要把反斜杠 (\)，　即： \n\r\t等
+    -d '' 选项改变了 read 命令的行为，使其不再在读取到换行符时停止，而是在读取到空字符串时停止
+
+## heredoc and nowdoc
 Act as stdin
 
 	# heredoc 任何字词都可以当作分界符 (cat < file)
@@ -43,7 +53,7 @@ Act as stdin
 		echo $PATH
     MM
 
-#### here string
+### here string
 > Note: here string 结尾会追加'\n'
 
 Act as stdin
@@ -60,17 +70,17 @@ Note that here string behavior can also be accomplished (reversing the order) vi
 	echo 'one two' | tr a-z A-Z
 
 
-### str2hex
+## str2hex
 
     echo -n GET | xxd -p
     echo -n GET | xxd -p | xxd -r -p
 
-### count_chars
+## count_chars
 
 	echo 'ahui ahui' | grep -o a | wc -l
 	a='ahui ahui'; b=${a//[^a]}; echo ${#b}
 
-### expr
+## expr
 expr 命令支持ERE 正则匹配
 
 	expr "$SHELL" : '.*/\(.*\)'
@@ -81,12 +91,12 @@ expr 命令支持ERE 正则匹配
 
 	match($2, /1(.*)/, m){}
 
-### Str2Hex & Hex2Str
+## Str2Hex & Hex2Str
 
 	echo '12' | xxd -p
 	echo '3132' | xxd -r -p
 
-### print
+## print
 打印原始字符串，请用
 
    `printf "%s" "$var"`
@@ -96,15 +106,15 @@ Note:
 - `$(cmd)` , ``` `cmd` ``` 会过滤最后连续的换符符, 且被视为多个参数
 - `"$(cmd)"` , ```"`cmd`"``` 会过滤最后连续的换符符,且被视为1个参数
 
-### shell 字符解析
+## shell 字符解析
 
-#### 单引号
+### 单引号
 要注意的是shell中的单引号内所有字符都会原样输出.
 
 	str='a  '\'\"'  b';
 	echoraw 'It'\''s Jack'; //output: It's Jack
 
-#### 双引号
+### 双引号
 而双引号内: `$`, 字符会被解析, `!` 会被terminal 解析
 
 	echoraw "${HOME}"
@@ -124,13 +134,13 @@ Or turn off history expandsion:
 	//or
 	set +o histexpand
 
-#### 无引号
+### 无引号
 `\t\n\r\'\"` 全部被转义为`字面字符`
 
     echoraw 0\t0\n0\rabc\'\"
         0t0n0rabc'"
 
-#### 无引号`$''`
+### 无引号`$''`
 `\t\n\r` 转义为特殊字符，`\'` `\"` `$` 转义为字面字符
 
     # Press Ctrl-v + Tab
@@ -142,14 +152,14 @@ Or turn off history expandsion:
         0	0
         abc'"
 
-#### 无引号`$`
+### 无引号`$`
 
     cmd='arg1 arg2'
     echoraw $cmd
         zsh: 一个参数
         bash: 多个参数
 
-#### 无引号`$""` 不要用
+### 无引号`$""` 不要用
 shell 不兼容
 
     # zsh
@@ -159,7 +169,7 @@ shell 不兼容
 	$ echoraw $"var"
         var
 
-### echo 命令
+## echo 命令
 对于`echo` 来说，它是将经过shell 解析过的字符，再用自己的规则解析一次。
 
 zsh 中的echo 会解析 \007 \x31 (建议不要这样使用)
@@ -169,12 +179,16 @@ zsh 中的echo 会解析 \007 \x31 (建议不要这样使用)
 	echo "\x31" //1
 	echo  '\0116' //N的ASCII 的8进制是116
 
-在bash 下，必须加`-e`
+在bash 下，echo必须加`-e` 才支持bytes 输入
 
 	echo -e "\x31" //1
 
-### str 函数
-#### concat 拼接
+-E 表示禁用反斜线转义(原始raw 输出): bash默认的是-E, zsh 默认是-e
+
+    echo -E "\x31" // \x
+
+## str 函数
+### concat 拼接
 
 	$PATH:otherStr #拼接.
 	${var}otherStr
@@ -187,7 +201,7 @@ or:
 	str+='world'
 
 
-#### length
+### length
 
 	echo ${#str}
 	echo -n "1" | wc -c #去掉换行符
@@ -195,11 +209,11 @@ or:
 
 	echo $((${#str}+2))
 
-#### index
+### index
 
 	awk -v str="$a" -v substr="$b" 'BEGIN{print index(str,substr)}'; #
 
-#### match in
+### match in
 使用 grep
 
 	[ $(echo "$st" | grep -E "^[0-9]{8}$") ] && echo "match"
@@ -209,7 +223,7 @@ or:
 	[[ ${str_a/${str_b}//} == $str_a ]]
 	[[ ! ${str_a/${str_b}//} == $str_a ]] && echo yes
 
-#### regex
+### regex
 使用ERE or wildcard
 
 	# support zsh/bash
@@ -228,7 +242,7 @@ substr is beginning:
      do something here
     fi
 
-#### substr 截取 slice
+### substr 截取 slice
 
 	echo ${str:start:length}
 	echo ${str:start} #start 不为负数.否则当作0
@@ -237,14 +251,14 @@ substr is beginning:
 
 	echo ${str:0:-1}; #remove last char(bash>4.2, zsh)
 
-#### trim
+### trim
 
 	"trim any last char
 	echo ${str%?}
 	"trim last char /
 	echo ${str%/}
 
-#### replace, 替换与删除
+### replace, 替换与删除
 支持通配符`*`
 
     #...%
@@ -275,12 +289,12 @@ substr is beginning:
 	${var//[^s|S]} 只保保留s|S
     [ "$answer" != "${answer#[Yy]}" ]
 
-#### dirname
+### dirname
 
     path=$(dirname $path)
     path=$(cd $(dirname $0) && pwd)
 
-#### var-test 变量测试
+### var-test 变量测试
 
     - 不存在则设置默认值expr, 否则用原值
         :- 不为空值则设置
@@ -298,12 +312,17 @@ substr is beginning:
     var=${str?expr}	        expr输出至stderr var=$str		var=$str
     var=${str:?expr}        expr输出至stderr expr输出stderr	var=$str
 
-## Number 数字
+### contains substr
+
+    if [[ $string == *"My long"* ]]; then .. fi
+    [[ $PATH =~ ~/bin ]] || echo 'pls config $PATH'
+
+# Number 数字
 
 	$RANDOM 随机数
 	declare -i a=1
 
-### Calculate 运算
+## Calculate 运算
 下面介绍的inner运算和expr都不支持小数, 虽然不会报错, 但计算结果让人无语. 如果需要小数, 请使用bc(无论如何, shell 计算很鸡肋, 如果需要大量的运算请请使用python/octave等脚本)
 
 	# 不要用inner calc 和 expr 做 float 运算!!
@@ -312,7 +331,7 @@ substr is beginning:
 	➜  ~  a=2+1.1; declare -p a;
 	typeset -i a=3
 
-#### Inner Calc
+### Inner Calc
 
 	let ++a; let a++;//a也可以为字符串
 	let a=$a+2;
@@ -327,19 +346,19 @@ substr is beginning:
 	declare -i a=1;
 	a+=2; #shell 不允许有空格
 
-#### expr 运算
+### expr 运算
 
     expr 14 % 9 #需要有空格
     expr 14 \* 3 #*在shell中有特别的含义(它是通配符wildcard)
 		expr '14 * 3' #expr 识别为一个参数
 	expr \( 1 + 2 \)  \* 3
 
-#### bc 运算
+### bc 运算
 
 	echo '14*3' | bc #bc更精确
 	echo '2.1*3' |bc #6.3
 
-### 生成数字序列
+## 生成数字序列
 这不是数组!而是以空格为间隔的字符串序列!
 
 	for i in {1..5}; do echo $i; done #Brace expansion是在其它所有类型的展开之前处理的包括参数和变量展开
@@ -353,13 +372,13 @@ seq 用法: man seq
 
 	seq [first [incr]] last
 
-### Format Num
+## Format Num
 padding num
 
 	`printf "%02i\n" $num`
 	n=`printf %03d $n`
 
-## Array数组
+# Array数组
 > terminal: zsh 的数组, 其下标是从1 开始的，而bash 是从0 开始的。
 > 在函数参数上看: 二者都是从0开始的，不过zsh 会指向函名，bash 则会指向脚本名. 不过`$@`与`$*` 都不会包含0
 
@@ -410,30 +429,8 @@ local 与 assignment 需要分开：
 
 	unset var[0] #清除下标, 其它下标的顺序不会变
     
-### access array
-    arr=('1 2'
-    3)
-    printf "%s -- " '$arr:'
-    printf "%s," $arr 
-    printf "%s -- " $'\n"$arr":'
-    printf "%s," "$arr" 
-    printf "%s -- " $'\n$arr[@]:'
-    printf "%s," ${arr[@]}
-    printf "%s -- " $'\n"$arr[@]":'
-    printf "%s," "${arr[@]}"
 
-强烈建议只用`"$arr[@]"`
-
-    # bash test.sh
-    $arr: -- 1,2,
-    "$arr": -- 1 2,
-    $arr[@]: -- 1,2,3,
-    "$arr[@]": -- 1 2,3,%
-
-### loop argument
-
-
-### pass array
+## pass array
 
 	arr=('1 2' 3)
 	"${arr[@]}"
@@ -461,6 +458,27 @@ With Bash4.3, it only creates a reference to the original array, it doesn't copy
     b="${arr[@]}"; # 结果: ('1 2 3 4' 3 4)
 	b=${arr[@]}" ; # 结果: ('1 2 3 4' 3 4)
 
+## access array
+    arr=('1 2'
+    3)
+    printf "%s -- " '$arr:'
+    printf "%s," $arr 
+    printf "%s -- " $'\n"$arr":'
+    printf "%s," "$arr" 
+    printf "%s -- " $'\n$arr[@]:'
+    printf "%s," ${arr[@]}
+    printf "%s -- " $'\n"$arr[@]":'
+    printf "%s," "${arr[@]}"
+
+强烈建议只用`"$arr[@]"`
+
+    # bash test.sh
+    $arr: -- 1,2,
+    "$arr": -- 1 2,
+    $arr[@]: -- 1,2,3,
+    "$arr[@]": -- 1 2,3,%
+
+
 ### loop array
 
 	for i in ('1 2', 3); //error
@@ -480,11 +498,11 @@ zsh 只能用变量
     for i in $lw;
         do echo $i;
     done
+
 ### in_array
 shell 参数不支持array传递. 只能变通实现[in_array](http://stackoverflow.com/questions/5788249/shell-script-function-and-for-loop)了
 
-用shift 实现
-
+**用shift 实现**
 shift: 左移出1 (注意:shell 不支持unshift push pop)
 shift 3: 左移出3
 
@@ -503,7 +521,7 @@ shift 3: 左移出3
 	in_array 'Hello Jack' "$@" && echo has; # for zsh and bash
 	in_array 'Hello Jack' $arr && echo has;		# for zsh only
 
-利用eval 访问外围的arr
+**利用eval 访问外围的arr**
 
 	in_array(){
 		a="$2"

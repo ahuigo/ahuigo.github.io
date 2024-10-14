@@ -21,6 +21,19 @@ private: true
 
 for more: https://deno.land/manual/getting_started/permissions#permissions-list
 
+    file permission:
+        --allow-read[=<PATH>...] or -R[=<PATH>...]
+        --deny-read[=<PATH>...]
+        --allow-write[=<PATH>...] or -W[=<PATH>...]
+    os env:
+        --deny-env[=<VARIABLE_NAME>...]
+        --deny-env=AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY
+    network:
+        deno run --allow-net
+        deno run --allow-net=github.com,jsr.io script.ts
+        deno run --allow-net=example.com:80 script.ts
+    
+
 ## watch mode
 The files that are watched depend on the subcommand used:
 

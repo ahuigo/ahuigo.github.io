@@ -222,6 +222,10 @@ tag的 class 属性是 多值属性 .按照CSS类名搜索tag时,可以分别搜
 
 	soup.find_all("a", attrs={"class": "sister"})
 
+## delete node
+    for node in child.find_all(class_="ty_pinyin"):
+        node.decompose()
+
 ## add node
 
 node type:

@@ -17,6 +17,11 @@ wheel：Python 分发的新标准，意在取代 eggs。官网
     import site
     print(site.getsitepackages())
 
+# debug
+## No module named 'urllib3.packages.six'
+    pip uninstall urllib3
+    pip install urllib3
+
 # pip
 
     wget https://bootstrap.pypa.io/get-pip.py -O - | python3

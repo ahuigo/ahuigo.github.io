@@ -6,27 +6,28 @@ priority:
 # Shell Programming
 Shell 编程笔记
 
-# process
-## 异步与同步命令: `&` and `;` 
-> https://stackoverflow.com/questions/51943502/shell-execute-multiple-commands-from-string-with-ampersandbackground-process
+# process 管理
+## grep & ps
+remove grep command while use ps
 
-Asynchronous lists:
+	ps aux | grep perl | grep -v grep
+	ps aux | grep '[p]erl'
 
-    command1 & [command2 & ... ]
+Or use `pgrep` instead:
 
-sequential list
+	pgrep perl
+	pgrep per[l]
 
-    command1 ; [command2 ; ... ]
-
+# cmd exec
 ## 子进程退出
 shell 本身启动的`cmd &`, 会随着shell 的退出而退出。
-sub process 启动的`cmd &`, 会随着shell 的退出, 不会退出，控制权限会被交给shell 的父进程
+sub process 启动的`cmd &`, 在shell 的退出时不会退出，控制权限会被交给shell 的父进程
 
     `echo "the command"|at now`;
 
 ## async 异步执行: wait
 > http://billie66.github.io/TLCL/book/zh/chap37.html
-wait 命令导致一个父脚本暂停运行，直到一个 特定的进程（例如，子脚本）运行结束。
+wait 会等待 特定的进程（例如，子脚本）运行结束。
 
 	# async-parent : Asynchronous execution demo (parent)
 	echo "Parent: starting..."
@@ -73,17 +74,6 @@ http://unix.stackexchange.com/questions/85249/why-not-use-which-what-to-use-then
 	$ false | true; echo $?
 	1
 
-## grep & ps
-remove grep command while use ps
-
-	ps aux | grep perl | grep -v grep
-	ps aux | grep '[p]erl'
-
-Or use `pgrep` instead:
-
-	pgrep perl
-	pgrep per[l]
-
 ## type
 type 用于查看命令的属性
 
@@ -94,7 +84,7 @@ type 用于查看命令的属性
 
 	unalias rgrep
 
-# exec cmd
+# cmd advanced
 ## sh -c cmdstr
 
     $ bash -c 'echo $$ ; ls -l /proc/self ; echo foo'
@@ -107,17 +97,27 @@ type 用于查看命令的属性
     7217
     lrwxrwxrwx 1 root root 0 Jun 30 16:49 /proc/self -> 7217
 
-## async/sync command
+## 异步与同步命令: `&` and `;` 
+> https://stackoverflow.com/questions/51943502/shell-execute-multiple-commands-from-string-with-ampersandbackground-process
+
+ampersand `&` is for Asynchronous lists:
+
+    command1 & [command2 & ... ]
+
+semi-column `;` is for sequential list: 
+
+    command1 ; [command2 ; ... ]
+
+`&&` is for combine cmd to one
+
+e.g.:
+
 
     sh -c 'ls ; ls'
     sh -c 'cmd1 && cmd2'
     sh -c 'cmd1 & cmd2'
     sh -c 'cmd1 ; cmd2'
     sudo -- sh -c 'date; who am i'
-
-1. ampersand `&` is for Asynchronous lists:
-1. semi-column `;` is actually a sequential list.
-2. `&&` is for combine cmd to one
 
 Empty command is fobidden:
 
@@ -223,26 +223,6 @@ or :
 	echo abc | tee /dev/stdout | cmd
 	#with tty(screen)
 	echo abc | tee /dev/tty | cmd
-
-# Caculation cmd
-### expr
-expr 算式:
-
-	x=`expr $x + 1` ; #$x 与 + 与 1 之间必须有空格, 否则被expr视为字符串
-
-### bc expression
-	x=`echo $x^3 | bc`; #bc 较expr限制少, 支持大量的数学符号(而expr 仅支持+-*/%)
-
-### let
-let 数学式:
-
-	let x=$x+1;echo $x; # let 没有返回值的
-
-### 双括号(())
-1. 支持-+*/%
-2. 支持随机数
-
-	echo $((RANDOM%100))
 
 # debug 调试
 

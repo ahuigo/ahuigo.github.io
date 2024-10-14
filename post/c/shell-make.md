@@ -5,6 +5,10 @@ private:
 ---
 
 # Expr
+## 指定运行shell
+在makefile 开头行指定shell
+
+    SHELL := /bin/bash
 
 ## Func
 
@@ -18,8 +22,7 @@ private:
         echo $(sort $(dir $(filter %.go,$(ARR))))
 
 ## loop
-
-使用原生的shell 的loop
+使用make 自带的shell 的loop
 
     TEST_DIRS=$(sort $(dir $(filter %.go,$(ARR))))
     @for dir in $(TEST_DIRS); do \
@@ -376,7 +379,6 @@ Example: clean 清除编译文件 这一target 不需要条件。
     	@echo "clean completed"
 
 ## 忽略错误
-
 默认make 执行语句时，如果有错误就结束执行。
 
 如果候忽略错误, 就加`-`

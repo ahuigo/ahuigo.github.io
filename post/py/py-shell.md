@@ -112,12 +112,23 @@ check command exists
 
 ### subprocess.Popen(支持异步)
 > subprocess.call 等，内部使用的就是Popen
-Popen 是最基础的类, 它是非阻塞的(除非执行`.stdout.read()`)
+Popen 是最基础的类, 它是非阻塞的(除非执行`proc.stdout.read()`)
 
-	subprocess.Popen('sleep 61') #wrong
-	subprocess.Popen(['sleep', '61']).pid; #ok
 
-	subprocess.Popen(['echo','12'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+
+#### 异步执行
+    import subprocess
+    # 这里程序会继续执行，不会等待 'ls' 命令结束
+    process = subprocess.Popen(['sleep', '61'])
+    process = subprocess.Popen('ls -l', shell=True)
+
+#### shell=True 支持字符语句
+1. 只取第一个参数，且把参数当成shell 语句而非单条命令
+2. 可以执行multiple commands
+
+e.g.
+
+	subprocess.Popen('sleep 5;echo abc',shell=True, stdout=subprocess.PIPE).stdout.read()
 
 #### read output
 
@@ -127,21 +138,10 @@ Popen 是最基础的类, 它是非阻塞的(除非执行`.stdout.read()`)
 		print "test:", line.rstrip()
 		line = proc.stdout.readline();
 
-#### shell=True 时:
-1. 只取第一个参数，且把参数当成shell 语句而非单条命令
-2. 可以执行multiple commands
-
-	subprocess.Popen('sleep 5;echo abc',shell=True, stdout=subprocess.PIPE).stdout.read()
-#### 异步执行
-    import subprocess
-    # 这里程序会继续执行，不会等待 'ls' 命令结束
-    process = subprocess.Popen(['ls', '-l'])
-
-#### subprocess.Popen().communicate
+#### write: subprocess.Popen().communicate
 如果子进程还需要输入，则可以通过communicate()方法输入(其实是向stdin 写)：
 
 	import subprocess
-
 	print('$ nslookup')
 	p = subprocess.Popen(['nslookup'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	output, err = p.communicate(b'set q=mx\npython.org\nexit\n')
@@ -154,21 +154,6 @@ Popen 是最基础的类, 它是非阻塞的(除非执行`.stdout.read()`)
 	set q=mx
 	python.org
 	exit
-
-运行结果如下：
-
-	$ nslookup
-	Server:        192.168.19.4
-	Address:    192.168.19.4#53
-
-	Non-authoritative answer:
-	python.org    mail exchanger = 50 mail.python.org.
-
-	Authoritative answers can be found from:
-	mail.python.org    internet address = 82.94.164.166
-	mail.python.org    has AAAA address 2001:888:2000:d::a6
-
-	Exit code: 0
 
 ### via call
 类似run, 但不返回结果:

@@ -19,10 +19,9 @@ private: true
     - Authorized OAuth Apps: 你登录过的oauth apps
         - github cli(`gh auth login`): you can revoke access to the GitHub CLI application.
 - OAuth App: https://github.com/settings/developers 提供三方登录注册
-- 项目相关
+- 项目独立的环境变量:
     - Github Environments: 用于管理项目的不同部署环境, 例如环境保护规则（例如需要特定的人员审查和批准部署）、环境变量
     - Actions secrets and variables
-
 
 # Github packages
 发布和安装各种语言和平台的软件包，比如 npm、RubyGems、Docker 等。
@@ -31,6 +30,21 @@ private: true
 两种token:
 - 推荐用github atciton workflow : use `GITHUB_TOKEN` to publish, install, delete, and restore packages in GitHub Packages without needing to store and manage a personal access token(PAT).
 - 否则，使用PAT token(classic): 给 read/write/delete:packages　权限
+
+## gh release 发包工具
+参考ginapp/makefile
+
+    gh release -h
+    gh release list
+    gh release create -h
+
+发包:
+
+    gh release create [<tag>] [<files>...]
+    gh release create v0.1.0 --notes "New dict" ./words.hash
+    
+    # update: delete first then create
+    gh release delete v0.1.0 -y
 
 ## container registry
 打label：

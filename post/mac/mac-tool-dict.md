@@ -4,7 +4,7 @@ date: 2020-10-28
 private: true
 ---
 # mac 自带的词典工具
-> https://medium.com/p/8b07b7c8a88
+> 本文发布在：https://medium.com/p/8b07b7c8a88
 
 mac 自带的词典APP, 名叫 Dictionary.app, 非常方便，本文我简写Dict.app 吧。
 它提供了丰富的功能：
@@ -48,6 +48,7 @@ mac 系统字典路径：
     在某些系统上，可能还会有其他的词典文件，例如 /usr/share/dict/american-english 或 /usr/share/dict/british-english。
 
 ## 安装langdao 词典
+> 打包方法
 我自己打包了langdao 的词典, 两种下载方式:
 1. [在baidu pan下载](链接: https://pan.baidu.com/s/17lP-y4cR18o8l6mL0B88qA 提取码: d4kd ),
 2. https://github.com/ahuigo/eng-dict
@@ -92,7 +93,7 @@ Mac 提供了一个非常方便的三指查词功能
 
 parse mac dictionary 脚本：
 
-    https://github.com/ahuigo/eng-dict/blob/master/parse-db.py
+    https://github.com/ahuigo/eng-dict/blob/master/gendict.py
 
 需要使用的工具
 

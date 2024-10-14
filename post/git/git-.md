@@ -514,12 +514,15 @@ Create an archive of files from a named tree.
 
     # if local branch dev is the current branch:
     git branch -u origin/dev
+    # if local branch dev is not the current branch:
     git branch -u origin/dev dev
+
     # or longer command
     git branch --set-upstream-to=origin/dev
 
-    # if local branch dev is not the current branch:
-    git branch -u origin/dev dev
+当origin的默认分支从master 变成了main 时:　自动remote HEAD引用　指向origin 的默认分支(main)
+
+    git remote set-head origin -a 
 
 创建时设置
 

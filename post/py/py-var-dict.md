@@ -257,7 +257,10 @@ or with collections.Counter:
 
     class AttrDict(dict):
         def __init__(self, *args, **kwargs):
+            # 实现dict
             super(AttrDict, self).__init__(*args, **kwargs)
+
+            # 实现object: 属性表__dict__ 指向字典本身
             self.__dict__ = self
     obj = AttrDict(**{'a':1,'b':2}) 
 
@@ -267,11 +270,15 @@ or with collections.Counter:
         __getattr__ = dict.__getitem__
         __setattr__ = dict.__setitem__
 
-3.method3: via `__dict__.update()`
+3.method3: via `dict.update()`
 
-    class Struct:
-        def __init__(self, **entries):
-            self.__dict__.update(entries)
+    class Struct(dict):
+        def __init__(self,*args, **kwargs):
+            # 实现dict 
+            self.update(kwargs)
+
+            # 实现object: 属性表__dict__ 指向字典本身
+            self.__dict__ = self
 
 4.method4: via `setattr()`
 

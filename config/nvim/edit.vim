@@ -10,6 +10,8 @@ function! edit#run()
         !python3 %
     elseif ext == 'sh'
         !bash %
+    elseif ext == 'awk'
+        !gawk -f %
     elseif ext == 'js'
         !node %
     elseif ext == 'lua'

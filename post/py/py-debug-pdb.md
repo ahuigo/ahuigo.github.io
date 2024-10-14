@@ -181,6 +181,12 @@ breakponint on frame:
     break  cont       enable   jump      p         retval   u        whatis   
     bt     continue   exit     l         pp        run      unalias  where    
 
+     (Pdb) h step
+
+### (Pdb) step + return(step out)
+
+     (Pdb) h step
+     (Pdb) h return
 ### (Pdb) next
 ### (Pdb) c, continue
 

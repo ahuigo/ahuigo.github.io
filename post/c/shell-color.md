@@ -4,7 +4,6 @@ date: 2018-09-27
 ---
 # shell color
 https://en.wikipedia.org/wiki/ANSI_escape_code
-http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
 
 ## shell
 
@@ -52,11 +51,11 @@ http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
 The SGR parameters 30-37 selected the foreground color,
 
     BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(30,38)
-    print("\033[1;32minfo\033[0m")
+    print("\033[1;32m info \033[0m")
 
 while 40-47 selected the background.
 
-    print("\033[1;42minfo\033[0m")
+    print("\033[1;42m info \033[0m")
 
 ## color code list
 
@@ -69,7 +68,6 @@ zsh color list
 
     "COLOR_SEQ%sRESET_SEQ"
     "BOLD_SEQ%sRESET_SEQ"
-
 
     Code: Client: Meaning:
     [0m     -- reset; clears all colors and styles (to white on black)
@@ -101,6 +99,16 @@ zsh color list
     [46m    --  set background color to cyan
     [47m    --  set background color to white
     [49m    2.53    set background color to default (black)
+
+    FG  BG
+    90	100	Bright Black (Gray)	
+    91	101	Bright Red	
+    92	102	Bright Green	
+    93	103	Bright Yellow	
+    94	104	Bright Blue	
+    95	105	Bright Magenta
+    96	106	Bright Cyan	
+    97	107	Bright White
 
 >  In version 2.50 and later, bold is interpreted as high-intensity
 

@@ -433,6 +433,15 @@ shell 没有三元运算符：不过可以这样
 ### logic
 
     !	反转以上测试
+    ! [[ -f ~/bin/trans ]] && echo yes
+
+### test command
+使用`[[ $(command ...) ]]`
+
+    [[ $(find ~/bin/trans -type f -size +2M) ]] && echo yes
+    if echo abc|grep ab; then
+        echo yes
+    fi
 
 ### test string, 字符串测试
 

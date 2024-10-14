@@ -1,7 +1,7 @@
 # 目录说明
-	config
-		ln ~/.config
-	conf(app)
+	config 配置app snippet
+		ln ~/.config/karabiner
+	conf: 
 		install-conf.sh 安装常用的配置
 		install/	安装脚本
 	tool/	工具库
@@ -31,11 +31,19 @@ local:
     local.rc
 
 # config
-## copy conf
+## git clone
     mkdir ~/bin
     sudo mkdir /usr/local/bin
     mkdir ~/www
     #git clone https://github.com/ahuigo/a ~/www/a
+
+## link config (app snippet)
+    # config
+    ln -s ~/www/a/config/nvim ~/.config/
+    ln -s ~/www/a/config/karabiner/assets/complex_modifications ~/.config/karabiner/assets/
+
+## link conf 配置tool
+
     ln -s ~/www/a/conf ~/
     ln -s ~/www/a/conf/.profile ~/
         #export PATH=$PATH:$HOME/www/a/bin:~/bin:/usr/local/sbin
@@ -44,10 +52,6 @@ local:
     ln -s ~/www/autotool/git_template ~/.git_template
     cd prixx/conf && make init
 
-## link conf
-    # config
-    ln -s ~/www/a/config/nvim ~/.config/
-    ln -s ~/www/a/config/karabiner/assets/complex_modifications ~/.config/karabiner/assets/
 
     ## profile
     cat <<'MM' >> ~/.zshrc
@@ -60,7 +64,7 @@ local:
 
     /bak
 
-# app(/conf)
+# app(/config)
 ## nvim
 see nvim-plugin.md
 

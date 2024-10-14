@@ -50,7 +50,7 @@ click 之于argparse/argv, 相当于requests 之于urllib
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", "--name", default="ahui", help="your name")
-    parser.parse_args()
+    args=parser.parse_args()
 
 ## with pytest
     import argparse

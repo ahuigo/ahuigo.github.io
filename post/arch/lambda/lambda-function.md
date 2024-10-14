@@ -4,7 +4,7 @@ date: 2024-03-28
 private: true
 ---
 # lambda eval
-1. deno/v8 isolate: jslib/pwa/js-worker/isolate/readme.md
+1. deno/v8 isolate: jslib/pwa-demo/js-worker/isolate/readme.md
 2. go docker: https://github.com/openfaas/faas?
 
 ## run python

@@ -10,9 +10,9 @@ date: 2018-09-28
 函数式编程
 
 # call func
-getattr(foo, 'bar')()
-locals()['bar']()
-globals()['bar']()
+    getattr(foo, 'bar')()
+    locals()['bar']()
+    globals()['bar']()
 
 ## exec func by name
 
@@ -33,7 +33,6 @@ Next, your subfile.py can import globals:
 
 	import settings
 	settings.myList.append('hey')
-
 
 # function
 

@@ -13,7 +13,7 @@ https://docs.python.org/3.4/howto/logging.html
     formatmsg='%(asctime)s:%(levelname)s:%(pathname)s:%(lineno)s:%(message)s'
     logging.basicConfig(format=formatmsg, filename='mvp.log', level=logging.DEBUG)
 
-    # logger and stramHanler
+    # logger and stramHanler(optional)
     logger = logging.getLogger('mvp')
     ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(logging.DEBUG)

@@ -8,10 +8,26 @@ vegeta 是golang 写的压测工具
 
     go get  github.com/tsenart/vegeta
 
+## 压测报告
+    $ jq -ncM 'while(true; .+1) | {method:"GET", header:{"Content-Type": ["application/json"]}, url:"http://m:4500/sleep/3", body: {} | @base64 }'| vegeta attack -format=json -rate=4 -lazy -duration=10s | vegeta report
+    Requests      [total, rate, throughput]         40, 4.10, 3.14
+        throughput(qps): 40/12.75=3.14
+    Duration      [total, attack, wait]             12.753s, 9.75s, 3.003s
+            attack: 发完所有的请求花了接近10s;
+            total: 所有的请求完成接近13s
+            wait: 所有请求发送完毕后，等待所有响应返回的时间 (并不是平均响应时间)
+    Latencies     [min, mean, 50, 90, 95, 99, max]  3.001s, 3.002s, 3.002s, 3.003s, 3.003s, 3.011s, 3.011s
+    Bytes In      [total, mean]                     680, 17.00
+    Bytes Out     [total, mean]                     80, 2.00
+    Success       [ratio]                           100.00%
+    Status Codes  [code:count]                      200:40 
+## 构建请求
 ### 构造get/post 请求
 
-    echo "GET http://host.com/api/v1/tasks" | vegeta attack  -rate=10000  -duration=10s |vegeta report
-    echo "GET http://host.com/api/v1/tasks" | vegeta attack  -rate=10000  -duration=10s > result.bin
+    $ echo "GET http://host.com/api/v1/tasks" | vegeta attack  -rate=10000  -duration=10s |vegeta report
+    $ echo "GET http://host.com/api/v1/tasks" | vegeta attack  -rate=10000  -duration=10s > result.bin
+
+
 
 #### header(要加json):
 
@@ -35,7 +51,7 @@ vegeta 是golang 写的压测工具
     while(true; .+1) 生成自增ID
     ("stress-test-"+(.|tostring)) 将整数ID转为string并加上前缀
 
-### vegeta attack
+## vegeta attack
 vegeta attack 参数：
 
     -format 接收请求信息的格式，如上例用这里使用json 请求格式
@@ -102,6 +118,3 @@ vegeta plot： 生成 html 格式的折线图，使用浏览器打开文件。
 ### -keepalive
 Specifies whether to reuse TCP connections between HTTP requests.
 
-
-# Debug
-## 

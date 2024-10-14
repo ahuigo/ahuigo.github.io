@@ -108,6 +108,7 @@ From remote to local
 从本地到远端：
 
 	$ scp .ssh/id_rsa.pub username@hostname:/home/username/.ssh/authorized_keys
+	$ scp -C -p 22 .ssh/id_rsa.pub username@hostname:/home/username/.ssh/authorized_keys
 
 ### sftp
 就是 sftp 不需要远端系统中运行 FTP 服务器。它仅仅要求 SSH 服务器。 这意味着任何一台能用 SSH 客户端连接的远端机器，也可当作类似于 FTP 的服务器来使用。 这里是一个样本会话：

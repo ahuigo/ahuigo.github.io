@@ -172,6 +172,34 @@ easymothtion：需要插件支持, vscode 也可以开启easymotion
         <leader><leader>j
         <leader><leader>k
 
+### jumplist, jumps
+A "jump" is one of the following commands:
+
+    "'", "`", "G", "/", "?", "n", "N", "%", "(", ")", "[[", "]]", "{", "}", ":s", ":tag", "L", "M", "H"
+    and the commands that start editing a new file.
+
+If you make the cursor "jump" with one of these commands, the position of the cursor before the jump is
+remembered.
+
+    ctrl-o 跳到旧的jump (jump backward in insert & normal mode)
+    ctrl-i/<TAB> 跳到新的jump (jump forward in normal mode)
+    :ju or :jumps 查看jumplist（曾经跳过的位置列表）
+    :help jumplist 查帮助
+
+ps: <C-O> 或者 <C-I>/<TAB> 前面都可加数字(jumpid),比如
+
+    3<C-O>
+    5<C-I> or 5<TAB>
+
+### change list
+
+    :help changelist
+    :changes 	print all change list
+
+    g; "跳到上次修改
+    g, "跳到新的修改
+    `. "跳到上次修改
+
 ## line
 
     . current line
@@ -306,34 +334,6 @@ sentence
     g'{mark}  g`{mark}
                 Jump to the {mark}, but don't change the jumplist when
                 jumping within the current buffer.
-
-## jumplist, jumps
-A "jump" is one of the following commands:
-
-    "'", "`", "G", "/", "?", "n", "N", "%", "(", ")", "[[", "]]", "{", "}", ":s", ":tag", "L", "M", "H"
-    and the commands that start editing a new file.
-
-If you make the cursor "jump" with one of these commands, the position of the cursor before the jump is
-remembered.
-
-    ctrl-o 跳到旧的jump (jump backward in insert & normal mode)
-    ctrl-i/<TAB> 跳到新的jump (jump forward in normal mode)
-    :ju or :jumps 查看jumplist（曾经跳过的位置列表）
-    :help jumplist 查帮助
-
-ps: <C-O> 或者 <C-I>/<TAB> 前面都可加数字(jumpid),比如
-
-    3<C-O>
-    5<C-I> or 5<TAB>
-
-## change list
-
-    :help changelist
-    :changes 	print all change list
-
-    g; "跳到上次修改
-    g, "跳到新的修改
-    `. "跳到上次修改
 
 ## 插入模式下的光标移动
 以下归纳的是按光标移动(Normal/Visual模式下). 如果需要在insert mode下移动光标, 需要加一个前缀键: Ctrl+o
