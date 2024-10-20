@@ -13,13 +13,11 @@ description:
 4. 内核态的终端处理程序将ctrl-c 解析为一个SIGINT 信号，记录到进程的PCB 中（也可以说是向进程发送了一个SIGINT 信号）
 5. 然后cpu 从内核态切换到进程态前，会检查到PCB 有无待处理的信号。本例中，cpu 会发现PCB 中有一个SIGINT 信号， 这个信号默认是终止程序执行，不必再返回用户空间
 
-关于ctrl-c 产生的int 中断: 
-它只影响shell 前台进程(不带&, shell 被wait waitpid 所阻塞); 不影响shell 后台进程(带&)
 
-# 信号与进程的关系:
+## 信号与进程的关系:
 1. 它们是异步的(Asynchronous)
 
-# 信号定义与分类
+## 信号定义与分类
 kill -l 查看系统定义的信号列表:
 
 > 1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL
@@ -34,9 +32,13 @@ kill -l 查看系统定义的信号列表:
 
 这些信号的宏定义位于signal.h, 编号34 以上的是实时信号，34以下的为非实时信号.
 
-3. SIGTERM(15): Terminatted, (kill pid 默认就是15)
-1. SIGINT(2): interrupt, Ctrl-c会发送(这在Python中其实被封装成了KeyboardInterrupt异常)，
-2. SIGQUIT(3): quit, `Ctrl-\`发送SIGQUIT，
+## 常见中断信号
+> ctrl+d  This sends an EOF (End Of File)  to process(只能在行首有效果, 它并不是信号)
+
+1. SIGTERM(15): Terminatted, (kill pid 默认就是15)
+2. SIGINT(2): interrupt, `Ctrl-c`会发送(这在Python中其实被封装成了KeyboardInterrupt异常)，
+    它只影响shell 前台进程(不带`&`, shell 被wait waitpid 所阻塞); 不影响shell 后台进程(带`&`)
+3. SIGQUIT(3): quit, `Ctrl-\`发送SIGQUIT，
 4. SIGKILL(9): force killed,cannot be ignored
 3. SIGCHLD: 进程退出，向父进程发出SIGCHLD (chldhandler)
 4. SIGTTIN 当后台进程读tty时，tty将发送该信号给相应的进程组，默认行为是暂停进程组中进程的执行

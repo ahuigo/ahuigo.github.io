@@ -114,8 +114,6 @@ check command exists
 > subprocess.call 等，内部使用的就是Popen
 Popen 是最基础的类, 它是非阻塞的(除非执行`proc.stdout.read()`)
 
-
-
 #### 异步执行
     import subprocess
     # 这里程序会继续执行，不会等待 'ls' 命令结束

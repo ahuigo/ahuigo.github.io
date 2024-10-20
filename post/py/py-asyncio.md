@@ -2,7 +2,7 @@
 title: asyncio
 date: 2018-09-28
 ---
-# asyncio
+# asyncio 介绍
 asyncio是基于coroutine 的，包括了:
 1. 事件循环(event loop):
    1. 全局有一个event loop: 所以可以在全局使用 await task
@@ -281,11 +281,16 @@ executor 上下文结束是阻塞的(会等所有任务完成):
 
     nums = [25, 61, 29, 50, 109]
 
-    with concurrent.futures.ProcessPoolExecutor() as executor:
-        future_to_num = {executor.submit(is_prime, n ):n for n in nums}
-        for future in concurrent.futures.as_completed(future_to_num):
-            data = future.result()
-            print(future_to_num[future],data)
+    def main():
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            future_to_num = {executor.submit(is_prime, n ):n for n in nums}
+            for future in concurrent.futures.as_completed(future_to_num): # process　没有这个就不会执行
+                data = future.result()
+                print(future_to_num[future],data)
+
+    必须在main中运行
+    if __nmae__ == "__main__":
+        main()
 
 也可以不用async , 用multiprocessing.
 

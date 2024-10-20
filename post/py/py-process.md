@@ -6,6 +6,15 @@ description:
 date: 2018-10-04
 ---
 # Preface
+python process vs thread:
+- process: 
+  - 支持并行
+  - 传变量时会遇到pickle　不支持的类型
+  - target 只能是global function(否则会报Can't pickle local object)
+- thread: 
+  - 不支持并行
+  - 不支持stop
+
 ## shell
 - sh: sh之于subprocess， 相当于requests 对于urllib2
 	1. sh.ls("-l", "/tmp", color="never")
@@ -32,7 +41,7 @@ Example
 ## fork api:
     from multiprocessing import Process
 
-    p = Process(target=run_proc, args=('test',))
+    p = Process(target=run_proc, args=['test',])
         p.start() .join() .terminate()
         p.exitcode = 0
     multiprocessing.Pool(4).apply_async(func_task, args).get() # 直接调用get()会阻塞，不需要pool.join()
