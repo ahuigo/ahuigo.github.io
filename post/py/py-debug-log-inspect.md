@@ -49,11 +49,13 @@ stack example 2: print_stack(), format_stack()
     print(func.__class__) # "<class 'function'>"
     print(cls.__class__) # "<class 'type'>"
 
-## path
+## inspect path
+current file + fileno:
 
     __file__
     sys._getframe().f_lineno
 
+parent file + fileno:
 
 ## class defined path
 
@@ -88,7 +90,8 @@ stack example 2: print_stack(), format_stack()
 
 ## inspect source code
 
-    inspect.getsourcelines(foo)
+    file_name = inspect.getfile(func_foo)
+    line_number = inspect.getsourcelines(func_foo)[1]
 
 ## inspect class
 

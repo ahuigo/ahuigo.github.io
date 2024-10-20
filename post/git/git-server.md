@@ -18,10 +18,18 @@ mac 可在UI中添加
 1. linux: `systemctl start sshd`
 2. macosx: 打开remote login, 并且Access allow for 设置成only these users: `git` (安全考虑)
 
-测试
+### 测试
 
     ssh git@127.0.0.1
     ssh -vT git@127.0.0.1
+
+如果报：Unable to negotiate with port 22: no matching host key type found. Their offer: ssh-rsa
+
+    # On Mac/Linux/Ubuntu: added the following lines to /etc/ssh/ssh_config or ~/.ssh/
+    Host *
+        PubkeyAcceptedAlgorithms +ssh-rsa
+        HostkeyAlgorithms +ssh-rsa
+
 
 ### 配置sshd
 为了安全，我们应该禁用ssh 登录。

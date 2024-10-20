@@ -172,6 +172,8 @@ function mocha(){
     npx mocha --require "@babel/register" $1
 }
 
+################### dict ##############
+alias t=t.py
 
 ################ shell cli###########################
 # grep

@@ -17,7 +17,7 @@ Shift+ ⌘ +G 切换地址（相当于拿到一个文件地址直接粘贴到地
 a. ⌥ ⌘ C 复制文件地址　
 b. 用 manico.app 呼起 iterm2
 c. cd <⌘ V>
-
+in
 2. 选中要打开的文件，然后右键点 services -> new Terminal at folder 
 3. 也可自定义一个快捷键，参考： https://www.howtogeek.com/210147/how-to-open-terminal-in-the-current-os-x-finder-location/
 

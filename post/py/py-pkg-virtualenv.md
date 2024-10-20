@@ -32,7 +32,6 @@ python pip虚拟环境:
     eval "$(pyenv virtualenv-init -)" # 启用 pyenv-virtualenv 的自动激活和取消激活虚拟环境的功
     ＃如果你用 virtualenvwrapper 
     pyenv-virtualenvwrapper 
-a
 ## 显示当前版本
 
     pyenv install --list
@@ -44,7 +43,9 @@ a
         3.6.4
         3.7.9
         3.8.19
+### get python path
 
+    pyenv which python
 ## 切换
 pyenv 会修改环境变量, 通过在 PATH 环境变量的最前面添加一个 shims 目录来实现版本切换, shims 会自动读取当前目录的.python-version
 

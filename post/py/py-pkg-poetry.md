@@ -221,6 +221,29 @@ ali的
     https://artifactory.yourapp.com/artifactory/api/pypi/pypi-dev/simple/
     https://mirrors.aliyun.com/pypi/simple/
 
+#### Unable to store the password for poetry-repository
+    $ poetry config http-basic.mypypi yourname
+    Unable to store the password for poetry-repository-mypypi in the key ring: Can't store password on keychain: (-25244, 'Unknown Error')
+
+
+解决方法1：https://github.com/python-poetry/poetry/issues/7243
+- 设置权限: 增加并允许你的程序python3.12 访问
+
+解决方法2： 进入mac osx 的keychain access, 删除原始的password(login item)
+然后再执行
+
+    $ poetry config http-basic.mypypi yourname
+
+解决方法3：(无效)
+
+    $ python -c "import keyring.util.platform_; print(keyring.util.platform_.config_root())"
+    ~/.config/python_keyring
+    $ cat >> ~/.config/python_keyring 
+    [backend]
+    default-keyring=keyring.backends.fail.Keyring
+
+
+
 ## 下载源(局部)
 https://python-poetry.org/docs/repositories/
 

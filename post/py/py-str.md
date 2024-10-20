@@ -7,6 +7,7 @@ date: 2017-08-09
 见/py/py-serial.md
 
 # String
+## define string
 same as js:
 
 	print "a\nb" ;# The character here "\n" is new line
@@ -15,6 +16,15 @@ same as js:
 
 	'\x87' == '\u0087' == b'\xc2\x87'.decode() ; #表示的是双位unicode
     '\x87' == bytes([0xc2,0x87]).decode() == chr(0x87)
+
+re 支持unicode
+
+    # 原始unicode字符
+    re.match('\x87', '\x87')
+
+    # re也unicode表达式
+    re.match(r'\x87', '\x87')
+    re.match('\\x87', '\x87')
 
 ## ord/chr(unicode)
 

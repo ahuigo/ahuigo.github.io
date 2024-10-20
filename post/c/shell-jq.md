@@ -36,16 +36,23 @@ jq 参数：
     echo '{"value": 10}' | jq 'if .value > 5 then "greater" else "smaller" end'
 
     echo '{"value": 10}' | jq 'if .value > 5 then "greater" else "smaller" + obj end'
+
 # 变量
 
-设置入口变量$：
+## 设置入口变量$：
 
     echo '{"value": 10}' | jq --arg obj " than 5" 'if .value > 5 then "greater" else "smaller" + $obj end'
     echo '{"value": 10}' | jq --arg obj "than 5" 'if .value > 5 then "greater " + $obj else "smaller " + $obj end'
 
-动态设置变量$
+## 动态设置变量$
 
     echo '{"value": 10}' | jq 'if .value > 5 then . as $obj | "greater " + ($obj | tostring) else . as $obj | "smaller " + ($obj | tostring) end'
+
+## as 别名
+
+    .bagid as $bagid | if .total_count > 0 then  .names + [.data[] | select (.name | startswith(\"prefix-\"+$bagid)) |.name] else [] end
+
+    .bagid as $bagid | if .total_count > 0 then .names + [.data[] | select(.name | startswith("prefix-" + $bagid)) | .name] else .names end
 
 # 管道
 

@@ -405,20 +405,6 @@ Example: clean 清除编译文件 这一target 不需要条件。
     f.o: f.c
     g.o: g.c
 
-## prerequisites 前置条件
-
-前置条件通常是一组文件名，之间用空格分隔。 它指定了"目标"是否重新构建的判断标准：
-只要有一个前置文件不存在，或者有过更新（前置文件的last-modification时间戳比目标的时间戳新），"目标"就需要重新构建。
-
-    result.txt: source.txt
-    	cp source.txt result.txt
-
-如果前置条件也是目标的话，也会构建：
-
-    init: 
-        echo init
-    dev: init   #init也是目标
-        echo dev
 
 # 控制语法
 
@@ -541,6 +527,20 @@ patsubst 函数用于模式匹配的替换，格式如下。
 
 # 依赖处理
 
+## prerequisites 前置条件
+
+前置条件通常是一组文件名，之间用空格分隔。 它指定了"目标"是否重新构建的判断标准：
+只要有一个前置文件不存在，或者有过更新（前置文件的last-modification时间戳比目标的时间戳新），"目标"就需要重新构建。
+
+    result.txt: source.txt
+    	cp source.txt result.txt
+
+如果前置条件也是目标的话，也会构建：
+
+    init: 
+        echo init
+    dev: init   #init也是目标
+        echo dev
 ## 忽略目标 .PHONY: test
 
 如果当前目录有文件叫做clean，那么这个命令`make clean`不会执行。因为Make发现clean文件已经存在，就认为没有必要重新构建了

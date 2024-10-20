@@ -141,6 +141,11 @@ say 默认根据系统设置选择英音或美音，你可以手动切换英美�
 
     say -v Daniel "Hello, how are you?"
 
+中文（setting->Accessibility->下载你想要的语音包）
+
+    say -v '?' | ag zh
+    say -v Meijia '你好，这个问题解决了吗? hi'
+
 ## Voice Files Dir
 可以选择其它发音文件，
 所有的下载语音文件都是放在这里的：

@@ -690,7 +690,7 @@ e.g.
 		return wrapper
         # reuturn functools.wraps(func)(wrapper)
 
-或者针对带参数的decorator：
+或者针对带参数的decorator(再加一层)：
 
 	import functools
 
