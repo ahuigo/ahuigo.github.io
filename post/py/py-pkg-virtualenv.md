@@ -11,10 +11,14 @@ python 版本切换:
 
 python pip虚拟环境:
 - virtualenv 提供了 Python 虚拟环境的隔离，但是命令复杂，目录的管理也比较混乱，
-    - VirtualEnvWrapper 基于 virtualenv 的一组扩展, 它提供了更简易的命令和操作。
-- venv, python3 自带，类似于virtualenv
+    - VirtualEnvWrapper(>=python3.8) 基于 virtualenv 的一组扩展, 它提供了更简易的命令和操作。
+    - 支持python3+python2
+- venv, python>=3.3 自带，类似于virtualenv, 但是只支持python>=3.3
     - pyvenv 实际上是 Python 3.x 的一个模块 venv，等价于 python -m venv。
-    - pyvenv 与 pyenv 不一样
+    - pyvenv-virtualenv 是一个插件：
+      - >=python3.3 时它会使用python -m venv if it is available,
+      - 否则使用virtualenv
+    - pyvent-virtualenvwrapper(年久失修)
 
 # pyenv(python版本切换)
 用于管理python
@@ -34,15 +38,17 @@ python pip虚拟环境:
     pyenv-virtualenvwrapper 
 ## 显示当前版本
 
-    pyenv install --list
-    pyenv global
-        > system
-
     > pyenv versions
         * system (set by /home/user/.pyenv/version)
         3.6.4
         3.7.9
         3.8.19
+
+显示安装的版本
+
+    pyenv install --list
+    pyenv global
+        > system
 ### get python path
 
     pyenv which python
@@ -53,9 +59,8 @@ pyenv 会修改环境变量, 通过在 PATH 环境变量的最前面添加一个
     pyenv install 3.6.4
     pyenv install 3.7.9
     > shim 通过./.python-version 指向3.7.9
-    pyenv local 3.7.9
-    pyenv local 3.6.4
-    python3.7
+    pyenv local 3.7.9 # 会写./.python-version
+    pyenv shell 3.6 # 针对会话切换（不会存储）
 
 恢复到没有 pyenv 时的原始环境变量，你可以删除这个 .python-version 文件：
 
@@ -141,38 +146,53 @@ virtualenv是如何创建“独立”的Python运行环境的呢？原理很简�
 ## 参考
 http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432712108300322c61f256c74803b43bfd65c6f8d0d0000
 
-# virtualenvwrapper
-virtualenvwrapper 将所有的虚拟环境目录全都集中起来，比如放到 ~/virtualenvs/，并对不同的虚拟环境使用不同的目录来管理。virtualenvwrapper 正是这样做的。并且，它还省去了每次开启虚拟环境时候的 source 操作，使得虚拟环境更加好用。
+# pyenv-virtualenv
+## install
 
-	pip install virtualenvwrapper
+    # linux
+    git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
 
-不过，在 Mac OS X El Capitan 上可能会出现安装报错的情况，主要问题出在一个叫做 six 的包上。因此安装的时候，可以采用如下方式。
+    # mac
+    brew install pyenv-virtualenv  
 
-	pip install virtualenvwrapper --ignore-installed six
+可选
 
-现在，我们就拥有了一个可以管理虚拟环境的神器。
+    echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
 
-## 使用
-首先，需要对 virtualenvwrapper 进行配置。它需要指定一个环境变量，叫做 WORKON_HOME，并且需要运行一下它的初始化工具 virtualenvwrapper.sh，这个脚本在 /usr/local/bin/ 目录下。WORKON_HOME 就是它将要用来存放各种虚拟环境目录的目录，这里我们可以设置为 ~/.virtualenvs。
+## 创建环境
+### create virtualenv env
+create a virtualenv based on Python 3.8.20 under `$(pyenv root)/versions` in a folder called my-venv38.
 
-	export WORKON_HOME='~/.virtualenvs'
-	source /usr/local/bin/virtualenvwrapper.sh
+    pyenv virtualenv 3.8.20 my-venv38
 
-由于每次都需要执行这两部操作，我们可以将其写入终端的配置文件中。例如，如果使用 bash，则添加到 ~/.bashrc 中；如果使用 zsh，则添加到 ~/.zshrc 中。这样每次启动终端的时候都会自动运行，终端其中之后 virtualenvwrapper 就可以用啦。
+### Create virtualenv from current version
+If there is **only one** argument given to pyenv virtualenv, the virtualenv will be created with the given name based on the current pyenv Python version.
 
-## 创建一个虚拟环境。
-创建spider 的虚拟环境。它被存放在 $WORKON_HOME/spider 目录下。
+    $ pyenv version
+    3.8.20
+    $ pyenv virtualenv venv38
 
-	mkvirtualenv spider
+### List existing virtualenvs
 
-新建虚拟环境之后会自动激活虚拟环境。如果我们平时想要进入某个虚拟环境，可以用下面的命令; workon 后面可是可以支持用 tab 自动补全的哟。
+    $ pyenv shell venv38
+    $ pyenv virtualenvs # 跟pyenv versions 不同，它只展示`.pyenv/versions/x.x.x/envs/*`
 
-	workon spider
+## del环境
+    pyenv uninstall venv38
+    pyenv uninstall my-venv38
 
-退出
+或者删除：
 
-	deactivate
+    l .pyenv/versions/3.8.20/envs/my-venv38 .pyenv/versions/3.8.20/envs/venv38
+    rm -rf .pyenv/versions/3.8.20/envs/my-venv38
+    rm -rf .pyenv/versions/3.8.20/envs/venv38
 
-另外，删除虚拟环境也一样简单。
+## 切换环境
+    pyenv activate venv38
+    pyenv deactivate
 
-	rmvirtualenv spider
+`Perhaps pyenv-virtualenv has not been loaded into your shell properly` 修复方法：
+
+    # ~/.profile
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"

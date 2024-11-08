@@ -4,6 +4,7 @@ date: 2018-10-04
 ---
 # JS webpack sourceMap 结构
 > 参考： http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html
+英文	http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/
 > devtool 中的设置: preference 开启 enable js/css source map
 
 开发者调试代码时，直接调试`*.min.js`太麻烦了， 而是browser 通过`*.min.map`记录找到真正的`源代码`并定位到`出错位置`

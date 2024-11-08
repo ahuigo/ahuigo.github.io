@@ -69,7 +69,6 @@ Note that here string behavior can also be accomplished (reversing the order) vi
 
 	echo 'one two' | tr a-z A-Z
 
-
 ## str2hex
 
     echo -n GET | xxd -p

@@ -52,6 +52,8 @@ show current database
 ## table
 ### list table
     SHOW TABLES FROM <database_name>;
+        SHOW TABLES FROM currentDatabase();
+        SHOW TABLES ;
     SELECT database, name AS table_name, engine, is_replicated FROM system.tables WHERE database = '<database_name>'
 
 ### create table
@@ -66,6 +68,10 @@ drop
 
     DROP TABLE database_name.table_name;
     DROP TABLE table_name;
+
+### show table struct
+    DESCRIBE TABLE test.orders;
+    SHOW CREATE TABLE test.orders;
 
 # dump & restore
 ## dump

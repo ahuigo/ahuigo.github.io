@@ -205,9 +205,11 @@ ruby:
 2. ag 
     1. default: Pcre
     1. -Q --literal: Do not parse PATTERN as a regular expression. Try to match it literally.
+    2. ag　不支持0宽度断言，echo traceId:1233 | ag -o '(?=traceId:)\w+'　
 2. find 同时支持POSIX (`-regex '.*\.txt$'` )正则，以及Wildcard 通配符(`-path '*.txt'`)。
 3. sed 通过`-r` 启用ERE
 4. gawk 默认ERE
+
 
 sed/gsed 默认使用BRE, 也支持ERE. 但是*sed* 不支持`\r\n` 
 

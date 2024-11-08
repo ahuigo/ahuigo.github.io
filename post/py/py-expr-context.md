@@ -57,20 +57,30 @@ If an error is raised in `__init__` or `__enter__` then the code block is never 
         def __del__(self):
             print('__del__', self)
 
-    with CManager() as c:
-        print( 'doing something with c:', c)
-        raise RuntimeError()
-        print ('finished doing something')
-    print('done something')
+    def f():
+        with CManager() as c:
+            for j in range(3):
+                yield j
+            print( 'doing something with c:', c)
+            raise RuntimeError()
+            print ('finished doing something')
+        print("end")
+
+    for i in f():
+        print(i)
 
     """
     # outputs:
     __init__
     __enter__
-    doing something with c: <__main__.CManager object at 0x103fd8ed0>
-    __exit__: <type 'exceptions.RuntimeError'>
-    done something
-    __del__ <__main__.CManager object at 0x10ed77b00>
+    0
+    1
+    2
+    doing something with c: <__main__.CManager object at 
+    0x10430cfb0>
+    __exit__: <class 'RuntimeError'>
+    end
+    __del__ <__main__.CManager object at 0x10430cfb0>
     """
 
 ## Generators contextmanager(enter: next(g), exit: StopIteration)
@@ -80,27 +90,15 @@ Note: 因为只执行一次next, 所以只能用一个yield
     from contextlib import contextmanager
     @contextmanager
     def tag(name):
-        print("<%s>" % name)
+        print("<%s>" % name, end="")
         yield
-        print("</%s>" % name)
+        print("</%s>" % name, end="")
 
     with tag("h1"):
-    print("foo")
+        print("main")
 
     output:
-    <h1>
-    foo
-    </h1>
-
-## check context
-
-    from flask from has_request_context, has_app_context
-    has_request_context()
-
-原理:
-1. __enter__ 把app_ctx=LocalStack() 放到globals.py 中
-2. app_ctx.top in not None 判断当前ctx
-3. __exit__ 中stack.pop 出ctx
+    <h1> foo </h1>
 
 ## context with file
 
@@ -127,7 +125,7 @@ Note: 因为只执行一次next, 所以只能用一个yield
     # Make a lock
     lock = threading.Lock()
 
-    # Old-way to use a lock
+    # 1. Old-way to use a lock
     lock.acquire()
     try:
         print 'Critical section 1'
@@ -136,7 +134,7 @@ Note: 因为只执行一次next, 所以只能用一个yield
         lock.release()
     Better
 
-    # New-way to use a lock
+    # 2. New-way to use a lock
     with lock:
         print 'Critical section 1'
         print 'Critical section 2'

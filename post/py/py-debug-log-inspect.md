@@ -77,7 +77,7 @@ parent file + fileno:
     def Main():
       PrintFrame()                              # for this line
 
-包装一下
+包装一下, 展示caller
 
     def debug_print(*args, mode=None):
       callerframerecord = inspect.stack()[1]    
@@ -88,7 +88,7 @@ parent file + fileno:
       color_end = f"\033[0m"
       print(f'{color_red}{info.filename}:{info.lineno}:{info.function}{color_end}', args)
 
-## inspect source code
+## inspect from source code 
 
     file_name = inspect.getfile(func_foo)
     line_number = inspect.getsourcelines(func_foo)[1]

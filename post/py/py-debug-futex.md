@@ -7,6 +7,7 @@ date: 2018-09-28
 
     sudo strace -p 2583
     futex(0x..., FUTEX_WAIT_PRIVATE, 0, NULL
+
 Futex是一种用户态和内核态混合的同步机制。
 1. 同步的进程间通过mmap共享一段内存，futex变量就位于这段共享 的内存中且操作是原子的，
 2. 当进程尝试进入互斥区或者退出互斥区的时候，先去查看共享内存中的futex变量，
@@ -20,7 +21,7 @@ futex 函数：
 
 这种情况经常出现在：
 1. redis 堵塞
-2. queue 的 get() 是堵塞: 多个线程同时获取queue.get(), 没有获取到的线程就会被get 阻塞
+2. queue 的 get() 是堵塞: 多个线程同时获取queue.get(), 没有获取到的线程就会被get 阻塞
     1. 可以用queue.get(timeout=2)
     1. queue.get() 前，mutex.acquire(1) 加锁+先判断 queue size
 3. RLock().acquire()

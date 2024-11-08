@@ -86,6 +86,10 @@ install下载配置在~/.pip/pip.conf配置文件中写入：
     aiodns==1.1.1
     $ pip3 install -r requirements-dev.txt
 
+## pip freeze
+    pip3 freeze > requirements.txt  # Python3
+    pip freeze > requirements.txt  # Python2
+
 ## pip with user
 使用用户身份安装
 

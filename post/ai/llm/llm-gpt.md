@@ -51,14 +51,6 @@ chatpdf 原理 https://v2ex.com/t/921750 https://www.v2ex.com/t/927940
 和 https://gpt-index.readthedocs.io/en/latest/index.html
 
 # ai体验-平台-应用
-## Ai 体验
-https://cap.chatyy.com
-合租 https://nf.video/
-https://chatgpt123.com/#term-82
-
-## 申请帐号
-GPT4的PLUS会员 https://adaptive-birch-2ff.notion.site/AI-ChatGPT-PLUS-07651a29a7834e57aa938ee78bf743a0
-
 ## 应用
 Ai打游戏：https://github.com/linyiLYi/street-fighter-ai
 awesome aitools: https://github.com/ikaijua/Awesome-AITools/blob/main/README-CN.md 

@@ -24,18 +24,22 @@ jq 参数：
     printf %s '"a\nv"'  | jq 
     printf %s '"a\nv"'  | jq -r
 
-## 随机数据
-
-    jq -ncM 'while(true; .+1) | {method: "POST", body: {"num":("num"+(.|tostring))}}'
-
-    while(true; .+1) 中对.这个变量进行自增
 
 # 控制语句
+## while
+    while(condition; update_command)    
+    jq 'while(.value < 5; .value += 1)|.value' a.json
+
+    jq -ncM 'while(true; .+1) | {method: "POST", body: {"num":("num"+(.|tostring))}}'
+    while(true; .+1) 中对.这个变量进行自增
 ## if else
 
     echo '{"value": 10}' | jq 'if .value > 5 then "greater" else "smaller" end'
 
     echo '{"value": 10}' | jq 'if .value > 5 then "greater" else "smaller" + obj end'
+
+    echo '{"name": "video"}' | jq 'if .name == "video" then true else false end'
+
 
 # 变量
 
@@ -104,6 +108,11 @@ map 转数组：
     echo '{"k1":"v1"}' | jq 'to_entries'
     [ { "key": "k1", "value": "v1" } ]
 
+## 字典
+
+    echo '{"dict":{}}' | jq 'if .dict | length == 0 then true else false end'
+    echo '{"dict":{"a":1}}' | jq '.dict | length == 1 '
+
 ## 数组
 
 ### 数组取值 index
@@ -132,6 +141,14 @@ map 转数组：
 
     jq '.data.users[] | select(.name=="Alex")'
     jq '.data.users[] | select(.name=="Alex") | "name=\(.name) \(.job)"'
+
+### map
+you can tell jq to "collect" all of the answers by wrapping the filter in square brackets:
+
+    # 输出多个值
+    jq '.[] | {message: .commit.message, name: .commit.committer.name}'
+    # 输出数组
+    jq '[.[] | {message: .commit.message, name: .commit.committer.name}]'
 
 ### map merge other jq query
 

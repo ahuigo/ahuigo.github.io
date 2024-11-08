@@ -87,12 +87,25 @@ Lock:
 				lock.release()
 
 
-RLock:
+RLock: 可重入锁
+1. 同一线程多次获取: 同一个线程可以多次获取 RLock 而不会被阻塞。
+2. 计数机制: RLock 维护一个计数器，记录获取锁的次数。每次获取锁时计数器加1，每次释放锁时计数器减1。当计数器为0时，锁才会真正释放。
+
+它允许同一个线程多次获取同一个锁而不会导致死锁
 
     from threading import RLock, Thread
-    lock = Rlock()
-    lock.acquire(block=True)
-    lock.release()
+    rlock = Rlock()
+
+    # 仅限同一线程内多锁多次
+    def recursive_function(n):
+        with rlock:
+            if n > 0:
+                print(f"Recursion level: {n}")
+                recursive_function(n - 1)
+
+    # 改成多线程非阻塞(默认是阻塞)
+    if rlock.acquire(blocking=False):
+        rlock.release()
 
 mutex:
 
@@ -149,7 +162,6 @@ thread.start() 后isAlive为true
     import threading
     import sys
     class ExcThread(threading.Thread):
-
         def __init__(self, target, args = None):
             self.args = args if args else []
             self.target = target
@@ -244,7 +256,7 @@ GIL是Python解释器设计的历史遗留问题，通常我们用的解释器�
 2. 不过，也不用过于担心，Python虽然不能利用多线程实现多核任务，但可以通过多进程实现多核任务。多个Python进程有各自独立的GIL锁，互不影响
 
 # sleep
-sleep 线程级的，只会停止当前线程: 在waiter sleep时，worken继续工作
+sleep 线程级的，只会停止当前线程: 在waiter sleep时，worker继续工作
 
     class worker(Thread):
         def run(self):
@@ -261,11 +273,35 @@ sleep 线程级的，只会停止当前线程: 在waiter sleep时，worken继续
     def run():
         worker().start()
         waiter().start()
+# stop
+## Stop Thread
+https://stackoverflow.com/questions/323972/is-there-any-way-to-kill-a-thread
 
-# Stop Thread
+    import threading
+
+    class StoppableThread(threading.Thread):
+        """Thread class with a stop() method. The thread itself has to check
+        regularly for the stopped() condition."""
+
+        def __init__(self,  *args, **kwargs):
+            super(StoppableThread, self).__init__(*args, **kwargs)
+            self._stop_event = threading.Event()
+
+        def stop(self):
+            self._stop_event.set()
+
+        def stopped(self):
+            return self._stop_event.is_set()
+    t = StoppableThread()
+    t.start()
+    t.stop() # 可选
+    t.join()
+
+## Stop process
 参考：
 https://stackoverflow.com/questions/38857379/stopping-processes-in-threadpool-in-python
 
+    import multiprocessing as mp
     procs = []  # this is not a Pool
     for _ in range(4):
         p = mp.Process(target=some_long_task_from_library, args=(1000,))
@@ -291,7 +327,7 @@ https://stackoverflow.com/questions/38857379/stopping-processes-in-threadpool-in
     t.a = 2;
     threading.current_thread().a
 2. 通过dict[thread_key]
-3. 通过queue
+3. 通过queue (thread safe)
 
 ## 一个线程不安全的case
 因为有些操作的字节码 不是原子性的
