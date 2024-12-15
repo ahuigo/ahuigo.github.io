@@ -79,7 +79,7 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 #export HOMEBREW_CASK_OPTS=/opt/homebrew-cask/Caskroom
 
 
-#git
+######################################## git #############################################
 #sh ~/.git.bash
 
 # git complete
@@ -89,9 +89,6 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 # git command
 alias gitup='git submodule init && git submodule update'
 alias ga.='git add .'
-function lllllllllzrmv(){
-    mv $2 $1;
-}
 
 ###################cicd #####################
 function devops() {
@@ -233,6 +230,12 @@ function ts () {
 
 # app
 export APP_ENV=dev
+
+##################### bun ###########################
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$PATH:$BUN_INSTALL/bin
 
 ###########################deno & fresh######################
 export FRESH_WATCH=1

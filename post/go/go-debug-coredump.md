@@ -3,7 +3,6 @@ title: go dlv
 date: 2020-07-25
 private: true
 ---
-# go dlv 
 # coredump
 ## 产生coredump
 > go-lib/go-debug/coredump

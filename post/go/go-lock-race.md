@@ -5,7 +5,7 @@ date: 2020-07-18
 # golang race 问题
 > 建议使用 go test -race 或　go run -race
 
-## 问题发现的过程
+## string并发case
 字节的同学在[踩坑记： Go 服务灵异 panic](v2ex.com/t/691145)提到，json 序列化字符串经常遇到 nil address:
 
     Error: invalid memory address or nil pointer dereference
@@ -120,3 +120,12 @@ Mutex 性能不够好（ lock does not scale with the number of the processors �
     s.Store(FIRST) 
 
 对于 `*string` 可以改用 atomic.StorePointer
+
+# 并发模型
+1. 通过共享内存:go lock/atomic, 见golib/lock/(sync.once/sync.NewCond广播/atomic)
+2. 通过CSP模型(go channel)
+3. 通过Actor模型
+
+## Actor模型
+- golib/os/chan/actor/actor_test.go
+

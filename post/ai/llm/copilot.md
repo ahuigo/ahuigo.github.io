@@ -5,22 +5,23 @@ private: true
 ---
 # Preface
 - copilot
+- fitten code https://code.fittentech.com/
 - Codeium 作为copilot 的实例替代（替代不了copilot chat）
-- https://about.sourcegraph.com/cody
+- cody: https://about.sourcegraph.com/cody
 - codewhisper (aws)
 
 # vsc copilot
 ## 快捷键 
 vscode 为例(cmd+K cmd+s)
 
+    Ctrl+Cmd+I      toggle copilot chat sidebar
+    Shift+Cmd+I     ask copilot chat
     Tab             接受当前建议
     Esc             取消当前行的建议
     Alt + ]         展示下一个建议
     Alt + [         展示上一条建议
     Ctl + Shift + P  GitHub Copilot 指令命令选择
     Cmd+I           generate copilot code
-    Ctrl+Cmd+I      toggle copilot chat sidebar
-    Shift+Cmd+I     ask copilot chat
     Trigger auto completion
         Alt + \  触发当前行的建议(Trigger inline suggestion)
         Ctrl + Enter 打开GitHub Copilot建议面板

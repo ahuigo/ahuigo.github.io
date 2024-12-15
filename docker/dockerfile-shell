@@ -1,5 +1,6 @@
 From alpine
 #COPY --from=alpine /bin/sh /bin/sh
+RUN echo $(date; echo commit_id: $COMMIT_ID) > a.txt
 RUN echo go build -ldflags=-s -w \
         -X common/types.BuildDate=$(date -I'seconds') 
 ENTRYPOINT [ "sleep", "360000" ]

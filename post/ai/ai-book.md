@@ -24,7 +24,10 @@ date: 2019-01-29
     1. RL部分首推Deepmind的UCL RL课程
     2. RL进阶 Stanford CS294
 
-## lib
+## 语音识别合成 voice recoginzation
+- Whisper: openai 开发的离线语音识别合成
+
+## gui 操作
 - https://pyautogui.readthedocs.io/en/latest/ 完成图像定位、鼠标点击等
 
 # 参考

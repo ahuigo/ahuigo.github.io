@@ -135,6 +135,19 @@ Seq Scan 是全表顺序扫描，一般查询没有索引的表需要全表顺�
 1. Execution time: 0.160 ms 表明了实际的SQL 执行时间，其中不包括查询计划的生成时间
 
 ## Index Scan
+分析一下这个sql　explain：
+
+    explain SELECT count(*) FROM "fail_apis" WHERE return_text != '' AND "monitor_fail_apis"."topic" = 'topic1';
+                                                QUERY PLAN                                              
+    ------------------------------------------------------------------------------------------------------
+    Aggregate  (cost=26190.30..26190.31 rows=1 width=8)
+    ->  Bitmap Heap Scan on fail_apis  (cost=525.09..26188.74 rows=625 width=0)   #2. 再使用位图 Heap Scan 过滤return_text
+            Recheck Cond: (topic = 'topic1'::text)
+            Filter: (return_text <> ''::text)
+            ->  Bitmap Index Scan on idx_fail_apis_topic  (cost=0.00..524.93 rows=24743 width=0) 1. 先使用topic 索引
+                Index Cond: (topic = 'topic1'::text) 
+
+
 Index Scan 是索引扫描，主要用来在WHERE 条件中存在索引列时的扫描，如上面Seq Scan 中的查询如果在st_no 上创建索引，则EXPLAIN 输出如下：
 
     postgres=> explain(ANALYZE,VERBOSE,BUFFERS) select * from class where st_no=2;

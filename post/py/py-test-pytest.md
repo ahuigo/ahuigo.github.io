@@ -83,7 +83,20 @@ example
                             # but not TestMyClass.test_method_simple
     py.test test_mod.py::test_func # only run tests that match the "node ID",
                        # e.g "test_mod.py::test_func" will select only test_func in test_mod.py
+## make test
+    test:
+        python3 -m pytest -s
+        #python3 -m pytest -s path/to/your_test_file.py
 
+    test1:
+        PYTHONPATH=. python tests/test_client.py
+## vscode test
+vscode　默认不会在testMain 入口展示run/debug icon, 需要手动配置
+1. 点左侧功能面板的　试剂瓶(Testing)
+1. 点Configure Python Tests: 选择pytest or unittest
+    1. 选择你的test file 目录
+
+## cli test
 ### test file
 
     pytest test_a.py

@@ -67,6 +67,12 @@ https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-conta
 
     display: flex 
     height: auto
+    .break-words {
+        overflow-wrap: break-word;
+    }
+    .whitespace-break-spaces {
+        white-space: break-spaces;
+    }
 
 其它浏览器hack方法：
 

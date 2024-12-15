@@ -136,6 +136,12 @@ recursive:
 
 # File Api
 
+## stdio:stderr,stdout
+
+    os.Stderr
+    os.Stdout
+    os.Stdin
+
 ## open
 read write trunc
 

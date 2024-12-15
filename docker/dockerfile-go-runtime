@@ -1,0 +1,8 @@
+from golang:1.22-alpine
+# docker build -t go1.22 .
+# cat a.go | docker run --rm -i  go1.22
+WORKDIR /app
+RUN go mod init m
+RUN echo $'cat - > main.go \n\
+go mod tidy && go run .' > /run.sh
+CMD sh /run.sh

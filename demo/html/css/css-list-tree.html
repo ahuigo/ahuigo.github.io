@@ -1,8 +1,4 @@
----
-title: 线css实现 tree views
-date: 2023-01-18
-private: true
----
+<pre>
 # 线css实现 tree views
 > Refer: https://iamkate.com/code/tree-views/
 > note: 不建议使用这种方式，计算calc border/width及偏移非常复杂...通用性极其不强
@@ -15,8 +11,9 @@ private: true
         line-height: 18px; //+2px
     }
 
-```
-<ul class="tree">
+</pre>
+
+<ul class="fresh-menu-tree">
   <li>
     <details open>
       <summary>Giant planets</summary>
@@ -45,12 +42,12 @@ private: true
 </ul>
 
 <style>
-.tree{
+.fresh-menu-tree{
   --spacing : 1.5rem;
   --radius  : 10px;
 }
 
-.tree li{
+.fresh-menu-tree li{
     /*removes the bullet points from list items*/
   display      : block;
   position     : relative;
@@ -59,21 +56,21 @@ private: true
   padding-left : calc(2 * var(--spacing) - var(--radius) - 2px);
 }
 
-.tree ul{
+.fresh-menu-tree ul{
     /*10-1.5*16=-14px*/
   margin-left  : calc(var(--radius) - var(--spacing));
   padding-left : 0;
 }
 
-.tree ul li{
+.fresh-menu-tree ul li{
   border-left : 2px solid #ddd;
 }
 
-.tree ul li:last-child{
+.fresh-menu-tree ul li:last-child{
   border-color : transparent;
 }
 
-.tree ul li::before{
+.fresh-menu-tree ul li::before{
   content      : '';
   display      : block;
   position     : absolute;
@@ -85,26 +82,26 @@ private: true
   border-width : 0 0 2px 2px;
 }
 
-.tree summary{
+.fresh-menu-tree summary{
   display : block;
   cursor  : pointer;
 }
 
-.tree summary::marker,
-.tree summary::-webkit-details-marker{
+.fresh-menu-tree summary::marker,
+.fresh-menu-tree summary::-webkit-details-marker{
   display : none;
 }
 
-.tree summary:focus{
+.fresh-menu-tree summary:focus{
   outline : none;
 }
 
-.tree summary:focus-visible{
+.fresh-menu-tree summary:focus-visible{
   outline : 1px dotted #000;
 }
 
-.tree li::after,
-.tree summary::before{
+.fresh-menu-tree li::after,
+.fresh-menu-tree summary::before{
   content       : '';
   display       : block;
   position      : absolute;
@@ -116,7 +113,7 @@ private: true
   background    : #ddd;
 }
 
-.tree summary::before{
+.fresh-menu-tree summary::before{
   content     : '+';
   z-index     : 1;
   background  : #696;
@@ -125,8 +122,7 @@ private: true
   text-align  : center;
 }
 
-.tree details[open] > summary::before{
+.fresh-menu-tree details[open] > summary::before{
   content : '−';
 }
 </style>
-```

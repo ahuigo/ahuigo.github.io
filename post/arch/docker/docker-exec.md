@@ -8,6 +8,24 @@ date: 2019-08-15
     docker run --name debian -it -d debian bash
     docker exec -it debian bash
 
+## interactive
+     -i, --interactive                    Keep STDIN open even if not attached
+     -t, --tty                            Allocate a pseudo-TTY
+
+## pipeline
+    docker run --rm -i --log-driver=none -a stdin -a stdout -a stderr ...
+    -a, --attach list                    Attach to STDIN, STDOUT or STDERR
+
+for example:
+
+    echo "ahuigo" | docker run --rm -i alpine cat -
+    echo "ahuigo" | docker run --rm -i -a stdout  alpine cat -
+    echo "This was piped into docker" |
+        docker run --rm -i --log-driver=none -a stdin -a stdout -a stderr \
+        alpine cat - | xargs echo This is coming out of docker: 
+
+
+
 # Docker exec 
 ## limit resource
     # 运行一个 Deno 脚本，限制 CPU 使用率为 0.5 核，内存使用为 100m

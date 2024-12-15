@@ -27,6 +27,13 @@ chrome devtool 的source 选项卡(`cmd+6`) 正好提供了这样的功能. 它�
 3. Content scripts: 调用扩展程序的js
 4. snippets: 存放你的code，按`cmd+enter`执行
 
+## Workspace 使用
+在soruce的workspace 中
+1. 选择 Add folder to workspace，然后选择的文件夹。
+2. 进行修改并保存，修改会立即生效
+    1. chrome会自动根据当前页面**加载的资源**映射到workspace(如果映射关联workspace相应的文件, 文件会有一个小绿点)
+    2.  Overrides 中的修改会优先生效。 没有 Overrides 时: Workspace 中的修改会生效。
+
 ## source map
 js-debug-sourcemap.md
 
@@ -144,7 +151,6 @@ console group 用于对log 分组:
 
 	console.group('group1')
 	console.groupEnd();
-
 
 ## console log
 

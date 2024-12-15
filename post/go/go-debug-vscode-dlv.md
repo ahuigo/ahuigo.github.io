@@ -3,6 +3,7 @@ title: Golang： debuging & Live Reload with docker
 date: 2020-04-01
 private: true
 ---
+
 # vscode 单步debug
 配置launch.json
 
@@ -36,7 +37,9 @@ private: true
     > call str
     "hello"
 
-# dlv 命令用法
+# go dlv 
+> 参考: go/dev/comiple-dlv.md
+
 Delve is full featured debugging tool for Go. 
 
     go install github.com/go-delve/delve/cmd/dlv
@@ -55,7 +58,7 @@ Delve is full featured debugging tool for Go.
     trace       Compile and begin tracing program.
     version     Prints version.
 
-### dlv 可执行文件
+## dlv 可执行文件
 想使用delve, 需要编译支持：
 
     # cgo 关闭动态态链接
@@ -70,9 +73,42 @@ Delve is full featured debugging tool for Go.
     dlv --listen=:2345 --headless=true --api-version=2 --log exec ./server
     dlv --listen=:2345 --headless=true --api-version=2 --accept-multiclient exec ./server
 
-### dlv 源文件
+## dlv 源文件
 
+    dlv debug # 默认找本地的package main
     dlv debug --headless --listen=:2345 --api-version=2 --log main.go
+
+case:
+
+    $ dlv debug (所在目录main)
+    (dlv) break main.main
+    (dlv) breakpoints
+    Breakpoint 1 at 0x4bd30a for main.main() /myproj/test_go/src/test.go:8 (0)
+    (dlv) continue
+    > main.main() /myproj/test_go/src/test.go:8 (hits goroutine(1):1 total:1) (PC: 0x4bd30a)
+    (dlv) n
+    (dlv) print config
+
+## dlv expression表达式
+dlv expr: https://github.com/go-delve/delve/blob/master/Documentation/cli/expr.md
+refer: https://chai2010.cn/advanced-go-programming-book/ch3-asm/ch3-09-debug.html
+
+    (dlv) p iface1
+    interface {}(*struct main.astruct) *{A: 1, B: 2}
+    (dlv) p iface2
+    interface {}(*struct string) *"test"
+    (dlv) p err1
+    error(*struct main.astruct) *{A: 1, B: 2}
+    (dlv) p iface1.(*main.astruct).B
+    2
+    # Or just use the special .(data) type assertion:
+    (dlv) p iface1.(data).B
+    2
+
+specify package path
+
+    (dlv) p "some/package".A
+    (dlv) p "some/other/package".A
 
 # dlv in vscode 
 配置：

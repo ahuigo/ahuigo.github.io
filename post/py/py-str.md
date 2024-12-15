@@ -88,6 +88,9 @@ https://realpython.com/python-f-strings/#multiline-f-strings
                 "You are a {profession}. " \
                 "You were in {affiliation}."
 
+#### f-number
+    f"{self.endTime * 1e3:.0f}"
+
 ### string Template
 
     from string import Template

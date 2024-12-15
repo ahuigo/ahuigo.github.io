@@ -39,6 +39,15 @@ When the Java extension fails to start, the first thing to look at is the VS Cod
     Open the command palette (F1)
     select Developer: Toggle Developer Tools
 
-# cpu/mem 占用
-## 进程占用process explorer
+# 性能问题分析
+
+## 查找有问题的插件
+第一种方法，比较准确的方法是使用`> Start Extension Bisect`
+
+    使用二分的方法，每一步选择good/bad,
+
+第二种方法，使用命令`> show running extensions`就能看到正在运行的插件，其中的profile 最大的就可能是有问题的
+
+## main+插件进程cpu/mem 占用
 vscode 按`Cmd+p`,　输入命令`> Open Process Explorer`可查看main+plugin进程占用
+

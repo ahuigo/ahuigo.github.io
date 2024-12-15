@@ -220,7 +220,11 @@ js查看方法：
     .then(async r => console.log(...r.headers)
     .then(async r => console.log(r.headers.get('x-auth-token'))
 
-you can access only following standard headers:
+    res = await fetch()
+    [...res.headers.entries()].map(v=>console.log(v))
+    [...res.headers].map(v=>console.log(v))
+
+跨域名时, you can access only following standard headers:
 
     Cache-Control
     Content-Language

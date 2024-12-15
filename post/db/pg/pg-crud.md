@@ -93,7 +93,18 @@ https://dataedo.com/kb/query/postgresql/list-all-primary-keys-and-their-columns
         ON CONSTRAINT constraint_name
         WHERE predicate
     action:
-        DO UPDATE SET column_1 = EXCLUDED.value_1,v2, .. WHERE condition
+        DO UPDATE SET 
+        id= EXCLUDED.id, # EXCLUDED.id 会自增
+        column_1 = EXCLUDED.value_1,v2, .. WHERE condition
+
+return id(必须使用DO UPDATE): refer golib/db/gorm/curd/insert_update_test.go
+
+    # excluded.id 会自增
+    INSERT INTO "product1" ("code") VALUES ('L1') ON CONFLICT ("code") 
+        DO UPDATE SET id=excluded.id RETURNING "id";
+    # id 不会自增
+    INSERT INTO "product1" ("code") VALUES ('L1') ON CONFLICT ("code") 
+        DO UPDATE SET id=product1.id RETURNING "id";
 
 可以什么都不做时，就不需要target:
 
@@ -731,6 +742,16 @@ indexes):
 ## update
 
     UPDATE ed_names SET c_request = c_request+1 WHERE id = 'x'"
+
+### update return
+	update details set status='pending' where id in (select id from cte) RETURNING *;
+
+### update + select
+
+    WITH cte AS (
+		SELECT id FROM details WHERE status='' LIMIT 1
+	)
+	update details set status='pending' where id in (select id from cte) RETURNING *;
 
 ### update subquery
 

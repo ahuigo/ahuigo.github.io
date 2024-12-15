@@ -42,6 +42,28 @@ private:
 
     $ go run -gcflags=-G=3 ./main.go
 
+## 约束接口参数
+参考type set: https://tonybai.com/2021/04/07/go-generics-use-type-sets-to-remove-type-keyword/
+
+    type MyInterface interface{
+        T1|T2|~T3|T4
+        M1()
+        M2()
+    }
+
+管道符将这些类型连接在一起，共同构成一个union element，该union element的type set为所有这些类型的type set的并集。
+
+    T1、T2、T4、Tn这些仅代表type set仅为自身的类型；
+    ~T3的type set 为所有underlying type为T3的类型，~T3被称为approximation elements;
+
+每个类型都有一个type set。
+
+    非接口类型的类型的type set中仅包含其自身。比如非接口类型T，它的type set中唯一的元素就是它自身：{T}；
+    对于一个普通的、没有type list的普通接口类型来说，它的type set是一个无限集合。所有实现了该接口类型所有方法的类型都是该集合的一个元素，另外由于该接口类型本身也声明了其所有方法，因此接口类型自身也是其Type set的一员。
+    空接口类型interface{}的type set中则是囊括了所有可能的类型；
+    这样一来我们来试试用type set概念重新陈述一下一个类型T实现一个接口类型I：即当类型T是接口类型I的type set的一员时，T便实现了接口I;
+    对于使用嵌入接口类型组合而成的接口类型，其type set就是其所有的嵌入的接口类型的type set的交集。proposal中的举例：type O2 interface{ E1; E2 } ，则02这个接口类型的type set是E1和E2两个接口类型的type set的交集。
+
 ## 约束类型参数
 https://juejin.cn/post/7183613424230727740
 
@@ -65,7 +87,7 @@ https://juejin.cn/post/7183613424230727740
     Add("a","b")
 
 ## 约束constraint（底层类型约束）
-定义 constraint 的时候支持一种特殊的语法
+定义 constraint 的时候支持一种特殊的语法(参考#约束接口参数)
 
     type Float interface {
     	~float32 | ~float64
@@ -150,6 +172,17 @@ https://juejin.cn/post/7183613424230727740
         }
       }
       return -1
+    }
+
+### 整数类型约束
+
+    // int/int8/int32/int64/uint/...
+    func Scale[E constraints.Integer](s []E, c E) []E {
+        r := make([]E, len(s))
+        for i, v := range s {
+            r[i] = v * c
+        }
+        return r
     }
 
 ## 总结

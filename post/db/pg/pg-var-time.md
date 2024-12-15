@@ -135,3 +135,5 @@ info
 ### compare delta time
 
     where exittime - entrytime > interval '1 hour';
+    WHERE now()- updated_at > interval '5 minutes';"
+    where age(now(),updated_at) < interval '22 days';

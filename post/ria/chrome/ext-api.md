@@ -5,28 +5,6 @@ category: blog
 private:
 description: 
 ---
-# Load Extension
-Extension that you download from web store is packaged up as `.crx`. For development, chrome gives a quick way to loading up your working directory for testing
-
-1. Visit `chrome://extensions`
-2. Ensure that the `Developer mode`
-3. Click `Load unpacked extension`
-
-## Storage Location for Packed Extensions
-Navigate to chrome://version/ and look for **Profile Path**, it is your default directory where all the `extensions, apps, themes` are stored.
-
-    # Mac OSX
-    ~/Library/Application\ Support/Google/Chrome/Default/Extensions
-
-# debug
-Right click `inspect popup`
-Right click `inspect view`
-https://developer.chrome.com/extensions/tut_debugging
-
-- 重新cmd+r 加载extension, 清除缓存、dns、重启浏览器..
-- 其它插件的干扰，如`Go Agent`
-- 使用`incognito` 模式
-
 # API
 https://developer.chrome.com/extensions/api_index
 

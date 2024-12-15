@@ -63,3 +63,26 @@ A service worker that lives at `example.com/my-pwa/sw.js` can control any naviga
 1. 去`chrome://inspect/#service-workers` 查看
 2. F12, 切换到`Application->service workers`.
 3. 在networks 中看, 仅当首次注册加载才能看到网络请求，否则会有缓存
+
+## service workers缓存
+> 参考：jslib/pwa-demo/simple-service-worker/
+
+example:
+
+    // 添加缓存
+    const putInCache = async (request, response) => {
+        const cache = await caches.open('v1');
+        await cache.put(request, response);
+    };
+    // 获取缓存
+    const responseFromCache = await caches.match(request);
+    window.caches.open("v1").then((cache) => {
+        return cache.match("/list");
+    });
+
+批量添加
+
+    const addResourcesToCache = async (resources) => {
+        const cache = await caches.open('v1');
+        await cache.addAll(resources);// 自动使用response.url作为key
+    };

@@ -30,6 +30,23 @@ private: true
     FROM access_log
     WHERE client_ip = inet '192.168.100.23';
 
+## partial where
+    db.Exec("CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_name ON users (name) WHERE name!=''").Error
+    db.Exec("CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_name ON users (name) WHERE name IS NOT NULL").Error
+
+gorm:
+
+    Name2 string `gorm:"index:idx_name,unique"`
+    Name3 string `gorm:"index:,sort:desc,collate:utf8,type:btree,length:10,where:name3 != 'jinzhu'"`
+    Name4 string `gorm:"uniqueIndex"`
+    Age   int64  `gorm:"index:,class:FULLTEXT,comment:hello \\, world,where:age > 10"`
+    Age2  int64  `gorm:"index:,expression:ABS(age)"`
+
+Note:
+
+    CONCURRENTLY：这是一个选项，
+        用于在创建索引时允许其他操作（如插入、更新、删除）继续进行。它减少了锁定表的时间，从而减少了对数据库正常操作的影响。
+
 ## partial enum
 
     "idx_status" btree (status) WHERE status = ANY(ARRAY['started'::text, 'running'::text])

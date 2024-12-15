@@ -47,3 +47,5 @@
 	rebase = false
 [commit]
 	template = ~/.git_template/gitmessage
+[http]
+	postBuffer = 157286400

@@ -260,7 +260,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
 [对齐弹性容器中的弹性项目](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container#%E8%BD%B4%E5%AF%B9%E9%BD%90%E5%86%85%E5%AE%B9%E2%80%94%E2%80%94_align-content%E5%B1%9E%E6%80%A7)
 
 ## flex 被子div 放大
-### flex item(min-width:auto)阻止flex-shrink 缩小
+### flex item(min-width:auto) 会阻止flex-shrink 缩小
 另外，如果是pre 还有设置成wrap
 
     .flex-item {
@@ -272,7 +272,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
         white-space: pre-wrap; /* 让内容在需要的时候换行 */
     }
 
-### inline-flex 让container 承子元素child放大
+### inline-flex 让container 被子元素child放大
 
     .container{
         flex: 1 1;

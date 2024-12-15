@@ -236,7 +236,7 @@ ARG/ENV 都可以在build 阶段定义和使用, 不同点：
     RUN echo "name: $name"
     RUN echo "name: ${name}"
 
-ARG 改变ENV
+用ARG 改变ENV
 
     ARG arg1=arg1
     ENV env1=${arg1} env2=env2
@@ -425,6 +425,26 @@ ENTRYPOINT has two forms:
 
     ENTRYPOINT ["executable", "param1", "param2"] (exec form, preferred)
     ENTRYPOINT command param1 param2 (shell form)
+
+### dockerfile heredoc 语法
+组合多行命令不需要用反斜线：
+
+    RUN <<EOF
+        apt-get update
+        apt-get upgrade -y
+        apt-get install -y ...
+    EOF
+
+    RUN <<EOF
+        echo "Hello" >> /hello
+        echo "World!" >> /hello
+    EOF
+
+或者用反斜线:
+
+    RUN echo $'rm /tmp/* \n\
+        go run main.go \n\
+        ' > /run.sh
 
 ### 开始build
 
