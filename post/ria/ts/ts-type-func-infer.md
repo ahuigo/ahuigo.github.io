@@ -161,3 +161,6 @@ https://stackoverflow.com/questions/36015691/obtaining-the-return-type-of-a-func
     type T11 = ReturnType<(s: string) => void>;  // void
     type T12 = ReturnType<(<T>() => T)>;  // {}
     type T13 = ReturnType<(<T extends U, U extends number[]>() => T)>;  // number[]
+## Awaited 获取Promise的类型
+
+    Awaited<ReturnType<typeof funName>>

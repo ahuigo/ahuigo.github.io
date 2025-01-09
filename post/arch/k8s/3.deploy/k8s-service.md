@@ -119,3 +119,40 @@ Minikube 可模拟一个负载均衡器(没有真正的外部负载均衡器，�
       - port: 4501        # Service 对外暴露的端口, 
         targetPort: 4500  # service流量转发到的 Pod 上的端口
         nodePort: 30080  # 不写就随机分配的一个在 30000-32767的node端口。端口流量会被转发到 targetPort 上
+
+
+# apisix
+一般应用会用apisix 绑定域名
+
+```
+    apiVersion: apisix.apache.org/v2
+    kind: ApisixRoute
+    metadata:
+      name: ginapp
+      labels:
+        app: ginapp
+        app.kubernetes.io/name: ginapp
+        app.kubernetes.io/instance: ginapp
+    spec:
+      http:
+      - name: ginapp
+        backends:
+        - serviceName: ginapp
+          servicePort: 4500
+        match:
+          hosts:
+          - ginapp.com
+          paths:
+          - "/*"
+    ---
+    apiVersion: apisix.apache.org/v2beta3
+    kind: ApisixTls
+    metadata:
+      name: ginapp
+    spec:
+      hosts:
+      - ginapp.com
+      secret:
+        name: xxxxxxxxxxxxxxxxxx
+        namespace: prod
+```

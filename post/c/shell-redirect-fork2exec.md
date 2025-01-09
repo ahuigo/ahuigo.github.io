@@ -68,13 +68,11 @@ with tty(screen)
     deno completions zsh > "$ZSH_CACHE_DIR/completions/_deno"
 
 ### 叠加重定
+`>&` 让stdout+err叠加到别的文件 下面的语法全等价, 都是重定向err+stdout到a.txt
 
-`>&` `&>`让stdout+err叠加到别的文件 下面的语法全等价, 都是重定向err+stdout到a.txt
-
-    >& a.txt
-    &> a.txt
+    # sh 不支持
+    >& a.txt # 等价于 2>&1 > a.txt 
     >&a.txt
-    &>a.txt
     # 可以记忆为`&` 代表err,  `>`代表stdtout
 
     lsof -p 1134
@@ -82,11 +80,16 @@ with tty(screen)
     1w     REG    t.txt
     2w     REG    t.txt
 
+`&>` 解析为　`&`后台执行，再跟一个`>` 定向
+
+    &> a.txt  # 相当于 ./run >a.txt &
+    &>a.txt
+
 追加`&>>`　定向
 
     $ date1 &>> build-info
 
-独立的`>&`,`>`都是非法的, 因为必须要指定定向的文件，`>&1`是重复叠加1指向的文件（重复输出） `2>&2`, `num2>&num1` 同理
+独立不带文件的`>&`,`>`都是非法的, 因为必须要指定定向的文件，`>&1`是重复叠加1指向的文件（重复输出） `2>&2`, `num2>&num1` 同理
 
     go run err.go >&1 | wc -l
 

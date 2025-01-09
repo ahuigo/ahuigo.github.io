@@ -7,8 +7,8 @@ private: true
 1. deno/v8 isolate: jslib/pwa-demo/js-worker/isolate/readme.md
 2. go docker: https://github.com/openfaas/faas?
 
-## run python
-### python exec
+# eval python
+## python exec/eval
 ```python
 code = '''
 def main(a,b):
@@ -22,7 +22,7 @@ add = eval('main')
 print(add(1, 2))
 print(f,add)
 ```
-### deno run python(native)
+## deno run python(native)
 deno run -A --unstable test.ts
 
     import { python } from "https://deno.land/x/python/mod.ts";
@@ -33,15 +33,17 @@ deno run -A --unstable test.ts
     plt.plot(xpoints, ypoints);
     plt.show();
 
-### deno/v8 wasm for python(Pyodide)
+## deno/v8 wasm for python(Pyodide)
 https://pythondev.readthedocs.io/wasm.html
 - [x] pyodide browser
 - [] pyodide deno(WIP, https://github.com/pyodide/pyodide/issues/3420)
 
-## js exec
+# eval js
+## via js's exec
 refer to:
 - post/ria/js-func-eval.md
 
+## via js worker
 ### resource limit
 Besides using the container as sugessted in comments:
 
@@ -53,3 +55,22 @@ Besides using the container as sugessted in comments:
 e.g.:
 
     deno run --v8-flags='--max-heap-size=50,--max-old-space-size=50' a.ts
+
+
+### golang run js
+   "github.com/robertkrimen/otto"
+    vm := otto.New()
+    vm.Set("def", 11)
+    vm.Run(`
+        abc = 2 + def;
+        console.log("The value of abc is " + abc); // 4
+    `)
+
+    if value, err := vm.Get("abc"); err == nil {
+        if value_int, err := value.ToInteger(); err == nil {
+            fmt.Printf("", value_int, err)
+        }
+    }
+
+# eval golang
+## via goval
