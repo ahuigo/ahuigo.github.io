@@ -272,6 +272,17 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
         white-space: pre-wrap; /* 让内容在需要的时候换行 */
     }
 
+防止item 把container 撑大（允许flex-shrink生效），就加 min-w-0
+
+    <div className="flex flex-row">
+      <div className="sticky min-h-screen flex">
+        <LeftMenu />
+      </div>
+      <div className="flex flex-1 min-w-0">
+        <Outlet />
+      </div>
+    </div>
+
 ### inline-flex 让container 被子元素child放大
 
     .container{
@@ -283,7 +294,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
         <div></div>
     </div>
 
-如果不生效，检查一下parent的
+如果不生效，检查一下parent的:
 Priority: `min-width`>`max-width`>`flex-basis(not content)`>`width`>`flex-basis:max-content`
 
 #### flex-shrink:0 影响放大

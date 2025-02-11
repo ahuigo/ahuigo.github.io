@@ -42,6 +42,14 @@ private:
     // covert text[] to integer[]
     SELECT ARRAY(SELECT CAST(unnest(array['200','301']::text[]) AS integer));
 
+### array replace
+
+    UPDATE t1 SET pathnames = (
+        SELECT array_agg(replace(unnest, '%', '*')) FROM unnest(pathnames)
+    );
+    select id,(
+        select array_agg(replace(unnest, '%', '*')) FROM unnest(pathnames) 
+    ) from t1;
 
 
 ## empty array

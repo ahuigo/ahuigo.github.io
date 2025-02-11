@@ -34,4 +34,4 @@ private: true
 
 ## where regex
     
-    select * from xx where name ~ '^\w{2}$'
+    select * from xx where name ~ '^\w{2}$' and name NOT in ('name1','name2')

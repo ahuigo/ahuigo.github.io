@@ -28,3 +28,17 @@ vscode 为例(cmd+K cmd+s)
         ctrl+/  accept panel suggestion
 
 另外，在copilot chat 中按 `Up/Down` 键，可以切换历史输入
+# 配置
+## 上下文管理
+Copilot 现在也可以在对话中通过#添加其他文件来作为上下了
+
+## instructions
+https://docs.github.com/zh/copilot/customizing-copilot/adding-custom-instructions-for-github-copilot
+创建名为 .github/copilot-instructions.md 的文件。
+以 Markdown 格式在该文件中添加自然语言说明。
+
+    We use Bazel for managing our Java dependencies, not Maven, so when talking about Java packages, always give me instructions and code samples that use Bazel.
+
+    We always write JavaScript with double quotes and tabs for indentation, so when your responses include JavaScript code, please follow those conventions.
+
+    Our team uses Jira for tracking items of work.

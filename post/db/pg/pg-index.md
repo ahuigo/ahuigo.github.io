@@ -107,7 +107,7 @@ add index(recommended)
     CREATE UNIQUE INDEX idx_group_name ON project (project_group_id, name);
     Drop INDEX index_name
 
-add constraint (属于表的一部分，所以要用alter table)
+add constraint (属于表的一部分，所以要用alter table) 约束本身会附带索引
 
     \h alter table
     alter table t add UNIQUE(name,id);

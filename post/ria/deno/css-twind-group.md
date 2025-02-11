@@ -5,13 +5,19 @@ private: true
 ---
 # class on parent(trigger by self)
 ## space between
-    space-y-1 
+space-y-4 :
+
     .space-y-4 > :not([hidden]) ~ :not([hidden]) {
         margin-top: 1rem;
         margin-bottom: 1rem;
     }
 
 ### tailwind >=3.1
+改变**所有子元素**的样式:
+
+    class="*:p-4"
+        .\*\:p-4 > * {}
+
 作用在**子元素hover**, 改变**所有子元素**的样式:
 
     <div class="[&>*:hover]:p-4"> </div>

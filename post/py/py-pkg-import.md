@@ -156,6 +156,10 @@ python安装路径: sys.prefix
 
 ### find package path
 
+    python -m site
+
+or:
+
 	import a_module
 	print a_module.__file__
 
