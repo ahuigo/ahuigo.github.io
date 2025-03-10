@@ -1,3 +1,19 @@
+元音	单元音	前元音	/iː/	/ɪ/	/e/	/æ/	 
+中元音	 	/ɜː/	/ə/	/ʌ/	
+后元音	/uː/	/ʊ/	/ɔː/	/ɒ/	/ɑː/
+双元音	开合双元音	/eɪ/	/aɪ/	/ɔɪ/	/aʊ/	/əʊ/
+集中双元音	/ɪə/	/eə/	/ʊə/	 	 
+辅音	爆破音	清辅音	/p/	/t/	/k/	 	 
+浊辅音	/b/	/d/	/ɡ/	 	 
+摩擦音	清辅音	/f/	/s/	/ʃ/	/θ/	/h/
+浊辅音	/v/	/z/	/ʒ/	/ð/	/r/
+破擦音	清辅音	/tʃ/	/tr/	/ts/	 	 
+浊辅音	/dʒ/	/dr/	/dz/	 	 
+鼻音	（浊辅音）	/m/	/n/	/ŋ/	 	 
+舌则音	（浊辅音）	/l/	 	 	 	 
+半元音	（浊辅音）	/j/	/w/	
+
+# ed
 https://www.bilibili.com/video/BV1f541157rH/?spm_id_from=333.1007.top_right_bar_window_history.content.click&vd_source=c19c4980a244fedcc729762ff654bbc9
 
 1. rule1: ed前是清音(unvoiced)，发清音/t/，注意是轻读(light release)。 e.g.: worked, stuffed, missed, watched (01:22)
@@ -26,3 +42,12 @@ e.g.
 4. 其它
 helped you /helpt juː/ -> /help tʃjuː/ (12:18)
 missed you /mis tʃjuː/ (12:45)
+
+# t
+
+前后都是元音:t变d    look at him /luk ədim / , looks at him /luk sədim/ or /luk sædəm /
+前辅后元:变d   looked at tim /luktədim / -> /luk dədim / 
+前后都辅音:省略t   looked at him /luktədim / -> /luk dədim /
+                
+后是辅音(快读)省略t    - worked a lot /wɜːrk də lɑːt/ (t变d) (06:28)
+
