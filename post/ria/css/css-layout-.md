@@ -20,6 +20,11 @@ description:
 1. table 容器
 1. inline-[block|flex|...] 行内级
 
+## padding
+
+    padding-block: vertical <top, bottom>
+    padding-inline: horizontal <left, right>
+    padding: padding-block padding-inline
 
 ## box
 box 的 horizonal 水平居中

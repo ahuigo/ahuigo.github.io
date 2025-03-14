@@ -30,6 +30,13 @@ space-y-4 :
         .\[\&\>\*\]\:hover\:p-4:hover>* { }
     <div class="[&>p]:hover:mt-0 ">...</div>
 
+注意：以下的 `&>` 与`&_`不同，　后者是孙子节点
+
+    [&>.ant-pro-card-body]:[padding-block:4px]
+        [&>.ant-pro-card-body]:[padding-block:4px]>.ant-pro-card-body{}
+    [&_.ant-pro-card-body]:[padding-block:4px]
+        [&>.ant-pro-card-body]:[padding-block:4px] .ant-pro-card-body{}
+
 ## via plugin
 in tailwind.config.js, demo: https://play.tailwindcss.com/h7eDGStsE9?file=config
 

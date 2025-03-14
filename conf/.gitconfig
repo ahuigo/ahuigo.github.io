@@ -49,3 +49,5 @@
 	template = ~/.git_template/gitmessage
 [http]
 	postBuffer = 157286400
+[rebase]
+	reapplyCherry = true

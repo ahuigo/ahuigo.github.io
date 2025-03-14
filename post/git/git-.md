@@ -143,6 +143,18 @@ if 401
 
 	git clone https://username@github.com/org/project.git
 
+## mirror
+Use github 国内镜像: https://www.google.com/search?q=github+2025%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F
+
+	git config --global url."https://bgithub.xyz/".insteadOf "https://github.com/"
+
+Replace git:// with https://
+
+	git config --global url."https://github".insteadOf git://github
+
+Use ssh instead of https://
+
+	git config --global url."git@github.com:".insteadOf "https://github.com/"
 
 ## export repo sub folder
 This creates an empty repository with your remote, and fetches `-f` all objects but doesn't check them out. 

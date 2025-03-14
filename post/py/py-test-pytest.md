@@ -90,11 +90,24 @@ example
 
     test1:
         PYTHONPATH=. python tests/test_client.py
+        python ./tests/test_client.py # 只会把./tests 加入sys.path
+
 ## vscode test
 vscode　默认不会在testMain 入口展示run/debug icon, 需要手动配置
 1. 点左侧功能面板的　试剂瓶(Testing)
 1. 点Configure Python Tests: 选择pytest or unittest
     1. 选择你的test file 目录
+
+注意配置pytest directory:
+
+    "python.testing.pytestEnabled": true,
+    "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python",
+
+    "python.testing.pytestPath": "${workspaceFolder}/venv/bin/pytest",
+    "python.testing.autoTestDiscoverOnSaveEnabled": true
+
+或手动配置debug启动器 .vscode/launch.json 参考　vsc-python.md
+
 
 ## cli test
 ### test file
@@ -102,8 +115,12 @@ vscode　默认不会在testMain 入口展示run/debug icon, 需要手动配置
     pytest test_a.py
 
 ### verbose output
-    pytest -s
-    -s is equivalent to --capture=no
+    pytest -s -v
+        -s is equivalent to --capture=no
+        -v, --verbose
+    pytest -v               # increase verbosity, display individual test names
+    pytest -vv              # more verbose, display more details from the test output
+    pytest -vvv             # not a standard , but may be used for even more detail in certain setups
 
 ### output
 

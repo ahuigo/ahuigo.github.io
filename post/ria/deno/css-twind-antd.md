@@ -21,3 +21,39 @@ private: true
         preflight: false
       }
     }
+
+# modify antd css
+## via styled component
+https://juejin.cn/post/7239714997710356537
+
+    import styled from 'styled-components'
+    import {Select} from 'antd'
+
+    const StyledSelect = styled(Select)`
+        .ant-select-selector {
+            // write your style
+        }
+    `
+    const Button = styled.a<{ $primary?: boolean; }>`
+        --accent-color: white;
+        &>button {
+            background-color: ${props => props.$primary ? 'var(--accent-color)' : css`....`};
+        }
+        &:hover {
+            filter: brightness(0.85);
+        }`
+
+## ProCard 
+
+      <ProCard
+        size="small"
+        className='text-left p-0 m-0 [&>.ant-pro-card-body]:[padding:0px]'
+        bodyStyle={{ padding: 0 }}
+        headStyle={{ padding: 0 }}
+      >
+
+## Tablist
+    <Tabs
+        defaultActiveKey="body"
+        className='[&_.ant-tabs-nav]:mb-0'
+    >

@@ -69,7 +69,7 @@ prompt = f"""
 
 实际解决方案和步骤：
 """
-# 破解
+# 破解deepseek prompt
 > https://baoyu.io/blog/crack-deepseek-r1-prompts
 教你如何破解 DeepSeek R1 系统提示词:
     加上一段文本，模拟它自己在思考，并且思考后决定回复，就像下面这样：

@@ -3,8 +3,8 @@ title: 量化
 date: 2018-09-27
 ---
 # 量化
-book
-https://www.zhihu.com/question/26594258
+book: https://www.zhihu.com/question/26594258
+做了一个支持多策略的全球市场投资交易提醒工具 https://www.v2ex.com/t/1031232#reply146
 
 ## 套利
 OK期货/huobi波动价差。

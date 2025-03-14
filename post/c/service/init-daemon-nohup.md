@@ -51,7 +51,7 @@ background job:
 
 大部分linux 这个参数默认关闭（off）。因此，session 退出的时候，不会把SIGHUP信号发给"后台任务"。所以，一般来说，"后台任务"不会随着 session 一起退出。
 
-## disown(忘记nohup)
+## disown(忘记nohup, forget nohup)
 因为有的系统的huponexit参数可能是打开的（on）。
 更保险的方法是使用disown命令。它可以将指定任务从"后台任务"列表（jobs命令的返回结果）之中移除。一个"后台任务"只要不在这个列表之中，`session 就肯定不会向它发出SIGHUP信号`。 
 

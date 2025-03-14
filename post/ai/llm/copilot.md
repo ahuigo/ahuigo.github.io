@@ -29,6 +29,14 @@ vscode 为例(cmd+K cmd+s)
 
 另外，在copilot chat 中按 `Up/Down` 键，可以切换历史输入
 # 配置
+## agent mode
+开启： https://techcommunity.microsoft.com/blog/educatordeveloperblog/use-github-copilot-agent-mode-to-create-a-copilot-chat-application-in-5-minutes/4375689
+
+    vscode >= 1.98
+    cmd+, 打开 chat agent
+
+https://www.youtube.com/watch?v=KSxUr0BU9ig
+
 ## 上下文管理
 Copilot 现在也可以在对话中通过#添加其他文件来作为上下了
 

@@ -82,6 +82,13 @@ https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-conta
     white-space: -o-pre-wrap; /* Opera 7 */    
     word-wrap: break-word; /* Internet Explorer 5.5+ */
 
+tailwindcss 
+
+    whitespace-normal break-words break-all
+    whitespace-normal {
+        white-space: normal;
+    }
+
 示例:
 https://stackoverflow.com/questions/64699828/css-property-white-space-example-for-break-spaces
 

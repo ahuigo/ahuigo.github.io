@@ -7,6 +7,30 @@ private: true
 > Refer　to：https://juejin.cn/post/6902291855782707214 @xxholly32 
 > https://www.tailwindcss.cn/docs/functions-and-directives
 
+## 常用的class
+
+    py-<number>
+        padding-block: calc(var(--spacing) * <number>);
+    py-px
+        padding-block: 1px;
+    py-(<custom-property>)
+        padding-block: var(<custom-property>);
+    py-[<value>]
+        padding-block: <value>;
+
+    ps-<number>
+        padding-inline-start: calc(var(--spacing) * <number>);
+    ps-px
+        padding-inline-start: 1px;
+    pe-px
+        padding-inline-end: 1px;
+    pe-(<custom-property>)
+        padding-inline-end: var(<custom-property>);
+    pe-[<value>]
+        padding-inline-end: <value>;
+
+
+
 ## @apply
 实现类的组合复用, 参考　https://tailwindcss.com/docs/reusing-styles#extracting-classes-with-apply　我们扩展一下`@layer components`
 

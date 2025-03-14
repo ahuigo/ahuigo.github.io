@@ -23,6 +23,7 @@ export LANG='en_US.UTF-8'
 export CLICOLOR="xterm-color"
 #$(pyenv root)/shims:
 export GNUTERM=qt
+set +x
 export PS1="%m:%~%$ 🌈 🏂 🏡  🌤️  🔥📌👋❌✅" # host
 #export PS1="$(hostname -I | cut -d' ' -f1):%~%$ " # ip
 #export PS1="$(hostname -I | cut -d' ' -f1):%~%$ $(git_prompt_info) "$'\n> '
@@ -42,7 +43,9 @@ alias gpass='openssl rand -base64 10'
 alias cp='cp -i'
 alias svnst='svn st'
 alias l='ls -lah'
-alias code1=~/'Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+#alias code1=~/'Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+alias code1=/'Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+alias code='/Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code'
 alias code.='code .'
 jc () {
         j ${1} && code .

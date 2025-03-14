@@ -232,6 +232,11 @@ https://apple.stackexchange.com/questions/89981/remapping-keys-in-iterm2
 
 ![](/img/shell/keyboard/iterm-keys-map.png)
 
+#### ubuntu ctrl+u
+
+    echo 'bindkey \^U backward-kill-line' >> ~/.zshrc
+
+
 
 ## iterm2 快捷键
 1. 自用按键

@@ -135,6 +135,8 @@ example:
 
     $ sed '2c Sth. else' a.txt
     $ sed '/my/c Sth. else' a.txt # ignore the space after c
+        不能用$ sed '#my#c Sth. else' a.txt 
+    $ sed 's/^host=.*/host="2"/'
 
 ## d删除
 
@@ -156,7 +158,22 @@ example:
     $ sed '/from pattern/,/to pattern/d'
     $ sed '/from pattern/,+3d' //使用相对位置
     $ sed '1!p' //对行范围取反 除开第1行
-    $ sed '2,$!p' //对行范围取反 仅限第1行
+    $ sed '2,$!p' //对行范围取 仅限第1行
+
+
+## 替换某一个section (toml有用)
+> 因执行 N 命令时，它会将下一行添加到模式空间中，。所以模式空间变成了多行文本, 用换行符`\n`连接.
+以下是一个sed命令，它可以找到以`^[start]$`开头、以`^[end]$`结尾的段落，并将其中所有的"hostx"替换为"host"：
+
+    sed '
+    /^\[start\]$/ {
+        :collect
+        N
+        /\n\[end\]$/! {
+            b collect
+        }
+        s/\nhost=.*/\nhost=2/g
+    }' a.txt
 
 # Multi Command, 命令打包
 

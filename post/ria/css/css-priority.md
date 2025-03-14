@@ -9,6 +9,8 @@ private: true
 
     1. inner style
     2. ID 选择器（例如，#example）
+    5. 组合类选择器优先级高
+        `.a.b .c{}` 高于　`.a .c{}`
     3. 类选择器 (例如，.example)，属性选择器（例如，[type="radio"]）和伪类（例如，:hover）
     4. 类型选择器（例如，h1）和伪元素（例如，::before）
     
