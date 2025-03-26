@@ -101,3 +101,9 @@ pnpm will use `./.npmrc` and `~/.npmrc`
     pnpm config set registry https://registry.npmjs.org/
     pnpm config delete registry
     pnpm config get registry
+
+with password:
+
+    pnpm config set @mygroup:registry https://artifactory.x.com/artifactory/api/npm/ \
+    pnpm config set https://artifactory.x.com/artifactory/api/npm/:username=xxx \
+    pnpm config set https://artifactory.x.com/artifactory/api/npm/:_password=xxx

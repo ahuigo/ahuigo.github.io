@@ -34,6 +34,10 @@ Open Prompt :https://v2ex.com/t/934197
 
 - base llm和rlhf人类反馈强化学习
 
+# 提示词
+17岁高中生写了个神级Prompt，直接把Claude强化成了满血o1。
+    https://mp.weixin.qq.com/s/IAKD0FfcYehs5FsDkLbTJQ
+
 # ai体验-平台-应用
 ## API 平台
 1. https://docs.fal.ai/

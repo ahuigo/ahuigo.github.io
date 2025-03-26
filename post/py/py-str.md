@@ -66,6 +66,8 @@ https://realpython.com/python-f-strings/#multiline-f-strings
 
 > %r displays the "raw" data
 
+### r-string
+    b=r'''a{a}\nb'''
 ### f-string
     x=1; user={'name':'ahui'};
     f'x={x}, user["name"]={user["name"]}, id(user)={id(user)}'
@@ -91,6 +93,11 @@ https://realpython.com/python-f-strings/#multiline-f-strings
 #### f-number
     f"{self.endTime * 1e3:.0f}"
 
+### rf-string
+会转义字符串`\n`，不会引用　`{}`
+
+    a=1
+    a=rf'''a{a}\nb'''
 ### string Template
 
     from string import Template
