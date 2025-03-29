@@ -46,8 +46,9 @@ https://docs.github.com/zh/copilot/customizing-copilot/adding-custom-instruction
 
 `cmd+, :  copilot instruction` 可看到有几种:
 - instruction file: `.github/copilot-instructions.md` 的文件。
-- Prompt files(预览): `.github/prompts/*.md`
+- Prompt files(预览): `.github/prompts/*.prompt.md`
     - 用途: 分割成多个提示词文件, 方便链接到其它提示文件作为依赖(复用)
+    - 使用: 在chat中通过附件手动引用(非全局的)
 
 ### instruct file
 创建名为 `.github/copilot-instructions.md` 的文件。
@@ -76,6 +77,21 @@ https://docs.github.com/zh/copilot/customizing-copilot/adding-custom-instruction
     Answer all questions in less than 1000 characters, and words of no more than 12 characters.
 
 ### prompt files 示例
+1. 启用: cmd+shift+p: `Open Workspace Settings (JSON)`
+    1. settings.json 文件中，添加 "chat.promptFiles": true 以启用 .github/prompts 文件夹作为提示文件的位置
+2. 创建:
+    1. cmd+shift+p: “Chat: Create Prompt”
+    2. 输入unittest, 编辑`.github/prompts/apitest.prompt.md`
+        1. 可使用link `[link](url)` 或`#file:../../web/index.ts` 引用工作区其它文件.  路径是相对于提示文件的
+3. 使用prompt files:
+    1. Copilot Chat 视图底部，单击“Attach context”附件图标 
+    2. 单击“Prompt...”并选择要使用的提示文件: `apitest.prompt.md`
+
+`apitest.prompt.md`
+
+    你的目标是生成api test 代码, 要求:
+    - 使用goitest 进行测试, 参考 #file:../../server/task_test.go
+
 `New React form.prompt.md` - 包含有关使用 React 生成窗体的可重用任务的说明。
 
     Your goal is to generate a new React form component.
