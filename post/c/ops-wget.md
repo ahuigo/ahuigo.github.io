@@ -47,6 +47,12 @@ Example: Dump Site
 ## header
 
     wget --header='User-Agent: Chrome/68.0.97' ahuigo.com -O index
+    wget --header 'User-Agent: Chrome/68.0.97' ahuigo.com -O index
+
+注意wget 不支持curl 的参数:
+
+    -b 'token=123'
+    -H 'Content-Type: xxx'
 
 ## output log
 

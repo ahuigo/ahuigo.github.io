@@ -47,12 +47,6 @@ Open Prompt :https://v2ex.com/t/934197
 2.　https://openrouter.ai/
     gpt4, claude 等llm api
 
-## IDE
-- windsurf 重构项目擅长，相比cursor, 联网搜索和读图功能都没有，还不能预设prompt…
-- cursor
-- devin: 搏一搏，$20变$500：一小时魔改Cursor变身Devin https://yage.ai/cursor-to-devin.html
-    1. Devin有理解图像的能力
-
 ## 应用
 AI开发的菜品应用(gpt+cursor+windsurf+...): 
     https://www.youtube.com/watch?v=w1Mo0NoiO7U

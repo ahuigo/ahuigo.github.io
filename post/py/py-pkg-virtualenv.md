@@ -36,6 +36,7 @@ python pip虚拟环境:
     eval "$(pyenv virtualenv-init -)" # 启用 pyenv-virtualenv 的自动激活和取消激活虚拟环境的功
     ＃如果你用 virtualenvwrapper 
     pyenv-virtualenvwrapper 
+
 ## 显示当前版本
 
     > pyenv versions
@@ -52,6 +53,7 @@ python pip虚拟环境:
 ### get python path
 
     pyenv which python
+
 ## 切换
 pyenv 会修改环境变量, 通过在 PATH 环境变量的最前面添加一个 shims 目录来实现版本切换, shims 会自动读取当前目录的.python-version
 
@@ -74,7 +76,7 @@ Open the command palette  by typing `Ctrl + Shift + P`. Then type **python: sele
 
 Or You can find the same option by simply clicking and selecting the interpreter from the bottom right corner of the VSCode as shown in the image below.
 
-# venv
+# venv(pyvenv)
 venv 是python自带的依赖隔离管理
 
     # 新隔离环境的配置./blog_dir
@@ -82,11 +84,16 @@ venv 是python自带的依赖隔离管理
     #或者(如果没带pip)
     pyvenv --without-pip blog_dir
 
-使用：
+
+## pyvenv使用：
 
     $ . blog_dir/bin/activate
     (blog_pyenv) ➜ umi3$ git:(dev) ✗ 
     $ deactivate   
+
+一般alias 方便:
+
+    pvenv='source .pvenv/bin/activate'
 
 # virtualenv
 ## install

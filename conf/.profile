@@ -122,7 +122,12 @@ function current_repo() {
 alias gcm='git commit -m'
 function gcap(){
     ori_dir=$(pwd)
-	git commit -am $1;
+    noverify=$2
+    if [[ $noverify == "no" ]];  then
+        git commit -am "msg:$1" --no-verify
+    else
+        git commit -am $1;
+    fi
     if test $? != 0;then
         return
     fi
@@ -173,6 +178,9 @@ function mocha(){
     npx mocha --require "@babel/register" $1
 }
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 ################### dict ##############
 alias t=t.py
 
