@@ -27,7 +27,7 @@ chrome 原生的`$(selector)==document.querySelector() 、$$(selector)==jquery==
 	$('p.a.b')
 		不同于：$('p .a .b') 子结点class=a, 再子结点class=b
 	$('p.classA.classB')  p结点必须满足class包含: classA, classB
-	    不同于$('p .classA .classB') p 结点的子结点含classA, 子结点2再含classA, 返回子结点2, 结果跟$('p').find('.classA').find('.classB') 一样
+	    不同于$('p .classA .classB') p 结点的子结点含classA, 子结点2再含classB, 返回子结点2, 结果跟$('p').find('.classA').find('.classB') 一样
     $('input:checked[name="id[]"]')
 
 	$('#id')[0];//原生的dom, 非jquery 对象

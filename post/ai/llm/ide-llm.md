@@ -67,3 +67,5 @@ and an Executor (powered by Claude/GPT) that implements step-by-step actions.
     For Windsurf users: Use both .windsurfrules and scratchpad.md for similar functionality
 
 
+## curosr rules share
+https://www.bilibili.com/video/BV1FfXtYQEYd/?vd_source=c19c4980a244fedcc729762ff654bbc9

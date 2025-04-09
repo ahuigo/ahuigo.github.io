@@ -31,12 +31,11 @@ device-width(jquery)
 
     screenX = screenLeft, screenY = screenTop (窗口左上角点在整个屏幕的位置)
 
-窗口内宽/高
+窗口内宽/高: document元素尺寸+border+滚动条长度
 
     window.innerWidth, window.innerHeight;
-    //Same as
-    document.documentElement.clientWidth, document.documentElement.clientHeight
-    897,731
+        document.documentElement.clientWidth, document.documentElement.clientHeight + 滚动条
+        897,731
 
 窗口外宽/高(包含了窗口菜单栏、dev-tool、底边任务栏等) (对于用户来说，基本没有用)
 
@@ -44,6 +43,16 @@ device-width(jquery)
     1177,826
 
 ### 页面/Element(width height)
+    clientWidth = width + padding 
+    offsetWidth = width + padding + border + 滚动条	
+    innerWidth = document.clientWidth + 滚动条
+    scrollHeight= height + padding + overflow
+
+判断滚动距离:
+
+    e = ducument.documentElement (html)
+    e.scrollHeight - e.clientHeight
+
 #### width/height
 
 ![dom-offset](/img/ria-dom-offset.gif)
@@ -71,7 +80,7 @@ div 的自身宽度 + padding: clientHeight
     document.body.clientHeight .clientHeight body本身的宽/高
     ele.clientWidth, ele.clientHeight; //=padding+[ele.style.width, ele.style.height] (css的style必须指明:height:50px)
 
-div 的自身宽度 + padding + border(20px): offsetHeight
+div 的自身宽度 + padding + border(20px)+滚动条: offsetHeight
 
    $0.offsetHeight： 100+20+20=140px
 
@@ -80,24 +89,24 @@ scrollHeight: 内部元素实际长度（包括了内部元素的margin）+滚�
     clientHeight 相对scrollHeight 不包含滚动条
     如果不滚出，两者scrollHeight与clientHeight 相同
 
-body 的自身宽度 + padding + border + margin(外边距): 
+html 的自身宽度 + padding + border + margin(外边距): 
 
-    document.body.scrollWidth .scrollHeight
+    html = document.documentElement
+    html.scrollWidth .scrollHeight
     960,11473	 11473 = 10742+731
-    	body.scrollHeight(固定) >= document.body.scrollTop(变化) + window.innerHeight
-    	body.scrollWidth(固定) >= document.body.scrollLeft(变化) + window.innerWidth
+    	html.scrollHeight(固定) >= html.scrollTop(变化) + html.clientHeight
+    	html.scrollWidth(固定) >= html.scrollLeft(变化) + html.clientWidth
 
-clientLeft 就是 border-left
+clientLeft 就是 left border(border-left: 10px)
 
-    $0.clientLeft == widht of border-left
-
+    $0.clientLeft == widh of left border
 
 #### 滚动偏移
 
 ##### 整个页面滚动偏移: 
 body.style=width:3009px; 不是window的偏移，而是其内页面偏
 
-    # 等价 scrollY == window.pageYOffset
+    # 等价 scrollY == window.pageYOffset = html.scrollTop
     window.scrollX/scrollY
     window.pageXOffset/window.pageYOffset
         el.scrollLeft/scrollTop
@@ -118,7 +127,7 @@ body.style=width:3009px; 不是window的偏移，而是其内页面偏
 
 滑动到底部(div 必须是overflow:scroll):
 
-    // 滚动偏移=总长-clientHight
+    // 滚动遇大偏移=总长-clientHight
     div.scrollTop = div.scrollHeight - div.clientHeight;
 
 ##### scroll 底部检测

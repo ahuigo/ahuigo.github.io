@@ -45,7 +45,7 @@ Copilot 现在也可以在对话中通过#添加其他文件来作为上下了
 https://docs.github.com/zh/copilot/customizing-copilot/adding-custom-instructions-for-github-copilot
 
 `cmd+, :  copilot instruction` 可看到有几种:
-- instruction file: `.github/copilot-instructions.md` 的文件。
+- instruction file: `.github/copilot-instructions.md` 的文件。勾选上
 - Prompt files(预览): `.github/prompts/*.prompt.md`
     - 用途: 分割成多个提示词文件, 方便链接到其它提示文件作为依赖(复用)
     - 使用: 在chat中通过附件手动引用(非全局的)
@@ -75,6 +75,13 @@ https://docs.github.com/zh/copilot/customizing-copilot/adding-custom-instruction
     Answer all questions in the style of a friendly colleague, using informal language.
 
     Answer all questions in less than 1000 characters, and words of no more than 12 characters.
+
+#### 使用
+开启后才能使用, 在chat 输入问题后, 只有回答时它会显示
+
+    used 1 reference (.github/copilot-instructions.md)
+
+注意: copilot如果需要调用`python tools/*` 它只需要显示这个执行语句, 它不能自动调用
 
 ### prompt files 示例
 1. 启用: cmd+shift+p: `Open Workspace Settings (JSON)`
