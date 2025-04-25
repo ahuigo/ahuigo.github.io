@@ -358,11 +358,28 @@ like math.isclose
     'Thu Sep 22 2016 17:50:56 GMT+0800 (CST)'
 
 # timezone
-    import datetime
-    datetime.datetime.now(datetime.timezone.utc).isoformat()
-    '2019-12-25T04:13:39.774413+00:00'
+
+## set timezone
+
+    from datetime import datetime,timezone,timedelta
+    datetime.now(timezone.utc).isoformat()
+        '2019-12-25T04:13:39.774413+00:00'
+    datetime.now(timezone.utc).strftime("%Z,%z")
+        'UTC,+0000'
+    datetime.now(tz=timezone(timedelta(hours=8))).strftime("%H:%M+%Z,%z")
+        '21:13+UTC+08:00,+0800'
+    datetime.now(tz=timezone(timedelta(hours=7))).strftime("%H:%M+%Z,%z")
+        '20:13+UTC+08:00,+0800'
+
 
 ## get time with zone
+通过直接指定：
+
+    datetime.strptime('2015-6-1 19:19:59+11:00', '%Y-%m-%d %H:%M:%S%z').strftime('%H:%Z,%z')
+    Out[17]: '19:UTC+11:00,+1100'
+
+通过localtimezone:
+
     >>> import datetime
     >>> today = datetime.datetime.now()
     >>> from pytz import reference

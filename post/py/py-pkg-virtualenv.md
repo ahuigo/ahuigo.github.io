@@ -77,23 +77,26 @@ Open the command palette  by typing `Ctrl + Shift + P`. Then type **python: sele
 Or You can find the same option by simply clicking and selecting the interpreter from the bottom right corner of the VSCode as shown in the image below.
 
 # venv(pyvenv)
-venv 是python自带的依赖隔离管理
+venv 是python自带的依赖隔离管理. 命令行叫pyvenv
 
-    # 新隔离环境的配置./blog_dir
-    python3 -m venv blog_dir
-    #或者(如果没带pip)
-    pyvenv --without-pip blog_dir
+    # 创建新隔离环境: ./.myvenv
+    python3 -m venv .myvenv
 
+    # 或者如果安装了命令行pyvenv
+    pyvenv --without-pip .myvenv
 
 ## pyvenv使用：
 
-    $ . blog_dir/bin/activate
-    (blog_pyenv) ➜ umi3$ git:(dev) ✗ 
+    # 激活隔离环境
+    $ source .myvenv/bin/activate
+    (.myvenv) $ git:(dev) ✗ 
+
+    # 退出当前的venv环境
     $ deactivate   
 
-一般alias 方便:
+一般加alias 会更方便:
 
-    pvenv='source .pvenv/bin/activate'
+    pvenv='source .myvenv/bin/activate'
 
 # virtualenv
 ## install

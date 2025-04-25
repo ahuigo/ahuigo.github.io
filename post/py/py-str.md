@@ -68,6 +68,9 @@ https://realpython.com/python-f-strings/#multiline-f-strings
 
 ### r-string
     b=r'''a{a}\nb'''
+    b=r'''
+    a{a}\nb
+    '''
 ### f-string
     x=1; user={'name':'ahui'};
     f'x={x}, user["name"]={user["name"]}, id(user)={id(user)}'

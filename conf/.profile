@@ -47,6 +47,7 @@ alias l='ls -lah'
 alias code=/'Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 alias code1='/Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code'
 alias code2='/Applications/Cursor.app/Contents/Resources/app/bin/code'
+alias trae='open -a Trae'
 alias code.='code .'
 jc () {
         j ${1} && code .

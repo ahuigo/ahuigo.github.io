@@ -352,10 +352,12 @@ Set crud:
     s.has(4)
     s.forEach(fn)
 
-### 交集
+### 交集/差集
     union=new Set([...a,...b]);
     intersect=new Set([...a].filter(x=>b.has(x)))
     diff=new Set([...a].filter(x=>!b.has(x)));
+
+判断两集合相同
 
 ### forEach/values
 只支持 forEach 不支持map

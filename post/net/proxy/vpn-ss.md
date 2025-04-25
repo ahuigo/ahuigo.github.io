@@ -29,10 +29,13 @@ v2ray和trojan有如下区别及特点：
 # 客户端
 ## ss
 ## clash
+> bwg.md
+1. clash
+2. clash.meta  基于clash开源的二次开发
+3. clash verge (v2ex推荐 tauri 开发)
+    Clash.Meta(mihomo)内核
+    Clash Verge Rev会显示节点类型，比如SS或者Trojan，以及是否支持UDP。默认就显示节点延迟。
 
-    clash
-    clash.meta  基于clash开源的二次开发
-    clash verge (v2ex推荐 tauri 开发)
 
 ## openvpn on mac osx
 1. 可在 https://tunnelblick.net/downloads.html 下载最新版本

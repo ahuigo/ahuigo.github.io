@@ -56,7 +56,6 @@ Copy the **tools** folder and the following **config files** into your project r
     Cursor users only need the:  .cursorrules file. 
     Github Copilot users need the:  .github/copilot-instructions.md file.
 
-
 ## multi agent配置
 > https://github.com/grapeot/devin.cursorrules/tree/multi-agent
 high-level Planner (powered by o1) that coordinates complex tasks,
@@ -65,7 +64,6 @@ and an Executor (powered by Claude/GPT) that implements step-by-step actions.
     Copy all files from this repository to your project folder
     For Cursor users: The .cursorrules file will be automatically loaded
     For Windsurf users: Use both .windsurfrules and scratchpad.md for similar functionality
-
 
 ## curosr rules share
 https://www.bilibili.com/video/BV1FfXtYQEYd/?vd_source=c19c4980a244fedcc729762ff654bbc9
