@@ -11,7 +11,10 @@ go 可以安装多个版本
     brew remove go
 
 ## install go
+    # mac:
     brew install go
+    # linux 
+
 
 环境变量
 
