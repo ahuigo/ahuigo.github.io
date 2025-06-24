@@ -6,8 +6,14 @@ private: true
 # Preface
 - windsurf 重构项目擅长，相比cursor, 联网搜索和读图功能都没有，还不能预设prompt…
 - cursor
+- cline:  开源/mcp
 - devin: 搏一搏，$20变$500：一小时魔改Cursor变身Devin https://yage.ai/cursor-to-devin.html
     1. Devin有理解图像的能力
+
+# mcp
+https://github.com/aipotheosis-labs/aci-mcp
+
+# cline
 
 # cursor
 - 搏一搏，$20变$500：一小时魔改Cursor变身Devin https://yage.ai/cursor-to-devin.html

@@ -33,9 +33,14 @@ raw 只解析 `$`
     # 适合用于复杂的正则
     String.raw`\a` === `\\a`
     String.raw`\a` === `\\a`
+    String.raw`\`` === '\\`'
     > String.raw`${1+2}`
     '3'
 
+转义``` ` ```
+
+    String.raw`${'`'}` === '`'
+    String.raw`${'\\'}` === '\\'
 
 es有这样的语法 string raw
 
@@ -45,17 +50,15 @@ es有这样的语法 string raw
         console.log(arguments)
     }
     tw`${button} w-20 ${f}`
-    // output: [button, ' w-20 ', f]
-
-
+    // tw(['',' w-20 ', ''], button, f)
 
 原理是:
 
     function f(...arg){
         console.log(arg)
     }
-    // equal to
     f`a${1}@${[2]}b`; 
+    // equal to
     f(['a','@','b'], 1, [2]);
 
 ### charcode(unicode)

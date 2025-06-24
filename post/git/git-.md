@@ -277,7 +277,7 @@ The result is:
 	  ↑
 	master
 
-### git reset(commit+index, keep working)
+### git reset mixed(commit+index, keep working)
 undo commit -am 'msg'
 
 	git reset ;	# same as: git reset HEAD .
@@ -290,7 +290,10 @@ In this case the result is:
 	  ↑
 	master: lost index+commit
 
-### git reset soft(commit)
+#### git reset mixed(reset index only)
+	git reset HEAD~1 -- .; # reset index only
+
+### git reset soft(reset commit only)
 undo commit
 
 	   (F(working))

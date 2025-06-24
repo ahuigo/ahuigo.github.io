@@ -96,7 +96,8 @@ deployment中，ReplicaSet 是管理 Pod副本创建删除的副本
 
 ## get deployment
     kubectl get deployment ginapp
-	kubectl get deploy
+	kubectl get deploy 
+	kubectl get deploy -n namesapce
 
 	$ kubectl get deployments -A
 	$ kubectl get deployments --all-namespaces
@@ -148,6 +149,10 @@ Note: ginapp-7c4c9c4769-95fh8 名中　95fh8 是hash 值
     NAMESPACE     NAME                       READY   STATUS             RESTARTS        AGE
     default       ginapp--7c4c9c4769-95fh8   0/1     ImagePullBackOff   0               7h22m
     kube-system   etcd-minikube              1/1     Running            1 (7h32m ago)   7d16h
+
+## get pod ip
+    kubectl get pods -l app=mcp -n dev -o wide
+    kubectl get pods -l app=mcp -n dev -o jsonpath='{.items[0].status.podIP}'
 
 ## get pod logs
 ### kubectl logs

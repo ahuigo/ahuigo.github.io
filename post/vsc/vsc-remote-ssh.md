@@ -19,6 +19,11 @@ disconnect:
 ## install extension
 Install extension like go/deno/copilot, etc. 
 
+如果远程开发安装插件有网络问题，可以:
+1. 按`cmd+p: download`
+2. 选中Remote: download extentions locally (and install on remote)
+2. 选中Remote SSH: local server Download (Always)
+
 ## Open dir(project)
 open project:
 - Open: Press `cmd+o` to open dir

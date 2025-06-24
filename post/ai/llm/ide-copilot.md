@@ -32,7 +32,7 @@ vscode 为例(cmd+K cmd+s)
 ## agent mode
 开启： https://techcommunity.microsoft.com/blog/educatordeveloperblog/use-github-copilot-agent-mode-to-create-a-copilot-chat-application-in-5-minutes/4375689
 
-    vscode >= 1.98
+    vscode >= 1.99
     cmd+, 打开 chat agent
 
 https://www.youtube.com/watch?v=KSxUr0BU9ig
@@ -124,3 +124,67 @@ https://docs.github.com/en/copilot/customizing-copilot/adding-personal-custom-in
 1. 在github page中 click Immersive to open Copilot Chat in the full-page(https://github.com/copilot)
 2. Select the  dropdown menu at the top right of the immersive page, then **click Personal instructions**. 
 3. Add natural language instructions to the text box.
+
+# mcp
+> https://code.visualstudio.com/docs/copilot/chat/mcp-servers
+> 开启：vscode://settings/chat.mcp.enabled
+
+## 添加 MCP 服务器
+有多种选择：
+
+1. Workspace settings: add a .vscode/mcp.json 
+2. User settings: specify the server in your user settings to enable the MCP server across all workspaces.
+3. Automatic discovery: enable autodiscovery of MCP servers defined in other tools, such as Claude Desktop.
+
+After you add an MCP server, you can use the tools it provides in **agent mode**.
+
+### add mcp server(面板)
+> `cmd+shift+p`: MCP：Add Server 
+
+以下示例显示如何配置 Perplexity MCP 服务器 ，其中 VS Code 在服务器启动时提示您输入 API 密钥。了解有关配置格式的更多信息。
+
+    // .vscode/mcp.json
+    {
+    // 💡 Inputs are prompted on first server start, then stored securely by VS Code.
+    "inputs": [
+        {
+        "type": "promptString",
+        "id": "perplexity-key",
+        "description": "Perplexity API Key",
+        "password": true
+        }
+    ],
+    "servers": {
+        // https://github.com/ppl-ai/modelcontextprotocol/
+        "Perplexity": {
+        "type": "stdio",
+        "command": "npx", 
+        "args": ["-y", "server-perplexity-ask"],
+        "cwd": "${workspaceFolder}",// 注意: 默认当前目录是$HOME
+        "env": {
+            "PERPLEXITY_API_KEY": "${input:perplexity-key}"
+        }
+        }
+    }
+    }
+
+配置格式说明：https://code.visualstudio.com/docs/copilot/chat/mcp-servers#_configuration-format
+- cwd 不支持：https://github.com/cline/cline/discussions/2635
+- “inputs”：字段允许您为配置值定义自定义占位符，避免硬编码敏感信息。
+    第一次启动时，VS Code 会提示您输入这些值，并安全地存储它们以供后续使用.若要避免显示键入的值，请将密码字段设置为 true
+
+### 命令行添加mcp：
+
+    code --add-mcp "{\"name\":\"my-server\",\"command\": \"uvx\",\"args\": [\"mcp-server-fetch\"]}"
+
+### 分享mcp安装link：
+
+    const link = `vscode:mcp/install?${encodeURIComponent(JSON.stringify(obj))`;
+
+
+### auto discovery mcp
+使用 chat.mcp.discovery.enabled 设置启用自动发现。
+
+## 在agent模式下使用 MCP 工具
+## 管理mcp
+MCP: List Servers

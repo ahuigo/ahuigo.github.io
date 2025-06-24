@@ -84,11 +84,11 @@ example
     py.test test_mod.py::test_func # only run tests that match the "node ID",
                        # e.g "test_mod.py::test_func" will select only test_func in test_mod.py
 ## make test
-    test:
+    test1:
         python3 -m pytest -s
         #python3 -m pytest -s path/to/your_test_file.py
 
-    test1:
+    test2:
         PYTHONPATH=. python tests/test_client.py
         python ./tests/test_client.py # 只会把./tests 加入sys.path
 
@@ -114,6 +114,10 @@ vscode　默认不会在testMain 入口展示run/debug icon, 需要手动配置
 
     pytest test_a.py
 
+### test specify function case
+
+    pytest tests/test_my_module.py -k "specific_test_name"
+
 ### verbose output
     pytest -s -v
         -s is equivalent to --capture=no
@@ -128,6 +132,10 @@ vscode　默认不会在testMain 入口展示run/debug icon, 需要手动配置
     py.test --resultlog=filepath
     # xml
     py.test --junitxml=filepath
+
+### coverage
+    pytest --cov=testing_demo --cov-report=term-missing
+
 
 ## help
 ```

@@ -68,8 +68,7 @@ fi
 alias py='ipython3'
 alias p='python3'
 alias p2='python2'
-alias pi='pip3'
-alias pip='pip3'
+alias pip='python3 -m pip'
 #export PYTHONPATH=.
 
 ####################### docker ###################################################
@@ -114,6 +113,12 @@ function goclean() {
     rm -rf ~/go/pkg/mod/cache/download/"$1"
 }
 
+
+########################## jq jd #####################
+# jd a.json b.json
+function jd() {
+    vimdiff <(jq -S . $1) <(jq -S . $2) 
+}
 
 ########################## git #####################
 function current_repo() {
@@ -268,7 +273,7 @@ export PATH="$PATH:$HOME/flutter/bin"
 export ANDROID_SDK_ROOT=~/Library/Android/sdk
 export ANDROID_HOME=$ANDROID_SDK_ROOT; #已弃用
 # https://developer.android.com/tools
-export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:
+#export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:
 
 ################## java ########################
 # export JAVA_HOME="$(/usr/libexec/java_home)"
@@ -284,7 +289,7 @@ export GODEV=local
 export GO111MODULE=on 
 export GOPATH=~/go
 # 配置 GOPROXY 环境变量
-export GOPRIVATE='*.internal.mycompany.com,github.com/ahuigo1,github.com/ahuigo2/requests'
+export GOPRIVATE='*.test.com,github.com/ahuigo1,github.com/ahuigo2/requests'
 #export GOPROXY=https://goproxy.io,direct
 #export GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 export GONOSUMDB=*.corp.example.com,rsc.io/private
