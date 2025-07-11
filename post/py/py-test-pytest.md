@@ -126,6 +126,13 @@ vscode　默认不会在testMain 入口展示run/debug icon, 需要手动配置
     pytest -vv              # more verbose, display more details from the test output
     pytest -vvv             # not a standard , but may be used for even more detail in certain setups
 
+如果是输出管道，最好关闭管道缓冲
+
+    PYTHONUNBUFFERED=1 pytest -s -vvv 
+    # 或
+    python -u -m pytest -s -vvv 
+    uv run python -u -m pytest -s -vvv 
+ 
 ### output
 
     # log

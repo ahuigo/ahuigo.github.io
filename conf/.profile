@@ -226,7 +226,8 @@ function mda (){
         mkdir -p $1
         sudo chmod a+rwx $1
 }
-
+################### mysql postgres ######################
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 ################ node:cnpm/yarn/pnpm #################
 # pnpm
 export PNPM_HOME=~/Library/pnpm
