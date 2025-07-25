@@ -26,6 +26,47 @@ uv sync会自动查找下载python 版本(创建虚拟环境)，以及项目pkg 
     uv add pandas
     uv remove pandas
 
+## 不需要 from src.xxx
+默认情况下./src 才是包目录, uv run main.py 时, import语句会从src目录找module, 不需要写 from src.user
+
+以下配置你不需要设置, 如果你想显式的指定,可以这样:
+```
+#################方法1: 使用 setuptools ##################
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+# 告诉 setuptools 在 'src' 目录中寻找包
+[tool.setuptools.packages.find]
+where = ["src"]
+
+######### 方法2：使用 hatchling (Hatch 的构建后端) ########
+# hatch 默认就支持 src 布局，通常无需额外配置。如果 src/<package_name> 存在，它会优先使用。
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# Hatch 会自动检测 src 目录。 # 如果需要明确指定，可以这样做：
+[tool.hatch.build.targets.wheel]
+packages = ["src/my_package"]
+```
+
+如果用想用项目根目录作为包目录,可以这样做
+```
+    [build-system]
+    requires = ["setuptools", "wheel"]
+    build-backend = "setuptools.build_meta"
+
+    [tool.setuptools]
+    py-modules = ["config"]
+    packages = ["apps", "utils", "openapi"]
+    # packages = ["."] # 这样好像也行
+
+    [tool.pytest.ini_options]
+    pythonpath = ["."]
+```
+
+
 ## uv run启动程序
 uv run 会自动启动虚拟环境(.venv/bin/python)
 
