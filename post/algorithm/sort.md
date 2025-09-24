@@ -286,7 +286,7 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 Python 版本：
 
     def heap_sort(lst):
-        def sift_down(start, end):
+        def sift_down(start, end): #保证把[start..end] 中最大的值移动到叶子结点
             root = start
             while True:
                 child = 2 * root + 1
@@ -301,11 +301,11 @@ Python 版本：
                     break
 
         # max heap
-        for start in xrange((len(lst) - 2) // 2, -1, -1):
+        for start in range((len(lst) - 2) // 2, -1, -1):
             sift_down(start, len(lst) - 1)
 
         # heap sort 
-        for end in xrange(len(lst) - 1, 0, -1):
+        for end in range(len(lst) - 1, 0, -1):
             lst[0], lst[end] = lst[end], lst[0]
             sift_down(0, end - 1)
         return lst

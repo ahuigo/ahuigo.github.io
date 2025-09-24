@@ -123,15 +123,15 @@ Unit 一共分成12种。
 ## list 列表
 	list-units 
 		List known units
-		针对的是enabled 的x.service、x.device、session.scope
+		针对的是 enabled 的x.service、x.device、session.scope
 	list-unit-files 
 		List installed unit files and their enablement state
 		(不含.device)
 	status [PATTERN...|PID...]]
-		运行状态(include disabled units)
+		运行状态( include disabled units)
 	show [PATTERN...|JOB...]
            Show properties of one or more units, jobs,
-		   相似于cat，但是把默认属性也全部打印
+		   相似于cat，但是把默认  属性也全部打印
 
 systemctl list-units命令可以查看当前系统的所有 Unit
 

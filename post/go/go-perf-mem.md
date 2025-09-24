@@ -10,6 +10,7 @@ Go 程序会在 2 个地方为变量分配内存，一个是全局的堆(heap)�
 Heap　内存需要gc管理: Go 语言使用的是标记(STW)+清除算法，并且在此基础上使用了三色标记法和写屏障技术，提高了效率
 
 # 逃逸分析(escape analysis)
+> 逃逸即脱离栈的生命周期。
 编译器决定变量需要分配在栈上，还是堆上呢？就称之为逃逸分析(escape analysis)
 
     func createDemo(name string) *Demo {
@@ -24,8 +25,24 @@ Heap　内存需要gc管理: Go 语言使用的是标记(STW)+清除算法，并
     ./main_pointer.go:17:20: new(Demo) escapes to heap
     ./main_pointer.go:18:13: demo escapes to heap
 
+## 逃逸场景
+> golib/perf/gc/escape/*.go
+接口类型包含指针变量
+返回函数内部定义的指针	是	指针或引用可能在函数返回后仍被使用，需保存在堆上
+变量地址赋值给全局变量或结构体字段	是	变量作用域超出了原始定义的函数栈帧范围
+闭包中引用外部变量	是	闭包可能在原函数执行完之后继续使用外部变量
+interface类型	  是
+对象传入函数但在函数外部没有引用	否	编译器可检测生命周期不超出当前函数，可安全分配在栈上
 
 ## interface{} 动态类型逃逸
+interface{}，编译期间很难确定其参数的具体类型，也会发生逃逸
+
+    func foo() any {
+        return v any = 1 // 逃逸
+        return v any = stu{} // 逃逸
+        return v any = &stu{} // 逃逸
+    }
+
 fmt.Printf 中的参数 是放heap or stack？
 
     package main
@@ -38,11 +55,17 @@ fmt.Printf 中的参数 是放heap or stack？
         fmt.Println(err)
     }
 
-查看变量是在heap 还是在stack, 用：
+查看变量是在heap 还是在stack, 用:
 
     go build -gcflags='-m=3'
     $ go run -gcflags='-m=3'
     //It says "id escapes to heap".
+
+Note:
+
+-m 或 -m=1: 只显示逃逸分析的结果。你会看到类似 ... escapes to heap 的信息，告诉你哪些变量因为什么原因被分配到了堆上而不是栈上。
+-m=2: 在级别 1 的基础上，额外显示关于函数内联的决策信息。
+-m=3: 在级别 2 的基础上，提供更多关于内联决策的细节。
 
 id是一个整数，因此是一个值类型。值类型不能溢出到堆中。您实际看到的是id int装箱为interface{}，它是一种值类型，可以溢出到堆中。fmt.Errorf调用时，interface{}会创建一个包含 的新对象id，这就是溢出到堆中的内容。
 

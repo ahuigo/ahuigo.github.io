@@ -9,8 +9,9 @@ private:
 
     CPU profiles    cpu 分析
     Heap profiles   内存 分析
-    block profile   阻塞分析
     mutex profiling 锁性能分析
+    block profile   阻塞分析
+    goroutines      状态分析
     traces等        调用栈分析
 
 ## go profiling相关的分析工具

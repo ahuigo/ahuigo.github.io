@@ -39,6 +39,7 @@ private: true
     kubectl create configmap my-config --from-file=path/to/my/file
 
 ### 使用configmap file
+kubectl get deploy appname -o yaml
 
     spec:
       containers:

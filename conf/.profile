@@ -130,7 +130,7 @@ function gcap(){
     ori_dir=$(pwd)
     noverify=$2
     if [[ $noverify == "no" ]];  then
-        git commit -am "msg:$1" --no-verify
+        git commit -am "$1" --no-verify
     else
         git commit -am $1;
     fi
@@ -161,7 +161,7 @@ function gcap(){
                         git pull -Xtheirs
                     fi
                     git add .
-                    git commit -am "msg:$1"
+                    git commit -am "$1"
                     git remote | xargs -L1 git push
                     cd $top_dir
                 fi
