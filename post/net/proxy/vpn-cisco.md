@@ -7,7 +7,16 @@ private: true
 如果只是想使用cisco secure client连接vpn，可以参考以下步骤：
 1. 下载并安装cisco secure client, 只选vpn
 
-如果选择错了，就要重新安装：https://www.cnblogs.com/jinzhenzong/p/12246608.html
+## 清理
+如果选择错了，就要清理并重新安装：https://www.cnblogs.com/jinzhenzong/p/12246608.html
+
+清理app：
+
+    ls /Applications/Cisco/
+    Cisco Secure Client - Socket Filter.app Uninstall Cisco Secure Client.app
+    Cisco Secure Client.app
+
+清理残留：
 ```
 find  /opt/cisco/secureclient/ -name '*.sh'
 sudo bash /opt/cisco/secureclient/bin/cisco_secure_client_uninstall.sh
