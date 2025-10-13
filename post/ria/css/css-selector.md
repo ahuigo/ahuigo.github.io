@@ -111,6 +111,7 @@ example:
         $('div').children(); //所有div之下的所有子节点
         $("div").children("p.1"); //筛选出所有类名为.1的p标签节点
         $('parent > child'); //儿子
+            xpath = '//parent/child'
             # 第二个儿子
             $("#holder > div:nth-child(2)").before("<div>foobar</div>");
             $("#holder > div:eq(2)").before("<div>foobar</div>");
@@ -126,6 +127,7 @@ example:
             getElementById("app").querySelectorAll(":scope > .foo");
     孙、曾孙...
         $('parent grandchild'); //孙子
+            xpath = '//parent//grandchild'
         $("div").find("span"); //所有孙子中的span节点
         $("div").find("*"); //所有孙子节点
 
@@ -184,6 +186,8 @@ css3:
 
     [attribute]	[target]	选择带有 target 属性所有元素。	2
     [attribute^=value]	a[src^="https"]	选择其 src 属性值以 "https" 开头的每个 <a> 元素。	3
+        [attribute^=value]	a[src^='https']
+        [attribute^=value]	a[src^=https]	
     [attribute$=value]	a[src$=".pdf"]	选择其 src 属性以 ".pdf" 结尾的所有 <a> 元素。	3
     [attribute*=value]	a[src*="abc"]	选择其 src 属性中包含 "abc" 子串的每个 <a> 元素。	3
     [attribute~=value]	[title~=flower]	选择 title 属性包含单词 "flower" 的所有元素。	2
@@ -194,11 +198,13 @@ jquery 独有
 	$('p[input!="value"]');//not equal value
 	$('p[attr1][attr2]');//has attr1 and attr2
 
-for class:
+#### for class:
 
 	.hasClass('className')
+    $('body div>span[class~="className"]') // className 是独立的一个类
+    xpath = "//body//div/span[contains(@class, 'className')]"
 
-### via visiblity
+### via visibility
 
 	$('tr:hidden')
 	$('tr:visible')
@@ -209,12 +215,31 @@ for class:
     :not(selector)	:not(p)	选择非 <p> 元素的每个元素。	3
     ::selection	::selection	选择被用户选取的元素部分。	3
 
-### via content
+### via content(xpath)
 
-	$('div:contain("substr")')
 	$('div:empty')
 	$(':header');//匹配h1,h2,....
 	$('div:parent');//不是div父节点，而是含有子元素或文本的div 尽量不要用
+
+	$('div:contains("substr")') // css3 提案, 还没被采纳
+
+不过xpath 支持了:
+
+    # xpath 选择器: contains text()
+    page.$x("//*[contains(@class, 'item') and contains(text(), 'pro')]");
+
+    # 在 HTML 中定位某个 div 下的第 2 个 p 标签：
+    '//div[@class="content"]/p[2]'
+
+    # 查找fieldset节点, 且span孙子节点含有文本'机型'
+    xpath = "//fieldset[.//span[contains(text(), '机型')]]";
+        document.evaluate(
+        xpath,
+        document,
+        null,
+        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+        null
+    ).snapshotItem(0);
 
 ### via form
 
@@ -249,3 +274,15 @@ css3 才区分
     :where(.a, .b):hover {
         outline: 1px solid red;
     }
+
+# xpath
+
+    # 查找fieldset节点, 且span孙子节点含有文本'xx'
+    xpath = "//fieldset[.//span[contains(text(), 'xx')]]";
+        document.evaluate(
+        xpath,
+        document,
+        null,
+        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+        null
+    ).snapshotItem(0);
