@@ -33,7 +33,7 @@ assert 还支持提示信息:
 ## test case rule
 name rule:
 
-    file: test_*.py|*_test.py
+    file: test_*.py|*_test.py (建议后者)
     clsss: Test*
         method/func: test* 一般还是test_*
     directory: test*, 一般写tests
@@ -108,6 +108,14 @@ vscode　默认不会在testMain 入口展示run/debug icon, 需要手动配置
 
 或手动配置debug启动器 .vscode/launch.json 参考　vsc-python.md
 
+### pytest discovery error
+如果报错: `Pytest Discovery couldn't find any tests`
+
+打开cmd+shift+p 检查：
+1. 检查 pytest 是否安装在当前 python interpreter: .venv/bin/python
+2. 检查 python.testing.pytestEnabled 是否为 true
+3. python.testing.pytestArgs 是否正确参数，如`-s`
+4. 检查 python.testing.pytestPath 是否正确： ${workspaceFolder}/.venv/bin/pytest
 
 ## cli test
 ### test file

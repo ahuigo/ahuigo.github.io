@@ -17,6 +17,14 @@ pip install uv
         pyproject.toml
         .python-version
 
+
+以src/myproj 结构初始化项目:
+> Note: `--lib` 比 `--package` 只多一个`src/myproj/py.typed`
+> 有 py.typed 的第三方库，对外承诺它是一个支持类型检查的包(PEP561)
+
+    uv init --package myproj
+    uv init --lib myproj
+
 ## uv sync
 uv sync会自动查找下载python 版本(创建虚拟环境)，以及项目pkg 依赖, 更新uv.lock
 
@@ -161,11 +169,35 @@ uv run 会自动启动虚拟环境(.venv/bin/python)
 
 
 ### working directory
-change cmd's working directory:
+方案1： change cmd's working directory:
 
     uv run --directory /path/to/app cmd/main.py
+    See --project to only change the project root directory.
 
-See --project to only change the project root directory.
+方案2： 按模块运行（推荐）
+
+    在项目根目录执行：
+    uv run -m web.task
+    “-m web.task”会以模块方式运行，Python 会把当前工作目录（项目根）放到 sys.path，使得 import lib.lib 能被正确解析。
+
+方案3：调整包结构与导入, 这种“src 布局”对打包和工具兼容性更好。
+
+    $ uv init --lib
+    $ tree .
+    src/
+        app/
+            lib.py
+            web/
+                task.py
+                route.py
+    运行：uv run -m app.web.task
+    导入：from app.lib import tidy 或在 web/task.py 里使用相对导入：from ..lib import tidy
+
+传统做法（不建议）
+
+    PYTHONPATH=. uv run web/task.py
+    或
+    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 
 ### uv 启动pytest:
