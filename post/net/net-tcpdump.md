@@ -31,7 +31,7 @@ tshark比较新是wireshark的命令行版。 它和tcpdump 都是基于libpcap�
 		any 所有接口(not support promiscuous，监听其它主机的接口 )
 	-n
 		遇到协议号或端口号时，不要将这些号码转换成对应的协议名称或端口名称。比如，我们希望显示21，而非tcpdump自作聪明的将它显示成FTP。
-	-X, -x(小写显示hex，不显示ascii)
+	-X, -x(小写显示hex，以及显示ascii)
 		把协议头和包内容都以16 进制显示出来（tcpdump会以16进制和ASCII的形式显示），这在进行协议分析时是绝对的利器。
 	-A
 		选项，则tcpdump只会显示ASCII形式的数据包内容，不会再以十六进制形式显示；
@@ -40,6 +40,8 @@ tshark比较新是wireshark的命令行版。 它和tcpdump 都是基于libpcap�
 		选项，则tcpdump会从以太网部分就开始显示网络包内容，而不是仅从网络层协议开始显示。一般不需要这么低层
 	-c count
 		只抓一个包
+    -S  ack 显示绝对序列号. 默认ack 只会响应seq 的偏移量(相对初始seq)
+        ack 是告诉对应下一个包的seq从ack开始
 	port 8000
 		监听8000 端口
 
@@ -58,7 +60,7 @@ tshark比较新是wireshark的命令行版。 它和tcpdump 都是基于libpcap�
 # output
 
     tcpdump -n -s 0
-    tcpdump -i any -p -s 0 -w /sdcard/netCapture.pcap
+    tcpdump -i any -p -s 0 -w ./netCapture.pcap
 
     -C filesize 表示存储文件的最大大小；
     -c 5 只抓5个
@@ -66,6 +68,8 @@ tshark比较新是wireshark的命令行版。 它和tcpdump 都是基于libpcap�
     -w 表示抓取的包保存的文件路径，此时不会在标准输出打印
     -p, --no-promiscuous-mode
       Don't put the interface into promiscuous mode.
+      如果不带 -p 参数，tcpdump 会默认尝试将网络接口设置为“混杂模式”（Promiscuous Mode）: 会捕获物理网络上（同一冲突域或广播域内）所有流经它的数据包，无论这些包的目标地址是不是本机。
+
     -n     Don't convert addresses (i.e., host addresses, port numbers, etc.) to names
 
 ## promiscuous mode, 混杂模式
@@ -219,11 +223,16 @@ tcp在收到第一条数据包之后，后续的数据包，是使用之前数�
 # filter
 可以通过命令man pcap-filter来查得
 
-	'condition1 and condition2 or condtion3...'
+
+    sudo tcpdump -i eth0 -n "dst host 192.168.1.1 and dst port 80"
+    sudo tcpdump -i any -Xn "host 192.168.1.1 and port 80"
 
 ## logic
+在 tcpdump 的过滤表达式中，逻辑运算符: not , and , or。
 
-	and not or
+	'condition1 and condition2 or condtion3'
+        相当于： 'condition1 and (condition2 or condtion3)'
+	'condition1 or condition2 and condtion3'
 
 ## filter help
 packet filter syntax
@@ -231,6 +240,46 @@ packet filter syntax
 	man pcap-filter
 
 > 你会发现，过滤表达式大体可以分成三种过滤条件，“类型”、“方向”和“协议”，这三种条件的搭配组合就构成了我们的过滤表达式。
+
+## complex filter
+精确地捕获那些**带有实际数据负载**的 TCP 包:
+这个 `tcpdump` 过滤器 `'(((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'` 
+
+让我们一步步来拆解它：
+
+- `ip[2:2]`**: 表示从 IP 头部偏移 2 个字节开始，读取 2 个字节。
+    * 结果：`ip[2:2]` = IP 数据包的总长度（包含 IP 头部和其后的所有数据，单位：字节）。**
+- `ip[0]` 是 IP 头部第一个字节。
+    * IP 头部第一个字节的前 4 位是 IP 版本号
+    * 后 4 位是 **IP 头部长度 (Internet Header Length, IHL)
+- `ip[0]&0xf`:提取出 **IHL** 字段的值。
+- `ip[0]&0xf)<<2)`:  因为 IHL 的单位是 4 字节的字，所以将其乘以 4 即可得到以字节为单位的 IP 头部长度。
+    * 结果：`((ip[0]&0xf)<<2)` = IP 头部长度（单位：字节）。**
+
+- `ip[2:2] - ((ip[0]&0xf)<<2)`**:
+    *  这个表达式计算的是：`(IP 数据包总长度) - (IP 头部长度)`。 
+    * 结果：`ip payload length` = IP 数据包的负载长度（即 IP 头部之后的数据部分的长度）
+    * 对于 TCP 数据包来说，这就是整个 TCP 段（包含 TCP 头部和 TCP 有效载荷）的长度，单位：字节。
+
+解析 TCP 头部长度
+*   **`tcp[12]`**:
+    *   `[12]` 表示从 TCP 头部偏移 12 个字节开始，读取 1 个字节。
+    *   在 TCP 头部中，偏移 12 个字节的位置是 **数据偏移 (Data Offset)** 字段（也称为 TCP 头部长度），它是一个 4 位的字段，位于该字节的高 4 位。低 4 位是保留字段和一些标志位。
+*   **`(tcp[12]&0xf0)`**:
+    *   `&0xf0` 是一个位掩码操作。`0xf0` 在二进制中是 `11110000`。
+    *   这个操作会保留 `tcp[12]` 的高 4 位，即提取出 **数据偏移** 字段的值。这个值仍然是左移了 4 位的。
+    *   **结果：`(tcp[12]&0xf0)` = TCP 头部长度（未转换成字节，值在高 4 位）。**
+
+*   **`((tcp[12]&0xf0)>>2)`**:
+    *   `>>2` 是右移 2 位操作，相当于除以 $2^2 = 4$。
+        *   数据偏移字段的值本身就是以 4 字节的字为单位的 TCP 头部长度。
+        *   所以，先用 `&0xf0` 提取出高 4 位的值（它已经代表了乘以 16 的效果），然后右移 2 位，
+    *   **结果：`((tcp[12]&0xf0)>>2)` = TCP 头部长度（单位：字节）。**
+
+计算 TCP 有效载荷（数据）长度
+* `((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2))`**:
+    * 这个表达式计算的是：`(IP 负载长度) - (TCP 头部长度)`。
+    *  因此，`(整个 TCP 段的长度) - (TCP 头部长度)` = **TCP 有效载荷（数据）的长度**。
 
 ## protocol
 

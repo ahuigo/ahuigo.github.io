@@ -220,6 +220,70 @@ function loop(){
 		sleep 1;
 	done
 }
+timerun() {
+    local duration=$1
+    shift # 移除 duration 参数
+    if [ "$#" -eq 0 ]; then
+        echo "用法: timerun DURATION COMMAND [ARGS...]" >&2
+        return 2
+    fi
+
+    local command_to_run=("$@")
+    local pid # 用于存储后台进程的PID
+    echo "--- 正在运行命令 '${command_to_run[*]}' (持续 ${duration} 秒) ---" >&2
+
+    # 2. 在一个新的进程组中运行命令
+    # 这样我们可以通过进程组ID来杀死所有子进程
+    (exec "${command_to_run[@]}") &
+    pid=$! # 获取后台进程的PID
+
+    # 检查命令是否成功启动
+    if ! kill -0 "$pid" >/dev/null 2>&1; then
+        echo "错误: 无法启动命令 '${command_to_run[0]}'." >&2
+        return 1 # 返回1表示被计时器终止，虽然这里是启动失败
+    fi
+
+    # 3. 等待指定时间
+    local wait_result=0
+    # 使用 wait -n 来等待任意一个子进程结束 (如果有多个子进程，这可能不是你想要的)
+    # 对于单个后台进程，sleep 和后续的 kill -0 检查更直接
+    # sleep 期间，我们可以监听子进程是否退出
+    local sleep_left=$duration
+    while [[ $sleep_left -gt 0 ]]; do
+        # 每秒检查一次进程是否还在运行
+        if ! kill -0 "$pid" >/dev/null 2>&1; then
+            # 进程已退出，不再需要等待
+            echo "--- 命令 (PID: $pid) 在 ${duration} 秒内完成 ---" >&2
+            wait "$pid" # 收割子进程并获取其退出状态
+            return $?
+        fi
+        sleep 1
+        sleep_left=$((sleep_left - 1))
+    done
+
+
+    # 4. 时间到，检查进程并终止
+    if kill -0 "$pid" >/dev/null 2>&1; then
+        echo "--- 时间已到 (${duration}s)，正在尝试终止进程组 $pid ---" >&2
+
+        # 尝试发送 SIGTERM (信号 15)
+        kill -- "-$pid" # 杀死整个进程组
+        sleep 1 # 给进程一个机会来优雅地关闭
+
+        if kill -0 "$pid" >/dev/null 2>&1; then
+            echo "--- 进程组 $pid 未优雅终止，发送 SIGKILL (强制终止) ---" >&2
+            kill -9 -- "-$pid" # 强制杀死整个进程组
+        fi
+        wait "$pid" >/dev/null 2>&1 # 收割僵尸进程，不关心其退出状态
+        return 1 # 表示被计时器终止
+    else
+        # 如果到了这里但进程已死，说明在最后一次检查和 sleep 之间退出了。
+        echo "--- 命令 (PID: $pid) 在 ${duration} 秒内完成 (在最后一次检查后) ---" >&2
+        wait "$pid" # 收割子进程并获取其退出状态
+        return $?
+    fi
+}
+
 
 # mda
 function mda (){
@@ -284,7 +348,10 @@ export PATH=$JAVA_HOME/bin:$PATH
 #export CLASSPATH=.:/usr/local/lib/jar:~/jar/json-simple-1.1.jar:/usr/local/lib/jar/java-json.jar
 export CLASSPATH='.:/usr/local/lib/jar/*'
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
-
+###################k8s ##############
+kpod() {
+    grep -v NAME | head -n 1 | awk '{print $1}'
+}
 #################### golang ###############################
 export GODEV=local
 export GO111MODULE=on 

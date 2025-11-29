@@ -17,7 +17,6 @@ go tool trace 能够跟踪捕获各种执行中的事件，例如：
     阻塞在共享内存:(channel/mutex etc) 竞争和逻辑冲突
 
 ## todo
-https://about.sourcegraph.com/blog/go/an-introduction-to-go-tool-trace-rhys-hiltner
 https://mp.weixin.qq.com/s/I9xSMxy32cALSNQAN8wlnQ
 
 # 生成trace.out
@@ -51,7 +50,7 @@ https://mp.weixin.qq.com/s/I9xSMxy32cALSNQAN8wlnQ
     为调度器级别的信息提供计时功能，显示调度在哪里最耗费时间
 
 ## 1. View Trace by proc
-> 按`?` 获取快捷键帮助
+按`?` 获取快捷键帮助, s/w 放大/缩小时间轴; 面板介绍：
 
 1 Timeline  
 显示执行的时间，根据跟踪定位的不同，时间单位可能会发生变化。你可以通过使用键盘快捷键（WASD键，就像视频游戏一样😊）来导航时间轴。

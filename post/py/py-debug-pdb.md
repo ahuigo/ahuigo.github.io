@@ -3,16 +3,28 @@ title: py-debug-pdb
 date: 2018-09-28
 ---
 # Preface
-- pdb 相当于是c里面的gdb
-- ipdb：之于pdb, 相当于ipython 之于python. 
+几个pdb相关的调试工具介绍
+- pdb: pdb(标准库调试器), 相当于是c里面的gdb
+    - pdb.set_trace()，或命令行 python -m pdb script.py 异常触发
+- ipdb(pdb 的“增强版”交互壳)：ipdb之于pdb, 相当于ipython 之于python. 
+    0. 触发：ipdb.set_trace() 或 ipython --pdb script.py 异常时触发
     1. 相对pdb 增加了高亮、tab  
     2. p (print), up(up stack), down(down stack) 之类的命令。
     3. 还能创建临时变量，执行任意函数
+- IPython 的 embed（嵌入式交互解释器）
+    - from IPython import embed; embed()
+    - 能力：交互式探索当前作用域变量、执行任意 Python 语句；不提供步进/断点/堆栈导航，除非结合异常钩子或 --pdb。
 
-# ipdb: ipython + pdb
+# ipdb(ipython)
 
 ## start shell
-插入以下代码进入断点调试，相当于js debugger:
+ipython.embed 进入shell：
+
+    if is_debug():
+        from IPython import embed
+        embed()
+
+下面介绍的 pdb插入以下代码进入断点调试，相当于js debugger:
 
     import os
     def is_debug():
@@ -22,15 +34,10 @@ date: 2018-09-28
         import pdb; 
         pdb.set_trace()
 
-或者进入shell：
-
-    if is_debug():
-        from IPython import embed
-        embed()
 
 ## via sys.excepthook
 创建一个sys.excepthook, 当异常出现时，就调用ipython+pdb 调试: (from @Rui L on zhihu)
-```
+```python
 import sys
 
 class ExceptionHook:
@@ -182,6 +189,13 @@ breakponint on frame:
     bt     continue   exit     l         pp        run      unalias  where    
 
      (Pdb) h step
+
+### 设断点
+
+    (Pdb) b 10          # 在第10行设断点
+    (Pdb) b myfile.py:15 # 在myfile.py的第15行设断点
+    (Pdb) b myfunc      # 在函数myfunc入口处设断点
+    (Pdb) b             # 列出所有断点
 
 ### (Pdb) step + return(step out)
 
