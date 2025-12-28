@@ -172,6 +172,12 @@ Socks5 takes precedence over -x:
 
 	--socks5 <host[:port]>
 	--socks5 127.0.0.1:1080
+		-x socks5://127.0.0.1:1080
+
+socks5h
+
+	curl -x socks5h://127.0.0.1:1080
+	curl --socks5-hostname 127.0.0.1:1080
 
 ## via proxy
 global:
