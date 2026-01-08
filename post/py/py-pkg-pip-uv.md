@@ -25,15 +25,61 @@ pip install uv
     uv init --package myproj
     uv init --lib myproj
 
+### 旧项目添加uv支持
+
+    uv init
+    # 添加私有源到 pyproject.toml(如有需要)
+    uv add -r requirements.txt
+    uv sync
+    source .venv/bin/activate
+
 ## uv sync
 uv sync会自动查找下载python 版本(创建虚拟环境)，以及项目pkg 依赖, 更新uv.lock
 
     uv sync
 
+## python 版本管理
+方法1：pyproject.toml 中指定python版本: uv sync
+```
+    [project]
+    requires-python = ">=3.12,<3.13"
+```
+方法2：使用 .python-version 文件指定版本: uv sync
+
+    echo "3.12.4" > .python-version
+    uv sync
+
+方法3：命令行指定版本: uv venv
+
+    uv venv --python python3.12 .venv
+    uv venv --python 3.8 --clear
+    source .venv/bin/activate
+    python --version
+
 ## 包管理
+https://docs.astral.sh/uv/concepts/projects/sync/#syncing-the-environment
+
+`project.optional-dependencies` are part of your published package and can be installed by the end user via `pip install your-package[some-extra]` or `uv add "your-package[some-extra]" `
+
     uv add pandas
+    uv add pandas --index https://artifactory.local/artifactory/pypi/simple --index-strategy unsafe-best-match
     uv remove pandas
     uv add --dev pytest
+
+    # 添加开发依赖: [dependency-groups] (发布包时不会包含这些依赖)
+    uv add --dev pytest black mypy # 等价于  uv add --group dev pytest black mypy
+    uv sync # 开发时，默认初始化会安装 基本的依赖+dev 组
+    uv sync --group dev # 安装基本依赖+dev组（等价上面的）
+    uv sync --no-dev # 只安装基本的依赖
+    uv sync --only-dev # 只安装dev组（不安装基本的依赖）
+
+    # 添加可选依赖组 [project.optional-dependencies] (发布包时会包含这些依赖)
+    uv add --optional test pytest-cov pytest # pyproject.toml 中生成test 分组 # test =["pytest-dov","pytest"]
+    uv sync --extra test # 同步安装test 分组
+
+    # 安装分组时，不删除其它分组的包的话，要加上 --inexact
+    uv sync --group dev --inexact
+    uv sync --extra test --inexact
 
 ### 全局源
 ~/.config/uv/uv.toml
@@ -201,16 +247,22 @@ uv run 会自动启动虚拟环境(.venv/bin/python)
 
 
 ### uv 启动pytest:
+https://github.com/astral-sh/uv/issues/7260
+
     uv add --dev pytest
+    uv run pytest --verbose
 
 pyproject.toml file by adding these settings:
 
     [tool.pytest.ini_options]
+    pythonpath = ["."]
     testpaths = ["tests"]
     python_files = "test_*.py"
     python_functions = "test_*
 
 # uvx 
+     pipx install uv
+
 ## uvx 是什么？
 类似 npm 的 npx，`uvx` 是 `uv` 提供的一个工具，用于在虚拟环境中临时运行命令，而无需将其安装到项目中。
 

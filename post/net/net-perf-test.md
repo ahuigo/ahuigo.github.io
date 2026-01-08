@@ -8,7 +8,6 @@ private: true
 
 ### 1. **`iperf3` / `iperf`**（推荐）
 - **用途**：测量两节点之间的 **最大 TCP/UDP 带宽**。
-- **是否饱和**：如果实测带宽接近你机器的物理带宽（如 1 Gbps ≈ 125 MB/s），则说明可能饱和。
 - **用法示例**：
   ```bash
   # 服务端（节点A）
@@ -19,7 +18,10 @@ private: true
     -t 30  # 测试30秒
     -i 1   # 每秒输出一次结果
   ```
-- **判断**：若 节点间通信量 + 其他业务流量 > 实测可用带宽 → 可能是瓶颈。
+
+基础测试	iperf3 -c [IP]
+万兆网络压测	iperf3 -c [IP] -P 8 -t 60
+检查丢包极限	iperf3 -c [IP] -u -b 0 (0表示不限制发送速度)
 
 ### 1.2 iftop 监控实时流量
 sudo iftop -i eth0
@@ -37,7 +39,7 @@ sudo iftop -i eth0
   - 平均 RTT > 心跳间隔（如 100ms 心跳，RTT > 80ms 就危险）
   - 丢包率 > 0.1% 可能影响 稳定性
 
-### ss 分析 tcp 连接状态
+### 3. ss 分析 tcp 连接状态
     # ss -ti src 10.27.11.112:30100
     State   Recv-Q    Send-Q       Local Address:Port        Peer Address:Port    Process                                                                       
     ESTAB   0         0             10.27.11.112:30100       10.27.11.113:49260   
@@ -291,10 +293,8 @@ func tcpThroughputTest(addr, port string) float64 {
 > - 更严谨的做法是用 `iperf3` 的 Go 封装，但上述代码适合快速集成
 
 ## 总结
-
 | 方法 | 用途 |
 |------|------|
 | `iperf3` | 测带宽上限 |
 | `ping` / `mtr` | 测延迟/丢包 |
 | `iftop` | 实时流量监控 |
-| 自研 Go 工具 | 集成化诊断 | 

@@ -4,12 +4,15 @@ title: Ops 分析进程性能的工具
 category: blog
 description:
 ---
+# perf book
+http://linuxtools-rst.readthedocs.org/zh_CN/latest/advance/index.html
+
 # Ops 分析进程性能的工具
 - sar, iostat, top
 - vmstat
 
 # sar
-sar 用地找出系统瓶颈: 了解CPU、内存和硬盘的使用情况
+sar 用地找出系统瓶颈: CPU、内存、硬盘的使用情况
 
 它有两种用法；
 
@@ -18,11 +21,16 @@ sar 用地找出系统瓶颈: 了解CPU、内存和硬盘的使用情况
 
 ## install sar
 	1. apt-get install sysstat 来安装；
-	2. vi /etc/default/sysstat
-	3. 设置 ENABLED=”true”
-	4. /etc/init.d/sysstat start
 
 ## 追溯过去的统计数据
+### 先开启 sar 服务生成日志
+sar 默认情况下是关闭的；需要编辑配置文件来开启它；
+
+	1. vi /etc/default/sysstat
+        2. 设置 ENABLED=”true”
+	3. /etc/init.d/sysstat start
+
+### 查看历史数据
 默认情况下，sar从最近的0点0分开始显示数据；如果想继续查看一天前的报告；可以查看保存在`/var/log/sysstat/`下的sa日志； 使用sar工具查看:
 最近28号的sa 日志
 
@@ -108,31 +116,72 @@ sar -W：查看页面交换发生状况
 	怀疑I/O存在瓶颈，可用 sar -b、sar -u 和 sar -d 等来查看
 
 ### sar参数说明
+sar --help
 
-	-A 汇总所有的报告
-	-a 报告文件读写使用情况
-	-B 报告附加的缓存的使用情况
-	-b 报告缓存的使用情况
-	-c 报告系统调用的使用情况
-	-d 报告磁盘的使用情况
-	-g 报告串口的使用情况
-	-h 报告关于buffer使用的统计数据
-	-m 报告IPC消息队列和信号量的使用情况
-	-n 报告命名cache的使用情况
-	-p 报告调页活动的使用情况
-	-q 报告运行队列和交换队列的平均长度
-	-R 报告进程的活动情况
-	-r 报告没有使用的内存页面和硬盘块
-	-u 报告CPU的利用率
-	-v 报告进程、i节点、文件和锁表状态
-	-w 报告系统交换活动状况
-	-y 报告TTY设备活动状况
+	-B 内存分页统计 (Paging Statistics)
+        数据来自 /proc/vmstat
+	-b 全局I/O 传输速率统计 (I/O and Transfer Rate Statistics)
+        用于监控块设备（如硬盘、SSD、RAID 卡）的整体吞吐量和请求频率。
+        数据来自 /proc/stat
+	-d DEV 具体到每个磁盘的详细统计 (Device Activity)
+    -n 网络统计 (Network Statistics)
+        -n DEV 每个网络接口的统计
+        -n EDEV 每个网络接口的统计errors
+        -n IP IP 相关统计
+        -n EIP IP 相关erros 统计
+        -n TCP TCP 相关统计
+        -n ETCP TCP 相关erros 统计
 
 ## other
 
-	-d       Report disk activity.
 	-g       Report page-out activity.
 	-p       Report page-in and page fault activity
 
-# perf book
-http://linuxtools-rst.readthedocs.org/zh_CN/latest/advance/index.html
+
+# 各种top工具
+## disk 瓶颈分析
+### 用iostat 查看磁盘整体实时吞吐量
+    iostat -dmx 1 
+        -d : display only disk statistics
+        -m : display statistics in megabytes per second
+        -x : display extended statistics
+    观察 %util：如果一直 100%，说明磁盘已经到物理极限了。
+    观察 await：如果每个请求的平均等待时间超过 100 ms，说明磁盘响应极慢。
+### 用iotop的元凶
+查看各个进程的磁盘I/O 使用情况；
+
+    sudo iotop -oPa
+        -o : only show processes or threads actually doing I/O
+        -P : show accumulated I/O instead of bandwidth
+        -a : accumulate I/O over time instead of showing bandwidth
+
+
+## network瓶颈分析
+### 整体与明细结合
+    #sar 中nload 查看整体网络吞吐量(rxkB/s, txkB/s)
+    sar -n DEV 1
+    nload
+
+    # iftop (查看连接明细)
+    sudo iftop -i eth0
+
+    # 查看发包/收包累计错误
+    ip -s link show eth0
+
+### 如何确认带宽是否到达瓶颈？
+确认带宽瓶颈通常遵循 “查上限 -> 算占比 -> 看丢包” 的逻辑。
+
+    # 是否有重传
+    watch -n 1 "netstat -s | grep retransmitted"
+        2786339 segments retransmitted
+
+    # 使用 ifconfig 或 ip -s link 查看是否有丢包 dropped 
+    ip -s link show eth0
+        RX:     bytes   packets errors dropped  missed   mcast           
+            1071085972035 732395223  21089 1658458       0  412232 
+        TX:     bytes   packets errors dropped carrier collsns           
+            18521428887  24931231      0       0       0       0
+        RX dropped：接收丢包，通常由于内核处理速度跟不上或缓冲区满。
+        TX dropped：发送丢包，通常由于网卡队列溢出（即带宽打满）。
+
+rxkB+txkB 达到接近网卡或带宽上限, 参考net-perf-test.md中的 iperf3 测试上限
