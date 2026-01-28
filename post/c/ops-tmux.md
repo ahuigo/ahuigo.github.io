@@ -4,7 +4,7 @@ title:	linux-tmux
 category: blog
 description: 
 ---
-# Preface
+# install
 tmux 用于复用终端窗口, 安装tmux 很简单
 
 	brew install tmux
@@ -42,12 +42,6 @@ tmux 用于复用终端窗口, 安装tmux 很简单
 	$ tmux kill-session -t session-name
 
 # Config
-The default shortcuts prefix is `ctrl+b`, you and set it to `ctrl+d`
-
-	$ vim ~/.tmux.conf
-	unbind C-b
-	set -g prefix C-d
-
 如果你希望新的配置项能够立即生效，那么你可以将下面这一行配置加入到文件 ~/.tmux.conf 中。
 
 	# bind a reload key
@@ -81,27 +75,24 @@ The default shortcuts prefix is `ctrl+b`, you and set it to `ctrl+d`
 
 	tmux new-session -s work -d
 
-total:
-
-    New Session
-        tmux new [-s name] [cmd] (:new) - new session
-    Switch Session
-        tmux ls (:ls) - list sessions
-        tmux switch [-t name] (:switch) - switches to an existing session
-        tmux as [id] [-t name] (:attach) - attaches to an existing session
-        <C-b>c (:detach) - detach the currently attached session
-    Session Management
-        <C-b>s - list sessions
-            <C-b>:ls - list sessions
-        <C-b>$ - name session
-    Close Session
-        tmux kill-session [-t name] (:kill-session)
-
-
 ## 关闭会话(session)
 在tmux 外
 
 	tmux kill-session -t work
+
+在tmux 会话内
+
+    Ctrl-d
+
+## 退出tmux, 但是不关闭会话(session)
+从当前 tmux 会话分离(detach)，让服务继续跑：
+
+	# 命令行直接分离
+	tmux detach
+
+	# 常用快捷键：Ctrl-b d
+
+如果当前会话开了多个客户端，按 `Ctrl-b D` 选择要分离的客户端。
 
 ## 会话列表
 在列表中，按`jk` 选择，按`space` 展开，按`Enter` 确认. 也可按`session_id` 直接选择确认
@@ -114,12 +105,16 @@ total:
     ctrl+b :ls
 
 ## session attache & detach
-关于会话有两个非常重要的操作，即attach和detach，attach就是让某个会话到前台来运行，而detach则是将某个会话放到后台。通常，当我们打开tmux时，tmux在创建一个会话的同时也会attach到这个会话，所以我们会立即看到tmux的窗口。在某个会话中，我们按C-b d会detach这个会话，也就会回到原先的终端控制台，但实际上并没有退出这个会话，比如你可以通过在终端中输入下列命令重新attach到work会话：
 
 	tmux attach -t work
+	tmux ls
+
+## capture
+	tmux capture-pane -t <session>:<window> -e -p -S - -E - | aha > /tmp/a.html
 
 # 窗口
-窗口由多个面板组成
+
+## 窗口由多个面板组成
 创建窗口
 
     <C-b>c (:neww [-n name] [cmd]) - new window
@@ -141,7 +136,7 @@ Window Management
     <C-b>. - move window to another session (promt)
     :movew - move window to next unused number
 
-# 窗格面板 Panes
+## 面板 Panes
 新加窗格面板
 
 	" 竖直
@@ -153,6 +148,16 @@ Window Management
 
 	Ctrl-b Up/left/right/down
 	C-b o 下一面板
+	C-b ; 切换回上一个面板
+
+嫌方向键键程长，可以在 ~/.tmux.conf 里用更短的 Vim 风格绑定：
+
+	bind -r h select-pane -L
+	bind -r j select-pane -D
+	bind -r k select-pane -U
+	bind -r l select-pane -R
+
+使用时先按前缀 `Ctrl-b`，再按对应的 h/j/k/l。
 
 关闭面板
 
@@ -181,14 +186,39 @@ Panes Management
     <C-b>q - show pane numbers (type number to move cursor)
     <C-b><Space> - toggle pane arrangements
 
-# command mode
+# 编辑
+## command mode
 
     ctrl+b :list-keys -T copy-mode-vi
 
-# 复制文本
+## 复制文本
 1. `ctrl-b [` 进入vi 模式
 2. `<space>` 选择，`v` 在垂直选择和行选择之间切换
 3. `<enter>` 复制
+
+## 鼠标支持
+~/.tmux.conf：
+
+    set -g mouse on
+
+或实时切换到鼠标模式：
+
+	# 临时开启（当前tmux内执行）
+	Ctrl-b : set -g mouse on
+
+	# 临时关闭
+	Ctrl-b : set -g mouse off
+
+	# 绑定一个键 (m) 用于一键切换
+	# 写入 ~/.tmux.conf 后，重载配置或重启 tmux
+	bind m if -F '#{mouse}' 'set -g mouse off \; display-message "Mouse: OFF"' 'set -g mouse on \; display-message "Mouse: ON"'
+
+提示：开启 mouse 后，滚轮会滚动并进入复制模式；若不习惯，可随时用上面的快捷方式关闭。
+    
+
+或用vi 模式选择复制
+
+    setw -g mode-keys vi
 
 # tmux with iterm2
 https://toutiao.io/posts/q86tnu/preview

@@ -116,8 +116,7 @@ my-internal-package = { index = "my-pypi" }
 
 ```
 ### publish
-
-先指定（可选）打包的文件：
+#### 先指定（可选）打包的文件：
 ```
 [build-system]
 requires = ["hatchling"]
@@ -136,9 +135,7 @@ exclude = [
     "/tests"
 ]
 ```
-
-
-
+#### 使用  uv publish 发布包
 uv 不支持~/.pypirc, 只能使用以下方式
 ```
 # 1 build
@@ -157,6 +154,7 @@ uv publish --publish-url xxx
 uv publish --index xxx
 ```
 
+#### 发包时认证方式比较
 
 | 方法 | 命令/设置 | 安全性 | 推荐场景 |
 | :--- | :--- | :--- | :--- |
@@ -213,7 +211,6 @@ uv run 会自动启动虚拟环境(.venv/bin/python)
     uv run mcp
     uv run pytest
 
-
 ### working directory
 方案1： change cmd's working directory:
 
@@ -260,7 +257,18 @@ pyproject.toml file by adding these settings:
     python_files = "test_*.py"
     python_functions = "test_*
 
-# uvx 
+# uv 开发cli 包
+## uv本地运行cli
+假如我们开发的是 aip 包，并且在 pyproject.toml 中定义了脚本入口:
+| 命令 | 说明 |
+|------|------|
+| `uv run which aip` | 测试 uv 是否可找到 `aip` 命令 |
+| `uv run aip` | 开发阶段直接运行脚本入口 |
+| `uv run -m aip.cli` | 以模块方式运行 `src/aip/cli.py` 中的入口 |
+| `uv sync && source .venv/bin/activate && uv pip install -e . && aip` | 本地安装到虚拟环境后运行 |
+| `uv tool install --force . && aip` | 全局安装后运行 |
+
+# uvx: cli tool runner
      pipx install uv
 
 ## uvx 是什么？
@@ -278,7 +286,9 @@ pyproject.toml file by adding these settings:
 
     uvx "mcp[cli]"
 
-### cli 命令编写
+
+## cli 命令编写
+编写自己的cli命令，可以在 pyproject.toml 中的 [project.scripts] 部分定义命令映射。例如：
 ```
 [project.scripts]
 # 命令指向1:src/black/__init__.py 中的 patched_main()

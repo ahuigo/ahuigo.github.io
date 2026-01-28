@@ -14,6 +14,12 @@ git clone with PAT:
     alias git='git -c http.extraHeader="Authorization: Basic '$B64_PAT'"'
     git -c http.extraHeader="Authorization: Basic ${B64_PAT}" clone https://dev.azure.com/yourOrgName/yourProjectName/_git/yourRepoName 
 
+或git 全局配置：
+
+    git config --global http.extraHeader "Authorization: Basic ${B64_PAT}"
+    git config --global http.https://dev.azure.com/yourOrgName.extraHeader "Authorization: Basic ${B64_PAT}"
+
 curl with PAT:
 
     curl -u :{PAT} https://dev.azure.com/{organization}/_apis/build-release/builds
+

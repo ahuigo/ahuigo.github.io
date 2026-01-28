@@ -37,6 +37,7 @@ fi
 
 ###################### nvim + vscode #####################
 export EDITOR="nvim"
+alias cci=claude
 alias vi='nvim'
 alias vim='nvim'
 alias gpass='openssl rand -base64 10'
@@ -55,15 +56,11 @@ jc () {
 alias cj=jc
 
 ##################### python ##########################################
-if [[ -z $INIT_PROFILE ]]; then
-    export PATH=/opt/homebrew/opt/python@3.10/bin:$PATH
-    export PATH="$HOME/.poetry/bin:$PATH"
-fi
 if [[ -z $LDFLAGS ]];then
     # For compilers to find python@3.10 you may need to set:
     #export LDFLAGS="-L/opt/homebrew/opt/python@3.10/lib"
     #For pkg-config to find python@3.10 you may need to set:
-    export PKG_CONFIG_PATH="/opt/homebrew/opt/python@3.10/lib/pkgconfig"
+    export PKG_CONFIG_PATH_XXXXXXX="/opt/homebrew/opt/python@3.10/lib/pkgconfig"
 fi
 alias py='ipython3'
 alias p='python3'
