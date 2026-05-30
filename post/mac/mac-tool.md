@@ -331,16 +331,29 @@ https://sm.ms/
 # Screen/Video
 
 ## screen record
+临时简单录屏 → 系统quickTime自带（Command+Shift+5）,
+    为了直接录系统声音: 可装 BlackHole：brew install blackhole-2ch（2 声道够用）
+        打开 “音频 MIDI 设置”→ 新建 “多输出设备”→ 勾选 “内置输出 + BlackHole 2ch”
+        Cmd+Shift+5 → 选项 → 麦克风选 “BlackHole 2ch”
+免费 + 要内录 + 教学演示 → Omi 录屏专家
+直播 / 游戏 / 专业录制 → OBS Studio
 
+### QuickTime
+Screen/Audio/Movie Recording
 ### asciinema, 终端录制工具
+> 类似终端截图：tmux capture-pane
+普通录屏（QuickTime、OBS、GIF 工具）是像素视频, asciinema 是asciinema 是 "文本 + 时间戳"视频.cast
 
 	brew install asciinema
 	asciinema rec
+    asciinema play demo.cast
 
-## Flameshot
+
+## screenshot
+### Flameshot
 Flameshot：Linux下最接近Snipaste的截图软件
 
-## screencapture
+### screencapture
 screencapture命令可以截图。和Grab.app与cmd + shift + 3或cmd + shift + 4热键相似，但更加的灵活。
 
 抓取包含鼠标光标的全屏幕，并以image.png插入到新邮件的附件中：
@@ -357,12 +370,6 @@ screencapture命令可以截图。和Grab.app与cmd + shift + 3或cmd + shift + 
 	$ screencapture -s -t pdf image.pdf
 	更多用法请参阅screencapture --help。
 
-## QuickTime
-Screen/Audio/Movie Recording
-
-## Snagit
-Snagit: Screen capture, Video Capture, Edit Video
-It's be charged
 
 ## ASCII Art
 Graph::Easy
@@ -375,6 +382,7 @@ Graph::Easy
     http://36kr.com/p/216120.html
 
 ## GIF
+>最简单免费：LICEcap 原生无水印：GifCapture
 If you think a GIF of what is happening would be helpful, consider tools like 
 https://www.cockos.com/licecap/, 
 https://github.com/phw/peek 
@@ -383,7 +391,8 @@ https://www.screentogif.com/
 ### my app installed
 mac app(installed):
 1. GIPHY
-2. Kap
+2. Kap (替代recordit/LICEcap/Gifcam)
+3. licecap
 
 ### draw gif
     ms paint: http://gifpaint.com/

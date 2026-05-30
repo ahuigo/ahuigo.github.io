@@ -37,7 +37,8 @@ fi
 
 ###################### nvim + vscode #####################
 export EDITOR="nvim"
-alias cci=claude
+alias c=claude
+alias c2=claude2
 alias vi='nvim'
 alias vim='nvim'
 alias gpass='openssl rand -base64 10'
@@ -215,6 +216,13 @@ function loop(){
 		#printf "\r%s" "`$*`";
 		printf "\n%s" "`$@`";
 		sleep 1;
+	done
+}
+function loop300(){
+	while true;do
+		#printf "\r%s" "`$*`";
+		printf "\n%s" "`$@`";
+		sleep 300;
 	done
 }
 timerun() {

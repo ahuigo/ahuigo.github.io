@@ -111,6 +111,9 @@ tmux 用于复用终端窗口, 安装tmux 很简单
 
 ## capture
 	tmux capture-pane -t <session>:<window> -e -p -S - -E - | aha > /tmp/a.html
+    -e escape sequences 保留颜色
+    -S - 从历史记录的开始位置捕获
+    -E - 从历史记录的结束位置捕获
 
 # 窗口
 

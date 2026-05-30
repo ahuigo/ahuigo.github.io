@@ -51,3 +51,5 @@
 	postBuffer = 157286400
 [rebase]
 	reapplyCherry = true
+[safe]
+	directory = *
