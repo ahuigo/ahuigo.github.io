@@ -30,7 +30,9 @@ export PS1="%m:%~%$ 🌈 🏂 🏡  🌤️  🔥📌👋❌✅" # host
 #export PS1="%{$fg_bold[green]%}$(hostname -I | cut -d' ' -f1):%~%$ $(git_prompt_info) %{$reset_color%}%(?..[%?])"$'\n> '
 export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%(?..[%?])🌈 🏂 🏡  🌤️  🔥  ✅'$'\n$ '
 if [[ -z $INIT_PROFILE ]]; then
-    export PATH=$PATH:$HOME/www/py-lib/bin:$HOME/www/a/bin:~/bin:/usr/local/sbin
+    # ~/bin -> ~/.local/bin
+    #rm /usr/local/sbin
+    export PATH=$PATH:$HOME/www/py-lib/bin:~/www/a/bin
     # for ssh-host-machine: export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
 fi
 
@@ -67,6 +69,7 @@ alias py='ipython3'
 alias p='python3'
 alias p2='python2'
 alias pip='python3 -m pip'
+alias venv='source .venv/bin/activate'
 #export PYTHONPATH=.
 
 ####################### docker ###################################################
@@ -370,6 +373,8 @@ export GONOSUMDB=*.corp.example.com,rsc.io/private
 export PATH=/opt/homebrew/opt/go/bin:$PATH:$GOPATH/bin
 alias go17='ln -sf /opt/homebrew/opt/go@1.17/bin /opt/homebrew/opt/go/bin'
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
+################ comfy #############
+alias comfyproxy='http_proxy=http://127.0.0.1:7897 https_proxy=http://127.0.0.1:7897 no_proxy=localhost,127.0.0.1,0.0.0.0 open /Applications/ComfyUI.app'
 
 ######## other conf #############
 [ -f ~/.private ] && source ~/.private

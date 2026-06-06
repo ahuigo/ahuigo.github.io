@@ -166,6 +166,9 @@ urlencode
     curl --interface eth0
 
 ## via socks5
+> socks4(ipv4), socks5(ipv6+ipv4)
+> socks4a or socks5h 都使用代理的dns 
+
 Socks5 takes precedence over -x:
 
 > This option overrides any previous use of -x, --proxy, as they are mutually exclusive.
@@ -174,7 +177,7 @@ Socks5 takes precedence over -x:
 	--socks5 127.0.0.1:1080
 		-x socks5://127.0.0.1:1080
 
-socks5h
+socks5h (dns也走代理)
 
 	curl -x socks5h://127.0.0.1:1080
 	curl --socks5-hostname 127.0.0.1:1080
@@ -182,7 +185,7 @@ socks5h
 ## via proxy
 global:
 
-	# socks5h, 比较新的curl 才会支持
+	# socks5h, 比较新的curl 才会支持(dns 也走代理)
     https_proxy=socks5h://127.0.0.1:1081 curl https://google.com/
 	export http_proxy=socks5h://localhost:1080 HTTPS_PROXY=socks5h://localhost:1080 ALL_PROXY=socks5h://localhost:1080
 
