@@ -33,3 +33,9 @@ After installing, just tell your agent to run dev-browser --help — the help ou
     const tabs = await browser.listPages();
     console.log(JSON.stringify(tabs, null, 2));
     EOF
+
+vi CLAUDE.md:
+```
+# access browser
+dev-browser --help — the help output includes a full LLM usage guide with examples and API reference. 
+```

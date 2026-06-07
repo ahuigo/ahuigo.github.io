@@ -32,7 +32,7 @@ export PROMPT='${ret_status}%{$fg_bold[green]%}%p%{$fg[cyan]%}%C$ %{$fg_bold[blu
 if [[ -z $INIT_PROFILE ]]; then
     # ~/bin -> ~/.local/bin
     #rm /usr/local/sbin
-    export PATH=$PATH:$HOME/www/py-lib/bin:~/www/a/bin
+    export PATH=$PATH:$HOME/www/py-lib/bin:~/www/a/bin:~/.local/bin
     # for ssh-host-machine: export PS1='%n@%m%{$fg[cyan]%} %c%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}>%{$reset_color%}'
 fi
 
@@ -341,7 +341,6 @@ alias cg=cargo
 ################ flutter dart###############
 export PUB_HOSTED_URL=https://pub.flutter-io.cn
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
-export PATH="$PATH:$HOME/flutter/bin"
 ## android sdk
 export ANDROID_SDK_ROOT=~/Library/Android/sdk
 export ANDROID_HOME=$ANDROID_SDK_ROOT; #已弃用
