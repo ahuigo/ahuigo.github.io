@@ -177,13 +177,6 @@ function gcap(){
 #git fetch $1 $2 && git rebase $1/$2
 
 ################################node #################################
-function mocha1(){
-    file=$1
-    npx tsc -p $file && npx mocha --require "@babel/register" $file
-}
-function mocha(){
-    npx mocha --require "@babel/register" $1
-}
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
@@ -219,13 +212,6 @@ function loop(){
 		#printf "\r%s" "`$*`";
 		printf "\n%s" "`$@`";
 		sleep 1;
-	done
-}
-function loop300(){
-	while true;do
-		#printf "\r%s" "`$*`";
-		printf "\n%s" "`$@`";
-		sleep 300;
 	done
 }
 timerun() {
@@ -338,15 +324,6 @@ export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS
 ################ rust ###############
 alias cg=cargo
 
-################ flutter dart###############
-export PUB_HOSTED_URL=https://pub.flutter-io.cn
-export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
-## android sdk
-export ANDROID_SDK_ROOT=~/Library/Android/sdk
-export ANDROID_HOME=$ANDROID_SDK_ROOT; #已弃用
-# https://developer.android.com/tools
-#export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:
-
 ################## java ########################
 # export JAVA_HOME="$(/usr/libexec/java_home)"
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
@@ -374,6 +351,24 @@ alias go17='ln -sf /opt/homebrew/opt/go@1.17/bin /opt/homebrew/opt/go/bin'
 #[[ -d $GOROOT ]] || export GOROOT=/usr/local/Cellar/go/1.15.6/libexec
 ################ comfy #############
 alias comfyproxy='http_proxy=http://127.0.0.1:7897 https_proxy=http://127.0.0.1:7897 no_proxy=localhost,127.0.0.1,0.0.0.0 open /Applications/ComfyUI.app'
+
+###############claude code#################
+export ANTHROPIC_BETA_HEADER=prompt-caching-scope-2026-01-05
+export CLAUDE_CODE_ATTRIBUTION_HEADER=0
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+export CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=0
+export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
+export CLAUDE_CODE_ENABLE_FEEDBACK_SURVEY_FOR_OTEL=0
+export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1
+export DISABLE_AUTOUPDATER=1
+export DISABLE_ERROR_REPORTING=1
+export DISABLE_NON_ESSENTIAL_MODEL_CALLS=1
+export DISABLE_TELEMETRY=1
+export ENABLE_PROMPT_CACHING_1H=true
+export ENABLE_TOOL_SEARCH=true
+export ENABLE_LSP_TOOL=1
+export CLAUDE_CODE_MAX_PROMPT_CACHE_TTL=360
+export ANTHROPIC_MODEL=opusplan
 
 ######## other conf #############
 [ -f ~/.private ] && source ~/.private
