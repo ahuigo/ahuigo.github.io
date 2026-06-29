@@ -353,7 +353,7 @@ alias go17='ln -sf /opt/homebrew/opt/go@1.17/bin /opt/homebrew/opt/go/bin'
 alias comfyproxy='http_proxy=http://127.0.0.1:7897 https_proxy=http://127.0.0.1:7897 no_proxy=localhost,127.0.0.1,0.0.0.0 open /Applications/ComfyUI.app'
 
 ###############claude code#################
-export ANTHROPIC_BETA_HEADER=prompt-caching-scope-2026-01-05
+#export ANTHROPIC_BETA_HEADER=prompt-caching-scope-2026-01-05
 export CLAUDE_CODE_ATTRIBUTION_HEADER=0
 export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 export CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=0
