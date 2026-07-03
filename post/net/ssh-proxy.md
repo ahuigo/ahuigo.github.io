@@ -52,6 +52,14 @@ then:
     me% ssh user2@localhost -p 2201
     实际访问% ssh user2@192.168.25.100 -p 22
 
+Note: 通过跳板机访问时，非交互时，默认是bash
+
+    ssh user2@localhost -p 2201 -- 'echo $SHELL $PATH'
+
+.bashrc 中遇到我非交互时，可能提前会返回, 可以注释掉
+
+    # [ -z "$PS1" ] && return
+
 ### http over ssh
 转发2201到远端机的80
 
