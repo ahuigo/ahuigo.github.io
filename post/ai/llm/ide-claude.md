@@ -23,7 +23,7 @@ After installing, just tell your agent to run dev-browser --help — the help ou
 
     # Launch a headless browser and run a script
     dev-browser --headless <<'EOF'
-    const page = await browser.getPage("main");
+    const page = await browser.getPage("main");// 不用newPage() 避免重新创建
     await page.goto("https://example.com", { waitUntil: "domcontentloaded" });
     console.log(await page.title());
     EOF
@@ -38,4 +38,14 @@ vi CLAUDE.md:
 ```
 # access browser
 dev-browser --help — the help output includes a full LLM usage guide with examples and API reference. 
+```
+
+## agnes-skill image/video
+这个描述了agnes 文生image/video 的脚本（调用modelagnes-image-2.1-flash, agnes-video-v2.0）
+
+> 帮我安装这个 Skill 在当前项目。https://github.com/Yacey/agnes-ai-generation-skill
+
+使用 Anthropic 兼容 API 格式时，在请求体中添加 thinking 字段(enabled|adaptive):https://agnes-ai.com/zh-Hans/docs/agnes-20-flash
+```
+  env:{ "CLAUDE_CODE_EXTRA_BODY": "{\"thinking\":{\"type\":\"adaptive\",\"budget_tokens\": 2048}}", }
 ```

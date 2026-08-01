@@ -7,6 +7,57 @@ description:
 HowTo: Proxy Non-Proxy-Aware Android Applications through Burp
 http://blog.dornea.nu/2014/12/02/howto-proxy-non-proxy-aware-android-applications-through-burp/
 
+# tun
+> tun 支持rules: 包括ip/domain/地理位置（GEOIP:CN）/进程名
+在操作系统网络层，TUN 模式捕获的是 IP 数据包。为了支持按域名分流，现代 TUN 客户端（如 Clash Verge Rev / Mihomo (Clash Meta) / Sing-Box / Surge）引入了 Fake-IP / Redir-Host (TUN 映射 DNS) 技术：
+
+	[应用 (Node/Bun)] ──1. 查 DNS "open.feishu.cn"──► [TUN 客户端内建 DNS]
+	[应用 (Node/Bun)] ◄──2. 返回 Fake-IP (如 198.18.0.45)── [TUN 客户端内建 DNS]
+
+	[应用 (Node/Bun)] ──3. 发包到 198.18.0.45 ──► [TUN 网卡捕获]
+														│
+										TUN 根据 Fake-IP 映射还原出域名 open.feishu.cn
+														│
+										▼ 匹配 Rules 规则
+					┌────────────────────────────────────┴────────────────────────────────────┐
+					│                                                                         │
+		匹配 `DOMAIN-SUFFIX, feishu.cn, DIRECT`                                  匹配其他境外域名
+					│                                                                         │
+					▼                                                                         ▼
+		内核直连发往飞书真实 IP                                                    加密发往代理节点
+
+2 种透明代理方案：
+
+  方案一：操作系统 / 路由器层面的 TUN / TAP 模式（推荐，最省心）
+
+  现在主流的代理客户端（如 Clash Verge Rev / Sing-Box / Surge / Qv2ray）都支持 TUN (Tunnel) 模式。
+
+  - 工作原理：
+  在操作系统内核（L3/L4 网络层）创建一个虚拟网卡 (TUN Device)。
+  所有应用程序（无论是 Node.js、Python、Go、curl 还是终端命令）发出的 TCP/UDP 
+  原始数据包，都被内核路由表直接抓取并送到代理客户端。
+  - 为什么透明：
+    - 应用完全不知道代理的存在：应用以为自己是在直连目标 IP（如 121.29.103.92:443），使用的是 Node.js 最原生的
+  Socket。
+    - 不需要设置任何 HTTP_PROXY / HTTPS_PROXY 环境变量。
+    - 彻底绕过了 https-proxy-agent、form-data 等 npm 包的 JavaScript 代理代理逻辑，避开了所有的 Node.js 代理
+  Agent 死锁 Bug！
+  - 设置方法：
+  在你的代理客户端界面中，找到并开启 TUN Mode (TUN 模式) 或 Enhanced Mode / System Proxy (系统级 TUN 模式) 即可。
+
+  ---
+  方案二：利用 proxychains-ng / gdirect (动态 hook 操作系统 Socket)
+
+  如果你只需要对某个终端命令生效，不想开启全系统的 TUN 模式：
+
+  - 工作原理：
+  使用 proxychains（Mac 上用 proxychains-ng）：
+  proxychains4 bun --watch src/cli/index.ts run
+  它利用操作系统的 DYLD_INSERT_LIBRARIES (macOS) 或 LD_PRELOAD (Linux)，在 C 语言动态链接库层 hook 了 Node.js /
+  Bun 调用的 connect() 系统调用。
+  - 为什么透明：
+    - 同样完全不需要设置 HTTP_PROXY 环境变量。
+
 # socks5
 参考: [在终端下间接使用Socks5代理的几种方法(privoxy,tsocks,proxychains) ][privoxy,tsocks,proxychains]
 
